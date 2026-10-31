@@ -35,6 +35,8 @@ const HALF_GAP = 0.002;
 const GAMMA = dragCoefficient(DROP_MASS, FALL_SPEED);
 const WEIGHT = DROP_MASS * G;
 const FIELD_MAX_KN = 120;
+/** a hover is declared when the net force is within 1.5% of the weight: then |q/e − n| < 0.05 for every drop here */
+const HOVER_TOL = 0.015;
 
 export type DropId = 'a' | 'b' | 'c' | 'd';
 /** number of elementary charges on each drop (negative charges): hidden from the student */
@@ -79,6 +81,8 @@ export default function OilDrop(props: OilDropProps) {
   /** the drop's height as a fraction of the half-gap: +1 at the top plate */
   const pos = useRef(0);
   const lastT = useRef(0);
+  /** while t is below this, the figure says that a new drop has entered */
+  const newUntil = useRef(0);
   const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: TASK_LABEL[id] ?? id }));
 
   useEffect(
@@ -99,7 +103,7 @@ export default function OilDrop(props: OilDropProps) {
   const q = chargeOf(s.drop);
   const Ey = -s.E; // the top plate is positive: the field points down
   const net = netForceUp(q, DROP_MASS, Ey);
-  const hovering = isHovering(q, DROP_MASS, Ey);
+  const hovering = isHovering(q, DROP_MASS, Ey, HOVER_TOL);
   const speed = driftSpeed(q, DROP_MASS, Ey, GAMMA);
 
   useEffect(() => {
@@ -116,7 +120,11 @@ export default function OilDrop(props: OilDropProps) {
     lastT.current = t;
     if (dt > 0) {
       pos.current += (speed / HALF_GAP) * dt;
-      if (Math.abs(pos.current) >= 1) pos.current = pos.current > 0 ? -0.92 : 0.92; // a new drop enters through the other end of the chamber
+      if (Math.abs(pos.current) >= 1) {
+        // the drop hit a plate and is gone: a new drop of the same kind enters from the opposite plate
+        pos.current = pos.current > 0 ? -0.92 : 0.92;
+        newUntil.current = t + 3;
+      }
     }
     const plateH = 16;
     const topY = 30;
@@ -168,6 +176,16 @@ export default function OilDrop(props: OilDropProps) {
       ctx.restore();
     }
     chargeDisc(ctx, cx, dy, r, q, p, {});
+    if (t < newUntil.current) {
+      ctx.save();
+      ctx.font = `600 13px ${p.fontUi}`;
+      ctx.fillStyle = p.ink2;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.direction = 'rtl';
+      ctx.fillText('טיפה חדשה מאותו סוג', cx, dy + (dy > midY ? -(r + 18) : r + 18));
+      ctx.restore();
+    }
 
     if (s.showForces) {
       const wPx = 52;

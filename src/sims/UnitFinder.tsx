@@ -70,11 +70,16 @@ export default function UnitFinder(props: UnitFinderProps) {
       : `כל הנקודות על סימונים, אבל ${empty} סימונים נשארו ריקים`
     : 'חלק מהנקודות נופלות בין הסימונים';
 
-  useEffect(() => {
-    const nearE = Math.abs(s.unit - (E_CHARGE * 1e19)) < 0.15;
-    if (props.tasks?.includes('find-unit') && fits && empty === 0 && nearE) markTask(`${props.id}:find-unit`);
-    if (props.tasks?.includes('smaller-unit') && fits && empty > 0 && s.unit < 1.2) markTask(`${props.id}:smaller-unit`);
-  }, [s, props.id, props.tasks]);
+  /** Tasks tick only when the student moves the slider: steps in the text never complete them. */
+  const userSetUnit = (u: number) => {
+    setS({ unit: u });
+    const un = u * 1e-19;
+    const ok = unitMisfit(QS, un) < FIT_LIMIT;
+    const em = emptyMarks(QS, un);
+    const nearE = Math.abs(u - E_CHARGE * 1e19) < 0.15;
+    if (props.tasks?.includes('find-unit') && ok && em === 0 && nearE) markTask(`${props.id}:find-unit`);
+    if (props.tasks?.includes('smaller-unit') && ok && em > 0 && u < 1.2) markTask(`${props.id}:smaller-unit`);
+  };
 
   useEffect(() => {
     const id = setTimeout(() => setLive(`יחידה ${sci(unit)} קולון: ${verdict}.`), 300);
@@ -90,7 +95,7 @@ export default function UnitFinder(props: UnitFinderProps) {
     ctx.save();
     // the comb
     ctx.lineWidth = 1.6;
-    for (let k = 1; k * s.unit <= AXIS_MAX_E19; k++) {
+    for (let k = 1; k * unit <= Math.max(...QS) + 0.15 * unit; k++) {
       const x = X(k * s.unit);
       const hit = QS.some((q) => Math.abs(q / unit - k) <= 0.15);
       ctx.strokeStyle = hit ? withAlpha(p.accent, 0.9) : withAlpha(p.accent, 0.35);
@@ -177,7 +182,7 @@ export default function UnitFinder(props: UnitFinderProps) {
             היחידה שנבדקת: <b class="q">{sci(unit)} C</b>
           </span>
           <span>
-            סטייה ממוצעת מהסימונים: <b class="q">{(misfit * 100).toFixed(0)}% מהיחידה</b>
+            סטייה ממוצעת של הנקודות מהסימונים: <b class="q">{(misfit * s.unit).toFixed(2)}·10⁻¹⁹ C</b>
           </span>
           <span>
             <b>{verdict}</b>
@@ -192,7 +197,7 @@ export default function UnitFinder(props: UnitFinderProps) {
           step={0.1}
           value={s.unit}
           format={(v) => `${v.toFixed(1)}·10⁻¹⁹ C`}
-          onChange={(v) => setS({ unit: round1(v) })}
+          onChange={(v) => userSetUnit(round1(v))}
         />
       }
     />

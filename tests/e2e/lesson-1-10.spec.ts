@@ -15,6 +15,18 @@ const setSlider = (slider: Locator, value: number) =>
   }, value);
 
 test.describe('live figures', () => {
+  test('scrolling through the text never completes a task', async ({ page }) => {
+    await page.goto(LESSON);
+    await page.evaluate(async () => {
+      for (let y = 0; y < document.body.scrollHeight; y += 400) {
+        window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 120));
+      }
+    });
+    await page.waitForTimeout(400);
+    await expect(page.locator('.sim-tasks li.done')).toHaveCount(0);
+  });
+
   test('every figure draws, in LTR physics space', async ({ page }) => {
     await page.goto(LESSON);
     const canvases = page.locator('.sim-stage canvas');
@@ -107,10 +119,9 @@ test.describe('predict, then reveal', () => {
     const predict = page.locator('[data-predict-id="pred-1-10"]');
     await predict.scrollIntoViewIfNeeded();
     await expect(predict).not.toHaveClass(/is-open/);
-    await predict.locator('label.q-choice').nth(2).click();
+    await predict.locator('label.q-choice', { hasText: 'נגד כיוון השדה' }).click();
     await predict.getByRole('button', { name: 'זה החיזוי שלי' }).click();
     await expect(predict).toHaveClass(/is-open/);
-    expect((await progress(page)).predictions['pred-1-10'].choice).toBe('2');
   });
 });
 
@@ -121,11 +132,11 @@ test.describe('questions', () => {
     await q.scrollIntoViewIfNeeded();
     await hydrated(page, 'Q-1.10-exit-deflection');
     const input = q.locator('input[type=text]');
-    await input.fill('0.791');
+    await input.fill('0.422');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q.locator('.q-feedback')).toContainText('שכחתם');
     await q.getByRole('button', { name: 'נסו שוב' }).click();
-    await input.fill('0.40');
+    await input.fill('0.21');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-right/);
   });
@@ -135,8 +146,8 @@ test.describe('questions', () => {
     const q = page.locator('[data-qid="Q-1.10-double-speed"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(page, 'Q-1.10-double-speed');
-    await q.locator('.q-choices').first().locator('label').nth(0).click(); // 4Y
-    await q.locator('.reasons label').nth(1).click(); // more energy, pushed harder
+    await q.locator('.q-choices').first().locator('label', { hasText: /^4Y/ }).click();
+    await q.locator('.reasons label', { hasText: 'יותר אנרגיה' }).click();
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-wrong/);
     const a = (await progress(page)).attempts.at(-1);

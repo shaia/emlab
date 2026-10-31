@@ -17,7 +17,7 @@ import { polyline, withAlpha } from './core/ink';
 import { sciFull as sci } from './core-sci';
 import SimShell, { Toggle, type TaskDef } from './core/SimShell';
 
-export type Axis = 'r' | 'inv' | 'inv2';
+export type Axis = 'r' | 'r2' | 'inv' | 'inv2';
 
 /** the sphere charges are given in the lesson; the run is fixed so text and figure agree */
 export const Q1 = 2e-7;
@@ -27,14 +27,15 @@ const RUN = coulombRun(Q1, Q2, RADII, 0.04, 3);
 
 const AXES: Record<Axis, { p: number; label: string; name: string; unit: string }> = {
   r: { p: 1, label: 'r (m)', name: '⁦r⁩', unit: 'm' },
-  inv: { p: -1, label: '1/r (1/m)', name: '⁦1/r⁩', unit: '1/m' },
-  inv2: { p: -2, label: '1/r² (1/m²)', name: '⁦1/r²⁩', unit: '1/m²' },
+  r2: { p: 2, label: 'r² (m²)', name: '⁦r²⁩', unit: 'm²' },
+  inv: { p: -1, label: '1/r (m⁻¹)', name: '⁦1/r⁩', unit: 'm⁻¹' },
+  inv2: { p: -2, label: '1/r² (m⁻²)', name: '⁦1/r²⁩', unit: 'm⁻²' },
 };
 const AXIS_IDS = Object.keys(AXES) as Axis[];
 
 const TASK_LABEL: Record<string, string> = {
-  'try-all': 'הציגו את ⁦F⁩ מול כל אחד משלושת הצירים האופקיים: ⁦r⁩, אחר כך ⁦1/r⁩ ואחר כך ⁦1/r²⁩.',
-  straight: 'בחרו את הציר האופקי שבו הנקודות מתיישרות על קו אחד.',
+  'try-all': 'לחצו על כל אחד מארבעת הצירים האופקיים ובדקו אם הנקודות מתיישרות.',
+  straight: 'בחרו בעצמכם את הציר האופקי שבו הנקודות מתיישרות על קו ישר אחד.',
 };
 
 interface State {
@@ -64,12 +65,20 @@ export default function CoulombGraph(props: CoulombGraphProps) {
   const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: TASK_LABEL[id] ?? id }));
   const startRef = useRef(first);
 
-  const setAxis = (axis: Axis) => setS((prev) => ({ ...prev, axis, seen: prev.seen.includes(axis) ? prev.seen : [...prev.seen, axis] }));
+  /** a step in the text only shows an axis; it never counts as the student's own try */
+  const showAxis = (axis: Axis) => setS((prev) => ({ ...prev, axis }));
+  /** the student picks an axis: only this ticks the tasks */
+  const pickAxis = (axis: Axis) => {
+    const seen = s.seen.includes(axis) ? s.seen : [...s.seen, axis];
+    setS({ ...s, axis, seen });
+    if (props.tasks?.includes('try-all') && AXIS_IDS.every((a) => seen.includes(a))) markTask(`${props.id}:try-all`);
+    if (props.tasks?.includes('straight') && axis === 'inv2') markTask(`${props.id}:straight`);
+  };
 
   useEffect(
     () =>
       subscribeSteps(props.id, (st) => {
-        if (st.axis === 'r' || st.axis === 'inv' || st.axis === 'inv2') setAxis(st.axis);
+        if (st.axis === 'r' || st.axis === 'r2' || st.axis === 'inv' || st.axis === 'inv2') showAxis(st.axis);
         if (typeof st.fit === 'boolean') setS((prev) => ({ ...prev, fit: st.fit as boolean }));
       }),
     [props.id],
@@ -78,14 +87,10 @@ export default function CoulombGraph(props: CoulombGraphProps) {
   const xs = coulombAxis(RUN, AXES[s.axis].p);
   const fit = linearFit(xs, RUN.F);
 
-  useEffect(() => {
-    if (props.tasks?.includes('try-all') && AXIS_IDS.every((a) => s.seen.includes(a))) markTask(`${props.id}:try-all`);
-    if (props.tasks?.includes('straight') && s.axis === 'inv2') markTask(`${props.id}:straight`);
-  }, [s, props.id, props.tasks]);
 
   useEffect(() => {
     const id = setTimeout(
-      () => setLive(`הציר האופקי: ${AXES[s.axis].name}. מקדם ההתאמה לקו ישר R בריבוע ${fit.r2.toFixed(3)}.`),
+      () => setLive(`הציר האופקי: ${AXES[s.axis].name}. מדד ההתאמה R בריבוע ${fit.r2.toFixed(3)}.`),
       300,
     );
     return () => clearTimeout(id);
@@ -195,7 +200,7 @@ export default function CoulombGraph(props: CoulombGraphProps) {
       readout={
         <>
           <span>
-            התאמה לקו ישר: <b class="q">R² = {fit.r2.toFixed(3)}</b>
+            מדד ההתאמה לקו ישר: <b class="q">R² = {fit.r2.toFixed(3)}</b>
           </span>
           <span>
             <b>{straight ? 'הנקודות על קו ישר' : 'הנקודות אינן על קו ישר'}</b>
@@ -211,11 +216,11 @@ export default function CoulombGraph(props: CoulombGraphProps) {
         <>
           <div class="group" role="group" aria-label="הציר האופקי">
             {AXIS_IDS.map((a) => (
-              <Toggle key={a} label={`⁦F⁩ מול ${AXES[a].name}`} on={s.axis === a} onChange={() => setAxis(a)} />
+              <Toggle key={a} label={`⁦F⁩ מול ${AXES[a].name}`} on={s.axis === a} onChange={() => pickAxis(a)} />
             ))}
           </div>
           <div class="group">
-            <Toggle label="קו התאמה" on={s.fit} swatch="var(--accent)" onChange={(on) => setS((prev) => ({ ...prev, fit: on }))} />
+            <Toggle label="קו מגמה" on={s.fit} swatch="var(--accent)" onChange={(on) => setS((prev) => ({ ...prev, fit: on }))} />
           </div>
         </>
       }

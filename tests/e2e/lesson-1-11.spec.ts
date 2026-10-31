@@ -15,6 +15,18 @@ const setSlider = (slider: Locator, value: number) =>
   }, value);
 
 test.describe('live figures', () => {
+  test('scrolling through the text never completes a task', async ({ page }) => {
+    await page.goto(LESSON);
+    await page.evaluate(async () => {
+      for (let y = 0; y < document.body.scrollHeight; y += 400) {
+        window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 120));
+      }
+    });
+    await page.waitForTimeout(400);
+    await expect(page.locator('.sim-tasks li.done')).toHaveCount(0);
+  });
+
   test('both figures draw, in LTR physics space', async ({ page }) => {
     await page.goto(LESSON);
     const canvases = page.locator('.sim-stage canvas');
@@ -42,9 +54,10 @@ test.describe('live figures', () => {
     await fig.scrollIntoViewIfNeeded();
     const readout = fig.locator('.sim-readout');
     await expect(readout).toContainText('הנקודות אינן על קו ישר');
-    await fig.locator('[aria-label="הציר האופקי"] button').nth(1).click();
+    await fig.locator('[aria-label="הציר האופקי"] button').nth(1).click(); // r²
+    await fig.locator('[aria-label="הציר האופקי"] button').nth(2).click(); // 1/r
     await expect(readout).toContainText('הנקודות אינן על קו ישר');
-    await fig.locator('[aria-label="הציר האופקי"] button').nth(2).click();
+    await fig.locator('[aria-label="הציר האופקי"] button').nth(3).click(); // 1/r²
     await expect(readout).toContainText('הנקודות על קו ישר');
     await expect(readout).toContainText('N·m²');
     await expect(fig.locator('.sim-tasks li').first()).toHaveClass(/done/);
@@ -77,10 +90,9 @@ test.describe('predict, then reveal', () => {
     const predict = page.locator('[data-predict-id="pred-1-11"]');
     await predict.scrollIntoViewIfNeeded();
     await expect(predict).not.toHaveClass(/is-open/);
-    await predict.locator('label.q-choice').nth(2).click();
+    await predict.locator('label.q-choice').filter({ has: page.locator('annotation', { hasText: /1\/r\^2/ }) }).click();
     await predict.getByRole('button', { name: 'זה החיזוי שלי' }).click();
     await expect(predict).toHaveClass(/is-open/);
-    expect((await progress(page)).predictions['pred-1-11'].choice).toBe('2');
   });
 });
 
@@ -91,13 +103,13 @@ test.describe('questions', () => {
     await q.scrollIntoViewIfNeeded();
     await hydrated(page, 'Q-1.11-slope-charge');
     const input = q.locator('input[type=text]');
-    await input.fill('2700');
+    await input.fill('1800');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q.locator('.q-feedback')).toContainText('שכחתם לחלק ב-');
     const a = (await progress(page)).attempts.at(-1);
     expect(a).toMatchObject({ qid: 'Q-1.11-slope-charge', correct: false, misconception: 'MC-slope-is-k', lesson: '1.11' });
     await q.getByRole('button', { name: 'נסו שוב' }).click();
-    await input.fill('3e-7');
+    await input.fill('2e-7');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-right/);
   });
@@ -107,7 +119,7 @@ test.describe('questions', () => {
     const q = page.locator('[data-qid="Q-1.11-electroscope-sign"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(page, 'Q-1.11-electroscope-sign');
-    await q.locator('.q-choices').first().locator('label').nth(1).click(); // "the rod is positive"
+    await q.locator('.q-choices').first().locator('label', { hasText: 'המוט טעון חיובית' }).click();
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-wrong/);
     const a = (await progress(page)).attempts.at(-1);

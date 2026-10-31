@@ -21,14 +21,14 @@ import SimShell, { Slider, Toggle, type TaskDef } from './core/SimShell';
 export type Particle = 'electron' | 'proton';
 
 const GEO: CrtGeometry = { plateLength: 0.06, halfGap: 0.02, screenDistance: 0.12 };
-const SCREEN_HALF = 0.07;
+const SCREEN_HALF = 0.08;
 const GUN_X = -0.06;
 /** the world is centred on this x [m] (the span −0.09 … 0.21 m is 0.30 m wide) */
 const X0 = 0.06;
 const WORLD_W = 0.3;
-const WORLD_H = 0.17;
+const WORLD_H = 0.18;
 const PLATE_T = 0.004;
-const MARKS = 6;
+const MARKS = 5;
 
 const PARTICLES: Record<Particle, { q: number; m: number; name: string; speeds: number[] }> = {
   electron: { q: -E_CHARGE, m: M_ELECTRON, name: 'אלקטרון', speeds: [5, 10, 15, 20, 25, 30, 35, 40] },
@@ -39,7 +39,7 @@ const FIELD_KN = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const TASK_LABEL: Record<string, string> = {
   'spot-up': 'אלקטרון: הביאו את הכתם על המסך לגובה של לפחות 3 ס"מ מעל המרכז, בלי לפגוע בלוח.',
-  'proton-spot': 'עברו לפרוטון והסיטו את הכתם בלפחות 1 ס"מ מהמרכז. מה צריך לשנות במהירות?',
+  'proton-spot': 'עברו לפרוטון והסיטו את הכתם לפחות ב-1 ס"מ מהמרכז. מה צריך לשנות במהירות?',
   'hit-plate': 'הגדילו את השדה או האטו את החלקיק עד שהקרן פוגעת באחד הלוחות.',
 };
 
@@ -116,14 +116,15 @@ export default function CathodeRayTube(props: CathodeRayTubeProps) {
 
   const sol = solve(s);
 
-  useEffect(() => {
+  /** Tasks tick only when the student changes a control: steps in the text never complete them. */
+  const checkTasks = (next: State) => {
     const has = (t: string) => props.tasks?.includes(t);
     const done = (t: string) => markTask(`${props.id}:${t}`);
-    const { res, screenHit } = sol;
-    if (has('spot-up') && s.particle === 'electron' && screenHit && res.yScreen >= 0.03) done('spot-up');
-    if (has('proton-spot') && s.particle === 'proton' && screenHit && Math.abs(res.yScreen) >= 0.01) done('proton-spot');
+    const { res, screenHit } = solve(next);
+    if (has('spot-up') && next.particle === 'electron' && screenHit && res.yScreen >= 0.03) done('spot-up');
+    if (has('proton-spot') && next.particle === 'proton' && screenHit && Math.abs(res.yScreen) >= 0.01) done('proton-spot');
     if (has('hit-plate') && res.outcome === 'plate') done('hit-plate');
-  }, [s, props.id, props.tasks]);
+  };
 
   const describe = () => {
     const { res, screenHit } = sol;
@@ -200,7 +201,7 @@ export default function CathodeRayTube(props: CathodeRayTubeProps) {
       ctx.strokeStyle = p.ink2;
       ctx.textAlign = 'left';
       ctx.textBaseline = 'middle';
-      for (let cm = -7; cm <= 7; cm++) {
+      for (let cm = -8; cm <= 8; cm++) {
         const [, ty] = P(xScreen, cm / 100);
         const major = cm % 2 === 0;
         ctx.beginPath();
@@ -259,7 +260,7 @@ export default function CathodeRayTube(props: CathodeRayTubeProps) {
       ctx.restore();
     }
 
-    // equal-time marks: x = vt, y = ½at²
+    // equal-time marks: x = vt, y = ½at². Every mark carries its multiple of the first deflection (1, 4, 9, ...).
     if (s.showMarks && s.E > 0) {
       const dt = GEO.plateLength / v / MARKS;
       const [, y0] = P(0, 0);
@@ -276,13 +277,35 @@ export default function CathodeRayTube(props: CathodeRayTubeProps) {
         ctx.arc(mx, my, 4.6, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
-        if (Math.abs(my - y0) > 16) {
-          ctx.font = `600 11px ${p.fontUi}`;
-          ctx.fillStyle = p.ink2;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = my > y0 ? 'top' : 'bottom';
-          ctx.fillText(String(k * k), mx + 9, (my + y0) / 2 + (my > y0 ? -6 : 6));
-        }
+        const below = my >= y0;
+        ctx.font = `700 12px ${p.fontUi}`;
+        ctx.fillStyle = p.ink;
+        ctx.textAlign = 'center';
+        // the number sits on the side of the dot that faces the axis, away from the plate
+        ctx.textBaseline = below ? 'bottom' : 'top';
+        ctx.fillText(String(k * k), mx, my + (below ? -9 : 9));
+        ctx.restore();
+      }
+    }
+
+    // the exit angle θ between the original direction and the straight line to the screen
+    if (s.E > 0 && res.outcome === 'screen') {
+      const [ex, ey] = P(L, res.yExit);
+      const a = -Math.atan(res.slope);
+      if (Math.abs(a) > 0.03) {
+        const r = 34;
+        polyline(ctx, [[ex, ey], [ex + r + 14, ey]], p.ink2, 1, { dash: [3, 3], alpha: 0.9 });
+        ctx.save();
+        ctx.strokeStyle = p.ink;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.arc(ex, ey, r, 0, a, a < 0);
+        ctx.stroke();
+        ctx.font = `italic 700 15px ${p.fontUi}`;
+        ctx.fillStyle = p.ink;
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('θ', ex + (r + 6) * Math.cos(a / 2), ey + (r + 6) * Math.sin(a / 2));
         ctx.restore();
       }
     }
@@ -294,13 +317,15 @@ export default function CathodeRayTube(props: CathodeRayTubeProps) {
       const up = q * Ey > 0;
       const len = 30;
       arrow(ctx, fx, fy, fx, fy + (up ? -len : len), { color: p.force, width: 2.6, head: 10 });
-      ctx.save();
-      ctx.font = `italic 700 15px ${p.fontUi}`;
-      ctx.fillStyle = p.force;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('F', fx + 12, fy + (up ? -len : len) / 2);
-      ctx.restore();
+      if (!s.showMarks) {
+        ctx.save();
+        ctx.font = `italic 700 15px ${p.fontUi}`;
+        ctx.fillStyle = p.force;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('F', fx + 12, fy + (up ? -len : len) / 2);
+        ctx.restore();
+      }
     }
 
     // end of the path: a spot on the screen, a cross on the plate, or a miss
@@ -338,11 +363,10 @@ export default function CathodeRayTube(props: CathodeRayTubeProps) {
   };
 
   const change = (next: Partial<State>) => {
-    setS((prev) => {
-      const merged = { ...prev, ...next };
-      if (next.particle && next.particle !== prev.particle) merged.speed = next.particle === 'electron' ? 20 : 0.6;
-      return merged;
-    });
+    const merged = { ...s, ...next };
+    if (next.particle && next.particle !== s.particle) merged.speed = next.particle === 'electron' ? 20 : 0.6;
+    setS(merged);
+    checkTasks(merged);
   };
   // announce the outcome after the controls settle
   useEffect(() => {
@@ -379,7 +403,7 @@ export default function CathodeRayTube(props: CathodeRayTubeProps) {
             זמן בין הלוחות: <b class="q">t = L/v = {sci(res.transitTime)} s</b>
           </span>
           <span>
-            הסטה ביציאה: <b class="q">y = {sci(Math.abs(res.yExit) * 100)} cm</b>
+            הסטה ביציאה: <b class="q">y(L) = {sci(Math.abs(res.yExit) * 100)} cm</b>
           </span>
           <span>
             <b>{outcomeText}</b>
