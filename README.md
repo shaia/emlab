@@ -3,7 +3,7 @@
 An interactive, Hebrew-only course in electricity and magnetism for Israeli high-school physics at the 5-unit level
 (Bagrut paper 036371), written for a student who meets the material for the first time.
 
-**Live site:** <https://shaia.github.io/emlab/>
+**Live site:** <https://slow-is-smooth.io/emlab/>
 
 Each lesson is laid out as an open book: text on the right page and, on the left, a live figure the student can
 touch. As the text scrolls, its steps change what the figure shows. Students commit to a prediction before
