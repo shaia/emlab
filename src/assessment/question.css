@@ -302,3 +302,122 @@
   color: var(--hand);
   margin-bottom: 4px;
 }
+
+/* ---------- Bagrut multi-part question ---------- */
+.bagrut {
+  padding: 22px clamp(14px, 3vw, 28px) 18px;
+  border-radius: var(--radius);
+  background: var(--paper-2);
+  border: 1px solid var(--paper-edge);
+  box-shadow: var(--shadow-card);
+}
+.bagrut + .bagrut {
+  margin-top: 26px;
+}
+.bagrut-head h3 {
+  margin: 0 0 8px;
+}
+.bagrut-diagram {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  overflow-x: auto;
+}
+.bagrut-diagram svg {
+  display: block;
+  margin-inline: auto;
+  max-width: 100%;
+  height: auto;
+  color: var(--ink);
+  font-family: var(--font-ui);
+}
+.bagrut-note {
+  margin: 6px 0 0;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--ink-2);
+}
+.bagrut-parts {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+.b-part-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+  font: 700 1rem var(--font-ui);
+}
+.bagrut-score {
+  margin-top: 16px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--rule);
+  font-family: var(--font-ui);
+}
+
+.open-write {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.open-write-label {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--ink-2);
+}
+.open-write textarea {
+  width: 100%;
+  min-height: 7em;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--ink-3);
+  background: var(--paper);
+  color: var(--ink);
+  font: 1rem/1.5 var(--font-ui);
+  resize: vertical;
+}
+.open-note {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--ink-2);
+}
+.open-model {
+  margin-top: 6px;
+}
+.open-steps {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.open-steps li {
+  display: grid;
+  gap: 2px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--paper-2);
+  border-inline-start: 3px solid var(--rule);
+}
+.open-steps li[data-kind='result'] {
+  border-inline-start-color: var(--ok);
+}
+.open-step-kind {
+  font: 600 0.78rem var(--font-ui);
+  color: var(--ink-2);
+}
+.open-rubric {
+  border: 0;
+  margin: 0 0 12px;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.open-rubric legend {
+  padding: 0;
+}

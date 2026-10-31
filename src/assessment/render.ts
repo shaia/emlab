@@ -6,6 +6,7 @@
 
 import type { Question } from '~/content.config';
 import { tex } from '~/lib/tex';
+import { isOpen, partQuestion } from './bagrut';
 
 export function renderQuestion(q: Question): Question {
   const t = (s: string, field: string) => tex(s, `${q.id}.${field}`);
@@ -45,6 +46,25 @@ export function renderQuestion(q: Question): Question {
         correctFeedback: t(q.correctFeedback, 'correctFeedback'),
         wrongFeedback: t(q.wrongFeedback, 'wrongFeedback'),
         wrong: q.wrong.map((w, i) => ({ ...w, feedback: t(w.feedback, `wrong[${i}]`) })),
+      } as Question;
+    case 'bagrut':
+      return {
+        ...base,
+        type: 'bagrut',
+        title: t(q.title, 'title'),
+        parts: q.parts.map((p) => {
+          if (!isOpen(p)) return { ...renderQuestion(partQuestion(q, p)), label: p.label, points: p.points } as unknown as typeof p;
+          const pt = (s: string, field: string) => tex(s, `${q.id}/${p.label}.${field}`);
+          return {
+            ...p,
+            id: `${q.id}/${p.label}`,
+            prompt: pt(p.prompt, 'prompt'),
+            hints: p.hints.map((h, i) => pt(h, `hints[${i}]`)),
+            explanation: p.explanation ? pt(p.explanation, 'explanation') : undefined,
+            solution: p.solution.map((s, i) => ({ ...s, text: pt(s.text, `solution[${i}]`) })),
+            rubric: p.rubric.map((r, i) => ({ ...r, text: pt(r.text, `rubric[${i}]`) })),
+          };
+        }),
       } as Question;
     case 'rank':
       return {

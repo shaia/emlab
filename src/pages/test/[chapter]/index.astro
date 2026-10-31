@@ -1,0 +1,55 @@
+---
+/** Chapter test: drawn from the chapter's questions so that every objective is covered. */
+import { getCollection } from 'astro:content';
+import { chapterQuestions, chaptersWithQuestions, testPool } from '~/assessment/bank';
+import TestRunner from '~/assessment/TestRunner';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { chapters, lessonSlug } from '~/course';
+import { url } from '~/lib/url';
+import '~/styles/lesson.css';
+import '~/styles/platform.css';
+
+export async function getStaticPaths() {
+  return (await chaptersWithQuestions()).map((n) => ({ params: { chapter: `ch${n}` }, props: { n } }));
+}
+
+const { n } = Astro.props;
+const chapter = chapters.find((c) => c.n === n);
+const pool = testPool(await chapterQuestions(n));
+
+const lessonEntries = (await getCollection('lessons', (e) => e.data.chapter === n)).sort((a, b) => a.data.order - b.data.order);
+const objectives = lessonEntries.flatMap((e) => e.data.objectives);
+const lessons = Object.fromEntries(
+  lessonEntries.map((e) => [e.data.id, { title: e.data.title, href: url(`lessons/${lessonSlug(e.data.id)}/`) }]),
+);
+
+const misconceptions = Object.fromEntries(
+  (await getCollection('misconceptions')).map((m) => [
+    m.data.id,
+    {
+      title: m.data.title,
+      truth: m.data.truth,
+      label: m.data.remedy.label,
+      href: url(`lessons/${lessonSlug(m.data.remedy.lesson)}/${m.data.remedy.anchor ? `#${m.data.remedy.anchor}` : ''}`),
+    },
+  ]),
+);
+---
+
+<BaseLayout title={`מבחן פרק ${n}`} description={`מבחן שמכסה את כל המטרות של פרק ${n}, עם דוח אחרי ההגשה`}>
+  <div class="platform">
+    <section class="sheet sheet-narrow">
+      <p class="kicker">פרק {n} · {chapter?.title}</p>
+      <h1>מבחן פרק</h1>
+      <TestRunner
+        client:load
+        pool={pool}
+        objectives={objectives}
+        lessons={lessons}
+        misconceptions={misconceptions}
+        practiceHref={url(`practice/ch${n}/`)}
+        meHref={url('me/')}
+      />
+    </section>
+  </div>
+</BaseLayout>

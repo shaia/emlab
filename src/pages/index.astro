@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { chaptersWithQuestions } from '~/assessment/bank';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import CoverArt from '~/ui/CoverArt.astro';
 import { chapters, lessonSlug } from '~/course';
@@ -9,6 +10,7 @@ import '~/styles/lesson.css';
 const written = new Set(
   (await getCollection('lessons', (e) => !e.data.draft || import.meta.env.DEV)).map((e) => e.data.id),
 );
+const withPractice = new Set(await chaptersWithQuestions());
 const firstLesson = chapters.flatMap((c) => c.lessons).find((l) => written.has(l.id));
 ---
 
@@ -66,6 +68,12 @@ const firstLesson = chapters.flatMap((c) => c.lessons).find((l) => written.has(l
                   </li>
                 ))}
               </ol>
+              {withPractice.has(c.n) && (
+                <p class="chapter-tools">
+                  <a class="btn" href={url(`practice/ch${c.n}/`)}>דף תרגול</a>
+                  <a class="btn" href={url(`test/ch${c.n}/`)}>מבחן פרק</a>
+                </p>
+              )}
             </li>
           ))
         }
@@ -160,6 +168,12 @@ const firstLesson = chapters.flatMap((c) => c.lessons).find((l) => written.has(l
     border: 1.5px solid var(--accent);
     color: var(--accent);
     font: 700 1.3rem var(--font-ui);
+  }
+  .chapter-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0 0;
   }
   .lessons {
     list-style: none;
