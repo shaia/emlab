@@ -3,7 +3,22 @@
 - id: superposition
   term: עקרון הסופרפוזיציה
   en: superposition principle
-  definition: השדה (או הכוח) של כמה מטענים יחד הוא הסכום הווקטורי של השדות (או הכוחות) של כל מטען לבדו.
+  definition: הכוח (או השדה) של כמה מטענים יחד הוא הסכום הווקטורי של הכוחות (או השדות) של כל מטען לבדו.
   reject: [עקרון הסופרפוזיציא]
   lesson: '1.4'
 
+
+- id: resultant-force
+  term: הכוח השקול
+  en: net force
+  symbol: F
+  unit: N (ניוטון)
+  definition: הסכום הווקטורי של כל הכוחות שפועלים על גוף. הוא הכוח היחיד שיגרום לאותה השפעה כמו כולם יחד.
+  lesson: '1.4'
+
+- id: vector-component
+  term: רכיב של וקטור
+  en: vector component
+  symbol: F_x, F_y
+  definition: ההיטל של וקטור על אחד הצירים. אפשר לחבר וקטורים על ידי חיבור הרכיבים של כל ציר בנפרד.
+  lesson: '1.4'

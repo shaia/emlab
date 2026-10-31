@@ -1,0 +1,203 @@
+# Lesson 1.4 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time, so a broken formula fails the build with the question id.
+# YAML note: plain and single-quoted strings keep backslashes literally; never use "…" for TeX.
+
+chapter: 1
+questions:
+  # ---------------------------------------------------------------- 1.4 superposition of forces
+  - id: Q-1.4-independence
+    type: mc
+    objectives: [OBJ-1.4-1]
+    qualitative: true
+    prompt: >-
+      מטען A מפעיל על מטען B כוח $F$. מקרבים אל B מטען שלישי, C. מה קורה לכוח ש-A מפעיל על B?
+    choices:
+      - text: הוא לא משתנה. על B פועל גם כוח נוסף מ-C, והכוח השקול הוא הסכום הווקטורי של השניים.
+        correct: true
+        feedback: נכון. כל מטען מפעיל את הכוח שלו כאילו האחרים לא קיימים. זה עקרון הסופרפוזיציה.
+      - text: הוא נחלש, כי C "חוסם" חלק מהכוח של A.
+        feedback: מטען אחד לא חוסם את הכוח של מטען אחר. הכוח של A על B תלוי רק בשני המטענים האלה ובמרחק ביניהם.
+        misconception: MC-superposition-shielding
+      - text: הוא משתנה, כי עכשיו הכוח של A מתחלק בין B ו-C.
+        feedback: הכוח של A על B לא מתחלק. A מפעיל על C כוח נפרד, והוא לא גורע מהכוח על B.
+        misconception: MC-superposition-shielding
+
+  - id: Q-1.4-three-forces
+    type: mc
+    objectives: [OBJ-1.4-1]
+    qualitative: true
+    prompt: >-
+      ארבעה מטענים נקודתיים נמצאים בנקודות שונות. כמה כוחות חשמליים נפרדים פועלים על אחד מהם?
+    choices:
+      - text: שלושה, אחד מכל אחד מהמטענים האחרים.
+        correct: true
+        feedback: נכון. כל אחד משלושת המטענים האחרים מפעיל כוח משלו, והכוח השקול הוא הסכום הווקטורי של שלושתם.
+      - text: אחד, כי הכוח השקול הוא הכוח היחיד שפועל.
+        feedback: הכוח השקול הוא הסכום של הכוחות, לא כוח נוסף. הכוחות הנפרדים פועלים כולם, ורק ההשפעה הכוללת שלהם שווה לכוח השקול.
+      - text: שישה, אחד לכל זוג מטענים.
+        feedback: על מטען אחד פועלים רק כוחות שהוא מקבל, כלומר מכל אחד מהאחרים. הכוח בין שני מטענים אחרים לא פועל עליו.
+
+  - id: Q-1.4-add-magnitudes
+    type: mc
+    objectives: [OBJ-1.4-1, OBJ-1.4-3]
+    qualitative: true
+    prompt: >-
+      על מטען פועלים שני כוחות: $3\,\text{N}$ ימינה ו-$4\,\text{N}$ כלפי מעלה. מה גודל הכוח השקול?
+    choices:
+      - text: $5\,\text{N}$
+        correct: true
+        feedback: 'נכון. הכוחות מאונכים, ולכן $F = \sqrt{3^2 + 4^2} = 5\,\text{N}$.'
+      - text: $7\,\text{N}$
+        feedback: 'חיברתם את הגדלים ($3+4$). אפשר לחבר גדלים רק כשהכוחות באותו כיוון. הכוחות כאן מאונכים, ולכן הגודל של השקול הוא היתר במשולש ישר-זווית: $\sqrt{3^2+4^2} = 5\,	ext{N}$.'
+        misconception: MC-forces-add-as-numbers
+      - text: $1\,\text{N}$
+        feedback: 'החסרתם את הגדלים ($4-3$). החסרה נכונה רק לכוחות בכיוונים הפוכים. הכוחות כאן מאונכים, ולכן הגודל של השקול הוא $\sqrt{3^2+4^2} = 5\,	ext{N}$.'
+        misconception: MC-forces-add-as-numbers
+
+  - id: Q-1.4-line-numeric
+    type: numeric
+    objectives: [OBJ-1.4-2]
+    prompt: >-
+      על ציר $x$ נמצאים שלושה מטענים: $q_0 = +1\,\mu\text{C}$ בראשית הצירים, $q_1 = +4\,\mu\text{C}$ בנקודה $x = -0.2\,\text{m}$,
+      ו-$q_2 = -2\,\mu\text{C}$ בנקודה $x = +0.1\,\text{m}$. מה גודל הכוח השקול על $q_0$?
+      ($k = 9\cdot10^{9}\,\text{N}\cdot\text{m}^2/\text{C}^2$)
+    answer: 2.7
+    unit: N
+    tolerance: 0.03
+    correctFeedback: >-
+      נכון. $q_1$ דוחף את $q_0$ ימינה, $F_1 = 0.9\,\text{N}$. $q_2$ מושך אותו אל עצמו, גם ימינה, $F_2 = 1.8\,\text{N}$.
+      שני הכוחות באותו כיוון, ולכן $F = 0.9 + 1.8 = 2.7\,\text{N}$.
+    wrongFeedback: 'חשבו כל כוח בנפרד בעזרת חוק קולון, קבעו את הכיוון שלו לפי דחייה או משיכה, ורק אז חברו.'
+    commonWrong:
+      - value: 0.9
+        feedback: >-
+          קיבלתם את $F_1$ בלבד, או שהחסרתם $1.8 - 0.9$ "כי הסימנים של $q_1$ ו-$q_2$ מנוגדים".
+          הכיוון של כל כוח נקבע לפי הדחייה או המשיכה על $q_0$. כאן שני הכוחות פועלים ימינה, ולכן מחברים.
+        misconception: MC-forces-sign-decides
+      - value: 1.8
+        feedback: 'זה $F_2$ בלבד, הכוח של $q_2$. שכחתם את הכוח של $q_1$, שגם הוא פועל על $q_0$.'
+    hints:
+      - 'שרטטו. מטען $q_1$ משמאל ל-$q_0$, והוא חיובי כמוהו. לאיזה כיוון הוא דוחף את $q_0$?'
+      - '$q_2$ שלילי ונמצא מימין ל-$q_0$. לאיזה כיוון הוא מושך אותו?'
+
+  - id: Q-1.4-line-subtract
+    type: numeric
+    objectives: [OBJ-1.4-2]
+    level: bagrut
+    prompt: >-
+      שלושה מטענים חיוביים נמצאים על קו אחד. מטען $q_B = +2\,\mu	ext{C}$ נמצא בין שני האחרים:
+      מטען $q_A = +6\,\mu	ext{C}$ נמצא $30$ ס"מ משמאלו, ומטען $q_C = +2\,\mu	ext{C}$ נמצא $20$ ס"מ מימינו.
+      מה גודל הכוח השקול על $q_B$?
+    answer: 0.3
+    unit: N
+    tolerance: 0.03
+    correctFeedback: >-
+      נכון. $F_A = 1.2\,	ext{N}$ ימינה (דחייה), $F_C = 0.9\,	ext{N}$ שמאלה (דחייה).
+      הכוחות מנוגדים, ולכן $F = 1.2 - 0.9 = 0.3\,	ext{N}$, ימינה.
+    wrongFeedback: 'חשבו את שני הכוחות בנפרד. קבעו את הכיוון של כל אחד, ואז חברו עם סימן.'
+    commonWrong:
+      - value: 2.1
+        feedback: 'חיברתם גדלים. אבל $A$ ו-$C$ דוחפים את $q_B$ לכיוונים מנוגדים, ולכן מחסירים.'
+        misconception: MC-forces-add-as-numbers
+      - value: 1.2
+        feedback: 'זה הכוח של $A$ בלבד. שכחתם את הכוח של $C$.'
+      - value: 0.9
+        feedback: 'זה הכוח של $C$ בלבד. שכחתם את הכוח של $A$.'
+    hints:
+      - 'המירו את המרחקים למטרים וחשבו כל כוח בנפרד.'
+
+  - id: Q-1.4-balance
+    type: vector
+    objectives: [OBJ-1.4-2]
+    qualitative: true
+    prompt: >-
+      שני מטענים חיוביים שווים, $+Q$ ו-$+Q$, נמצאים על קו אופקי, אחד משמאל ואחד מימין. מטען שלילי $-q$ נמצא על הקו ביניהם,
+      **קרוב יותר** למטען הימני. מה כיוון הכוח השקול על $-q$?
+    answer: e
+    correctFeedback: >-
+      נכון. $-q$ נמשך לשני המטענים. המטען הימני קרוב יותר, ולכן המשיכה אליו חזקה יותר, והכוח השקול פונה ימינה.
+    wrong:
+      - dir: zero
+        feedback: >-
+          רק באמצע המרחק שני הכוחות שווים. כאן המרחקים שונים, ולכן גם הגדלים שונים, והכוח השקול אינו אפס.
+        misconception: MC-superposition-always-cancel
+      - dir: w
+        feedback: 'שני המטענים החיוביים מושכים את $-q$, כי המטענים שונים בסימנם. המשיכה למטען הקרוב חזקה יותר, כי הכוח יורד עם המרחק. המטען הימני קרוב יותר, ולכן השקול פונה ימינה.'
+    wrongFeedback: 'קבעו את כיוון כל כוח בנפרד, והשוו את גדליהם. איזה מטען קרוב יותר?'
+
+  - id: Q-1.4-components
+    type: numeric
+    objectives: [OBJ-1.4-3]
+    prompt: >-
+      כוח של $10\,\text{N}$ פועל בזווית $30^\circ$ מעל ציר $x$. מה גודל הרכיב $F_y$ של הכוח?
+    answer: 5.0
+    unit: N
+    tolerance: 0.03
+    correctFeedback: 'נכון. $F_y = F\sin 30^\circ = 10 \cdot 0.5 = 5\,\text{N}$.'
+    wrongFeedback: 'הרכיב האנכי הוא ההיטל על ציר $y$. שרטטו משולש ישר-זווית: הזווית היא עם ציר $x$.'
+    commonWrong:
+      - value: 8.66
+        feedback: 'זה $F_x = F\cos 30^\circ$. החלפתם בין $\sin$ ל-$\cos$. הרכיב שמול הזווית הוא $F\sin\theta$.'
+        misconception: MC-components-swap
+    hints:
+      - 'הרכיב $F_y$ הוא הצלע שמול הזווית של $30^\circ$ במשולש ישר-זווית.'
+
+  - id: Q-1.4-triangle
+    type: numeric
+    objectives: [OBJ-1.4-3]
+    level: bagrut
+    prompt: >-
+      מטען $q_A = +2\,\mu\text{C}$ נמצא בקודקוד של זווית ישרה. מטען $q_B = +3\,\mu\text{C}$ נמצא $30$ ס"מ מעליו,
+      ומטען $q_C = +4\,\mu\text{C}$ נמצא $40$ ס"מ מימינו. מה גודל הכוח השקול על $q_A$?
+    answer: 0.75
+    unit: N
+    tolerance: 0.03
+    correctFeedback: >-
+      נכון. $F_B = 0.6\,\text{N}$ כלפי מטה (דחייה מ-$B$), $F_C = 0.45\,\text{N}$ שמאלה (דחייה מ-$C$).
+      הכוחות מאונכים, ולכן $F = \sqrt{0.6^2 + 0.45^2} = 0.75\,\text{N}$.
+    wrongFeedback: 'חשבו את שני הכוחות. הם מאונכים זה לזה, ולכן הכוח השקול הוא היתר במשולש ישר-זווית.'
+    commonWrong:
+      - value: 1.05
+        feedback: 'חיברתם את הגדלים $0.6 + 0.45$. הכוחות מאונכים, ולכן מחברים וקטורים.'
+        misconception: MC-forces-add-as-numbers
+      - value: 0.15
+        feedback: 'החסרתם את הגדלים. החסרה נכונה רק לכוחות בכיוונים הפוכים.'
+        misconception: MC-forces-add-as-numbers
+    hints:
+      - 'חשבו $F_B$ ו-$F_C$ בנפרד, עם המרחקים במטרים. מה הזווית בין שני הכוחות?'
+
+  - id: Q-1.4-triangle-dir
+    type: vector
+    objectives: [OBJ-1.4-3]
+    qualitative: true
+    prompt: >-
+      באותה מערכת (שלושה מטענים חיוביים: $A$ בקודקוד הזווית הישרה, $B$ מעליו ו-$C$ מימינו), מה כיוון הכוח השקול על $A$?
+    answer: sw
+    correctFeedback: >-
+      נכון. $B$ דוחף את $A$ כלפי מטה, ו-$C$ דוחף אותו שמאלה. הסכום מצביע שמאלה-למטה.
+    wrong:
+      - dir: ne
+        feedback: זה הכיוון **אל** המטענים $B$ ו-$C$. אבל כל המטענים חיוביים, ולכן הם דוחים.
+        misconception: MC-coulomb-signs-reversed
+      - dir: se
+        feedback: 'הרכיב האנכי נכון, כי $B$ דוחף כלפי מטה. אבל $C$ נמצא מימין ודוחף שמאלה, לא ימינה.'
+    wrongFeedback: 'קבעו כיוון לכל כוח לפי דחייה או משיכה, ואז חברו.'
+
+  - id: Q-1.4-angle
+    type: numeric
+    objectives: [OBJ-1.4-3]
+    level: bagrut
+    prompt: >-
+      באותה מערכת, הכוח השקול על $q_A$ מורכב מ-$F_B = 0.6\,\text{N}$ (אנכי) ומ-$F_C = 0.45\,\text{N}$ (אופקי).
+      מה הזווית, במעלות, בין הכוח השקול לבין הקו האופקי?
+    answer: 53
+    unit: מעלות
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\tan\theta = F_y/F_x = 0.6/0.45 = 1.33$, ולכן $\theta = 53^\circ$ מתחת לקו האופקי, שמאלה.'
+    wrongFeedback: 'הזווית עם הקו האופקי מקיימת $\tan\theta = F_y/F_x$, כלומר הרכיב האנכי חלקי האופקי.'
+    commonWrong:
+      - value: 37
+        feedback: 'זו הזווית עם הקו **האנכי**. הפכתם את היחס $F_y/F_x$.'
+        misconception: MC-components-swap
+    hints:
+      - 'שרטטו את שני הרכיבים כניצבים במשולש ישר-זווית. הזווית עם הקו האופקי היא מול $F_y$.'
