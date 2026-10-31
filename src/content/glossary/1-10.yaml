@@ -1,0 +1,22 @@
+# Lesson 1.10 terms. Ids are topic-specific so they cannot collide with other lessons' files.
+
+- id: crt-tube
+  term: שפופרת קרן קתודית
+  en: cathode-ray tube
+  definition: שפופרת ריק שבה חלקיקים טעונים (בדרך כלל אלקטרונים) יוצאים ממקור, עוברים בין לוחות טעונים ופוגעים במסך. השדה בין הלוחות מסיט את הקרן, והכתם על המסך מראה כמה.
+  reject: [שפופרת קרני קתודה]
+  lesson: '1.10'
+
+- id: crt-deflection
+  term: הסטה
+  en: deflection
+  symbol: y
+  unit: m
+  definition: המרחק האנכי שבו הקרן סטתה מהכיוון שבו נכנסה לשדה. בין הלוחות y = qEx²/(2mv²), כאשר x הוא המרחק האופקי שעבר החלקיק בתוך השדה.
+  lesson: '1.10'
+
+- id: millikan-oil-drop
+  term: ניסוי טיפות השמן של מיליקן
+  en: Millikan oil-drop experiment
+  definition: ניסוי משנת 1909 שבו טיפת שמן טעונה מרחפת בין שני לוחות אופקיים כשכוח השדה שווה למשקל שלה, qE = mg. מהמדידה מחשבים את המטען שלה, וכל התוצאות הן כפולות שלמות של מטען יסודי אחד.
+  lesson: '1.10'
