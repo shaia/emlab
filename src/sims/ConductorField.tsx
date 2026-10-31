@@ -30,7 +30,7 @@ const E0_UNIT = 1e4;
 /** px per (N/C) for the probe arrow: 5·10⁴ N/C draws 60 px */
 const PX_PER_E = 60 / 5e4;
 const ARROW_CAP = 150;
-const PROBE_START: [number, number] = [0.75, 0.42];
+const PROBE_START: [number, number] = [0.7, 0.28];
 
 const TASK_LABEL: Record<string, string> = {
   'insert-conductor': 'הכניסו את המוליך לשדה. מה קרה לקווים שנכנסים אליו?',

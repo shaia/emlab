@@ -411,7 +411,7 @@ export default function FieldExplorer(props: FieldExplorerProps) {
                 {s.charges.map((c, i) => (
                   <span key={i}>
                     {i > 0 && ' · '}
-                    <b class="q">
+                    <b class="q" dir="ltr">
                       {chargeLabel(c.q)}: {Math.max(props.minLines ?? 6, Math.round(Math.abs(c.q) / LINE_Q))}
                     </b>
                   </span>
