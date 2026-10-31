@@ -138,6 +138,18 @@ describe('conservation and shape independence', () => {
     }
   });
 
+  it('a symmetric dipole inside a closed curve has equal crossings out and in (net zero), as in the figure', () => {
+    const bounds = { xmin: -1, xmax: 1, ymin: -0.75, ymax: 0.75 };
+    const cs: PointCharge[] = [
+      { x: -0.2, y: 0, q: 2 * uC },
+      { x: 0.2, y: 0, q: -2 * uC },
+    ];
+    const lines = fieldLines(cs, { bounds, coreRadius: 0.06, maxStep: 0.02, chargePerLine: 0.25 * uC, minLines: 1 });
+    const marked = lines.map((l) => ({ ...l, reversed: cs.find((k) => k.x === l.points[0][0] && k.y === l.points[0][1])!.q < 0 }));
+    const x = lineCrossings(marked, circle(0, 0, 0.5));
+    expect(x.filter((k) => k.outward).length).toBe(x.filter((k) => !k.outward).length);
+  });
+
   it('a charge outside a closed curve contributes equally many entering and leaving crossings', () => {
     const bounds = { xmin: -2, xmax: 2, ymin: -1.5, ymax: 1.5 };
     const cs: PointCharge[] = [{ x: 1.0, y: 0.1, q: 2 * uC }];

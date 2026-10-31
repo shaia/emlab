@@ -1,0 +1,263 @@
+# Lesson 1.7 question bank. Same format and rules as 1-5.yaml.
+# Numbers were computed with src/physics (gauss.ts, electrostatics.ts); ε₀ = 8.85·10⁻¹² as students see it.
+
+chapter: 1
+questions:
+  # ---------------------------------------------------------------- OBJ-1.7-1 flux through a flat surface
+  - id: Q-1.7-flux-angle
+    type: mc
+    objectives: [OBJ-1.7-1]
+    qualitative: true
+    prompt: >-
+      חלון שטוח בשדה חשמלי אחיד. כשהאנך לחלון מצביע בכיוון השדה, השטף דרכו הוא $\Phi_0$.
+      מטים את החלון כך שהזווית בין האנך לשדה היא $60^\circ$ (השטח והשדה לא משתנים).
+      מה השטף עכשיו?
+    choices:
+      - text: '$\Phi_0/2$'
+        correct: true
+        feedback: 'נכון. $\Phi = EA\cos60^\circ = \Phi_0\cdot\tfrac12$. רק חצי מהקווים עוברים עכשיו דרך החלון.'
+      - text: '$\Phi_0\sqrt{3}/2$'
+        feedback: 'זה $\sin 60^\circ$. הזווית בנוסחה נמדדת בין **האנך** לשדה, ולכן הפונקציה היא $\cos\theta$. כשהאנך בכיוון השדה ($\theta=0$) השטף מקסימלי, ו-$\cos0=1$.'
+        misconception: MC-flux-sin-for-cos
+      - text: '$\Phi_0$'
+        feedback: 'השטח והשדה לא השתנו, אבל הזווית כן. חלון מוטה "תופס" פחות קווים, והשטף קטן.'
+        misconception: MC-flux-ignores-angle
+      - text: '0'
+        feedback: 'השטף מתאפס רק כשהחלון מקביל לשדה, כלומר $\theta = 90^\circ$. ב-$60^\circ$ עוד קווים עוברים.'
+        misconception: MC-flux-ignores-angle
+
+  - id: Q-1.7-flux-calc
+    type: numeric
+    objectives: [OBJ-1.7-1]
+    prompt: >-
+      חלון שטוח בשטח $0.2\,\text{m}^2$ נמצא בשדה אחיד של $3000\,\text{N/C}$.
+      הזווית בין האנך לחלון לבין השדה היא $30^\circ$. מה השטף דרך החלון?
+    answer: 520
+    unit: N·m²/C
+    correctFeedback: 'נכון: $\Phi = EA\cos\theta = 3000\cdot0.2\cdot\cos30^\circ = 520\,\text{N}\cdot\text{m}^2/\text{C}$.'
+    wrongFeedback: 'השתמשו ב-$\Phi = EA\cos\theta$ עם $\theta = 30^\circ$ (מחשבון במעלות).'
+    commonWrong:
+      - value: 300
+        feedback: 'השתמשתם ב-$\sin30^\circ$. הזווית היא בין **האנך** לשדה, ולכן צריך $\cos30^\circ$.'
+        misconception: MC-flux-sin-for-cos
+      - value: 600
+        feedback: 'זה $EA$, בלי הזווית. חלון מוטה מקבל פחות שטף.'
+        misconception: MC-flux-ignores-angle
+    hints:
+      - 'כתבו קודם את הנוסחה. מה $\cos30^\circ$?'
+
+  - id: Q-1.7-flux-sign
+    type: mc
+    objectives: [OBJ-1.7-1]
+    qualitative: true
+    prompt: >-
+      חלון שטוח בשדה אחיד מכוון כך שהאנך שלו מצביע **נגד** כיוון השדה ($\theta = 180^\circ$).
+      מה הסימן של השטף דרכו?
+    choices:
+      - text: שלילי
+        correct: true
+        feedback: 'נכון. $\cos180^\circ = -1$, ולכן $\Phi = -EA$. הקווים עוברים דרך החלון בכיוון הפוך לאנך.'
+      - text: חיובי, כי שטח וגודל השדה הם תמיד חיוביים.
+        feedback: 'שטח וגודל השדה חיוביים, אבל השטף תלוי גם בזווית. הסימן של השטף מגיע מ-$\cos\theta$.'
+        misconception: MC-flux-always-positive
+      - text: אפס, כי החלון "הפוך" לשדה.
+        feedback: 'השטף מתאפס כשהחלון מקביל לשדה ($\theta = 90^\circ$), לא כשהוא הפוך. כאן עוברים הרבה קווים, בכיוון נגד האנך.'
+        misconception: MC-flux-ignores-angle
+
+  - id: Q-1.7-flux-rank
+    type: rank
+    objectives: [OBJ-1.7-1]
+    qualitative: true
+    prompt: >-
+      ארבעה חלונות שטוחים נמצאים באותו שדה אחיד. דרגו את השטף דרכם, מהגדול לקטן
+      (הזווית היא בין האנך לשדה):
+    items:
+      - id: A
+        label: 'חלון A: שטח $2\,\text{m}^2$, $\theta = 0^\circ$'
+      - id: B
+        label: 'חלון B: שטח $2\,\text{m}^2$, $\theta = 60^\circ$'
+      - id: C
+        label: 'חלון C: שטח $1\,\text{m}^2$, $\theta = 0^\circ$'
+      - id: D
+        label: 'חלון D: שטח $2\,\text{m}^2$, $\theta = 90^\circ$'
+    order: [A, [B, C], D]
+    correctFeedback: >-
+      נכון. השטף פרופורציוני ל-$A\cos\theta$: ב-A הערך 2, ב-B הערך $2\cdot0.5 = 1$, ב-C הערך 1, וב-D הערך 0. B ו-C שווים.
+    wrongFeedback: 'חשבו לכל חלון את $A\cos\theta$. השדה זהה בכולם, ולכן הוא לא משפיע על הדירוג.'
+    hints:
+      - '$\cos60^\circ = 0.5$ ו-$\cos90^\circ = 0$.'
+
+  # ---------------------------------------------------------------- OBJ-1.7-2 closed surface depends on enclosed charge
+  - id: Q-1.7-size-change
+    type: twotier
+    objectives: [OBJ-1.7-2]
+    qualitative: true
+    prompt: >-
+      מטען נקודתי נמצא במרכז כדור ברדיוס $r$. מחליפים את הכדור בכדור באותו מרכז וברדיוס $2r$.
+      מה קורה לשטף דרך הכדור?
+    choices:
+      - text: הוא לא משתנה.
+        correct: true
+        feedback: 'נכון. אותם קווים שיצאו מהמטען חוצים גם את הכדור הגדול.'
+      - text: הוא גדל פי 4.
+        feedback: 'שטח הכדור באמת גדל פי 4, אבל השדה על הכדור הגדול קטן פי 4. שני השינויים מבטלים זה את זה.'
+        misconception: MC-gauss-flux-depends-on-size
+      - text: הוא קטן פי 4.
+        feedback: 'השדה אכן קטן פי 4, אבל שטח הכדור גדל פי 4 ומפצה על כך.'
+        misconception: MC-gauss-flux-depends-on-size
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: 'כל קו שיוצא מהמטען חוצה כל משטח שמקיף אותו, ולכן מספר הקווים לא תלוי בגודל המשטח.'
+        correct: true
+        feedback: זה בדיוק הרעיון. השטף תלוי במטען שבפנים, לא במשטח.
+      - text: 'השדה חלש יותר רחוק מהמטען, ולכן יש פחות שטף.'
+        feedback: 'השדה אכן חלש יותר, אבל השטף הוא השדה **כפול השטח**, והשטח גדל. מה קורה למכפלה?'
+        misconception: MC-gauss-flux-depends-on-size
+      - text: 'כדור גדול יותר מקיף יותר שטח, ולכן יש לו יותר שטף.'
+        feedback: 'השטף איננו רק שטח. הוא השדה כפול השטח, והשדה קטן כשהכדור גדול.'
+        misconception: MC-gauss-flux-depends-on-size
+    explanation: >-
+      $\Phi = E\cdot4\pi r^2 = \dfrac{kq}{r^2}\cdot4\pi r^2 = 4\pi kq = q/\varepsilon_0$. הרדיוס מצטמצם.
+
+  - id: Q-1.7-outside-charge
+    type: mc
+    objectives: [OBJ-1.7-2]
+    qualitative: true
+    prompt: >-
+      מטען נקודתי חיובי נמצא **מחוץ** למשטח סגור (למשל מחוץ לבלון דמיוני), במרחק קטן ממנו.
+      מה השטף נטו דרך המשטח?
+    choices:
+      - text: אפס
+        correct: true
+        feedback: 'נכון. כל קו שנכנס למשטח גם יוצא ממנו, ולכן השטף נטו אפס, אף על פי שהשדה על המשטח אינו אפס.'
+      - text: חיובי, כי יש שדה על המשטח.
+        feedback: 'יש שדה, ואפילו חזק, אבל חלק מהקווים נכנסים וחלק יוצאים. הם מבטלים זה את זה.'
+        misconception: MC-gauss-outside-charge-counts
+      - text: שלילי, כי הקווים נכנסים אל המשטח.
+        feedback: 'הקווים נכנסים, אבל אחר כך הם גם יוצאים. הכניסה והיציאה מבטלות זו את זו.'
+        misconception: MC-gauss-outside-charge-counts
+
+  - id: Q-1.7-zero-flux-field
+    type: mc
+    objectives: [OBJ-1.7-2]
+    qualitative: true
+    prompt: >-
+      השטף החשמלי דרך משטח סגור הוא אפס. מה אפשר להסיק?
+    choices:
+      - text: סכום המטענים בתוך המשטח הוא אפס. השדה על המשטח לא בהכרח אפס.
+        correct: true
+        feedback: 'נכון. למשל דיפול בתוך משטח: הסכום אפס, והשדה סביבו בהחלט קיים.'
+      - text: השדה אפס בכל נקודה על המשטח.
+        feedback: 'שטף אפס אומר שמה שנכנס שווה למה שיוצא, לא שאין שדה. באיור 1.7ב, בסידור של שני מטענים מנוגדים, יש קווים בכל מקום והשטף אפס.'
+        misconception: MC-gauss-zero-flux-zero-field
+      - text: אין מטענים בתוך המשטח.
+        feedback: 'יכולים להיות מטענים, אם הסכום שלהם אפס, למשל $+q$ ו-$-q$.'
+        misconception: MC-gauss-zero-flux-zero-field
+
+  - id: Q-1.7-shape-change
+    type: multi
+    objectives: [OBJ-1.7-2]
+    qualitative: true
+    prompt: >-
+      מטען $+q$ נמצא בתוך בלון. מנפחים את הבלון ומעוותים אותו, אבל המטען נשאר בתוכו.
+      אילו מהמשפטים נכונים? (אפשר לסמן כמה)
+    choices:
+      - text: השטף דרך הבלון לא משתנה.
+        correct: true
+        feedback: 'נכון. המטען הכלוא לא השתנה.'
+      - text: כל קו שיוצא מהמטען חוצה את הבלון.
+        correct: true
+        feedback: 'נכון. אין דרך לצאת מהאזור בלי לחצות את המשטח.'
+      - text: אם הבלון מתנפח, השטף גדל, כי הוא גדול יותר.
+        feedback: 'גודל המשטח לא קובע את השטף. מה שקובע הוא המטען הכלוא.'
+        misconception: MC-gauss-flux-depends-on-size
+      - text: אם המטען זז מהמרכז, השטף משתנה.
+        feedback: 'כל עוד המטען בתוך הבלון, מקומו אינו משנה את השטף. הוא משתנה רק כשהמטען חוצה את המשטח.'
+        misconception: MC-gauss-flux-depends-on-size
+
+  # ---------------------------------------------------------------- OBJ-1.7-3 using Gauss's law
+  - id: Q-1.7-from-charge
+    type: numeric
+    objectives: [OBJ-1.7-3]
+    prompt: >-
+      בתוך משטח סגור נמצא מטען נקודתי של $5\,\mu\text{C}$. מה השטף החשמלי דרך המשטח?
+      ($\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$)
+    answer: 5.65e5
+    unit: N·m²/C
+    correctFeedback: 'נכון: $\Phi = q/\varepsilon_0 = 5\cdot10^{-6} / 8.85\cdot10^{-12} = 5.65\cdot10^{5}\,\text{N}\cdot\text{m}^2/\text{C}$.'
+    wrongFeedback: 'השתמשו בחוק גאוס, $\Phi = q/\varepsilon_0$, עם $q$ בקולון.'
+    commonWrong:
+      - value: 4.5e4
+        feedback: 'הכפלתם ב-$k$. אבל $q/\varepsilon_0 = 4\pi k q$: צריך לחלק ב-$\varepsilon_0$ (או להכפיל ב-$4\pi k$).'
+        misconception: MC-gauss-flux-equals-kq
+    hints:
+      - 'המירו קודם: $5\,\mu\text{C} = 5\cdot10^{-6}\,\text{C}$.'
+
+  - id: Q-1.7-charge-from-flux
+    type: numeric
+    objectives: [OBJ-1.7-3]
+    prompt: >-
+      מודדים שהשטף החשמלי דרך משטח סגור הוא $4.4\cdot10^{5}\,\text{N}\cdot\text{m}^2/\text{C}$ (בכיוון החוצה).
+      מה המטען הכלוא בתוכו, במיקרו-קולון?
+    answer: 3.9
+    unit: μC
+    correctFeedback: 'נכון: $q = \Phi\varepsilon_0 = 4.4\cdot10^{5}\cdot8.85\cdot10^{-12} = 3.9\cdot10^{-6}\,\text{C} = 3.9\,\mu\text{C}$, חיובי כי השטף החוצה.'
+    wrongFeedback: 'בחוק גאוס $\Phi = q/\varepsilon_0$, ולכן $q = \Phi\varepsilon_0$.'
+    commonWrong:
+      - value: 4.97e16
+        feedback: 'חילקתם את השטף ב-$\varepsilon_0$ במקום להכפיל. חשבו מה קורה לעוצמות של 10 בתוצאה.'
+    hints:
+      - 'בודדו את $q$ מהנוסחה.'
+
+  - id: Q-1.7-net-enclosed
+    type: numeric
+    objectives: [OBJ-1.7-3]
+    level: bagrut
+    prompt: >-
+      משטח סגור מקיף מטען של $+3\,\mu\text{C}$ ומטען של $-1\,\mu\text{C}$. מחוץ למשטח נמצא מטען של $+2\,\mu\text{C}$.
+      מה השטף דרך המשטח?
+    answer: 2.26e5
+    unit: N·m²/C
+    correctFeedback: 'נכון. המטען הכלוא הוא $3-1 = 2\,\mu\text{C}$ (המטען שבחוץ לא נספר), ולכן $\Phi = 2\cdot10^{-6}/8.85\cdot10^{-12} = 2.26\cdot10^{5}\,\text{N}\cdot\text{m}^2/\text{C}$.'
+    wrongFeedback: 'סכמו רק את המטענים שבתוך המשטח, עם הסימנים, וחלקו ב-$\varepsilon_0$.'
+    commonWrong:
+      - value: 4.52e5
+        feedback: 'סכמתם גם את המטען שמחוץ למשטח. הוא לא תורם לשטף נטו.'
+        misconception: MC-gauss-outside-charge-counts
+      - value: 3.39e5
+        feedback: 'התעלמתם מהמטען השלילי שבתוך המשטח. מטענים כלואים נספרים כולם, עם הסימן שלהם.'
+    hints:
+      - 'איזה מטענים נמצאים בתוך המשטח?'
+
+  - id: Q-1.7-face-flux
+    type: numeric
+    objectives: [OBJ-1.7-3]
+    prompt: >-
+      מטען נקודתי של $6\,\mu\text{C}$ נמצא במרכז קובייה. מה השטף דרך פאה אחת של הקובייה?
+    answer: 1.13e5
+    unit: N·m²/C
+    correctFeedback: 'נכון. השטף הכולל $q/\varepsilon_0 = 6.78\cdot10^{5}$, ושש הפאות שוות בגלל הסימטריה: $\Phi = 1.13\cdot10^{5}\,\text{N}\cdot\text{m}^2/\text{C}$.'
+    wrongFeedback: 'חשבו את השטף דרך כל הקובייה, ואז חלקו אותו בין הפאות השוות.'
+    commonWrong:
+      - value: 6.78e5
+        feedback: 'זה השטף דרך כל הקובייה. שאלו אתכם על פאה אחת, שהיא שישית ממנו.'
+    hints:
+      - 'המטען במרכז, ולכן כל הפאות שוות.'
+
+  - id: Q-1.7-double-charge
+    type: mc
+    objectives: [OBJ-1.7-3]
+    qualitative: true
+    prompt: >-
+      משטח סגור מקיף מטען $+q$. מוסיפים בתוך המשטח, בלי לגעת בו, מטען שני $+q$.
+      מה קורה לשטף דרך המשטח?
+    choices:
+      - text: הוא גדל פי 2.
+        correct: true
+        feedback: 'נכון. המטען הכלוא הוא $2q$, ולפי חוק גאוס $\Phi = 2q/\varepsilon_0$.'
+      - text: הוא גדל פי 4, כי בחוק קולון יש ריבוע.
+        feedback: 'הריבוע במרחק כבר מצטמצם עם שטח המשטח. בחוק גאוס השטף ביחס ישר למטען הכלוא, ולא למטען בריבוע.'
+        misconception: MC-gauss-flux-equals-kq
+      - text: הוא לא משתנה, כי המשטח נשאר אותו משטח.
+        feedback: 'השטף תלוי במטען הכלוא, לא רק במשטח. מטען שנוסף בפנים מוסיף לשטף.'
+        misconception: MC-gauss-flux-depends-on-size

@@ -1,0 +1,50 @@
+# Glossary terms introduced in this lesson. Format and rules: see glossary/1-5.yaml.
+
+- id: electric-flux
+  term: שטף חשמלי
+  en: electric flux
+  symbol: Φ
+  unit: N·m²/C
+  definition: מדד לכמה שדה חשמלי עובר דרך משטח. במשטח שטוח ובשדה אחיד, Φ = E·A·cosθ, כאשר θ היא הזווית בין האנך למשטח לבין השדה.
+  lesson: '1.7'
+
+- id: surface-normal
+  term: אנך למשטח
+  en: surface normal
+  symbol: n̂
+  definition: חץ שניצב למשטח. כיוונו קובע את הסימן של השטף. במשטח סגור האנך מצביע תמיד החוצה.
+  lesson: '1.7'
+
+- id: closed-surface
+  term: משטח סגור
+  en: closed surface
+  definition: משטח שמקיף חלק מהמרחב, כך שאי אפשר להגיע מבפנים לחוץ בלי לחצות אותו. למשל כדור, קובייה או בלון.
+  lesson: '1.7'
+
+- id: gaussian-surface
+  term: משטח גאוס
+  en: Gaussian surface
+  definition: משטח סגור דמיוני שבוחרים כדי להשתמש בחוק גאוס. אין צורך שיהיה חומר במקום שבו הוא עובר.
+  lesson: '1.7'
+
+- id: enclosed-charge
+  term: מטען כלוא
+  en: enclosed charge
+  symbol: q
+  unit: C
+  definition: סכום המטענים, עם הסימנים שלהם, שנמצאים בתוך משטח סגור. מטענים שמחוץ למשטח אינם נכללים.
+  lesson: '1.7'
+
+- id: gauss-law
+  term: חוק גאוס
+  en: Gauss's law
+  definition: השטף החשמלי דרך משטח סגור שווה למטען הכלוא בתוכו, חלקי ε₀. Φ = q/ε₀.
+  lesson: '1.7'
+
+- id: permittivity
+  term: פרמיטיביות הריק
+  en: vacuum permittivity
+  symbol: ε₀
+  unit: C²/(N·m²)
+  definition: 'קבוע טבע, ε₀ = 8.85·10⁻¹² C²/(N·m²). הוא קשור לקבוע קולון, k = 1/(4πε₀).'
+  lesson: '1.7'
