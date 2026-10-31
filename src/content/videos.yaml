@@ -1,0 +1,23 @@
+# Curated YouTube clips. Every id was checked against YouTube oEmbed (exists, embeddable;
+# title and channel as below) on the `verified` date. Never add an id that was not checked:
+# `npm run check:videos` re-checks them all.
+
+- id: khan-efield-definition
+  youtubeId: _4VC3IHbuW8
+  title: 'Electric field definition'
+  channel: Khan Academy Physics
+  lang: en
+  captions: []
+  minutes: 14
+  why: למה פיזיקאים המציאו את מושג השדה החשמלי, ואיך מגדירים אותו (לפי כותרת הסרטון ותיאורו).
+  verified: '2026-10-31'
+
+- id: profdave-charge-fields
+  youtubeId: VFbyDCG_j18
+  title: 'Electric Charge and Electric Fields'
+  channel: Professor Dave Explains
+  lang: en
+  captions: []
+  minutes: 7
+  why: סקירה קצרה של מטען, חוק קולון והשדה החשמלי, טובה לחזרה מהירה.
+  verified: '2026-10-31'

@@ -1,0 +1,45 @@
+# Misconception register. Each entry is detected by at least one distractor in a question bank
+# (the distractor's `misconception:` tag) and has a remedy: the place in the course that
+# refutes it by experiment. lint-content enforces both directions.
+
+- id: MC-field-depends-on-test-charge
+  title: השדה תלוי במטען הבוחן
+  belief: מטען בוחן גדול יותר יוצר בנקודה שדה גדול יותר.
+  truth: השדה נקבע רק על ידי מטעני המקור והמיקום. מטען בוחן כפול מקבל כוח כפול, ולכן היחס F/q₀ לא משתנה.
+  remedy: { lesson: '1.5', anchor: fig-1-5a, label: 'איור 1.5א: שנו את q₀ וצפו בחץ E' }
+
+- id: MC-field-needs-charge-present
+  title: אין שדה במקום ריק
+  belief: בנקודה שאין בה מטען אין שדה חשמלי.
+  truth: השדה קיים בכל נקודה במרחב סביב מטען המקור, גם אם אין בה דבר. מטען בוחן רק חושף אותו.
+  remedy: { lesson: '1.5', anchor: fig-1-5a, label: 'איור 1.5א: גררו את מטען הבוחן לכל מקום' }
+
+- id: MC-negative-test-charge-flips-field
+  title: מטען בוחן שלילי הופך את השדה
+  belief: אם מניחים בנקודה מטען שלילי, כיוון השדה בה מתהפך.
+  truth: הכוח על מטען שלילי הפוך לשדה, אבל השדה עצמו לא משתנה. כיוון השדה מוגדר לפי הכוח על מטען חיובי.
+  remedy: { lesson: '1.5', anchor: fig-1-5a, label: 'איור 1.5א: הפכו את q₀ לשלילי' }
+
+- id: MC-field-linear-in-r
+  title: השדה יורד כמו 1/r
+  belief: במרחק כפול השדה חלש פי 2.
+  truth: השדה של מטען נקודתי יורד כמו 1/r². במרחק כפול הוא חלש פי 4, ובמרחק משולש פי 9.
+  remedy: { lesson: '1.5', anchor: fig-1-5b, label: 'איור 1.5ב: התרחקו מהמטען וקראו את E' }
+
+- id: MC-field-away-from-negative
+  title: השדה של מטען שלילי יוצא ממנו
+  belief: השדה תמיד מצביע החוצה מהמטען, גם כשהוא שלילי.
+  truth: השדה של מטען שלילי מצביע אליו, כי מטען בוחן חיובי נמשך אליו.
+  remedy: { lesson: '1.5', anchor: fig-1-5b, label: 'איור 1.5ב: מטען מקור שלילי' }
+
+- id: MC-superposition-add-magnitudes
+  title: מחברים עוצמות במקום וקטורים
+  belief: השדה השקול של שני מטענים הוא סכום עוצמות השדות שלהם.
+  truth: מחברים וקטורים. שדות בכיוונים מנוגדים מחסירים זה את זה, ובאמצע בין שני מטענים זהים השדה מתאפס.
+  remedy: { lesson: '1.5', anchor: fig-1-5c, label: 'איור 1.5ג: מצאו את נקודת האפס' }
+
+- id: MC-opposite-signs-cancel
+  title: מטענים מנוגדים מבטלים זה את זה
+  belief: בין מטען חיובי למטען שלילי השדות מחסירים זה את זה, כי "הסימנים מנוגדים".
+  truth: בין מטען חיובי לשלילי שני השדות מצביעים לאותו כיוון, מהחיובי אל השלילי, ולכן הם מתחברים.
+  remedy: { lesson: '1.5', anchor: fig-1-5c, label: 'איור 1.5ג: דיפול' }

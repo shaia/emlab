@@ -1,0 +1,86 @@
+---
+/**
+ * Cover illustration: the field lines of a dipole, traced at build time by the same physics
+ * engine the live figures use, and inked onto the cover as SVG. Lines draw themselves in once
+ * (CSS), unless the reader asked for stillness.
+ */
+import { fieldLines } from '~/physics/electrostatics';
+
+const W = 640;
+const H = 420;
+const ppm = 320; // px per metre
+const charges = [
+  { x: -0.38, y: 0, q: 2e-6 },
+  { x: 0.38, y: 0, q: -2e-6 },
+];
+const toS = (x: number, y: number) => [W / 2 + x * ppm, H / 2 - y * ppm] as const;
+const lines = fieldLines(charges, {
+  bounds: { xmin: -W / 2 / ppm, xmax: W / 2 / ppm, ymin: -H / 2 / ppm, ymax: H / 2 / ppm },
+  coreRadius: 18 / ppm,
+  maxStep: 0.01,
+  chargePerLine: 2e-6 / 16,
+});
+const paths = lines.map((l) =>
+  l.points
+    .map(([x, y], i) => {
+      const [sx, sy] = toS(x, y);
+      return `${i ? 'L' : 'M'}${sx.toFixed(1)} ${sy.toFixed(1)}`;
+    })
+    .join(''),
+);
+---
+
+<svg class="cover-art" viewBox={`0 0 ${W} ${H}`} role="img" aria-label="קווי השדה של דיפול חשמלי: מטען חיובי ומטען שלילי">
+  <g class="lines">
+    {paths.map((d, i) => <path d={d} style={`--i:${i}`} pathLength="1" />)}
+  </g>
+  {
+    charges.map((c) => {
+      const [x, y] = toS(c.x, c.y);
+      return (
+        <g class={c.q > 0 ? 'pos' : 'neg'}>
+          <circle cx={x} cy={y} r="17" />
+          <path d={c.q > 0 ? `M${x - 8} ${y}h16M${x} ${y - 8}v16` : `M${x - 8} ${y}h16`} class="glyph" />
+        </g>
+      );
+    })
+  }
+</svg>
+
+<style>
+  .cover-art {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .lines path {
+    fill: none;
+    stroke: var(--efield);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    filter: drop-shadow(0 0 3px var(--efield-glow));
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    animation: draw 2.4s cubic-bezier(0.3, 0.6, 0.2, 1) both;
+    animation-delay: calc(var(--i) * 40ms);
+  }
+  @keyframes draw {
+    from {
+      stroke-dashoffset: 1;
+    }
+  }
+  .pos circle {
+    fill: var(--pos);
+  }
+  .neg circle {
+    fill: var(--neg);
+  }
+  circle {
+    stroke: rgba(0, 0, 0, 0.25);
+  }
+  .glyph {
+    stroke: #fff;
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+</style>

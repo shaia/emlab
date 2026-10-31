@@ -1,0 +1,18 @@
+---
+/**
+ * Mounts a simulation island by name. Hydration directives need a static component reference,
+ * so every simulation is listed here once; an unknown name fails the build.
+ */
+import FieldExplorer from '~/sims/FieldExplorer';
+
+interface Props {
+  name: string;
+  props: Record<string, unknown> & { id: string };
+}
+
+const KNOWN = ['field-explorer'];
+const { name, props } = Astro.props;
+if (!KNOWN.includes(name)) throw new Error(`<Sim name="${name}">: unknown simulation (known: ${KNOWN.join(', ')})`);
+---
+
+{name === 'field-explorer' && <FieldExplorer client:visible {...props} />}

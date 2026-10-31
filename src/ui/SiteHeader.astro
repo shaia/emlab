@@ -1,0 +1,91 @@
+---
+import { pageExists, url } from '~/lib/url';
+import Settings from './Settings.tsx';
+
+const path = Astro.url.pathname;
+// a link shows only once its page exists, so a partial release has no dead ends
+const links = [
+  { page: '', label: 'תוכן העניינים' },
+  { page: 'me/', label: 'המסלול שלי' },
+  { page: 'formulas/', label: 'דף נוסחאות' },
+  { page: 'glossary/', label: 'מילון' },
+]
+  .filter((l) => l.page === '' || pageExists(l.page))
+  .map((l) => ({ href: url(l.page), label: l.label }));
+---
+
+<header class="site-header">
+  <a class="brand" href={url('')}>
+    <span class="brand-mark" aria-hidden="true">⚡</span>
+    <span>חשמל ומגנטיות</span>
+  </a>
+  <nav aria-label="ניווט ראשי">
+    {
+      links.map((l) => (
+        <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>
+          {l.label}
+        </a>
+      ))
+    }
+  </nav>
+  <Settings client:idle />
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 12px var(--gutter);
+    font-family: var(--font-ui);
+    font-size: 0.92rem;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+  .brand-mark {
+    display: inline-grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--current);
+    font-size: 0.95rem;
+  }
+  nav {
+    display: flex;
+    gap: 4px;
+    flex: 1;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav a {
+    padding: 6px 12px;
+    border-radius: 999px;
+    color: var(--ink-2);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  nav a:hover {
+    background: var(--glass);
+    color: var(--ink);
+  }
+  nav a[aria-current='page'] {
+    background: var(--paper);
+    color: var(--ink);
+  }
+  @media (max-width: 720px) {
+    .brand span:last-child {
+      display: none;
+    }
+  }
+</style>
