@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { EPS0 } from '~/physics/constants';
+import { EPS0, K } from '~/physics/constants';
 import {
+  cavityChargeField,
   cavityField,
+  chargedConductorField,
+  uniformSigma,
   inducedChargeHemisphere,
   inducedChargeBetween,
   inducedChargeTotal,
@@ -164,5 +167,50 @@ describe('convergence', () => {
     const ea = a.points.at(-1)!;
     const eb = b.points.at(-1)!;
     expect(Math.hypot(ea[0] - eb[0], ea[1] - eb[1])).toBeLessThan(1e-3);
+  });
+});
+
+describe('charged conductor and charge in a cavity', () => {
+  const Q = 2e-6;
+  const Rc = 0.2;
+
+  it('a charged conductor has no field inside and kQ/r² outside', () => {
+    expect(len3(chargedConductorField(Q, R, at(0.6 * R, 1.1, 0.2)))).toBe(0);
+    const e = chargedConductorField(Q, R, at(2 * R, 0.7, 0.3));
+    expect(relativeError(len3(e), (K * Q) / (2 * R) ** 2)).toBeLessThan(1e-12);
+  });
+
+  it('just outside the surface E = σ/ε₀ with σ = Q/(4πR²)', () => {
+    const e = chargedConductorField(Q, R, at(R * (1 + 1e-12), 0.4));
+    expect(relativeError(len3(e), uniformSigma(Q, R) / EPS0)).toBeLessThan(1e-9);
+  });
+
+  it('the field of a charged conductor points away from a positive charge and toward a negative one', () => {
+    const p = at(2 * R, 0.5);
+    expect(dot(chargedConductorField(Q, R, p), p)).toBeGreaterThan(0);
+    expect(dot(chargedConductorField(-Q, R, p), p)).toBeLessThan(0);
+  });
+
+  it('with a point charge in the cavity the metal is field-free, and outside the field is kq/r²', () => {
+    expect(len3(cavityChargeField(Q, R, Rc, at(0.27, 1, 0.1)))).toBe(0);
+    const out = cavityChargeField(Q, R, Rc, at(3 * R, 0.9));
+    expect(relativeError(len3(out), (K * Q) / (3 * R) ** 2)).toBeLessThan(1e-12);
+    const inn = cavityChargeField(Q, R, Rc, at(0.5 * Rc, 0.9));
+    expect(relativeError(len3(inn), (K * Q) / (0.5 * Rc) ** 2)).toBeLessThan(1e-12);
+  });
+
+  it('the flux through a sphere around the shell is q/ε₀, the same with or without the shell', () => {
+    const rr = 2 * R;
+    const n = 2000;
+    let flux = 0;
+    for (let i = 0; i < n; i++) {
+      const th = ((i + 0.5) * Math.PI) / n;
+      flux += dot(cavityChargeField(Q, R, Rc, at(rr, th)), at(1, th)) * 2 * Math.PI * rr * rr * Math.sin(th) * (Math.PI / n);
+    }
+    expect(relativeError(flux, Q / EPS0)).toBeLessThan(1e-6);
+  });
+
+  it('σ scales as Q and as 1/R²', () => {
+    expect(relativeError(uniformSigma(3 * Q, 2 * R), (3 / 4) * uniformSigma(Q, R))).toBeLessThan(1e-12);
   });
 });

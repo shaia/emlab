@@ -14,13 +14,18 @@
  * - Failure modes: none inside the sphere (E is defined as exactly 0 there); the exterior formulas
  *   are exact for r ≥ R. 2D figures show the z = 0 slice of a 3D sphere, so lines bend the 3D way.
  *
+ * Two more exact cases share this module: a conductor with net charge Q and no applied field
+ * (`chargedConductorField`), and an isolated neutral shell with a point charge q at the centre of its
+ * cavity (`cavityChargeField`). Both are spherically symmetric: the charge sits on the outer surface
+ * (and, with the cavity charge, −q on the cavity wall), and outside the field is kQ/r².
+ *
  * Outside (r ≥ R), with θ measured from +x:
  *   φ = −E₀ (r − R³/r²) cos θ
  *   E_r = E₀ (1 + 2R³/r³) cos θ,   E_θ = −E₀ (1 − R³/r³) sin θ
  * and on the surface the induced surface charge is σ = ε₀E_r = 3ε₀E₀ cos θ.
  */
 
-import { EPS0 } from './constants';
+import { EPS0, K } from './constants';
 import type { Vec2, Vec3 } from './vec';
 
 /** Electric field [N/C] at p. Exactly zero inside the conductor (r < R). */
@@ -135,4 +140,34 @@ export function traceSphereLine(E0: number, R: number, start: Vec2, dir: 1 | -1,
     if (x < bounds.xmin || x > bounds.xmax || y < bounds.ymin || y > bounds.ymax) return { points, end: 'bounds' };
   }
   return { points, end: 'steps' };
+}
+
+/** Radial field kq/r² of a point source at the origin, as a 3D vector at p. */
+function radial(q: number, p: Vec3): Vec3 {
+  const [x, y, z] = p;
+  const r2 = x * x + y * y + z * z;
+  const f = (K * q) / (r2 * Math.sqrt(r2));
+  return [f * x, f * y, f * z];
+}
+
+/** A conducting sphere of radius R with net charge Q and no applied field: zero inside, kQ/r² outside. */
+export function chargedConductorField(Q: number, R: number, p: Vec3): Vec3 {
+  const r2 = p[0] * p[0] + p[1] * p[1] + p[2] * p[2];
+  return r2 < R * R ? [0, 0, 0] : radial(Q, p);
+}
+
+/**
+ * A neutral conducting shell (outer radius R, cavity radius Rc) not connected to anything, with a point
+ * charge q at the centre of the cavity: kq/r² in the cavity, zero in the metal, kq/r² outside.
+ * The cavity wall carries −q and the outer surface +q, both spread uniformly.
+ */
+export function cavityChargeField(q: number, R: number, Rc: number, p: Vec3): Vec3 {
+  const r2 = p[0] * p[0] + p[1] * p[1] + p[2] * p[2];
+  if (r2 >= Rc * Rc && r2 < R * R) return [0, 0, 0];
+  return radial(q, p);
+}
+
+/** Uniform surface charge density [C/m²] of charge Q spread over a sphere of radius R: Q/(4πR²). */
+export function uniformSigma(Q: number, R: number): number {
+  return Q / (4 * Math.PI * R * R);
 }

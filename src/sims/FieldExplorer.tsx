@@ -111,6 +111,12 @@ export interface FieldExplorerProps {
   minLines?: number;
   /** show under the figure how many lines are drawn for each charge (lesson 1.6) */
   lineCounts?: boolean;
+  /** keep the direction chevrons still, so nothing looks like it flows along the lines (lesson 1.6) */
+  staticArrows?: boolean;
+  /** draw the force arrow on the test charge and its F readout (default true) */
+  showForce?: boolean;
+  /** show the q₀ slider (default true) */
+  showQ0Control?: boolean;
   tasks?: string[];
 }
 
@@ -216,7 +222,7 @@ export default function FieldExplorer(props: FieldExplorerProps) {
         });
         linesCache.current = { key, lines: traced.map((l) => l.points.map(([x, y]) => toScreen(view, x, y))) };
       }
-      const phase = (t * 28) % 70;
+      const phase = props.staticArrows ? 0 : (t * 28) % 70;
       for (const pts of linesCache.current.lines) {
         polyline(ctx, pts, p.efield, 1.6, { glow: p.efieldGlow, alpha: 0.9 });
         // chevrons every 70 px along the line show the direction (and drift when motion is on)
@@ -261,8 +267,10 @@ export default function FieldExplorer(props: FieldExplorerProps) {
           arrow(ctx, px, py, px + ux * lenE, py + uy * lenE, { color: p.efield, width: 7, head: 16, alpha: 0.45 });
           label(ctx, 'E', px + ux * (lenE - 6) + nx, py + uy * (lenE - 6) + ny, p.efield, p.fontUi);
         }
-        arrow(ctx, px, py, px + sf * ux * lenF, py + sf * uy * lenF, { color: p.force, width: 2.6, head: 11 });
-        label(ctx, 'F', px + sf * ux * (lenF - 6) - nx, py + sf * uy * (lenF - 6) - ny, p.force, p.fontUi);
+        if (props.showForce !== false) {
+          arrow(ctx, px, py, px + sf * ux * lenF, py + sf * uy * lenF, { color: p.force, width: 2.6, head: 11 });
+          label(ctx, 'F', px + sf * ux * (lenF - 6) - nx, py + sf * uy * (lenF - 6) - ny, p.force, p.fontUi);
+        }
       }
       chargeDisc(ctx, px, py, PROBE_PX, s.q0, p, { selected: s.selected === 'probe' });
       // q₀ label sits beside the probe, perpendicular to the field: E and F both run along it
@@ -284,7 +292,7 @@ export default function FieldExplorer(props: FieldExplorerProps) {
   const { canvasRef, invalidate, viewRef } = useFigureCanvas(draw, {
     worldWidth: WORLD_W,
     worldHeight: WORLD_H,
-    animate: s.showLines,
+    animate: s.showLines && !props.staticArrows,
   });
   useEffect(invalidate, [s]);
 
@@ -412,20 +420,20 @@ export default function FieldExplorer(props: FieldExplorerProps) {
                   <span key={i}>
                     {i > 0 && ' · '}
                     <b class="q" dir="ltr">
-                      {chargeLabel(c.q)}: {Math.max(props.minLines ?? 6, Math.round(Math.abs(c.q) / LINE_Q))}
+                      {chargeLabel(c.q)}: {c.q === 0 ? 0 : Math.max(props.minLines ?? 6, Math.round(Math.abs(c.q) / LINE_Q))}
                     </b>
                   </span>
                 ))}
               </span>
             )}
-            {s.showProbe && (
+            {s.showProbe && props.showForce !== false && (
             <span>
               כוח על <span class="q">q₀</span>: <b class="q">F = {sci(F)} N</b> ({directionHe(fDir)})
             </span>
             )}
             {s.showProbe && (
             <span>
-              שדה: <b class="q">E = F/q₀ = {sci(E)} N/C</b> ({directionHe(Math.atan2(ey, ex))})
+              שדה: <b class="q">E = {props.showForce === false ? '' : 'F/q₀ = '}{sci(E)} N/C</b> ({directionHe(Math.atan2(ey, ex))})
             </span>
             )}
           </>
@@ -453,7 +461,7 @@ export default function FieldExplorer(props: FieldExplorerProps) {
               ))}
             </div>
           )}
-          {s.showProbe && (
+          {s.showProbe && props.showQ0Control !== false && (
             <Slider
               label="מטען הבוחן q₀"
               min={0}

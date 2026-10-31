@@ -10,9 +10,10 @@ async function fillUntilReady(q: Locator, input: Locator, value: string) {
   }).toPass();
 }
 
-async function chooseUntilReady(q: Locator, index: number) {
+// choices are matched by text, so the specs survive the question engine shuffling them
+async function chooseUntilReady(q: Locator, text: string) {
   await expect(async () => {
-    await q.locator('.q-choices').first().locator('label').nth(index).click();
+    await q.locator('.q-choices').first().locator('label', { hasText: text }).click();
     await expect(q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true })).toBeEnabled({ timeout: 500 });
   }).toPass();
 }
@@ -23,8 +24,8 @@ test.describe('live figures', () => {
   test('every simulation draws, in LTR physics space', async ({ page }) => {
     await page.goto(LESSON);
     const canvases = page.locator('.sim-stage canvas');
-    expect(await canvases.count()).toBe(3);
-    for (let i = 0; i < 3; i++) {
+    expect(await canvases.count()).toBe(4);
+    for (let i = 0; i < 4; i++) {
       const c = canvases.nth(i);
       await c.scrollIntoViewIfNeeded();
       await expect(c).toHaveCSS('direction', 'ltr');
@@ -45,11 +46,21 @@ test.describe('live figures', () => {
     await page.goto(LESSON);
     const fig = page.locator('#fig-1-9a');
     await fig.scrollIntoViewIfNeeded();
-    await expect(fig.locator('.sim-readout')).not.toContainText('σ');
+    await expect(fig.locator('.sim-readout')).not.toContainText('E = 0 N/C');
     await fig.getByRole('button', { name: 'מוליך', exact: true }).click();
-    await expect(fig.locator('.sim-readout')).toContainText('σ = 3ε₀E₀');
+    // σ is shown only after the lesson has defined it
+    await expect(fig.locator('.sim-readout')).not.toContainText('σ');
     await expect(fig.locator('.sim-tasks li').first()).toHaveClass(/done/);
     expect((await progress(page)).tasks['fig-1-9a:insert-conductor']).toBeTruthy();
+  });
+
+  test('the readout shows σ only after the step that defines it', async ({ page }) => {
+    await page.goto(LESSON);
+    const fig = page.locator('#fig-1-9b');
+    await fig.scrollIntoViewIfNeeded();
+    await expect(fig.locator('.sim-readout')).not.toContainText('σ');
+    await page.locator('[data-step="sigma-pole"]').click();
+    await expect(fig.locator('.sim-readout')).toContainText('σ = 3ε₀E₀');
   });
 
   test('the field is zero when the probe is dragged into the conductor', async ({ page, isMobile }) => {
@@ -93,13 +104,13 @@ test.describe('questions', () => {
     await page.goto(LESSON);
     const q = page.locator('[data-qid="Q-1.9-inside-field"]');
     await q.scrollIntoViewIfNeeded();
-    await chooseUntilReady(q, 1);
+    await chooseUntilReady(q, 'חלש יותר מהשדה שבחוץ');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-wrong/);
     const a = (await progress(page)).attempts.at(-1);
     expect(a).toMatchObject({ qid: 'Q-1.9-inside-field', correct: false, confident: true, misconception: 'MC-conductor-partial-shield', lesson: '1.9' });
     await q.getByRole('button', { name: 'נסו שוב' }).click();
-    await q.locator('.q-choices').first().locator('label').nth(0).click();
+    await q.locator('.q-choices').first().locator('label', { hasText: 'אפס, בכל נקודה' }).click();
     await q.getByRole('button', { name: 'בדיקה · לא בטוחים' }).click();
     await expect(q).toHaveClass(/is-right/);
   });

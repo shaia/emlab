@@ -10,9 +10,10 @@ async function fillUntilReady(q: Locator, input: Locator, value: string) {
   }).toPass();
 }
 
-async function chooseUntilReady(q: Locator, index: number) {
+// choices are matched by text, so the specs survive the question engine shuffling them
+async function chooseUntilReady(q: Locator, text: string) {
   await expect(async () => {
-    await q.locator('.q-choices').first().locator('label').nth(index).click();
+    await q.locator('.q-choices').first().locator('label', { hasText: text }).click();
     await expect(q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true })).toBeEnabled({ timeout: 500 });
   }).toPass();
 }
@@ -97,7 +98,7 @@ test.describe('questions', () => {
     await page.goto(LESSON);
     const q = page.locator('[data-qid="Q-1.6-like-middle"]');
     await q.scrollIntoViewIfNeeded();
-    await chooseUntilReady(q, 1);
+    await chooseUntilReady(q, 'קו ישר שמחבר');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-wrong/);
     const a = (await progress(page)).attempts.at(-1);
