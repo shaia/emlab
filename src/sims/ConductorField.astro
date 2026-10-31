@@ -1,0 +1,7 @@
+---
+/** Conducting sphere in a uniform field, for lesson MDX: <Spread figure={ConductorField} figureProps={{…}}>. */
+import ConductorField, { type ConductorFieldProps } from './ConductorField';
+type Props = ConductorFieldProps;
+---
+
+<ConductorField client:visible {...Astro.props} />
