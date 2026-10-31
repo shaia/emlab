@@ -4,7 +4,10 @@ import { getCollection } from 'astro:content';
 import type { Question } from '~/content.config';
 import { lessonOrder } from '~/course';
 import { isOpen, partQuestion } from './bagrut';
+import { lessonOfQuestion } from './ids';
 import { renderQuestion } from './render';
+
+export { lessonOfQuestion };
 
 let cache: Map<string, Question> | null = null;
 
@@ -35,11 +38,6 @@ export function lessonFromPath(pathname: string): string | null {
 }
 
 /* ------------------------------------------------------------------ chapter views */
-
-/** "Q-1.5-ratio" → "1.5"; Bagrut questions ("Q-1-bagrut-2") belong to no single lesson. */
-export function lessonOfQuestion(id: string): string | null {
-  return id.match(/^Q-(\d+\.\d+)-/)?.[1] ?? null;
-}
 
 /** Chapter numbers that have at least one question: the practice sheet and test exist for these. */
 export async function chaptersWithQuestions(): Promise<number[]> {

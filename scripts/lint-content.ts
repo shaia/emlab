@@ -133,7 +133,7 @@ const pending: string[] = [];
 /** Every gradable unit: a question, or one part of a Bagrut question. */
 const units = questions.flatMap(({ q, file }) =>
   q.type === 'bagrut'
-    ? (q.parts ?? []).map((p) => ({ q: { ...p, id: `${q.id}/${p.label}`, type: p.type } as Question, file, part: p, parent: q }))
+    ? (q.parts ?? []).map((p) => ({ q: { ...p, id: `${q.id}/${p.label}`, type: p.type } as unknown as Question, file, part: p, parent: q }))
     : [{ q, file, part: null as Part | null, parent: null as Question | null }],
 );
 for (const { q, file } of questions) {
