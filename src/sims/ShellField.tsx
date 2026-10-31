@@ -25,8 +25,8 @@ const R_MAX = 1.0;
 const N_ARROWS = 12;
 
 const TASK_LABEL: Record<string, string> = {
-  'inside-zero': 'כווצו את משטח גאוס עד שהוא בתוך הקליפה. מה השדה, ולמה?',
-  'quarter-field': 'מצאו את הרדיוס שבו השדה חלש פי 4 מהשדה ממש מחוץ לקליפה.',
+  'inside-zero': 'כווצו את משטח גאוס עד שהוא בתוך הקליפה. מה השדה שם?',
+  'quarter-field': 'מצאו את הרדיוס שבו השדה חלש פי 4 מהשדה ממש מחוץ לקליפה (מיד אחרי הדופן).',
   'negative-shell': 'הפכו את מטען הקליפה לשלילי, והגדילו את משטח גאוס אל מחוץ לקליפה. לאן מצביעים החצים?',
 };
 
@@ -50,11 +50,16 @@ export default function ShellField(props: ShellFieldProps) {
   const [s, setS] = useState<State>({ Q: props.Q ?? 2, r: props.r ?? 0.7 });
   const [live, setLive] = useState('');
   const dragging = useRef(false);
+  // a state change that came from a text step must not tick a task: only the student's own controls do
+  const fromStep = useRef(false);
+  // the inside of the graph stays hidden until someone (or a step) takes the Gaussian sphere inside the shell
+  const [reveal, setReveal] = useState(false);
   const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: TASK_LABEL[id] ?? id }));
 
   useEffect(
     () =>
       subscribeSteps(props.id, (st) => {
+        fromStep.current = true;
         setS((prev) => ({
           Q: typeof st.Q === 'number' ? st.Q : prev.Q,
           r: typeof st.r === 'number' ? st.r : prev.r,
@@ -69,6 +74,11 @@ export default function ShellField(props: ShellFieldProps) {
   const Esurface = shellField(Q, R, R);
 
   useEffect(() => {
+    if (s.r < R) setReveal(true);
+    if (fromStep.current) {
+      fromStep.current = false;
+      return;
+    }
     const has = (t: string) => props.tasks?.includes(t);
     const done = (t: string) => markTask(`${props.id}:${t}`);
     if (has('inside-zero') && s.r < R - 0.04) done('inside-zero');
@@ -183,8 +193,13 @@ export default function ShellField(props: ShellFieldProps) {
       ctx.strokeStyle = p.efield;
       ctx.lineWidth = 2.6;
       ctx.beginPath();
-      ctx.moveTo(gx(0), gy(0));
-      ctx.lineTo(gx(R - 1e-6), gy(0));
+      if (reveal) {
+        ctx.moveTo(gx(0), gy(0));
+        ctx.lineTo(gx(R - 1e-6), gy(0));
+        ctx.lineTo(gx(R), gy(0));
+      } else {
+        ctx.moveTo(gx(R), gy(shellField(Q, R, R)));
+      }
       ctx.lineTo(gx(R), gy(shellField(Q, R, R)));
       for (let i = 1; i <= 80; i++) {
         const r = R + ((R_MAX - R) * i) / 80;
@@ -198,6 +213,13 @@ export default function ShellField(props: ShellFieldProps) {
       ctx.moveTo(gx(0), gy1);
       ctx.lineTo(gx(R_MAX), gy1);
       ctx.stroke();
+    }
+    if (!reveal) {
+      ctx.fillStyle = p.ink3;
+      ctx.font = `600 22px ${p.fontUi}`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('?', gx(R / 2), gy1 - (gy1 - gy0) * 0.12);
     }
     // current point
     ctx.fillStyle = p.accent;

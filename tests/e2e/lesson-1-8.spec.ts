@@ -1,5 +1,6 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 
+const FIGS = ['fig-1-8a', 'fig-1-8b'];
 const LESSON = '/lessons/1-8/';
 
 /** Islands hydrate when scrolled into view: an input filled earlier is lost. Retry until the check button is live. */
@@ -12,10 +13,10 @@ async function fillAndCheck(q: Locator, input: Locator, value: string) {
   await check.click();
 }
 
-async function pickAndCheck(q: Locator, index: number) {
+async function pickAndCheck(q: Locator, text: string) {
   const check = q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true });
   await expect(async () => {
-    await q.locator('label').nth(index).click({ timeout: 2000 });
+    await q.locator('label', { hasText: text }).click({ timeout: 2000 });
     await expect(check).toBeEnabled({ timeout: 1000 });
   }).toPass({ timeout: 15000 });
   await check.click();
@@ -51,10 +52,13 @@ test.describe('shell field (1.8א)', () => {
     await expect(readout).toContainText('3.67·10⁴');
     await setRange(page, 'fig-1-8a', 0, 0.8);
     await expect(readout).toContainText('2.81·10⁴');
-    await setRange(page, 'fig-1-8a', 0, 0.25);
-    await expect(readout).toContainText('q = 0 μC');
+    // text steps scrolled into view also drive the figure (and never tick a task): retry the student's own move
+    await expect(async () => {
+      await setRange(page, 'fig-1-8a', 0, 0.25);
+      await expect(readout).toContainText('q = 0 μC', { timeout: 1000 });
+      await expect(fig.locator('.sim-tasks li').first()).toHaveClass(/done/, { timeout: 1000 });
+    }).toPass({ timeout: 10000 });
     await expect(readout).toContainText('E = 0 N/C');
-    await expect(fig.locator('.sim-tasks li').first()).toHaveClass(/done/);
     expect((await progress(page)).tasks['fig-1-8a:inside-zero']).toBeTruthy();
   });
 
@@ -96,6 +100,22 @@ test.describe('plates field (1.8ב)', () => {
   });
 });
 
+test.describe('guided tasks', () => {
+  test('scrolling through the text never ticks a task: only the learner moves the figure do', async ({ page }) => {
+    test.slow();
+    await page.goto(LESSON);
+    await page.evaluate(async () => {
+      for (let y = 0; y < document.body.scrollHeight; y += 300) {
+        window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 120));
+      }
+    });
+    await page.waitForTimeout(500);
+    const tasks = Object.keys(((await progress(page)) ?? { tasks: {} }).tasks ?? {});
+    expect(tasks.filter((k) => FIGS.some((f) => k.startsWith(f + ':')))).toEqual([]);
+  });
+});
+
 test.describe('predict, then reveal', () => {
   test('the flap opens after committing to "zero"', async ({ page }) => {
     await page.goto(LESSON);
@@ -131,7 +151,7 @@ test.describe('questions', () => {
     await page.goto(LESSON);
     const q = page.locator('[data-qid="Q-1.8-shell-inside"]');
     await q.scrollIntoViewIfNeeded();
-    await pickAndCheck(q, 1);
+    await pickAndCheck(q, 'כמו על פני הקליפה');
     await expect(q).toHaveClass(/is-wrong/);
     const a = (await progress(page)).attempts.at(-1);
     expect(a).toMatchObject({ qid: 'Q-1.8-shell-inside', confident: true, misconception: 'MC-shell-inside-field' });

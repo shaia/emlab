@@ -1,5 +1,6 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 
+const FIGS = ['fig-1-7a', 'fig-1-7b', 'fig-1-7c'];
 const LESSON = '/lessons/1-7/';
 
 /** Islands hydrate when scrolled into view: an input filled earlier is lost. Retry until the check button is live. */
@@ -12,10 +13,10 @@ async function fillAndCheck(q: Locator, input: Locator, value: string) {
   await check.click();
 }
 
-async function pickAndCheck(q: Locator, index: number) {
+async function pickAndCheck(q: Locator, text: string) {
   const check = q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true });
   await expect(async () => {
-    await q.locator('label').nth(index).click({ timeout: 2000 });
+    await q.locator('label', { hasText: text }).click({ timeout: 2000 });
     await expect(check).toBeEnabled({ timeout: 1000 });
   }).toPass({ timeout: 15000 });
   await check.click();
@@ -45,7 +46,7 @@ test.describe('flux window (1.7א)', () => {
     const readout = fig.locator('.sim-readout');
     await expect.poll(() => inked(fig.locator('canvas'))).toBeGreaterThan(200);
     await setRange(page, 'fig-1-7a', 0, 0);
-    await expect(readout).toContainText('Φ = E·A·cosθ = 1000');
+    await expect(readout).toContainText(/Φ = (E·A·cosθ = )?1000 N/);
     await setRange(page, 'fig-1-7a', 0, 90);
     await expect(readout).toContainText('= 0 N·m²/C');
     await expect(fig.locator('.sim-tasks li').first()).toHaveClass(/done/);
@@ -66,16 +67,20 @@ test.describe('closed surface (1.7ב)', () => {
     await fig.getByRole('button', { name: 'מטען אחד' }).click();
     await fig.getByRole('button', { name: 'עיגול' }).click();
     await expect(readout).toContainText('+2 μC');
-    await expect(readout).toContainText('2.26·10⁵');
     await expect(readout).toContainText('יוצאים 8');
-    await fig.getByRole('button', { name: 'מטען מחוץ' }).click();
+    await expect(readout).toContainText('נטו 8');
+    await expect(readout).toContainText('= 2.26·10⁵ N');
+    // the readout counts lines: it does not name the law
+    await expect(readout).not.toContainText('ε₀');
+    await fig.getByRole('button', { name: 'מטען מחוץ למשטח' }).click();
     await expect(readout).toContainText('0 μC');
-    await expect(readout).toContainText('Φ = q/ε₀ = 0 N');
+    await expect(readout).toContainText('= 0 N·m²/C');
     await fig.getByRole('button', { name: 'שני מטענים מנוגדים' }).click();
-    await expect(readout).toContainText('Φ = q/ε₀ = 0 N');
+    await expect(readout).toContainText('נטו 0');
+    await expect(readout).toContainText('= 0 N·m²/C');
     await fig.getByRole('button', { name: 'מטען אחד' }).click();
     await fig.getByRole('button', { name: 'ריבוע' }).click();
-    await expect(readout).toContainText('2.26·10⁵');
+    await expect(readout).toContainText('נטו 8');
   });
 
   test('dragging the charge out of the surface changes the flux', async ({ page, isMobile }) => {
@@ -95,7 +100,7 @@ test.describe('closed surface (1.7ב)', () => {
     await page.mouse.down();
     await page.mouse.move(cx + 0.9 * ppm, cy, { steps: 10 });
     await page.mouse.up();
-    await expect(readout).toContainText('Φ = q/ε₀ = 0 N');
+    await expect(readout).toContainText('= 0 N·m²/C');
     await expect(fig.locator('.sim-tasks li').nth(1)).toHaveClass(/done/);
   });
 });
@@ -110,23 +115,32 @@ test.describe('Gauss in space (1.7ג)', () => {
     const readout = fig.locator('.sim-readout');
     // text steps scrolled into view also drive the figure: set the position until it holds
     await expect(async () => {
-      await setRange(page, 'fig-1-7c', 0, 120);
+      await setRange(page, 'fig-1-7c', 1, 120);
       await expect(readout).toContainText('מחוץ למשטח', { timeout: 1000 });
     }).toPass({ timeout: 10000 });
     await expect(readout).toContainText('= 0 N·m²/C');
-    await setRange(page, 'fig-1-7c', 0, 0);
+    // WebGL is available in the test browser: the figure switches to the 3D view (72 lines)
+    await expect(fig.locator('canvas')).toHaveAttribute('data-view', '3d');
+    await setRange(page, 'fig-1-7c', 1, 0);
     await fig.getByRole('button', { name: 'כדור' }).click();
     await fig.getByRole('button', { name: /מטען \+2/ }).click();
     await expect(readout).toContainText('בתוך המשטח');
     await expect(readout).toContainText('2.26·10⁵');
-    await expect(readout).toContainText('יוצאות 72');
+    await expect(readout).toContainText('יוצאים 72');
+    // a bigger or smaller surface around the charge: the same lines and the same flux
+    await setRange(page, 'fig-1-7c', 0, 95);
+    await expect(readout).toContainText('יוצאים 72');
+    await expect(readout).toContainText('2.26·10⁵');
+    await setRange(page, 'fig-1-7c', 0, 35);
+    await expect(readout).toContainText('יוצאים 72');
+    await expect(readout).toContainText('2.26·10⁵');
+    await expect(fig.locator('.sim-tasks li').first()).toHaveClass(/done/);
+    await setRange(page, 'fig-1-7c', 0, 55);
     await fig.getByRole('button', { name: 'קובייה' }).click();
     await expect(readout).toContainText('2.26·10⁵');
     await fig.getByRole('button', { name: /מטען −2/ }).click();
     await expect(readout).toContainText('-2.26·10⁵');
-    await expect(readout).toContainText('נכנסות 72');
-    // WebGL is available in the test browser: the figure switches to the 3D view
-    await expect(fig.locator('canvas')).toHaveAttribute('data-view', '3d');
+    await expect(readout).toContainText('נכנסים 72');
     expect(errors).toEqual([]);
   });
 
@@ -137,8 +151,10 @@ test.describe('Gauss in space (1.7ג)', () => {
     await fig.scrollIntoViewIfNeeded();
     await expect(fig.locator('canvas')).toHaveAttribute('data-view', '2d');
     await expect.poll(() => inked(fig.locator('canvas'))).toBeGreaterThan(200);
-    await setRange(page, 'fig-1-7c', 0, 0);
+    await setRange(page, 'fig-1-7c', 1, 0);
     await expect(fig.locator('.sim-readout')).toContainText('בתוך המשטח');
+    // the cross-section draws 24 lines, and the readout counts those
+    await expect(fig.locator('.sim-readout')).toContainText('יוצאים 24');
   });
 
   test('without WebGL the figure falls back to the 2D cross-section', async ({ page }) => {
@@ -154,6 +170,22 @@ test.describe('Gauss in space (1.7ג)', () => {
     await fig.scrollIntoViewIfNeeded();
     await expect(fig.locator('canvas')).toHaveAttribute('data-view', '2d');
     await expect.poll(() => inked(fig.locator('canvas'))).toBeGreaterThan(200);
+  });
+});
+
+test.describe('guided tasks', () => {
+  test('scrolling through the text never ticks a task: only the learner moves the figure do', async ({ page }) => {
+    test.slow();
+    await page.goto(LESSON);
+    await page.evaluate(async () => {
+      for (let y = 0; y < document.body.scrollHeight; y += 300) {
+        window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 120));
+      }
+    });
+    await page.waitForTimeout(500);
+    const tasks = Object.keys(((await progress(page)) ?? { tasks: {} }).tasks ?? {});
+    expect(tasks.filter((k) => FIGS.some((f) => k.startsWith(f + ':')))).toEqual([]);
   });
 });
 
@@ -176,17 +208,17 @@ test.describe('predict, then reveal', () => {
 });
 
 test.describe('questions', () => {
-  test('numeric: sin instead of cos gets targeted feedback, then the right value passes', async ({ page }) => {
+  test('numeric: counting an outside charge gets targeted feedback, then the right value passes', async ({ page }) => {
     await page.goto(LESSON);
-    const q = page.locator('[data-qid="Q-1.7-flux-calc"]');
+    const q = page.locator('[data-qid="Q-1.7-net-enclosed"]');
     await q.scrollIntoViewIfNeeded();
     const input = q.locator('input[type=text]');
-    await fillAndCheck(q, input, '300');
-    await expect(q.locator('.q-feedback')).toContainText('הזווית היא בין');
+    await fillAndCheck(q, input, '4.52e5');
+    await expect(q.locator('.q-feedback')).toContainText('מחוץ למשטח');
     const a = (await progress(page)).attempts.at(-1);
-    expect(a).toMatchObject({ qid: 'Q-1.7-flux-calc', correct: false, misconception: 'MC-flux-sin-for-cos', lesson: '1.7' });
+    expect(a).toMatchObject({ qid: 'Q-1.7-net-enclosed', correct: false, misconception: 'MC-gauss-outside-charge-counts', lesson: '1.7' });
     await q.getByRole('button', { name: 'נסו שוב' }).click();
-    await fillAndCheck(q, input, '520');
+    await fillAndCheck(q, input, '2.26e5');
     await expect(q).toHaveClass(/is-right/);
   });
 
@@ -194,7 +226,7 @@ test.describe('questions', () => {
     await page.goto(LESSON);
     const q = page.locator('[data-qid="Q-1.7-outside-charge"]');
     await q.scrollIntoViewIfNeeded();
-    await pickAndCheck(q, 1);
+    await pickAndCheck(q, 'חיובי, כי יש שדה על המשטח');
     await expect(q).toHaveClass(/is-wrong/);
     const a = (await progress(page)).attempts.at(-1);
     expect(a).toMatchObject({ qid: 'Q-1.7-outside-charge', confident: true, misconception: 'MC-gauss-outside-charge-counts' });

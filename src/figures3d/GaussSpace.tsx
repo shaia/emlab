@@ -23,8 +23,8 @@ import { webglAvailable } from './webgl';
 
 const uC = 1e-6;
 const Q_MAG = 2 * uC;
-const SIZE = 0.55;
 const N_RAYS = 72;
+const N_PLANAR = 24;
 const WORLD_W = 3.2;
 const WORLD_H = 2.4;
 const CHARGE_PX = 11;
@@ -34,6 +34,7 @@ type SceneModule = typeof import('./gaussScene');
 const SHAPE_LABEL: Record<SurfaceShape, string> = { sphere: 'כדור', cube: 'קובייה' };
 
 const TASK_LABEL: Record<string, string> = {
+  resize: 'הגדילו את המשטח כשהמטען בתוכו, וחזרו וקטינו אותו. מה קרה למספר הקווים שחוצים אותו ולשטף?',
   'cross-surface': 'הזיזו את המטען מחוץ למשטח אל תוכו ובחזרה. מתי הקרניים והשטף משתנים?',
   'cube-same': 'כשהמטען בתוך המשטח, עברו בין כדור לקובייה. מה קרה לשטף?',
   'negative-inside': 'הפכו את המטען לשלילי כשהוא בתוך המשטח. מה קרה לכיוון הזרימה ולסימן של השטף?',
@@ -44,6 +45,8 @@ export interface GaussSpaceProps {
   shape?: SurfaceShape;
   /** charge position along the x axis [cm] */
   x?: number;
+  /** radius of the sphere (half the side of the cube) [cm] */
+  radius?: number;
   tasks?: string[];
 }
 
@@ -52,37 +55,53 @@ interface State {
   /** cm */
   x: number;
   sign: 1 | -1;
+  /** cm */
+  radius: number;
+  /** the readout names the law only from the step that names it */
+  showLaw: boolean;
 }
 
 const dirs3 = fibonacciSphere(N_RAYS);
+/** the 2D cross-section draws its own lines in the plane: the ones of the 3D set that lie in it are too few */
+const dirsPlanar: [number, number, number][] = Array.from({ length: N_PLANAR }, (_, i) => {
+  const a = (2 * Math.PI * (i + 0.5)) / N_PLANAR;
+  return [Math.cos(a), Math.sin(a), 0];
+});
 
-function analyse(s: State) {
+/** Count what is drawn: 72 lines in 3D, 24 in the cross-section. */
+function analyse(s: State, view3d: boolean) {
   const origin: [number, number, number] = [s.x / 100, 0, 0];
+  const R = s.radius / 100;
   let out = 0;
   let inn = 0;
-  for (const d of dirs3) {
-    const c = rayCrossings(s.shape, [0, 0, 0], SIZE, origin, d);
+  for (const d of view3d ? dirs3 : dirsPlanar) {
+    const c = rayCrossings(s.shape, [0, 0, 0], R, origin, d);
     out += c.out;
     inn += c.in;
   }
+  const inside = Math.abs(origin[0]) < R;
   // field lines of a negative charge run inward: what the rays do geometrically, the field does reversed
-  return s.sign > 0 ? { out, in: inn, inside: Math.abs(s.x / 100) < SIZE } : { out: inn, in: out, inside: Math.abs(s.x / 100) < SIZE };
+  return s.sign > 0 ? { out, in: inn, inside } : { out: inn, in: out, inside };
 }
 
 function numericFlux(s: State): number {
+  const R = s.radius / 100;
   const q = [{ pos: [s.x / 100, 0, 0] as [number, number, number], q: s.sign * Q_MAG }];
-  return s.shape === 'sphere' ? fluxThroughSphere(q, [0, 0, 0], SIZE, 6000) : fluxThroughCube(q, [0, 0, 0], SIZE * 2, 50);
+  return s.shape === 'sphere' ? fluxThroughSphere(q, [0, 0, 0], R, 6000) : fluxThroughCube(q, [0, 0, 0], R * 2, 50);
 }
 
 const signed = (sign: number) => `${sign > 0 ? '+' : '−'}2 μC`;
 
 export default function GaussSpace(props: GaussSpaceProps) {
-  const [s, setS] = useState<State>({ shape: props.shape ?? 'sphere', x: props.x ?? 120, sign: 1 });
+  const initialState = (): State => ({ shape: props.shape ?? 'sphere', x: props.x ?? 120, sign: 1, radius: props.radius ?? 55, showLaw: false });
+  const [s, setS] = useState<State>(initialState);
+  // a state change that came from a text step must not tick a task: only the student's own controls do
+  const fromStep = useRef(false);
   const [live, setLive] = useState('');
   const [want3d, setWant3d] = useState(false);
   const [mod, setMod] = useState<SceneModule | null>(null);
   const [failed, setFailed] = useState(false);
-  const seen = useRef({ inside: false, outside: false, sphereInside: null as number | null });
+  const seen = useRef({ inside: false, outside: false, sphereInside: null as number | null, radii: [] as number[] });
   const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: TASK_LABEL[id] ?? id }));
 
   // 3D only with WebGL and motion allowed; re-checked when still mode or reduced motion change
@@ -106,26 +125,38 @@ export default function GaussSpace(props: GaussSpaceProps) {
   useEffect(
     () =>
       subscribeSteps(props.id, (st) => {
+        fromStep.current = true;
         setS((prev) => {
           const next = { ...prev };
           if (st.shape === 'sphere' || st.shape === 'cube') next.shape = st.shape;
           if (typeof st.x === 'number') next.x = st.x;
           if (st.sign === 1 || st.sign === -1) next.sign = st.sign;
+          if (typeof st.radius === 'number') next.radius = st.radius;
+          if (typeof st.showLaw === 'boolean') next.showLaw = st.showLaw;
           return next;
         });
       }),
     [props.id],
   );
 
-  const info = useMemo(() => analyse(s), [s.shape, s.x, s.sign]);
-  const flux = useMemo(() => numericFlux(s), [s.shape, s.x, s.sign]);
+  const view3d = want3d && !!mod && !failed;
+  const info = useMemo(() => analyse(s, view3d), [s.shape, s.x, s.sign, s.radius, view3d]);
+  const flux = useMemo(() => numericFlux(s), [s.shape, s.x, s.sign, s.radius]);
   const expected = info.inside ? gaussFlux(s.sign * Q_MAG) : 0;
   // a numeric sum is never exactly zero: show what it means to the reader
   const shownFlux = Math.abs(flux) < 0.005 * gaussFlux(Q_MAG) ? 0 : flux;
 
   useEffect(() => {
+    if (fromStep.current) {
+      fromStep.current = false;
+      return;
+    }
     const has = (t: string) => props.tasks?.includes(t);
     const done = (t: string) => markTask(`${props.id}:${t}`);
+    if (info.inside) {
+      if (!seen.current.radii.includes(s.radius)) seen.current.radii.push(s.radius);
+      if (has('resize') && Math.max(...seen.current.radii) >= 2 * Math.min(...seen.current.radii)) done('resize');
+    }
     if (info.inside) seen.current.inside = true;
     else seen.current.outside = true;
     if (has('cross-surface') && seen.current.inside && seen.current.outside) done('cross-surface');
@@ -135,18 +166,19 @@ export default function GaussSpace(props: GaussSpaceProps) {
   }, [s, info.inside, props.id, props.tasks, shownFlux]);
 
   const describe = (st: State) => {
-    const a = analyse(st);
-    return `המטען ${signed(st.sign)} ב-${st.x} ס"מ מהמרכז, ${a.inside ? 'בתוך' : 'מחוץ ל'}${SHAPE_LABEL[st.shape] === 'כדור' ? 'כדור' : 'קובייה'}. ${a.out} קרניים יוצאות ו-${a.in} נכנסות.`;
+    const a = analyse(st, view3d);
+    const place = a.inside ? `בתוך ה${SHAPE_LABEL[st.shape]}` : `מחוץ ל${SHAPE_LABEL[st.shape]}`;
+    return `המטען ${signed(st.sign)} ב-${st.x} ס"מ מהמרכז, ${place}. ${a.out} קווי שדה יוצאים ו-${a.in} נכנסים.`;
   };
 
   const shell = {
     fig: props.id,
-    label: `איור חי: מטען נקודתי, משטח סגור ${SHAPE_LABEL[s.shape]} והקרניים של השדה. ${describe(s)} השטף ${sci(shownFlux)} ניוטון מטר בריבוע לקולון.`,
+    label: `איור חי: מטען נקודתי, משטח סגור ${SHAPE_LABEL[s.shape]} וקווי השדה. ${describe(s)} השטף ${sci(shownFlux)} ניוטון מטר בריבוע לקולון.`,
     aspect: WORLD_W / WORLD_H,
     live,
     tasks,
     onReset: () => {
-      setS({ shape: props.shape ?? 'sphere', x: props.x ?? 120, sign: 1 });
+      setS(initialState());
       setLive('האיור אופס.');
     },
     readout: (
@@ -155,12 +187,12 @@ export default function GaussSpace(props: GaussSpaceProps) {
           מיקום המטען: <b class="q">{info.inside ? 'בתוך המשטח' : 'מחוץ למשטח'}</b>
         </span>
         <span>
-          קרניים: <b class="q">יוצאות {info.out}</b> · <b class="q">נכנסות {info.in}</b>
+          קווי שדה: <b class="q">יוצאים {info.out}</b> · <b class="q">נכנסים {info.in}</b>
         </span>
         <span>
           שטף דרך המשטח: <b class="q">Φ = {sci(shownFlux)} N·m²/C</b>
         </span>
-        {info.inside && (
+        {s.showLaw && info.inside && (
           <span>
             לפי חוק גאוס: <b class="q">q/ε₀ = {sci(expected)} N·m²/C</b>
           </span>
@@ -182,6 +214,18 @@ export default function GaussSpace(props: GaussSpaceProps) {
             </button>
           ))}
         </div>
+        <Slider
+          label="גודל המשטח"
+          value={s.radius}
+          min={35}
+          max={105}
+          step={10}
+          format={(v) => `${v} cm`}
+          onChange={(v) => {
+            setS({ ...s, radius: v });
+            setLive(describe({ ...s, radius: v }));
+          }}
+        />
         <Slider
           label="מיקום המטען"
           value={s.x}
@@ -223,7 +267,7 @@ function Canvas3D(p: { mod: SceneModule; s: State; shell: ShellProps; onFail: ()
     };
     let scene: ReturnType<SceneModule['createGaussScene']>;
     try {
-      scene = p.mod.createGaussScene(canvas, colors(), { shape: p.s.shape, x: p.s.x / 100, sign: p.s.sign });
+      scene = p.mod.createGaussScene(canvas, colors(), { shape: p.s.shape, x: p.s.x / 100, sign: p.s.sign, radius: p.s.radius / 100 });
     } catch {
       p.onFail();
       return;
@@ -248,8 +292,8 @@ function Canvas3D(p: { mod: SceneModule; s: State; shell: ShellProps; onFail: ()
   }, []);
 
   useEffect(() => {
-    sceneRef.current?.setState({ shape: p.s.shape, x: p.s.x / 100, sign: p.s.sign });
-  }, [p.s.shape, p.s.x, p.s.sign]);
+    sceneRef.current?.setState({ shape: p.s.shape, x: p.s.x / 100, sign: p.s.sign, radius: p.s.radius / 100 });
+  }, [p.s.shape, p.s.x, p.s.sign, p.s.radius]);
 
   const onKeyDown = (e: KeyboardEvent) => {
     const step = 0.12;
@@ -265,8 +309,6 @@ function Canvas3D(p: { mod: SceneModule; s: State; shell: ShellProps; onFail: ()
 
 /* --------------------- the 2D cross-section (fallback and loading) --------------------- */
 
-const N_PLANAR = 24;
-
 function Canvas2D(p: { s: State; shell: ShellProps }) {
   const { s } = p;
   const draw = ({ ctx, view, palette: pal, t }: FrameInfo) => {
@@ -280,10 +322,11 @@ function Canvas2D(p: { s: State; shell: ShellProps }) {
     ctx.beginPath();
     if (s.shape === 'sphere') {
       const [x, y] = toScreen(view, 0, 0);
-      ctx.arc(x, y, SIZE * view.ppm, 0, Math.PI * 2);
+      ctx.arc(x, y, (s.radius / 100) * view.ppm, 0, Math.PI * 2);
     } else {
-      const [x0, y0] = toScreen(view, -SIZE, SIZE);
-      ctx.rect(x0, y0, 2 * SIZE * view.ppm, 2 * SIZE * view.ppm);
+      const R = s.radius / 100;
+      const [x0, y0] = toScreen(view, -R, R);
+      ctx.rect(x0, y0, 2 * R * view.ppm, 2 * R * view.ppm);
     }
     ctx.fill();
     ctx.stroke();
@@ -294,7 +337,7 @@ function Canvas2D(p: { s: State; shell: ShellProps }) {
     for (let i = 0; i < N_PLANAR; i++) {
       const a = (2 * Math.PI * (i + 0.5)) / N_PLANAR;
       const d: [number, number, number] = [Math.cos(a), Math.sin(a), 0];
-      const c = rayCrossings(s.shape, [0, 0, 0], SIZE, [cx, 0, 0], d);
+      const c = rayCrossings(s.shape, [0, 0, 0], s.radius / 100, [cx, 0, 0], d);
       const crossing = c.out + c.in > 0;
       const len = 1.9;
       const a0 = toScreen(view, cx, 0);

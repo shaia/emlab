@@ -4,7 +4,8 @@
  *
  * Model: the plane shows a slice of 3D point charges. Each field line stands for a fixed
  * amount of charge (LINE_UC), so counting lines that leave and enter the surface is counting
- * flux. The readout also gives the enclosed charge and Φ = q/ε₀ (src/physics/gauss.ts).
+ * flux: one line stands for the flux of 0.25 μC, so the net count tracks the enclosed charge.
+ * The readout gives the enclosed charge and the line counts; the formula is named later, in 1.7c.
  * The count is exact when all charges are single or come in a symmetric pair; with several
  * unequal charges the finite number of lines can be one off, which is why the readout labels
  * the line counts as counts, not as the flux itself.
@@ -12,7 +13,8 @@
 
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { fieldLines, type PointCharge } from '~/physics/electrostatics';
-import { enclosedCharge, lineCrossings, pointInPolygon, polygonArea, polygonFlux } from '~/physics/gauss';
+import { EPS0 } from '~/physics/constants';
+import { enclosedCharge, lineCrossings, pointInPolygon, polygonArea } from '~/physics/gauss';
 import type { Vec2 } from '~/physics/vec';
 import { markTask } from '~/progress/store';
 import { subscribeSteps } from '~/ui/steps';
@@ -23,6 +25,8 @@ import SimShell, { type TaskDef } from './core/SimShell';
 
 const uC = 1e-6;
 const LINE_UC = 0.25 * uC;
+/** flux one line stands for: the flux of 0.25 μC, i.e. 0.25 μC / ε₀ [N·m²/C] */
+const LINE_FLUX = LINE_UC / EPS0;
 const WORLD_W = 2;
 const WORLD_H = 1.5;
 const CHARGE_PX = 15;
@@ -62,7 +66,7 @@ const SCENES: Record<Scene, { charges: PointCharge[]; shape: Shape; cx: number; 
 
 const SCENE_LABEL: Record<Scene, string> = {
   single: 'מטען אחד',
-  outside: 'מטען מחוץ',
+  outside: 'מטען מחוץ למשטח',
   dipole: 'שני מטענים מנוגדים',
   three: 'שלושה מטענים',
 };
@@ -72,7 +76,7 @@ const SHAPE_LABEL: Record<Shape, string> = { circle: 'עיגול', square: 'רי
 const TASK_LABEL: Record<string, string> = {
   'cross-in': 'גררו מטען מבחוץ אל תוך המשטח (או החוצה). מתי השטף משתנה?',
   reshape: 'שנו את צורת המשטח או את גודלו, בלי לגעת במטענים. מה קרה לשטף?',
-  'zero-flux': 'הכניסו למשטח מטענים כך שהשטף יהיה אפס, גם שיש בתוכו מטענים.',
+  'zero-flux': 'הכניסו למשטח כמה מטענים כך שהשטף יהיה אפס, גם כשיש בתוכו מטענים.',
 };
 
 export function shapePolygon(shape: Shape, cx: number, cy: number, size: number): Vec2[] {
@@ -137,6 +141,7 @@ export default function GaussSurface(props: GaussSurfaceProps) {
   const start = useRef<State>(initial(props));
   const drag = useRef<{ kind: 'charge' | 'vertex' | 'body'; i: number; dx: number; dy: number; last?: [number, number] } | null>(null);
   const [live, setLive] = useState('');
+  const fromStep = useRef(false);
   const prevEnc = useRef<number | null>(null);
   const prevCharges = useRef<PointCharge[] | null>(null);
   const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: TASK_LABEL[id] ?? id }));
@@ -144,6 +149,7 @@ export default function GaussSurface(props: GaussSurfaceProps) {
   useEffect(
     () =>
       subscribeSteps(props.id, (st) => {
+        fromStep.current = true;
         setS((prev) => {
           let next = { ...prev };
           const sceneChanged = typeof st.scene === 'string' && st.scene in SCENES && st.scene !== prev.scene;
@@ -161,12 +167,16 @@ export default function GaussSurface(props: GaussSurfaceProps) {
   );
 
   const enc = enclosedCharge(s.charges, s.poly);
-  const flux = polygonFlux(s.charges, s.poly);
   const area = Math.abs(polygonArea(s.poly));
   const startArea = Math.abs(polygonArea(start.current.poly));
 
   // task detection
   useEffect(() => {
+    // a state change that came from a text step must not tick a task: only the student's own controls do
+    if (fromStep.current) {
+      fromStep.current = false;
+      return;
+    }
     const has = (t: string) => props.tasks?.includes(t);
     const done = (t: string) => markTask(`${props.id}:${t}`);
     const insideCount = s.charges.filter((c) => pointInPolygon(s.poly, c.x, c.y)).length;
@@ -312,7 +322,7 @@ export default function GaussSurface(props: GaussSurfaceProps) {
 
   const describe = (st: State) => {
     const q = enclosedCharge(st.charges, st.poly);
-    return `המטען בתוך המשטח ${signedMicro(q)}. השטף ${sci(polygonFlux(st.charges, st.poly))} ניוטון מטר בריבוע לקולון.`;
+    return `המטען בתוך המשטח ${signedMicro(q)}.`;
   };
 
   const onPointerDown = (e: PointerEvent) => {
@@ -422,6 +432,7 @@ export default function GaussSurface(props: GaussSurfaceProps) {
 
   const nOut = crossings.filter((c) => c.outward).length;
   const nIn = crossings.length - nOut;
+  const net = nOut - nIn;
 
   return (
     <SimShell
@@ -444,12 +455,14 @@ export default function GaussSurface(props: GaussSurfaceProps) {
           </span>
           {s.showLines && (
             <span>
-              קווים: <b class="q">יוצאים {nOut}</b> · <b class="q">נכנסים {nIn}</b>
+              קווים: <b class="q">יוצאים {nOut}</b> · <b class="q">נכנסים {nIn}</b> · <b class="q">נטו {net}</b>
             </span>
           )}
-          <span>
-            שטף: <b class="q">Φ = q/ε₀ = {sci(flux)} N·m²/C</b>
-          </span>
+          {s.showLines && (
+            <span>
+              שטף: <b class="q">Φ ≈ {net} × {sci(LINE_FLUX)} = {sci(net * LINE_FLUX)} N·m²/C</b>
+            </span>
+          )}
         </>
       }
       controls={

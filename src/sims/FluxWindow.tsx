@@ -44,10 +44,12 @@ interface State {
   ang: number;
   E: number;
   L: number;
+  /** the readout writes the formula only from the step that teaches it */
+  formula: boolean;
 }
 
 function initial(p: FluxWindowProps): State {
-  return { ang: ((p.theta ?? 0) * Math.PI) / 180, E: p.E ?? 2000, L: p.length ?? 0.5 };
+  return { ang: ((p.theta ?? 0) * Math.PI) / 180, E: p.E ?? 2000, L: p.length ?? 0.5, formula: false };
 }
 
 const deg = (r: number) => Math.round((Math.abs(r) * 180) / Math.PI);
@@ -56,14 +58,18 @@ export default function FluxWindow(props: FluxWindowProps) {
   const [s, setS] = useState<State>(() => initial(props));
   const start = useRef<State>(initial(props));
   const dragging = useRef(false);
+  // a state change that came from a text step must not tick a task: only the student's own controls do
+  const fromStep = useRef(false);
   const [live, setLive] = useState('');
   const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: TASK_LABEL[id] ?? id }));
 
   useEffect(
     () =>
       subscribeSteps(props.id, (st) => {
+        fromStep.current = true;
         setS((prev) => {
           const next = { ...prev };
+          if (typeof st.formula === 'boolean') next.formula = st.formula;
           if (typeof st.theta === 'number') next.ang = (st.theta * Math.PI) / 180;
           if (typeof st.E === 'number') next.E = st.E;
           if (typeof st.length === 'number') next.L = st.length;
@@ -79,6 +85,10 @@ export default function FluxWindow(props: FluxWindowProps) {
   const flux = Math.abs(rawFlux) < 1e-9 ? 0 : rawFlux;
 
   useEffect(() => {
+    if (fromStep.current) {
+      fromStep.current = false;
+      return;
+    }
     const has = (t: string) => props.tasks?.includes(t);
     const done = (t: string) => markTask(`${props.id}:${t}`);
     const d = deg(s.ang);
@@ -131,6 +141,36 @@ export default function FluxWindow(props: FluxWindowProps) {
     ctx.strokeStyle = p.accent;
     ctx.lineWidth = 4;
     ctx.stroke();
+    ctx.restore();
+
+    // the window's shadow on a plane perpendicular to the field: its length is L·|cosθ|
+    const bx = toScreen(view, WORLD_W / 2 - 0.12, 0)[0];
+    const sTop = toScreen(view, 0, halfSpan)[1];
+    const sBot = toScreen(view, 0, -halfSpan)[1];
+    ctx.save();
+    ctx.setLineDash([3, 4]);
+    ctx.strokeStyle = p.ink3;
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(x1, sTop);
+    ctx.lineTo(bx, sTop);
+    ctx.moveTo(x2, sBot);
+    ctx.lineTo(bx, sBot);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.strokeStyle = p.ink;
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(bx, sTop);
+    ctx.lineTo(bx, sBot);
+    ctx.stroke();
+    ctx.fillStyle = p.ink2;
+    ctx.font = `12px ${p.fontUi}`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.direction = 'rtl';
+    ctx.fillText('הצל', bx, Math.min(sTop, sBot) - 8);
     ctx.restore();
 
     const [cx, cy] = toScreen(view, 0, 0);
@@ -235,13 +275,16 @@ export default function FluxWindow(props: FluxWindowProps) {
       readout={
         <>
           <span>
-            שטח: <b class="q">A = {sci(A)} m²</b> · זווית: <b class="q">θ = {deg(s.ang)}°</b>
+            אורך <b class="q">L = {sci(s.L)} m</b>, עומק <b class="q">1 m</b>: שטח <b class="q">A = {sci(A)} m²</b>
           </span>
           <span>
-            קווים שעוברים: <b class="q">{nThrough}</b>
+            זווית: <b class="q">θ = {deg(s.ang)}°</b>
           </span>
           <span>
-            שטף: <b class="q">Φ = E·A·cosθ = {sci(flux)} N·m²/C</b>
+            קווים שעוברים: <b class="q">{Math.cos(s.ang) < -1e-9 ? '−' : ''}{nThrough}</b> (מדד גס, עד קו אחד פחות או יותר)
+          </span>
+          <span>
+            שטף: <b class="q">Φ = {s.formula ? 'E·A·cosθ = ' : ''}{sci(flux)} N·m²/C</b>
           </span>
         </>
       }
@@ -266,7 +309,7 @@ export default function FluxWindow(props: FluxWindowProps) {
             onChange={(v) => setS({ ...s, E: v })}
           />
           <Slider
-            label="אורך החלון"
+            label="אורך החלון L"
             value={s.L}
             min={0.2}
             max={1}

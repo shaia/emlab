@@ -76,11 +76,17 @@ export default function PlatesField(props: PlatesFieldProps) {
   const [live, setLive] = useState('');
   const dragging = useRef(false);
   const seen = useRef({ near: false, far: false });
+  // a state change that came from a text step must not tick a task: only the student's own controls do
+  const fromStep = useRef(false);
+  // the probe tasks need the student to move the probe, not just to pick a mode
+  const probeMoved = useRef(false);
   const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: TASK_LABEL[id] ?? id }));
 
   useEffect(
     () =>
       subscribeSteps(props.id, (st) => {
+        fromStep.current = true;
+        probeMoved.current = false;
         setS((prev) => {
           const next = { ...prev };
           if (typeof st.mode === 'string' && st.mode in MODE_LABEL) next.mode = st.mode as PlatesMode;
@@ -100,8 +106,13 @@ export default function PlatesField(props: PlatesFieldProps) {
   const Eright = planesFieldX(planes, 0.8);
 
   useEffect(() => {
+    if (fromStep.current) {
+      fromStep.current = false;
+      return;
+    }
     const has = (t: string) => props.tasks?.includes(t);
     const done = (t: string) => markTask(`${props.id}:${t}`);
+    if (!probeMoved.current) return;
     if (s.mode === 'one') {
       if (Math.abs(s.probe) < 0.2) seen.current.near = true;
       if (Math.abs(s.probe) > 0.7) seen.current.far = true;
@@ -129,6 +140,24 @@ export default function PlatesField(props: PlatesFieldProps) {
       ctx.rect(Math.min(x0, x1), Math.min(y0, y1), Math.abs(x1 - x0), Math.abs(y1 - y0));
       ctx.fill();
       ctx.stroke();
+      // the two bases are the short sides facing left and right: draw them solid and name them
+      ctx.setLineDash([]);
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(Math.min(x0, x1), Math.min(y0, y1));
+      ctx.lineTo(Math.min(x0, x1), Math.max(y0, y1));
+      ctx.moveTo(Math.max(x0, x1), Math.min(y0, y1));
+      ctx.lineTo(Math.max(x0, x1), Math.max(y0, y1));
+      ctx.stroke();
+      ctx.fillStyle = p.accent;
+      ctx.font = `12px ${p.fontUi}`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.direction = 'rtl';
+      ctx.fillText('בסיס', Math.min(x0, x1) - 16, Math.max(y0, y1) + 6);
+      ctx.fillText('בסיס', Math.max(x0, x1) + 16, Math.max(y0, y1) + 6);
+      ctx.textBaseline = 'middle';
+      ctx.fillText('דופן', Math.max(x0, x1) + 22, Math.min(y0, y1));
       ctx.restore();
     }
 
@@ -228,6 +257,7 @@ export default function PlatesField(props: PlatesFieldProps) {
     const v = viewRef.current;
     if (!dragging.current || !v) return;
     const [wx] = toWorld(v, e.offsetX, e.offsetY);
+    probeMoved.current = true;
     setS((prev) => ({ ...prev, probe: clampX(wx) }));
   };
   const onPointerUp = () => {
@@ -239,6 +269,7 @@ export default function PlatesField(props: PlatesFieldProps) {
     e.preventDefault();
     const d = e.key === 'ArrowRight' ? 1 : -1;
     setS((prev) => {
+      probeMoved.current = true;
       const next = { ...prev, probe: clampX(prev.probe + d * (e.shiftKey ? 0.1 : 0.02)) };
       setLive(`נקודת המדידה ב-${Math.round(next.probe * 100)} ס"מ. ${fieldWords(planesFieldX(planes, next.probe))}.`);
       return next;
@@ -297,7 +328,10 @@ export default function PlatesField(props: PlatesFieldProps) {
             max={0.95}
             step={0.1}
             format={(v) => `${Math.round(v * 100)} cm`}
-            onChange={(v) => setS({ ...s, probe: v })}
+            onChange={(v) => {
+              probeMoved.current = true;
+              setS({ ...s, probe: v });
+            }}
           />
         </>
       }

@@ -14,7 +14,6 @@ import { rayCrossings, type SurfaceShape } from '~/physics/gauss';
 import type { Vec3 } from '~/physics/vec';
 import { addInkOutline, createInkMaterial, setInkColors, setInkPixelRatio, setOutlineColor } from './ink';
 
-export const SURFACE_SIZE = 0.55;
 export const N_RAYS = 72;
 const RAY_LEN = 2.6;
 const PER_RAY = 3;
@@ -36,6 +35,9 @@ export interface SceneState {
   x: number;
   /** sign of the charge: +1 or −1 */
   sign: 1 | -1;
+  /** radius of the sphere, or half the side of the cube [m] */
+  radius: number;
+  /** number of field lines drawn (the same number the readout counts) */
 }
 
 export interface GaussScene {
@@ -111,7 +113,7 @@ export function createGaussScene(canvas: HTMLCanvasElement, colors: SceneColors,
 
   // ---- the closed surface
   const surfaceMat = createInkMaterial({ color: col.paper, ink: col.accent, hatchGap: 7, mode: 'veil' });
-  let surface: THREE.Mesh = new THREE.Mesh(new THREE.SphereGeometry(SURFACE_SIZE, 48, 32), surfaceMat);
+  let surface: THREE.Mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 48, 32), surfaceMat);
   let edges: THREE.LineSegments | null = null;
   const surfaceGroup = new THREE.Group();
   const edgeMat = new THREE.LineBasicMaterial({ color: new THREE.Color(col.accent) });
@@ -119,10 +121,10 @@ export function createGaussScene(canvas: HTMLCanvasElement, colors: SceneColors,
     surfaceGroup.clear();
     surface.geometry.dispose();
     if (state.shape === 'sphere') {
-      surface = new THREE.Mesh(new THREE.SphereGeometry(SURFACE_SIZE, 48, 32), surfaceMat);
+      surface = new THREE.Mesh(new THREE.SphereGeometry(1, 48, 32), surfaceMat);
       edges = null;
     } else {
-      const s = SURFACE_SIZE * 2;
+      const s = 2;
       surface = new THREE.Mesh(new THREE.BoxGeometry(s, s, s), surfaceMat);
       edges?.geometry.dispose();
       edges = new THREE.LineSegments(new THREE.EdgesGeometry(surface.geometry), edgeMat);
@@ -208,6 +210,7 @@ export function createGaussScene(canvas: HTMLCanvasElement, colors: SceneColors,
       builtShape = state.shape;
     }
     const origin: Vec3 = [state.x, 0, 0];
+    surfaceGroup.scale.setScalar(state.radius);
     charge.position.set(state.x, 0, 0);
     glyph.position.set(state.x, 0, 0);
     chargeMat.uniforms.uColor.value.set(state.sign > 0 ? col.pos : col.neg);
@@ -215,7 +218,7 @@ export function createGaussScene(canvas: HTMLCanvasElement, colors: SceneColors,
     glyph.material.needsUpdate = true;
     dirs.forEach((d, i) => {
       rayPos.set([origin[0], origin[1], origin[2], origin[0] + d[0] * RAY_LEN, origin[1] + d[1] * RAY_LEN, origin[2] + d[2] * RAY_LEN], i * 6);
-      const c = rayCrossings(state.shape, [0, 0, 0], SURFACE_SIZE, origin, d);
+      const c = rayCrossings(state.shape, [0, 0, 0], state.radius, origin, d);
       through[i] = c.out + c.in > 0;
     });
     (rayGeo.getAttribute('position') as THREE.BufferAttribute).needsUpdate = true;
