@@ -6,3 +6,33 @@
   definition: גוף טעון שממדיו קטנים מאוד לעומת המרחקים בבעיה, כך שאפשר להתייחס אליו כאל נקודה.
   lesson: '1.3'
 
+
+- id: electric-force
+  term: כוח חשמלי
+  en: electric force
+  symbol: F
+  unit: N (ניוטון)
+  definition: הכוח שמטענים מפעילים זה על זה. הוא דוחה בין מטענים מאותו סימן, ומושך בין מטענים מסימנים שונים.
+  lesson: '1.3'
+
+- id: coulomb-law
+  term: חוק קולון
+  en: Coulomb's law
+  definition: גודל הכוח החשמלי בין שני מטענים נקודתיים ביחס ישר למכפלת גדלי המטענים וביחס הפוך לריבוע המרחק ביניהם. הכוח פועל לאורך הקו שמחבר את המטענים.
+  lesson: '1.3'
+
+- id: coulomb-constant
+  term: קבוע קולון
+  en: Coulomb constant
+  symbol: k
+  unit: N·m²/C²
+  definition: הקבוע בחוק קולון. k = 9·10⁹ N·m²/C².
+  lesson: '1.3'
+
+- id: gravitational-force
+  term: כוח הכבידה
+  en: gravitational force
+  symbol: F_g
+  unit: N (ניוטון)
+  definition: הכוח שמסות מפעילות זו על זו. הוא תמיד מושך, וגודלו ביחס ישר למכפלת המסות וביחס הפוך לריבוע המרחק.
+  lesson: '1.3'

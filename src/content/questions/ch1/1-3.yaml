@@ -1,0 +1,251 @@
+# Lesson 1.3 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time, so a broken formula fails the build with the question id.
+# YAML note: plain and single-quoted strings keep backslashes literally; never use "…" for TeX.
+
+chapter: 1
+questions:
+  # ---------------------------------------------------------------- 1.3 Coulomb's law
+  - id: Q-1.3-force-value
+    type: numeric
+    objectives: [OBJ-1.3-1]
+    prompt: >-
+      שני מטענים נקודתיים, $2\,\mu\text{C}$ ו-$5\,\mu\text{C}$, נמצאים במרחק $30$ ס"מ זה מזה בריק.
+      מה גודל הכוח שכל אחד מהם מפעיל על השני?
+      ($k = 9\cdot10^{9}\,\text{N}\cdot\text{m}^2/\text{C}^2$)
+    answer: 1.0
+    unit: N
+    tolerance: 0.03
+    correctFeedback: 'נכון: $F = \dfrac{kq_1q_2}{r^2} = \dfrac{9\cdot10^9 \cdot 2\cdot10^{-6} \cdot 5\cdot10^{-6}}{0.3^2} = 1\,\text{N}$.'
+    wrongFeedback: 'השתמשו ב-$F = kq_1q_2/r^2$. המירו את המטענים לקולון ואת המרחק למטרים.'
+    commonWrong:
+      - value: 0.3
+        feedback: 'חילקתם ב-$r$ ולא ב-$r^2$. בחוק קולון המרחק בריבוע.'
+        misconception: MC-coulomb-linear-in-r
+      - value: 1.0e-4
+        feedback: 'הצבתם $r = 30$ במקום $0.3\,\text{m}$. ביחידות SI המרחק הוא במטרים.'
+    hints:
+      - 'המירו: $2\,\mu\text{C} = 2\cdot10^{-6}\,\text{C}$, $30\,\text{cm} = 0.3\,\text{m}$.'
+      - 'כמה זה $0.3^2$?'
+
+  - id: Q-1.3-attract-repel
+    type: mc
+    objectives: [OBJ-1.3-1]
+    qualitative: true
+    prompt: >-
+      מטען $+2\,\mu\text{C}$ ומטען $-2\,\mu\text{C}$ נמצאים במרחק $10$ ס"מ זה מזה.
+      מה נכון לגבי הכוח ביניהם?
+    choices:
+      - text: הם מושכים זה את זה, בכוח שגודלו $k\cdot 4\cdot10^{-12}/0.01$.
+        correct: true
+        feedback: נכון. מטענים מסימנים שונים מושכים זה את זה, והגודל נקבע לפי חוק קולון עם ערכים מוחלטים.
+      - text: הם דוחים זה את זה, כי הסימנים הפוכים.
+        feedback: זה הפוך. מטענים מסימנים **שונים** מושכים, ומטענים מאותו סימן דוחים.
+        misconception: MC-coulomb-signs-reversed
+      - text: הכוח ביניהם קטן יותר מהכוח בין שני מטענים חיוביים של $2\,\mu\text{C}$, כי הוא "שלילי".
+        feedback: סימן המטען קובע רק אם הכוח דוחה או מושך. הגודל זהה, כי בחוק קולון מציבים את גדלי המטענים.
+        misconception: MC-coulomb-negative-force-weaker
+      - text: אין כוח ביניהם, כי סכום המטענים הוא אפס.
+        feedback: הכוח תלוי במכפלת המטענים ולא בסכומם. המכפלה כאן שונה מאפס.
+        misconception: MC-coulomb-add-charges
+    explanation: >-
+      $F = k|q_1||q_2|/r^2$ נותן את הגודל. הסימנים קובעים רק את הכיוון: דחייה בין סימנים זהים, משיכה בין סימנים שונים.
+
+  - id: Q-1.3-direction
+    type: vector
+    objectives: [OBJ-1.3-1]
+    qualitative: true
+    prompt: >-
+      מטען חיובי נמצא משמאל למטען שלילי, על אותו קו אופקי.
+      מה כיוון הכוח הפועל על המטען **השלילי**?
+    answer: w
+    correctFeedback: נכון. מטענים מסימנים שונים מושכים זה את זה, ולכן המטען השלילי נמשך שמאלה, אל המטען החיובי.
+    wrong:
+      - dir: e
+        feedback: ימינה הוא כיוון הדחייה. אבל מטענים מסימנים שונים מושכים זה את זה.
+        misconception: MC-coulomb-signs-reversed
+    wrongFeedback: הכוח פועל לאורך הקו שמחבר את המטענים. מטענים מסימנים שונים מושכים.
+
+  - id: Q-1.3-find-charge
+    type: numeric
+    objectives: [OBJ-1.3-1]
+    level: bagrut
+    prompt: >-
+      שני מטענים נקודתיים שווים נמצאים במרחק $0.1\,\text{m}$ זה מזה, והכוח ביניהם הוא $3.6\,\text{N}$.
+      מה גודל כל אחד מהמטענים?
+    answer: 2.0e-6
+    unit: C
+    tolerance: 0.03
+    correctFeedback: 'נכון: $q^2 = \dfrac{Fr^2}{k} = \dfrac{3.6 \cdot 0.01}{9\cdot10^9} = 4\cdot10^{-12}$, ולכן $q = 2\cdot10^{-6}\,\text{C}$.'
+    wrongFeedback: 'המטענים שווים, ולכן $F = kq^2/r^2$. בודדים את $q^2$ ואחר כך מוציאים שורש.'
+    commonWrong:
+      - value: 4.0e-12
+        feedback: 'זה $q^2$. נשאר להוציא שורש ריבועי.'
+    hints:
+      - 'כתבו $F = kq^2/r^2$ ובודדו את $q^2$.'
+
+  - id: Q-1.3-halve-distance
+    type: mc
+    objectives: [OBJ-1.3-2]
+    qualitative: true
+    prompt: >-
+      שני מטענים נקודתיים מפעילים זה על זה כוח $F$. מקרבים אותם למחצית המרחק, והמטענים לא משתנים.
+      מה הכוח עכשיו?
+    choices:
+      - text: '$4F$'
+        correct: true
+        feedback: 'נכון. $F \propto 1/r^2$, ולכן מחצית המרחק נותנת כוח גדול פי $2^2 = 4$.'
+      - text: '$2F$'
+        feedback: 'זה היה נכון אם הכוח היה ביחס הפוך ל-$r$. אבל בחוק קולון המרחק בריבוע.'
+        misconception: MC-coulomb-linear-in-r
+      - text: '$F/2$'
+        feedback: כשמקרבים מטענים הכוח גדל ולא קטן.
+      - text: '$F/4$'
+        feedback: כשמקרבים מטענים הכוח גדל. כאן הכיוון הפוך.
+
+  - id: Q-1.3-third-law
+    type: twotier
+    objectives: [OBJ-1.3-2]
+    qualitative: true
+    prompt: >-
+      שני מטענים נקודתיים, $q_1 = 4\,\mu\text{C}$ ו-$q_2 = 1\,\mu\text{C}$, נמצאים במרחק קבוע זה מזה.
+      איזה מהם מקבל כוח גדול יותר מהמטען השני?
+    choices:
+      - text: $q_1$, כי המטען שלו גדול יותר.
+        feedback: הכוחות שווים בגודלם. המטען הגדול לא מקבל כוח גדול יותר.
+        misconception: MC-coulomb-bigger-charge-bigger-force
+      - text: $q_2$, כי הוא מושפע ממטען גדול.
+        feedback: הכוחות שווים בגודלם. $q_2$ אמנם מקבל כוח ממטען גדול, אבל גם $q_1$ מקבל כוח מ-$q_2$, ובאותו גודל בדיוק.
+        misconception: MC-coulomb-bigger-charge-bigger-force
+      - text: שניהם מקבלים כוח שווה בגודלו.
+        correct: true
+        feedback: נכון. הכוחות שווים בגודלם ומנוגדים בכיוונם.
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: 'חוק שלישי של ניוטון: כוחות פעולה ותגובה שווים בגודלם.'
+        correct: true
+        feedback: נכון. הכוח ש-$q_1$ מפעיל על $q_2$ שווה בגודלו לכוח ש-$q_2$ מפעיל על $q_1$.
+      - text: 'הכוח ביחס ישר למטען, ולכן המטען הגדול מקבל כוח גדול.'
+        feedback: 'בנוסחה $F = kq_1q_2/r^2$ מופיעים שני המטענים, והיא סימטרית. אותו $F$ פועל על כל אחד מהם.'
+        misconception: MC-coulomb-bigger-charge-bigger-force
+      - text: 'המטען הקטן קל יותר להזיז, ולכן הכוח עליו גדול.'
+        feedback: 'קלות ההזזה היא תאוצה, לא כוח. הכוח על שני המטענים שווה בגודלו.'
+        misconception: MC-coulomb-bigger-charge-bigger-force
+    hints:
+      - 'כתבו את הכוח ש-$q_1$ מפעיל על $q_2$ ואת הכוח ש-$q_2$ מפעיל על $q_1$. מה ההבדל ביניהם בנוסחה?'
+    explanation: >-
+      $F = kq_1q_2/r^2$ סימטרית במטענים, ולכן גם המטען הגדול וגם הקטן מקבלים אותו גודל כוח. הכיוונים הפוכים.
+
+  - id: Q-1.3-scaling-combo
+    type: mc
+    objectives: [OBJ-1.3-2]
+    prompt: >-
+      בין שני מטענים פועל כוח $F$. מגדילים את $q_1$ פי 2, את $q_2$ פי 3, ואת המרחק ביניהם פי 2.
+      מה הכוח החדש?
+    choices:
+      - text: '$1.5F$'
+        correct: true
+        feedback: 'נכון. $\dfrac{2\cdot 3}{2^2} = \dfrac{6}{4} = 1.5$.'
+      - text: '$1.25F$'
+        feedback: 'חיברתם את המטענים ($2+3$) במקום להכפיל. הכוח ביחס למכפלה $q_1q_2$: $2\cdot3 = 6$.'
+        misconception: MC-coulomb-add-charges
+      - text: '$3F$'
+        feedback: 'חילקתם ב-$2$ ולא ב-$2^2$. המרחק נכנס בריבוע.'
+        misconception: MC-coulomb-linear-in-r
+      - text: '$24F$'
+        feedback: 'הכפלתם בריבוע המרחק. הוא נמצא במכנה, לכן מחלקים בו.'
+
+  - id: Q-1.3-rank-forces
+    type: rank
+    objectives: [OBJ-1.3-2]
+    qualitative: true
+    prompt: >-
+      דרגו את הכוח בין שני המטענים בארבעה מצבים, מהחזק לחלש:
+    items:
+      - id: A
+        label: 'מצב A: מטענים $q$ ו-$q$ במרחק $r$'
+      - id: B
+        label: 'מצב B: מטענים $2q$ ו-$q$ במרחק $2r$'
+      - id: C
+        label: 'מצב C: מטענים $q$ ו-$q$ במרחק $r/2$'
+      - id: D
+        label: 'מצב D: מטענים $2q$ ו-$2q$ במרחק $2r$'
+    order: [C, [A, D], B]
+    correctFeedback: >-
+      נכון. נסמן $F_0 = kq^2/r^2$ ונקבל: A הוא $F_0$. B הוא $2F_0/4 = F_0/2$. C הוא $4F_0$. D הוא $4F_0/4 = F_0$.
+      לכן C החזק ביותר, A ו-D שווים, ו-B החלש ביותר.
+    wrongFeedback: 'כתבו כל כוח כמספר כפול $F_0 = kq^2/r^2$. מכפילים את המטענים ומחלקים בריבוע המרחק.'
+    hints:
+      - 'במצב D שני המטענים כפולים והמרחק כפול. כמה זה ביחס ל-A?'
+
+  - id: Q-1.3-electron-proton
+    type: numeric
+    objectives: [OBJ-1.3-1, OBJ-1.3-3]
+    prompt: >-
+      מה גודל הכוח החשמלי בין אלקטרון לפרוטון, במרחק $1\cdot10^{-10}\,\text{m}$ זה מזה?
+      ($e = 1.6\cdot10^{-19}\,\text{C}$, $k = 9\cdot10^{9}\,\text{N}\cdot\text{m}^2/\text{C}^2$)
+    answer: 2.3e-8
+    unit: N
+    tolerance: 0.03
+    correctFeedback: 'נכון: $F = \dfrac{ke^2}{r^2} = \dfrac{9\cdot10^9 \cdot (1.6\cdot10^{-19})^2}{(10^{-10})^2} = 2.3\cdot10^{-8}\,\text{N}$.'
+    wrongFeedback: 'המטען של כל חלקיק הוא $e$ בגודלו. הציבו $F = ke^2/r^2$.'
+    commonWrong:
+      - value: 2.3e-18
+        feedback: 'חילקתם ב-$r$ ולא ב-$r^2$. המרחק בריבוע.'
+        misconception: MC-coulomb-linear-in-r
+    hints:
+      - 'כמה זה $(10^{-10})^2$?'
+
+  - id: Q-1.3-ratio-protons
+    type: numeric
+    objectives: [OBJ-1.3-3]
+    level: bagrut
+    prompt: >-
+      שני פרוטונים נמצאים במרחק כלשהו זה מזה. מה היחס בין גודל הכוח החשמלי ביניהם לבין גודל כוח הכבידה ביניהם?
+      ($e = 1.6\cdot10^{-19}\,\text{C}$, $m_p = 1.67\cdot10^{-27}\,\text{kg}$,
+      $k = 9\cdot10^{9}\,\text{N}\cdot\text{m}^2/\text{C}^2$, $G = 6.67\cdot10^{-11}\,\text{N}\cdot\text{m}^2/\text{kg}^2$)
+    answer: 1.24e36
+    unit: ללא יחידות
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\dfrac{F_e}{F_g} = \dfrac{ke^2}{Gm_p^2} = 1.24\cdot10^{36}$. המרחק מצטמצם, ולכן אין צורך לדעת אותו.'
+    wrongFeedback: 'כתבו את שני הכוחות ($ke^2/r^2$ ו-$Gm_p^2/r^2$) וחלקו. $r^2$ מצטמצם.'
+    commonWrong:
+      - value: 2.27e39
+        feedback: 'השתמשתם במסה של אלקטרון ושל פרוטון. כאן שני החלקיקים פרוטונים.'
+    hints:
+      - 'בחלוקה של שני הכוחות, המרחק לא מופיע.'
+
+  - id: Q-1.3-ratio-distance
+    type: mc
+    objectives: [OBJ-1.3-3]
+    qualitative: true
+    prompt: >-
+      מרחיקים אלקטרון ופרוטון מ-$10^{-10}\,\text{m}$ ל-$10^{-9}\,\text{m}$.
+      מה קורה ליחס בין הכוח החשמלי לכוח הכבידה ביניהם?
+    choices:
+      - text: הוא לא משתנה.
+        correct: true
+        feedback: נכון. שני הכוחות יורדים כמו $1/r^2$, ולכן היחס ביניהם לא תלוי במרחק.
+      - text: הוא גדל, כי הכבידה "מגיעה רחוק יותר".
+        feedback: גם כוח הכבידה וגם הכוח החשמלי יורדים כמו $1/r^2$. אף אחד מהם לא מגיע רחוק יותר.
+        misconception: MC-electric-gravity-ratio-depends-on-r
+      - text: הוא קטן, כי הכוח החשמלי נחלש מהר יותר.
+        feedback: שניהם נחלשים בדיוק באותו קצב, פי 100 כשהמרחק גדל פי 10. היחס נשאר קבוע.
+        misconception: MC-electric-gravity-ratio-depends-on-r
+
+  - id: Q-1.3-planets
+    type: mc
+    objectives: [OBJ-1.3-3]
+    qualitative: true
+    prompt: >-
+      הכוח החשמלי בין אלקטרון לפרוטון חזק פי $10^{39}$ מהכבידה ביניהם. ובכל זאת כוח הכבידה הוא שמניע את כוכבי הלכת סביב השמש.
+      למה?
+    choices:
+      - text: גופים גדולים הם כמעט נייטרליים. המטענים החיוביים והשליליים בהם מבטלים זה את זה, ואילו המסות רק מצטברות.
+        correct: true
+        feedback: נכון. בגוף נייטרלי כל כוחות המשיכה והדחייה מתקזזים. כוח הכבידה אף פעם לא מתקזז, כי המסות תמיד מושכות.
+      - text: בגופים גדולים כוח הכבידה חזק יותר מהכוח החשמלי בין כל שני חלקיקים בהם.
+        feedback: לא נכון. בין כל שני חלקיקים הכוח החשמלי חזק הרבה יותר. ההבדל הוא שהכוחות החשמליים מתבטלים בגוף נייטרלי.
+        misconception: MC-gravity-stronger-than-electric
+      - text: הכוח החשמלי פועל רק במרחקים קטנים, כמו בתוך אטום.
+        feedback: 'הכוח החשמלי יורד כמו $1/r^2$ ואינו מתאפס בשום מרחק. גם הכבידה יורדת כך.'
+        misconception: MC-electric-force-short-range
