@@ -199,8 +199,8 @@ export default function ElectroscopeScene(props: { id: string; tasks?: string[] 
     }
 
     // rod
-    const tip = 38 + (cx - 8 - 38) * s.prox;
-    const len = 44;
+    const tip = 50 + (cx - 8 - 50) * s.prox;
+    const len = 42;
     ctx.save();
     ctx.fillStyle = p.paper2;
     ctx.strokeStyle = p.ink2;

@@ -24,7 +24,7 @@ const TASK_LABEL: Record<string, string> = {
 };
 
 const COLS = [110, 130];
-const ROWS = [30, 45, 60, 75, 90];
+const ROWS = [24, 39, 54, 69, 84];
 
 export default function PolariseScene(props: { id: string; tasks?: string[] }) {
   const [rodN, setRodN] = useState(ROD);
@@ -58,9 +58,9 @@ export default function PolariseScene(props: { id: string; tasks?: string[] }) {
     const f = frameOf(view);
     const gR = 3.1 * f.u;
     // the neutral insulator
-    slab(ctx, f.X(98), f.Y(16), 44 * f.u, 88 * f.u, p, { dash: true });
-    label(ctx, 'מבודד ניטרלי', f.X(120), f.Y(9), p, { size: 13, color: p.ink });
-    const px = Math.max(-9, Math.min(9, shift * 1.1)); // + = toward the rod = to the left
+    slab(ctx, f.X(98), f.Y(12), 44 * f.u, 84 * f.u, p, { dash: true });
+    label(ctx, 'מבודד ניטרלי', f.X(120), f.Y(104), p, { size: 13, color: p.ink });
+    const px = Math.max(-9, Math.min(9, shift * 1.8)); // + = toward the rod = to the left
     for (const mx of COLS) {
       for (const my of ROWS) {
         const X = f.X(mx);
@@ -79,7 +79,7 @@ export default function PolariseScene(props: { id: string; tasks?: string[] }) {
     }
     // the charged body
     const xb = 79 - ((r - 1) / 1.2) * 28;
-    const yb = 60;
+    const yb = 54;
     const rb = 15;
     ctx.save();
     ctx.fillStyle = p.paper2;
@@ -101,7 +101,7 @@ export default function PolariseScene(props: { id: string; tasks?: string[] }) {
     if (rodN !== 0) {
       const len = Math.min(52, 60 * Math.pow(rel, 0.4)) * f.u;
       const ax = f.X(120);
-      const ay = f.Y(112);
+      const ay = f.Y(114);
       arrow(ctx, ax, ay, ax - len, ay, { color: p.force, width: 3.4, head: 12 });
       label(ctx, 'F', ax - len / 2, ay - 12, p, { size: 15, color: p.force, weight: 700 });
     }

@@ -17,11 +17,11 @@ import { eText, frameOf, label, negative, slab } from './draw';
 const SITES = 6;
 const SITE_W = 22;
 const BAR_X = 14;
-const BAR_H = 32;
+const BAR_H = 30;
 const MAX_TOTAL = 12;
 const BARS: { kind: BodyKind; y: number; name: string }[] = [
-  { kind: 'conductor', y: 20, name: 'מוליך: מוט מתכת' },
-  { kind: 'insulator', y: 74, name: 'מבודד: מוט פלסטיק' },
+  { kind: 'conductor', y: 16, name: 'מוליך: מוט מתכת' },
+  { kind: 'insulator', y: 76, name: 'מבודד: מוט פלסטיק' },
 ];
 
 const TASK_LABEL: Record<string, string> = {
@@ -119,7 +119,7 @@ export default function MaterialsScene(props: { id: string; tasks?: string[] }) 
         ctx.stroke();
       }
       ctx.restore();
-      label(ctx, bar.name, f.X(BAR_X + (SITE_W * SITES) / 2), f.Y(bar.y - 8), p, { size: 14, color: p.ink });
+      label(ctx, bar.name, f.X(BAR_X + (SITE_W * SITES) / 2), f.Y(bar.y - 7), p, { size: 14, color: p.ink });
 
       // targets: tokens sorted by x are matched to target slots sorted by x
       const dist = distributeCharge(bar.kind, dep[i]);
@@ -151,7 +151,7 @@ export default function MaterialsScene(props: { id: string; tasks?: string[] }) 
         }
         negative(ctx, f.X(tk.x), f.Y(tk.y), 3.1 * f.u, p);
       });
-      label(ctx, `Q = ${eText(-total(i))}`, f.X(BAR_X + (SITE_W * SITES) / 2), f.Y(bar.y + BAR_H + 10), p, {
+      label(ctx, `Q = ${eText(-total(i))}`, f.X(BAR_X + (SITE_W * SITES) / 2), f.Y(bar.y + BAR_H + 9), p, {
         size: 15,
         color: p.hand,
         weight: 700,
