@@ -478,7 +478,7 @@ questions:
         level: mid
         standalone: false
         objectives: []
-        pendingObjectives: ['OBJ-1.1-TBD: כימות המטען, מטען שהוא כפולה שלמה של e']
+        pendingObjectives: ['OBJ-1.1-TBD: קוונטיזציה של המטען, מטען שהוא כפולה שלמה של e']
         prompt: כמה אלקטרונים עודפים יש על הטיפה?
         answer: 2
         unit: אלקטרונים

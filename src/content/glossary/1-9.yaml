@@ -11,13 +11,7 @@
 - id: excess-charge-conductor
   term: מטען עודף
   en: excess charge
-  definition: מטען נטו של מוליך, כלומר המטען שנוסף לו מעבר למצבו הנייטרלי, שבו המטען הכולל אפס.
-  lesson: '1.9'
-
-- id: induced-charge-conductor
-  term: מטען מושרה
-  en: induced charge
-  definition: מטען שמופיע על פני מוליך כשמניחים אותו בשדה חיצוני או ליד מטען אחר. המטענים החופשיים זזים, אבל המטען הכולל של המוליך לא משתנה.
+  definition: מטען נטו של מוליך, כלומר המטען שנוסף לו מעבר למצבו הניטרלי, שבו המטען הכולל אפס.
   lesson: '1.9'
 
 - id: surface-charge-density-conductor
