@@ -1,0 +1,188 @@
+# Lesson 1.9 question bank. Format and rules: see questions/ch1/1-5.yaml.
+
+chapter: 1
+questions:
+  # ---------------------------------------------------------------- 1.9 conductors in equilibrium
+  - id: Q-1.9-inside-field
+    type: mc
+    objectives: [OBJ-1.9-1]
+    qualitative: true
+    prompt: >-
+      כדור מתכת נייטרלי מוכנס לשדה חשמלי אחיד שמצביע ימינה. אחרי שהמטענים התייצבו, מה השדה בתוך הכדור?
+    choices:
+      - text: אפס, בכל נקודה בתוך הכדור.
+        correct: true
+        feedback: נכון. המטענים החופשיים זזים עד שהשדה בתוך המתכת מתאפס.
+      - text: חלש יותר מהשדה שבחוץ, ומצביע ימינה.
+        feedback: אם היה בפנים שדה, גם קטן, היה כוח על המטענים החופשיים והם היו ממשיכים לנוע. המטענים נחים רק כשהשדה אפס.
+        misconception: MC-conductor-partial-shield
+      - text: זהה לשדה שבחוץ, כי המתכת לא משנה את השדה.
+        feedback: המתכת משנה את השדה מאוד, כי המטענים החופשיים שבה זזים וקווי השדה לא נכנסים אליה.
+        misconception: MC-conductor-partial-shield
+
+  - id: Q-1.9-why-zero
+    type: mc
+    objectives: [OBJ-1.9-1]
+    qualitative: true
+    prompt: >-
+      למה בשיווי משקל אלקטרוסטטי השדה בתוך מוליך הוא אפס?
+    choices:
+      - text: אילו היה שדה, הוא היה מפעיל כוח על מטענים חופשיים והם היו נעים. אבל בשיווי משקל כולם נחים.
+        correct: true
+        feedback: נכון. נחים פירושו שאין כוח, ולכן אין שדה.
+      - text: כי במתכת אין מטענים.
+        feedback: במתכת יש מטענים רבים, והאלקטרונים החופשיים הם בדיוק אלה שזזים. המתכת נייטרלית, ולא ריקה ממטען.
+      - text: כי המתכת חוסמת את קווי השדה כמו קיר.
+        feedback: זו לא הסיבה. הקווים לא "נעצרים בקיר", הם מסתיימים במטענים מושרים שעל הפנים. ההסבר הוא התנועה של המטענים החופשיים עד שהכוח עליהם מתאפס.
+    explanation: >-
+      המטענים החופשיים במוליך זזים בשדה. הם מפסיקים לזוז רק כשהכוח עליהם אפס, כלומר כשהשדה אפס.
+
+  - id: Q-1.9-force-zero
+    type: vector
+    objectives: [OBJ-1.9-1]
+    qualitative: true
+    prompt: >-
+      מוליך נמצא בשיווי משקל אלקטרוסטטי בתוך שדה חיצוני חזק. אלקטרון חופשי נמצא בתוך המוליך. מה כיוון הכוח החשמלי על האלקטרון?
+    answer: zero
+    correctFeedback: נכון. הכוח הוא אפס, כי השדה בתוך המוליך אפס. האלקטרון יכול לנוע בחופשיות אבל אין כוח שדוחף אותו לכיוון מסוים.
+    wrong:
+      - dir: w
+        feedback: זה היה הכוח על אלקטרון בשדה שמצביע ימינה, אבל בתוך מוליך בשיווי משקל אין שדה.
+        misconception: MC-conductor-partial-shield
+    wrongFeedback: מה השדה בתוך מוליך בשיווי משקל?
+
+  - id: Q-1.9-surface-direction
+    type: vector
+    objectives: [OBJ-1.9-2]
+    qualitative: true
+    prompt: >-
+      לוח מתכת מונח אופקית, והצד העליון שלו טעון חיובית ובשיווי משקל. מה כיוון השדה החשמלי ממש מעל פני הלוח?
+    answer: n
+    correctFeedback: נכון. השדה ניצב לפני המוליך, ומצביע החוצה ממשטח חיובי, כלומר כלפי מעלה.
+    wrong:
+      - dir: e
+        feedback: זה כיוון לאורך פני השטח. אילו היה שם שדה כזה, המטענים החופשיים היו מחליקים לאורך הלוח. בשיווי משקל השדה ניצב.
+        misconception: MC-conductor-tangential-field
+      - dir: s
+        feedback: שדה מצביע החוצה ממטען חיובי, לא פנימה.
+    wrongFeedback: השדה ליד פני מוליך ניצב לפני השטח. לאיזה כיוון ניצב, ומצביע החוצה או פנימה?
+
+  - id: Q-1.9-where-charge
+    type: mc
+    objectives: [OBJ-1.9-2]
+    qualitative: true
+    prompt: >-
+      מוסיפים $5\,\text{nC}$ של מטען עודף לכדור מתכת מבודד. איפה נמצא המטען העודף אחרי שהמטענים התייצבו?
+    choices:
+      - text: על פני השטח החיצוניים של הכדור.
+        correct: true
+        feedback: נכון. המטענים דוחים זה את זה ומתרחקים עד הקצה. בתוך המתכת אין מטען עודף.
+      - text: מתפזר בצורה אחידה בכל נפח הכדור.
+        feedback: מטענים בני אותו סימן דוחים זה את זה ולכן לא נשארים בפנים. המטען נדחק אל פני השטח.
+        misconception: MC-conductor-volume-charge
+      - text: מתרכז במרכז הכדור.
+        feedback: במרכז המטענים היו קרובים מאוד זה לזה והדחייה ביניהם הייתה חזקה. הם נעים החוצה עד פני השטח.
+        misconception: MC-conductor-volume-charge
+
+  - id: Q-1.9-sigma-field
+    type: numeric
+    objectives: [OBJ-1.9-2]
+    prompt: >-
+      על פני מוליך בשיווי משקל צפיפות המטען המשטחית היא $\sigma = 2.0\cdot10^{-8}\,\text{C/m}^2$.
+      מה עוצמת השדה ממש מחוץ למוליך, ליד פני השטח? ($\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/\text{N}\cdot\text{m}^2$)
+    answer: 2.26e3
+    unit: N/C
+    tolerance: 0.03
+    correctFeedback: 'נכון: $E = \dfrac{\sigma}{\varepsilon_0} = \dfrac{2.0\cdot10^{-8}}{8.85\cdot10^{-12}} = 2.26\cdot10^{3}\,\text{N/C}$.'
+    wrongFeedback: 'ליד פני מוליך בשיווי משקל $E = \sigma/\varepsilon_0$.'
+    commonWrong:
+      - value: 1.13e3
+        feedback: 'חילקתם ב-$2\varepsilon_0$. זה השדה של לוח אינסופי לא מוליך, שיש לו מטען משני צדיו. ליד פני מוליך כל המטען על הפנים, והשדה הוא $\sigma/\varepsilon_0$.'
+      - value: 1.77e-19
+        feedback: 'כפלתם ב-$\varepsilon_0$ במקום לחלק בו.'
+    hints:
+      - 'השתמשו ב-$E = \sigma/\varepsilon_0$.'
+
+  - id: Q-1.9-charged-ball
+    type: numeric
+    objectives: [OBJ-1.9-2]
+    level: bagrut
+    prompt: >-
+      כדור מתכת ברדיוס $20\,\text{cm}$ טעון ב-$-3.2\,\text{nC}$ ונמצא בשיווי משקל.
+      מה עוצמת השדה החשמלי ממש מחוץ לפני הכדור? (כל המטען על הפנים, והשדה מחוץ לכדור כמו של מטען נקודתי במרכז.)
+    answer: 720
+    unit: N/C
+    correctFeedback: 'נכון. $E = \dfrac{k|Q|}{R^2} = \dfrac{9\cdot10^9 \cdot 3.2\cdot10^{-9}}{0.2^2} = 720\,\text{N/C}$, והשדה מצביע פנימה, אל הכדור, כי המטען שלילי.'
+    wrongFeedback: 'השתמשו ב-$E = k|Q|/R^2$ עם $Q$ בקולון ו-$R$ במטרים.'
+    commonWrong:
+      - value: 144
+        feedback: 'חילקתם ב-$R$ במקום ב-$R^2$.'
+        misconception: MC-field-linear-in-r
+    hints:
+      - '$3.2\,\text{nC} = 3.2\cdot10^{-9}\,\text{C}$ ו-$20\,\text{cm} = 0.2\,\text{m}$.'
+
+  - id: Q-1.9-cage-inside
+    type: mc
+    objectives: [OBJ-1.9-3]
+    qualitative: true
+    prompt: >-
+      אדם יושב בתוך כלוב מתכת סגור שנמצא בשדה חשמלי חזק. מה השדה החשמלי בתוך הכלוב?
+    choices:
+      - text: אפס, בכל נקודה בתוכו.
+        correct: true
+        feedback: נכון. המטענים על המתכת מסתדרים כך שהשדה בתוך הכלוב מתאפס.
+      - text: חלש יותר מהשדה שבחוץ, אבל לא אפס.
+        feedback: בשיווי משקל השדה אפס, ולא רק קטן. אם נשאר שדה, המטענים בכלוב ממשיכים לזוז.
+        misconception: MC-conductor-partial-shield
+      - text: אפס רק במרכז הכלוב, ולא ליד הדפנות.
+        feedback: השדה אפס בכל נקודה בתוך החלל, גם ליד הדפנות.
+        misconception: MC-conductor-partial-shield
+
+  - id: Q-1.9-cage-charge-inside
+    type: mc
+    objectives: [OBJ-1.9-3]
+    qualitative: true
+    prompt: >-
+      מטען חיובי נמצא בתוך החלל של קליפת מתכת שאינה מוארקת. האם יש שדה חשמלי מחוץ לקליפה?
+    choices:
+      - text: כן. המטען שבחלל מושרה על פני הקליפה, ומטען מושרה על הפנים החיצוניים יוצר שדה בחוץ.
+        correct: true
+        feedback: נכון. הכלוב מגן מפני שדות מבחוץ, אבל לא מסתיר מטען שנמצא בתוכו.
+      - text: לא. הקליפה חוסמת כל שדה, גם של מטען מבפנים.
+        feedback: הקליפה מגינה על מה שבפנים מפני שדה חיצוני. מטען שבתוכה מושרה על פני הקליפה, ויוצר שדה גם בחוץ.
+        misconception: MC-cage-hides-inside-charge
+      - text: יש שדה רק בתוך החלל.
+        feedback: המטען שבתוך החלל גורם למטען מושרה על הפנים החיצוניים של הקליפה, והוא יוצר שדה גם מחוץ לה.
+        misconception: MC-cage-hides-inside-charge
+
+  - id: Q-1.9-lightning
+    type: mc
+    objectives: [OBJ-1.9-3]
+    qualitative: true
+    prompt: >-
+      למה בדרך כלל בטוח להישאר בתוך מכונית סגורה עם גוף מתכת בזמן סערת ברקים?
+    choices:
+      - text: המטען מתפזר על פני החיצוניים של המתכת, והשדה בתוך הרכב קטן מאוד, כמו בכלוב פאראדיי.
+        correct: true
+        feedback: נכון. הגוף המוליך עושה את עבודת הכלוב.
+      - text: הצמיגים מבודדים את הרכב מהקרקע.
+        feedback: זו טעות נפוצה. הצמיגים לא מבודדים מברק שעבר דרך האוויר. מה שמגן הוא גוף המתכת המוליך.
+      - text: המתכת סופגת את המטען ולכן המטען נעלם.
+        feedback: מטען לא נעלם (שימור המטען). הוא עובר ומתפזר על פני המתכת.
+
+  - id: Q-1.9-cage-e0-change
+    type: mc
+    objectives: [OBJ-1.9-3]
+    qualitative: true
+    prompt: >-
+      בתוך החלל של קליפת מתכת השדה הוא אפס. מגדילים פי 3 את השדה החיצוני האחיד. מה יהיה השדה בחלל?
+    choices:
+      - text: עדיין אפס.
+        correct: true
+        feedback: נכון. המטענים על הקליפה מגיבים בהתאם, והשדה בחלל נשאר אפס (כל עוד המתכת לא נפגעת).
+      - text: גדל פי 3.
+        feedback: אפס כפול 3 הוא עדיין אפס. המטענים על הקליפה הולכים ומתאימים את עצמם לשדה החזק יותר.
+        misconception: MC-conductor-partial-shield
+      - text: קטן פי 3.
+        feedback: השדה בחלל לא קטן, הוא אפס מלכתחילה, ונשאר אפס.
+        misconception: MC-conductor-partial-shield

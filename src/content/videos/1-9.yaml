@@ -1,0 +1,21 @@
+# Verified YouTube videos for this lesson. Format and rules: see videos/1-5.yaml.
+
+- id: technorama-faraday-cage
+  youtubeId: iRAPDb7LGko
+  title: '100,000 Volt - Human Lightening - Faraday cage - Technorama'
+  channel: Rando York - Shorts and Trains
+  lang: en
+  captions: []
+  minutes: 1
+  why: קטע קצר של הדגמה בכלוב פאראדיי תחת מתח של 100,000 וולט (לפי כותרת הסרטון). חפשו איפה האדם נמצא ביחס למוליך.
+  verified: '2026-10-31'
+
+- id: alchemist-faraday-cages
+  youtubeId: X5SwiK1_2u4
+  title: 'Faraday Cages Explained [IN UNDER 3 MINUTES]'
+  channel: TheAlchemist
+  lang: en
+  captions: []
+  minutes: 3
+  why: 'הסבר קצר על כלובי פאראדיי (לפי כותרת הסרטון). השוו את ההסבר לזה שבשיעור: למה אין שדה בתוך המוליך?'
+  verified: '2026-10-31'
