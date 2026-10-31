@@ -1,0 +1,7 @@
+---
+/** Charge lab figure for lesson MDX: <Spread figure={ChargeLab} figureProps={{ scene: 'rub' }}>. */
+import ChargeLab, { type ChargeLabProps } from './chargelab/ChargeLab';
+type Props = ChargeLabProps;
+---
+
+<ChargeLab client:visible {...Astro.props} />

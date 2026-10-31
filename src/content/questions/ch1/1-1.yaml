@@ -1,0 +1,289 @@
+# Lesson 1.1 question bank. Strings may hold $inline$ TeX and **bold**; they are rendered at
+# build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Convention: q is the charge of a body, e = 1.6e-19 C is a positive number (the electron carries -e).
+
+chapter: 1
+questions:
+  # ------------------------------------------------ OBJ-1.1-1 two kinds of charge
+  - id: Q-1.1-three-rods
+    type: mc
+    objectives: [OBJ-1.1-1]
+    qualitative: true
+    prompt: >-
+      שלושה מוטות טעונים: A, B ו-C. מגלים ש-A דוחה את B, וש-B מושך את C.
+      מה בוודאות קורה בין A לבין C?
+    choices:
+      - text: A ו-C מושכים זה את זה.
+        correct: true
+        feedback: נכון. A ו-B מאותו סימן, ו-B ו-C מסימנים הפוכים. לכן A ו-C מסימנים הפוכים, והם מושכים.
+      - text: A ו-C דוחים זה את זה.
+        feedback: דחייה פירושה אותו סימן. אבל B מאותו סימן כמו A, ו-C הפוך מ-B. לכן C הפוך מ-A.
+      - text: אי אפשר לדעת בלי למדוד את גודל המטענים.
+        feedback: כדי לקבוע אם גופים מושכים או דוחים מספיק לדעת את הסימנים. הגודל משפיע רק על עוצמת הכוח.
+
+  - id: Q-1.1-two-positive
+    type: mc
+    objectives: [OBJ-1.1-1]
+    qualitative: true
+    prompt: >-
+      שני כדורים קטנים טעונים שניהם **חיובית** נמצאים קרוב זה לזה. מה קורה ביניהם?
+    choices:
+      - text: הם דוחים זה את זה.
+        correct: true
+        feedback: נכון. מטענים מאותו סימן דוחים זה את זה, בין שהם חיוביים ובין שהם שליליים.
+      - text: הם מושכים זה את זה, כי מטען חיובי מושך.
+        feedback: אין סימן שמושך תמיד וסימן שדוחה תמיד. מה שקובע הוא הצירוף של שני הסימנים.
+        misconception: MC-charge-sign-decides-force
+      - text: אין ביניהם כוח, כי הם לא נוגעים זה בזה.
+        feedback: הכוח החשמלי פועל מרחוק, בלי מגע, כמו כוח הכבידה. זה בדיוק מה שהאיור מראה.
+
+  - id: Q-1.1-force-direction
+    type: vector
+    objectives: [OBJ-1.1-1]
+    qualitative: true
+    prompt: >-
+      כדור חיובי נמצא משמאל לכדור שלילי, על אותו קו אופקי. מה כיוון הכוח שפועל על הכדור **השלילי**?
+    answer: w
+    correctFeedback: נכון. מטענים מנוגדים מושכים, ולכן הכדור השלילי נמשך שמאלה, אל הכדור החיובי.
+    wrong:
+      - dir: e
+        feedback: ימינה היה כיוון הכוח אילו הכדורים היו דוחים זה את זה. אבל הסימנים מנוגדים, והם מושכים.
+        misconception: MC-charge-sign-decides-force
+    wrongFeedback: הכוח בין שני מטענים פועל לאורך הקו שמחבר ביניהם, ולכן כאן הוא אופקי. מטענים מנוגדים מושכים זה את זה.
+
+  # ------------------------------------------------ OBJ-1.1-2 quantisation
+  - id: Q-1.1-count-electrons
+    type: numeric
+    objectives: [OBJ-1.1-2]
+    prompt: >-
+      על גוף יש עודף אלקטרונים, והמטען שלו הוא $-4.8\cdot10^{-6}\,\text{C}$.
+      כמה אלקטרונים עודפים יש עליו? ($e = 1.6\cdot10^{-19}\,\text{C}$)
+    answer: 3.0e13
+    unit: אלקטרונים
+    tolerance: 0.02
+    correctFeedback: 'נכון: $n = \dfrac{|q|}{e} = \dfrac{4.8\cdot10^{-6}}{1.6\cdot10^{-19}} = 3.0\cdot10^{13}$.'
+    wrongFeedback: 'המטען הוא $n$ פעמים $e$. לכן $n = |q|/e$.'
+    commonWrong:
+      - value: 7.68e-25
+        feedback: 'כפלתם את המטען ב-$e$. כדי לדעת כמה אלקטרונים יש, מחלקים את המטען במטען של אלקטרון אחד.'
+      - value: 3.33e-14
+        feedback: 'חילקתם הפוך, $e/|q|$. מספר האלקטרונים חייב להיות גדול ככל שהמטען גדול.'
+      - value: 3.0e-25
+        feedback: 'את $4.8/1.6 = 3$ חישבתם נכון, אבל את החזקות חיברתם: $-6 + (-19) = -25$. בחילוק מחסירים: $-6 - (-19) = 13$.'
+      - value: 3.0e12
+        feedback: 'שגיתם בחזקה באחד. $\mu\text{C}$ הוא $10^{-6}\,\text{C}$, ולכן $-6 - (-19) = 13$ ולא $12$.'
+      - value: -3.0e13
+        feedback: 'המספר נכון, אבל מספר אלקטרונים הוא תמיד חיובי. הסימן השלילי שייך למטען ($q = -n\,e$), לא למספר האלקטרונים.'
+    hints:
+      - 'כתבו $|q| = n\,e$ ופתרו עבור $n$.'
+
+  - id: Q-1.1-allowed-charge
+    type: mc
+    objectives: [OBJ-1.1-2]
+    qualitative: true
+    prompt: >-
+      איזה מהמטענים האלה **לא** יכול להיות המטען הכולל של גוף? ($e = 1.6\cdot10^{-19}\,\text{C}$)
+    choices:
+      - text: '$-4.8\cdot10^{-19}\,\text{C}$'
+        feedback: זה בדיוק $-3e$, כלומר שלושה אלקטרונים עודפים. מטען כזה אפשרי.
+      - text: '$+6.4\cdot10^{-19}\,\text{C}$'
+        feedback: זה $+4e$, כלומר חסרים ארבעה אלקטרונים. מטען כזה אפשרי.
+      - text: '$+2.4\cdot10^{-19}\,\text{C}$'
+        correct: true
+        feedback: 'נכון. $2.4\cdot10^{-19}/1.6\cdot10^{-19} = 1.5$. זה אחד וחצי אלקטרונים, ואי אפשר להסיר חצי אלקטרון.'
+      - text: '$0$'
+        feedback: אפס הוא מטען אפשרי, והוא מטען של גוף ניטרלי.
+    explanation: >-
+      המטען של גוף הוא תמיד $|q| = n\,e$ עם $n$ שלם. לכן מחלקים את המטען ב-$e$ ובודקים אם יוצא מספר שלם.
+
+  - id: Q-1.1-gentle-rub
+    type: mc
+    objectives: [OBJ-1.1-2]
+    qualitative: true
+    prompt: >-
+      תלמיד טוען: "אם משפשפים בעדינות מאוד אפשר לטעון גוף במטען של $1.2\cdot10^{-19}\,\text{C}$, פחות מאלקטרון אחד". מה נכון?
+    choices:
+      - text: מטען כזה אי אפשר לקבל, כי הוא לא כפולה שלמה של $e = 1.6\cdot10^{-19}\,\text{C}$.
+        correct: true
+        feedback: 'נכון. $1.2\cdot10^{-19}/1.6\cdot10^{-19} = 0.75$, וזה לא מספר שלם. הכי מעט שאפשר להעביר הוא אלקטרון אחד.'
+      - text: אפשר, כי שפשוף עדין מעביר חלק מאלקטרון.
+        feedback: אלקטרון הוא חלקיק שלם. הוא עובר כולו או לא עובר, ואין "חלק מאלקטרון".
+        misconception: MC-charge-continuous
+      - text: אפשר, כי מטען הוא גודל רציף כמו אורך.
+        feedback: 'אורך אפשר לחלק כרצוננו, אבל מטען מגיע בחבילות של $e$. זו הקוונטיזציה של המטען.'
+        misconception: MC-charge-continuous
+
+  - id: Q-1.1-electrons-to-charge
+    type: numeric
+    objectives: [OBJ-1.1-2]
+    prompt: >-
+      על גוף יש עודף של $2.5\cdot10^{12}$ אלקטרונים. מה גודל המטען שלו, בקולון?
+    answer: 4.0e-7
+    unit: C
+    tolerance: 0.02
+    correctFeedback: 'נכון: $|q| = n\,e = 2.5\cdot10^{12}\cdot1.6\cdot10^{-19} = 4.0\cdot10^{-7}\,\text{C}$.'
+    wrongFeedback: 'גודל המטען הוא מספר האלקטרונים כפול המטען של אלקטרון אחד: $|q| = n\,e$.'
+    commonWrong:
+      - value: 1.5625e31
+        feedback: 'חילקתם את מספר האלקטרונים ב-$e$. כדי לעבור ממספר אלקטרונים למטען כופלים ב-$e$.'
+    hints:
+      - '$|q| = n\,e$.'
+
+  # ------------------------------------------------ OBJ-1.1-3 conservation
+  - id: Q-1.1-rub-cloth
+    type: twotier
+    objectives: [OBJ-1.1-3]
+    qualitative: true
+    prompt: >-
+      מוט PVC ובד צמר, שניהם ניטרליים, משפשפים זה בזה. אחר כך המוט טעון **שלילית**.
+      מה המצב של הצמר?
+    choices:
+      - text: הצמר טעון חיובית, באותו גודל מטען.
+        correct: true
+        feedback: נכון. מה שהמוט קיבל הצמר איבד, ולכן המטענים הפוכים ושווים בגודלם.
+      - text: הצמר נשאר ניטרלי.
+        feedback: 'אם הצמר נשאר ניטרלי, המטען הכולל השתנה: מאפס לשלילי. זה לא יכול לקרות, כי מטען נשמר.'
+        misconception: MC-charge-created
+      - text: הצמר טעון שלילית, כמו המוט.
+        feedback: 'אם שני הגופים היו שליליים, המטען הכולל היה שלילי. אבל הוא התחיל מאפס, וסך המטען נשמר.'
+        misconception: MC-charge-created
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: אלקטרונים עברו מהצמר אל המוט, והמטען הכולל נשמר.
+        correct: true
+        feedback: זה בדיוק מה שקרה. הצמר איבד אלקטרונים ונעשה חיובי, והמוט קיבל אותם ונעשה שלילי.
+      - text: החיכוך יוצר מטען חדש על שני הגופים.
+        feedback: חיכוך לא יוצר מטען. הוא רק מאפשר לאלקטרונים לעבור בין הגופים.
+        misconception: MC-charge-created
+      - text: פרוטונים עברו מהצמר אל המוט.
+        feedback: פרוטונים כלואים בגרעיני האטומים ולא עוברים בחיכוך. מי שעובר הם האלקטרונים.
+        misconception: MC-charge-protons-move
+    hints:
+      - 'מה המטען הכולל של שני הגופים לפני השפשוף? מה הוא אחריו?'
+    explanation: >-
+      לפני השפשוף שני הגופים ניטרליים והמטען הכולל אפס. מטען נשמר, ולכן גם אחרי השפשוף הכולל אפס:
+      $q_1 + q_2 = 0$ (1 למוט, 2 לבד).
+
+  - id: Q-1.1-positive-body
+    type: mc
+    objectives: [OBJ-1.1-3]
+    qualitative: true
+    prompt: >-
+      גוף מוצק נעשה טעון חיובית בשפשוף. מה קרה בו?
+    choices:
+      - text: הוא איבד חלק מהאלקטרונים שלו.
+        correct: true
+        feedback: נכון. אחרי האובדן יש בו יותר פרוטונים מאלקטרונים, ולכן הוא חיובי.
+      - text: הוא קיבל פרוטונים.
+        feedback: פרוטונים נמצאים בגרעינים וקשורים חזק מאוד. בחיכוך הם לא עוברים.
+        misconception: MC-charge-protons-move
+      - text: נוצר בו מטען חיובי חדש.
+        feedback: מטען לא נוצר. אם הגוף נעשה חיובי, מישהו אחר קיבל את האלקטרונים.
+        misconception: MC-charge-created
+
+  - id: Q-1.1-total-charge
+    type: mc
+    objectives: [OBJ-1.1-3]
+    prompt: >-
+      שני גופים ניטרליים משפשפים זה בזה. אחרי השפשוף המטען של גוף A הוא $+6\cdot10^{-9}\,\text{C}$.
+      מה המטען של גוף B?
+    choices:
+      - text: '$-6\cdot10^{-9}\,\text{C}$'
+        correct: true
+        feedback: 'נכון. מטען נשמר: $q_A + q_B = 0$, ולכן $q_B = -6\cdot10^{-9}\,\text{C}$.'
+      - text: '$+6\cdot10^{-9}\,\text{C}$'
+        feedback: 'אז המטען הכולל היה $+12\cdot10^{-9}\,\text{C}$, אף על פי שהתחלנו מאפס. זה סותר את שימור המטען.'
+        misconception: MC-charge-created
+      - text: '$0$'
+        feedback: 'אם B נשאר ניטרלי, המטען הכולל הוא $+6\cdot10^{-9}\,\text{C}$ ולא אפס. מטען לא נוצר.'
+        misconception: MC-charge-created
+      - text: '$-12\cdot10^{-9}\,\text{C}$'
+        feedback: 'המטען הכולל צריך להישאר אפס: $+6 - 12 = -6 \neq 0$.'
+
+  - id: Q-1.1-neutral
+    type: mc
+    objectives: [OBJ-1.1-3]
+    qualitative: true
+    prompt: >-
+      מה הפירוש של "גוף ניטרלי"?
+    choices:
+      - text: מספר הפרוטונים בו שווה למספר האלקטרונים, ולכן סך המטען שלו אפס.
+        correct: true
+        feedback: נכון. גוף ניטרלי מלא במטענים, אבל החיוביים והשליליים מתקזזים.
+      - text: אין בו בכלל מטענים חשמליים.
+        feedback: כל חומר בנוי מפרוטונים ואלקטרונים. "ניטרלי" אומר שהם בכמויות שוות, לא שהם חסרים.
+        misconception: MC-charge-neutral-means-empty
+      - text: יש בו רק אלקטרונים.
+        feedback: גוף כזה היה טעון שלילית מאוד. בגוף ניטרלי יש גם פרוטונים, בכמות שווה.
+        misconception: MC-charge-neutral-means-empty
+
+  # ------------------------------------------------ OBJ-1.1-4 conductors and insulators
+  - id: Q-1.1-spread-metal
+    type: mc
+    objectives: [OBJ-1.1-4]
+    qualitative: true
+    prompt: >-
+      מניחים אלקטרונים עודפים בקצה אחד של מוט מתכת שתלוי על חוטי משי. מה יקרה להם?
+    choices:
+      - text: הם יתפזרו לאורך כל המוט.
+        correct: true
+        feedback: נכון. במוליך האלקטרונים חופשיים לנוע, והם דוחים זה את זה עד שהם מתרחקים ככל האפשר.
+      - text: הם יישארו בקצה שבו הונחו.
+        feedback: זה מה שקורה במבודד. במתכת אלקטרונים נעים בחופשיות, והדחייה ביניהם מפזרת אותם.
+        misconception: MC-charge-conductor-stays
+      - text: הם ייעלמו אל האוויר.
+        feedback: אוויר מבודד היטב, ובמצב רגיל המטען נשאר על המוט. האלקטרונים רק מתפזרים עליו.
+
+  - id: Q-1.1-stay-plastic
+    type: mc
+    objectives: [OBJ-1.1-4]
+    qualitative: true
+    prompt: >-
+      שפשפו קצה אחד של סרגל פלסטיק בצמר, כך שרק הקצה הזה נטען. מה יקרה למטען על הסרגל?
+    choices:
+      - text: הוא יישאר בקצה ששפשפו.
+        correct: true
+        feedback: נכון. במבודד האלקטרונים כמעט לא יכולים לנוע, ולכן המטען נשאר במקום שבו הצטבר.
+      - text: הוא יתפזר על כל הסרגל, כמו במתכת.
+        feedback: פיזור כזה דורש אלקטרונים חופשיים. בפלסטיק כמעט אין כאלה.
+        misconception: MC-charge-insulator-spreads
+      - text: הוא ייעלם מיד.
+        feedback: מבודד שומר מטען. בגלל זה אפשר לטעון סרגל ולהרים בו פיסות נייר.
+
+  - id: Q-1.1-why-spread
+    type: twotier
+    objectives: [OBJ-1.1-4]
+    qualitative: true
+    prompt: >-
+      למה מטען עודף שמונח על מוליך מתפזר עליו?
+    choices:
+      - text: כי המטענים יכולים לנוע בחופשיות בתוך המוליך.
+        correct: true
+        feedback: נכון. בלי תנועה חופשית של אלקטרונים אין פיזור.
+      - text: כי המוליך מושך מטען אל כל נקודה בו.
+        feedback: למוליך אין "משיכה" מיוחדת. הפיזור בא מהדחייה בין המטענים.
+    reasonPrompt: ומה מרחיק את האלקטרונים זה מזה?
+    reasons:
+      - text: מטענים מאותו סימן דוחים זה את זה.
+        correct: true
+        feedback: נכון. האלקטרונים העודפים דוחים זה את זה, ולכן מתרחקים עד שאין לאן.
+      - text: מטענים מאותו סימן מושכים זה את זה.
+        feedback: אם היו מושכים, הם היו מתקבצים במקום אחד. הם דוחים, ולכן מתפזרים.
+        misconception: MC-charge-sign-decides-force
+
+  - id: Q-1.1-which-conductors
+    type: multi
+    objectives: [OBJ-1.1-4]
+    prompt: >-
+      סמנו את **כל** החומרים שהם מוליכים טובים של חשמל.
+    choices:
+      - text: חוט נחושת
+        correct: true
+        feedback: נחושת היא מתכת, ובמתכות יש אלקטרונים חופשיים.
+      - text: נייר אלומיניום
+        correct: true
+        feedback: אלומיניום הוא מתכת, ולכן מוליך.
+      - text: גומי
+        feedback: 'גומי הוא מבודד: האלקטרונים בו קשורים לאטומים שלהם ולא חופשיים לנוע בגוף.'
+      - text: זכוכית
+        feedback: 'זכוכית היא מבודד: האלקטרונים בה קשורים לאטומים שלהם ולא חופשיים לנוע בגוף.'
