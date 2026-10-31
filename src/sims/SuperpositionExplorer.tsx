@@ -51,8 +51,8 @@ const PRESETS: Record<Preset, { charges: PointCharge[]; target: number }> = {
   general: {
     charges: [
       { x: -0.3, y: 0, q: 2 * uC },
-      { x: 0.2, y: 0.5, q: 3 * uC },
-      { x: 0.6, y: -0.1, q: -3 * uC },
+      { x: 0.1, y: 0.5, q: 3 * uC },
+      { x: 0.6, y: -0.1, q: 3 * uC },
     ],
     target: 0,
   },
@@ -66,7 +66,7 @@ const PRESET_LABEL: Record<Preset, string> = {
 
 const TASK_LABEL: Record<string, string> = {
   cancel: 'גררו את B לנקודה שבה שני החצים שווים ומנוגדים, והכוח השקול מתאפס. באיזה צד של האמצע היא?',
-  'tip-to-tail': 'הפעילו את "חיבור ראש-לזנב" וראו איך החץ השני מתחיל בראש הראשון.',
+  'tip-to-tail': 'ודאו ש"חיבור ראש-לזנב" פעיל, וראו איך החץ השני מתחיל בראש החץ הראשון.',
   components: 'הפעילו את "רכיבים x ו-y" וקראו את Fx ואת Fy בשורה שמתחת לאיור.',
   'move-charge': 'גררו את A או את C למקום אחר, וראו איזה כוח משתנה ואיזה לא.',
 };
@@ -78,6 +78,15 @@ interface State {
   showParts: boolean;
   selected: number | null;
   preset: Preset;
+  /** the force [N] drawn at the reference arrow length; fixed until a preset, target or "fit" change */
+  refF: number;
+}
+
+/** The longest of the separate forces and their sum: the scale that fits the whole picture. */
+function fitScale(charges: readonly PointCharge[], target: number): number {
+  const m = (f: readonly [number, number]) => Math.hypot(f[0], f[1]);
+  const biggest = Math.max(...forcesOnCharge(charges, target).map(m), m(netForceOnCharge(charges, target)));
+  return biggest > 0 ? biggest : 1;
 }
 
 export interface SuperpositionExplorerProps {
@@ -87,6 +96,8 @@ export interface SuperpositionExplorerProps {
   showParts?: boolean;
   /** show the buttons that switch between the presets */
   editable?: boolean;
+  /** hide the target buttons, the tip-to-tail and component toggles, and the F_x, F_y readout */
+  simple?: boolean;
   tasks?: string[];
 }
 
@@ -99,6 +110,7 @@ function initial(p: SuperpositionExplorerProps): State {
     showParts: p.showParts ?? false,
     selected: null,
     preset,
+    refF: fitScale(PRESETS[preset].charges, PRESETS[preset].target),
   };
 }
 
@@ -147,14 +159,19 @@ export default function SuperpositionExplorer(props: SuperpositionExplorerProps)
       subscribeSteps(props.id, (st) => {
         setS((prev) => {
           const next = { ...prev };
-          if (typeof st.preset === 'string' && st.preset in PRESETS && st.preset !== prev.preset) {
+          // a step with a preset puts the charges back where that preset has them
+          if (typeof st.preset === 'string' && st.preset in PRESETS) {
             const pr = st.preset as Preset;
             next.preset = pr;
             next.charges = PRESETS[pr].charges.map((c) => ({ ...c }));
             next.target = PRESETS[pr].target;
             next.selected = null;
+            next.refF = fitScale(next.charges, next.target);
           }
-          if (typeof st.target === 'number' && st.target >= 0 && st.target < 3) next.target = st.target;
+          if (typeof st.target === 'number' && st.target >= 0 && st.target < 3) {
+            next.target = st.target;
+            next.refF = fitScale(next.charges, next.target);
+          }
           if (typeof st.showSum === 'boolean') next.showSum = st.showSum;
           if (typeof st.showParts === 'boolean') next.showParts = st.showParts;
           return next;
@@ -186,7 +203,7 @@ export default function SuperpositionExplorer(props: SuperpositionExplorerProps)
     const net = netForceOnCharge(s.charges, t);
     const mag = (f: readonly [number, number]) => Math.hypot(f[0], f[1]);
     const biggest = Math.max(...forces.map(mag), mag(net));
-    const pxPerN = biggest > 0 ? (0.26 * view.w) / biggest : 0;
+    const pxPerN = biggest > 0 ? (0.26 * view.w) / s.refF : 0;
     const [ox, oy] = toScreen(view, s.charges[t].x, s.charges[t].y);
     const tip = (f: readonly [number, number], fromx = ox, fromy = oy): [number, number] => [fromx + f[0] * pxPerN, fromy - f[1] * pxPerN];
 
@@ -319,9 +336,10 @@ export default function SuperpositionExplorer(props: SuperpositionExplorerProps)
   const { canvasRef, invalidate, viewRef } = useFigureCanvas(draw, { worldWidth: WORLD_W, worldHeight: WORLD_H, animate: false });
   useEffect(invalidate, [s]);
 
+  // on the line preset the charges stay on the axis, so every force stays along it
   const clampWorld = (x: number, y: number): [number, number] => [
     Math.max(-WORLD_W / 2 + 0.05, Math.min(WORLD_W / 2 - 0.05, x)),
-    Math.max(-WORLD_H / 2 + 0.05, Math.min(WORLD_H / 2 - 0.05, y)),
+    s.preset === 'line' ? 0 : Math.max(-WORLD_H / 2 + 0.05, Math.min(WORLD_H / 2 - 0.05, y)),
   ];
 
   const hit = (v: View, sx: number, sy: number): number | null => {
@@ -422,11 +440,13 @@ export default function SuperpositionExplorer(props: SuperpositionExplorerProps)
               ({dirOf(forces[k])})
             </span>
           ))}
-          <span>
-            <b class="q">
-              F<sub>x</sub> = {r3(net[0])} N, F<sub>y</sub> = {r3(net[1])} N
-            </b>
-          </span>
+          {!props.simple && (
+            <span>
+              <b class="q">
+                F<sub>x</sub> = {r3(net[0])} N, F<sub>y</sub> = {r3(net[1])} N
+              </b>
+            </span>
+          )}
           <span>
             הכוח השקול על {NAMES[s.target]}: <b class="q">F = {r3(Fm)} N</b>
             {Fm > 1e-12 ? ` (${dirOf(net)})` : ''}
@@ -435,15 +455,29 @@ export default function SuperpositionExplorer(props: SuperpositionExplorerProps)
       }
       controls={
         <>
-          <div class="group" role="group" aria-label="על איזה מטען מחשבים את הכוח">
-            <span class="hint">מחשבים את הכוח על:</span>
-            {NAMES.map((n, i) => (
-              <Toggle key={n} label={n} on={s.target === i} onChange={() => setS({ ...s, target: i })} />
-            ))}
-          </div>
+          {!props.simple && (
+            <div class="group" role="group" aria-label="על איזה מטען מחשבים את הכוח">
+              <span class="hint">מחשבים את הכוח על:</span>
+              {NAMES.map((n, i) => (
+                <Toggle key={n} label={n} on={s.target === i} onChange={() => setS({ ...s, target: i, refF: fitScale(s.charges, i) })} />
+              ))}
+            </div>
+          )}
           <div class="group" role="group" aria-label="מה להציג">
-            <Toggle label="חיבור ראש-לזנב" on={s.showSum} swatch="var(--force)" onChange={(v) => setS({ ...s, showSum: v })} />
-            <Toggle label="רכיבים x ו-y" on={s.showParts} onChange={(v) => setS({ ...s, showParts: v })} />
+            {!props.simple && (
+              <>
+                <Toggle label="חיבור ראש-לזנב" on={s.showSum} swatch="var(--force)" onChange={(v) => setS({ ...s, showSum: v })} />
+                <Toggle label="רכיבים x ו-y" on={s.showParts} onChange={(v) => setS({ ...s, showParts: v })} />
+              </>
+            )}
+            <button
+              type="button"
+              class="toggle"
+              title="קנה המידה של החצים נשאר קבוע כשמזיזים מטענים. הלחצן מתאים אותו לחץ הארוך ביותר."
+              onClick={() => setS({ ...s, refF: fitScale(s.charges, s.target) })}
+            >
+              התאמת קנה המידה
+            </button>
           </div>
           {props.editable && (
             <div class="group" role="group" aria-label="סידור מוכן">
@@ -453,7 +487,14 @@ export default function SuperpositionExplorer(props: SuperpositionExplorerProps)
                   label={PRESET_LABEL[k]}
                   on={s.preset === k}
                   onChange={() =>
-                    setS({ ...s, preset: k, charges: PRESETS[k].charges.map((c) => ({ ...c })), target: PRESETS[k].target, selected: null })
+                    setS({
+                      ...s,
+                      preset: k,
+                      charges: PRESETS[k].charges.map((c) => ({ ...c })),
+                      target: PRESETS[k].target,
+                      selected: null,
+                      refF: fitScale(PRESETS[k].charges, PRESETS[k].target),
+                    })
                   }
                 />
               ))}
@@ -472,7 +513,7 @@ export default function SuperpositionExplorer(props: SuperpositionExplorerProps)
               }
             />
           ) : (
-            <p class="hint hand">לחצו על מטען כדי לשנות את גודלו. גררו מטען כדי להזיז אותו.</p>
+            <p class="hint hand">לחצו על מטען כדי לשנות אותו (גודל וסימן). גררו מטען כדי להזיז אותו. קנה המידה של החצים קבוע, עד שלוחצים על "התאמת קנה המידה".</p>
           )}
         </>
       }

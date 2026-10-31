@@ -46,6 +46,7 @@ test.describe('live figures', () => {
     const fig = page.locator('#fig-1-4a');
     await fig.scrollIntoViewIfNeeded();
     await hydrated(fig);
+    await page.waitForTimeout(800); // a step may re-apply its preset once the figure is in view
     const t = await text(fig.locator('.sim-readout'));
     expect(t).toContain('F = 0.0595 N');
     expect(t).toContain('FA = 0.0893 N');
@@ -58,6 +59,7 @@ test.describe('live figures', () => {
     const fig = page.locator('#fig-1-4a');
     await fig.scrollIntoViewIfNeeded();
     await hydrated(fig);
+    await page.waitForTimeout(800); // a step may re-apply its preset once the figure is in view
     const readout = fig.locator('.sim-readout');
     const read = async () => {
       const t = await text(readout);
@@ -84,6 +86,7 @@ test.describe('live figures', () => {
     const fig = page.locator('#fig-1-4a');
     await fig.scrollIntoViewIfNeeded();
     await hydrated(fig);
+    await page.waitForTimeout(800); // a step may re-apply its preset once the figure is in view
     const box = (await fig.locator('canvas').boundingBox())!;
     const ppm = box.width / 2;
     const cx = box.x + box.width / 2;
@@ -101,11 +104,14 @@ test.describe('live figures', () => {
     const fig = page.locator('#fig-1-4b');
     await fig.scrollIntoViewIfNeeded();
     await hydrated(fig);
-    await fig.getByRole('button', { name: 'משולש ישר-זווית' }).click();
-    const t = await text(fig.locator('.sim-readout'));
-    expect(t).toContain('F = 0.188 N');
-    expect(t).toContain('Fx = 0.113 N');
-    expect(t).toContain('Fy = -0.15 N');
+    await page.waitForTimeout(800); // a step may re-apply its preset once the figure is in view
+    await expect(async () => {
+      await fig.getByRole('button', { name: 'משולש ישר-זווית' }).click();
+      const t = await text(fig.locator('.sim-readout'));
+      expect(t).toContain('F = 0.188 N');
+      expect(t).toContain('Fx = 0.113 N');
+      expect(t).toContain('Fy = -0.15 N');
+    }).toPass({ timeout: 10_000 });
     await fig.getByRole('button', { name: 'חיבור ראש-לזנב' }).click();
     await fig.getByRole('button', { name: 'רכיבים x ו-y' }).click();
     await expect(fig.locator('.sim-tasks li').nth(0)).toHaveClass(/done/);
@@ -137,14 +143,14 @@ test.describe('questions', () => {
     await q.scrollIntoViewIfNeeded();
     const input = q.locator('input[type=text]');
     await expect(async () => {
-      await input.fill('0.144');
+      await input.fill('2.1');
       await expect(q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true })).toBeEnabled({ timeout: 1000 });
     }).toPass({ timeout: 15_000 });
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q.locator('.q-feedback')).toContainText('חיברתם');
     expect((await progress(page)).attempts.at(-1)).toMatchObject({ misconception: 'MC-forces-add-as-numbers', lesson: '1.4' });
     await q.getByRole('button', { name: 'נסו שוב' }).click();
-    await input.fill('0.072');
+    await input.fill('0.3');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-right/);
   });
@@ -154,7 +160,7 @@ test.describe('questions', () => {
     const q = page.locator('[data-qid="Q-1.4-independence"]');
     await q.scrollIntoViewIfNeeded();
     await expect(async () => {
-      await q.locator('label.q-choice').nth(1).click();
+      await q.locator('label.q-choice', { hasText: 'חוסם' }).click();
       await expect(q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true })).toBeEnabled({ timeout: 1000 });
     }).toPass({ timeout: 15_000 });
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();

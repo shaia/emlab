@@ -133,7 +133,7 @@ export default function GravityCompare(props: GravityCompareProps) {
   return (
     <SimShell
       fig={props.id}
-      label={`גרף של הכוח החשמלי והכוח הכבידתי כפונקציה של המרחק, ל${PAIRS[s.pair].label}, בסקאלה לוגריתמית. במרחק ${rText} הכוח החשמלי גדול פי ${sci(ratio, 2)} מכוח הכבידה.`}
+      label={`גרף של הכוח החשמלי וכוח הכבידה כפונקציה של המרחק, ל${PAIRS[s.pair].label}, בסקאלה לוגריתמית. במרחק ${rText} הכוח החשמלי גדול פי ${sci(ratio, 2)} מכוח הכבידה.`}
       canvasRef={canvasRef}
       aspect={1.2}
       live={live}

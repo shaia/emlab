@@ -36,3 +36,17 @@
   unit: N (ניוטון)
   definition: הכוח שמסות מפעילות זו על זו. הוא תמיד מושך, וגודלו ביחס ישר למכפלת המסות וביחס הפוך לריבוע המרחק.
   lesson: '1.3'
+
+- id: elementary-charge-e
+  term: מטען אלמנטרי
+  en: elementary charge
+  symbol: e
+  unit: C (קולון)
+  definition: גודל המטען של פרוטון או של אלקטרון, e = 1.6·10⁻¹⁹ C. הפרוטון חיובי והאלקטרון שלילי.
+  lesson: '1.3'
+
+- id: neutral-body
+  term: גוף נייטרלי
+  en: neutral body
+  definition: גוף שסך המטענים החיוביים בו שווה לסך המטענים השליליים, כך שהמטען הכולל שלו אפס.
+  lesson: '1.3'

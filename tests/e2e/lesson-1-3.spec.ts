@@ -143,8 +143,8 @@ test.describe('questions', () => {
     await q.scrollIntoViewIfNeeded();
     // the card hydrates when visible: retry the selection until the check button is live
     await expect(async () => {
-      await q.locator('.q-choices').first().locator('label').nth(0).click();
-      await q.locator('.reasons label').nth(1).click();
+      await q.locator('.q-choices').first().locator('label', { hasText: 'כי המטען שלו גדול יותר' }).click();
+      await q.locator('.reasons label', { hasText: 'המטען הגדול מקבל כוח גדול' }).click();
       await expect(q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true })).toBeEnabled({ timeout: 1000 });
     }).toPass({ timeout: 15_000 });
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
@@ -152,8 +152,8 @@ test.describe('questions', () => {
     const a = (await progress(page)).attempts.at(-1);
     expect(a).toMatchObject({ qid: 'Q-1.3-third-law', correct: false, confident: true, misconception: 'MC-coulomb-bigger-charge-bigger-force', lesson: '1.3' });
     await q.getByRole('button', { name: 'נסו שוב' }).click();
-    await q.locator('.q-choices').first().locator('label').nth(2).click();
-    await q.locator('.reasons label').nth(0).click();
+    await q.locator('.q-choices').first().locator('label', { hasText: 'שניהם מקבלים כוח שווה' }).click();
+    await q.locator('.reasons label', { hasText: 'חוק שלישי של ניוטון' }).click();
     await q.getByRole('button', { name: 'בדיקה · לא בטוחים' }).click();
     await expect(q).toHaveClass(/is-right/);
   });

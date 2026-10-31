@@ -17,12 +17,14 @@ import { useFigureCanvas, type FrameInfo } from './core/canvas';
 import { arrow, chargeDisc } from './core/ink';
 import { directionHe, sci } from './core/format';
 import { drawAxes, drawCurve, drawMarker, insetBox, makePlot } from './core/plot';
-import SimShell, { Slider, type TaskDef } from './core/SimShell';
+import SimShell, { Slider, Toggle, type TaskDef } from './core/SimShell';
 
 const uC = 1e-6;
 const R = 15;
-/** the stage shows separations up to this [cm]; the graph's x axis covers 10..R_PLOT_MAX */
-const R_PLOT_MAX = 60;
+/** the stage is drawn to scale up to this separation [cm] */
+const R_SCENE = 60;
+/** the graph's x axis covers 10..R_PLOT_MAX, so that 2r stays on it for every r the sliders allow */
+const R_PLOT_MAX = 100;
 const R_MIN = 10;
 const R_MAX = 50;
 const SCENE_FRAC = 0.4;
@@ -32,16 +34,18 @@ const PX_PER_N_FRAC = 0.11;
 const Q_STEPS = [-4, -3, -2, -1, 1, 2, 3, 4];
 
 const TASK_LABEL: Record<string, string> = {
-  'double-r': 'הכפילו את המרחק r, והשאירו את המטענים כמו שהם. פי כמה השתנה הכוח?',
+  'double-r': 'הכפילו את המרחק r (עד 40 ס"מ), והשאירו את המטענים כמו שהם. פי כמה השתנה הכוח?',
   'double-q': 'הכפילו את אחד המטענים, והשאירו את המרחק. פי כמה השתנה הכוח?',
-  unequal: 'בחרו מטען אחד שגדול פי 4 מהשני, והשוו את שני החצים.',
-  attract: 'הפכו את אחד המטענים לשלילי. מה קרה לכיוון החצים?',
+  unequal: 'בחרו שני מטענים שונים בגודלם (אחד לפחות כפול מהשני), והשוו את שני החצים.',
+  attract: 'הפכו את אחד המטענים לשלילי בלחצן שמתחת לאיור. מה קרה לכיוון החצים?',
 };
 
 interface State {
   q1: number;
   q2: number;
   r: number;
+  /** show the point at double the distance on the graph */
+  ghost: boolean;
 }
 
 export interface CoulombExplorerProps {
@@ -51,10 +55,12 @@ export interface CoulombExplorerProps {
   q1?: number;
   q2?: number;
   r?: number;
+  /** show the graph point at double the distance (it answers the Predict, so lessons start it off) */
+  showGhost?: boolean;
   tasks?: string[];
 }
 
-const initial = (p: CoulombExplorerProps): State => ({ q1: p.q1 ?? 2, q2: p.q2 ?? 2, r: p.r ?? 20 });
+const initial = (p: CoulombExplorerProps): State => ({ q1: p.q1 ?? 2, q2: p.q2 ?? 2, r: p.r ?? 20, ghost: p.showGhost ?? true });
 
 const qText = (q: number) => `${q > 0 ? '+' : '−'}${Math.abs(q)} μC`;
 
@@ -82,6 +88,7 @@ export default function CoulombExplorer(props: CoulombExplorerProps) {
           if (typeof st.q1 === 'number') next.q1 = st.q1;
           if (typeof st.q2 === 'number') next.q2 = st.q2;
           if (typeof st.r === 'number') next.r = st.r;
+          if (typeof st.showGhost === 'boolean') next.ghost = st.showGhost;
           return next;
         });
       }),
@@ -95,7 +102,7 @@ export default function CoulombExplorer(props: CoulombExplorerProps) {
     const sameCharges = s.q1 === st.q1 && s.q2 === st.q2;
     if (has('double-r') && sameCharges && s.r >= 2 * st.r) done('double-r');
     if (has('double-q') && s.r === st.r && ((s.q1 === 2 * st.q1 && s.q2 === st.q2) || (s.q2 === 2 * st.q2 && s.q1 === st.q1))) done('double-q');
-    if (has('unequal') && Math.max(Math.abs(s.q1), Math.abs(s.q2)) >= 3 * Math.min(Math.abs(s.q1), Math.abs(s.q2))) done('unequal');
+    if (has('unequal') && Math.max(Math.abs(s.q1), Math.abs(s.q2)) >= 2 * Math.min(Math.abs(s.q1), Math.abs(s.q2))) done('unequal');
     if (has('attract') && s.q1 * s.q2 < 0) done('attract');
   }, [s, props.id, props.tasks]);
 
@@ -104,7 +111,7 @@ export default function CoulombExplorer(props: CoulombExplorerProps) {
     const sceneH = h * SCENE_FRAC;
     const cy = sceneH * 0.5;
     const cx = w / 2;
-    const rpx = (s.r / R_PLOT_MAX) * 0.84 * w;
+    const rpx = (s.r / R_SCENE) * 0.84 * w;
     const x1 = cx - rpx / 2;
     const x2 = cx + rpx / 2;
     const F = forceN(s);
@@ -199,10 +206,18 @@ export default function CoulombExplorer(props: CoulombExplorerProps) {
     const yMax = niceCeil(Math.abs(forceN(s, R_MIN)) * 1.05);
     const plot = makePlot(
       box,
-      { min: R_MIN, max: R_PLOT_MAX, label: 'המרחק r בסנטימטרים', ticks: [10, 20, 30, 40, 50, 60], format: (v) => String(v) },
+      { min: R_MIN, max: R_PLOT_MAX, label: 'המרחק r בסנטימטרים', ticks: [10, 20, 40, 60, 80, 100], format: (v) => String(v) },
       { min: 0, max: yMax, label: 'גודל הכוח F בניוטון' },
     );
     drawAxes(ctx, plot, p);
+    ctx.save();
+    ctx.font = `11px ${p.fontUi}`;
+    ctx.fillStyle = p.ink3;
+    ctx.direction = 'rtl';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'top';
+    ctx.fillText('הציר האנכי מתכוונן למטענים', box.x + box.w - 4, box.y + 4);
+    ctx.restore();
     drawCurve(ctx, plot, (r) => Math.abs(forceN(s, r)), { color: p.force });
     const label = (text: string, xv: number, yv: number, color: string) => {
       ctx.save();
@@ -214,7 +229,7 @@ export default function CoulombExplorer(props: CoulombExplorerProps) {
       ctx.fillText(text, Math.min(plot.px(xv) + 8, box.x + box.w - 24), plot.py(yv) - 7);
       ctx.restore();
     };
-    if (2 * s.r <= R_PLOT_MAX) {
+    if (s.ghost && 2 * s.r <= R_PLOT_MAX) {
       const f2 = Math.abs(forceN(s, 2 * s.r));
       drawMarker(ctx, plot, 2 * s.r, f2, p.ink3, { guides: true, radius: 4.5 });
       label('¼F', 2 * s.r, f2, p.ink2);
@@ -238,7 +253,7 @@ export default function CoulombExplorer(props: CoulombExplorerProps) {
     if (!v) return;
     const sceneH = v.h * SCENE_FRAC;
     const cy = sceneH * 0.5;
-    const rpx = (s.r / R_PLOT_MAX) * 0.84 * v.w;
+    const rpx = (s.r / R_SCENE) * 0.84 * v.w;
     for (const x of [v.w / 2 - rpx / 2, v.w / 2 + rpx / 2]) {
       if (Math.hypot(e.offsetX - x, e.offsetY - cy) < R + 12) {
         dragging.current = true;
@@ -250,7 +265,7 @@ export default function CoulombExplorer(props: CoulombExplorerProps) {
   const onPointerMove = (e: PointerEvent) => {
     const v = viewRef.current;
     if (!v || !dragging.current) return;
-    setR((Math.round(((Math.abs(e.offsetX - v.w / 2) * 2 * R_PLOT_MAX) / (0.84 * v.w)) / 5)) * 5);
+    setR((Math.round(((Math.abs(e.offsetX - v.w / 2) * 2 * R_SCENE) / (0.84 * v.w)) / 5)) * 5);
   };
   const onPointerUp = () => {
     if (dragging.current) setLive(describe(s));
@@ -317,6 +332,10 @@ export default function CoulombExplorer(props: CoulombExplorerProps) {
             format={(i) => qText(Q_STEPS[i])}
             onChange={(i) => setS({ ...s, q2: Q_STEPS[i] })}
           />
+          <div class="group" role="group" aria-label="סימן המטענים">
+            <Toggle label="q₁ שלילי" on={s.q1 < 0} onChange={() => setS({ ...s, q1: -s.q1 })} />
+            <Toggle label="q₂ שלילי" on={s.q2 < 0} onChange={() => setS({ ...s, q2: -s.q2 })} />
+          </div>
           <Slider
             label="המרחק r"
             min={R_MIN}
