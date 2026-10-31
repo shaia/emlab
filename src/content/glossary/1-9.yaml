@@ -1,0 +1,44 @@
+# Glossary terms introduced in this lesson. Format and rules: see glossary/1-5.yaml.
+# Ids carry a suffix where another lesson of chapter 1 may define a neighbouring term.
+
+- id: electrostatic-equilibrium
+  term: שיווי משקל אלקטרוסטטי
+  en: electrostatic equilibrium
+  definition: מצב שבו כל המטענים במוליך נחים, ואין בו תנועה מסודרת של מטענים.
+  reject: [שיווי משקל סטטי]
+  lesson: '1.9'
+
+- id: excess-charge-conductor
+  term: מטען עודף
+  en: excess charge
+  definition: מטען נטו של מוליך, כלומר המטען שנוסף לו מעבר למצבו הנייטרלי, שבו המטען הכולל אפס.
+  lesson: '1.9'
+
+- id: induced-charge-conductor
+  term: מטען מושרה
+  en: induced charge
+  definition: מטען שמופיע על פני מוליך כשמניחים אותו בשדה חיצוני או ליד מטען אחר. המטענים החופשיים זזים, אבל המטען הכולל של המוליך לא משתנה.
+  lesson: '1.9'
+
+- id: surface-charge-density-conductor
+  term: צפיפות מטען משטחית
+  en: surface charge density
+  symbol: σ
+  unit: C/m²
+  definition: המטען ליחידת שטח על פני משטח. ליד פני מוליך בשיווי משקל, השדה הניצב לפני השטח הוא E = σ/ε₀.
+  lesson: '1.9'
+
+- id: faraday-cage
+  term: כלוב פאראדיי
+  en: Faraday cage
+  definition: מעטפת מוליכה, מלאה או מרשת, שבתוכה השדה החשמלי אפס כשהשדה החיצוני סטטי.
+  reject: [כלוב פרדיי, כלוב פרדי]
+  lesson: '1.9'
+
+- id: vacuum-permittivity
+  term: מתירות הריק
+  en: vacuum permittivity
+  symbol: ε₀
+  unit: C²/(N·m²)
+  definition: קבוע טבע, ε₀ = 8.85·10⁻¹² C²/(N·m²). הוא קשור לקבוע קולון, k = 1/(4πε₀), ולכן אותן נוסחאות אפשר לכתוב עם k או עם ε₀.
+  lesson: '1.9'

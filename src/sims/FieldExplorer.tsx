@@ -59,7 +59,13 @@ const TASK_LABEL: Record<string, string> = {
   'negative-q0': 'הפכו את מטען הבוחן לשלילי. לאן מצביע הכוח עכשיו, ולאן E?',
   'double-Q': 'הגדילו את מטען המקור פי 2 ובדקו מה קורה לשדה בנקודה.',
   'find-null': 'בסידור של שני מטענים חיוביים: מצאו נקודה שבה השדה מתאפס, וגררו לשם את מטען הבוחן.',
+  'lines-double': 'לחצו על המטען והגדילו אותו פי 2. כמה קווים נוספו? מה קרה לצפיפות הקווים ליד המטען?',
+  'probe-tangent': 'גררו את מטען הבוחן למקומות שונים. באיזה כיוון החץ E ביחס לקווים שליד מטען הבוחן?',
+  'flip-sign': 'לחצו על אחד המטענים והפכו את סימנו. לאן הולכים עכשיו הקווים שיוצאים מהמטען החיובי?',
 };
+
+/** One field line per this much charge: the rule "the number of lines is proportional to the charge". */
+const LINE_Q = uC / 6;
 
 /** q₀ choices in nC; zero is excluded because E = F/q₀ needs a test charge. */
 const Q0_STEPS = [-4, -3, -2, -1, 1, 2, 3, 4];
@@ -101,6 +107,16 @@ export interface FieldExplorerProps {
   showE?: boolean;
   /** allow adding/removing charges and switching presets */
   editable?: boolean;
+  /** fewest lines drawn from one charge; lesson 1.6 passes 1 so the count stays proportional to the charge */
+  minLines?: number;
+  /** show under the figure how many lines are drawn for each charge (lesson 1.6) */
+  lineCounts?: boolean;
+  /** keep the direction chevrons still, so nothing looks like it flows along the lines (lesson 1.6) */
+  staticArrows?: boolean;
+  /** draw the force arrow on the test charge and its F readout (default true) */
+  showForce?: boolean;
+  /** show the q₀ slider (default true) */
+  showQ0Control?: boolean;
   tasks?: string[];
 }
 
@@ -170,6 +186,17 @@ export default function FieldExplorer(props: FieldExplorerProps) {
     if (has('negative-q0') && s.q0 < 0) done('negative-q0');
     const sumQ = (cs: PointCharge[]) => cs.reduce((a, c) => a + Math.abs(c.q), 0);
     if (has('double-Q') && sumQ(s.charges) >= 2 * sumQ(st.charges) - 1e-12) done('double-Q');
+    // tasks of lesson 1.6 compare with the preset the learner is looking at, so a step that
+    // switches presets never ticks them by itself
+    const base = PRESETS[s.preset];
+    const absSum = (cs: PointCharge[]) => cs.reduce((a, c) => a + Math.abs(c.q), 0);
+    if (has('lines-double') && s.showLines && absSum(s.charges) >= 2 * absSum(base) - 1e-12) done('lines-double');
+    if (has('flip-sign') && s.charges.length === base.length && s.charges.some((c, i) => Math.sign(c.q) !== Math.sign(base[i].q))) {
+      done('flip-sign');
+    }
+    if (has('probe-tangent') && s.showLines && s.showProbe && Math.hypot(s.probe[0] - st.probe[0], s.probe[1] - st.probe[1]) > 0.2) {
+      done('probe-tangent');
+    }
     if (has('find-null') && s.charges.length >= 2 && s.showProbe) {
       const [ex, ey] = fieldAt(s.charges, s.probe[0], s.probe[1]);
       if (Math.hypot(ex, ey) < 0.12 * refField(s.charges)) done('find-null');
@@ -184,18 +211,18 @@ export default function FieldExplorer(props: FieldExplorerProps) {
     const ymax = view.oy + view.h / 2 / view.ppm;
 
     if (s.showLines && s.charges.some((c) => c.q !== 0)) {
-      const key = JSON.stringify([s.charges, view.w, view.h]);
+      const key = JSON.stringify([s.charges, view.w, view.h, props.minLines]);
       if (linesCache.current.key !== key) {
         const traced = fieldLines(s.charges, {
           bounds: { xmin, xmax, ymin, ymax },
           coreRadius: CHARGE_PX / view.ppm,
           maxStep: 0.02,
-          chargePerLine: uC / 6,
-          minLines: 6,
+          chargePerLine: LINE_Q,
+          minLines: props.minLines ?? 6,
         });
         linesCache.current = { key, lines: traced.map((l) => l.points.map(([x, y]) => toScreen(view, x, y))) };
       }
-      const phase = (t * 28) % 70;
+      const phase = props.staticArrows ? 0 : (t * 28) % 70;
       for (const pts of linesCache.current.lines) {
         polyline(ctx, pts, p.efield, 1.6, { glow: p.efieldGlow, alpha: 0.9 });
         // chevrons every 70 px along the line show the direction (and drift when motion is on)
@@ -240,8 +267,10 @@ export default function FieldExplorer(props: FieldExplorerProps) {
           arrow(ctx, px, py, px + ux * lenE, py + uy * lenE, { color: p.efield, width: 7, head: 16, alpha: 0.45 });
           label(ctx, 'E', px + ux * (lenE - 6) + nx, py + uy * (lenE - 6) + ny, p.efield, p.fontUi);
         }
-        arrow(ctx, px, py, px + sf * ux * lenF, py + sf * uy * lenF, { color: p.force, width: 2.6, head: 11 });
-        label(ctx, 'F', px + sf * ux * (lenF - 6) - nx, py + sf * uy * (lenF - 6) - ny, p.force, p.fontUi);
+        if (props.showForce !== false) {
+          arrow(ctx, px, py, px + sf * ux * lenF, py + sf * uy * lenF, { color: p.force, width: 2.6, head: 11 });
+          label(ctx, 'F', px + sf * ux * (lenF - 6) - nx, py + sf * uy * (lenF - 6) - ny, p.force, p.fontUi);
+        }
       }
       chargeDisc(ctx, px, py, PROBE_PX, s.q0, p, { selected: s.selected === 'probe' });
       // q₀ label sits beside the probe, perpendicular to the field: E and F both run along it
@@ -263,7 +292,7 @@ export default function FieldExplorer(props: FieldExplorerProps) {
   const { canvasRef, invalidate, viewRef } = useFigureCanvas(draw, {
     worldWidth: WORLD_W,
     worldHeight: WORLD_H,
-    animate: s.showLines,
+    animate: s.showLines && !props.staticArrows,
   });
   useEffect(invalidate, [s]);
 
@@ -382,14 +411,31 @@ export default function FieldExplorer(props: FieldExplorerProps) {
       onPointerUp={onPointerUp}
       cursor={drag.current ? 'grabbing' : 'grab'}
       readout={
-        s.showProbe ? (
+        s.showProbe || (props.lineCounts && s.showLines) ? (
           <>
+            {props.lineCounts && s.showLines && (
+              <span>
+                קווים לכל מטען:{' '}
+                {s.charges.map((c, i) => (
+                  <span key={i}>
+                    {i > 0 && ' · '}
+                    <b class="q" dir="ltr">
+                      {chargeLabel(c.q)}: {c.q === 0 ? 0 : Math.max(props.minLines ?? 6, Math.round(Math.abs(c.q) / LINE_Q))}
+                    </b>
+                  </span>
+                ))}
+              </span>
+            )}
+            {s.showProbe && props.showForce !== false && (
             <span>
               כוח על <span class="q">q₀</span>: <b class="q">F = {sci(F)} N</b> ({directionHe(fDir)})
             </span>
+            )}
+            {s.showProbe && (
             <span>
-              שדה: <b class="q">E = F/q₀ = {sci(E)} N/C</b> ({directionHe(Math.atan2(ey, ex))})
+              שדה: <b class="q">E = {props.showForce === false ? '' : 'F/q₀ = '}{sci(E)} N/C</b> ({directionHe(Math.atan2(ey, ex))})
             </span>
+            )}
           </>
         ) : undefined
       }
@@ -415,7 +461,7 @@ export default function FieldExplorer(props: FieldExplorerProps) {
               ))}
             </div>
           )}
-          {s.showProbe && (
+          {s.showProbe && props.showQ0Control !== false && (
             <Slider
               label="מטען הבוחן q₀"
               min={0}
