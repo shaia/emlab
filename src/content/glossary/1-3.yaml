@@ -1,0 +1,8 @@
+# Glossary terms introduced in this lesson. Format and rules: see glossary/1-5.yaml.
+
+- id: point-charge
+  term: מטען נקודתי
+  en: point charge
+  definition: גוף טעון שממדיו קטנים מאוד לעומת המרחקים בבעיה, כך שאפשר להתייחס אליו כאל נקודה.
+  lesson: '1.3'
+

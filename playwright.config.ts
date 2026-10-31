@@ -2,6 +2,8 @@ import { defineConfig, devices } from '@playwright/test';
 
 // Locally the installed Edge is used (no browser download); CI installs Playwright's Chromium.
 const channel = process.env.CI ? undefined : 'msedge';
+// one preview server per checkout: parallel worktrees each set their own E2E_PORT
+const port = Number(process.env.E2E_PORT ?? 4321);
 
 export default defineConfig({
   testDir: 'tests/e2e',
@@ -11,7 +13,7 @@ export default defineConfig({
   fullyParallel: true,
   reporter: process.env.CI ? 'github' : 'list',
   use: {
-    baseURL: 'http://localhost:4321',
+    baseURL: `http://localhost:${port}`,
     trace: 'retain-on-failure',
   },
   projects: [
@@ -20,8 +22,8 @@ export default defineConfig({
   ],
   webServer: {
     // tests run against the built site, exactly what GitHub Pages serves
-    command: 'npx astro preview --port 4321',
-    url: 'http://localhost:4321',
+    command: `npx astro preview --port ${port}`,
+    url: `http://localhost:${port}`,
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,
   },

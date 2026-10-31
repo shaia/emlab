@@ -3,7 +3,12 @@
  * the misconception register, the glossary and the video list. Reports every problem, then
  * exits 1 if there were any.
  *
- *   npm run lint:content
+ *   npm run lint:content                       # the whole course (CI)
+ *   npx tsx scripts/lint-content.ts --file <p> # problems in one file only (the edit hook)
+ *
+ * --file skips completeness checks ("≥ 3 questions per objective", "every misconception is
+ * detected", "every template part is present"): a lesson being written is incomplete by design,
+ * and the hook must not block each save. CI runs the full lint.
  */
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -12,8 +17,13 @@ import { parse } from 'yaml';
 
 const ROOT = join(import.meta.dirname, '..');
 const CONTENT = join(ROOT, 'src/content');
+const fileArg = process.argv.indexOf('--file');
+const onlyFile = fileArg > 0 ? process.argv[fileArg + 1]?.replaceAll('\\', '/') : null;
 const problems: string[] = [];
-const fail = (where: string, msg: string) => problems.push(`${where}: ${msg}`);
+const fail = (where: string, msg: string, completeness = false) => {
+  if (onlyFile && (completeness || !where.startsWith(onlyFile))) return;
+  problems.push(`${where}: ${msg}`);
+};
 
 const walk = (dir: string): string[] =>
   readdirSync(dir).flatMap((f) => {
@@ -75,14 +85,27 @@ const lessons: Lesson[] = walk(join(CONTENT, 'lessons'))
   })
   .filter((l): l is Lesson => l !== null);
 
-const banks = readdirSync(join(CONTENT, 'questions'))
+const banks = walk(join(CONTENT, 'questions'))
   .filter((f) => f.endsWith('.yaml'))
-  .map((f) => ({ file: `src/content/questions/${f}`, data: yamlFile<{ questions: Question[] }>(join(CONTENT, 'questions', f)) }));
-const questions = banks.flatMap((b) => b.data.questions.map((q) => ({ q, file: b.file })));
+  .map((f) => ({ file: rel(f), data: yamlFile<{ questions: Question[] }>(f) }));
+const questions = banks.flatMap((b) => (b.data?.questions ?? []).map((q) => ({ q, file: b.file })));
 
-const misconceptions = yamlFile<{ id: string; remedy: { lesson: string; anchor?: string } }[]>(join(CONTENT, 'misconceptions.yaml'));
-const glossary = yamlFile<{ id: string; term: string; reject?: string[] }[]>(join(CONTENT, 'glossary.yaml'));
-const videos = yamlFile<{ id: string }[]>(join(CONTENT, 'videos.yaml'));
+/** A per-lesson YAML folder (`misconceptions/1-5.yaml`, …): every entry, tagged with its file. */
+const yamlDir = <T>(name: string): (T & { file: string })[] =>
+  readdirSync(join(CONTENT, name))
+    .filter((f) => f.endsWith('.yaml'))
+    .flatMap((f) => (yamlFile<T[]>(join(CONTENT, name, f)) ?? []).map((e) => ({ ...e, file: `src/content/${name}/${f}` })));
+
+const misconceptions = yamlDir<{ id: string; remedy: { lesson: string; anchor?: string } }>('misconceptions');
+const glossary = yamlDir<{ id: string; term: string; reject?: string[] }>('glossary');
+const videos = yamlDir<{ id: string }>('videos');
+for (const [name, list] of [['misconceptions', misconceptions], ['glossary', glossary], ['videos', videos]] as const) {
+  const seen = new Map<string, string>();
+  for (const e of list) {
+    if (seen.has(e.id)) fail(e.file, `${name} id ${e.id} is also defined in ${seen.get(e.id)}`);
+    seen.set(e.id, e.file);
+  }
+}
 
 const lessonById = new Map(lessons.map((l) => [l.id, l]));
 const objectiveIds = new Set(lessons.flatMap((l) => l.objectives));
@@ -110,7 +133,7 @@ for (const { q, file } of questions) {
     ...(q.wrong ?? []),
   ].flatMap((c) => (c.misconception ? [c.misconception] : []));
   for (const t of tags) {
-    if (!mcIds.has(t)) fail(w, `misconception ${t} is not in misconceptions.yaml`);
+    if (!mcIds.has(t)) fail(w, `misconception ${t} is not in the misconception register (src/content/misconceptions/)`);
     detected.add(t);
   }
   const correctCount = (cs?: Choice[]) => (cs ?? []).filter((c) => c.correct).length;
@@ -127,19 +150,19 @@ for (const { q, file } of questions) {
 for (const l of lessons) {
   for (const o of l.objectives) {
     const qs = questions.filter(({ q }) => q.objectives.includes(o)).map(({ q }) => q);
-    if (qs.length < 3) fail(l.file, `objective ${o} has ${qs.length} questions (needs ≥ 3)`);
-    else if (!qs.some((q) => q.qualitative)) fail(l.file, `objective ${o} has no qualitative question`);
+    if (qs.length < 3) fail(l.file, `objective ${o} has ${qs.length} questions (needs ≥ 3)`, true);
+    else if (!qs.some((q) => q.qualitative)) fail(l.file, `objective ${o} has no qualitative question`, true);
   }
 }
 
 /* ------------------------------------------------------- misconceptions */
 
 for (const m of misconceptions) {
-  if (!detected.has(m.id)) fail('src/content/misconceptions.yaml', `${m.id} is not detected by any distractor`);
+  if (!detected.has(m.id)) fail(m.file, `${m.id} is not detected by any distractor`, true);
   const target = lessonById.get(m.remedy.lesson);
-  if (!target) fail('src/content/misconceptions.yaml', `${m.id} remedy points at lesson ${m.remedy.lesson}, which is not written`);
+  if (!target) fail(m.file, `${m.id} remedy points at lesson ${m.remedy.lesson}, which is not written`, true);
   else if (m.remedy.anchor && !target.figures.includes(m.remedy.anchor) && !target.body.includes(`id="${m.remedy.anchor}"`)) {
-    fail('src/content/misconceptions.yaml', `${m.id} remedy anchor #${m.remedy.anchor} is not in lesson ${m.remedy.lesson}`);
+    fail(m.file, `${m.id} remedy anchor #${m.remedy.anchor} is not in lesson ${m.remedy.lesson}`, true);
   }
 }
 
@@ -148,7 +171,7 @@ for (const m of misconceptions) {
 const TEMPLATE = ['Hook', 'Predict', 'Explore', 'Explain', 'Example', 'Check', 'Watch', 'Summary'];
 for (const l of lessons) {
   const blocks = [...l.body.matchAll(/<(Hook|Predict|Explore|Explain|Example|Check|Watch|Summary)\b/g)].map((m) => m[1]);
-  for (const b of TEMPLATE) if (!blocks.includes(b)) fail(l.file, `lesson template: missing <${b}>`);
+  for (const b of TEMPLATE) if (!blocks.includes(b)) fail(l.file, `lesson template: missing <${b}>`, true);
   let last = -1;
   for (const b of blocks) {
     const i = TEMPLATE.indexOf(b);
@@ -158,7 +181,7 @@ for (const l of lessons) {
 
   const spreadFigs = [...l.body.matchAll(/<Spread[\s\S]*?\bfig="([^"]+)"/g)].map((m) => m[1]);
   for (const f of spreadFigs) if (!l.figures.includes(f)) fail(l.file, `figure ${f} is not listed in frontmatter figures`);
-  for (const f of l.figures) if (!spreadFigs.includes(f)) fail(l.file, `frontmatter figure ${f} has no <Spread>`);
+  for (const f of l.figures) if (!spreadFigs.includes(f)) fail(l.file, `frontmatter figure ${f} has no <Spread>`, true);
   for (const m of l.body.matchAll(/<Step\s+fig="([^"]+)"/g)) {
     if (!spreadFigs.includes(m[1])) fail(l.file, `<Step fig="${m[1]}"> drives a figure that is not in this lesson`);
   }
@@ -172,7 +195,7 @@ for (const l of lessons) {
   for (const m of l.body.matchAll(/<Check[\s\S]*?ids=\{\[([^\]]*)\]\}/g)) {
     for (const id of m[1].match(/'([^']+)'/g) ?? []) {
       const qid = id.slice(1, -1);
-      if (!seenQ.has(qid)) fail(l.file, `<Check> asks for unknown question ${qid}`);
+      if (!seenQ.has(qid)) fail(l.file, `<Check> asks for unknown question ${qid}`, true);
     }
   }
   for (const m of l.body.matchAll(/<Term\s+id="([^"]+)"/g)) {
@@ -204,4 +227,4 @@ if (problems.length) {
   for (const p of problems) console.error(`  ✗ ${p}`);
   process.exit(1);
 }
-console.log(`lint-content: ok (${lessons.length} lessons, ${questions.length} questions, ${misconceptions.length} misconceptions, ${glossary.length} terms, ${videos.length} videos)`);
+console.log(`lint-content: ok${onlyFile ? ` for ${onlyFile}` : ''} (${lessons.length} lessons, ${questions.length} questions, ${misconceptions.length} misconceptions, ${glossary.length} terms, ${videos.length} videos)`);

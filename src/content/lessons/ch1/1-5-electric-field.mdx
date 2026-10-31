@@ -19,12 +19,14 @@ videos: [khan-efield-definition]
 figures: [fig-1-5a, fig-1-5b, fig-1-5c]
 ---
 
+import FieldExplorer from '~/sims/FieldExplorer.astro';
+
 <Spread
   fig="fig-1-5a"
   n="1.5א"
   caption="מטען מקור $Q$ ומטען בוחן $q_0$. החץ הירוק הוא הכוח $F$ על $q_0$. החץ הכתום הרחב הוא הכוח ליחידת מטען, $F/q_0$. גררו את $q_0$, ושנו את גודלו בפס הגרירה שמתחת לאיור."
-  sim="field-explorer"
-  simProps={{ preset: 'single', showVectors: false, showLines: false, showProbe: true, showE: true, tasks: ['change-q0', 'negative-q0', 'move-probe'] }}
+  figure={FieldExplorer}
+  figureProps={{ preset: 'single', showVectors: false, showLines: false, showProbe: true, showE: true, tasks: ['change-q0', 'negative-q0', 'move-probe'] }}
 >
 
 <Hook title="כוח בלי מגע">
@@ -89,8 +91,8 @@ figures: [fig-1-5a, fig-1-5b, fig-1-5c]
   fig="fig-1-5b"
   n="1.5ב"
   caption="השדה בנקודות רבות סביב מטען אחד. חץ ארוך מראה שדה חזק, וחץ קצר שדה חלש. האורכים לא ביחס ישר לעוצמה, כדי שאפשר יהיה לראות גם את השדות החלשים. את הערך המדויק בנקודה של $q_0$ קוראים בשורה שמתחת לאיור. לחצו על המטען כדי לשנות את גודלו."
-  sim="field-explorer"
-  simProps={{ preset: 'single', showVectors: true, showLines: false, showProbe: true, showE: true, tasks: ['double-Q'] }}
+  figure={FieldExplorer}
+  figureProps={{ preset: 'single', showVectors: true, showLines: false, showProbe: true, showE: true, tasks: ['double-Q'] }}
 >
 
 <Explain title="ההגדרה: כוח ליחידת מטען">
@@ -145,8 +147,8 @@ figures: [fig-1-5a, fig-1-5b, fig-1-5c]
   fig="fig-1-5c"
   n="1.5ג"
   caption="שדה של שני מטענים. בכל נקודה החץ הוא הסכום הווקטורי של השדות של שני המטענים. אפשר לגרור את המטענים, לשנות אותם, ולבחור סידורים מוכנים."
-  sim="field-explorer"
-  simProps={{ preset: 'like', editable: true, showVectors: true, showLines: false, showProbe: true, showE: true, tasks: ['find-null'] }}
+  figure={FieldExplorer}
+  figureProps={{ preset: 'like', editable: true, showVectors: true, showLines: false, showProbe: true, showE: true, tasks: ['find-null'] }}
 >
 
 <Explain title="כמה מטענים: מחברים וקטורים" id="superposition">

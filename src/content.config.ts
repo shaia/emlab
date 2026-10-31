@@ -1,6 +1,30 @@
 import { defineCollection } from 'astro:content';
-import { glob, file } from 'astro/loaders';
+import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { readdir, readFile } from 'node:fs/promises';
+import { parse } from 'yaml';
+
+/**
+ * A collection kept as one YAML list per lesson (`<dir>/1-5.yaml`, …), merged into one collection.
+ * Per-lesson files let lessons be written in parallel without editing a shared file; a duplicate id
+ * across files fails the build.
+ */
+function yamlDir(dir: string) {
+  return async () => {
+    const files = (await readdir(dir)).filter((f) => f.endsWith('.yaml')).sort();
+    const seen = new Map<string, string>();
+    const entries: { id: string }[] = [];
+    for (const f of files) {
+      const list = (parse(await readFile(`${dir}/${f}`, 'utf8')) ?? []) as { id: string }[];
+      for (const e of list) {
+        if (seen.has(e.id)) throw new Error(`${dir}: id "${e.id}" appears in both ${seen.get(e.id)} and ${f}`);
+        seen.set(e.id, f);
+        entries.push(e);
+      }
+    }
+    return entries;
+  };
+}
 
 const objective = z.object({ id: z.string().regex(/^OBJ-\d+\.\d+-\d+$/), text: z.string() });
 
@@ -99,12 +123,12 @@ export const question = z.discriminatedUnion('type', [mc, multi, numeric, vector
 export type Question = z.infer<typeof question>;
 
 const questions = defineCollection({
-  loader: glob({ base: './src/content/questions', pattern: '*.yaml' }),
+  loader: glob({ base: './src/content/questions', pattern: '**/*.yaml' }),
   schema: z.object({ chapter: z.number().int(), questions: z.array(question) }),
 });
 
 const misconceptions = defineCollection({
-  loader: file('src/content/misconceptions.yaml'),
+  loader: yamlDir('src/content/misconceptions'),
   schema: z.object({
     id: z.string().regex(/^MC-[\w-]+$/),
     title: z.string(),
@@ -116,7 +140,7 @@ const misconceptions = defineCollection({
 });
 
 const glossary = defineCollection({
-  loader: file('src/content/glossary.yaml'),
+  loader: yamlDir('src/content/glossary'),
   schema: z.object({
     id: z.string(),
     term: z.string(),
@@ -131,7 +155,7 @@ const glossary = defineCollection({
 });
 
 const videos = defineCollection({
-  loader: file('src/content/videos.yaml'),
+  loader: yamlDir('src/content/videos'),
   schema: z.object({
     id: z.string(),
     youtubeId: z.string().regex(/^[\w-]{11}$/),

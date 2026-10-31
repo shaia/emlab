@@ -1,0 +1,9 @@
+# Glossary terms introduced in this lesson. Format and rules: see glossary/1-5.yaml.
+
+- id: superposition
+  term: עקרון הסופרפוזיציה
+  en: superposition principle
+  definition: השדה (או הכוח) של כמה מטענים יחד הוא הסכום הווקטורי של השדות (או הכוחות) של כל מטען לבדו.
+  reject: [עקרון הסופרפוזיציא]
+  lesson: '1.4'
+

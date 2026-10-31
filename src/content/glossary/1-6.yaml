@@ -1,0 +1,8 @@
+# Glossary terms introduced in this lesson. Format and rules: see glossary/1-5.yaml.
+
+- id: field-line
+  term: קו שדה
+  en: field line
+  definition: קו שהמשיק לו בכל נקודה הוא בכיוון השדה החשמלי. צפיפות הקווים מראה את עוצמת השדה.
+  reject: [קו כוח]
+  lesson: '1.6'

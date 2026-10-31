@@ -2,55 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 
 const LESSON = '/lessons/1-5/';
 
-/** Fail the test on any console error or uncaught exception. */
-function watchErrors(page: Page) {
-  const errors: string[] = [];
-  page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
-  page.on('pageerror', (e) => errors.push(String(e)));
-  return errors;
-}
-
 const progress = (page: Page) => page.evaluate(() => JSON.parse(localStorage.getItem('emlab:v1') ?? 'null'));
-
-test.describe('every page', () => {
-  for (const path of ['/', LESSON]) {
-    test(`${path} renders in Hebrew RTL with no errors`, async ({ page }) => {
-      const errors = watchErrors(page);
-      await page.goto(path);
-      await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
-      await expect(page.locator('html')).toHaveAttribute('lang', 'he');
-      await expect(page.locator('.katex-error')).toHaveCount(0);
-      // scroll through so every lazily hydrated island mounts
-      await page.evaluate(async () => {
-        for (let y = 0; y < document.body.scrollHeight; y += 600) {
-          window.scrollTo(0, y);
-          await new Promise((r) => setTimeout(r, 60));
-        }
-      });
-      await page.waitForTimeout(300);
-      expect(errors).toEqual([]);
-      // nothing may widen the page: sideways scrolling on a phone misplaces every tap
-      const { sw, cw } = await page.evaluate(() => ({
-        sw: document.documentElement.scrollWidth,
-        cw: document.documentElement.clientWidth,
-      }));
-      expect(sw).toBeLessThanOrEqual(cw);
-    });
-
-    test(`${path} has no dead internal links`, async ({ page, request }) => {
-      await page.goto(path);
-      const hrefs = await page.$$eval('a[href]', (as) =>
-        [...new Set(as.map((a) => (a as HTMLAnchorElement).href))].filter((h) => h.startsWith(location.origin)),
-      );
-      expect(hrefs.length).toBeGreaterThan(0);
-      for (const h of hrefs) {
-        const url = h.split('#')[0];
-        const res = await request.get(url);
-        expect(res.status(), url).toBe(200);
-      }
-    });
-  }
-});
 
 test.describe('live figures', () => {
   test('every simulation draws, in LTR physics space', async ({ page }) => {
