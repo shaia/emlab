@@ -2,6 +2,9 @@ import { expect, test, type Page } from '@playwright/test';
 
 const LESSON = '/lessons/1-5/';
 
+/** Islands hydrate when scrolled into view; acting on the server HTML before that does nothing. */
+const hydrated = (page: Page, inner: string) => expect(page.locator(`astro-island:not([ssr]) ${inner}`).first()).toBeAttached();
+
 const progress = (page: Page) => page.evaluate(() => JSON.parse(localStorage.getItem('emlab:v1') ?? 'null'));
 
 test.describe('live figures', () => {
@@ -78,6 +81,7 @@ test.describe('predict, then reveal', () => {
     await page.goto(LESSON);
     const predict = page.locator('[data-predict-id="pred-1-5"]');
     await predict.scrollIntoViewIfNeeded();
+    await hydrated(page, '[data-predict-id="pred-1-5"]');
     await expect(predict).not.toHaveClass(/is-open/);
     const commit = predict.getByRole('button', { name: 'זה החיזוי שלי' });
     await expect(commit).toBeDisabled();
@@ -89,6 +93,7 @@ test.describe('predict, then reveal', () => {
     await page.goto(LESSON);
     // islands hydrate when visible: the restored state appears once the block is on screen
     await page.locator('[data-predict-id="pred-1-5"]').scrollIntoViewIfNeeded();
+    await hydrated(page, '[data-predict-id="pred-1-5"]');
     await expect(page.locator('[data-predict-id="pred-1-5"]')).toHaveClass(/is-open/);
     // the summary closes the loop
     await page.locator('.revisit').scrollIntoViewIfNeeded();
@@ -101,8 +106,10 @@ test.describe('questions', () => {
     await page.goto(LESSON);
     const q = page.locator('[data-qid="Q-1.5-test-charge-double"]');
     await q.scrollIntoViewIfNeeded();
-    await q.locator('.q-choices').first().locator('label').nth(0).click(); // "it doubles"
-    await q.locator('.reasons label').nth(1).click(); // "the field is the force"
+    await hydrated(page, '[data-qid="Q-1.5-test-charge-double"]');
+    // choices are shuffled per question, so pick them by text
+    await q.locator('.q-choices').first().locator('label', { hasText: 'גדלה פי 2' }).click();
+    await q.locator('.reasons label', { hasText: 'השדה שווה לכוח' }).click();
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-wrong/);
     await expect(q.locator('.q-feedback')).toContainText('השדה איננו הכוח');
@@ -110,8 +117,8 @@ test.describe('questions', () => {
     expect(a).toMatchObject({ qid: 'Q-1.5-test-charge-double', correct: false, confident: true, misconception: 'MC-field-depends-on-test-charge', lesson: '1.5' });
 
     await q.getByRole('button', { name: 'נסו שוב' }).click();
-    await q.locator('.q-choices').first().locator('label').nth(1).click();
-    await q.locator('.reasons label').nth(0).click();
+    await q.locator('.q-choices').first().locator('label', { hasText: 'לא משתנה' }).click();
+    await q.locator('.reasons label', { hasText: 'גדלים פי 2' }).click();
     await q.getByRole('button', { name: 'בדיקה · לא בטוחים' }).click();
     await expect(q).toHaveClass(/is-right/);
     await expect(q.locator('.q-explanation')).toBeVisible();
@@ -121,6 +128,7 @@ test.describe('questions', () => {
     await page.goto(LESSON);
     const q = page.locator('[data-qid="Q-1.5-point-field"]');
     await q.scrollIntoViewIfNeeded();
+    await hydrated(page, '[data-qid="Q-1.5-point-field"]');
     const input = q.locator('input[type=text]');
     await input.fill('3.6*10^4');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
@@ -135,12 +143,14 @@ test.describe('questions', () => {
     await page.goto(LESSON);
     const v = page.locator('[data-qid="Q-1.5-negative-test-field"]');
     await v.scrollIntoViewIfNeeded();
+    await hydrated(page, '[data-qid="Q-1.5-negative-test-field"]');
     await v.getByRole('radio', { name: 'שמאלה', exact: true }).click();
     await v.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(v.locator('.q-feedback')).toContainText('זה כיוון');
 
     const r = page.locator('[data-qid="Q-1.5-rank-points"]');
     await r.scrollIntoViewIfNeeded();
+    await hydrated(page, '[data-qid="Q-1.5-rank-points"]');
     // items start as C, A, B (not the answer); move A up to get A, C, B, then tie C = B
     await r.getByRole('button', { name: 'למעלה' }).nth(1).click();
     await r.locator('.q-rank-rel').nth(1).click();
@@ -154,6 +164,7 @@ test.describe('lesson completion', () => {
     await page.goto(LESSON);
     const end = page.getByRole('button', { name: /סיימתי את השיעור/ });
     await end.scrollIntoViewIfNeeded();
+    await hydrated(page, '.lesson-end');
     await end.click();
     await expect(page.locator('.stamp')).toBeVisible();
     await page.goto('/');

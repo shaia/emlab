@@ -16,6 +16,7 @@ const open: OpenPart = {
   level: 'basic',
   hints: ['רמז'],
   confidence: true,
+  shuffle: true,
   solution: [{ kind: 'formula', text: '$E = kQ/r^2$' }],
   rubric: [
     { text: 'נוסחה', weight: 1 },
@@ -34,6 +35,7 @@ const q: BagrutQuestion = {
   level: 'bagrut',
   hints: [],
   confidence: true,
+  shuffle: true,
   objectives: [],
   parts: [
     {
@@ -48,6 +50,7 @@ const q: BagrutQuestion = {
       level: 'basic',
       hints: [],
       confidence: true,
+      shuffle: true,
       answer: 100,
       unit: 'N/C',
       tolerance: 0.03,

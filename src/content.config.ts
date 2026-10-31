@@ -66,6 +66,8 @@ const common = {
   explanation: z.string().optional(),
   /** ask "sure / not sure" before checking: separates misconceptions from gaps */
   confidence: z.boolean().default(true),
+  /** show mc/multi/twotier choices in a fixed shuffled order; false keeps a deliberate order */
+  shuffle: z.boolean().default(true),
 };
 
 const directions = ['e', 'ne', 'n', 'nw', 'w', 'sw', 's', 'se', 'out', 'in', 'zero'] as const;

@@ -7,6 +7,7 @@
 import type { Question } from '~/content.config';
 import { tex } from '~/lib/tex';
 import { isOpen, partQuestion } from './bagrut';
+import { seededShuffle } from './shuffle';
 
 export function renderQuestion(q: Question): Question {
   const t = (s: string, field: string) => tex(s, `${q.id}.${field}`);
@@ -16,8 +17,11 @@ export function renderQuestion(q: Question): Question {
     hints: q.hints.map((h, i) => t(h, `hints[${i}]`)),
     explanation: q.explanation ? t(q.explanation, 'explanation') : undefined,
   };
-  const choices = <C extends { text: string; feedback: string }>(cs: C[], name: string) =>
-    cs.map((c, i) => ({ ...c, text: t(c.text, `${name}[${i}].text`), feedback: t(c.feedback, `${name}[${i}].feedback`) }));
+  // render first (error messages keep the YAML index), then shuffle unless the author opted out
+  const choices = <C extends { text: string; feedback: string }>(cs: C[], name: string) => {
+    const rendered = cs.map((c, i) => ({ ...c, text: t(c.text, `${name}[${i}].text`), feedback: t(c.feedback, `${name}[${i}].feedback`) }));
+    return (q as { shuffle?: boolean }).shuffle === false ? rendered : seededShuffle(rendered, `${q.id}:${name}`);
+  };
 
   switch (q.type) {
     case 'mc':

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { grade, groupsOf, parseNumber, probesOf } from '~/assessment/check';
 import type { Question } from '~/content.config';
 
-const base = { objectives: ['OBJ-1.5-1'], qualitative: false, level: 'basic' as const, hints: [], confidence: true };
+const base = { objectives: ['OBJ-1.5-1'], qualitative: false, level: 'basic' as const, hints: [], confidence: true, shuffle: true };
 
 const mc: Question = {
   ...base,
