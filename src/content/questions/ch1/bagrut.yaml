@@ -46,8 +46,7 @@ questions:
         type: numeric
         points: 5
         level: mid
-        objectives: []
-        pendingObjectives: ['OBJ-1.3-TBD: חוק קולון, גודל הכוח בין שני מטענים נקודתיים']
+        objectives: [OBJ-1.3-1]
         prompt: מה גודל הכוח החשמלי שכל אחד משני המטענים מפעיל על השני?
         answer: 0.4
         unit: N
@@ -309,8 +308,7 @@ questions:
         points: 4
         level: mid
         qualitative: true
-        objectives: [OBJ-1.5-2]
-        pendingObjectives: ['OBJ-1.10-TBD: תנועת מטען בשדה אחיד']
+        objectives: [OBJ-1.5-2, OBJ-1.10-1]
         prompt: מה כיוון הכוח החשמלי על האלקטרון בין הלוחות?
         answer: n
         correctFeedback: 'נכון. השדה כלפי מטה, והאלקטרון שלילי, ולכן הכוח עליו כלפי מעלה, אל הלוח החיובי.'
@@ -338,8 +336,7 @@ questions:
         type: numeric
         points: 5
         level: mid
-        objectives: []
-        pendingObjectives: ['OBJ-1.10-TBD: תנועה בשדה אחיד, רכיב אופקי במהירות קבועה']
+        objectives: [OBJ-1.10-2]
         prompt: כמה זמן האלקטרון נמצא בין הלוחות?
         answer: 2.5e-9
         unit: s
@@ -353,8 +350,7 @@ questions:
         points: 8
         level: bagrut
         standalone: false
-        objectives: [OBJ-1.5-1]
-        pendingObjectives: ['OBJ-1.10-TBD: סטייה בשדה אחיד']
+        objectives: [OBJ-1.5-1, OBJ-1.10-2]
         prompt: בכמה מילימטרים האלקטרון סוטה אנכית, מרגע הכניסה לשדה ועד היציאה ממנו?
         answer: 2.198
         unit: mm
@@ -370,8 +366,7 @@ questions:
         type: open
         points: 10
         level: bagrut
-        objectives: [OBJ-1.5-1]
-        pendingObjectives: ['OBJ-1.10-TBD: הזנחת הכבידה']
+        objectives: [OBJ-1.5-1, OBJ-1.10-1]
         prompt: >-
           הראו בחישוב שאפשר להזניח את כוח הכובד על האלקטרון לעומת הכוח החשמלי. כתבו את הפתרון בפורמט בגרות.
         hints:
@@ -416,8 +411,7 @@ questions:
         points: 4
         level: mid
         qualitative: true
-        objectives: [OBJ-1.5-2]
-        pendingObjectives: ['OBJ-1.10-TBD: שיווי משקל של מטען בשדה אחיד']
+        objectives: [OBJ-1.5-2, OBJ-1.10-4]
         prompt: מה כיוון הכוח החשמלי על הטיפה?
         answer: n
         correctFeedback: 'נכון. הטיפה במנוחה, ולכן הכוח השקול עליה אפס. הכבידה כלפי מטה, ולכן הכוח החשמלי שווה לה בגודלו וכלפי מעלה.'
@@ -477,8 +471,7 @@ questions:
         points: 6
         level: mid
         standalone: false
-        objectives: []
-        pendingObjectives: ['OBJ-1.1-TBD: קוונטיזציה של המטען, מטען שהוא כפולה שלמה של e']
+        objectives: [OBJ-1.1-2, OBJ-1.10-4]
         prompt: כמה אלקטרונים עודפים יש על הטיפה?
         answer: 2
         unit: אלקטרונים
@@ -491,8 +484,7 @@ questions:
         type: open
         points: 10
         level: bagrut
-        objectives: [OBJ-1.5-1, OBJ-1.5-2]
-        pendingObjectives: ['OBJ-1.10-TBD: תנועה בשדה אחיד']
+        objectives: [OBJ-1.5-1, OBJ-1.5-2, OBJ-1.10-1]
         prompt: >-
           מכפילים את עוצמת השדה, והמטען והמסה לא משתנים. מה גודל התאוצה של הטיפה ברגע שאחרי הכפלת השדה, ובאיזה כיוון?
           כתבו את הפתרון בפורמט בגרות.
