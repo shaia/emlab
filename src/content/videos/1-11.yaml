@@ -1,0 +1,13 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+# The same film is listed in 1-10.yaml under its own id; no separate review video was found.
+
+- id: v-1-11-millikan-film
+  youtubeId: SrGahpb9HIs
+  title: 'Physics - The Millikan Experiment'
+  channel: rdwaynes
+  lang: en
+  captions: []
+  minutes: 29
+  why: 'סרט לימודי ישן (1959) על ניסוי מיליקן, כפי שהוא מתואר בתיאור ההעלאה. מתאים לחזרה: ראו איך מדידה אחת של טיפה הופכת לנתון, ואיך הרבה נתונים יחד מובילים לטענה על המטען.'
+  verified: '2026-10-31'

@@ -4,6 +4,10 @@ const LESSON = '/lessons/1-10/';
 
 const progress = (page: Page) => page.evaluate(() => JSON.parse(localStorage.getItem('emlab:v1') ?? 'null'));
 
+// islands hydrate when visible: wait for the question's island before typing into it
+const hydrated = (page: Page, qid: string) =>
+  expect(page.locator(`astro-island:not([ssr]) [data-qid="${qid}"]`)).toHaveCount(1);
+
 const setSlider = (slider: Locator, value: number) =>
   slider.evaluate((el: HTMLInputElement, v: number) => {
     el.value = String(v);
@@ -115,6 +119,7 @@ test.describe('questions', () => {
     await page.goto(LESSON);
     const q = page.locator('[data-qid="Q-1.10-exit-deflection"]');
     await q.scrollIntoViewIfNeeded();
+    await hydrated(page, 'Q-1.10-exit-deflection');
     const input = q.locator('input[type=text]');
     await input.fill('0.791');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
@@ -129,6 +134,7 @@ test.describe('questions', () => {
     await page.goto(LESSON);
     const q = page.locator('[data-qid="Q-1.10-double-speed"]');
     await q.scrollIntoViewIfNeeded();
+    await hydrated(page, 'Q-1.10-double-speed');
     await q.locator('.q-choices').first().locator('label').nth(0).click(); // 4Y
     await q.locator('.reasons label').nth(1).click(); // more energy, pushed harder
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
