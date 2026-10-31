@@ -1,0 +1,40 @@
+# Glossary terms introduced in this lesson. Format and rules: see glossary/1-5.yaml.
+
+- id: symmetry
+  term: סימטריה
+  en: symmetry
+  definition: תכונה של התפלגות מטענים שנראית אותו דבר אחרי סיבוב או הזזה. למשל קליפה כדורית נראית אותו דבר מכל כיוון. הסימטריה קובעת איך השדה יכול להיראות.
+  lesson: '1.8'
+
+- id: spherical-shell
+  term: קליפה כדורית
+  en: spherical shell
+  symbol: R
+  definition: משטח כדורי דק שהמטען מפוזר עליו באופן אחיד. הרדיוס שלה R נמדד מהמרכז.
+  lesson: '1.8'
+
+- id: surface-charge-density
+  term: צפיפות מטען משטחית
+  en: surface charge density
+  symbol: σ
+  unit: C/m²
+  definition: 'המטען ליחידת שטח של משטח טעון: σ = q/A.'
+  lesson: '1.8'
+
+- id: infinite-plane
+  term: לוח אינסופי
+  en: infinite plane
+  definition: הדגם של לוח טעון גדול מאוד, שבו מתעלמים מהשפות. קרוב ללוח אמיתי, הרחק משפתו, הדגם נותן תוצאה טובה.
+  lesson: '1.8'
+
+- id: parallel-plates
+  term: לוחות מקבילים
+  en: parallel plates
+  definition: שני לוחות טעונים, זה מול זה, במרחק קטן ביחס לגודלם. בין הלוחות השדה אחיד.
+  lesson: '1.8'
+
+- id: gauss-cylinder
+  term: גליל גאוס
+  en: Gaussian pillbox
+  definition: משטח גאוס בצורת גליל קצר, שחוצה לוח טעון. שני הבסיסים שלו מקבילים ללוח, והדופן שלו ניצבת ללוח.
+  lesson: '1.8'

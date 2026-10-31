@@ -1,0 +1,274 @@
+# Lesson 1.8 question bank. Same format and rules as 1-5.yaml.
+# Numbers were computed with src/physics; ε₀ = 8.85·10⁻¹² as students see it.
+
+chapter: 1
+questions:
+  # ---------------------------------------------------------------- OBJ-1.8-1 symmetry and the Gaussian surface
+  - id: Q-1.8-which-surface
+    type: mc
+    objectives: [OBJ-1.8-1]
+    qualitative: true
+    prompt: >-
+      רוצים למצוא בעזרת חוק גאוס את השדה של קליפה כדורית טעונה באופן אחיד. איזה משטח גאוס מתאים?
+    choices:
+      - text: כדור באותו מרכז כמו הקליפה.
+        correct: true
+        feedback: 'נכון. על כדור כזה השדה מאונך למשטח ובגודל זהה בכל נקודה, ולכן השטף הוא פשוט $E\cdot4\pi r^2$.'
+      - text: קובייה שהקליפה בתוכה.
+        feedback: 'חוק גאוס נכון גם לקובייה, אבל על קובייה השדה לא בגודל קבוע ולא מאונך לפאות בכל נקודה, ולכן אי אפשר לחלץ ממנו את $E$.'
+        misconception: MC-gauss-always-solves
+      - text: כל משטח סגור מתאים באותה מידה.
+        feedback: 'החוק נכון לכל משטח, אבל רק משטח שמתאים לסימטריה נותן את $E$ ישירות.'
+        misconception: MC-gauss-always-solves
+
+  - id: Q-1.8-dipole-gauss
+    type: twotier
+    objectives: [OBJ-1.8-1]
+    qualitative: true
+    prompt: >-
+      אפשר למצוא את השדה של קליפה כדורית בעזרת חוק גאוס, אבל לא את השדה של דיפול (מטען חיובי ושלילי שווים וקרובים).
+      האם חוק גאוס נכון גם לדיפול?
+    choices:
+      - text: כן, החוק נכון תמיד.
+        correct: true
+        feedback: 'נכון. החוק נכון לכל התפלגות מטענים ולכל משטח סגור.'
+      - text: לא, החוק נכון רק לקליפות כדוריות.
+        feedback: 'החוק נכון לכל התפלגות. מה שמוגבל הוא היכולת לחלץ ממנו את $E$.'
+        misconception: MC-gauss-always-solves
+    reasonPrompt: אז למה לא משתמשים בו כדי לחשב את השדה של הדיפול?
+    reasons:
+      - text: 'בדיפול אין משטח שעליו השדה קבוע בגודלו ומאונך למשטח, ולכן אי אפשר לחלץ את $E$ מהשטף.'
+        correct: true
+        feedback: 'בדיוק. בלי סימטריה, השטף הוא סכום על שדה משתנה, והחוק לא נותן את $E$ בנקודה.'
+      - text: 'בדיפול השטף דרך כל משטח הוא אפס, ולכן אין שדה.'
+        feedback: 'השטף אפס כשהמשטח כולל את שני המטענים, אבל השדה לא אפס. זו טעות שראינו בשיעור 1.7.'
+        misconception: MC-gauss-always-solves
+      - text: 'חוק גאוס עובד רק במטענים שלא זזים.'
+        feedback: 'גם בדיפול המטענים לא זזים. הבעיה היא חוסר סימטריה.'
+
+  - id: Q-1.8-plane-surface
+    type: mc
+    objectives: [OBJ-1.8-1]
+    qualitative: true
+    prompt: >-
+      רוצים למצוא את השדה ליד לוח אינסופי טעון באופן אחיד. מה משטח הגאוס המתאים ביותר?
+    choices:
+      - text: גליל קצר שחוצה את הלוח, ושני בסיסיו מקבילים ללוח.
+        correct: true
+        feedback: 'נכון. על הבסיסים השדה מאונך ובגודל קבוע, ועל הדופן השדה מקביל למשטח, ולכן שם השטף אפס.'
+      - text: כדור שמרכזו על הלוח.
+        feedback: 'על כדור כזה השדה לא מאונך למשטח ולא קבוע בגודלו. אין סימטריה כדורית ללוח.'
+        misconception: MC-gauss-always-solves
+      - text: 'כדור שמרכזו רחוק מהלוח, כדי ש"יתרחק" ממנו.'
+        feedback: 'המרחק לא עוזר. הסימטריה של לוח היא סימטריה לאורכו, והיא מתאימה לגליל ולא לכדור.'
+        misconception: MC-gauss-always-solves
+
+  - id: Q-1.8-wall-flux
+    type: mc
+    objectives: [OBJ-1.8-1]
+    qualitative: true
+    prompt: >-
+      בחישוב של לוח אינסופי בעזרת גליל גאוס, למה אין תרומה לשטף מדופן הגליל?
+    choices:
+      - text: 'כי השדה מקביל לדופן, ולכן הוא מאונך לאנך של הדופן ו-$\cos90^\circ = 0$.'
+        correct: true
+        feedback: 'נכון. השדה של לוח ניצב ללוח, והדופן ניצבת ללוח. השדה "מחליק" לאורכה.'
+      - text: 'כי הדופן קטנה מאוד בהשוואה לבסיסים.'
+        feedback: 'גודל הדופן לא משנה. גם אם היא ארוכה, השטף דרכה אפס, כי השדה מקביל לה.'
+      - text: 'כי השדה בתוך הגליל אפס.'
+        feedback: 'השדה בתוך הגליל אינו אפס. הוא מאונך לבסיסים ויוצא מהם.'
+
+  # ---------------------------------------------------------------- OBJ-1.8-2 spherical shell
+  - id: Q-1.8-shell-inside
+    type: mc
+    objectives: [OBJ-1.8-2]
+    qualitative: true
+    prompt: >-
+      קליפה כדורית דקה טעונה באופן אחיד במטען $Q$. מה השדה החשמלי בנקודה בתוך הקליפה?
+    choices:
+      - text: אפס
+        correct: true
+        feedback: 'נכון. משטח גאוס בתוך הקליפה לא כולא מטען, ולכן השטף אפס, ולכן $E$ אפס.'
+      - text: '$kQ/r^2$, כאשר $r$ הוא המרחק מהמרכז.'
+        feedback: 'זה היה נכון אילו כל המטען $Q$ היה בתוך משטח גאוס. אבל כל המטען על הקליפה, מחוץ למשטח שבתוכה.'
+        misconception: MC-shell-inside-field
+      - text: '$kQ/R^2$, כמו על פני הקליפה.'
+        feedback: 'השדה לא נשאר קבוע כשנכנסים פנימה. ברגע שנכנסים לתוך הקליפה, המטען הכלוא אפס.'
+        misconception: MC-shell-inside-field
+
+  - id: Q-1.8-shell-field
+    type: numeric
+    objectives: [OBJ-1.8-2]
+    prompt: >-
+      קליפה כדורית ברדיוס $10$ ס"מ טעונה ב-$+4\,\mu\text{C}$. מה עוצמת השדה במרחק $50$ ס"מ ממרכזה?
+      ($k = 9\cdot10^{9}\,\text{N}\cdot\text{m}^2/\text{C}^2$)
+    answer: 1.44e5
+    unit: N/C
+    correctFeedback: 'נכון. מחוץ לקליפה $E = kQ/r^2 = 9\cdot10^9\cdot4\cdot10^{-6}/0.5^2 = 1.44\cdot10^{5}\,\text{N/C}$.'
+    wrongFeedback: 'מחוץ לקליפה השדה כמו של מטען נקודתי במרכז: $E = kQ/r^2$, עם $r$ מהמרכז במטרים.'
+    commonWrong:
+      - value: 3.6e6
+        feedback: 'הצבתם את רדיוס הקליפה $R = 0.1\,\text{m}$ ב-$r$. צריך להציב את המרחק מהמרכז עד הנקודה.'
+      - value: 7.2e4
+        feedback: 'חילקתם ב-$r$ במקום ב-$r^2$.'
+        misconception: MC-field-linear-in-r
+    hints:
+      - 'הנקודה מחוץ לקליפה? כן, כי $0.5 > 0.1$.'
+
+  - id: Q-1.8-shell-distance
+    type: numeric
+    objectives: [OBJ-1.8-2]
+    level: bagrut
+    prompt: >-
+      קליפה כדורית ברדיוס $20$ ס"מ טעונה ב-$+3\,\mu\text{C}$. מה עוצמת השדה בנקודה שנמצאת $30$ ס"מ מ**פני** הקליפה?
+    answer: 1.08e5
+    unit: N/C
+    correctFeedback: 'נכון. המרחק מהמרכז הוא $0.2 + 0.3 = 0.5\,\text{m}$, ולכן $E = 9\cdot10^9\cdot3\cdot10^{-6}/0.5^2 = 1.08\cdot10^{5}\,\text{N/C}$.'
+    wrongFeedback: 'ב-$kQ/r^2$ ה-$r$ הוא המרחק מהמרכז. חברו את הרדיוס למרחק מהפנים.'
+    commonWrong:
+      - value: 3.0e5
+        feedback: 'הצבתם $r = 0.3\,\text{m}$, המרחק מפני הקליפה. אבל $r$ נמדד מהמרכז: $0.2 + 0.3 = 0.5\,\text{m}$.'
+        misconception: MC-shell-distance-from-surface
+    hints:
+      - 'איפה נמצא המרכז של הקליפה?'
+
+  - id: Q-1.8-shell-rank
+    type: rank
+    objectives: [OBJ-1.8-2]
+    qualitative: true
+    prompt: >-
+      קליפה כדורית ברדיוס $R$ טעונה באופן אחיד. דרגו את עוצמת השדה בארבע הנקודות, מהחזקה לחלשה:
+    items:
+      - id: D
+        label: 'נקודה D: במרחק $4R$ מהמרכז'
+      - id: A
+        label: 'נקודה A: במרחק $R/2$ מהמרכז'
+      - id: C
+        label: 'נקודה C: במרחק $3R$ מהמרכז'
+      - id: B
+        label: 'נקודה B: במרחק $2R$ מהמרכז'
+    order: [B, C, D, A]
+    correctFeedback: >-
+      נכון. A בתוך הקליפה ולכן $E = 0$. מחוץ לקליפה $E\propto1/r^2$: ב-B הערך $1/4$, ב-C $1/9$ וב-D $1/16$ (ביחידות של $kQ/R^2$).
+    wrongFeedback: 'בתוך הקליפה השדה אפס. מחוץ לה הוא יורד כמו $1/r^2$ עם המרחק מהמרכז.'
+    hints:
+      - 'איזו נקודה בתוך הקליפה?'
+
+  - id: Q-1.8-shell-direction
+    type: vector
+    objectives: [OBJ-1.8-2]
+    qualitative: true
+    prompt: >-
+      קליפה כדורית טעונה במטען **שלילי**. הנקודה P נמצאת מימין למרכז הקליפה, מחוצה לה. מה כיוון השדה ב-P?
+    answer: w
+    correctFeedback: 'נכון. מחוץ לקליפה השדה כמו של מטען נקודתי שלילי במרכז: הוא מצביע אל המרכז, כלומר שמאלה.'
+    wrong:
+      - dir: e
+        feedback: 'זה כיוון השדה של מטען חיובי. השדה של מטען שלילי מצביע אליו.'
+        misconception: MC-field-away-from-negative
+      - dir: zero
+        feedback: 'השדה אפס רק בתוך הקליפה. P נמצאת מחוצה לה.'
+        misconception: MC-shell-inside-field
+    wrongFeedback: 'השדה מצביע לכיוון הכוח על מטען בוחן חיובי. לאן הוא נמשך?'
+
+  # ---------------------------------------------------------------- OBJ-1.8-3 plane and plates
+  - id: Q-1.8-plane-distance
+    type: mc
+    objectives: [OBJ-1.8-3]
+    qualitative: true
+    prompt: >-
+      מודדים את השדה במרחק $1$ ס"מ מלוח אינסופי טעון, ואחר כך במרחק $1$ מטר ממנו. מה היחס בין השדה השני לראשון?
+    choices:
+      - text: 'השדות שווים, $\sigma/2\varepsilon_0$ בשני המרחקים.'
+        correct: true
+        feedback: 'נכון. בתוצאה $E = \sigma/2\varepsilon_0$ אין מרחק. הקווים מקבילים, ולא מתרווחים.'
+      - text: 'השדה השני קטן פי $100^2$ מהראשון.'
+        feedback: 'זה נכון למטען נקודתי. אצל לוח אינסופי הקווים מקבילים ולא מתרווחים, ולכן השדה לא יורד.'
+        misconception: MC-plane-field-falls
+      - text: 'השדה השני קטן פי $100$ מהראשון.'
+        feedback: 'אין תלות במרחק בלוח אינסופי. צפיפות הקווים לא משתנה.'
+        misconception: MC-plane-field-falls
+
+  - id: Q-1.8-plane-numeric
+    type: numeric
+    objectives: [OBJ-1.8-3]
+    prompt: >-
+      לוח אינסופי טעון בצפיפות מטען משטחית $\sigma = 3\,\mu\text{C/m}^2$. מה עוצמת השדה החשמלי ליד הלוח?
+      ($\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$)
+    answer: 1.7e5
+    unit: N/C
+    correctFeedback: 'נכון: $E = \dfrac{\sigma}{2\varepsilon_0} = \dfrac{3\cdot10^{-6}}{2\cdot8.85\cdot10^{-12}} = 1.7\cdot10^{5}\,\text{N/C}$.'
+    wrongFeedback: 'ללוח יחיד $E = \sigma/2\varepsilon_0$, עם $\sigma$ ב-$\text{C/m}^2$.'
+    commonWrong:
+      - value: 3.39e5
+        feedback: 'השתמשתם ב-$\sigma/\varepsilon_0$. זה השדה **בין שני לוחות**. ללוח יחיד יש גורם 2 במכנה.'
+        misconception: MC-plane-factor-two
+    hints:
+      - '$\sigma = 3\cdot10^{-6}\,\text{C/m}^2$.'
+
+  - id: Q-1.8-plates-between
+    type: numeric
+    objectives: [OBJ-1.8-3]
+    prompt: >-
+      שני לוחות מקבילים גדולים טעונים ב-$+\sigma$ וב-$-\sigma$, כאשר $\sigma = 2\,\mu\text{C/m}^2$. מה עוצמת השדה בין הלוחות?
+    answer: 2.26e5
+    unit: N/C
+    correctFeedback: 'נכון: $E = \sigma/\varepsilon_0 = 2\cdot10^{-6}/8.85\cdot10^{-12} = 2.26\cdot10^{5}\,\text{N/C}$.'
+    wrongFeedback: 'בין שני לוחות מנוגדים השדות של שני הלוחות מתחברים.'
+    commonWrong:
+      - value: 1.13e5
+        feedback: 'זה השדה של לוח אחד, $\sigma/2\varepsilon_0$. בין שני לוחות מנוגדים השדות מתחברים, ולכן הוא כפול.'
+        misconception: MC-plane-factor-two
+    hints:
+      - 'כל לוח נותן $\sigma/2\varepsilon_0$, והשדות באותו כיוון.'
+
+  - id: Q-1.8-plates-outside
+    type: mc
+    objectives: [OBJ-1.8-3]
+    qualitative: true
+    prompt: >-
+      שני לוחות מקבילים גדולים, האחד חיובי והשני שלילי, בעלי אותה צפיפות מטען בגודלה. מה השדה בנקודה שנמצאת **מחוץ** ללוחות?
+    choices:
+      - text: אפס
+        correct: true
+        feedback: 'נכון. מחוץ ללוחות שני השדות באותו גודל ובכיוונים מנוגדים, והם מבטלים זה את זה.'
+      - text: 'חצי מהשדה שבין הלוחות.'
+        feedback: 'זה היה נכון אילו היה רק לוח אחד. כאן יש שני לוחות, ושני השדות מבטלים זה את זה מחוץ להם.'
+        misconception: MC-plates-outside-field
+      - text: 'כמו בין הלוחות, אבל חלש יותר ככל שמתרחקים.'
+        feedback: 'השדה מחוץ ללוחות אפס, ולא יורד בהדרגה. בדגם של לוחות אינסופיים הוא קבוע.'
+        misconception: MC-plates-outside-field
+
+  - id: Q-1.8-plates-same
+    type: vector
+    objectives: [OBJ-1.8-3]
+    qualitative: true
+    prompt: >-
+      שני לוחות מקבילים גדולים, שניהם טעונים ב-$+\sigma$. הנקודה P נמצאת מימין לשני הלוחות. מה כיוון השדה ב-P?
+    answer: e
+    correctFeedback: 'נכון. שני הלוחות החיוביים דוחפים ימינה, והשדות מתחברים: $\sigma/\varepsilon_0$.'
+    wrong:
+      - dir: zero
+        feedback: 'השדות מתבטלים **בין** הלוחות, כי שם הם מנוגדים. מימין לשניהם הם באותו כיוון.'
+        misconception: MC-plane-factor-two
+      - dir: w
+        feedback: 'לוח חיובי יוצר שדה שמצביע הרחק ממנו, בכל צד שלו.'
+    wrongFeedback: 'קבעו את כיוון השדה של כל לוח לחוד בנקודה P, ואחר כך חברו.'
+
+  - id: Q-1.8-plates-force
+    type: numeric
+    objectives: [OBJ-1.8-3]
+    level: bagrut
+    prompt: >-
+      אלקטרון נמצא בין שני לוחות מקבילים גדולים עם $\sigma = \pm2\,\mu\text{C/m}^2$. מה גודל הכוח על האלקטרון?
+      ($e = 1.6\cdot10^{-19}\,\text{C}$, $\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$)
+    answer: 3.6e-14
+    unit: N
+    correctFeedback: 'נכון. $E = \sigma/\varepsilon_0 = 2.26\cdot10^5\,\text{N/C}$ ו-$F = eE = 1.6\cdot10^{-19}\cdot2.26\cdot10^{5} = 3.6\cdot10^{-14}\,\text{N}$.'
+    wrongFeedback: 'חשבו קודם את השדה בין הלוחות, $\sigma/\varepsilon_0$, ואחר כך $F = eE$.'
+    commonWrong:
+      - value: 1.8e-14
+        feedback: 'השתמשתם בשדה של לוח אחד, $\sigma/2\varepsilon_0$. בין שני לוחות השדה כפול.'
+        misconception: MC-plane-factor-two
+    hints:
+      - 'השדה בין הלוחות אחיד. הכוח הוא מטען כפול שדה.'
