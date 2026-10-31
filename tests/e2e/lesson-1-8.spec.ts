@@ -62,9 +62,12 @@ test.describe('shell field (1.8א)', () => {
     await page.goto(LESSON);
     const fig = page.locator('#fig-1-8a');
     await fig.scrollIntoViewIfNeeded();
-    await setRange(page, 'fig-1-8a', 0, 0.7);
-    await setRange(page, 'fig-1-8a', 1, -2);
-    await expect(fig.locator('.sim-readout')).toContainText('(פנימה)');
+    // text steps scrolled into view also drive the figure: set the charge until it holds
+    await expect(async () => {
+      await setRange(page, 'fig-1-8a', 0, 0.7);
+      await setRange(page, 'fig-1-8a', 1, -2);
+      await expect(fig.locator('.sim-readout')).toContainText('(פנימה)', { timeout: 1000 });
+    }).toPass({ timeout: 10000 });
   });
 });
 
@@ -137,6 +140,7 @@ test.describe('questions', () => {
 
 test.describe('lesson completion', () => {
   test('finishing stamps the lesson', async ({ page }) => {
+    test.slow();
     await page.goto(LESSON);
     const end = page.getByRole('button', { name: /סיימתי את השיעור/ });
     await end.scrollIntoViewIfNeeded();

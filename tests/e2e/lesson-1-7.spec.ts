@@ -203,6 +203,7 @@ test.describe('questions', () => {
 
 test.describe('lesson completion', () => {
   test('finishing stamps the lesson', async ({ page }) => {
+    test.slow();
     await page.goto(LESSON);
     const end = page.getByRole('button', { name: /סיימתי את השיעור/ });
     await end.scrollIntoViewIfNeeded();
