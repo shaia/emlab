@@ -399,7 +399,7 @@
 .formula-lesson > h3 a {
   font: 500 0.9rem var(--font-ui);
 }
-.gloss-letter {
+.platform .gloss-letter {
   margin: 28px 0 8px;
   padding-bottom: 4px;
   border-bottom: 1px solid var(--rule);
