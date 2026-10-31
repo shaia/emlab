@@ -25,8 +25,11 @@ export function sci(x: number, sig = 3): string {
   if (!Number.isFinite(x)) return '∞';
   if (x === 0) return '0';
   const ax = Math.abs(x);
-  if (ax >= 0.01 && ax < 1e4) {
-    return trim(x.toPrecision(sig));
+  // round first: 9999 at 3 figures is 10⁴ and belongs in the exponent branch
+  const r = Number(x.toPrecision(sig));
+  if (ax >= 0.01 && Math.abs(r) < 1e4) {
+    // toPrecision writes "5.00e+3" once the integer part has more digits than `sig`
+    return Math.abs(r) >= 10 ** sig ? String(r) : trim(r.toPrecision(sig));
   }
   const exp = Math.floor(Math.log10(ax));
   const mant = x / 10 ** exp;
