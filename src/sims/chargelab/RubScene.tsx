@@ -53,10 +53,11 @@ export default function RubScene(props: { id: string; tasks?: string[] }) {
     [props.id],
   );
 
+  // tasks count only the student's own presses of "rub", never the state a text step sets
+  const [pressed, setPressed] = useState(0);
   useEffect(() => {
-    if (rubs > 0) setRubbed((r) => (r.includes(pair) ? r : [...r, pair]));
-    if (props.tasks?.includes('rub-3') && rubs >= 3) markTask(`${props.id}:rub-3`);
-  }, [rubs, pair, props.id, props.tasks]);
+    if (props.tasks?.includes('rub-3') && pressed >= 3) markTask(`${props.id}:rub-3`);
+  }, [pressed, props.id, props.tasks]);
   useEffect(() => {
     if (props.tasks?.includes('both-pairs') && rubbed.length >= 2) markTask(`${props.id}:both-pairs`);
   }, [rubbed, props.id, props.tasks]);
@@ -97,14 +98,14 @@ export default function RubScene(props: { id: string; tasks?: string[] }) {
       else if (i < COLS) hole(ctx, x, y, r, p);
     });
     label(ctx, name, f.X(x0 + 32), f.Y(top - 8), p, { size: 14, color: p.ink });
-    label(ctx, `Q = ${eText(chargeInE(n))}`, f.X(x0 + 32), f.Y(top + 62), p, { size: 15, color: p.ink, weight: 700 });
+    label(ctx, `q = ${eText(chargeInE(n))}`, f.X(x0 + 32), f.Y(top + 62), p, { size: 15, color: p.ink, weight: 700 });
   };
 
   const draw = ({ ctx, view, palette: p }: FrameInfo) => {
     const f = frameOf(view);
     drawBody(ctx, f, p, 8, nA, names.nameA);
     drawBody(ctx, f, p, 88, nB, names.nameB);
-    label(ctx, `Q₁ + Q₂ = ${eText(chargeInE(nA + nB))}`, f.X(80), f.Y(108), p, { size: 16, color: p.hand, weight: 700, hand: true });
+    label(ctx, `q₁ + q₂ = ${eText(chargeInE(nA + nB))}`, f.X(80), f.Y(108), p, { size: 16, color: p.hand, weight: 700, hand: true });
   };
 
   const { canvasRef, invalidate } = useFigureCanvas(draw, { worldWidth: 1.6, worldHeight: 1.2, animate: false });
@@ -114,6 +115,8 @@ export default function RubScene(props: { id: string; tasks?: string[] }) {
     if (rubs >= MAX_RUBS) return;
     const next = rubs + 1;
     setRubs(next);
+    setPressed((n) => n + 1);
+    setRubbed((r) => (r.includes(pair) ? r : [...r, pair]));
     const [a, b] = counts(pair, next);
     setLive(`עבר עוד אלקטרון. ${names.nameA}: ${eText(chargeInE(a))}. ${names.nameB}: ${eText(chargeInE(b))}. סך הכול ${eText(chargeInE(a + b))}.`);
   };
@@ -126,7 +129,7 @@ export default function RubScene(props: { id: string; tasks?: string[] }) {
   const qB = chargeOfElectrons(nB);
   const row = (name: string, n: number, q: number) => (
     <span>
-      {name}: <b class="q">Q = {eText(chargeInE(n))} = {minus(sci(q))} C</b>
+      {name}: <b class="q">q = {eText(chargeInE(n))} = {minus(sci(q))} C</b>
     </span>
   );
 
@@ -144,7 +147,7 @@ export default function RubScene(props: { id: string; tasks?: string[] }) {
           {row(names.nameA, nA, qA)}
           {row(names.nameB, nB, qB)}
           <span>
-            סך הכול: <b class="q">Q₁ + Q₂ = {sci(qA + qB)} C</b>
+            סך הכול: <b class="q">q₁ + q₂ = {sci(qA + qB)} C</b>
           </span>
         </>
       }

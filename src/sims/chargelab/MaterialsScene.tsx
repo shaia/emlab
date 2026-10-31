@@ -47,6 +47,8 @@ const empty = (): number[] => new Array(SITES).fill(0);
 export default function MaterialsScene(props: { id: string; tasks?: string[] }) {
   const [dep, setDep] = useState<number[][]>([empty(), empty()]);
   const tokens = useRef<Token[][]>([[], []]);
+  /** electrons the student put on each bar; a text step's `load` does not count for the task */
+  const [byStudent, setByStudent] = useState<number[]>([0, 0]);
   const lastT = useRef(0);
   const [live, setLive] = useState('');
   const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: TASK_LABEL[id] ?? id }));
@@ -59,6 +61,7 @@ export default function MaterialsScene(props: { id: string; tasks?: string[] }) 
     const put = Math.min(k, room);
     if (put <= 0) return;
     setDep((prev) => prev.map((d, j) => (j === i ? d.map((x, q) => (q === s ? x + put : x)) : d)));
+    setByStudent((prev) => prev.map((x, j) => (j === i ? x + put : x)));
     for (let m = 0; m < put; m++) tokens.current[i].push(slot(s, tokens.current[i].length % 12, BARS[i].y));
   };
   const addBoth = (s: number, k: number) => {
@@ -94,8 +97,8 @@ export default function MaterialsScene(props: { id: string; tasks?: string[] }) 
   );
 
   useEffect(() => {
-    if (props.tasks?.includes('load-both') && total(0) >= 6 && total(1) >= 6) markTask(`${props.id}:load-both`);
-  }, [dep, props.id, props.tasks]);
+    if (props.tasks?.includes('load-both') && byStudent[0] >= 6 && byStudent[1] >= 6) markTask(`${props.id}:load-both`);
+  }, [byStudent, props.id, props.tasks]);
 
   const draw = ({ ctx, view, palette: p, t }: FrameInfo) => {
     const f = frameOf(view);
@@ -151,7 +154,7 @@ export default function MaterialsScene(props: { id: string; tasks?: string[] }) 
         }
         negative(ctx, f.X(tk.x), f.Y(tk.y), 3.1 * f.u, p);
       });
-      label(ctx, `Q = ${eText(-total(i))}`, f.X(BAR_X + (SITE_W * SITES) / 2), f.Y(bar.y + BAR_H + 9), p, {
+      label(ctx, `q = ${eText(-total(i))}`, f.X(BAR_X + (SITE_W * SITES) / 2), f.Y(bar.y + BAR_H + 9), p, {
         size: 15,
         color: p.hand,
         weight: 700,

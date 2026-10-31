@@ -21,9 +21,11 @@ export interface ChargeLabProps {
   id: string;
   scene: ChargeLabScene;
   tasks?: string[];
+  /** electroscope only: show the touch button and the ground wire (lesson 1.2, figure 1.2b) */
+  charging?: boolean;
 }
 
-export default function ChargeLab({ scene, id, tasks }: ChargeLabProps) {
+export default function ChargeLab({ scene, id, tasks, charging }: ChargeLabProps) {
   switch (scene) {
     case 'pair':
       return <PairScene id={id} tasks={tasks} />;
@@ -32,7 +34,7 @@ export default function ChargeLab({ scene, id, tasks }: ChargeLabProps) {
     case 'materials':
       return <MaterialsScene id={id} tasks={tasks} />;
     case 'electroscope':
-      return <ElectroscopeScene id={id} tasks={tasks} />;
+      return <ElectroscopeScene id={id} tasks={tasks} charging={charging} />;
     case 'polarise':
       return <PolariseScene id={id} tasks={tasks} />;
   }

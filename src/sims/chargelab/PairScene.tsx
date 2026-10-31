@@ -35,9 +35,12 @@ export default function PairScene(props: { id: string; tasks?: string[] }) {
     [props.id],
   );
 
-  useEffect(() => {
-    setSeen((prev) => (prev.includes(key(a, b)) ? prev : [...prev, key(a, b)]));
-  }, [a, b]);
+  /** A combination counts for the task only when the student's own click made it. */
+  const choose = (na: Sign, nb: Sign) => {
+    setA(na);
+    setB(nb);
+    setSeen((prev) => (prev.includes(key(na, nb)) ? prev : [...prev, key(na, nb)]));
+  };
   useEffect(() => {
     if (props.tasks?.includes('all-four') && seen.length >= 4) markTask(`${props.id}:all-four`);
   }, [seen, props.id, props.tasks]);
@@ -46,18 +49,27 @@ export default function PairScene(props: { id: string; tasks?: string[] }) {
 
   const draw = ({ ctx, view, palette: p }: FrameInfo) => {
     const f = frameOf(view);
-    const y = f.Y(55);
-    const xa = f.X(48);
-    const xb = f.X(112);
     const r = 11 * f.u;
-    // strings
+    // each string swings with the force: out when the balls repel, in when they attract (schematic: not to scale)
+    const swing = repel ? 7 : 4;
+    const pivotA = 48;
+    const pivotB = 112;
+    const sA = repel ? -swing : swing;
+    const sB = -sA;
+    const drop = Math.sqrt(47 * 47 - swing * swing);
+    const y = f.Y(8 + drop);
+    const xa = f.X(pivotA + sA);
+    const xb = f.X(pivotB + sB);
     ctx.save();
     ctx.strokeStyle = p.ink3;
     ctx.lineWidth = 1.4;
-    for (const x of [xa, xb]) {
+    for (const [pv, x] of [
+      [pivotA, xa],
+      [pivotB, xb],
+    ] as const) {
       ctx.beginPath();
-      ctx.moveTo(x, f.Y(8));
-      ctx.lineTo(x, y - r);
+      ctx.moveTo(f.X(pv), f.Y(8));
+      ctx.lineTo(x, y);
       ctx.stroke();
     }
     ctx.strokeStyle = p.ink2;
@@ -70,7 +82,7 @@ export default function PairScene(props: { id: string; tasks?: string[] }) {
     (a > 0 ? positive : negative)(ctx, xa, y, r, p);
     (b > 0 ? positive : negative)(ctx, xb, y, r, p);
     // equal and opposite forces: on A (left) and on B (right)
-    const L = 15 * f.u;
+    const L = 11 * f.u;
     const gap = r + 4;
     const dirA = repel ? -1 : 1;
     arrow(ctx, xa + dirA * gap, y, xa + dirA * (gap + L), y, { color: p.force, width: 3, head: 11 });
@@ -98,13 +110,13 @@ export default function PairScene(props: { id: string; tasks?: string[] }) {
         <>
           <div class="group" role="group" aria-label="הכדור השמאלי">
             <span class="hint">כדור שמאלי:</span>
-            <Toggle label="חיובי (+)" on={a > 0} onChange={() => setA(1)} />
-            <Toggle label="שלילי (−)" on={a < 0} onChange={() => setA(-1)} />
+            <Toggle label="חיובי (+)" on={a > 0} onChange={() => choose(1, b)} />
+            <Toggle label="שלילי (−)" on={a < 0} onChange={() => choose(-1, b)} />
           </div>
           <div class="group" role="group" aria-label="הכדור הימני">
             <span class="hint">כדור ימני:</span>
-            <Toggle label="חיובי (+)" on={b > 0} onChange={() => setB(1)} />
-            <Toggle label="שלילי (−)" on={b < 0} onChange={() => setB(-1)} />
+            <Toggle label="חיובי (+)" on={b > 0} onChange={() => choose(a, 1)} />
+            <Toggle label="שלילי (−)" on={b < 0} onChange={() => choose(a, -1)} />
           </div>
         </>
       }

@@ -43,9 +43,12 @@ export default function PolariseScene(props: { id: string; tasks?: string[] }) {
     [props.id],
   );
 
-  useEffect(() => {
-    if (rodN !== 0 && ri <= 2) setSigns((s) => (s.includes(Math.sign(rodN)) ? s : [...s, Math.sign(rodN)]));
-  }, [rodN, ri]);
+  /** a sign counts for the task only when the student chose it with the buttons, with the body near */
+  const chooseRod = (n: number, say: string) => {
+    setRodN(n);
+    setLive(say);
+    if (n !== 0 && ri <= 2) setSigns((s) => (s.includes(Math.sign(n)) ? s : [...s, Math.sign(n)]));
+  };
   useEffect(() => {
     if (props.tasks?.includes('both-signs') && signs.length >= 2) markTask(`${props.id}:both-signs`);
   }, [signs, props.id, props.tasks]);
@@ -59,8 +62,9 @@ export default function PolariseScene(props: { id: string; tasks?: string[] }) {
     const gR = 3.1 * f.u;
     // the neutral insulator
     slab(ctx, f.X(98), f.Y(12), 44 * f.u, 84 * f.u, p, { dash: true });
-    label(ctx, 'מבודד ניטרלי', f.X(120), f.Y(104), p, { size: 13, color: p.ink });
-    const px = Math.max(-9, Math.min(9, shift * 1.8)); // + = toward the rod = to the left
+    label(ctx, 'מבודד ניטרלי', f.X(120), f.Y(102), p, { size: 13, color: p.ink });
+    // the electrons shift inside their molecule, never out of it: tanh keeps the shift under 4.4 (the ring stays inside the dashed circle)
+    const px = 4.4 * Math.tanh(shift / 3); // + = toward the rod = to the left
     for (const mx of COLS) {
       for (const my of ROWS) {
         const X = f.X(mx);
@@ -101,9 +105,9 @@ export default function PolariseScene(props: { id: string; tasks?: string[] }) {
     if (rodN !== 0) {
       const len = Math.min(52, 60 * Math.pow(rel, 0.4)) * f.u;
       const ax = f.X(120);
-      const ay = f.Y(114);
+      const ay = f.Y(112);
       arrow(ctx, ax, ay, ax - len, ay, { color: p.force, width: 3.4, head: 12 });
-      label(ctx, 'F', ax - len / 2, ay - 12, p, { size: 15, color: p.force, weight: 700 });
+      label(ctx, 'F', ax - len - 10 * f.u, ay, p, { size: 15, color: p.force, weight: 700 });
     }
   };
 
@@ -134,7 +138,7 @@ export default function PolariseScene(props: { id: string; tasks?: string[] }) {
           <span>{say}</span>
           {rodN !== 0 && (
             <span>
-              עוצמת הכוח (יחסית): <b class="q">{sci(rel, 2)}</b>
+              עוצמת הכוח, ביחס לכוח במרחק "צמוד כמעט": <b class="q">{sci(rel, 2)}</b>
             </span>
           )}
         </>
@@ -142,9 +146,9 @@ export default function PolariseScene(props: { id: string; tasks?: string[] }) {
       controls={
         <>
           <div class="group" role="group" aria-label="סימן הגוף הטעון">
-            <Toggle label="גוף שלילי (−)" on={rodN > 0} onChange={() => (setRodN(ROD), setLive('הגוף הטעון שלילי.'))} />
-            <Toggle label="גוף חיובי (+)" on={rodN < 0} onChange={() => (setRodN(-ROD), setLive('הגוף הטעון חיובי.'))} />
-            <Toggle label="בלי מטען" on={rodN === 0} onChange={() => (setRodN(0), setLive('הגוף ניטרלי.'))} />
+            <Toggle label="גוף שלילי (−)" on={rodN > 0} onChange={() => chooseRod(ROD, 'הגוף הטעון שלילי.')} />
+            <Toggle label="גוף חיובי (+)" on={rodN < 0} onChange={() => chooseRod(-ROD, 'הגוף הטעון חיובי.')} />
+            <Toggle label="בלי מטען" on={rodN === 0} onChange={() => chooseRod(0, 'הגוף ניטרלי.')} />
           </div>
           <Slider label="מרחק" min={0} max={R_VALUES.length - 1} step={1} value={ri} format={(i) => R_NAMES[i]} onChange={setRi} />
         </>
