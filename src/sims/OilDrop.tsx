@@ -23,7 +23,7 @@ import { markTask } from '~/progress/store';
 import { subscribeSteps } from '~/ui/steps';
 import { useFigureCanvas, type FrameInfo } from './core/canvas';
 import { arrow, chargeDisc, withAlpha } from './core/ink';
-import { sci } from './core/format';
+import { sciFull as sci } from './core-sci';
 import SimShell, { Slider, Toggle, type TaskDef } from './core/SimShell';
 
 /** mass of every drop [kg], given to the student */
@@ -49,7 +49,7 @@ const chargeOf = (d: DropId) => -DROPS[d].n * E_CHARGE;
 
 const TASK_LABEL: Record<string, string> = {
   'balance-one': 'כווננו את השדה עד שהטיפה מרחפת, ולחצו "רשמו מדידה".',
-  'three-drops': 'מדדו שלוש טיפות שונות. מה משותף ליחסים q/e שקיבלתם?',
+  'three-drops': 'מדדו שלוש טיפות שונות. מה משותף ליחסים ⁦q/e⁩ שקיבלתם?',
 };
 
 interface State {
@@ -246,7 +246,7 @@ export default function OilDrop(props: OilDropProps) {
           </span>
           {hovering && s.E > 0 && (
             <span>
-              q = mg/E = <b class="q">{sci(chargeFromBalance(DROP_MASS, s.E))} C</b>, כלומר <b class="q">q/e ≈ {inUnitsOfE(chargeFromBalance(DROP_MASS, s.E)).toFixed(1)}</b>
+              <b class="q">q = mg/E = {sci(chargeFromBalance(DROP_MASS, s.E))} C</b>, כלומר <b class="q">q/e ≈ {inUnitsOfE(chargeFromBalance(DROP_MASS, s.E)).toFixed(1)}</b>
             </span>
           )}
         </>

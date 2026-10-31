@@ -18,7 +18,7 @@ import { useFigureCanvas, type FrameInfo } from './core/canvas';
 import { Slider, type TaskDef } from './core/SimShell';
 import SimShell from './core/SimShell';
 import { withAlpha } from './core/ink';
-import { sci } from './core/format';
+import { sciFull as sci } from './core-sci';
 
 /** counts of elementary charges behind each measured drop (hidden from the student) */
 const COUNTS = [3, 1, 5, 2, 4, 2, 3, 6, 1, 4];

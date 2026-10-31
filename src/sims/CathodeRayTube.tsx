@@ -15,7 +15,7 @@ import { markTask } from '~/progress/store';
 import { subscribeSteps } from '~/ui/steps';
 import { toScreen, useFigureCanvas, type FrameInfo } from './core/canvas';
 import { arrow, chargeDisc, paperGrid, polyline, withAlpha } from './core/ink';
-import { sci } from './core/format';
+import { sciFull as sci } from './core-sci';
 import SimShell, { Slider, Toggle, type TaskDef } from './core/SimShell';
 
 export type Particle = 'electron' | 'proton';

@@ -42,9 +42,9 @@ test.describe('live figures', () => {
     await fig.scrollIntoViewIfNeeded();
     const readout = fig.locator('.sim-readout');
     await expect(readout).toContainText('הנקודות אינן על קו ישר');
-    await fig.getByRole('button', { name: 'F מול 1/r', exact: true }).click();
+    await fig.locator('[aria-label="הציר האופקי"] button').nth(1).click();
     await expect(readout).toContainText('הנקודות אינן על קו ישר');
-    await fig.getByRole('button', { name: 'F מול 1/r²', exact: true }).click();
+    await fig.locator('[aria-label="הציר האופקי"] button').nth(2).click();
     await expect(readout).toContainText('הנקודות על קו ישר');
     await expect(readout).toContainText('N·m²');
     await expect(fig.locator('.sim-tasks li').first()).toHaveClass(/done/);

@@ -14,7 +14,7 @@ import { markTask } from '~/progress/store';
 import { subscribeSteps } from '~/ui/steps';
 import { useFigureCanvas, type FrameInfo } from './core/canvas';
 import { polyline, withAlpha } from './core/ink';
-import { sci } from './core/format';
+import { sciFull as sci } from './core-sci';
 import SimShell, { Toggle, type TaskDef } from './core/SimShell';
 
 export type Axis = 'r' | 'inv' | 'inv2';
@@ -26,14 +26,14 @@ const RADII = [0.05, 0.075, 0.1, 0.125, 0.15, 0.2, 0.25];
 const RUN = coulombRun(Q1, Q2, RADII, 0.04, 3);
 
 const AXES: Record<Axis, { p: number; label: string; name: string; unit: string }> = {
-  r: { p: 1, label: 'r (m)', name: 'המרחק r', unit: 'm' },
-  inv: { p: -1, label: '1/r (1/m)', name: '1/r', unit: '1/m' },
-  inv2: { p: -2, label: '1/r² (1/m²)', name: '1/r²', unit: '1/m²' },
+  r: { p: 1, label: 'r (m)', name: '⁦r⁩', unit: 'm' },
+  inv: { p: -1, label: '1/r (1/m)', name: '⁦1/r⁩', unit: '1/m' },
+  inv2: { p: -2, label: '1/r² (1/m²)', name: '⁦1/r²⁩', unit: '1/m²' },
 };
 const AXIS_IDS = Object.keys(AXES) as Axis[];
 
 const TASK_LABEL: Record<string, string> = {
-  'try-all': 'הציגו את F מול כל אחד משלושת הצירים: r, 1/r ו-1/r².',
+  'try-all': 'הציגו את ⁦F⁩ מול כל אחד משלושת הצירים האופקיים: ⁦r⁩, אחר כך ⁦1/r⁩ ואחר כך ⁦1/r²⁩.',
   straight: 'בחרו את הציר האופקי שבו הנקודות מתיישרות על קו אחד.',
 };
 
@@ -151,7 +151,12 @@ export default function CoulombGraph(props: CoulombGraphProps) {
     ctx.restore();
 
     if (s.fit && Number.isFinite(fit.slope)) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(ml, mt, W, H);
+      ctx.clip();
       polyline(ctx, [[X(0), Y(fit.intercept)], [X(xmax), Y(fit.intercept + fit.slope * xmax)]], p.accent, 2, { dash: [7, 5], alpha: 0.9 });
+      ctx.restore();
     }
     xs.forEach((x, i) => {
       ctx.save();
@@ -206,7 +211,7 @@ export default function CoulombGraph(props: CoulombGraphProps) {
         <>
           <div class="group" role="group" aria-label="הציר האופקי">
             {AXIS_IDS.map((a) => (
-              <Toggle key={a} label={`F מול ${AXES[a].name}`} on={s.axis === a} onChange={() => setAxis(a)} />
+              <Toggle key={a} label={`⁦F⁩ מול ${AXES[a].name}`} on={s.axis === a} onChange={() => setAxis(a)} />
             ))}
           </div>
           <div class="group">
