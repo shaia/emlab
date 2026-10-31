@@ -1,0 +1,7 @@
+---
+/** Millikan oil-drop figure for lesson MDX: <Spread figure={OilDrop} figureProps={{…}}>. */
+import OilDrop, { type OilDropProps } from './OilDrop';
+type Props = OilDropProps;
+---
+
+<OilDrop client:visible {...Astro.props} />
