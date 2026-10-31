@@ -8,3 +8,65 @@
   definition: תכונה של חלקיקים שגורמת להם להפעיל כוח חשמלי זה על זה ולהרגיש כוח כזה. יש שני סוגים, חיובי ושלילי.
   lesson: '1.1'
 
+
+- id: electron
+  term: אלקטרון
+  en: electron
+  symbol: e⁻
+  definition: חלקיק קטן בעל מטען שלילי. בחומרים האלקטרונים הם אלה שיכולים לעבור מגוף לגוף, ולכן הם אלה שיוצרים טעינה.
+  lesson: '1.1'
+
+- id: proton
+  term: פרוטון
+  en: proton
+  definition: חלקיק בעל מטען חיובי שנמצא בגרעין האטום. בגופים מוצקים הפרוטונים לא עוברים מגוף לגוף.
+  lesson: '1.1'
+
+- id: elementary-charge
+  term: המטען היסודי
+  en: elementary charge
+  symbol: e
+  unit: C
+  definition: גודל המטען של אלקטרון או של פרוטון, e = 1.6·10⁻¹⁹ C. זה המטען הקטן ביותר שאפשר לבודד.
+  reject: [מטען אלמנטרי]
+  lesson: '1.1'
+
+- id: charge-quantization
+  term: קוונטיזציה של המטען
+  en: charge quantization
+  definition: המטען של כל גוף הוא כפולה שלמה של המטען היסודי, q = n·e, כש-n מספר שלם. אי אפשר שיהיה לגוף מטען של חצי אלקטרון.
+  reject: [כימות המטען]
+  lesson: '1.1'
+
+- id: charge-conservation
+  term: שימור המטען
+  en: conservation of charge
+  definition: סך המטען במערכת סגורה לא משתנה. מטען לא נוצר ולא נעלם. הוא רק עובר מגוף לגוף.
+  lesson: '1.1'
+
+- id: neutral
+  term: גוף ניטרלי
+  en: neutral body
+  definition: גוף שמספר הפרוטונים בו שווה למספר האלקטרונים, ולכן סך המטען שלו אפס. גוף ניטרלי כן מכיל מטענים, אבל בכמויות שוות.
+  reject: [נייטרלי]
+  lesson: '1.1'
+
+- id: coulomb
+  term: קולון
+  en: coulomb
+  symbol: C
+  definition: יחידת המטען במערכת היחידות הבינלאומית. מטען של קולון אחד שווה לכ-6.25·10¹⁸ מטענים יסודיים.
+  lesson: '1.1'
+
+- id: conductor
+  term: מוליך
+  en: conductor
+  definition: חומר שבו אלקטרונים חופשיים לנוע בכל הגוף. מטען עודף שמונח על מוליך מתפזר עליו.
+  lesson: '1.1'
+
+- id: insulator
+  term: מבודד
+  en: insulator
+  definition: חומר שבו האלקטרונים כמעט לא נעים מאטום לאטום. מטען עודף שמונח על מבודד נשאר במקום שבו הונח.
+  reject: [מבדד, איזולטור]
+  lesson: '1.1'

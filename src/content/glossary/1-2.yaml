@@ -1,0 +1,47 @@
+# Glossary terms introduced in lesson 1.2. Format and rules: see glossary/1-5.yaml.
+
+- id: charging-by-friction
+  term: טעינה בחיכוך
+  en: charging by friction
+  definition: שני גופים שונים משפשפים זה בזה, ואלקטרונים עוברים מאחד לשני. הגוף שקיבל אלקטרונים נטען שלילית, והגוף שאיבד אלקטרונים נטען חיובית.
+  reject: [טעינה בשפשוף]
+  lesson: '1.2'
+
+- id: charging-by-contact
+  term: טעינה במגע
+  en: charging by contact
+  definition: גוף טעון נוגע בגוף אחר, ומטען עובר ביניהם. שני הגופים נשארים עם מטען מאותו סימן.
+  lesson: '1.2'
+
+- id: charging-by-induction
+  term: טעינה בהשראה
+  en: charging by induction
+  definition: טעינה בלי מגע. מקרבים גוף טעון לגוף מוליך, מארקים את המוליך, מנתקים את ההארקה ורק אחר כך מרחיקים את הגוף הטעון. המוליך נשאר עם מטען מסימן הפוך.
+  reject: [טעינה באינדוקציה]
+  lesson: '1.2'
+
+- id: induced-charge
+  term: מטען מושרה
+  en: induced charge
+  definition: מטען שמופיע על גוף בגלל גוף טעון שנמצא לידו, בלי מגע. הצד הקרוב מקבל סימן הפוך לגוף הטעון, והצד הרחוק מקבל אותו סימן.
+  lesson: '1.2'
+
+- id: grounding
+  term: הארקה
+  en: grounding
+  definition: חיבור של גוף מוליך אל האדמה בחוט מוליך. האדמה היא מאגר ענק של אלקטרונים, ולכן אלקטרונים יכולים לעבור אליה ממנו או ממנה אליו.
+  reject: [גירקוע]
+  lesson: '1.2'
+
+- id: electroscope
+  term: אלקטרוסקופ
+  en: electroscope
+  definition: מכשיר שמראה שיש מטען. מוט מתכת עם כדור בקצהו העליון ושני עלי מתכת דקים בקצהו התחתון. כשיש מטען על העלים הם דוחים זה את זה ונפתחים.
+  lesson: '1.2'
+
+- id: polarization
+  term: קיטוב
+  en: polarization
+  definition: במבודד ניטרלי שנמצא ליד גוף טעון, ענן האלקטרונים של כל מולקולה זז מעט. צד אחד של המולקולה נטען חיובית והצד השני שלילית, בלי שאף אלקטרון עוזב את המולקולה.
+  reject: [פולריזציה]
+  lesson: '1.2'
