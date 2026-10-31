@@ -7,10 +7,17 @@
  */
 
 import { useState } from 'preact/hooks';
-import type { Question } from '~/content.config';
 import { recordAttempt, type AttemptKind } from '~/progress/store';
+import type { Simple } from './bagrut';
 import { grade, parseNumber, probesOf, type Answer, type Dir, type Verdict } from './check';
 import './question.css';
+
+type Question = Simple;
+
+export interface GradedInfo {
+  hints: number;
+  confident: boolean | null;
+}
 
 interface Props {
   q: Question;
@@ -20,10 +27,12 @@ interface Props {
   /** shown in the header, e.g. "שאלה 2" */
   label?: string;
   /** called after every graded attempt (tests use it to tally scores) */
-  onGraded?: (v: Verdict) => void;
+  onGraded?: (v: Verdict, info: GradedInfo) => void;
+  /** tell the student that hints cost points (Bagrut parts) */
+  hintCost?: boolean;
 }
 
-type Draft =
+export type Draft =
   | { type: 'mc'; choice: number | null }
   | { type: 'multi'; choices: number[] }
   | { type: 'numeric'; text: string }
@@ -31,7 +40,7 @@ type Draft =
   | { type: 'rank'; order: string[]; tied: boolean[] }
   | { type: 'twotier'; choice: number | null; reason: number | null };
 
-function emptyDraft(q: Question): Draft {
+export function emptyDraft(q: Question): Draft {
   switch (q.type) {
     case 'mc':
       return { type: 'mc', choice: null };
@@ -49,7 +58,7 @@ function emptyDraft(q: Question): Draft {
 }
 
 /** The draft as a gradable answer, or a reason it is not ready yet. */
-function toAnswer(d: Draft): Answer | { error: string } | null {
+export function toAnswer(d: Draft): Answer | { error: string } | null {
   switch (d.type) {
     case 'mc':
       return d.choice === null ? null : { type: 'mc', choice: d.choice };
@@ -78,7 +87,7 @@ const TYPE_LABEL: Record<Question['type'], string> = {
   twotier: 'תשובה ונימוק',
 };
 
-export default function QuestionCard({ q, lesson = null, kind = 'check', label, onGraded }: Props) {
+export default function QuestionCard({ q, lesson = null, kind = 'check', label, onGraded, hintCost = false }: Props) {
   const [draft, setDraft] = useState<Draft>(() => emptyDraft(q));
   const [verdict, setVerdict] = useState<Verdict | null>(null);
   const [tries, setTries] = useState(0);
@@ -112,7 +121,7 @@ export default function QuestionCard({ q, lesson = null, kind = 'check', label, 
       confident,
       hints,
     });
-    onGraded?.(v);
+    onGraded?.(v, { hints, confident });
   };
 
   const retry = () => {
@@ -165,7 +174,7 @@ export default function QuestionCard({ q, lesson = null, kind = 'check', label, 
           )}
           {hints < q.hints.length && (
             <button type="button" class="btn ghost" onClick={() => setHints((n) => n + 1)}>
-              רמז {q.hints.length > 1 ? `(${hints + 1}/${q.hints.length})` : ''}
+              רמז {q.hints.length > 1 ? `(${hints + 1}/${q.hints.length})` : ''}{hintCost ? ' · עולה בנקודות' : ''}
             </button>
           )}
         </div>
@@ -210,7 +219,7 @@ interface AreaProps {
   verdict: Verdict | null;
 }
 
-function AnswerArea({ q, draft, setDraft, locked, verdict }: AreaProps) {
+export function AnswerArea({ q, draft, setDraft, locked, verdict }: AreaProps) {
   const name = `${q.id}-ans`;
   switch (q.type) {
     case 'mc':

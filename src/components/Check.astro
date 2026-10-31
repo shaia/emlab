@@ -1,7 +1,7 @@
 ---
 /** Lesson self-check: questions from the YAML banks, by id, rendered at build time. */
 import Block from './Block.astro';
-import QuestionCard from '~/assessment/QuestionCard';
+import AnyQuestion from '~/assessment/AnyQuestion';
 import { getQuestion, lessonFromPath } from '~/assessment/bank';
 import { renderQuestion } from '~/assessment/render';
 
@@ -16,5 +16,5 @@ const questions = await Promise.all(ids.map(async (id) => renderQuestion(await g
 ---
 
 <Block kind="check" title={title}>
-  {questions.map((q, i) => <QuestionCard client:visible q={q} lesson={lesson} kind="check" label={`שאלה ${i + 1}`} />)}
+  {questions.map((q, i) => <AnyQuestion client:visible q={q} lesson={lesson} kind="check" label={`שאלה ${i + 1}`} />)}
 </Block>

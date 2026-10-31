@@ -51,7 +51,19 @@ interface Question {
   reasons?: Choice[];
   commonWrong?: { misconception?: string; feedback: string }[];
   wrong?: { misconception?: string; feedback: string }[];
+  /** Bagrut questions: lettered parts, each a question-like object */
+  parts?: Part[];
+  diagram?: string;
+  diagramAlt?: string;
   [k: string]: unknown;
+}
+interface Part extends Omit<Question, 'id' | 'parts' | 'prompt'> {
+  label: string;
+  prompt: string;
+  points: number;
+  pendingObjectives?: string[];
+  rubric?: { text: string; weight?: number }[];
+  solution?: { kind: string; text: string }[];
 }
 interface Lesson {
   file: string;
@@ -117,14 +129,47 @@ const glossaryIds = new Set(glossary.map((g) => g.id));
 
 const seenQ = new Set<string>();
 const detected = new Set<string>();
+const pending: string[] = [];
+/** Every gradable unit: a question, or one part of a Bagrut question. */
+const units = questions.flatMap(({ q, file }) =>
+  q.type === 'bagrut'
+    ? (q.parts ?? []).map((p) => ({ q: { ...p, id: `${q.id}/${p.label}`, type: p.type } as Question, file, part: p, parent: q }))
+    : [{ q, file, part: null as Part | null, parent: null as Question | null }],
+);
 for (const { q, file } of questions) {
-  const w = `${file} ${q.id}`;
-  if (seenQ.has(q.id)) fail(w, 'duplicate question id');
+  if (seenQ.has(q.id)) fail(`${file} ${q.id}`, 'duplicate question id');
   seenQ.add(q.id);
+}
+for (const { q: bq, file } of questions.filter(({ q }) => q.type === 'bagrut')) {
+  const w = `${file} ${bq.id}`;
+  const parts = bq.parts ?? [];
+  if (parts.length < 2) fail(w, 'a Bagrut question needs at least 2 parts');
+  const labels = parts.map((p) => p.label);
+  if (new Set(labels).size !== labels.length) fail(w, 'two parts share a label');
+  if (bq.diagram && !bq.diagramAlt?.trim()) fail(w, 'a diagram needs diagramAlt (its accessible description)');
+  if (bq.diagram && /<script|on\w+=/i.test(bq.diagram)) fail(w, 'the diagram SVG must not contain scripts or event handlers');
+  if (parts.length && !parts.some((p) => p.type === 'open')) fail(w, 'a Bagrut question should have an open part (full written solution)', true);
+  const total = parts.reduce((n, p) => n + (p.points ?? 0), 0);
+  if (total !== 33) fail(w, `parts add up to ${total} points; a Bagrut question is worth 33`, true);
+}
+for (const { q, file, part, parent } of units) {
+  const w = `${file} ${q.id}`;
   const lessonOfId = q.id.match(/^Q-(\d+\.\d+)-/)?.[1];
-  for (const o of q.objectives) {
+  for (const o of q.objectives ?? []) {
     if (!objectiveIds.has(o)) fail(w, `objective ${o} is not declared by any lesson`);
     if (lessonOfId && !o.startsWith(`OBJ-${lessonOfId}-`)) fail(w, `objective ${o} belongs to another lesson than the id prefix ${lessonOfId}`);
+  }
+  if (part) {
+    const waiting = part.pendingObjectives ?? [];
+    if ((q.objectives ?? []).length === 0 && waiting.length === 0) fail(w, 'a part needs objectives, or pendingObjectives naming the lesson it waits for');
+    for (const x of waiting) pending.push(`${parent?.id}/${part.label}: ${x}`);
+    if (part.type === 'open') {
+      if (!part.solution?.length) fail(w, 'an open part needs a model solution');
+      else if (!part.solution.some((s) => s.kind === 'result')) fail(w, 'the model solution must end in a result step (value or conclusion, with units)');
+      if ((part.rubric ?? []).length < 2) fail(w, 'an open part needs a rubric of at least 2 lines');
+    }
+  } else if ((q.objectives ?? []).length === 0) {
+    fail(w, 'no objectives');
   }
   const tags = [
     ...(q.choices ?? []),
@@ -149,7 +194,7 @@ for (const { q, file } of questions) {
 
 for (const l of lessons) {
   for (const o of l.objectives) {
-    const qs = questions.filter(({ q }) => q.objectives.includes(o)).map(({ q }) => q);
+    const qs = questions.filter(({ q }) => q.type !== 'bagrut' && q.objectives.includes(o)).map(({ q }) => q);
     if (qs.length < 3) fail(l.file, `objective ${o} has ${qs.length} questions (needs ≥ 3)`, true);
     else if (!qs.some((q) => q.qualitative)) fail(l.file, `objective ${o} has no qualitative question`, true);
   }
@@ -222,6 +267,12 @@ for (const g of glossary) {
 
 /* --------------------------------------------------------------- report */
 
+if (pending.length) {
+  console.log(`lint-content: ${pending.length} Bagrut part(s) wait for objectives of lessons not written yet:
+`);
+  for (const p of pending) console.log(`  • ${p}`);
+  console.log('');
+}
 if (problems.length) {
   console.error(`lint-content: ${problems.length} problem(s)\n`);
   for (const p of problems) console.error(`  ✗ ${p}`);

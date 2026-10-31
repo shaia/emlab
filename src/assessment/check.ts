@@ -7,6 +7,7 @@
  */
 
 import type { Question } from '~/content.config';
+import { isOpen, partQuestion } from './bagrut';
 
 export type Dir = 'e' | 'ne' | 'n' | 'nw' | 'w' | 'sw' | 's' | 'se' | 'out' | 'in' | 'zero';
 
@@ -47,11 +48,15 @@ export function probesOf(q: Question): string[] {
       break;
     case 'rank':
       break;
+    case 'bagrut':
+      for (const p of q.parts) if (!isOpen(p)) probesOf(partQuestion(q, p)).forEach(add);
+      break;
   }
   return [...tags];
 }
 
 export function grade(q: Question, a: Answer): Verdict {
+  if (q.type === 'bagrut') throw new Error(`${q.id}: grade its parts, not the whole Bagrut question`);
   if (q.type !== a.type) throw new Error(`answer type ${a.type} does not match question ${q.id} (${q.type})`);
   switch (q.type) {
     case 'mc': {

@@ -1,0 +1,510 @@
+# Chapter 1 Bagrut-style questions: a scenario with lettered parts (א, ב, ג…), 33 points each, as in
+# paper 036371 (the exam has 6 such questions; students answer 3). Parts are auto-graded (mc, numeric,
+# vector, rank, twotier) or `open`: the student writes a solution, reveals the model one in Bagrut
+# format (formula → manipulation → substitution with units → result) and ticks the rubric.
+#
+# Objectives: a part lists the ids it genuinely tests. Where a part tests a lesson that is not
+# written yet, `objectives` stays short or empty and `pendingObjectives` names the lesson
+# (lint-content prints the list). Replace each entry by the real objective id when that lesson lands.
+#
+# Every number was computed with src/physics (coulombForce, fieldAt, shellField, gaussFlux,
+# parallelPlatesField, deflection), not by hand. YAML note: never use "…" for TeX.
+
+chapter: 1
+questions:
+  # ------------------------------------------------------------ 1: two charges on a line
+  - id: Q-1-bagrut-1
+    type: bagrut
+    title: שני מטענים על ישר
+    prompt: >-
+      שני מטענים נקודתיים קבועים נמצאים בריק על ציר $x$. המטען $Q_A = +4\,\mu\text{C}$ נמצא בראשית הציר,
+      והמטען $Q_B = -1\,\mu\text{C}$ נמצא בנקודה $x = 0.30\,\text{m}$. הנקודה P נמצאת על הציר ב-$x = 0.10\,\text{m}$.
+      השתמשו ב-$k = 9\cdot10^{9}\,\text{N}\cdot\text{m}^2/\text{C}^2$ וב-$e = 1.6\cdot10^{-19}\,\text{C}$.
+    diagramAlt: ציר x עם מטען חיובי בראשית, נקודה P במרחק 0.10 מטר ממנו, ומטען שלילי במרחק 0.30 מטר מהראשית.
+    diagram: |
+      <svg viewBox="0 0 520 140" width="520" height="140" font-size="15" aria-hidden="true">
+        <line x1="20" y1="60" x2="490" y2="60" stroke="currentColor" stroke-width="1.5"/>
+        <polygon points="490,55 502,60 490,65" fill="currentColor"/>
+        <text x="496" y="82" fill="currentColor" font-style="italic">x</text>
+        <circle cx="60" cy="60" r="15" fill="var(--pos)"/>
+        <text x="60" y="67" text-anchor="middle" fill="#fff" font-weight="700" font-size="20">+</text>
+        <text x="60" y="30" text-anchor="middle" fill="currentColor">Q<tspan font-size="11" dy="3">A</tspan><tspan dy="-3"> = +4 μC</tspan></text>
+        <circle cx="240" cy="60" r="15" fill="var(--paper)" stroke="var(--neg)" stroke-width="3"/>
+        <text x="240" y="67" text-anchor="middle" fill="var(--neg)" font-weight="700" font-size="20">−</text>
+        <text x="240" y="30" text-anchor="middle" fill="currentColor">Q<tspan font-size="11" dy="3">B</tspan><tspan dy="-3"> = −1 μC</tspan></text>
+        <circle cx="120" cy="60" r="4.5" fill="currentColor"/>
+        <text x="120" y="42" text-anchor="middle" fill="currentColor" font-weight="700">P</text>
+        <line x1="60" y1="96" x2="120" y2="96" stroke="currentColor" stroke-width="1"/>
+        <line x1="60" y1="90" x2="60" y2="102" stroke="currentColor"/><line x1="120" y1="90" x2="120" y2="102" stroke="currentColor"/>
+        <text x="90" y="115" text-anchor="middle" fill="currentColor">0.10 m</text>
+        <line x1="60" y1="126" x2="240" y2="126" stroke="currentColor" stroke-width="1"/>
+        <line x1="60" y1="120" x2="60" y2="132" stroke="currentColor"/><line x1="240" y1="120" x2="240" y2="132" stroke="currentColor"/>
+        <text x="150" y="139" text-anchor="middle" fill="currentColor">0.30 m</text>
+      </svg>
+    parts:
+      - label: א
+        type: numeric
+        points: 5
+        level: mid
+        objectives: []
+        pendingObjectives: ['OBJ-1.3-TBD: חוק קולון, גודל הכוח בין שני מטענים נקודתיים']
+        prompt: מה גודל הכוח החשמלי שכל אחד משני המטענים מפעיל על השני?
+        answer: 0.4
+        unit: N
+        correctFeedback: 'נכון: $F = k\dfrac{|Q_A Q_B|}{r^2} = 9\cdot10^{9}\cdot\dfrac{4\cdot10^{-6}\cdot1\cdot10^{-6}}{0.30^2} = 0.40\,\text{N}$.'
+        wrongFeedback: 'חוק קולון: $F = k|Q_A Q_B|/r^2$, כאשר $r$ הוא המרחק בין המטענים, $0.30\,\text{m}$. המירו $\mu\text{C}$ ל-C.'
+        commonWrong:
+          - value: 0.12
+            feedback: 'לא העליתם את המרחק בריבוע. בחוק קולון המכנה הוא $r^2$.'
+        hints:
+          - 'כתבו את חוק קולון. המרחק שמציבים בו הוא המרחק בין שני המטענים, לא עד P.'
+
+      - label: ב
+        type: vector
+        points: 4
+        level: mid
+        qualitative: true
+        objectives: [OBJ-1.5-2]
+        prompt: מניחים אלקטרון בנקודה P. מה כיוון הכוח החשמלי שפועל עליו?
+        answer: w
+        correctFeedback: 'נכון. שני המטענים יוצרים ב-P שדה ימינה (הרחק מהחיובי ואל השלילי), והכוח על מטען שלילי הפוך לשדה: שמאלה.'
+        wrong:
+          - dir: e
+            feedback: ימינה הוא כיוון השדה ב-P. על אלקטרון, מטען שלילי, הכוח הפוך לשדה.
+        wrongFeedback: קבעו קודם את כיוון השדה ב-P, ואחר כך זכרו שהכוח על מטען שלילי הפוך אליו.
+        hints:
+          - 'מה כיוון השדה של $Q_A$ ב-P, ומה כיוון השדה של $Q_B$ ב-P?'
+
+      - label: ג
+        type: numeric
+        points: 8
+        level: bagrut
+        objectives: [OBJ-1.5-3, OBJ-1.5-4]
+        prompt: מה עוצמת השדה החשמלי השקול בנקודה P?
+        answer: 3.825e6
+        unit: N/C
+        correctFeedback: 'נכון: $E_A = k\dfrac{Q_A}{0.10^2} = 3.6\cdot10^{6}$ ו-$E_B = k\dfrac{|Q_B|}{0.20^2} = 2.25\cdot10^{5}$, שניהם ימינה, ולכן $E = 3.8\cdot10^{6}\,\text{N/C}$.'
+        wrongFeedback: 'חשבו כל שדה בנפרד, $E = k|Q|/r^2$ עם המרחק מהמטען עצמו אל P, ואז חברו וקטורית.'
+        commonWrong:
+          - value: 3.375e6
+            feedback: 'הפחתתם את שני השדות. אבל בין חיובי לשלילי שני השדות מצביעים לאותו כיוון, ולכן מחברים.'
+            misconception: MC-opposite-signs-cancel
+          - value: 4.05e5
+            feedback: 'השתמשתם ב-$r$ ולא ב-$r^2$ במכנה. השדה של מטען נקודתי יורד כמו $1/r^2$.'
+            misconception: MC-field-linear-in-r
+          - value: 3.6e6
+            feedback: 'חישבתם רק את השדה של $Q_A$. גם $Q_B$ יוצר שדה ב-P, וצריך להוסיף אותו.'
+        hints:
+          - 'המרחק של P מ-$Q_B$ הוא $0.30 - 0.10 = 0.20\,\text{m}$.'
+          - 'בכל נקודה בין שני מטענים מנוגדים, שני השדות מצביעים אל אותו צד.'
+        explanation: >-
+          בנקודה P שני השדות מצביעים ימינה: השדה של $Q_A$ יוצא ממנו, והשדה של $Q_B$ נכנס אליו. לכן
+          $E = E_A + E_B = 3.6\cdot10^{6} + 2.25\cdot10^{5} = 3.8\cdot10^{6}\,\text{N/C}$.
+
+      - label: ד
+        type: numeric
+        points: 7
+        level: bagrut
+        objectives: [OBJ-1.5-4]
+        prompt: באיזו נקודה על הציר, מחוץ לקטע שבין שני המטענים, השדה החשמלי השקול מתאפס? כתבו את $x$ של הנקודה.
+        answer: 0.6
+        unit: m
+        correctFeedback: 'נכון. מימין ל-$Q_B$ מתקיים $\dfrac{kQ_A}{x^2} = \dfrac{k|Q_B|}{(x-0.30)^2}$, כלומר $x = 2(x - 0.30)$, ומכאן $x = 0.60\,\text{m}$.'
+        wrongFeedback: 'בין המטענים השדות מתחברים, ולכן האפס נמצא מחוץ להם, בצד של המטען הקטן בגודלו. השוו את העוצמות והציבו את המרחקים מכל מטען.'
+        commonWrong:
+          - value: 0.15
+            feedback: 'באמצע בין שני המטענים השדות מצביעים לאותו כיוון ולא מבטלים זה את זה. האפס נמצא מחוץ לקטע.'
+            misconception: MC-opposite-signs-cancel
+        hints:
+          - 'באיזה צד של המטענים שני השדות מצביעים בכיוונים מנוגדים? ליד איזה מטען צריך להיות כדי שהשדות יהיו שווים?'
+          - 'סמנו את המרחק מ-$Q_B$ ב-$d$. אז המרחק מ-$Q_A$ הוא $d + 0.30$. השוו את העוצמות.'
+
+      - label: ה
+        type: open
+        points: 9
+        level: bagrut
+        objectives: [OBJ-1.5-1]
+        prompt: >-
+          אלקטרון משוחרר ממנוחה בנקודה P. חשבו את גודל הכוח החשמלי עליו ואת גודל התאוצה שלו ברגע השחרור
+          ($m_e = 9.1\cdot10^{-31}\,\text{kg}$). כתבו את הפתרון בפורמט בגרות, והשתמשו בשדה שחישבתם בסעיף ג.
+        hints:
+          - 'הכוח על מטען בשדה: $F = |q|E$. אחר כך החוק השני של ניוטון.'
+        solution:
+          - { kind: formula, text: '$F = |q|\,E$ וגם $a = F/m$' }
+          - { kind: substitution, text: '$F = 1.6\cdot10^{-19}\,\text{C}\cdot 3.825\cdot10^{6}\,\text{N/C} = 6.1\cdot10^{-13}\,\text{N}$' }
+          - { kind: substitution, text: '$a = \dfrac{6.12\cdot10^{-13}\,\text{N}}{9.1\cdot10^{-31}\,\text{kg}} = 6.7\cdot10^{17}\,\text{m/s}^2$' }
+          - { kind: result, text: 'הכוח $6.1\cdot10^{-13}\,\text{N}$ שמאלה (הפוך לשדה), והתאוצה $6.7\cdot10^{17}\,\text{m/s}^2$ שמאלה.' }
+        rubric:
+          - text: כתבתי את הנוסחה $F = |q|E$ (ואת החוק השני של ניוטון) לפני ההצבה.
+          - text: השתמשתי בשדה מסעיף ג ובמטען האלקטרון, והצבתי עם יחידות.
+          - text: חישבתי נכון את הכוח, בערך $6\cdot10^{-13}\,\text{N}$.
+          - text: חישבתי נכון את התאוצה, בערך $7\cdot10^{17}\,\text{m/s}^2$.
+          - text: כתבתי את התוצאה עם יחידות וציינתי שהכיוון שמאלה.
+
+  # ----------------------------------------------- 2: spherical shell, parallel plates (Gauss)
+  - id: Q-1-bagrut-2
+    type: bagrut
+    title: מעטפת כדורית ושני לוחות
+    prompt: >-
+      מעטפת כדורית דקה ברדיוס $R = 0.20\,\text{m}$ טעונה במטען כולל $Q = +8\,\text{nC}$, המפוזר עליה בצורה אחידה.
+      במערכת נפרדת, שני לוחות מקבילים גדולים טעונים במטענים מנוגדים בצפיפות משטחית
+      $\sigma = 2\,\mu\text{C/m}^2$ (בלוח העליון $+\sigma$ ובתחתון $-\sigma$). התעלמו מאפקט הקצוות.
+      השתמשו ב-$k = 9\cdot10^{9}\,\text{N}\cdot\text{m}^2/\text{C}^2$ וב-$\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$.
+    diagramAlt: מעטפת כדורית טעונה ברדיוס R ונקודה מחוץ לה במרחק r מהמרכז, ולצידה שני לוחות מקבילים, העליון חיובי והתחתון שלילי.
+    diagram: |
+      <svg viewBox="0 0 540 170" width="540" height="170" font-size="15" aria-hidden="true">
+        <circle cx="110" cy="85" r="50" fill="none" stroke="var(--pos)" stroke-width="3"/>
+        <text x="110" y="64" text-anchor="middle" fill="var(--pos)" font-weight="700">+  +  +</text>
+        <circle cx="110" cy="85" r="2.5" fill="currentColor"/>
+        <line x1="110" y1="85" x2="160" y2="85" stroke="currentColor" stroke-dasharray="3 3"/>
+        <text x="136" y="104" text-anchor="middle" fill="currentColor" font-style="italic">R</text>
+        <circle cx="210" cy="85" r="4.5" fill="currentColor"/>
+        <line x1="110" y1="140" x2="210" y2="140" stroke="currentColor"/>
+        <line x1="110" y1="134" x2="110" y2="146" stroke="currentColor"/><line x1="210" y1="134" x2="210" y2="146" stroke="currentColor"/>
+        <text x="160" y="160" text-anchor="middle" fill="currentColor" font-style="italic">r = 0.40 m</text>
+        <text x="210" y="70" text-anchor="middle" fill="currentColor" font-weight="700">P</text>
+        <line x1="330" y1="40" x2="510" y2="40" stroke="var(--pos)" stroke-width="5"/>
+        <line x1="330" y1="130" x2="510" y2="130" stroke="var(--neg)" stroke-width="5"/>
+        <text x="320" y="46" text-anchor="end" fill="var(--pos)" font-weight="700">+σ</text>
+        <text x="320" y="136" text-anchor="end" fill="var(--neg)" font-weight="700">−σ</text>
+        <text x="360" y="32" fill="var(--pos)" font-weight="700">+   +   +   +   +   +</text>
+        <text x="360" y="152" fill="var(--neg)" font-weight="700">−   −   −   −   −   −</text>
+      </svg>
+    parts:
+      - label: א
+        type: mc
+        points: 4
+        level: mid
+        qualitative: true
+        objectives: []
+        pendingObjectives: ['OBJ-1.7-TBD / OBJ-1.8-TBD: השדה בתוך מעטפת טעונה, מחוק גאוס']
+        prompt: מה עוצמת השדה החשמלי בנקודה שנמצאת בתוך המעטפת, במרחק $0.10\,\text{m}$ ממרכזה?
+        choices:
+          - text: אפס.
+            correct: true
+            feedback: 'נכון. משטח גאוס כדורי בתוך המעטפת לא סוגר שום מטען, ולכן השטף דרכו אפס. מסימטריה השדה זהה בכל נקודה שלו, ולכן הוא אפס.'
+          - text: '$k\dfrac{Q}{(0.10)^2}$, כאילו כל המטען במרכז.'
+            feedback: 'נוסחת המטען הנקודתי תקפה מחוץ למעטפת. בתוכה אין מטען עטוף, ולכן אין שדה.'
+          - text: '$k\dfrac{Q}{R^2}$, כמו על פני המעטפת.'
+            feedback: 'זה השדה על פני המעטפת. בתוכה, כאשר המטען לא נמצא בתוך משטח גאוס, השדה אפס.'
+          - text: 'לא אפס, אבל קטן מזה שעל פני המעטפת.'
+            feedback: 'השדה לא יורד בהדרגה: משטח גאוס בתוך המעטפת לא עוטף מטען, והשדה בכל נקודה בתוכה אפס.'
+        hints:
+          - 'איזה מטען עוטף משטח כדורי דמיוני ברדיוס $0.10\,\text{m}$?'
+
+      - label: ב
+        type: numeric
+        points: 6
+        level: mid
+        objectives: [OBJ-1.5-3]
+        pendingObjectives: ['OBJ-1.8-TBD: שדה מחוץ למעטפת כדורית']
+        prompt: מה עוצמת השדה החשמלי בנקודה P, במרחק $r = 0.40\,\text{m}$ ממרכז המעטפת?
+        answer: 450
+        unit: N/C
+        correctFeedback: 'נכון. מחוץ למעטפת השדה כשל מטען נקודתי במרכז: $E = k\dfrac{Q}{r^2} = 9\cdot10^{9}\cdot\dfrac{8\cdot10^{-9}}{0.40^2} = 450\,\text{N/C}$.'
+        wrongFeedback: 'מחוץ למעטפת השדה כשל מטען נקודתי שנמצא במרכז. המרחק שמציבים הוא המרחק מהמרכז, $0.40\,\text{m}$, וצריך להמיר nC ל-C.'
+        commonWrong:
+          - value: 1800
+            feedback: 'הצבתם את רדיוס המעטפת, $0.20\,\text{m}$. צריך את המרחק מהמרכז עד P, $0.40\,\text{m}$.'
+          - value: 180
+            feedback: 'השתמשתם ב-$r$ ולא ב-$r^2$ במכנה. השדה של מטען נקודתי יורד כמו $1/r^2$.'
+            misconception: MC-field-linear-in-r
+        hints:
+          - 'כתבו את עוצמת השדה של מטען נקודתי, והציבו בה את המרחק מהמרכז.'
+
+      - label: ג
+        type: numeric
+        points: 6
+        level: bagrut
+        objectives: []
+        pendingObjectives: ['OBJ-1.7-TBD: שטף חשמלי וחוק גאוס']
+        prompt: מה השטף החשמלי דרך משטח כדורי דמיוני ברדיוס $0.40\,\text{m}$, שמרכזו במרכז המעטפת?
+        answer: 904
+        unit: N·m²/C
+        correctFeedback: 'נכון. לפי חוק גאוס $\Phi = \dfrac{Q_{\text{enc}}}{\varepsilon_0} = \dfrac{8\cdot10^{-9}}{8.85\cdot10^{-12}} = 9.0\cdot10^{2}\,\text{N}\cdot\text{m}^2/\text{C}$.'
+        wrongFeedback: 'חוק גאוס: $\Phi = Q_{\text{enc}}/\varepsilon_0$, כאשר $Q_{\text{enc}}$ הוא המטען שבתוך המשטח. אפשר לבדוק גם כך: $\Phi = E\cdot 4\pi r^2$.'
+        commonWrong:
+          - value: 226
+            feedback: 'שטח כדור הוא $4\pi r^2$, לא $\pi r^2$. עם השטח הנכון $E\cdot A$ נותן את אותה תוצאה כמו חוק גאוס.'
+        hints:
+          - 'איזה מטען נמצא בתוך המשטח?'
+        explanation: >-
+          השטף לא תלוי ברדיוס המשטח, כל עוד הוא עוטף את כל המטען: כשהרדיוס גדל, השדה קטן כמו $1/r^2$
+          והשטח גדל כמו $r^2$.
+
+      - label: ד
+        type: numeric
+        points: 7
+        level: mid
+        objectives: []
+        pendingObjectives: ['OBJ-1.8-TBD: שדה בין שני לוחות מקבילים טעונים']
+        prompt: מה עוצמת השדה החשמלי בין שני הלוחות?
+        answer: 2.26e5
+        unit: N/C
+        correctFeedback: 'נכון: $E = \dfrac{\sigma}{\varepsilon_0} = \dfrac{2\cdot10^{-6}}{8.85\cdot10^{-12}} = 2.3\cdot10^{5}\,\text{N/C}$.'
+        wrongFeedback: 'בין לוחות טעונים במטענים מנוגדים $E = \sigma/\varepsilon_0$. שימו לב להמרת $\mu\text{C}$ ל-C.'
+        commonWrong:
+          - value: 1.13e5
+            feedback: 'זה השדה של לוח אחד, $\sigma/(2\varepsilon_0)$. בין הלוחות מוסיפים את השדה של הלוח השני, ומקבלים פי 2.'
+        hints:
+          - 'השדה של לוח אחד הוא $\sigma/(2\varepsilon_0)$. כמה לוחות תורמים בין הלוחות?'
+
+      - label: ה
+        type: open
+        points: 10
+        level: bagrut
+        qualitative: true
+        objectives: [OBJ-1.5-4]
+        pendingObjectives: ['OBJ-1.8-TBD: שדה של לוח אינסופי']
+        prompt: >-
+          הסבירו בעזרת עקרון הסופרפוזיציה ובעזרת השדה של לוח אחד, $E_1 = \sigma/(2\varepsilon_0)$, מדוע השדה בין הלוחות
+          הוא $\sigma/\varepsilon_0$ ומדוע מחוץ ללוחות הוא אפס.
+        hints:
+          - 'שרטטו את החצים של שני הלוחות בשלושה אזורים: מעל שני הלוחות, ביניהם ומתחתם.'
+        solution:
+          - { kind: formula, text: 'שדה של לוח אחד: $E_1 = \dfrac{\sigma}{2\varepsilon_0}$, יוצא מלוח חיובי ונכנס ללוח שלילי.' }
+          - { kind: manipulation, text: 'בין הלוחות: השדה של הלוח החיובי (הרחק ממנו) והשדה של השלילי (אליו) מצביעים שניהם מלמעלה למטה, ולכן מחברים: $E = E_1 + E_1$.' }
+          - { kind: manipulation, text: 'מחוץ ללוחות: שני השדות שווים בעוצמה ומצביעים בכיוונים מנוגדים, ולכן הם מבטלים זה את זה.' }
+          - { kind: result, text: 'בין הלוחות $E = \dfrac{\sigma}{\varepsilon_0} = 2.3\cdot10^{5}\,\text{N/C}$, מלוח חיובי אל שלילי. מחוץ ללוחות $E = 0$.' }
+        rubric:
+          - text: ציינתי שהשדה של לוח אחד אינסופי הוא $\sigma/(2\varepsilon_0)$ ואינו תלוי במרחק.
+          - text: הסברתי שבין הלוחות שני השדות מצביעים לאותו כיוון, ולכן מחברים.
+          - text: הסברתי שמחוץ ללוחות השדות בכיוונים מנוגדים ובעוצמות שוות, ולכן מתבטלים.
+          - text: כתבתי את התוצאות $\sigma/\varepsilon_0$ ו-0, ואת כיוון השדה בין הלוחות.
+
+  # ---------------------------------------------- 3: an electron crossing a uniform field
+  - id: Q-1-bagrut-3
+    type: bagrut
+    title: אלקטרון בין שני לוחות
+    prompt: >-
+      אלקטרון נכנס בכיוון אופקי, במהירות $v_0 = 2.0\cdot10^{7}\,\text{m/s}$, אל האזור שבין שני לוחות מקבילים אופקיים
+      שאורכם $L = 5.0\,\text{cm}$. בין הלוחות שדה חשמלי אחיד כלפי מטה, בעוצמה $E = 4.0\cdot10^{3}\,\text{N/C}$.
+      האלקטרון לא פוגע בלוחות. התעלמו מאפקט הקצוות.
+      ($e = 1.6\cdot10^{-19}\,\text{C}$, $m_e = 9.1\cdot10^{-31}\,\text{kg}$, $g = 10\,\text{m/s}^2$)
+    diagramAlt: אלקטרון נכנס בכיוון אופקי בין שני לוחות אופקיים באורך L; בין הלוחות שדה חשמלי E כלפי מטה, והלוח העליון חיובי.
+    diagram: |
+      <svg viewBox="0 0 520 170" width="520" height="170" font-size="15" aria-hidden="true">
+        <line x1="130" y1="35" x2="400" y2="35" stroke="var(--pos)" stroke-width="5"/>
+        <line x1="130" y1="125" x2="400" y2="125" stroke="var(--neg)" stroke-width="5"/>
+        <text x="122" y="40" text-anchor="end" fill="var(--pos)" font-weight="700" font-size="20">+</text>
+        <text x="122" y="132" text-anchor="end" fill="var(--neg)" font-weight="700" font-size="20">−</text>
+        <g stroke="var(--efield)" stroke-width="2" fill="var(--efield)">
+          <line x1="190" y1="50" x2="190" y2="104"/><polygon points="184,102 196,102 190,114" stroke="none"/>
+          <line x1="260" y1="50" x2="260" y2="104"/><polygon points="254,102 266,102 260,114" stroke="none"/>
+          <line x1="330" y1="50" x2="330" y2="104"/><polygon points="324,102 336,102 330,114" stroke="none"/>
+        </g>
+        <text x="274" y="82" fill="var(--efield)" font-style="italic" font-weight="700">E</text>
+        <circle cx="50" cy="80" r="12" fill="var(--paper)" stroke="var(--neg)" stroke-width="3"/>
+        <text x="50" y="86" text-anchor="middle" fill="var(--neg)" font-weight="700" font-size="18">−</text>
+        <line x1="64" y1="80" x2="116" y2="80" stroke="currentColor" stroke-width="2"/>
+        <polygon points="114,74 126,80 114,86" fill="currentColor"/>
+        <text x="90" y="68" text-anchor="middle" fill="currentColor" font-style="italic">v<tspan font-size="11" dy="3">0</tspan></text>
+        <line x1="130" y1="152" x2="400" y2="152" stroke="currentColor"/>
+        <line x1="130" y1="146" x2="130" y2="158" stroke="currentColor"/><line x1="400" y1="146" x2="400" y2="158" stroke="currentColor"/>
+        <text x="265" y="168" text-anchor="middle" fill="currentColor" font-style="italic">L</text>
+      </svg>
+    parts:
+      - label: א
+        type: vector
+        points: 4
+        level: mid
+        qualitative: true
+        objectives: [OBJ-1.5-2]
+        pendingObjectives: ['OBJ-1.10-TBD: תנועת מטען בשדה אחיד']
+        prompt: מה כיוון הכוח החשמלי על האלקטרון בין הלוחות?
+        answer: n
+        correctFeedback: 'נכון. השדה כלפי מטה, והאלקטרון שלילי, ולכן הכוח עליו כלפי מעלה, אל הלוח החיובי.'
+        wrong:
+          - dir: s
+            feedback: 'כלפי מטה הוא כיוון השדה. על מטען שלילי הכוח הפוך לשדה.'
+        wrongFeedback: 'הכוח על מטען שלילי הפוך לכיוון השדה.'
+        hints:
+          - 'לאיזה לוח נמשך מטען שלילי?'
+
+      - label: ב
+        type: numeric
+        points: 6
+        level: mid
+        objectives: [OBJ-1.5-1]
+        prompt: מה גודל התאוצה של האלקטרון בין הלוחות? התעלמו מהכבידה.
+        answer: 7.03e14
+        unit: m/s²
+        correctFeedback: 'נכון: $F = eE$ ו-$a = F/m = \dfrac{1.6\cdot10^{-19}\cdot4.0\cdot10^{3}}{9.1\cdot10^{-31}} = 7.0\cdot10^{14}\,\text{m/s}^2$.'
+        wrongFeedback: 'הכוח הוא $F = eE$, והתאוצה לפי החוק השני של ניוטון היא $a = F/m$. מסת האלקטרון קטנה מאוד, ולכן התאוצה עצומה.'
+        hints:
+          - 'מצאו קודם את הכוח מההגדרה של השדה, $F = |q|E$.'
+
+      - label: ג
+        type: numeric
+        points: 5
+        level: mid
+        objectives: []
+        pendingObjectives: ['OBJ-1.10-TBD: תנועה בשדה אחיד, רכיב אופקי במהירות קבועה']
+        prompt: כמה זמן האלקטרון נמצא בין הלוחות?
+        answer: 2.5e-9
+        unit: s
+        correctFeedback: 'נכון. אופקית אין כוח, ולכן המהירות קבועה: $t = \dfrac{L}{v_0} = \dfrac{0.050}{2.0\cdot10^{7}} = 2.5\cdot10^{-9}\,\text{s}$.'
+        wrongFeedback: 'בכיוון האופקי אין כוח, ולכן $v_0$ קבועה והזמן הוא $t = L/v_0$. המירו את $L$ למטרים.'
+        hints:
+          - 'איזה כוח פועל בכיוון האופקי?'
+
+      - label: ד
+        type: numeric
+        points: 8
+        level: bagrut
+        standalone: false
+        objectives: [OBJ-1.5-1]
+        pendingObjectives: ['OBJ-1.10-TBD: סטייה בשדה אחיד']
+        prompt: בכמה מילימטרים האלקטרון סוטה אנכית, מרגע הכניסה לשדה ועד היציאה ממנו?
+        answer: 2.198
+        unit: mm
+        correctFeedback: 'נכון. אנכית התאוצה קבועה והמהירות ההתחלתית אפס: $y = \tfrac12 a t^2 = \tfrac12\cdot7.03\cdot10^{14}\cdot(2.5\cdot10^{-9})^2 = 2.2\cdot10^{-3}\,\text{m}$.'
+        wrongFeedback: 'אנכית: $y = \tfrac12 a t^2$, עם התאוצה מסעיף ב והזמן מסעיף ג. התוצאה במטרים, ואחר כך ממירים למילימטרים.'
+        commonWrong:
+          - value: 4.396
+            feedback: 'שכחתם את החצי בנוסחה $y = \tfrac12 a t^2$.'
+        hints:
+          - 'אנכית האלקטרון מתחיל ממנוחה ומאיץ בתאוצה קבועה.'
+
+      - label: ה
+        type: open
+        points: 10
+        level: bagrut
+        objectives: [OBJ-1.5-1]
+        pendingObjectives: ['OBJ-1.10-TBD: הזנחת הכבידה']
+        prompt: >-
+          הראו בחישוב שאפשר להזניח את כוח הכובד על האלקטרון לעומת הכוח החשמלי. כתבו את הפתרון בפורמט בגרות.
+        hints:
+          - 'חשבו את שני הכוחות והשוו ביניהם במנה.'
+        solution:
+          - { kind: formula, text: '$F_E = eE$ ו-$F_g = mg$' }
+          - { kind: substitution, text: '$F_E = 1.6\cdot10^{-19}\,\text{C}\cdot4.0\cdot10^{3}\,\text{N/C} = 6.4\cdot10^{-16}\,\text{N}$' }
+          - { kind: substitution, text: '$F_g = 9.1\cdot10^{-31}\,\text{kg}\cdot10\,\text{m/s}^2 = 9.1\cdot10^{-30}\,\text{N}$' }
+          - { kind: manipulation, text: '$\dfrac{F_E}{F_g} = \dfrac{6.4\cdot10^{-16}}{9.1\cdot10^{-30}}$' }
+          - { kind: result, text: '$\dfrac{F_E}{F_g} \approx 7\cdot10^{13}$: הכוח החשמלי גדול פי $7\cdot10^{13}$, ולכן אפשר להזניח את הכבידה.' }
+        rubric:
+          - text: כתבתי את שתי הנוסחאות, $F_E = eE$ ו-$F_g = mg$.
+          - text: הצבתי נכון עם יחידות וקיבלתי $6.4\cdot10^{-16}\,\text{N}$ ו-$9.1\cdot10^{-30}\,\text{N}$.
+          - text: השוויתי את הכוחות במנה, בערך $7\cdot10^{13}$.
+          - text: כתבתי מסקנה במילים, שהכוח החשמלי גדול בהרבה ולכן מזניחים את הכבידה.
+
+  # ------------------------------------------------------------ 4: the Millikan oil drop
+  - id: Q-1-bagrut-4
+    type: bagrut
+    title: טיפת שמן בין שני לוחות
+    prompt: >-
+      בניסוי מסוג ניסוי מיליקן, טיפת שמן שמסתה $m = 4.8\cdot10^{-15}\,\text{kg}$ מרחפת במנוחה בין שני לוחות מקבילים
+      אופקיים. הלוח העליון חיובי והתחתון שלילי, והשדה ביניהם אחיד: $E = 1.5\cdot10^{5}\,\text{N/C}$.
+      ($g = 10\,\text{m/s}^2$, $e = 1.6\cdot10^{-19}\,\text{C}$)
+    diagramAlt: טיפת שמן שמרחפת במנוחה בין שני לוחות אופקיים; הלוח העליון חיובי והתחתון שלילי.
+    diagram: |
+      <svg viewBox="0 0 400 170" width="400" height="170" font-size="15" aria-hidden="true">
+        <line x1="60" y1="30" x2="340" y2="30" stroke="var(--pos)" stroke-width="5"/>
+        <line x1="60" y1="140" x2="340" y2="140" stroke="var(--neg)" stroke-width="5"/>
+        <text x="52" y="36" text-anchor="end" fill="var(--pos)" font-weight="700" font-size="20">+</text>
+        <text x="52" y="147" text-anchor="end" fill="var(--neg)" font-weight="700" font-size="20">−</text>
+        <circle cx="200" cy="85" r="11" fill="var(--paper-3)" stroke="currentColor" stroke-width="2"/>
+        <text x="200" y="90" text-anchor="middle" fill="currentColor" font-style="italic" font-size="13">m</text>
+        <line x1="200" y1="100" x2="200" y2="132" stroke="var(--force)" stroke-width="2.5"/>
+        <polygon points="194,128 206,128 200,140" fill="var(--force)"/>
+        <text x="214" y="124" fill="var(--force)" font-style="italic" font-weight="700">mg</text>
+        <text x="300" y="90" fill="currentColor" font-size="13">E = 1.5·10⁵ N/C</text>
+      </svg>
+    parts:
+      - label: א
+        type: vector
+        points: 4
+        level: mid
+        qualitative: true
+        objectives: [OBJ-1.5-2]
+        pendingObjectives: ['OBJ-1.10-TBD: שיווי משקל של מטען בשדה אחיד']
+        prompt: מה כיוון הכוח החשמלי על הטיפה?
+        answer: n
+        correctFeedback: 'נכון. הטיפה במנוחה, ולכן הכוח השקול עליה אפס. הכבידה כלפי מטה, ולכן הכוח החשמלי שווה לה בגודלו וכלפי מעלה.'
+        wrong:
+          - dir: s
+            feedback: 'כלפי מטה פועלת הכבידה. כדי שהטיפה תישאר במנוחה הכוח החשמלי צריך לאזן אותה: כלפי מעלה.'
+        wrongFeedback: 'הטיפה במנוחה, ולכן הכוחות עליה מאזנים זה את זה.'
+        hints:
+          - 'איזה עוד כוח פועל על הטיפה?'
+
+      - label: ב
+        type: twotier
+        points: 5
+        level: mid
+        qualitative: true
+        objectives: [OBJ-1.5-2]
+        prompt: מה סימן המטען של הטיפה?
+        choices:
+          - text: חיובי.
+            feedback: 'מטען חיובי היה מקבל כוח בכיוון השדה, כלומר כלפי מטה. הכוח הדרוש הוא כלפי מעלה.'
+          - text: שלילי.
+            correct: true
+            feedback: 'נכון. הכוח כלפי מעלה והשדה כלפי מטה, כלומר הפוכים.'
+          - text: הטיפה ניטרלית.
+            feedback: 'לטיפה ניטרלית אין כוח חשמלי, והיא הייתה נופלת.'
+        reasonPrompt: ומה הנימוק?
+        reasons:
+          - text: 'הכוח החשמלי כלפי מעלה והשדה כלפי מטה, והכוח על מטען שלילי הפוך לשדה.'
+            correct: true
+            feedback: 'זה הנימוק. הכוח על מטען הוא $\vec F = q\vec E$, וכש-$q<0$ הכוח הפוך לשדה.'
+          - text: 'על מטען שלילי השדה מצביע כלפי מעלה, ולכן הכוח בכיוון השדה.'
+            feedback: 'השדה בין הלוחות לא משתנה בגלל סימן המטען שבתוכו. הוא כלפי מטה, והכוח על מטען שלילי הפוך אליו.'
+            misconception: MC-negative-test-charge-flips-field
+          - text: 'הלוח התחתון שלילי, ולכן הוא דוחף את הטיפה כלפי מעלה, ולכן הטיפה שלילית.'
+            feedback: 'זה נימוק מעגלי: הוא מניח את סימן הטיפה כדי להסיק אותו. נימוק תקף מתחיל בהשוואה בין כיוון הכוח לכיוון השדה.'
+        hints:
+          - 'השוו את כיוון הכוח לכיוון השדה.'
+
+      - label: ג
+        type: numeric
+        points: 8
+        level: bagrut
+        objectives: [OBJ-1.5-1]
+        prompt: מה גודל המטען של הטיפה?
+        answer: 3.2e-19
+        unit: C
+        correctFeedback: 'נכון. שיווי משקל: $|q|E = mg$, ולכן $|q| = \dfrac{mg}{E} = \dfrac{4.8\cdot10^{-15}\cdot10}{1.5\cdot10^{5}} = 3.2\cdot10^{-19}\,\text{C}$.'
+        wrongFeedback: 'הטיפה במנוחה, ולכן הכוח החשמלי $|q|E$ שווה לכוח הכובד $mg$. בודדו את $|q|$.'
+        commonWrong:
+          - value: 3.2e-20
+            feedback: 'שכחתם להכפיל ב-$g$. הכוח שמאזן את הטיפה הוא כוח הכובד $mg$, לא המסה.'
+        hints:
+          - 'כתבו שני כוחות שמאזנים זה את זה, והציבו בהם את הנוסחאות.'
+
+      - label: ד
+        type: numeric
+        points: 6
+        level: mid
+        standalone: false
+        objectives: []
+        pendingObjectives: ['OBJ-1.1-TBD: כימות המטען, מטען שהוא כפולה שלמה של e']
+        prompt: כמה אלקטרונים עודפים יש על הטיפה?
+        answer: 2
+        unit: אלקטרונים
+        correctFeedback: 'נכון. $n = \dfrac{|q|}{e} = \dfrac{3.2\cdot10^{-19}}{1.6\cdot10^{-19}} = 2$. המטען הוא כפולה שלמה של מטען האלקטרון, בדיוק מה שמיליקן גילה.'
+        wrongFeedback: 'מטען הטיפה הוא כפולה שלמה של מטען האלקטרון: $n = |q|/e$.'
+        hints:
+          - 'חלקו את מטען הטיפה במטען של אלקטרון אחד.'
+
+      - label: ה
+        type: open
+        points: 10
+        level: bagrut
+        objectives: [OBJ-1.5-1, OBJ-1.5-2]
+        pendingObjectives: ['OBJ-1.10-TBD: תנועה בשדה אחיד']
+        prompt: >-
+          מכפילים את עוצמת השדה, והמטען והמסה לא משתנים. מה גודל התאוצה של הטיפה ברגע שאחרי הכפלת השדה, ובאיזה כיוון?
+          כתבו את הפתרון בפורמט בגרות.
+        hints:
+          - 'מה הכוח השקול על הטיפה אחרי הכפלת השדה? הכוח החשמלי הכפיל את עצמו.'
+        solution:
+          - { kind: formula, text: '$\sum F = ma$ עם $F_E = |q|E'' = 2|q|E = 2mg$' }
+          - { kind: manipulation, text: 'ציר כלפי מעלה: $F_E - mg = ma$, ולכן $a = \dfrac{2mg - mg}{m} = g$.' }
+          - { kind: substitution, text: '$a = g = 10\,\text{m/s}^2$' }
+          - { kind: result, text: 'התאוצה $10\,\text{m/s}^2$ כלפי מעלה: הכוח החשמלי כפול מהכבידה, והטיפה מתחילה לעלות.' }
+        rubric:
+          - text: הבנתי שהכוח החשמלי הוא עכשיו $2mg$, כלומר כפול מהכבידה.
+          - text: כתבתי את החוק השני של ניוטון עם סימנים נכונים לפי ציר שבחרתי.
+          - text: קיבלתי $a = g = 10\,\text{m/s}^2$ עם יחידות.
+          - text: ציינתי שהכיוון כלפי מעלה.
