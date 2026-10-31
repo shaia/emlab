@@ -1,0 +1,14 @@
+# Lesson 1.11 (chapter review) terms. Ids carry a `review-` prefix so they cannot collide with the
+# lessons that introduce the same ideas; after merging, fold duplicates into the original entries.
+
+- id: review-torsion-balance
+  term: מאזן פיתול
+  en: torsion balance
+  definition: מכשיר שבו מוט תלוי על סיב דק. כוח קטן שפועל על קצה המוט מסובב אותו, וזווית הסיבוב מראה את גודל הכוח. קולון השתמש בו כדי למדוד את הכוח בין שני מטענים.
+  lesson: '1.11'
+
+- id: review-linearization
+  term: ליניאריזציה
+  en: linearization
+  definition: בחירת גדלים לצירי הגרף כך שהנקודות יתיישרו על קו ישר. את קו המגמה אפשר לתאר בנוסחה y = ax + b, והשיפוע שלו מבטא את הקבועים של החוק.
+  lesson: '1.11'

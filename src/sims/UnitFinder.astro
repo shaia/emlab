@@ -1,0 +1,7 @@
+---
+/** Lesson-1.11 figure: <Spread figure={UnitFinder} figureProps={{…}}>. */
+import UnitFinder, { type UnitFinderProps } from './UnitFinder';
+type Props = UnitFinderProps;
+---
+
+<UnitFinder client:visible {...Astro.props} />

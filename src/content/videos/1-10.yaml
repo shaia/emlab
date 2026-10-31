@@ -1,0 +1,12 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-1-10-millikan-film
+  youtubeId: SrGahpb9HIs
+  title: 'Physics - The Millikan Experiment'
+  channel: rdwaynes
+  lang: en
+  captions: []
+  minutes: 29
+  why: סרט לימודי ישן על ניסוי מיליקן (לפי כותרת הסרט). חפשו את הטיפה בין הלוחות ואת הרגע שבו כוונון השדה מחזיק אותה במקום. הסרט ארוך, ואפשר לצפות רק בחלק ממנו.
+  verified: '2026-10-31'
