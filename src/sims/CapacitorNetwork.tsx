@@ -250,7 +250,8 @@ export default function CapacitorNetwork(props: CapacitorNetworkProps) {
       const text = `${name} = ${muF(b.C)}`;
       const sub = `${muC(b.Q)}, ${volt(b.V)}`;
       if (side === 'below') label(text, x, y - 0.1, 'center', sub);
-      else if (side === 'left') label(text, x - 0.06, y + 0.03, 'right', sub);
+      // clear of the +/− glyphs, which sit on the left of the plates
+      else if (side === 'left') label(text, x - 0.15, y + 0.03, 'right', sub);
       else label(text, x + 0.06, y + 0.03, 'left', sub);
     };
 
@@ -311,17 +312,18 @@ export default function CapacitorNetwork(props: CapacitorNetworkProps) {
       battery(true);
       line([
         [xBat, yTop],
-        [0.65, yTop],
-        [0.65, yBot],
+        [0.42, yTop],
+        [0.42, yBot],
         [xBat, yBot],
       ]);
       line([
-        [0.1, yTop],
-        [0.1, yBot],
+        [0.0, yTop],
+        [0.0, yBot],
       ]);
-      cap(-0.4, yTop, false, 'C₁', b1, 'below');
-      cap(0.1, -0.05, true, 'C₂', b2, 'right');
-      cap(0.65, -0.05, true, 'C₃', b3, 'right');
+      // C₂ labelled on its left and C₃ on its right, so neither label runs into the other branch or off a phone screen
+      cap(-0.45, yTop, false, 'C₁', b1, 'below');
+      cap(0.0, -0.05, true, 'C₂', b2, 'left');
+      cap(0.42, -0.05, true, 'C₃', b3, 'right');
     } else {
       // share: C₁ on a branch at x = −0.25; a two-way switch at the top joins it to the battery or to C₂
       const xs = -0.25;
@@ -373,7 +375,18 @@ export default function CapacitorNetwork(props: CapacitorNetworkProps) {
     ctx.direction = 'ltr';
     ctx.textAlign = 'right';
     ctx.textBaseline = 'bottom';
-    ctx.fillText(s.topology === 'share' ? `ΣQ = ${muC(b1.Q + b2.Q)}` : `C_eq = ${muF(sol.Ceq)}`, ex, ey);
+    if (s.topology === 'share') ctx.fillText(`ΣQ = ${muC(b1.Q + b2.Q)}`, ex, ey);
+    else {
+      // C with a small "eq" below the line, as the lesson writes it
+      const rest = ` = ${muF(sol.Ceq)}`;
+      const wRest = ctx.measureText(rest).width;
+      ctx.fillText(rest, ex, ey);
+      ctx.font = `700 9px ${p.fontUi}`;
+      const wEq = ctx.measureText('eq').width;
+      ctx.fillText('eq', ex - wRest, ey + 3);
+      ctx.font = `700 13px ${p.fontUi}`;
+      ctx.fillText('C', ex - wRest - wEq, ey);
+    }
     ctx.restore();
   };
 
@@ -400,7 +413,7 @@ export default function CapacitorNetwork(props: CapacitorNetworkProps) {
         <>
           {s.topology !== 'share' && (
             <span>
-              קיבול שקול: <b class="q">C = {muF(sol.Ceq)}</b>, מטען מהסוללה: <b class="q">{muC(sol.Ceq * s.volts)}</b>
+              קיבול שקול: <b class="q">C<sub>eq</sub> = {muF(sol.Ceq)}</b>, מטען מהסוללה: <b class="q">{muC(sol.Ceq * s.volts)}</b>
             </span>
           )}
           {sol.branches.map((b, i) => (

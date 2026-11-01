@@ -42,20 +42,20 @@ test.describe('live figures', () => {
     await freezeSteps(page);
     const readout = fig.locator('.sim-readout');
     // 2 μF and 3 μF on 12 V
-    await expect(readout).toContainText('C = 5 μF');
+    await expect(readout).toContainText('Ceq = 5 μF');
     await expect(readout).toContainText('C₁: Q = 24 μC, V = 12 V');
     await setSlider(fig.locator('input[type=range]').nth(1), 4);
-    await expect(readout).toContainText('C = 6 μF');
+    await expect(readout).toContainText('Ceq = 6 μF');
     await setSlider(fig.locator('input[type=range]').nth(1), 3);
     await fig.getByRole('button', { name: 'בטור' }).click();
-    await expect(readout).toContainText('C = 1.2 μF');
+    await expect(readout).toContainText('Ceq = 1.2 μF');
     await expect(readout).toContainText('C₁: Q = 14.4 μC, V = 7.2 V');
     await expect(readout).toContainText('C₂: Q = 14.4 μC, V = 4.8 V');
     await setSlider(fig.locator('input[type=range]').first(), 3);
-    await expect(readout).toContainText('C = 1.5 μF');
+    await expect(readout).toContainText('Ceq = 1.5 μF');
     await setSlider(fig.locator('input[type=range]').first(), 2);
     await fig.getByRole('button', { name: 'מעורב' }).click();
-    await expect(readout).toContainText('C = 1.33 μF');
+    await expect(readout).toContainText('Ceq = 1.33 μF');
     await expect(readout).toContainText('C₁: Q = 16 μC, V = 8 V');
     await expect(readout).toContainText('C₃: Q = 4 μC, V = 4 V');
     const tasks = (await progress(page)).tasks;

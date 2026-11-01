@@ -101,7 +101,7 @@ questions:
         feedback: 'חילקתם את המתח חצי-חצי. בטור על שני הקבלים אותו מטען, ולכן המתח גדול יותר על הקבל הקטן.'
         misconception: MC-series-equal-voltage
       - value: 8
-        feedback: 'זה המתח על הקבל של $6\,\mu\text{F}$. על הקטן ($4\,\mu\text{F}$) המתח גדול יותר: $V = Q/C$.'
+        feedback: 'חילקתם את המתח ביחס ישר לקיבולים, $20\cdot\tfrac{4}{10}$. בטור המתח מתחלק ביחס **הפוך** לקיבול: על כל קבל אותו מטען, ו-$V = Q/C$ גדול יותר על הקבל הקטן.'
     hints:
       - 'בטור, על כל קבל אותו מטען: $Q = C_{\text{eq}}V$.'
 
@@ -198,6 +198,8 @@ questions:
         misconception: MC-equal-share-on-connect
       - value: 10
         feedback: 'חלק מהמטען עבר לקבל השני, ולכן המתח על הראשון ירד.'
+      - value: 2
+        feedback: 'החלפתם בין הקבלים: הצבתם במונה את הקבל הריק, $1\cdot10/5$. המטען שנשמר הוא של הקבל הטעון, $C_1V_0 = 4\cdot10 = 40\,\mu\text{C}$.'
 
   - id: Q-2.8-share-energy
     type: mc
