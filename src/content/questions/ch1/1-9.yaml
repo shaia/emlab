@@ -97,7 +97,7 @@ questions:
     wrongFeedback: 'ליד פני מוליך בשיווי משקל $E = \sigma/\varepsilon_0$.'
     commonWrong:
       - value: 1.13e3
-        feedback: 'חילקתם ב-$2\varepsilon_0$. זה השדה של לוח אינסופי לא מוליך, שיש לו מטען משני צדיו. ליד פני מוליך כל המטען על פני המוליך, והשדה הוא $\sigma/\varepsilon_0$.'
+        feedback: 'חילקתם ב-$2\varepsilon_0$. זה השדה של לוח אינסופי לא מוליך, שהשדה שלו מתפזר לשני צדיו. ליד פני מוליך כל המטען על פני המוליך, והשדה הוא $\sigma/\varepsilon_0$.'
       - value: 1.77e-19
         feedback: 'כפלתם ב-$\varepsilon_0$ במקום לחלק בו.'
     hints:
