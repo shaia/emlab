@@ -10,7 +10,7 @@ questions:
     type: numeric
     objectives: [OBJ-3.9-1]
     prompt: >-
-      קבל ריק מחובר בטור לנגד של $4\,\text{k}\Omega$ ולמפסק, וסוללה אידאלית של $12\,\text{V}$. סוגרים את המפסק. מה הזרם ברגע הראשון? ענו במיליאמפר.
+      קבל ריק, נגד של $4\,\text{k}\Omega$, מפסק פתוח וסוללה אידאלית של $12\,\text{V}$ מחוברים בטור. סוגרים את המפסק. מה הזרם ברגע הראשון? ענו במיליאמפר.
     answer: 3
     unit: mA
     tolerance: 0.03
@@ -19,7 +19,9 @@ questions:
     commonWrong:
       - value: 0
         feedback: 'הקבל לא חוסם את הזרם מההתחלה. כשהוא ריק אין עליו מתח, וכל המתח על הנגד. הזרם יורד לאפס רק כשהקבל מתמלא.'
-        misconception: MC-current-through-cap-steady
+        misconception: MC-capacitor-blocks-always
+      - value: 3000
+        feedback: 'שכחתם את הקידומת קילו: $4\,\text{k}\Omega = 4000\,\Omega$, ולכן $I = 12/4000 = 3\cdot10^{-3}\,\text{A} = 3\,\text{mA}$.'
       - value: 0.003
         feedback: 'זה הזרם באמפר. השאלה מבקשת מיליאמפר: כפלו ב-1000.'
 
@@ -35,7 +37,7 @@ questions:
         feedback: 'נכון. בהתחלה הקבל כמו תיל, ובסוף כמו נתק.'
       - text: 'בהתחלה: הזרם אפס, כי הקבל חוסם. בסוף: הזרם מרבי.'
         feedback: 'הפוך. קבל ריק לא מתנגד לזרם, והזרם דועך ככל שהקבל מתמלא.'
-        misconception: MC-current-through-cap-steady
+        misconception: MC-capacitor-blocks-always
       - text: 'הזרם קבוע כל הזמן, והמתח על הקבל עולה בקצב קבוע.'
         feedback: 'הזרם לא קבוע: ככל שהמתח על הקבל גדל, נשאר פחות מתח על הנגד, והזרם קטן.'
         misconception: MC-capacitor-instant
@@ -104,7 +106,7 @@ questions:
       - value: 4700
         feedback: 'כפלתם $47\cdot100$ בלי להמיר את הקידומות. $10^3\cdot10^{-6} = 10^{-3}$, ולכן התוצאה קטנה פי אלף.'
       - value: 0.47
-        feedback: 'בדקו את הקידומות: $47\,\text{k}\Omega = 4.7\cdot10^4\,\Omega$ ו-$100\,\mu\text{F} = 10^{-4}\,\text{F}$.'
+        feedback: 'קראתם $47\,\text{k}\Omega$ כ-$4.7\,\text{k}\Omega$ (או $100\,\mu\text{F}$ כ-$10\,\mu\text{F}$). $47\,\text{k}\Omega = 4.7\cdot10^4\,\Omega$ ו-$100\,\mu\text{F} = 10^{-4}\,\text{F}$.'
 
   - id: Q-3.9-after-tau
     type: numeric
@@ -120,8 +122,7 @@ questions:
       - value: 3.68
         feedback: 'זה 37%: המתח של קבל **שנפרק** אחרי $\tau$. בטעינה הוא מגיע ל-63%.'
       - value: 5
-        feedback: 'הקבל לא נטען בקצב קבוע. אחרי $\tau$ הוא כבר עבר את החצי: 63%.'
-        misconception: MC-capacitor-instant
+        feedback: 'התייחסתם ל-$\tau$ כאל "זמן מחצית". אחרי $\tau$ הקבל כבר עבר את החצי: הוא ב-63% מהמתח הסופי.'
       - value: 10
         feedback: 'אחרי $\tau$ הקבל עוד לא מלא, רק 63%. הוא מגיע כמעט למלא אחרי כ-$5\tau$.'
         misconception: MC-full-after-tau
@@ -131,17 +132,17 @@ questions:
     objectives: [OBJ-3.9-2]
     level: mid
     prompt: >-
-      בגרף של המתח על קבל שנטען מסוללה של $12\,\text{V}$, המתח מגיע ל-$7.6\,\text{V}$ אחרי $2\,\text{s}$. בערך מה קבוע הזמן? ענו בשניות.
-    answer: 2
+      בגרף של המתח על קבל שנטען מסוללה של $10\,\text{V}$, המתח מגיע ל-$6.3\,\text{V}$ אחרי $3\,\text{s}$. בערך מה קבוע הזמן? ענו בשניות.
+    answer: 3
     unit: s
     tolerance: 0.05
-    correctFeedback: 'נכון. $7.6/12 \approx 0.63$: זה בדיוק השבר שמגיעים אליו אחרי $\tau$ אחד. לכן $\tau \approx 2\,\text{s}$.'
+    correctFeedback: 'נכון. $6.3/10 = 0.63$: זה בדיוק השבר שמגיעים אליו אחרי $\tau$ אחד. לכן $\tau \approx 3\,\text{s}$.'
     wrongFeedback: 'חשבו איזה חלק מהמתח הסופי הקבל הגיע אליו. אחרי $\tau$ אחד הוא מגיע ל-63%.'
     commonWrong:
       - value: 1
-        feedback: 'אחרי $\tau$ אחד הקבל מגיע ל-63%, לא ל-100% ולא ל-50%. כאן הוא הגיע ל-63% אחרי $2\,\text{s}$.'
-      - value: 1.27
-        feedback: 'כפלתם את הזמן ב-0.63. ה-63% הוא שבר של המתח, לא של הזמן: הקבל הגיע ל-63% בדיוק אחרי $2\,\text{s}$.'
+        feedback: '$1\,\text{s}$ הוא קבוע הזמן של איור 3.9א. כאן הקבל הגיע ל-63% מהמתח הסופי אחרי $3\,\text{s}$, ולכן $\tau \approx 3\,\text{s}$.'
+      - value: 1.89
+        feedback: 'כפלתם את הזמן ב-0.63. ה-63% הוא שבר של המתח, לא של הזמן: הקבל הגיע ל-63% בדיוק אחרי $3\,\text{s}$.'
 
   - id: Q-3.9-tau-emf
     type: mc
@@ -187,17 +188,17 @@ questions:
     objectives: [OBJ-3.9-3]
     level: bagrut
     prompt: >-
-      סוללה אידאלית של $12\,\text{V}$ מחוברת בטור לנגד $R_1 = 2\,\Omega$ ולזוג שמחובר במקביל: נגד $R_2 = 4\,\Omega$ וקבל של $10\,\mu\text{F}$. מה המטען על הקבל במצב יציב? ענו במיקרו-קולון.
-    answer: 80
+      סוללה אידאלית של $9\,\text{V}$ מחוברת בטור לנגד $R_1 = 3\,\Omega$ ולזוג רכיבים שמחוברים במקביל זה לזה: נגד $R_2 = 6\,\Omega$ וקבל של $10\,\mu\text{F}$. מה המטען על הקבל במצב יציב? ענו במיקרו-קולון.
+    answer: 60
     unit: μC
     tolerance: 0.03
-    correctFeedback: 'נכון. במצב יציב בענף של הקבל אין זרם, ולכן הזרם $I = 12/(2+4) = 2\,\text{A}$ עובר ב-$R_1$ וב-$R_2$. על $R_2$, וגם על הקבל שבמקביל לו, $V = 2\cdot4 = 8\,\text{V}$, ו-$Q = CV = 10\,\mu\text{F}\cdot8\,\text{V} = 80\,\mu\text{C}$.'
+    correctFeedback: 'נכון. במצב יציב בענף של הקבל אין זרם, ולכן הזרם $I = 9/(3+6) = 1\,\text{A}$ עובר ב-$R_1$ וב-$R_2$. על $R_2$, וגם על הקבל שבמקביל לו, $V = 1\cdot6 = 6\,\text{V}$, ו-$Q = CV = 10\,\mu\text{F}\cdot6\,\text{V} = 60\,\mu\text{C}$.'
     wrongFeedback: 'במצב יציב הקבל כמו נתק. מצאו את הזרם בנגדים, את המתח על $R_2$, ואז $Q = CV$.'
     commonWrong:
-      - value: 120
-        feedback: 'שמתם על הקבל את כל $12\,\text{V}$. הקבל במקביל ל-$R_2$ בלבד, ועל $R_2$ רק $8\,\text{V}$.'
-      - value: 40
-        feedback: 'השתמשתם במתח על $R_1$, $4\,\text{V}$. הקבל מחובר במקביל ל-$R_2$.'
+      - value: 90
+        feedback: 'שמתם על הקבל את כל $9\,\text{V}$. הקבל במקביל ל-$R_2$ בלבד, ועל $R_2$ רק $6\,\text{V}$.'
+      - value: 30
+        feedback: 'השתמשתם במתח על $R_1$, $3\,\text{V}$. הקבל מחובר במקביל ל-$R_2$.'
 
   - id: Q-3.9-steady-branch
     type: mc
@@ -214,7 +215,7 @@ questions:
         misconception: MC-current-through-cap-steady
       - text: 'כל הזרם עובר בקבל, כי אין לו התנגדות.'
         feedback: 'בין הלוחות יש מבודד: במצב יציב קבל הוא כמו נתק, לא כמו תיל.'
-        misconception: MC-charge-crosses-gap
+        misconception: MC-current-through-cap-steady
       - text: 'המתח על הקבל אפס, כי לא עובר בו זרם.'
         feedback: 'אין זרם, ובכל זאת יש מתח, כמו על מפסק פתוח (שיעור 3.1). המתח על הקבל שווה למתח על הנגד שבמקביל לו.'
         misconception: MC-no-current-no-voltage
