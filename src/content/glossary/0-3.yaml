@@ -1,0 +1,33 @@
+# Glossary terms introduced in this lesson. Format and rules: see glossary/1-5.yaml.
+
+- id: si-units
+  term: יחידות SI
+  en: SI units
+  definition: מערכת היחידות הבין-לאומית שבה כתובים כל הקבועים בדף הנוסחאות. יחידות היסוד שלה בקורס הן מטר, קילוגרם, שנייה ואמפר, ומהן נבנות היחידות האחרות, למשל ניוטון וקולון.
+  lesson: '0.3'
+
+- id: scientific-notation
+  term: כתיב מדעי
+  en: scientific notation
+  definition: כתיבה של מספר כמספר בין 1 ל-10, כפול חזקה של 10. למשל 0.00045 נכתב 4.5·10⁻⁴.
+  reject: [סימון מדעי]
+  lesson: '0.3'
+
+- id: si-prefix
+  term: קידומת
+  en: SI prefix
+  definition: אות לפני יחידה שמחליפה חזקה של 10. למשל μ (מיקרו) היא 10⁻⁶, ולכן 3 μC הם 3·10⁻⁶ C.
+  lesson: '0.3'
+
+- id: significant-figures
+  term: ספרות משמעותיות
+  en: significant figures
+  definition: הספרות במספר שבאמת ידועות מהמדידה. אפסים בתחילת מספר אינם משמעותיים; אפס בסוף, אחרי הנקודה העשרונית, כן. 0.0250 הוא מספר עם 3 ספרות משמעותיות.
+  reject: [ספרות ערך]
+  lesson: '0.3'
+
+- id: formula-sheet
+  term: דף הנוסחאות
+  en: formula sheet
+  definition: הדף הרשמי שמקבלים בבחינת הבגרות, עם הנוסחאות והקבועים. פתרון בבגרות מתחיל מנוסחה כפי שהיא כתובה בו.
+  lesson: '0.3'

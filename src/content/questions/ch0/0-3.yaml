@@ -1,0 +1,314 @@
+# Chapter 0 question bank, lesson 0.3. Format and rules: see questions/ch1/1-5.yaml.
+# Gravity numbers recomputed with G_NEWTON from src/physics/constants.ts.
+
+chapter: 0
+questions:
+  # ---------------------------------------------------------------- 0.3 units, notation, solution format
+  - id: Q-0.3-micro
+    type: numeric
+    objectives: [OBJ-0.3-1]
+    prompt: >-
+      כמה קולון הם $3\,\mu\text{C}$?
+    answer: 3.0e-6
+    unit: C
+    tolerance: 0.01
+    correctFeedback: 'נכון: $\mu$ היא $10^{-6}$, ולכן $3\,\mu\text{C} = 3\cdot10^{-6}\,\text{C}$.'
+    wrongFeedback: 'מיקרו ($\mu$) פירושו מיליונית, $10^{-6}$.'
+    commonWrong:
+      - value: 3.0e6
+        feedback: 'הכיוון הפוך. מיקרו-קולון הוא חלק קטן מאוד של קולון, ולכן החזקה שלילית: $10^{-6}$, לא $10^{6}$.'
+        misconception: MC-power-direction
+      - value: 3.0e-3
+        feedback: 'זה $3\,\text{mC}$, מילי-קולון. מיקרו קטן פי 1000 ממילי.'
+      - value: 3.0e-9
+        feedback: 'זה $3\,\text{nC}$, ננו-קולון. מיקרו גדול פי 1000 מננו.'
+    hints:
+      - 'מצאו את $\mu$ על הסרגל באיור 0.3א. איזו חזקה של 10 כתובה מתחתיה?'
+
+  - id: Q-0.3-cm-to-m
+    type: numeric
+    objectives: [OBJ-0.3-1]
+    prompt: >-
+      מרחק בין שני מטענים הוא 15 ס"מ. כמה זה במטרים?
+    answer: 0.15
+    unit: m
+    tolerance: 0.01
+    correctFeedback: 'נכון: $15\,\text{cm} = 15\cdot10^{-2}\,\text{m} = 0.15\,\text{m}$.'
+    wrongFeedback: 'סנטי ($\text{c}$) פירושו מאית, $10^{-2}$.'
+    commonWrong:
+      - value: 1500
+        feedback: 'הכפלתם ב-100 במקום לחלק. סנטימטר קטן ממטר, ולכן במטרים המספר קטן יותר.'
+        misconception: MC-power-direction
+      - value: 0.015
+        feedback: 'חילקתם ב-1000. זו ההמרה של מילימטרים. בסנטימטרים מחלקים ב-100.'
+
+  - id: Q-0.3-rank-charges
+    type: rank
+    objectives: [OBJ-0.3-1]
+    qualitative: true
+    prompt: >-
+      דרגו את המטענים מהגדול לקטן:
+    items:
+      - id: b
+        label: '$2\,\text{mC}$'
+      - id: c
+        label: '$5\cdot10^{-4}\,\text{C}$'
+      - id: a
+        label: '$3000\,\mu\text{C}$'
+      - id: d
+        label: '$2\cdot10^{6}\,\text{nC}$'
+    order: [a, [b, d], c]
+    correctFeedback: >-
+      נכון. בקולון: $3000\,\mu\text{C} = 3\cdot10^{-3}\,\text{C}$, $2\,\text{mC} = 2\cdot10^{6}\,\text{nC} = 2\cdot10^{-3}\,\text{C}$,
+      ו-$5\cdot10^{-4}\,\text{C}$ הוא הקטן ביותר.
+    wrongFeedback: 'המירו את כולם לקולון, בכתיב מדעי, ורק אז השוו. שימו לב: שניים מהם שווים.'
+    hints:
+      - '$\text{m} = 10^{-3}$, $\mu = 10^{-6}$, $\text{n} = 10^{-9}$.'
+
+  - id: Q-0.3-sci-form
+    type: mc
+    objectives: [OBJ-0.3-1]
+    prompt: >-
+      איך כותבים את המספר 0.00045 בכתיב מדעי?
+    choices:
+      - text: '$4.5\cdot10^{-4}$'
+        correct: true
+        feedback: 'נכון. מזיזים את הנקודה 4 מקומות ימינה כדי לקבל 4.5, ולכן החזקה היא $-4$.'
+      - text: '$4.5\cdot10^{-5}$'
+        feedback: 'ספרתם 5 מקומות. מ-0.00045 עד 4.5 הנקודה זזה 4 מקומות בלבד. בדקו: $4.5\cdot10^{-5} = 0.000045$.'
+      - text: '$45\cdot10^{-5}$'
+        feedback: 'הערך נכון, אבל בכתיב מדעי המספר שלפני החזקה הוא בין 1 ל-10. כתבו $4.5\cdot10^{-4}$.'
+      - text: '$4.5\cdot10^{4}$'
+        feedback: 'זה 45,000, מספר גדול. מספר קטן מ-1 מקבל חזקה שלילית.'
+        misconception: MC-power-direction
+
+  - id: Q-0.3-which-bigger
+    type: mc
+    objectives: [OBJ-0.3-1]
+    qualitative: true
+    prompt: >-
+      מה גדול יותר, $1\,\text{mC}$ או $1\,\mu\text{C}$? ופי כמה?
+    choices:
+      - text: '$1\,\text{mC}$, פי 1000.'
+        correct: true
+        feedback: 'נכון. $1\,\text{mC} = 10^{-3}\,\text{C}$ ו-$1\,\mu\text{C} = 10^{-6}\,\text{C}$. ההפרש הוא שלוש חזקות של 10, כלומר פי 1000.'
+      - text: '$1\,\mu\text{C}$, כי מיקרו פירושו מיליון.'
+        feedback: 'מיקרו פירושו מיליונית, לא מיליון. $1\,\mu\text{C}$ הוא מיליונית של קולון.'
+        misconception: MC-power-direction
+      - text: '$1\,\text{mC}$, פי 10.'
+        feedback: 'על הסרגל, בין m ל-μ יש שלושה קווים, וכל קו הוא פי 10. לכן פי $10^3 = 1000$.'
+      - text: שניהם שווים, כי בשניהם כתוב 1.
+        feedback: הקידומת משנה את הגודל. אותו מספר עם קידומת אחרת הוא כמות אחרת לגמרי.
+
+  - id: Q-0.3-square-power
+    type: numeric
+    objectives: [OBJ-0.3-2]
+    prompt: >-
+      המרחק בין שני גופים הוא $r = 3\cdot10^{-2}\,\text{m}$. כמה זה $r^2$?
+    answer: 9.0e-4
+    unit: m²
+    tolerance: 0.01
+    correctFeedback: 'נכון: $(3\cdot10^{-2})^2 = 3^2\cdot(10^{-2})^2 = 9\cdot10^{-4}\,\text{m}^2$.'
+    wrongFeedback: 'מעלים בריבוע את שני הגורמים: את 3 וגם את $10^{-2}$.'
+    commonWrong:
+      - value: 9.0e-2
+        feedback: 'העליתם בריבוע רק את ה-3. גם $10^{-2}$ עולה בריבוע: $(10^{-2})^2 = 10^{-4}$.'
+        misconception: MC-square-mantissa-only
+      - value: 6.0e-4
+        feedback: 'הכפלתם את 3 ב-2 במקום להעלות בריבוע. $3^2 = 9$.'
+    hints:
+      - '$(ab)^2 = a^2 b^2$, ו-$(10^{a})^2 = 10^{2a}$.'
+
+  - id: Q-0.3-area
+    type: numeric
+    objectives: [OBJ-0.3-2]
+    prompt: >-
+      השטח של לוח מתכת הוא $20\,\text{cm}^2$. כמה זה ב-$\text{m}^2$?
+    answer: 2.0e-3
+    unit: m²
+    tolerance: 0.01
+    correctFeedback: 'נכון: $1\,\text{cm}^2 = (10^{-2}\,\text{m})^2 = 10^{-4}\,\text{m}^2$, ולכן $20\,\text{cm}^2 = 20\cdot10^{-4} = 2\cdot10^{-3}\,\text{m}^2$.'
+    wrongFeedback: 'בשטח יש שני אורכים. כל אחד מהם מומר מסנטימטרים למטרים.'
+    commonWrong:
+      - value: 0.2
+        feedback: 'המרתם כאילו זה אורך: $20\cdot10^{-2}$. אבל $\text{cm}^2$ הוא סנטימטר כפול סנטימטר, ולכן $10^{-2}\cdot10^{-2} = 10^{-4}$.'
+        misconception: MC-area-prefix-once
+      - value: 2.0e5
+        feedback: 'הכיוון הפוך. סנטימטר רבוע קטן ממטר רבוע, ולכן במטרים רבועים המספר קטן יותר.'
+        misconception: MC-power-direction
+
+  - id: Q-0.3-divide
+    type: numeric
+    objectives: [OBJ-0.3-2]
+    prompt: >-
+      מטען של $6\cdot10^{-4}\,\text{C}$ מתחלק שווה בשווה בין טיפות זהות, ובכל טיפה יש $2\cdot10^{-6}\,\text{C}$. כמה טיפות יש?
+    answer: 300
+    unit: טיפות
+    tolerance: 0.01
+    correctFeedback: 'נכון: $\dfrac{6\cdot10^{-4}}{2\cdot10^{-6}} = 3\cdot10^{-4-(-6)} = 3\cdot10^{2} = 300$.'
+    wrongFeedback: 'בחילוק מחלקים את המספרים ומחסירים את החזקות: $10^{a}/10^{b} = 10^{a-b}$.'
+    commonWrong:
+      - value: 3.0e-10
+        feedback: 'חיברתם את החזקות, כמו בכפל. בחילוק מחסירים: $-4 - (-6) = +2$.'
+      - value: 0.03
+        feedback: 'חיסרתם את החזקות בסדר ההפוך: $-6 - (-4) = -2$. החזקה של המונה באה ראשונה.'
+    hints:
+      - 'אפשר לבדוק בשכל: בכל טיפה מיקרו-קולונים בודדים, ובסך הכול מאות מיקרו-קולונים.'
+
+  - id: Q-0.3-area-twotier
+    type: twotier
+    objectives: [OBJ-0.3-2]
+    qualitative: true
+    prompt: >-
+      האם $1\,\text{cm}^2 = 10^{-2}\,\text{m}^2$?
+    choices:
+      - text: לא.
+        correct: true
+        feedback: 'נכון. $1\,\text{cm}^2 = 10^{-4}\,\text{m}^2$.'
+      - text: כן.
+        feedback: זה נכון לאורך, $1\,\text{cm} = 10^{-2}\,\text{m}$, אבל לא לשטח. בדקו את הנימוקים.
+        misconception: MC-area-prefix-once
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: 'בשטח יש שני אורכים, וכל אחד מהם מומר: $(10^{-2}\,\text{m})^2 = 10^{-4}\,\text{m}^2$.'
+        correct: true
+        feedback: 'בדיוק. דרך נוספת לראות את זה: ריבוע של מטר על מטר מכיל 100 שורות של 100 ריבועים של סנטימטר, כלומר 10,000.'
+      - text: 'סנטימטר הוא $10^{-2}$ מטר, וזה לא משתנה כשמדובר בשטח.'
+        feedback: 'סנטימטר רבוע הוא סנטימטר כפול סנטימטר. גם הקידומת "נכפלת": $10^{-2}\cdot10^{-2}$.'
+        misconception: MC-area-prefix-once
+      - text: אי אפשר להמיר יחידות של שטח, רק יחידות של אורך.
+        feedback: 'אפשר, ובפרק 2 תעשו את זה בשאלות על לוחות מתכת. ממירים כל אחד משני האורכים.'
+
+  - id: Q-0.3-sigfigs-report
+    type: mc
+    objectives: [OBJ-0.3-3]
+    qualitative: true
+    prompt: >-
+      בשאלה נתון מרחק של $2.0\,\text{m}$ וזמן של $3.0\,\text{s}$, ומבקשים את המהירות. המחשבון מציג 0.6666667. מה הכי מתאים לכתוב בתשובה?
+    choices:
+      - text: '$0.67\,\text{m/s}$'
+        correct: true
+        feedback: 'נכון. הנתונים ידועים בשתי ספרות משמעותיות, ולכן גם התוצאה, עם היחידות.'
+      - text: '$0.6666667\,\text{m/s}$'
+        feedback: 'שבע ספרות טוענות לדיוק שאין לנו: הנתונים ידועים רק בשתי ספרות. כתבו $0.67\,\text{m/s}$.'
+        misconception: MC-more-digits-better
+      - text: '$1\,\text{m/s}$'
+        feedback: 'עיגלתם יותר מדי, לספרה אחת, והתוצאה רחוקה ב-50%. הנתונים מצדיקים שתי ספרות.'
+      - text: '$0.67$'
+        feedback: 'המספר טוב, אבל בלי יחידות הוא לא תשובה. $0.67$ מה? מטרים לשנייה.'
+        misconception: MC-units-decoration
+
+  - id: Q-0.3-count-sigfigs
+    type: mc
+    objectives: [OBJ-0.3-3]
+    prompt: >-
+      כמה ספרות משמעותיות יש במספר $0.0250\,\text{m}$?
+    choices:
+      - text: '3'
+        correct: true
+        feedback: 'נכון: 2, 5, והאפס שבסוף. האפסים שבהתחלה רק מראים איפה הנקודה העשרונית. בכתיב מדעי רואים את זה מיד: $2.50\cdot10^{-2}$.'
+      - text: '5'
+        feedback: 'האפסים שבהתחלה אינם ספרות משמעותיות. הם רק מסמנים את מקום הנקודה, ונעלמים בכתיב מדעי.'
+      - text: '2'
+        feedback: 'האפס בסוף, אחרי הנקודה, כן משמעותי. מי שכתב אותו מדד עד הספרה הזו.'
+      - text: '4'
+        feedback: 'ספרו מהספרה הראשונה שאינה אפס: 2, 5, 0.'
+
+  - id: Q-0.3-sigfigs-why
+    type: mc
+    objectives: [OBJ-0.3-3]
+    qualitative: true
+    prompt: >-
+      תלמיד כתב תוצאה של $72345.678\,\text{N}$, אבל הנתונים בשאלה היו בשתי ספרות משמעותיות. מה הבעיה?
+    choices:
+      - text: 'התוצאה טוענת לדיוק של 8 ספרות, אבל הנתונים ידועים רק בשתיים. עדיף $7.2\cdot10^{4}\,\text{N}$.'
+        correct: true
+        feedback: נכון. התוצאה לא יכולה להיות מדויקת יותר מהנתונים שממנה חושבה.
+      - text: אין בעיה. יותר ספרות פירושן תשובה מדויקת יותר.
+        feedback: 'הספרות העודפות הן רק רעש של המחשבון. הן לא ידועות, ולכן לכתוב אותן זה לטעון משהו לא נכון.'
+        misconception: MC-more-digits-better
+      - text: 'צריך לעגל למספר שלם: $72346\,\text{N}$.'
+        feedback: 'גם $72346$ טוען לחמש ספרות ידועות. לפי הנתונים, רק שתי הראשונות ידועות.'
+        misconception: MC-more-digits-better
+
+  - id: Q-0.3-format-order
+    type: mc
+    objectives: [OBJ-0.3-4]
+    qualitative: true
+    prompt: >-
+      מה הסדר של שלבי הפתרון שמצופה מכם בבגרות?
+    choices:
+      - text: נוסחה, פיתוח, הצבה עם יחידות, ותוצאה עם יחידות.
+        correct: true
+        feedback: נכון. קודם עובדים באותיות, ורק בסוף מציבים מספרים. כך קל לבדוק כל שלב.
+      - text: הצבה של כל המספרים, אחר כך נוסחה, ובסוף תוצאה.
+        feedback: אי אפשר להציב לפני שיודעים באיזו נוסחה. והצבה מוקדמת גוררת טעויות חשבון שקשה לאתר.
+      - text: תוצאה, ואחריה הנוסחה, כדי להראות שהתוצאה נכונה.
+        feedback: הפתרון מוביל אל התוצאה, לא מצדיק אותה בדיעבד. הבודק רוצה לראות איך הגעתם אליה.
+
+  - id: Q-0.3-units-before
+    type: twotier
+    objectives: [OBJ-0.3-4]
+    qualitative: true
+    prompt: >-
+      בשאלה המרחק נתון בסנטימטרים, והנוסחה כוללת קבוע מדף הנוסחאות. מתי ממירים את המרחק למטרים?
+    choices:
+      - text: לפני ההצבה בנוסחה.
+        correct: true
+        feedback: נכון. ממירים את כל הנתונים ליחידות SI, ורק אז מציבים.
+      - text: בסוף, אחרי שמקבלים תוצאה.
+        feedback: 'אחרי שהמספרים הוצבו, התוצאה כבר שגויה, ולא תמיד ברור פי כמה. ממירים לפני ההצבה.'
+        misconception: MC-units-decoration
+      - text: לא צריך להמיר, כי כל המרחקים בשאלה בסנטימטרים.
+        feedback: 'הקבוע שבנוסחה כתוב במטרים. כדי שהיחידות יתאימו, גם המרחקים צריכים להיות במטרים.'
+        misconception: MC-units-decoration
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: הקבועים בדף הנוסחאות כתובים ביחידות SI, ולכן כל הנתונים חייבים להיות ב-SI.
+        correct: true
+        feedback: בדיוק. קבוע שכתוב במטרים "מצפה" למרחקים במטרים.
+      - text: זה רק עניין של סגנון, והתוצאה יוצאת אותו דבר.
+        feedback: 'התוצאה לא יוצאת אותו דבר. בשאלה עם $r^2$, הצבה של סנטימטרים משנה את התוצאה פי 10,000.'
+        misconception: MC-units-decoration
+      - text: מספרים בסנטימטרים גדולים מדי בשביל המחשבון.
+        feedback: המחשבון מסתדר עם כל מספר. הבעיה היא התאמת היחידות לקבועים.
+
+  - id: Q-0.3-unit-check
+    type: mc
+    objectives: [OBJ-0.3-4]
+    qualitative: true
+    prompt: >-
+      פתרתם שאלה שמבקשת כוח, והתוצאה יצאה ביחידות של $\text{m/s}$. מה זה אומר?
+    choices:
+      - text: שיש טעות בנוסחה או בפיתוח, כי כוח נמדד בניוטון.
+        correct: true
+        feedback: נכון. היחידות הן בדיקה חינמית. יחידות שגויות מגלות טעות עוד לפני שבודקים את המספר.
+      - text: 'שום דבר. יחידות הן רק תוספת לתשובה.'
+        feedback: 'יחידות הן חלק מהתשובה, והן גם בדיקה. כוח ביחידות של מהירות פירושו שמשהו בדרך השתבש.'
+        misconception: MC-units-decoration
+      - text: שצריך למחוק את היחידות ולכתוב במקומן N.
+        feedback: 'זה מסתיר את הטעות במקום לתקן אותה. חזרו לנוסחה ולפיתוח, ומצאו איפה היחידות התקלקלו.'
+        misconception: MC-units-decoration
+
+  - id: Q-0.3-gravity
+    type: numeric
+    objectives: [OBJ-0.3-4, OBJ-0.3-2]
+    level: bagrut
+    prompt: >-
+      מה כוח הכבידה בין שני גופים שמסותיהם $40\,\text{kg}$ ו-$90\,\text{kg}$, כשהמרחק ביניהם 60 ס"מ?
+      ($G = 6.67\cdot10^{-11}\,\text{N}\cdot\text{m}^2/\text{kg}^2$)
+    answer: 6.67e-7
+    unit: N
+    tolerance: 0.02
+    correctFeedback: >-
+      נכון. $F = \dfrac{Gm_1m_2}{r^2} = \dfrac{6.67\cdot10^{-11}\cdot 40\cdot 90}{0.6^2} = \dfrac{2.40\cdot10^{-7}}{0.36} \approx 6.7\cdot10^{-7}\,\text{N}$,
+      בשתי ספרות משמעותיות כמו הנתונים.
+    wrongFeedback: 'השתמשו ב-$F = Gm_1m_2/r^2$, עם $r$ במטרים.'
+    commonWrong:
+      - value: 6.67e-11
+        feedback: 'הצבתם $r = 60$, בסנטימטרים. $G$ כתוב במטרים, ולכן $r = 0.6\,\text{m}$.'
+        misconception: MC-units-decoration
+      - value: 4.0e-7
+        feedback: 'חילקתם ב-$r$ במקום ב-$r^2$.'
+    hints:
+      - '$60\,\text{cm} = 0.6\,\text{m}$, ו-$0.6^2 = 0.36$.'
