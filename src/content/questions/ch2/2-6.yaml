@@ -39,6 +39,8 @@ questions:
         feedback: 'הכפלתם את המטען במתח. הקיבול הוא מטען **חלקי** מתח.'
       - value: 2.0e6
         feedback: 'חילקתם מתח במטען. הקיבול הוא $Q/V$, לא $V/Q$.'
+      - value: 0.5
+        feedback: 'זו התשובה במיקרו-פאראד ($0.5\,\mu\text{F}$). השאלה מבקשת פאראד: $0.5\cdot10^{-6}\,\text{F}$.'
 
   - id: Q-2.6-net-charge
     type: mc
@@ -90,6 +92,8 @@ questions:
     commonWrong:
       - value: 8.85e-13
         feedback: 'הצבתם $d = 0.5$ במקום $5\cdot10^{-4}\,\text{m}$. מילימטר הוא אלפית מטר.'
+      - value: 8.85e-11
+        feedback: 'המרתם $0.5$ מ"מ ל-$5\cdot10^{-3}\,\text{m}$. אבל $0.5\,\text{mm} = 0.5\cdot10^{-3}\,\text{m} = 5\cdot10^{-4}\,\text{m}$.'
       - value: 2.21e-16
         feedback: 'הכפלתם במרחק במקום לחלק. הקיבול ביחס **הפוך** למרחק.'
         misconception: MC-wider-gap-more-capacitance
@@ -120,7 +124,7 @@ questions:
         feedback: 'המטען יושב על הלוחות, לא ביניהם. המקום שבין הלוחות לא "מכיל" מטען.'
         misconception: MC-wider-gap-more-capacitance
       - text: השדה בין הלוחות קטן פי 4 כשהמרחק כפול.
-        feedback: 'בין שני לוחות גדולים השדה $\sigma/\varepsilon_0$ לא תלוי במרחק בכלל.'
+        feedback: 'לאותו מטען, השדה בין שני לוחות גדולים, $\sigma/\varepsilon_0$, לא תלוי במרחק בכלל. (בקבל מחובר לסוללה השדה כן קטן, אבל פי 2, כי המטען עצמו קטן.)'
 
   - id: Q-2.6-rank-c
     type: rank
