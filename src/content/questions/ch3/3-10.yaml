@@ -1,0 +1,239 @@
+# Lesson 3.10 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/circuits.ts (terminalVoltage, parallelR,
+# solveCircuit). The numbers differ on purpose from the figures and the worked example.
+
+chapter: 3
+questions:
+  # ------------------------------------------------ OBJ-3.10-1: the measuring circuit
+  - id: Q-3.10-design
+    type: mc
+    objectives: [OBJ-3.10-1]
+    qualitative: true
+    prompt: >-
+      רוצים למדוד את מתח ההדקים של סוללה ואת הזרם שהיא מספקת, בכמה עומסים שונים. איזה מעגל מתאים?
+    choices:
+      - text: 'נגד משתנה ומד זרם בטור עם הסוללה, ומד מתח בין שני ההדקים של הסוללה.'
+        correct: true
+        feedback: 'נכון. הנגד המשתנה קובע את הזרם, מד הזרם בטור מודד אותו, ומד המתח על ההדקים מודד את מתח ההדקים.'
+      - text: 'נגד משתנה ומד מתח בטור עם הסוללה, ומד זרם בין שני ההדקים של הסוללה.'
+        feedback: 'המדים הוחלפו. מד מתח בטור כמעט עוצר את הזרם, ומד זרם על ההדקים הוא כמעט קצר (שיעור 3.7).'
+        misconception: MC-voltmeter-in-line
+      - text: 'מד זרם בין שני ההדקים של הסוללה, ומד מתח על הנגד המשתנה.'
+        feedback: 'מד זרם על ההדקים הוא כמעט קצר של הסוללה. מד זרם מחברים בטור.'
+        misconception: MC-ammeter-across
+      - text: 'מד מתח על ההדקים ומד זרם בטור, בלי נגד משתנה.'
+        feedback: 'המדים מחוברים נכון, אבל בלי נגד משתנה נקבל רק מדידה אחת. כדי לשרטט קו צריך כמה זוגות של זרם ומתח.'
+
+  - id: Q-3.10-why-rheostat
+    type: mc
+    objectives: [OBJ-3.10-1]
+    qualitative: true
+    prompt: >-
+      בניסוי מדידת הכא"מ וההתנגדות הפנימית מזיזים את המגע של הנגד המשתנה כמה פעמים. בשביל מה?
+    choices:
+      - text: 'כדי לקבל כמה זרמים שונים, ולכל זרם את מתח ההדקים, ולשרטט מהם גרף.'
+        correct: true
+        feedback: 'נכון. מדידה אחת לא מספיקה כדי למצוא שני נעלמים, $\varepsilon$ ו-$r$. מכמה מדידות מקבלים קו, ומהקו את שניהם.'
+      - text: 'כדי לשנות את הכא"מ של הסוללה.'
+        feedback: 'הכא"מ הוא תכונה של הסוללה, והנגד המשתנה לא משנה אותו. מה שמשתנה הוא הזרם, ואיתו מתח ההדקים.'
+      - text: 'כדי למצוא את המצב שבו מתח ההדקים שווה לכא"מ.'
+        feedback: 'זה קורה רק כשהזרם אפס. את הכא"מ מוצאים מהגרף, בהמשכה של הקו עד הציר.'
+        misconception: MC-terminal-equals-emf
+      - text: 'כדי להגן על הסוללה מקצר, ובלי קשר למדידה.'
+        feedback: 'הנגד המשתנה אכן מגביל את הזרם, אבל בניסוי הוא בעיקר הכלי שמשנה את הזרם בין המדידות.'
+
+  - id: Q-3.10-voltmeter-reads
+    type: twotier
+    objectives: [OBJ-3.10-1]
+    qualitative: true
+    prompt: >-
+      בניסוי, מד המתח מחובר בין ההדקים של הסוללה, והסוללה מספקת זרם. מה הוא מראה?
+    choices:
+      - text: 'את מתח ההדקים, שקטן מהכא"מ.'
+        correct: true
+        feedback: נכון.
+      - text: 'את הכא"מ של הסוללה.'
+        feedback: 'רק כשהזרם אפס. כשזורם זרם, חלק מהכא"מ נופל בתוך הסוללה.'
+        misconception: MC-terminal-equals-emf
+      - text: 'את הירידה על ההתנגדות הפנימית.'
+        feedback: 'את הירידה הזאת אי אפשר למדוד ישירות, כי ההתנגדות הפנימית בתוך הסוללה. מד המתח מראה את מה שנשאר בין ההדקים.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'בין ההדקים נמצא הכא"מ פחות הירידה בתוך הסוללה: $V = \varepsilon - Ir$.'
+        correct: true
+        feedback: 'נכון. לכן מכל מדידה מקבלים נקודה אחת על הקו $V(I)$.'
+      - text: 'מד מתח אידאלי לא מעביר זרם, ולכן הוא תמיד מראה את הכא"מ.'
+        feedback: 'מד המתח לא מעביר זרם, אבל הסוללה כן, דרך הנגד המשתנה. הזרם הזה הוא שגורם לירידה $Ir$.'
+        misconception: MC-terminal-equals-emf
+      - text: 'המתח מתחלק שווה בין הסוללה לנגד המשתנה.'
+        feedback: 'אין חלוקה שווה. מתח ההדקים הוא $\varepsilon - Ir$, והוא שווה למתח על הנגד המשתנה.'
+
+  # ------------------------------------------------ OBJ-3.10-2: ε and r from the graph
+  - id: Q-3.10-emf-from-line
+    type: numeric
+    objectives: [OBJ-3.10-2]
+    level: mid
+    prompt: >-
+      שתי נקודות על האופיין של סוללה: בזרם $0.5\,\text{A}$ מתח ההדקים $5.0\,\text{V}$, ובזרם $1.5\,\text{A}$ הוא $3.0\,\text{V}$. מה הכא"מ? ענו בוולט.
+    answer: 6
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. השיפוע $\dfrac{3.0 - 5.0}{1.5 - 0.5} = -2\,\Omega$, ולכן $r = 2\,\Omega$. הכא"מ הוא המתח בזרם אפס: $\varepsilon = 5.0 + 2\cdot0.5 = 6\,\text{V}$.'
+    wrongFeedback: 'מצאו את השיפוע מהנקודות, והמשיכו את הקו עד שהזרם אפס: שם המתח הוא הכא"מ.'
+    commonWrong:
+      - value: 5
+        feedback: 'זה מתח ההדקים בזרם $0.5\,\text{A}$. הכא"מ הוא המתח כשהזרם **אפס**: צריך להמשיך את הקו עד הציר.'
+        misconception: MC-terminal-equals-emf
+      - value: 4
+        feedback: 'זה המתח באמצע, בזרם $1\,\text{A}$. הכא"מ הוא החיתוך של הקו עם ציר המתח, בזרם אפס.'
+
+  - id: Q-3.10-r-from-line
+    type: numeric
+    objectives: [OBJ-3.10-2]
+    level: mid
+    prompt: >-
+      לאותה סוללה (בזרם $0.5\,\text{A}$ מתח ההדקים $5.0\,\text{V}$, ובזרם $1.5\,\text{A}$ הוא $3.0\,\text{V}$), מה ההתנגדות הפנימית? ענו באוהם.
+    answer: 2
+    unit: Ω
+    tolerance: 0.03
+    correctFeedback: 'נכון. השיפוע של הקו הוא $-2\,\Omega$, וההתנגדות הפנימית היא הגודל שלו: $r = 2\,\Omega$.'
+    wrongFeedback: 'השיפוע של האופיין הוא $-r$: חשבו $\Delta V/\Delta I$ בין שתי הנקודות.'
+    commonWrong:
+      - value: -2
+        feedback: 'זה השיפוע, עם הסימן. השיפוע הוא $-r$, ולכן $r = 2\,\Omega$: התנגדות אינה שלילית.'
+        misconception: MC-slope-positive-r
+      - value: 0.5
+        feedback: 'חישבתם $\Delta I/\Delta V$. השיפוע של גרף המתח כתלות בזרם הוא $\Delta V/\Delta I$.'
+      - value: 10
+        feedback: 'חילקתם מתח בזרם בנקודה אחת, $5.0/0.5$. זו ההתנגדות החיצונית בנקודה הזאת, לא $r$. את $r$ נותן השיפוע.'
+        misconception: MC-battery-line-origin
+
+  - id: Q-3.10-short-from-line
+    type: numeric
+    objectives: [OBJ-3.10-2]
+    level: bagrut
+    prompt: >-
+      לאותה סוללה ($\varepsilon = 6\,\text{V}$, $r = 2\,\Omega$), היכן חותך האופיין את ציר הזרם, כלומר מה זרם הקצר? ענו באמפר.
+    answer: 3
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. על ציר הזרם מתח ההדקים אפס: $0 = 6 - 2I$, ולכן $I = \varepsilon/r = 3\,\text{A}$.'
+    wrongFeedback: 'בחיתוך עם ציר הזרם $V = 0$. הציבו ב-$V = \varepsilon - Ir$.'
+    commonWrong:
+      - value: 0.333
+        feedback: 'חילקתם את $r$ ב-$\varepsilon$. זרם הקצר הוא $\varepsilon/r$.'
+      - value: 12
+        feedback: 'כפלתם את הכא"מ בהתנגדות. זרם הקצר הוא $\varepsilon/r$.'
+
+  - id: Q-3.10-through-origin
+    type: mc
+    objectives: [OBJ-3.10-2]
+    qualitative: true
+    prompt: >-
+      תלמיד שרטט את המדידות של מתח ההדקים כתלות בזרם, ומשך קו ישר מהראשית דרך הנקודות. מה הבעיה?
+    choices:
+      - text: 'האופיין של סוללה לא עובר בראשית: בזרם אפס המתח הוא הכא"מ, והקו יורד.'
+        correct: true
+        feedback: 'נכון. $V = \varepsilon - Ir$: בזרם אפס $V = \varepsilon$.'
+      - text: 'אין בעיה: גרף של מתח מול זרם תמיד עובר בראשית.'
+        feedback: 'זה נכון לנגד אוהמי, $V = IR$. בסוללה $V = \varepsilon - Ir$, וכשאין זרם המתח הוא הכא"מ.'
+        misconception: MC-battery-line-origin
+      - text: 'הבעיה היא רק שהקו צריך לעלות, לא לרדת.'
+        feedback: 'הקו אכן יורד: יותר זרם, יותר ירידה בתוך הסוללה, פחות מתח בין ההדקים.'
+        misconception: MC-slope-positive-r
+      - text: 'צריך לשרטט את הזרם על הציר האנכי, ואז הקו יעבור בראשית.'
+        feedback: 'החלפת הצירים לא משנה את הקשר: גם אז הקו לא יעבור בראשית.'
+
+  - id: Q-3.10-steeper
+    type: mc
+    objectives: [OBJ-3.10-2]
+    qualitative: true
+    prompt: >-
+      לשתי סוללות יש אופיינים שחותכים את ציר המתח באותה נקודה, אבל האופיין של סוללה B יורד בתלילות רבה יותר. מה נכון?
+    choices:
+      - text: 'לשתיהן אותו כא"מ, ולסוללה B התנגדות פנימית גדולה יותר.'
+        correct: true
+        feedback: 'נכון. החיתוך הוא הכא"מ, והשיפוע הוא $-r$: קו תלול יותר, $r$ גדולה יותר. כך נראית סוללה ישנה.'
+      - text: 'לסוללה B כא"מ גדול יותר.'
+        feedback: 'הכא"מ הוא החיתוך עם ציר המתח, והוא שווה לשתיהן. התלילות קשורה ל-$r$.'
+      - text: 'לסוללה B התנגדות פנימית קטנה יותר, כי הקו שלה מגיע מהר יותר לאפס.'
+        feedback: 'הפוך: הקו שלה מגיע לאפס בזרם קטן יותר, $\varepsilon/r$, ולכן $r$ שלה גדולה יותר.'
+        misconception: MC-slope-positive-r
+      - text: 'אי אפשר להשוות בלי לדעת את העומס.'
+        feedback: 'האופיין תלוי רק בסוללה עצמה, $\varepsilon$ ו-$r$. העומס רק בוחר נקודה על הקו.'
+
+  # ------------------------------------------------ OBJ-3.10-3: the chapter in one problem
+  - id: Q-3.10-integrated-current
+    type: numeric
+    objectives: [OBJ-3.10-3]
+    level: bagrut
+    prompt: >-
+      סוללה עם כא"מ של $12\,\text{V}$ והתנגדות פנימית של $1\,\Omega$ מחוברת לנגד $R_1 = 3\,\Omega$, שמחובר בטור לזוג נגדים במקביל, $R_2 = 6\,\Omega$ ו-$R_3 = 12\,\Omega$. מה הזרם שהסוללה מספקת? ענו באמפר.
+    answer: 1.5
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. הזוג במקביל: $\dfrac{6\cdot12}{18} = 4\,\Omega$. בטור עם $R_1$ ועם $r$: $3 + 4 + 1 = 8\,\Omega$. $I = 12/8 = 1.5\,\text{A}$.'
+    wrongFeedback: 'צמצמו את הרשת להתנגדות שקולה אחת, ואל תשכחו את ההתנגדות הפנימית: $I = \varepsilon/(R + r)$.'
+    commonWrong:
+      - value: 1.714
+        feedback: 'שכחתם את ההתנגדות הפנימית: $12/7$.'
+        misconception: MC-terminal-equals-emf
+      - value: 0.545
+        feedback: 'חיברתם את כל הנגדים בטור, $3 + 6 + 12 + 1 = 22\,\Omega$. $R_2$ ו-$R_3$ במקביל.'
+        misconception: MC-parallel-r-adds
+
+  - id: Q-3.10-integrated-power
+    type: numeric
+    objectives: [OBJ-3.10-3]
+    level: bagrut
+    prompt: >-
+      באותו מעגל ($\varepsilon = 12\,\text{V}$, $r = 1\,\Omega$, $R_1 = 3\,\Omega$ בטור עם $R_2 = 6\,\Omega$ במקביל ל-$R_3 = 12\,\Omega$), מה ההספק ב-$R_2$? ענו בוואט.
+    answer: 6
+    unit: W
+    tolerance: 0.03
+    correctFeedback: 'נכון. $I = 1.5\,\text{A}$, ועל הזוג שבמקביל $V = 1.5\cdot4 = 6\,\text{V}$. ב-$R_2$: $P = V^2/R = 36/6 = 6\,\text{W}$.'
+    wrongFeedback: 'מצאו את המתח על הזוג שבמקביל, $V = IR_{23}$, ואז $P = V^2/R_2$.'
+    commonWrong:
+      - value: 13.5
+        feedback: 'השתמשתם בכל הזרם של הסוללה, $I^2R_2 = 1.5^2\cdot6$. הזרם מתחלק בין $R_2$ ל-$R_3$: ב-$R_2$ עובר רק $1\,\text{A}$.'
+        misconception: MC-junction-equal-split
+      - value: 18.4
+        feedback: 'שמתם על $R_2$ את מתח ההדקים, $10.5\,\text{V}$. חלק ממנו נופל על $R_1$, ועל הזוג שבמקביל נשארים $6\,\text{V}$.'
+
+  - id: Q-3.10-integrated-efficiency
+    type: numeric
+    objectives: [OBJ-3.10-3]
+    level: bagrut
+    prompt: >-
+      באותו מעגל, איזה אחוז מהעבודה של הכא"מ מגיע למעגל החיצוני (הנגדים $R_1$, $R_2$, $R_3$)? ענו באחוזים.
+    answer: 87.5
+    unit: '%'
+    tolerance: 0.03
+    correctFeedback: 'נכון. הכא"מ עושה עבודה בהספק $\varepsilon I = 18\,\text{W}$, ובתוך הסוללה הולכים $I^2r = 2.25\,\text{W}$. למעגל החיצוני מגיעים $15.75\,\text{W}$, כלומר $VI/\varepsilon I = 10.5/12 = 87.5\%$.'
+    wrongFeedback: 'השוו את ההספק שיוצא מההדקים, $VI$, להספק של הכא"מ, $\varepsilon I$. היחס הוא $V/\varepsilon$.'
+    commonWrong:
+      - value: 100
+        feedback: 'בסוללה עם התנגדות פנימית, חלק מהאנרגיה הופך לחום בתוכה. לכן הנצילות קטנה מ-100%.'
+        misconception: MC-terminal-equals-emf
+      - value: 12.5
+        feedback: 'זה החלק שהולך לאיבוד בתוך הסוללה, $Ir/\varepsilon$. השאלה שואלת על מה שמגיע החוצה.'
+
+  - id: Q-3.10-which-law
+    type: mc
+    objectives: [OBJ-3.10-3]
+    qualitative: true
+    prompt: >-
+      במעגל עם שתי סוללות בשני ענפים שונים, רוצים למצוא את הזרם בכל ענף. מה הכלי המתאים?
+    choices:
+      - text: 'חוקי קירכהוף: משוואת צומת ומשוואות לולאה.'
+        correct: true
+        feedback: 'נכון. כששתי סוללות בענפים שונים, המעגל לא מתפרק לטור ולמקביל, וצריך את חוקי קירכהוף (שיעור 3.8).'
+      - text: 'צמצום לטור ולמקביל, כמו בכל מעגל.'
+        feedback: 'צמצום לטור ולמקביל עובד כשיש סוללה אחת. עם שתי סוללות בענפים שונים הוא לא מספיק.'
+        misconception: MC-parallel-r-adds
+      - text: 'חיבור הכא"מים של שתי הסוללות, וחלוקה בהתנגדות השקולה.'
+        feedback: 'זה נכון רק כששתי הסוללות בטור באותה לולאה. בענפים שונים הן לא מתחברות פשוט.'
+        misconception: MC-loop-all-add
+      - text: 'חוק אוהם לכל נגד בנפרד, עם המתח של הסוללה הקרובה אליו.'
+        feedback: 'המתח על כל נגד תלוי בכל המעגל, לא רק בסוללה הקרובה. לכן צריך לכתוב את כל המשוואות יחד.'

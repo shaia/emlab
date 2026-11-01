@@ -65,6 +65,7 @@ const PRESET_LABEL: Record<string, string> = {
   kirchhoff: 'שתי סוללות',
   'cap-steady': 'קבל במקביל לנגד',
   'cap-series': 'קבל בטור',
+  'battery-lab': 'מעגל המדידה',
 };
 
 const LOOP_LABEL: Record<string, string> = {
@@ -126,6 +127,8 @@ const TASK_LABEL: Record<string, string> = {
   full: 'הקטינו את הנגד המשתנה לאפס. מה המתח על הנורה עכשיו?',
   'loop-right': 'עברו ללולאה הימנית בגרף הגובה. האם גם היא חוזרת לגובה שבו התחילה?',
   'eps2-delivers': 'הגדילו את הכא"מ של ε₂ עד שהזרם בה מתהפך, והיא מתחילה לספק אנרגיה במקום לקבל.',
+  'rheo-max': 'כוונו את הנגד המשתנה להתנגדות הגדולה ביותר. מה מראים שני המדים?',
+  'rheo-min': 'כוונו את הנגד המשתנה לאפס. מה מראים שני המדים עכשיו?',
 };
 
 export interface CircuitLabProps {
@@ -697,6 +700,8 @@ export default function CircuitLab(props: CircuitLabProps) {
       if (key === 'R' && has('meter-1M') && prev.preset === 'loading' && before?.kind === 'voltmeter' && v >= 1e6) done('meter-1M');
       if (key === 'R' && has('dim') && before?.kind === 'rheostat' && v > (original?.R ?? 0)) done('dim');
       if (key === 'R' && has('full') && before?.kind === 'rheostat' && v < 0.01) done('full');
+      if (key === 'R' && has('rheo-max') && before?.kind === 'rheostat' && v >= 24) done('rheo-max');
+      if (key === 'R' && has('rheo-min') && before?.kind === 'rheostat' && v < 0.01) done('rheo-min');
       // below the preset's own resistance, at the doubled voltage
       if (key === 'R' && has('lower-R') && before?.kind === 'bulb' && v < (originalBulb?.R ?? 6) && next.board.parts.some((q) => q.kind === 'battery' && q.emf === 12)) done('lower-R');
       return next;

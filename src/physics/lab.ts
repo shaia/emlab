@@ -15,6 +15,7 @@
 
 import { plateCapacitance } from './capacitors';
 import { G } from './constants';
+import { terminalVoltage } from './circuits';
 import { coulombForce } from './electrostatics';
 
 /** A reproducible uniform generator on [0, 1) (mulberry32): the same seed, the same table. */
@@ -152,11 +153,26 @@ function capacitorGap(): Dataset {
   return { x: d, y: C, linear: 'inv', law: { slope: plateCapacitance(CAP_AREA, 1), intercept: 0 } };
 }
 
-export type DatasetId = 'spring' | 'fall' | 'coulomb' | 'capacitor-qv' | 'capacitor-gap';
+/** The battery of lesson 3.10: a worn 4.5 V battery with an internal resistance of 1.5 Ω. */
+export const BATTERY_EMF = 4.5;
+export const BATTERY_R = 1.5;
+
+/**
+ * Battery: a rheostat sets the current, an ammeter and a voltmeter read I and the terminal voltage
+ * (both to 3 significant figures). The line V = ε − Ir meets the V axis at ε and falls by r.
+ */
+function batteryVI(): Dataset {
+  const I = [0.2, 0.4, 0.6, 0.8, 1.0, 1.2];
+  const V = measure((i) => terminalVoltage(BATTERY_EMF, BATTERY_R, i), I, 0.01, 23).map(sig3);
+  return { x: I, y: V, linear: 'x', law: { slope: -BATTERY_R, intercept: BATTERY_EMF } };
+}
+
+export type DatasetId = 'spring' | 'fall' | 'coulomb' | 'capacitor-qv' | 'capacitor-gap' | 'battery-vi';
 export const DATASETS: Record<DatasetId, Dataset> = {
   spring: spring(),
   fall: fall(),
   coulomb: coulomb(),
   'capacitor-qv': capacitorQV(),
   'capacitor-gap': capacitorGap(),
+  'battery-vi': batteryVI(),
 };

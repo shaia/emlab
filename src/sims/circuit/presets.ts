@@ -364,6 +364,28 @@ const capSeries: Preset = {
   },
 };
 
+/**
+ * The lab of 3.10: the worn 4.5 V battery (r = 1.5 Ω, BATTERY_EMF and BATTERY_R in lab.ts), a
+ * rheostat that sets the current, an ammeter in series and a voltmeter across the battery's terminals.
+ */
+const batteryLab: Preset = {
+  board: {
+    cols: 5,
+    rows: 3,
+    parts: [
+      { id: 'eps', kind: 'battery', from: [0, 2], to: [0, 1], emf: 4.5, r: 1.5, locked: true },
+      ...run('wl', [0, 1], [0, 0], [1, 0], [2, 0]),
+      { id: 'V1', kind: 'voltmeter', from: [1, 0], to: [1, 1], locked: true },
+      w('wv', [1, 1], [1, 2]),
+      { id: 'A1', kind: 'ammeter', from: [2, 0], to: [3, 0], locked: true },
+      w('wt', [3, 0], [4, 0]),
+      { id: 'Rv', kind: 'rheostat', from: [4, 0], to: [4, 1], R: 6, locked: true },
+      w('wr', [4, 1], [4, 2]),
+      ...run('wb', [4, 2], [3, 2], [2, 2], [1, 2], [0, 2]),
+    ],
+  },
+};
+
 /** an empty builder board with a battery (3.5) */
 const blank: Preset = {
   board: {
@@ -393,4 +415,5 @@ export const PRESETS: Record<string, Preset> = {
   kirchhoff,
   'cap-steady': capSteady,
   'cap-series': capSeries,
+  'battery-lab': batteryLab,
 };

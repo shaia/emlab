@@ -100,6 +100,13 @@ describe('measurements', () => {
     }
   });
 
+  it('the battery’s V–I line meets the V axis at the EMF and falls with slope −r', () => {
+    const d = DATASETS['battery-vi'];
+    const { slope, intercept } = fitLine(d.x, d.y);
+    expect(relativeError(intercept, 4.5)).toBeLessThan(0.02);
+    expect(relativeError(slope, -1.5)).toBeLessThan(0.05);
+  });
+
   it('each lesson dataset is straight only under its own transform, and its slope is the law', () => {
     for (const d of Object.values(DATASETS)) {
       const curvature = (t: Transform) => {

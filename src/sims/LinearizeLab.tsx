@@ -34,6 +34,7 @@ const SETS: Record<DatasetId, { title: string; x: Axis; y: Axis }> = {
   coulomb: { title: 'שני כדורים טעונים: כוח מול מרחק', x: { sym: 'r', unit: 'm' }, y: { sym: 'F', unit: 'N' } },
   'capacitor-qv': { title: 'קבל: מטען מול מתח', x: { sym: 'V', unit: 'V' }, y: { sym: 'Q', unit: 'C' } },
   'capacitor-gap': { title: 'קבל: קיבול מול המרחק בין הלוחות', x: { sym: 'd', unit: 'm' }, y: { sym: 'C', unit: 'F' } },
+  'battery-vi': { title: 'סוללה: מתח ההדקים מול הזרם', x: { sym: 'I', unit: 'A' }, y: { sym: 'V', unit: 'V' } },
 };
 
 const xSym = (a: Axis, t: Transform) => ({ x: a.sym, x2: `${a.sym}²`, sqrt: `√${a.sym}`, inv: `1/${a.sym}`, inv2: `1/${a.sym}²` })[t];
@@ -69,6 +70,8 @@ export interface LinearizeLabProps {
   choose?: boolean;
   showFit?: boolean;
   showRuler?: boolean;
+  /** also read where the ruler meets the vertical axis (a line whose intercept is the answer) */
+  rulerIntercept?: boolean;
   tasks?: string[];
 }
 
@@ -353,6 +356,11 @@ export default function LinearizeLab(props: LinearizeLabProps) {
           {s.showRuler && (
             <span>
               הסרגל: <b class="q">Δy/Δx = {sci(ruler.slope)} {su}</b>
+            </span>
+          )}
+          {s.showRuler && props.rulerIntercept && (
+            <span>
+              הסרגל חותך את הציר האנכי בגובה <b class="q">{tickText(ruler.intercept)} {meta.y.unit}</b>
             </span>
           )}
           {/* Hebrew words stay outside the LTR quantities, and no commas between them */}

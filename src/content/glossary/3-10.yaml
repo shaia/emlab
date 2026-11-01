@@ -1,0 +1,7 @@
+# Lesson 3.10 terms. Format and rules: see glossary/1-5.yaml.
+
+- id: battery-characteristic
+  term: אופיין של סוללה
+  en: battery characteristic (V–I line)
+  definition: 'גרף של מתח ההדקים של סוללה כתלות בזרם שהיא מספקת. לפי V = ε − Ir הוא קו ישר יורד: הוא חותך את ציר המתח בכא"מ, השיפוע שלו הוא −r, והוא חותך את ציר הזרם בזרם הקצר ε/r.'
+  lesson: '3.10'

@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-3-10-battery-lab
+  youtubeId: oWqdnsoeE5k
+  title: 'חשמל - מעגלי זרם - ניסוי אופיין סוללה - המדידות'
+  channel: מרכז שוורץ/רייסמן הדרכות למורי פיזיקה
+  lang: he
+  captions: []
+  minutes: 2
+  why: 'צילום של ניסוי אופיין סוללה שמאפשר לקחת מדידות ולעבד אותן, כולל מצב של קצר ושל נתק (לפי תיאור הסרטון). עצרו, רשמו את זוגות המתח והזרם, ושרטטו גרף של המתח כתלות בזרם.'
+  verified: '2026-11-01'
+
+- id: v-3-10-bagrut-graph
+  youtubeId: j6TvVGUAhl0
+  title: 'בגרות פיזיקה חשמל 2014 שאלה 2 - מעגלי זרם: מתח על אמפרמטר, גרף מתח כתלות בזרם, כא"מ והתנגדות פנימית'
+  channel: אריאל ליבזון - Ariel Libson
+  lang: he
+  captions: []
+  minutes: 10
+  why: 'פתרון בעברית של שאלה 2 מבגרות 2014 בחשמל, שעוסקת במתח על אמפרמטר, בגרף מתח כתלות בזרם, בכא"מ ובהתנגדות פנימית (לפי כותרת הסרטון). נסו לפתור לפני הצפייה.'
+  verified: '2026-11-01'
