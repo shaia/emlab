@@ -5,6 +5,7 @@
  */
 
 import type { Board, Part, Pt } from './board';
+import { BATTERY_EMF, BATTERY_R } from '~/physics/lab';
 
 export interface Preset {
   board: Board;
@@ -365,15 +366,16 @@ const capSeries: Preset = {
 };
 
 /**
- * The lab of 3.10: the worn 4.5 V battery (r = 1.5 Ω, BATTERY_EMF and BATTERY_R in lab.ts), a
- * rheostat that sets the current, an ammeter in series and a voltmeter across the battery's terminals.
+ * The lab of 3.10: the worn 4.5 V battery (r = 1.5 Ω; BATTERY_EMF and BATTERY_R from lab.ts, so the
+ * circuit and the graph of the same battery agree), a rheostat that sets the current, an ammeter in
+ * series and a voltmeter across the battery's terminals.
  */
 const batteryLab: Preset = {
   board: {
     cols: 5,
     rows: 3,
     parts: [
-      { id: 'eps', kind: 'battery', from: [0, 2], to: [0, 1], emf: 4.5, r: 1.5, locked: true },
+      { id: 'eps', kind: 'battery', from: [0, 2], to: [0, 1], emf: BATTERY_EMF, r: BATTERY_R, locked: true },
       ...run('wl', [0, 1], [0, 0], [1, 0], [2, 0]),
       { id: 'V1', kind: 'voltmeter', from: [1, 0], to: [1, 1], locked: true },
       w('wv', [1, 1], [1, 2]),

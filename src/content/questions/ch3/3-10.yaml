@@ -70,60 +70,66 @@ questions:
         feedback: 'אין חלוקה שווה. מתח ההדקים הוא $\varepsilon - Ir$, והוא שווה למתח על הנגד המשתנה.'
 
   # ------------------------------------------------ OBJ-3.10-2: ε and r from the graph
-  - id: Q-3.10-emf-from-line
-    type: numeric
-    objectives: [OBJ-3.10-2]
-    level: mid
-    prompt: >-
-      שתי נקודות על האופיין של סוללה: בזרם $0.5\,\text{A}$ מתח ההדקים $5.0\,\text{V}$, ובזרם $1.5\,\text{A}$ הוא $3.0\,\text{V}$. מה הכא"מ? ענו בוולט.
-    answer: 6
-    unit: V
-    tolerance: 0.03
-    correctFeedback: 'נכון. השיפוע $\dfrac{3.0 - 5.0}{1.5 - 0.5} = -2\,\Omega$, ולכן $r = 2\,\Omega$. הכא"מ הוא המתח בזרם אפס: $\varepsilon = 5.0 + 2\cdot0.5 = 6\,\text{V}$.'
-    wrongFeedback: 'מצאו את השיפוע מהנקודות, והמשיכו את הקו עד שהזרם אפס: שם המתח הוא הכא"מ.'
-    commonWrong:
-      - value: 5
-        feedback: 'זה מתח ההדקים בזרם $0.5\,\text{A}$. הכא"מ הוא המתח כשהזרם **אפס**: צריך להמשיך את הקו עד הציר.'
-        misconception: MC-terminal-equals-emf
-      - value: 4
-        feedback: 'זה המתח באמצע, בזרם $1\,\text{A}$. הכא"מ הוא החיתוך של הקו עם ציר המתח, בזרם אפס.'
-
   - id: Q-3.10-r-from-line
     type: numeric
     objectives: [OBJ-3.10-2]
     level: mid
     prompt: >-
-      לאותה סוללה (בזרם $0.5\,\text{A}$ מתח ההדקים $5.0\,\text{V}$, ובזרם $1.5\,\text{A}$ הוא $3.0\,\text{V}$), מה ההתנגדות הפנימית? ענו באוהם.
-    answer: 2
+      שתי נקודות על האופיין של סוללה: בזרם $0.4\,\text{A}$ מתח ההדקים $5.0\,\text{V}$, ובזרם $0.8\,\text{A}$ הוא $4.0\,\text{V}$. מה ההתנגדות הפנימית? ענו באוהם.
+    answer: 2.5
     unit: Ω
     tolerance: 0.03
-    correctFeedback: 'נכון. השיפוע של הקו הוא $-2\,\Omega$, וההתנגדות הפנימית היא הגודל שלו: $r = 2\,\Omega$.'
+    correctFeedback: 'נכון. השיפוע של הקו הוא $\dfrac{4.0 - 5.0}{0.8 - 0.4} = -2.5\,\text{V/A}$, וההתנגדות הפנימית היא הגודל שלו: $r = 2.5\,\Omega$.'
     wrongFeedback: 'השיפוע של האופיין הוא $-r$: חשבו $\Delta V/\Delta I$ בין שתי הנקודות.'
     commonWrong:
-      - value: -2
-        feedback: 'זה השיפוע, עם הסימן. השיפוע הוא $-r$, ולכן $r = 2\,\Omega$: התנגדות אינה שלילית.'
+      - value: -2.5
+        feedback: 'זה השיפוע, עם הסימן. השיפוע הוא $-r$, ולכן $r = 2.5\,\Omega$: התנגדות אינה שלילית.'
         misconception: MC-slope-positive-r
-      - value: 0.5
+      - value: 0.4
         feedback: 'חישבתם $\Delta I/\Delta V$. השיפוע של גרף המתח כתלות בזרם הוא $\Delta V/\Delta I$.'
-      - value: 10
-        feedback: 'חילקתם מתח בזרם בנקודה אחת, $5.0/0.5$. זו ההתנגדות החיצונית בנקודה הזאת, לא $r$. את $r$ נותן השיפוע.'
+      - value: -0.4
+        feedback: 'חישבתם $\Delta I/\Delta V$, עם הסימן. השיפוע של גרף המתח כתלות בזרם הוא $\Delta V/\Delta I$, והגודל שלו הוא $r$.'
+        misconception: MC-slope-positive-r
+      - value: 12.5
+        feedback: 'חילקתם מתח בזרם בנקודה אחת, $5.0/0.4$. זו ההתנגדות החיצונית בנקודה הזאת, לא $r$. את $r$ נותן השיפוע.'
         misconception: MC-battery-line-origin
+      - value: 5
+        feedback: 'חילקתם מתח בזרם בנקודה אחת, $4.0/0.8$. זו ההתנגדות החיצונית בנקודה הזאת, לא $r$. את $r$ נותן השיפוע.'
+        misconception: MC-battery-line-origin
+
+  - id: Q-3.10-emf-from-line
+    type: numeric
+    objectives: [OBJ-3.10-2]
+    level: mid
+    prompt: >-
+      לאותה סוללה (בזרם $0.4\,\text{A}$ מתח ההדקים $5.0\,\text{V}$, ובזרם $0.8\,\text{A}$ הוא $4.0\,\text{V}$), מה הכא"מ? ענו בוולט.
+    answer: 6
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. הכא"מ הוא המתח בזרם אפס. מ-$0.4\,\text{A}$ עד אפס הזרם קטן ב-$0.4\,\text{A}$, והמתח עולה ב-$2.5\,\Omega\cdot0.4\,\text{A} = 1\,\text{V}$: $\varepsilon = 5.0 + 1 = 6\,\text{V}$.'
+    wrongFeedback: 'המשיכו את הקו, עם השיפוע שמצאתם, עד שהזרם אפס: שם המתח הוא הכא"מ.'
+    commonWrong:
+      - value: 5
+        feedback: 'זה מתח ההדקים בזרם $0.4\,\text{A}$. הכא"מ הוא המתח כשהזרם **אפס**: צריך להמשיך את הקו עד הציר.'
+        misconception: MC-terminal-equals-emf
+      - value: 5.4
+        feedback: 'הוספתם $0.4\,\text{V}$ במקום $r\cdot0.4\,\text{A} = 1\,\text{V}$. כשהזרם קטן ב-$0.4\,\text{A}$, המתח עולה ב-$r$ כפול השינוי.'
 
   - id: Q-3.10-short-from-line
     type: numeric
     objectives: [OBJ-3.10-2]
     level: bagrut
     prompt: >-
-      לאותה סוללה ($\varepsilon = 6\,\text{V}$, $r = 2\,\Omega$), היכן חותך האופיין את ציר הזרם, כלומר מה זרם הקצר? ענו באמפר.
-    answer: 3
+      לאותה סוללה ($\varepsilon = 6\,\text{V}$, $r = 2.5\,\Omega$), היכן חותך האופיין את ציר הזרם, כלומר מה זרם הקצר? ענו באמפר.
+    answer: 2.4
     unit: A
     tolerance: 0.03
-    correctFeedback: 'נכון. על ציר הזרם מתח ההדקים אפס: $0 = 6 - 2I$, ולכן $I = \varepsilon/r = 3\,\text{A}$.'
+    correctFeedback: 'נכון. על ציר הזרם מתח ההדקים אפס: $0 = 6 - 2.5I$, ולכן $I = \varepsilon/r = 2.4\,\text{A}$.'
     wrongFeedback: 'בחיתוך עם ציר הזרם $V = 0$. הציבו ב-$V = \varepsilon - Ir$.'
     commonWrong:
-      - value: 0.333
+      - value: 0.417
         feedback: 'חילקתם את $r$ ב-$\varepsilon$. זרם הקצר הוא $\varepsilon/r$.'
-      - value: 12
+      - value: 15
         feedback: 'כפלתם את הכא"מ בהתנגדות. זרם הקצר הוא $\varepsilon/r$.'
 
   - id: Q-3.10-through-origin
@@ -158,7 +164,7 @@ questions:
       - text: 'לסוללה B כא"מ גדול יותר.'
         feedback: 'הכא"מ הוא החיתוך עם ציר המתח, והוא שווה לשתיהן. התלילות קשורה ל-$r$.'
       - text: 'לסוללה B התנגדות פנימית קטנה יותר, כי הקו שלה מגיע מהר יותר לאפס.'
-        feedback: 'הפוך: הקו שלה מגיע לאפס בזרם קטן יותר, $\varepsilon/r$, ולכן $r$ שלה גדולה יותר.'
+        feedback: 'נכון שהקו שלה מגיע לאפס מוקדם יותר, אבל המסקנה הפוכה: הוא מגיע לאפס בזרם קטן יותר, $\varepsilon/r$, ולכן $r$ שלה גדולה יותר.'
         misconception: MC-slope-positive-r
       - text: 'אי אפשר להשוות בלי לדעת את העומס.'
         feedback: 'האופיין תלוי רק בסוללה עצמה, $\varepsilon$ ו-$r$. העומס רק בוחר נקודה על הקו.'
@@ -178,7 +184,6 @@ questions:
     commonWrong:
       - value: 1.714
         feedback: 'שכחתם את ההתנגדות הפנימית: $12/7$.'
-        misconception: MC-terminal-equals-emf
       - value: 0.545
         feedback: 'חיברתם את כל הנגדים בטור, $3 + 6 + 12 + 1 = 22\,\Omega$. $R_2$ ו-$R_3$ במקביל.'
         misconception: MC-parallel-r-adds
@@ -188,18 +193,23 @@ questions:
     objectives: [OBJ-3.10-3]
     level: bagrut
     prompt: >-
-      באותו מעגל ($\varepsilon = 12\,\text{V}$, $r = 1\,\Omega$, $R_1 = 3\,\Omega$ בטור עם $R_2 = 6\,\Omega$ במקביל ל-$R_3 = 12\,\Omega$), מה ההספק ב-$R_2$? ענו בוואט.
-    answer: 6
+      באותו מעגל ($\varepsilon = 12\,\text{V}$, $r = 1\,\Omega$, $R_1 = 3\,\Omega$ בטור עם $R_2 = 6\,\Omega$ במקביל ל-$R_3 = 12\,\Omega$), מה ההספק ב-$R_3$? ענו בוואט.
+    answer: 3
     unit: W
     tolerance: 0.03
-    correctFeedback: 'נכון. $I = 1.5\,\text{A}$, ועל הזוג שבמקביל $V = 1.5\cdot4 = 6\,\text{V}$. ב-$R_2$: $P = V^2/R = 36/6 = 6\,\text{W}$.'
-    wrongFeedback: 'מצאו את המתח על הזוג שבמקביל, $V = IR_{23}$, ואז $P = V^2/R_2$.'
+    correctFeedback: 'נכון. $I = 1.5\,\text{A}$, ועל הזוג שבמקביל $V = 1.5\,\text{A}\cdot4\,\Omega = 6\,\text{V}$. ב-$R_3$: $P = V^2/R = 36/12 = 3\,\text{W}$.'
+    wrongFeedback: 'מצאו את המתח על הזוג שבמקביל, $V = IR_{23}$, ואז $P = V^2/R_3$.'
     commonWrong:
-      - value: 13.5
-        feedback: 'השתמשתם בכל הזרם של הסוללה, $I^2R_2 = 1.5^2\cdot6$. הזרם מתחלק בין $R_2$ ל-$R_3$: ב-$R_2$ עובר רק $1\,\text{A}$.'
+      - value: 6
+        feedback: 'זה המתח על הזוג שבמקביל, $6\,\text{V}$, וזה גם ההספק ב-$R_2$. נשאר צעד: ההספק ב-$R_3$ הוא $V^2/R_3$.'
+      - value: 27
+        feedback: 'השתמשתם בכל הזרם של הסוללה, $I^2R_3 = 1.5^2\cdot12$. הזרם מתחלק בין $R_2$ ל-$R_3$: ב-$R_3$ עובר רק $0.5\,\text{A}$.'
+        misconception: MC-current-used-up
+      - value: 6.75
+        feedback: 'חילקתם את הזרם שווה בשווה, $0.75\,\text{A}$ בכל ענף. בענף עם ההתנגדות הגדולה עובר זרם קטן יותר: $6/12 = 0.5\,\text{A}$.'
         misconception: MC-junction-equal-split
-      - value: 18.4
-        feedback: 'שמתם על $R_2$ את מתח ההדקים, $10.5\,\text{V}$. חלק ממנו נופל על $R_1$, ועל הזוג שבמקביל נשארים $6\,\text{V}$.'
+      - value: 9.19
+        feedback: 'שמתם על $R_3$ את מתח ההדקים, $10.5\,\text{V}$. חלק ממנו נופל על $R_1$, ועל הזוג שבמקביל נשארים $6\,\text{V}$.'
 
   - id: Q-3.10-integrated-efficiency
     type: numeric
@@ -230,8 +240,7 @@ questions:
         correct: true
         feedback: 'נכון. כששתי סוללות בענפים שונים, המעגל לא מתפרק לטור ולמקביל, וצריך את חוקי קירכהוף (שיעור 3.8).'
       - text: 'צמצום לטור ולמקביל, כמו בכל מעגל.'
-        feedback: 'צמצום לטור ולמקביל עובד כשיש סוללה אחת. עם שתי סוללות בענפים שונים הוא לא מספיק.'
-        misconception: MC-parallel-r-adds
+        feedback: 'צמצום לטור ולמקביל עובד רק כשהרשת אכן מתפרקת לחלקים בטור ובמקביל. כששתי סוללות בענפים שונים, אין שני נגדים שעובר בהם בדיוק אותו זרם או שיש עליהם בדיוק אותו מתח, והצמצום נתקע.'
       - text: 'חיבור הכא"מים של שתי הסוללות, וחלוקה בהתנגדות השקולה.'
         feedback: 'זה נכון רק כששתי הסוללות בטור באותה לולאה. בענפים שונים הן לא מתחברות פשוט.'
         misconception: MC-loop-all-add
