@@ -1,0 +1,251 @@
+# Workbook, lesson 0.3. Every number recomputed with npx tsx against src/physics/constants.ts
+# (E_CHARGE, M_ELECTRON, G, G_NEWTON).
+
+lesson: '0.3'
+practice:
+  - id: W-0.3-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-0.3-1]
+    prompt: >-
+      כתבו כל גודל ביחידות SI ובכתיב מדעי:
+
+      (א) הרדיוס של אטום מימן, $53\,\text{pm}$;
+
+      (ב) המרחק הממוצע מכדור הארץ לירח, $384{,}000\,\text{km}$;
+
+      (ג) פרק זמן של $0.75\,\text{ms}$;
+
+      (ד) אנרגיה של $2.5\,\text{MJ}$.
+    answer: '$5.3\cdot10^{-11}\,\text{m}$, $3.84\cdot10^{8}\,\text{m}$, $7.5\cdot10^{-4}\,\text{s}$, $2.5\cdot10^{6}\,\text{J}$'
+    solution:
+      - { kind: given, text: 'הקידומות: $\text{p} = 10^{-12}$, $\text{m} = 10^{-3}$, $\text{k} = 10^{3}$, $\text{M} = 10^{6}$.' }
+      - { kind: manipulation, text: '(א) $53\,\text{pm} = 53\cdot10^{-12}\,\text{m} = 5.3\cdot10^{1}\cdot10^{-12}\,\text{m} = 5.3\cdot10^{-11}\,\text{m}$.' }
+      - { kind: manipulation, text: '(ב) $384{,}000 = 3.84\cdot10^{5}$, ולכן $384{,}000\,\text{km} = 3.84\cdot10^{5}\cdot10^{3}\,\text{m} = 3.84\cdot10^{8}\,\text{m}$.' }
+      - { kind: manipulation, text: '(ג) $0.75\,\text{ms} = 0.75\cdot10^{-3}\,\text{s} = 7.5\cdot10^{-4}\,\text{s}$: הנקודה זזה מקום אחד ימינה, והמעריך קטן ב-1.' }
+      - { kind: manipulation, text: '(ד) $2.5\,\text{MJ} = 2.5\cdot10^{6}\,\text{J}$.' }
+      - { kind: result, text: '$5.3\cdot10^{-11}\,\text{m}$, $3.84\cdot10^{8}\,\text{m}$, $7.5\cdot10^{-4}\,\text{s}$ ו-$2.5\cdot10^{6}\,\text{J}$.' }
+
+  - id: W-0.3-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-0.3-1, OBJ-0.3-3]
+    prompt: >-
+      ארבעה תלמידים כתבו את אותה תוצאה כך: $0.5\cdot10^{3}$, $5.0\cdot10^{2}$, $50\cdot10^{1}$ ו-$5\cdot10^{2}$.
+
+      (א) האם כל הכתיבות שוות זו לזו?
+
+      (ב) אילו מהן כתובות בכתיב מדעי?
+
+      (ג) מה ההבדל בין $5.0\cdot10^{2}$ לבין $5\cdot10^{2}$?
+    answer: 'כולן שוות ל-500. רק $5.0\cdot10^{2}$ ו-$5\cdot10^{2}$ כתובות בכתיב מדעי, וההבדל ביניהן הוא מספר הספרות המשמעותיות: שתיים לעומת אחת.'
+    solution:
+      - { kind: reasoning, text: '(א) $0.5\cdot10^{3} = 0.5\cdot1000 = 500$, $50\cdot10^{1} = 500$, $5.0\cdot10^{2} = 5\cdot10^{2} = 500$. כולן אותו ערך.' }
+      - { kind: reasoning, text: '(ב) בכתיב מדעי המספר שלפני החזקה הוא בין 1 ל-10. 0.5 קטן מ-1 ו-50 גדול מ-10, ולכן רק $5.0\cdot10^{2}$ ו-$5\cdot10^{2}$ כתובות בכתיב מדעי.' }
+      - { kind: reasoning, text: '(ג) האפס שאחרי הנקודה ב-5.0 משמעותי: מי שכתב אותו אומר שהספרה השנייה ידועה. ב-$5.0\cdot10^{2}$ יש שתי ספרות משמעותיות, וב-$5\cdot10^{2}$ רק אחת.' }
+      - { kind: result, text: 'הערך זהה, 500. בכתיב מדעי כתובות רק שתיים מהן, והן נבדלות בדיוק שהן מצהירות עליו: 2 ספרות משמעותיות לעומת 1.' }
+
+  - id: W-0.3-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-0.3-3]
+    prompt: >-
+      (א) כמה ספרות משמעותיות יש בכל אחד מהמספרים $3.00\cdot10^{8}$, $0.0070$ ו-$1.60\cdot10^{-19}$?
+
+      (ב) המחשבון הציג 0.0046872. כתבו את המספר בכתיב מדעי, מעוגל לשתי ספרות משמעותיות.
+    answer: '(א) 3, 2 ו-3. (ב) $4.7\cdot10^{-3}$'
+    solution:
+      - { kind: reasoning, text: 'סופרים מהספרה הראשונה שאינה אפס. אפסים בהתחלה רק מסמנים את מקום הנקודה; אפס בסוף, אחרי הנקודה, משמעותי.' }
+      - { kind: reasoning, text: '(א) $3.00\cdot10^{8}$: הספרות 3, 0, 0, כלומר 3. ב-0.0070: הספרות 7 ו-0 שבסוף, כלומר 2. $1.60\cdot10^{-19}$: הספרות 1, 6, 0, כלומר 3.' }
+      - { kind: manipulation, text: '(ב) $0.0046872 = 4.6872\cdot10^{-3}$. הספרה השלישית היא 8, ולכן מעגלים את 4.6 כלפי מעלה ל-4.7.' }
+      - { kind: result, text: '(א) 3, 2 ו-3 ספרות משמעותיות. (ב) $4.7\cdot10^{-3}$.' }
+
+  - id: W-0.3-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-0.3-2, OBJ-0.3-1]
+    prompt: >-
+      מסך של טלפון הוא מלבן של $14\,\text{cm}$ על $7.0\,\text{cm}$.
+      מה שטח המסך בסנטימטרים רבועים, במילימטרים רבועים ובמטרים רבועים?
+    answer: '$98\,\text{cm}^2 = 9.8\cdot10^{3}\,\text{mm}^2 = 9.8\cdot10^{-3}\,\text{m}^2$'
+    solution:
+      - { kind: given, text: 'אורך $14\,\text{cm}$, רוחב $7.0\,\text{cm}$.' }
+      - { kind: formula, text: 'שטח של מלבן: $A = ab$.' }
+      - { kind: substitution, text: '$A = 14\,\text{cm}\cdot7.0\,\text{cm} = 98\,\text{cm}^2$.' }
+      - { kind: manipulation, text: 'בסנטימטר יש 10 מילימטרים, ולכן $1\,\text{cm}^2 = (10\,\text{mm})^2 = 100\,\text{mm}^2$. מכאן $98\,\text{cm}^2 = 9800\,\text{mm}^2 = 9.8\cdot10^{3}\,\text{mm}^2$.' }
+      - { kind: manipulation, text: '$1\,\text{cm}^2 = (10^{-2}\,\text{m})^2 = 10^{-4}\,\text{m}^2$, ולכן $98\,\text{cm}^2 = 98\cdot10^{-4}\,\text{m}^2 = 9.8\cdot10^{-3}\,\text{m}^2$. בדיקה: $0.14\,\text{m}\cdot0.070\,\text{m} = 9.8\cdot10^{-3}\,\text{m}^2$.' }
+      - { kind: result, text: '$98\,\text{cm}^2$, שהם $9.8\cdot10^{3}\,\text{mm}^2$ ו-$9.8\cdot10^{-3}\,\text{m}^2$.' }
+
+  - id: W-0.3-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-0.3-4]
+    prompt: >-
+      תלמידה חישבה את האנרגיה הקינטית של כדור, וקיבלה תוצאה ביחידות $\text{kg}\cdot\text{m/s}$.
+
+      (א) האם התוצאה יכולה להיות נכונה? נמקו לפי היחידות.
+
+      (ב) לאיזה גודל מהמכניקה יש יחידות כאלה, ואיזו טעות כנראה עשתה התלמידה?
+    answer: 'לא. אנרגיה נמדדת בג׳אול, $\text{J} = \text{kg}\cdot\text{m}^2/\text{s}^2$. ליחידות $\text{kg}\cdot\text{m/s}$ יש תנע, $mv$, ולכן כנראה שכחה להעלות את המהירות בריבוע.'
+    solution:
+      - { kind: formula, text: 'האנרגיה הקינטית: $E_k = \tfrac{1}{2}mv^2$.' }
+      - { kind: reasoning, text: 'היחידות של $mv^2$: $\text{kg}\cdot(\text{m/s})^2 = \text{kg}\cdot\text{m}^2/\text{s}^2$. זה הג׳אול, וזה גם ניוטון כפול מטר: $\text{kg}\cdot\text{m/s}^2\cdot\text{m}$.' }
+      - { kind: reasoning, text: 'ב-$\text{kg}\cdot\text{m/s}$ חסר מטר אחד במונה ושנייה אחת במכנה, כלומר חסר גורם של מהירות. לכן התוצאה לא יכולה להיות אנרגיה.' }
+      - { kind: reasoning, text: 'ליחידות $\text{kg}\cdot\text{m/s}$ יש התנע, $p = mv$. כנראה התלמידה חישבה $\tfrac{1}{2}mv$, בלי הריבוע של המהירות.' }
+      - { kind: result, text: 'התוצאה שגויה: היחידות שלה הן של תנע, לא של אנרגיה. הטעות הסבירה היא $v$ במקום $v^2$.' }
+
+  - id: W-0.3-06
+    level: mid
+    qualitative: false
+    objectives: [OBJ-0.3-2, OBJ-0.3-1, OBJ-0.3-3]
+    prompt: >-
+      בלון ששפשפו בשיער קיבל מטען שגודלו $4.8\,\text{nC}$, כי נוספו לו אלקטרונים.
+      גודל המטען של כל אלקטרון הוא $1.6\cdot10^{-19}\,\text{C}$, והמסה שלו היא $9.1\cdot10^{-31}\,\text{kg}$.
+
+      (א) כמה אלקטרונים נוספו לבלון?
+
+      (ב) מה המסה הכוללת שלהם?
+    answer: '(א) $3.0\cdot10^{10}$ אלקטרונים. (ב) $2.7\cdot10^{-20}\,\text{kg}$'
+    solution:
+      - { kind: given, text: '$Q = 4.8\,\text{nC} = 4.8\cdot10^{-9}\,\text{C}$, $e = 1.6\cdot10^{-19}\,\text{C}$, $m_e = 9.1\cdot10^{-31}\,\text{kg}$.' }
+      - { kind: formula, text: 'מספר האלקטרונים $N = Q/e$, והמסה הכוללת $M = N m_e$.' }
+      - { kind: substitution, text: '$N = \dfrac{4.8\cdot10^{-9}\,\text{C}}{1.6\cdot10^{-19}\,\text{C}} = 3.0\cdot10^{-9-(-19)} = 3.0\cdot10^{10}$. היחידות מצטמצמות, כמו שצריך למספר של חלקיקים.' }
+      - { kind: substitution, text: '$M = 3.0\cdot10^{10}\cdot9.1\cdot10^{-31}\,\text{kg} = 27.3\cdot10^{-21}\,\text{kg} = 2.73\cdot10^{-20}\,\text{kg}$.' }
+      - { kind: result, text: '(א) $3.0\cdot10^{10}$ אלקטרונים. (ב) בשתי ספרות משמעותיות, $2.7\cdot10^{-20}\,\text{kg}$: עשרות מיליארדי אלקטרונים, ומסתם זעירה.' }
+
+  - id: W-0.3-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-0.3-3]
+    prompt: >-
+      את אורך השולחן מדדו בסרט מדידה, $1.5\,\text{m}$. את הרוחב מדדו בסרגל מדויק יותר, $0.825\,\text{m}$.
+      שלושה תלמידים כתבו את שטח השולחן: $1.2375\,\text{m}^2$, $1.24\,\text{m}^2$ ו-$1.2\,\text{m}^2$.
+      איזו תוצאה הכי מתאימה? נמקו.
+    answer: '$1.2\,\text{m}^2$: הנתון הכי פחות מדויק, האורך, ידוע רק בשתי ספרות משמעותיות.'
+    solution:
+      - { kind: given, text: 'האורך $1.5\,\text{m}$: שתי ספרות משמעותיות. הרוחב $0.825\,\text{m}$: שלוש.' }
+      - { kind: reasoning, text: 'המחשבון נותן $1.5\cdot0.825 = 1.2375$. אבל האורך ידוע רק עד עשירית המטר, ולכן גם השטח לא יכול להיות מדויק יותר משתי ספרות.' }
+      - { kind: reasoning, text: '$1.2375\,\text{m}^2$ טוען לחמש ספרות ידועות. $1.24\,\text{m}^2$ נשען על הרוחב המדויק ושוכח שהאורך פחות מדויק. הסרגל המדויק לא מתקן את סרט המדידה.' }
+      - { kind: result, text: '$1.2\,\text{m}^2$, בשתי ספרות משמעותיות, כמו הנתון הכי פחות מדויק.' }
+
+  - id: W-0.3-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-0.3-4, OBJ-0.3-2, OBJ-0.3-1]
+    prompt: >-
+      על גוף שמסתו $m$, ליד פני כדור הארץ, פועל כוח כבידה $F = \dfrac{GMm}{R^2}$, כאשר $M$ היא מסת כדור הארץ ו-$R$ הוא הרדיוס שלו.
+      הכוח הזה הוא המשקל של הגוף, $mg$.
+      נתון: $g = 10\,\text{m/s}^2$, $R = 6.4\cdot10^{3}\,\text{km}$, $G = 6.67\cdot10^{-11}\,\text{N}\cdot\text{m}^2/\text{kg}^2$.
+      חשבו את מסת כדור הארץ, ובדקו שהיחידות של התוצאה הן קילוגרמים.
+    answer: '$M \approx 6.1\cdot10^{24}\,\text{kg}$'
+    solution:
+      - { kind: given, text: '$g = 10\,\text{m/s}^2$, $R = 6.4\cdot10^{3}\,\text{km} = 6.4\cdot10^{6}\,\text{m}$, $G = 6.67\cdot10^{-11}\,\text{N}\cdot\text{m}^2/\text{kg}^2$.' }
+      - { kind: formula, text: 'המשקל שווה לכוח הכבידה: $mg = \dfrac{GMm}{R^2}$.' }
+      - { kind: manipulation, text: 'המסה $m$ מופיעה בשני האגפים ומצטמצמת. מבודדים את $M$ באותיות: $M = \dfrac{gR^2}{G}$.' }
+      - { kind: substitution, text: '$R^2 = (6.4\cdot10^{6}\,\text{m})^2 = 40.96\cdot10^{12}\,\text{m}^2 = 4.096\cdot10^{13}\,\text{m}^2$.' }
+      - { kind: substitution, text: '$M = \dfrac{10\,\text{m/s}^2\cdot4.096\cdot10^{13}\,\text{m}^2}{6.67\cdot10^{-11}\,\text{N}\cdot\text{m}^2/\text{kg}^2} = \dfrac{4.096\cdot10^{14}}{6.67\cdot10^{-11}}\,\text{kg} = 0.614\cdot10^{25}\,\text{kg}$.' }
+      - { kind: reasoning, text: 'בדיקת יחידות: $\text{N} = \text{kg}\cdot\text{m/s}^2$, ולכן $\dfrac{\text{m}^3/\text{s}^2}{\text{kg}\cdot\text{m}^3/(\text{s}^2\cdot\text{kg}^2)} = \text{kg}$. מי שמציב $R$ בקילומטרים מקבל $6.1\cdot10^{18}$, תשובה קטנה פי מיליון.' }
+      - { kind: result, text: '$M \approx 6.1\cdot10^{24}\,\text{kg}$, ביחידות של מסה כמו שצריך.' }
+
+  - id: W-0.3-09
+    level: bagrut
+    qualitative: true
+    objectives: [OBJ-0.3-4]
+    prompt: >-
+      (א) מהנוסחה $F = \dfrac{Gm_1m_2}{r^2}$ מצאו את היחידות של $G$, וכתבו אותן רק ביחידות היסוד $\text{kg}$, $\text{m}$ ו-$\text{s}$.
+
+      (ב) לפי החוק השלישי של קפלר, לכוכב לכת שמקיף את השמש במסלול מעגלי ברדיוס $r$, בזמן מחזור $T$, מתקיים
+      $T^2 = \dfrac{4\pi^2}{GM}\,r^3$, כאשר $M$ היא מסת השמש. הראו שהיחידות בשני האגפים זהות.
+    answer: 'היחידות של $G$ הן $\text{m}^3/(\text{kg}\cdot\text{s}^2)$, ובשני האגפים של החוק השלישי של קפלר יוצאות $\text{s}^2$.'
+    solution:
+      - { kind: manipulation, text: '(א) מבודדים את $G$: $G = \dfrac{F r^2}{m_1 m_2}$. היחידות: $\text{N}\cdot\text{m}^2/\text{kg}^2$.' }
+      - { kind: reasoning, text: 'מחליפים את הניוטון ביחידות יסוד, $\text{N} = \text{kg}\cdot\text{m/s}^2$: $\dfrac{\text{kg}\cdot\text{m}}{\text{s}^2}\cdot\dfrac{\text{m}^2}{\text{kg}^2} = \dfrac{\text{m}^3}{\text{kg}\cdot\text{s}^2}$.' }
+      - { kind: reasoning, text: '(ב) באגף שמאל, $T^2$ נמדד ב-$\text{s}^2$.' }
+      - { kind: reasoning, text: 'באגף ימין, ל-$4\pi^2$ אין יחידות. ל-$GM$ יש $\dfrac{\text{m}^3}{\text{kg}\cdot\text{s}^2}\cdot\text{kg} = \dfrac{\text{m}^3}{\text{s}^2}$, ולכן ל-$\dfrac{1}{GM}$ יש $\dfrac{\text{s}^2}{\text{m}^3}$. כפול $r^3$, שנמדד ב-$\text{m}^3$, נשאר $\text{s}^2$.' }
+      - { kind: result, text: 'היחידות של $G$ הן $\text{m}^3/(\text{kg}\cdot\text{s}^2)$, ושני האגפים נמדדים ב-$\text{s}^2$. הנוסחה עוברת את בדיקת היחידות.' }
+
+  - id: W-0.3-10
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-0.3-2, OBJ-0.3-3, OBJ-0.3-4]
+    prompt: >-
+      טיפת גשם היא כדור שהרדיוס שלו $2.0\,\text{mm}$. הנפח של כדור הוא $V = \tfrac{4}{3}\pi r^3$, והצפיפות של מים היא $1.0\cdot10^{3}\,\text{kg/m}^3$.
+
+      (א) מה מסת הטיפה?
+
+      (ב) מה משתנה במסה אם הרדיוס קטן פי 2?
+
+      (ג) כמה טיפות כאלה צריך כדי למלא בקבוק של ליטר אחד? ($1\,\text{L} = 10^{-3}\,\text{m}^3$)
+    answer: '(א) $3.4\cdot10^{-5}\,\text{kg}$. (ב) המסה קטנה פי 8, לכ-$4.2\cdot10^{-6}\,\text{kg}$. (ג) כ-$3.0\cdot10^{4}$ טיפות.'
+    solution:
+      - { kind: given, text: '$r = 2.0\,\text{mm} = 2.0\cdot10^{-3}\,\text{m}$, $\rho = 1.0\cdot10^{3}\,\text{kg/m}^3$.' }
+      - { kind: formula, text: '$V = \tfrac{4}{3}\pi r^3$, $m = \rho V$.' }
+      - { kind: substitution, text: 'בהעלאה בחזקה שלישית מעלים גם את 2.0 וגם את החזקה: $r^3 = (2.0\cdot10^{-3}\,\text{m})^3 = 8.0\cdot10^{-9}\,\text{m}^3$. לכן $V = \tfrac{4}{3}\pi\cdot8.0\cdot10^{-9}\,\text{m}^3 = 3.35\cdot10^{-8}\,\text{m}^3$.' }
+      - { kind: substitution, text: '(א) $m = 1.0\cdot10^{3}\,\text{kg/m}^3\cdot3.35\cdot10^{-8}\,\text{m}^3 = 3.35\cdot10^{-5}\,\text{kg}$. היחידות: $\text{kg/m}^3$ כפול $\text{m}^3$ נותן $\text{kg}$.' }
+      - { kind: reasoning, text: '(ב) $m = \rho\cdot\tfrac{4}{3}\pi r^3$, כלומר המסה פרופורציונית ל-$r^3$. רדיוס קטן פי 2 נותן מסה קטנה פי $2^3 = 8$: $3.35\cdot10^{-5}/8 = 4.19\cdot10^{-6}\,\text{kg}$.' }
+      - { kind: substitution, text: '(ג) $N = \dfrac{10^{-3}\,\text{m}^3}{3.35\cdot10^{-8}\,\text{m}^3} = 0.298\cdot10^{5} = 2.98\cdot10^{4}$.' }
+      - { kind: result, text: '(א) $3.4\cdot10^{-5}\,\text{kg}$, כלומר 34 מיליגרם. (ב) קטנה פי 8, לכ-$4.2\cdot10^{-6}\,\text{kg}$. (ג) כ-$3.0\cdot10^{4}$ טיפות.' }
+
+challenge:
+  - id: W-0.3-c1
+    stars: 1
+    objectives: [OBJ-0.3-2, OBJ-0.3-1, OBJ-0.3-3]
+    prompt: >-
+      מכשיר חשמלי כבוי שנשאר מחובר לשקע, במצב המתנה, צורך הספק של כ-$1\,\text{W}$.
+      נניח שמחיר החשמל הוא 0.60 ש״ח לכל קילוואט-שעה ($\text{kWh}$): האנרגיה שמכשיר בהספק של $1\,\text{kW}$ צורך בשעה אחת.
+
+      (א) כמה אנרגיה צורך מכשיר אחד במצב המתנה במשך שנה, ב-$\text{kWh}$ ובג׳אול?
+
+      (ב) כמה זה עולה בשנה?
+
+      (ג) נניח שבמדינה יש $2.0\cdot10^{6}$ משקי בית, ובכל אחד מהם 5 מכשירים כאלה.
+      מה ההספק הכולל של כל המכשירים במצב המתנה, במגה-וואט, ומה העלות השנתית הכוללת?
+
+      ההספק נתון בהערכה גסה, בספרה אחת, ולכן גם התשובות הן הערכה.
+    answer: '(א) כ-$9\,\text{kWh}$, כלומר כ-$3\cdot10^{7}\,\text{J}$. (ב) כ-5 ש״ח. (ג) $10\,\text{MW}$, וכ-$5\cdot10^{7}$ ש״ח בשנה.'
+    solution:
+      - { kind: given, text: '$P = 1\,\text{W}$. בשנה יש $365\cdot24 = 8760$ שעות, כלומר $t = 8.76\cdot10^{3}\,\text{h}$. המחיר 0.60 ש״ח ל-$\text{kWh}$.' }
+      - { kind: formula, text: 'אנרגיה בהספק קבוע: $E = Pt$.' }
+      - { kind: substitution, text: '(א) $E = 1\,\text{W}\cdot8.76\cdot10^{3}\,\text{h} = 8.76\cdot10^{3}\,\text{W}\cdot\text{h} = 8.76\,\text{kWh}$, כי $\text{k} = 10^{3}$.' }
+      - { kind: manipulation, text: 'בג׳אול: $1\,\text{kWh} = 10^{3}\,\text{W}\cdot3.6\cdot10^{3}\,\text{s} = 3.6\cdot10^{6}\,\text{J}$, ולכן $E = 8.76\cdot3.6\cdot10^{6}\,\text{J} = 3.15\cdot10^{7}\,\text{J}$.' }
+      - { kind: substitution, text: '(ב) העלות: $8.76\cdot0.60 = 5.3$ ש״ח בשנה.' }
+      - { kind: substitution, text: '(ג) מספר המכשירים: $2.0\cdot10^{6}\cdot5 = 1.0\cdot10^{7}$. ההספק הכולל: $1.0\cdot10^{7}\cdot1\,\text{W} = 10^{7}\,\text{W} = 10\,\text{MW}$, כי $\text{M} = 10^{6}$. העלות הכוללת: $1.0\cdot10^{7}\cdot5.3 = 5.3\cdot10^{7}$ ש״ח.' }
+      - { kind: result, text: 'בספרה משמעותית אחת, כמו ההספק הנתון: (א) כ-$9\,\text{kWh}$, או כ-$3\cdot10^{7}\,\text{J}$; (ב) כ-5 ש״ח; (ג) $10\,\text{MW}$ וכ-$5\cdot10^{7}$ ש״ח בשנה. מכשיר אחד עולה מעט, אבל עשרה מיליון מכשירים עולים עשרות מיליוני שקלים.' }
+    source:
+      name: PhysicsBowl
+      year: 2019
+      problem: 'Question 9'
+      url: https://aapt.org/Programs/PhysicsBowl/upload/2019-PhysicsBowl-Exam.pdf
+      verified: '2026-11-01'
+      adapted: true
+
+  - id: W-0.3-c2
+    stars: 2
+    objectives: [OBJ-0.3-4]
+    prompt: >-
+      גלגל תנופה הוא דסקה מסתובבת שאוגרת אנרגיה קינטית. הדסקה עשויה מחומר שהצפיפות שלו $\rho$, ב-$\text{kg/m}^3$.
+      החומר נקרע כשהכוח שמותח כל מטר רבוע של חתך עולה על $\sigma$, ולכן $\sigma$ נמדד ב-$\text{N/m}^2$.
+      רדיוס הדסקה $r$ ועוביה $h$. כשהדסקה מסתובבת מהר מדי, היא נקרעת.
+      מחפשים את האנרגיה הקינטית המרבית שאפשר לאגור בכל קילוגרם של דסקה, $E/m$. המספר $\alpha$ הוא בלי יחידות.
+
+      (א) אילו מהביטויים הבאים יכולים להיות נכונים לפי היחידות?
+
+      (1) $\alpha\rho\sigma/r$ (2) $\alpha h\rho\sigma/r$ (3) $\alpha(h/r)(\sigma/\rho)^2$ (4) $\alpha(h/r)(\sigma/\rho)$ (5) $\alpha\sigma/\rho$
+
+      (ב) היחידות לבדן לא מכריעות בין שני ביטויים. הכריעו ביניהם בעזרת ניסוי מחשבתי:
+      מניחים שתי דסקאות זהות זו על זו, ומדביקים אותן לדסקה אחת שעוביה $2h$.
+    answer: 'לפי היחידות רק (4) ו-(5) אפשריים; הניסוי המחשבתי פוסל את (4), ולכן $E/m = \alpha\sigma/\rho$.'
+    solution:
+      - { kind: given, text: 'אנרגיה לקילוגרם נמדדת ב-$\text{J/kg} = \dfrac{\text{kg}\cdot\text{m}^2/\text{s}^2}{\text{kg}} = \text{m}^2/\text{s}^2$. וגם $\sigma$: $\text{N/m}^2 = \dfrac{\text{kg}}{\text{m}\cdot\text{s}^2}$.' }
+      - { kind: reasoning, text: 'היחידות של $\sigma/\rho$: $\dfrac{\text{kg}}{\text{m}\cdot\text{s}^2}\cdot\dfrac{\text{m}^3}{\text{kg}} = \dfrac{\text{m}^2}{\text{s}^2}$, בדיוק יחידות של אנרגיה לקילוגרם. ל-$h/r$ אין יחידות, כי זה מטר חלקי מטר.' }
+      - { kind: reasoning, text: 'לכן (4) ו-(5) נותנים $\text{m}^2/\text{s}^2$. (3) נותן $\text{m}^4/\text{s}^4$. (1) נותן $\dfrac{\text{kg}^2}{\text{m}^5\cdot\text{s}^2}$, ו-(2) נותן $\dfrac{\text{kg}^2}{\text{m}^4\cdot\text{s}^2}$. שלושתם נפסלים.' }
+      - { kind: reasoning, text: '(ב) בדסקה המודבקת כל שכבה מסתובבת בדיוק כמו דסקה בודדת, ונקרעת באותה מהירות סיבוב. לכן כל קילוגרם בה אוגר אותה אנרגיה כמו קודם: $E/m$ לא תלוי בעובי $h$.' }
+      - { kind: reasoning, text: 'ביטוי (4) גדל פי 2 כשהעובי גדל פי 2, ולכן הוא נפסל. ביטוי (5) לא תלוי ב-$h$, ונשאר.' }
+      - { kind: result, text: '$E/m = \alpha\sigma/\rho$: חומר חזק וקל אוגר יותר אנרגיה בכל קילוגרם. היחידות צמצמו חמישה ביטויים לשניים, והפיזיקה הכריעה ביניהם.' }
+    source:
+      name: F = ma Contest
+      year: 2015
+      problem: 'Question 17'
+      url: https://www.aapt.org/physicsteam/2015/upload/exam1-2015-1-8.pdf
+      verified: '2026-11-01'
+      adapted: true
