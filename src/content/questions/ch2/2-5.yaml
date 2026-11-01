@@ -1,0 +1,258 @@
+# Lesson 2.5 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/potential.ts (spherePotentialAt, connectSpheres,
+# earthedSphereCharge, sphereSurfaceField).
+
+chapter: 2
+questions:
+  # ------------------------------------------------ OBJ-2.5-1: potential of a conducting sphere
+  - id: Q-2.5-inside-v
+    type: mc
+    objectives: [OBJ-2.5-1]
+    qualitative: true
+    prompt: >-
+      כדור מתכת ברדיוס $R$ טעון במטען $Q$. מה הפוטנציאל במרכז הכדור?
+    choices:
+      - text: $kQ/R$, כמו על פני הכדור.
+        correct: true
+        feedback: 'נכון. בתוך הכדור השדה אפס, ולכן הפוטנציאל לא משתנה בין פני הכדור למרכז.'
+      - text: אפס, כי בתוך מוליך אין שדה.
+        feedback: 'שדה אפס פירושו שהפוטנציאל **לא משתנה** ממקום למקום, לא שהוא אפס. הוא נשאר $kQ/R$, כמו על פני השטח.'
+        misconception: MC-zero-potential-inside-conductor
+      - text: אינסוף, כי המרחק מהמרכז אפס.
+        feedback: 'המטען לא יושב במרכז, אלא על פני הכדור, במרחק $R$. לכן הנוסחה $kQ/r$ עם $r = 0$ לא מתאימה בתוך הכדור.'
+      - text: $kQ/(2R)$, ממוצע בין המרכז לשפה.
+        feedback: 'אין כאן ממוצע: בכל הכדור הפוטנציאל זהה, $kQ/R$.'
+
+  - id: Q-2.5-sphere-v-numeric
+    type: numeric
+    objectives: [OBJ-2.5-1]
+    prompt: >-
+      כדור מוליך ברדיוס $15$ ס"מ טעון ב-$+3\,\mu\text{C}$. מה הפוטנציאל בנקודה שנמצאת $5$ ס"מ ממרכזו? ענו בוולט.
+    answer: 1.8e5
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. הנקודה בתוך הכדור, ושם $V = \dfrac{kQ}{R} = \dfrac{9\cdot10^{9}\cdot 3\cdot10^{-6}}{0.15} = 1.8\cdot10^{5}\,\text{V}$.'
+    wrongFeedback: 'בדקו אם הנקודה בתוך הכדור או מחוצה לו. בתוך הכדור הפוטנציאל שווה לפוטנציאל של פני הכדור.'
+    commonWrong:
+      - value: 5.4e5
+        feedback: 'הצבתם $r = 0.05\,\text{m}$, כאילו המטען במרכז. בתוך הכדור הפוטנציאל קבוע ושווה ל-$kQ/R$.'
+      - value: 0
+        feedback: 'בתוך הכדור השדה אפס, אבל הפוטנציאל לא: הוא שווה לפוטנציאל של פני הכדור.'
+        misconception: MC-zero-potential-inside-conductor
+
+  - id: Q-2.5-outside-v
+    type: numeric
+    objectives: [OBJ-2.5-1]
+    prompt: >-
+      אותו כדור (רדיוס $15$ ס"מ, מטען $+3\,\mu\text{C}$). מה הפוטנציאל בנקודה שנמצאת $45$ ס"מ ממרכזו? ענו בוולט.
+    answer: 6.0e4
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. מחוץ לכדור הוא מתנהג כמו מטען נקודתי במרכזו: $V = \dfrac{9\cdot10^{9}\cdot 3\cdot10^{-6}}{0.45} = 6\cdot10^{4}\,\text{V}$, שליש מהפוטנציאל של הכדור.'
+    wrongFeedback: 'מחוץ לכדור $V = kQ/r$, עם $r$ המרחק מהמרכז.'
+    commonWrong:
+      - value: 1.8e5
+        feedback: 'זה הפוטנציאל של הכדור עצמו. מחוץ לו הפוטנציאל יורד כמו $1/r$.'
+      - value: 9.0e4
+        feedback: 'מדדתם את המרחק מפני הכדור ($30$ ס"מ). בנוסחה $r$ נמדד מהמרכז.'
+
+  # ------------------------------------------------ OBJ-2.5-2: connecting two spheres
+  - id: Q-2.5-share-numeric
+    type: numeric
+    objectives: [OBJ-2.5-2]
+    level: mid
+    prompt: >-
+      כדור A ברדיוס $10$ ס"מ טעון ב-$+4\,\mu\text{C}$, וכדור B ברדיוס $30$ ס"מ טעון ב-$-2\,\mu\text{C}$. הכדורים רחוקים זה מזה, ומחברים אותם בחוט מוליך.
+      מה המטען על כדור B אחרי החיבור? ענו במיקרו-קולון, עם סימן.
+    answer: 1.5
+    unit: μC
+    tolerance: 0.03
+    correctFeedback: 'נכון. המטען הכולל $+2\,\mu\text{C}$ מתחלק לפי הרדיוסים, $1:3$: על A $+0.5\,\mu\text{C}$, ועל B $+1.5\,\mu\text{C}$.'
+    wrongFeedback: 'מצאו את המטען הכולל (עם הסימנים), וחלקו אותו לפי היחס בין הרדיוסים.'
+    commonWrong:
+      - value: 1
+        feedback: 'חילקתם חצי-חצי. המטען מתחלק כך שהפוטנציאלים שווים, כלומר לפי הרדיוסים: B גדול פי 3, ולכן מקבל פי 3.'
+        misconception: MC-equal-share-on-connect
+      - value: 4.5
+        feedback: 'חילקתם את המטען של A בלבד. צריך קודם לחבר את שני המטענים, עם הסימנים: $4 + (-2) = 2\,\mu\text{C}$.'
+    hints:
+      - 'שימור מטען: $q_A + q_B = Q_A + Q_B$. פוטנציאל שווה: $q_A/R_A = q_B/R_B$.'
+
+  - id: Q-2.5-flow-direction
+    type: mc
+    objectives: [OBJ-2.5-2]
+    qualitative: true
+    prompt: >-
+      כדור A ברדיוס $5$ ס"מ טעון ב-$+2\,\mu\text{C}$. כדור B ברדיוס $20$ ס"מ טעון ב-$+3\,\mu\text{C}$. מחברים אותם בחוט מוליך. לאן יעבור מטען חיובי?
+    choices:
+      - text: מ-A ל-B.
+        correct: true
+        feedback: 'נכון. $V_A = \dfrac{kQ_A}{R_A} = 3.6\cdot10^{5}\,\text{V}$ ו-$V_B = 1.35\cdot10^{5}\,\text{V}$. מטען חיובי עובר מהפוטנציאל הגבוה לנמוך, אף שעל A פחות מטען.'
+      - text: מ-B ל-A, כי על B יש יותר מטען.
+        feedback: 'כמות המטען לא קובעת את הכיוון. מה שקובע הוא הפוטנציאל, וכדור קטן מגיע לפוטנציאל גבוה גם עם מעט מטען.'
+        misconception: MC-flow-from-more-charge
+      - text: לא יעבור מטען, כי שני הכדורים חיוביים.
+        feedback: 'מטען עובר כל עוד הפוטנציאלים שונים, גם כששניהם חיוביים.'
+      - text: מטען יעבור עד שעל שני הכדורים יהיה $2.5\,\mu\text{C}$.
+        feedback: 'המטען עובר עד שהפוטנציאלים שווים, לא המטענים. בסוף על A $1\,\mu\text{C}$ ועל B $4\,\mu\text{C}$.'
+        misconception: MC-equal-share-on-connect
+
+  - id: Q-2.5-ratio-twotier
+    type: twotier
+    objectives: [OBJ-2.5-2]
+    qualitative: true
+    prompt: >-
+      שני כדורים מוליכים רחוקים, ברדיוסים $R$ ו-$3R$, מחוברים בחוט. מה נכון לגבי המטענים $q_R$ ו-$q_{3R}$ שעליהם?
+    choices:
+      - text: $q_{3R} = 3\,q_R$
+        correct: true
+        feedback: נכון.
+      - text: $q_{3R} = q_R$
+        feedback: 'אם המטענים היו שווים, הפוטנציאל של הכדור הקטן היה גדול פי 3, והמטען היה ממשיך לעבור.'
+        misconception: MC-equal-share-on-connect
+      - text: $q_{3R} = 9\,q_R$
+        feedback: 'היחס $R^2$ מופיע בשדה על פני השטח, לא בחלוקת המטען. החלוקה נקבעת לפי $V = kq/R$.'
+      - text: $q_R = 3\,q_{3R}$
+        feedback: 'הכדור הגדול צריך יותר מטען כדי להגיע לאותו פוטנציאל, לא פחות.'
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: 'אחרי החיבור הפוטנציאלים שווים: $kq_R/R = kq_{3R}/(3R)$.'
+        correct: true
+        feedback: נכון.
+      - text: המטען זורם עד שעל שני הכדורים יש אותו מטען.
+        feedback: 'המטען זורם כל עוד יש הפרש פוטנציאלים, ולא עד שהמטענים שווים.'
+        misconception: MC-equal-share-on-connect
+      - text: המטען מתחלק לפי שטח הפנים של הכדורים.
+        feedback: 'שטח הפנים ביחס $1:9$, אבל המטען מתחלק ביחס $1:3$. החלוקה נקבעת מהפוטנציאל.'
+
+  - id: Q-2.5-common-v
+    type: numeric
+    objectives: [OBJ-2.5-2]
+    prompt: >-
+      אחרי החיבור של כדור A ($10$ ס"מ) וכדור B ($30$ ס"מ), שהמטען הכולל עליהם $+2\,\mu\text{C}$, מה הפוטנציאל המשותף? ענו בוולט.
+    answer: 4.5e4
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון: $V = \dfrac{kQ}{R_A + R_B} = \dfrac{9\cdot10^{9}\cdot 2\cdot10^{-6}}{0.4} = 4.5\cdot10^{4}\,\text{V}$. אותו דבר יוצא מ-$kq_A/R_A$ עם $q_A = 0.5\,\mu\text{C}$.'
+    wrongFeedback: 'מצאו את המטען על אחד הכדורים אחרי החיבור, וחשבו את הפוטנציאל שלו: $V = kq/R$.'
+    commonWrong:
+      - value: 1.8e5
+        feedback: 'חישבתם $kQ/R_A$ עם כל המטען על A. אחרי החיבור על A נשאר רק רבע מהמטען.'
+      - value: 6.0e4
+        feedback: 'חישבתם $kQ/R_B$ עם כל המטען על B. אחרי החיבור על B שלושה רבעים מהמטען.'
+
+  # ------------------------------------------------ OBJ-2.5-3: earthing
+  - id: Q-2.5-earthed-alone
+    type: mc
+    objectives: [OBJ-2.5-3]
+    qualitative: true
+    prompt: >-
+      כדור מתכת קטן טעון ב-$+4\,\mu\text{C}$, ואין לידו מטענים אחרים. מחברים אותו לאדמה בחוט. כמה מטען נשאר עליו?
+    choices:
+      - text: כמעט אפס.
+        correct: true
+        feedback: 'נכון. כדור הארץ הוא מוליך עם רדיוס ענק. לפי $q \propto R$, כמעט כל המטען עובר אליו, והכדור מגיע לפוטנציאל של האדמה, אפס.'
+      - text: חצי, $2\,\mu\text{C}$, כי המטען מתחלק בין שני מוליכים.
+        feedback: 'המטען מתחלק לפי הרדיוסים, לא חצי-חצי. הרדיוס של כדור הארץ גדול מיליוני פעמים מהרדיוס של הכדור.'
+        misconception: MC-earth-shares-half
+      - text: כל $4\,\mu\text{C}$, כי האדמה לא מוליכה.
+        feedback: 'האדמה מוליכה מספיק כדי לקבל או לתת אלקטרונים, ולכן הארקה עובדת.'
+      - text: '$-4\,\mu\text{C}$, כי האדמה הופכת את הסימן.'
+        feedback: 'האדמה לא הופכת סימן. היא לוקחת את המטען העודף עד שהפוטנציאל של הכדור אפס.'
+
+  - id: Q-2.5-earthed-near
+    type: numeric
+    objectives: [OBJ-2.5-3]
+    level: bagrut
+    prompt: >-
+      כדור מתכת ברדיוס $5$ ס"מ מחובר לאדמה. מטען נקודתי $+2\,\mu\text{C}$ נמצא במרחק $25$ ס"מ ממרכז הכדור. מה המטען על הכדור? ענו במיקרו-קולון, עם סימן.
+    answer: -0.4
+    unit: μC
+    tolerance: 0.03
+    correctFeedback: 'נכון. הכדור כולו, ובכלל זה המרכז, בפוטנציאל אפס: $\dfrac{kQ}{R} + \dfrac{kq}{D} = 0$, ולכן $Q = -\dfrac{qR}{D} = -\dfrac{2\cdot0.05}{0.25} = -0.4\,\mu\text{C}$.'
+    wrongFeedback: 'כתבו את הפוטנציאל במרכז הכדור: תרומת המטען הקרוב ועוד תרומת המטען של הכדור, שכולו במרחק $R$ מהמרכז. הכדור מוארק, ולכן הסכום אפס.'
+    commonWrong:
+      - value: 0
+        feedback: 'בלי מטען בקרבת מקום, כדור מוארק אכן ניטרלי. כאן המטען הקרוב מושך אלקטרונים מהאדמה, כדי שפוטנציאל הכדור יישאר אפס.'
+        misconception: MC-ground-neutralises
+      - value: 0.4
+        feedback: 'הסימן הפוך. המטען החיובי הקרוב תורם פוטנציאל חיובי, ולכן מטען הכדור חייב להיות שלילי כדי שהסכום יהיה אפס.'
+    hints:
+      - 'במרכז הכדור: $V = kQ/R + kq/D$.'
+
+  - id: Q-2.5-earth-negative
+    type: mc
+    objectives: [OBJ-2.5-3]
+    qualitative: true
+    prompt: >-
+      כדור מתכת טעון במטען שלילי, ואין לידו מטענים אחרים. מארקים אותו. מה עובר בחוט ההארקה?
+    choices:
+      - text: אלקטרונים עוברים מהכדור לאדמה.
+        correct: true
+        feedback: 'נכון. לכדור עודף אלקטרונים, והפוטנציאל שלו שלילי. אלקטרונים זזים לכיוון הפוטנציאל הגבוה, כלומר אל האדמה, עד שהפוטנציאל שלו אפס.'
+      - text: אלקטרונים עוברים מהאדמה לכדור.
+        feedback: 'זה היה מוסיף לכדור עוד מטען שלילי. כדי שהפוטנציאל שלו יעלה לאפס, הוא צריך לאבד אלקטרונים.'
+        misconception: MC-electron-to-lower-potential
+      - text: פרוטונים עוברים מהאדמה לכדור.
+        feedback: 'במתכת פרוטונים לא זזים: הם בגרעינים. רק אלקטרונים עוברים.'
+      - text: לא עובר כלום, כי הכדור כבר שלילי כמו האדמה.
+        feedback: 'האדמה לא "שלילית": היא בפוטנציאל אפס. לכדור יש פוטנציאל שלילי, ולכן יש הפרש, ומטען עובר.'
+
+  # ------------------------------------------------ OBJ-2.5-4: small radius, strong field
+  - id: Q-2.5-sharp-field
+    type: mc
+    objectives: [OBJ-2.5-4]
+    qualitative: true
+    prompt: >-
+      כדור קטן וכדור גדול מחוברים בחוט ונמצאים באותו פוטנציאל. ליד פני איזה כדור השדה חזק יותר?
+    choices:
+      - text: ליד הכדור הקטן.
+        correct: true
+        feedback: 'נכון. על פני כדור $E = kq/R^2 = V/R$. באותו $V$, רדיוס קטן נותן שדה חזק.'
+      - text: ליד הכדור הגדול, כי יש עליו יותר מטען.
+        feedback: 'על הגדול אכן יותר מטען, $q \propto R$, אבל הוא מתפזר על שטח גדול יותר, $\propto R^2$. בסך הכול $E \propto 1/R$.'
+        misconception: MC-big-sphere-strong-field
+      - text: השדה שווה, כי הפוטנציאל שווה.
+        feedback: 'הפוטנציאל שווה, אבל השדה תלוי גם ברדיוס: $E = V/R$.'
+      - text: השדה אפס בשניהם, כי הם מחוברים.
+        feedback: 'השדה **בתוך** מוליך אפס. מחוץ לכדורים, ליד פני השטח, יש שדה.'
+
+  - id: Q-2.5-field-ratio
+    type: numeric
+    objectives: [OBJ-2.5-4]
+    level: mid
+    prompt: >-
+      שני כדורים מוליכים רחוקים, ברדיוסים $R$ ו-$4R$, מחוברים בחוט. פי כמה השדה ליד פני הכדור הקטן חזק מהשדה ליד פני הכדור הגדול?
+    answer: 4
+    unit: ''
+    tolerance: 0.03
+    correctFeedback: 'נכון. $E = V/R$ והפוטנציאל משותף, ולכן $E_R/E_{4R} = 4R/R = 4$.'
+    wrongFeedback: 'כתבו את השדה על פני כל כדור כ-$E = V/R$, עם אותו $V$ לשניהם.'
+    commonWrong:
+      - value: 0.25
+        feedback: 'הפכתם את היחס. ליד הכדור הקטן השדה חזק יותר.'
+        misconception: MC-big-sphere-strong-field
+      - value: 16
+        feedback: 'השתמשתם ב-$E = kq/R^2$ עם אותו מטען לשניהם. אבל על הכדור הגדול מטען גדול פי 4, ולכן היחס $4$ ולא $16$.'
+        misconception: MC-equal-share-on-connect
+      - value: 1
+        feedback: 'הפוטנציאל שווה, אבל השדה תלוי ברדיוס: $E = V/R$.'
+
+  - id: Q-2.5-lightning-rod
+    type: mc
+    objectives: [OBJ-2.5-4]
+    qualitative: true
+    prompt: >-
+      למה הקצה של כליא ברק מחודד?
+    choices:
+      - text: ליד חוד חד השדה חזק מאוד, והמטען בורח ממנו לאוויר בהדרגה.
+        correct: true
+        feedback: 'נכון. לחוד יש "רדיוס" קטן מאוד, ולכן לפי $E = V/R$ השדה לידו חזק. האוויר ליד החוד מוליך, והמטען נפרק בהדרגה במקום בברק אחד.'
+      - text: כדי שיהיה קל יותר להתקין אותו על הגג.
+        feedback: 'הצורה נבחרה מסיבה פיזיקלית: היא קובעת את עוצמת השדה ליד הקצה.'
+      - text: כי מתכת מחודדת מוליכה טוב יותר.
+        feedback: 'המתכת מוליכה באותה מידה בכל צורה. מה שהחוד משנה הוא עוצמת השדה מחוץ לה.'
+      - text: כדי שהשדה ליד הקצה יהיה חלש, והברק לא יפגע בו.
+        feedback: 'ההפך: ליד החוד השדה **חזק** במיוחד. כליא ברק נועד דווקא למשוך את הפריקה אליו, ולהוביל אותה לאדמה.'
+        misconception: MC-big-sphere-strong-field

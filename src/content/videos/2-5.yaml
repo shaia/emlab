@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-2-5-earthing
+  youtubeId: RU1zstnypMg
+  title: 'מחיבור מוליכים להארקה'
+  channel: מרכז שוורץ/רייסמן הדרכות למורי פיזיקה
+  lang: he
+  captions: []
+  minutes: 13
+  why: שיעור בעברית מסדרת הדרכה למורים לפיזיקה. לפי תיאור הסרטון, הוא ממשיך את החיבור של שני מוליכים, אבל הפעם אחד מהם הוא כדור הארץ, מחשב כמה מטען צריך כדי לשנות את הפוטנציאל של כדור הארץ בוולט אחד, ומסביר מה עושה ההארקה בשקע.
+  verified: '2026-11-01'
+
+- id: v-2-5-lightning-rod
+  youtubeId: wGc3q4dVOS0
+  title: 'Demonstration of How Lightning Rods Work (Van De Graaff)'
+  channel: Growing Answers
+  lang: en
+  captions: [en]
+  minutes: 7
+  why: הדגמה באנגלית של כליא ברק בעזרת מחולל ון דה גרף (לפי הכותרת ותיאור הסרטון). חפשו את ההבדל בין מה שקורה כשמקרבים לכדור הטעון גוף מחודד מוארק, לבין מה שקורה בלעדיו.
+  verified: '2026-11-01'
