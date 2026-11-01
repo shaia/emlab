@@ -1,0 +1,12 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-2-3-equipotentials
+  youtubeId: lezHfJFCrrM
+  title: 'משטחים שווי פוטנציאל'
+  channel: מרכז שוורץ/רייסמן הדרכות למורי פיזיקה
+  lang: he
+  captions: []
+  minutes: 9
+  why: שיעור בעברית מסדרת הדרכה למורים לפיזיקה. לפי תיאור הסרטון, הוא מראה איך מציירים משטחים שווי פוטנציאל, מנמק למה השדה תמיד ניצב להם ולשפת מוליך, ומתרגל את המשטחים של דיפול.
+  verified: '2026-11-01'

@@ -1,0 +1,21 @@
+# Lesson 2.3 terms. Format and rules: see glossary/1-5.yaml.
+
+- id: equipotential-surface
+  term: משטח שווה פוטנציאל
+  en: equipotential surface
+  definition: משטח שבכל הנקודות שלו הפוטנציאל זהה. באיור דו-ממדי רואים את החתך שלו כקו, קו שווה פוטנציאל. השדה ניצב למשטח בכל נקודה, ולכן השדה לא עושה עבודה על מטען שזז לאורכו.
+  reject: [משטח שווי פוטנציאל, משטח שוה פוטנציאל]
+  lesson: '2.3'
+
+- id: equipotential-line
+  term: קו שווה פוטנציאל
+  en: equipotential line
+  definition: קו שבכל הנקודות שלו הפוטנציאל זהה, כלומר החתך של משטח שווה פוטנציאל במישור של איור. כשמשרטטים קווים במרווחים שווים של פוטנציאל, היכן שהקווים צפופים השדה חזק.
+  lesson: '2.3'
+
+- id: volt-per-meter
+  term: וולט למטר
+  en: volt per metre
+  symbol: V/m
+  definition: יחידה של שדה חשמלי, שווה לניוטון לקולון (1 V/m = 1 N/C). היא מתאימה ל-E = V/d בשדה אחיד, כאשר V הוא המתח בין שתי נקודות ו-d המרחק ביניהן בכיוון השדה.
+  lesson: '2.3'

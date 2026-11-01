@@ -1,0 +1,253 @@
+# Lesson 2.3 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/potential.ts.
+
+chapter: 2
+questions:
+  # ------------------------------------------------ OBJ-2.3-1: equipotentials ⊥ field, no work along them
+  - id: Q-2.3-work-along
+    type: mc
+    objectives: [OBJ-2.3-1]
+    qualitative: true
+    prompt: >-
+      מזיזים מטען $q = 5\,\mu\text{C}$ לאורך $40$ ס"מ על משטח שווה פוטנציאל של $300\,\text{V}$. כמה עבודה עושה השדה?
+    choices:
+      - text: אפס.
+        correct: true
+        feedback: 'נכון. $W = q(V_A - V_B) = q(300 - 300) = 0$. לאורך משטח שווה פוטנציאל השדה ניצב לתזוזה.'
+      - text: $5\cdot10^{-6}\cdot 300 = 1.5\cdot10^{-3}\,\text{J}$.
+        feedback: 'העבודה תלויה בהפרש הפוטנציאלים בין ההתחלה לסוף, ולא בפוטנציאל עצמו. כאן ההפרש אפס.'
+      - text: תלוי באורך המסלול, כי השדה פועל לאורך כל הדרך.
+        feedback: 'השדה ניצב למשטח שווה פוטנציאל, ולכן ניצב לכל תזוזה לאורכו. כוח שניצב לתזוזה לא עושה עבודה.'
+        misconception: MC-work-across-field
+      - text: עבודה שלילית, כי צריך כוח חיצוני כדי להזיז את המטען.
+        feedback: 'אולי צריך כוח חיצוני כדי להתגבר על חיכוך או להאיץ, אבל השאלה על עבודת **השדה**, והיא אפס.'
+
+  - id: Q-2.3-angle
+    type: mc
+    objectives: [OBJ-2.3-1]
+    qualitative: true
+    prompt: >-
+      מה הזווית בין קו שדה לבין קו שווה פוטנציאל, בנקודה שבה הם נפגשים?
+    choices:
+      - text: $90^\circ$ תמיד.
+        correct: true
+        feedback: 'נכון. לאורך קו שווה פוטנציאל השדה לא עושה עבודה, ולכן אין לו רכיב לאורך הקו.'
+      - text: $0^\circ$, הם מקבילים.
+        feedback: 'אם השדה היה מקביל לקו שווה הפוטנציאל, הוא היה עושה עבודה על מטען שזז לאורכו, והפוטנציאל היה משתנה לאורך הקו.'
+        misconception: MC-equipotentials-along-field
+      - text: תלוי במרחק מהמטען.
+        feedback: 'הזווית ישרה בכל נקודה, קרוב ורחוק. רק הצפיפות של הקווים משתנה עם המרחק.'
+      - text: $45^\circ$ בשדה של מטען נקודתי, ו-$90^\circ$ בשדה אחיד.
+        feedback: 'סביב מטען נקודתי הקווים שווי הפוטנציאל הם מעגלים, וקווי השדה הם רדיוסים. רדיוס ניצב למעגל.'
+
+  - id: Q-2.3-crowding
+    type: twotier
+    objectives: [OBJ-2.3-1, OBJ-2.3-2]
+    qualitative: true
+    prompt: >-
+      באיור קווים שווי פוטנציאל משורטטים בהפרשים שווים של $10\,\text{V}$. באזור A הקווים צפופים, ובאזור B הם רחוקים זה מזה. היכן השדה חזק יותר?
+    choices:
+      - text: באזור A.
+        correct: true
+        feedback: נכון. שם הפוטנציאל משתנה ב-$10\,\text{V}$ על פני מרחק קטן יותר.
+      - text: באזור B.
+        feedback: 'במרווח גדול בין קווים, אותו הפרש של $10\,\text{V}$ מתפרש על מרחק גדול, והשיפוע קטן.'
+      - text: השדה שווה בשני האזורים, כי ההפרש בין הקווים שווה.
+        feedback: 'ההפרש בפוטנציאל שווה, אבל המרחק שונה. השדה הוא הפרש הפוטנציאלים **ליחידת אורך**.'
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: 'השדה הוא השיפוע של הפוטנציאל, $\Delta V/\Delta x$: אותו $\Delta V$ על פני $\Delta x$ קטן נותן שדה חזק.'
+        correct: true
+        feedback: נכון.
+      - text: היכן שיש יותר קווים יש יותר פוטנציאל, ולכן השדה חזק.
+        feedback: 'צפיפות הקווים לא מראה פוטנציאל גבוה, אלא שינוי מהיר שלו. עוצמת השדה נקבעת לפי השיפוע, לא לפי הגובה.'
+        misconception: MC-high-potential-strong-field
+      - text: קווים צפופים הם קווי שדה, וצפיפות קווי שדה מראה שדה חזק.
+        feedback: 'אלה קווים שווי פוטנציאל, לא קווי שדה. ההסבר צריך להיות דרך הפרש הפוטנציאלים והמרחק.'
+        misconception: MC-equipotentials-along-field
+
+  - id: Q-2.3-between-surfaces
+    type: numeric
+    objectives: [OBJ-2.3-1]
+    prompt: >-
+      מטען $q = +3\,\mu\text{C}$ זז $50$ ס"מ לאורך משטח שווה פוטנציאל של $200\,\text{V}$, ואחר כך עובר אל משטח של $150\,\text{V}$.
+      כמה עבודה עשה השדה בכל הדרך? ענו בג'אול.
+    answer: 1.5e-4
+    unit: J
+    tolerance: 0.03
+    correctFeedback: 'נכון. לאורך המשטח הראשון העבודה אפס, ובסך הכול $W = q(V_A - V_B) = 3\cdot10^{-6}\cdot(200 - 150) = 1.5\cdot10^{-4}\,\text{J}$.'
+    wrongFeedback: 'רק הפוטנציאל של ההתחלה ושל הסוף משנים: $W = q(V_A - V_B)$. הקטע לאורך המשטח לא מוסיף עבודה.'
+    commonWrong:
+      - value: 6.0e-4
+        feedback: 'הכפלתם את המטען בפוטנציאל $200\,\text{V}$. העבודה תלויה בהפרש בין ההתחלה לסוף, $50\,\text{V}$.'
+      - value: -1.5e-4
+        feedback: 'מטען חיובי שעובר לפוטנציאל נמוך יותר זז בכיוון הכוח, והעבודה חיובית: $W = q(V_A - V_B)$, ההתחלה פחות הסוף.'
+        misconception: MC-work-raises-energy
+
+  # ------------------------------------------------ OBJ-2.3-2: E = V/d, direction, slope of V(x)
+  - id: Q-2.3-plates-field
+    type: numeric
+    objectives: [OBJ-2.3-2]
+    prompt: >-
+      בין שני לוחות מקבילים שנמצאים $4$ מ"מ זה מזה יש מתח של $200\,\text{V}$. מה עוצמת השדה ביניהם? ענו ב-V/m.
+    answer: 5.0e4
+    unit: V/m
+    tolerance: 0.03
+    correctFeedback: 'נכון: $E = V/d = 200/(4\cdot10^{-3}) = 5\cdot10^{4}\,\text{V/m}$.'
+    wrongFeedback: 'בשדה אחיד $E = V/d$, עם המרחק במטרים.'
+    commonWrong:
+      - value: 50
+        feedback: 'הצבתם $d = 4$ במקום $4\cdot10^{-3}\,\text{m}$. מילימטר הוא אלפית מטר.'
+      - value: 0.8
+        feedback: 'הכפלתם את המתח במרחק. בשדה אחיד $V = Ed$, ולכן $E = V/d$: מחלקים.'
+
+  - id: Q-2.3-field-direction
+    type: vector
+    objectives: [OBJ-2.3-2]
+    qualitative: true
+    prompt: >-
+      שני לוחות אנכיים מקבילים. הפוטנציאל של הלוח השמאלי $0\,\text{V}$, ושל הימני $300\,\text{V}$. מה כיוון השדה ביניהם?
+    answer: w
+    correctFeedback: 'נכון. השדה מצביע לכיוון שבו הפוטנציאל יורד: מהלוח הימני (300 V) אל השמאלי (0 V).'
+    wrong:
+      - dir: e
+        feedback: 'ימינה הפוטנציאל **עולה**. השדה מצביע לכיוון שבו הפוטנציאל יורד.'
+        misconception: MC-field-points-to-higher-v
+      - dir: 'n'
+        feedback: 'הקווים שווי הפוטנציאל מקבילים ללוחות, כלומר אנכיים, והשדה ניצב להם: אופקי.'
+      - dir: 's'
+        feedback: 'הקווים שווי הפוטנציאל מקבילים ללוחות, כלומר אנכיים, והשדה ניצב להם: אופקי.'
+      - dir: zero
+        feedback: 'יש מתח בין הלוחות, ולכן יש ביניהם שדה: $E = V/d$.'
+    wrongFeedback: לאיזה כיוון הפוטנציאל יורד?
+
+  - id: Q-2.3-graph-slope
+    type: numeric
+    objectives: [OBJ-2.3-2]
+    level: mid
+    prompt: >-
+      בגרף של $V(x)$ הפוטנציאל יורד בקו ישר מ-$120\,\text{V}$ ב-$x = 0$ ל-$20\,\text{V}$ ב-$x = 25$ ס"מ. מה עוצמת השדה באזור הזה? ענו ב-V/m.
+    answer: 400
+    unit: V/m
+    tolerance: 0.03
+    correctFeedback: 'נכון: השיפוע הוא $\dfrac{\Delta V}{\Delta x} = \dfrac{120 - 20}{0.25} = 400\,\text{V/m}$, והשדה מצביע לכיוון $+x$, שם הפוטנציאל יורד.'
+    wrongFeedback: 'עוצמת השדה היא השיפוע של הגרף: הפרש הפוטנציאלים חלקי המרחק, במטרים.'
+    commonWrong:
+      - value: 480
+        feedback: 'חילקתם את הפוטנציאל $120\,\text{V}$ במרחק. השדה הוא **השינוי** בפוטנציאל חלקי המרחק: $(120 - 20)/0.25$.'
+        misconception: MC-high-potential-strong-field
+      - value: 80
+        feedback: 'חילקתם את הפוטנציאל $20\,\text{V}$ במרחק. השדה הוא **השינוי** בפוטנציאל חלקי המרחק.'
+        misconception: MC-high-potential-strong-field
+      - value: 4
+        feedback: 'הצבתם $\Delta x = 25$ במקום $0.25\,\text{m}$.'
+
+  - id: Q-2.3-graph-strong
+    type: mc
+    objectives: [OBJ-2.3-2]
+    qualitative: true
+    prompt: >-
+      בגרף של $V(x)$ יש שני קטעים ישרים. בקטע I הפוטנציאל גבוה, סביב $1000\,\text{V}$, והגרף כמעט אופקי. בקטע II הפוטנציאל נמוך, סביב $50\,\text{V}$, והגרף יורד בתלילות.
+      באיזה קטע השדה חזק יותר?
+    choices:
+      - text: בקטע II.
+        correct: true
+        feedback: 'נכון. עוצמת השדה היא השיפוע של $V(x)$. בקטע II הגרף תלול, ולכן השדה חזק, אף שהפוטנציאל נמוך.'
+      - text: בקטע I, כי הפוטנציאל שם גבוה יותר.
+        feedback: 'הפוטנציאל הגבוה הוא "הגובה", לא "התלילות". גרף כמעט אופקי פירושו שדה חלש.'
+        misconception: MC-high-potential-strong-field
+      - text: השדה שווה בשניהם, כי שני הקטעים ישרים.
+        feedback: 'בכל קטע ישר השדה קבוע, אבל הקטעים שונים בשיפוע, ולכן גם השדות שונים.'
+      - text: אי אפשר לדעת בלי מספרים מדויקים.
+        feedback: 'ההשוואה בין שיפוע כמעט אפס לשיפוע תלול מספיקה כדי לדעת.'
+
+  # ------------------------------------------------ OBJ-2.3-3: E = 0 is not V = 0
+  - id: Q-2.3-dipole-force
+    type: mc
+    objectives: [OBJ-2.3-3]
+    qualitative: true
+    prompt: >-
+      מטען $+Q$ נמצא משמאל ומטען $-Q$ מימין. באמצע ביניהם הפוטנציאל $V = 0$. מה פועל שם על אלקטרון?
+    choices:
+      - text: כוח שמאלה, לכיוון המטען החיובי.
+        correct: true
+        feedback: 'נכון. באמצע הדיפול השדה מצביע ימינה, אל $-Q$. על אלקטרון הכוח הפוך לשדה: שמאלה. פוטנציאל אפס לא אומר שדה אפס.'
+      - text: לא פועל עליו כוח, כי הפוטנציאל אפס.
+        feedback: 'הכוח נקבע לפי השדה, כלומר לפי השיפוע של הפוטנציאל. באמצע הדיפול $V$ חוצה את האפס בירידה תלולה, והשדה חזק.'
+        misconception: MC-zero-potential-zero-field
+      - text: כוח ימינה, לכיוון המטען השלילי.
+        feedback: 'זה הכיוון של השדה, כלומר הכוח על מטען **חיובי**. על אלקטרון הכוח הפוך.'
+        misconception: MC-beam-follows-field
+      - text: כוח בניצב לקו שמחבר את המטענים.
+        feedback: 'על הקו שמחבר את המטענים שני השדות לאורך הקו, ולכן גם הכוח לאורכו.'
+
+  - id: Q-2.3-like-midpoint
+    type: twotier
+    objectives: [OBJ-2.3-3]
+    qualitative: true
+    prompt: >-
+      שני מטענים שווים, $+Q$ ו-$+Q$, במרחק $2d$ זה מזה. מה נכון לגבי הנקודה שבאמצע ביניהם?
+    choices:
+      - text: 'השדה אפס, והפוטנציאל $2kQ/d$.'
+        correct: true
+        feedback: 'נכון. השדות שווים ומנוגדים, והפוטנציאלים, סקלרים חיוביים, מתחברים.'
+      - text: השדה אפס, וגם הפוטנציאל אפס.
+        feedback: 'השדות מבטלים זה את זה כי הם וקטורים בכיוונים מנוגדים. לפוטנציאל אין כיוון, ושתי התרומות חיוביות.'
+        misconception: MC-zero-field-zero-potential
+      - text: 'השדה $2kQ/d^2$, והפוטנציאל אפס.'
+        feedback: 'הפוך: את השדות מחסירים (כיוונים מנוגדים), ואת הפוטנציאלים מחברים.'
+        misconception: MC-potential-is-vector
+      - text: 'השדה $2kQ/d^2$, והפוטנציאל $2kQ/d$.'
+        feedback: 'הפוטנציאל נכון, אבל השדות של שני המטענים מצביעים לכיוונים מנוגדים ומבטלים זה את זה.'
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: השדה הוא השיפוע של הפוטנציאל. באמצע $V$ מגיע למינימום לאורך הקו, ושם השיפוע אפס, אבל הערך לא.
+        correct: true
+        feedback: נכון. כמו תחתית של עמק בגרף.
+      - text: כשהשדה אפס אין עבודה, ולכן גם אין פוטנציאל.
+        feedback: 'הפוטנציאל לא מודד עבודה בנקודה אחת, אלא אנרגיה ליחידת מטען יחסית לאינסוף. כדי להביא מטען לשם מהאינסוף צריך להשקיע עבודה.'
+        misconception: MC-zero-field-zero-potential
+      - text: מטענים שווים מבטלים זה את זה בכל גודל פיזיקלי.
+        feedback: 'וקטורים בכיוונים מנוגדים מבטלים זה את זה. סקלרים עם אותו סימן מתחברים.'
+        misconception: MC-potential-is-vector
+
+  - id: Q-2.3-like-numeric
+    type: numeric
+    objectives: [OBJ-2.3-3]
+    level: mid
+    prompt: >-
+      שני מטענים של $+3\,\mu\text{C}$ נמצאים $60$ ס"מ זה מזה. מה הפוטנציאל בנקודה שבאמצע ביניהם, שבה השדה אפס? ענו בוולט.
+    answer: 1.8e5
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון: $V = 2\cdot\dfrac{9\cdot10^{9}\cdot 3\cdot10^{-6}}{0.3} = 1.8\cdot10^{5}\,\text{V}$. השדה אפס, והפוטנציאל לא.'
+    wrongFeedback: 'חשבו את התרומה של כל מטען במרחק $0.3\,\text{m}$, וחברו.'
+    commonWrong:
+      - value: 0
+        feedback: 'השדה באמצע אפס, אבל הפוטנציאל לא: שתי התרומות חיוביות ומתחברות.'
+        misconception: MC-zero-field-zero-potential
+      - value: 9.0e4
+        feedback: 'זו התרומה של מטען אחד. יש שני מטענים, וכל אחד תורם את אותו פוטנציאל.'
+      - value: 4.5e4
+        feedback: 'חישבתם את הפוטנציאל של מטען אחד במרחק $0.6\,\text{m}$. המרחק מכל מטען לאמצע הוא $0.3\,\text{m}$, ויש שני מטענים.'
+
+  - id: Q-2.3-statements
+    type: multi
+    objectives: [OBJ-2.3-3]
+    qualitative: true
+    prompt: >-
+      סמנו את כל המשפטים הנכונים:
+    choices:
+      - text: בנקודה שבה השדה אפס, הפוטנציאל יכול להיות שונה מאפס.
+        correct: true
+        feedback: נכון, למשל באמצע בין שני מטענים זהים.
+      - text: בנקודה שבה הפוטנציאל אפס, השדה יכול להיות שונה מאפס.
+        correct: true
+        feedback: נכון, למשל באמצע דיפול.
+      - text: אם הפוטנציאל זהה בכל נקודה של אזור מסוים, השדה באזור הזה אפס.
+        correct: true
+        feedback: 'נכון. אם $V$ לא משתנה ממקום למקום, השיפוע אפס בכל מקום. כך בתוך מוליך.'
+      - text: בנקודה שבה השדה אפס, הפוטנציאל חייב להיות אפס.
+        feedback: 'השדה הוא השיפוע של $V$, לא הערך שלו. באמצע בין שני מטענים זהים $E = 0$ ו-$V = 2kQ/d$.'
+        misconception: MC-zero-field-zero-potential
