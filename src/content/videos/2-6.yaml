@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-2-6-plate-capacitance
+  youtubeId: DR1R_H2ITo8
+  title: 'חישוב קיבול קבל לוחות'
+  channel: מרכז שוורץ/רייסמן הדרכות למורי פיזיקה
+  lang: he
+  captions: []
+  minutes: 9
+  why: שיעור בעברית מסדרת הדרכה למורים לפיזיקה, על החישוב של הקיבול של קבל לוחות (לפי הכותרת ותיאור הסרטון). השוו את המהלך שבו לפיתוח של C = ε₀A/d בשיעור.
+  verified: '2026-11-01'
+
+- id: v-2-6-capacitors-explained
+  youtubeId: X4EUwTwZ110
+  title: 'Capacitors Explained - The basics how capacitors work working principle'
+  channel: The Engineering Mindset
+  lang: en
+  captions: [en]
+  minutes: 9
+  why: הסבר באנגלית, עם אנימציות, איך קבלים עובדים, איפה משתמשים בהם, ואילו סוגים יש (לפי תיאור הסרטון). שימושי כדי לראות איך נראים קבלים אמיתיים במעגלים.
+  verified: '2026-11-01'

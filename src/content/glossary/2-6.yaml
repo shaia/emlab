@@ -1,0 +1,28 @@
+# Lesson 2.6 terms. Format and rules: see glossary/1-5.yaml.
+
+- id: capacitor
+  term: קבל
+  en: capacitor
+  definition: שני מוליכים קרובים זה לזה ומבודדים זה מזה, שאוגרים מטענים שווים ומנוגדים, +Q ו-−Q. "המטען של הקבל" הוא המטען על אחד הלוחות, Q, אף שהמטען הכולל של הקבל אפס.
+  lesson: '2.6'
+
+- id: capacitance
+  term: קיבול
+  en: capacitance
+  symbol: C
+  unit: F
+  definition: היחס בין המטען על לוחות הקבל למתח ביניהם, C = Q/V. הקיבול הוא תכונה של המבנה (הגודל, המרחק, החומר שבין הלוחות), ולא תלוי במטען או במתח.
+  lesson: '2.6'
+
+- id: farad
+  term: פאראד
+  en: farad
+  symbol: F
+  definition: יחידת הקיבול, קולון לוולט, 1 F = 1 C/V. זו יחידה גדולה מאוד, ולכן קבלים נמדדים לרוב במיקרו-פאראד (μF), ננו-פאראד (nF) ופיקו-פאראד (pF = 10⁻¹² F).
+  lesson: '2.6'
+
+- id: parallel-plate-capacitor
+  term: קבל לוחות
+  en: parallel-plate capacitor
+  definition: קבל שבנוי משני לוחות מוליכים מקבילים, בשטח A ובמרחק d זה מזה. כשהמרחק קטן לעומת גודל הלוחות, השדה ביניהם אחיד והקיבול הוא C = ε₀A/d.
+  lesson: '2.6'

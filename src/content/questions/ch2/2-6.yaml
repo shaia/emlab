@@ -1,0 +1,230 @@
+# Lesson 2.6 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/capacitors.ts (ε₀ = 8.85·10⁻¹², as on the sheet).
+
+chapter: 2
+questions:
+  # ------------------------------------------------ OBJ-2.6-1: C = Q/V, a property of the structure
+  - id: Q-2.6-double-v
+    type: mc
+    objectives: [OBJ-2.6-1]
+    qualitative: true
+    prompt: >-
+      קבל מחובר לסוללה של $6\,\text{V}$. מחליפים את הסוללה בסוללה של $12\,\text{V}$. מה קורה לקיבול ולמטען?
+    choices:
+      - text: הקיבול לא משתנה, והמטען מוכפל.
+        correct: true
+        feedback: 'נכון. הקיבול נקבע מהמבנה של הקבל. $Q = CV$, ולכן במתח כפול המטען כפול.'
+      - text: הקיבול מוכפל, והמטען מוכפל.
+        feedback: 'המטען אכן מוכפל, אבל גם המתח. היחס $C = Q/V$ לא משתנה: הקיבול הוא תכונה של המבנה.'
+        misconception: MC-capacitance-depends-on-charge
+      - text: הקיבול קטן פי 2, והמטען לא משתנה.
+        feedback: 'זה היה נכון אילו המטען היה קבוע. כשהקבל מחובר לסוללה, המטען מסתגל למתח: $Q = CV$.'
+        misconception: MC-capacitance-depends-on-charge
+      - text: שניהם לא משתנים.
+        feedback: 'המתח בין הלוחות השתנה, ולכן הסוללה העבירה עוד מטען עד שהמתח שווה $12\,\text{V}$.'
+
+  - id: Q-2.6-c-from-qv
+    type: numeric
+    objectives: [OBJ-2.6-1]
+    prompt: >-
+      על לוחות של קבל יש מטען של $6\,\mu\text{C}$ כשהמתח ביניהם $12\,\text{V}$. מה הקיבול שלו? ענו בפאראד.
+    answer: 5.0e-7
+    unit: F
+    tolerance: 0.03
+    correctFeedback: 'נכון: $C = Q/V = 6\cdot10^{-6}/12 = 5\cdot10^{-7}\,\text{F} = 0.5\,\mu\text{F}$.'
+    wrongFeedback: 'הקיבול הוא מטען חלקי מתח: $C = Q/V$.'
+    commonWrong:
+      - value: 7.2e-5
+        feedback: 'הכפלתם את המטען במתח. הקיבול הוא מטען **חלקי** מתח.'
+      - value: 2.0e6
+        feedback: 'חילקתם מתח במטען. הקיבול הוא $Q/V$, לא $V/Q$.'
+
+  - id: Q-2.6-net-charge
+    type: mc
+    objectives: [OBJ-2.6-1]
+    qualitative: true
+    prompt: >-
+      כתוב שקבל "טעון ב-$5\,\mu\text{C}$". מה המטען הכולל של הקבל, שני הלוחות יחד?
+    choices:
+      - text: אפס.
+        correct: true
+        feedback: 'נכון. על הלוח האחד $+5\,\mu\text{C}$ ועל השני $-5\,\mu\text{C}$. "המטען של הקבל" הוא המטען על אחד הלוחות.'
+      - text: $5\,\mu\text{C}$.
+        feedback: 'זה המטען על אחד הלוחות. על הלוח השני יש מטען שווה ומנוגד, והסכום אפס.'
+        misconception: MC-capacitor-net-charge
+      - text: $10\,\mu\text{C}$, כי יש שני לוחות.
+        feedback: 'הסימנים של שני הלוחות מנוגדים: $+5$ ו-$-5$. הסכום אפס.'
+        misconception: MC-capacitor-net-charge
+      - text: תלוי במתח של הסוללה שטענה אותו.
+        feedback: 'המתח קובע כמה מטען יש על כל לוח, אבל הסכום של שני הלוחות תמיד אפס: הסוללה רק מעבירה מטען מלוח ללוח.'
+
+  - id: Q-2.6-charge-47uf
+    type: numeric
+    objectives: [OBJ-2.6-1]
+    prompt: >-
+      קבל של $47\,\mu\text{F}$ מחובר לסוללה של $9\,\text{V}$. כמה מטען יש על כל אחד מהלוחות? ענו בקולון.
+    answer: 4.23e-4
+    unit: C
+    tolerance: 0.03
+    correctFeedback: 'נכון: $Q = CV = 47\cdot10^{-6}\cdot9 = 4.23\cdot10^{-4}\,\text{C}$.'
+    wrongFeedback: '$Q = CV$, עם הקיבול בפאראד: $1\,\mu\text{F} = 10^{-6}\,\text{F}$.'
+    commonWrong:
+      - value: 423
+        feedback: 'הצבתם $C = 47$ במקום $47\cdot10^{-6}\,\text{F}$.'
+      - value: 1.91e5
+        feedback: 'חילקתם את המתח בקיבול. המטען הוא $Q = CV$.'
+
+  # ------------------------------------------------ OBJ-2.6-2: C = ε₀A/d
+  - id: Q-2.6-plates-c
+    type: numeric
+    objectives: [OBJ-2.6-2]
+    prompt: >-
+      קבל לוחות באוויר: שטח כל לוח $0.05\,\text{m}^2$, והמרחק בין הלוחות $0.5$ מ"מ. מה הקיבול? ענו בפאראד.
+      ($\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$)
+    answer: 8.85e-10
+    unit: F
+    tolerance: 0.03
+    correctFeedback: 'נכון: $C = \dfrac{\varepsilon_0 A}{d} = \dfrac{8.85\cdot10^{-12}\cdot0.05}{5\cdot10^{-4}} = 8.85\cdot10^{-10}\,\text{F}$.'
+    wrongFeedback: '$C = \varepsilon_0 A/d$, עם המרחק במטרים.'
+    commonWrong:
+      - value: 8.85e-13
+        feedback: 'הצבתם $d = 0.5$ במקום $5\cdot10^{-4}\,\text{m}$. מילימטר הוא אלפית מטר.'
+      - value: 2.21e-16
+        feedback: 'הכפלתם במרחק במקום לחלק. הקיבול ביחס **הפוך** למרחק.'
+        misconception: MC-wider-gap-more-capacitance
+
+  - id: Q-2.6-double-gap
+    type: twotier
+    objectives: [OBJ-2.6-2]
+    qualitative: true
+    prompt: >-
+      מגדילים פי 2 את המרחק בין הלוחות של קבל לוחות. מה קורה לקיבול?
+    choices:
+      - text: הוא קטן פי 2.
+        correct: true
+        feedback: נכון. $C = \varepsilon_0 A/d$.
+      - text: הוא גדל פי 2.
+        feedback: 'המרחק במכנה. לוחות רחוקים יותר צריכים מתח גדול יותר כדי לאגור אותו מטען.'
+        misconception: MC-wider-gap-more-capacitance
+      - text: הוא קטן פי 4.
+        feedback: 'המרחק מופיע בחזקה ראשונה: $C = \varepsilon_0 A/d$.'
+      - text: הוא לא משתנה, כי השטח לא השתנה.
+        feedback: 'הקיבול תלוי גם במרחק בין הלוחות, לא רק בשטח.'
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: 'לאותו מטען השדה זהה, אבל המתח $V = Ed$ כפול. לכן $Q/V$ חצי.'
+        correct: true
+        feedback: נכון. זה המהלך של הפיתוח.
+      - text: יש יותר מקום בין הלוחות לאגור מטען.
+        feedback: 'המטען יושב על הלוחות, לא ביניהם. המקום שבין הלוחות לא "מכיל" מטען.'
+        misconception: MC-wider-gap-more-capacitance
+      - text: השדה בין הלוחות קטן פי 4 כשהמרחק כפול.
+        feedback: 'בין שני לוחות גדולים השדה $\sigma/\varepsilon_0$ לא תלוי במרחק בכלל.'
+
+  - id: Q-2.6-rank-c
+    type: rank
+    objectives: [OBJ-2.6-2]
+    qualitative: true
+    prompt: >-
+      דרגו ארבעה קבלי לוחות לפי הקיבול, מהגדול לקטן:
+    items:
+      - id: A
+        label: 'A: שטח $A$, מרחק $d$'
+      - id: B
+        label: 'B: שטח $2A$, מרחק $d$'
+      - id: C
+        label: 'C: שטח $A$, מרחק $2d$'
+      - id: D
+        label: 'D: שטח $2A$, מרחק $2d$'
+    order: [B, [A, D], C]
+    correctFeedback: 'נכון. ביחידות של $\varepsilon_0A/d$: B הוא 2, A ו-D הם 1, ו-C הוא ½.'
+    wrongFeedback: 'כתבו כל קיבול כמספר כפול $\varepsilon_0A/d$: השטח במונה, המרחק במכנה.'
+    hints:
+      - 'ב-D גם השטח וגם המרחק כפולים. מה היחס ביניהם?'
+
+  - id: Q-2.6-one-farad
+    type: numeric
+    objectives: [OBJ-2.6-2]
+    level: mid
+    prompt: >-
+      כמה גדול צריך להיות שטח הלוחות של קבל לוחות באוויר, עם מרחק של $1$ מ"מ בין הלוחות, כדי שהקיבול שלו יהיה $1\,\text{F}$? ענו במ"ר.
+    answer: 1.13e8
+    unit: m²
+    tolerance: 0.03
+    correctFeedback: 'נכון: $A = \dfrac{Cd}{\varepsilon_0} = \dfrac{1\cdot10^{-3}}{8.85\cdot10^{-12}} = 1.13\cdot10^{8}\,\text{m}^2$, ריבוע של יותר מ-10 קילומטר על 10 קילומטר. פאראד הוא יחידה ענקית.'
+    wrongFeedback: 'בודדו את $A$ מ-$C = \varepsilon_0 A/d$: $A = Cd/\varepsilon_0$.'
+    commonWrong:
+      - value: 1.13e11
+        feedback: 'הצבתם $d = 1$ במקום $10^{-3}\,\text{m}$.'
+      - value: 8.85e-15
+        feedback: 'הכפלתם ב-$\varepsilon_0$ במקום לחלק: $A = Cd/\varepsilon_0$.'
+
+  # ------------------------------------------------ OBJ-2.6-3: a capacitor held at V by a battery
+  - id: Q-2.6-field-from-v
+    type: numeric
+    objectives: [OBJ-2.6-3]
+    prompt: >-
+      קבל לוחות שהמרחק בין לוחותיו $2$ מ"מ מחובר לסוללה של $100\,\text{V}$. מה השדה בין הלוחות? ענו ב-V/m.
+    answer: 5.0e4
+    unit: V/m
+    tolerance: 0.03
+    correctFeedback: 'נכון: $E = V/d = 100/(2\cdot10^{-3}) = 5\cdot10^{4}\,\text{V/m}$.'
+    wrongFeedback: 'בשדה אחיד $E = V/d$, עם $d$ במטרים.'
+    commonWrong:
+      - value: 50
+        feedback: 'הצבתם $d = 2$ במקום $2\cdot10^{-3}\,\text{m}$.'
+
+  - id: Q-2.6-area-field
+    type: mc
+    objectives: [OBJ-2.6-3]
+    qualitative: true
+    prompt: >-
+      קבל לוחות מחובר לסוללה. בלי לנתק אותו, מגדילים פי 2 את שטח הלוחות. מה קורה לשדה בין הלוחות?
+    choices:
+      - text: הוא לא משתנה.
+        correct: true
+        feedback: 'נכון. $E = V/d$: המתח והמרחק לא השתנו. המטען אמנם כפול, אבל מתפזר על שטח כפול, ולכן $\sigma$ ו-$E = \sigma/\varepsilon_0$ לא משתנים.'
+      - text: הוא גדל פי 2, כי המטען גדל פי 2.
+        feedback: 'המטען גדל פי 2, אבל השטח גם גדל פי 2. מה שקובע את השדה הוא צפיפות המטען, $\sigma = Q/A$, והיא לא השתנתה.'
+        misconception: MC-field-grows-with-area
+      - text: הוא קטן פי 2, כי המטען מתפזר על שטח גדול יותר.
+        feedback: 'הסוללה מוסיפה מטען עד שהמתח שוב שווה למתח שלה. בסוף $\sigma$ זהה לזו שהייתה.'
+      - text: הוא גדל פי 4.
+        feedback: 'השדה בקבל המחובר לסוללה הוא $V/d$, ושני הגדלים לא השתנו.'
+        misconception: MC-field-grows-with-area
+
+  - id: Q-2.6-sigma
+    type: numeric
+    objectives: [OBJ-2.6-3]
+    level: mid
+    prompt: >-
+      על לוח של קבל, ששטחו $200\,\text{cm}^2$, יש מטען של $17.7\,\text{nC}$. מה צפיפות המטען על הלוח? ענו ב-C/m².
+    answer: 8.85e-7
+    unit: C/m²
+    tolerance: 0.03
+    correctFeedback: 'נכון: $\sigma = Q/A = 17.7\cdot10^{-9}/0.02 = 8.85\cdot10^{-7}\,\text{C/m}^2$, ומכאן $E = \sigma/\varepsilon_0 = 10^{5}\,\text{V/m}$.'
+    wrongFeedback: '$\sigma = Q/A$. המירו: $200\,\text{cm}^2 = 0.02\,\text{m}^2$ (מ"ר אחד הוא $10^{4}\,\text{cm}^2$).'
+    commonWrong:
+      - value: 8.85e-11
+        feedback: 'הצבתם $A = 200$ במקום $0.02\,\text{m}^2$.'
+      - value: 8.85e-9
+        feedback: 'המרתם סנטימטרים רבועים למטרים רבועים כאילו היו סנטימטרים: $200\,\text{cm}^2 = 200\cdot10^{-4}\,\text{m}^2$, לא $200\cdot10^{-2}$.'
+
+  - id: Q-2.6-connected-gap
+    type: mc
+    objectives: [OBJ-2.6-3]
+    qualitative: true
+    prompt: >-
+      קבל לוחות מחובר לסוללה. בלי לנתק אותו, מקרבים את הלוחות זה לזה, לחצי מהמרחק. מה נכון?
+    choices:
+      - text: הקיבול, המטען והשדה גדלים כולם פי 2.
+        correct: true
+        feedback: 'נכון. $C = \varepsilon_0A/d$ כפול. $V$ קבוע, ולכן $Q = CV$ כפול. $E = V/d$ כפול.'
+      - text: הקיבול גדל פי 2, אבל המטען לא משתנה, כי הסוללה לא השתנתה.
+        feedback: 'הסוללה שומרת על **המתח**, לא על המטען. כשהקיבול גדל, היא מעבירה עוד מטען כדי שהמתח יישאר זהה.'
+      - text: הקיבול קטן פי 2, כי הלוחות קרובים יותר.
+        feedback: 'הפוך: הקיבול ביחס הפוך למרחק, ולוחות קרובים יותר אוגרים יותר מטען.'
+        misconception: MC-wider-gap-more-capacitance
+      - text: המתח בין הלוחות קטן פי 2.
+        feedback: 'הקבל מחובר לסוללה, ולכן המתח בין הלוחות שווה כל הזמן למתח של הסוללה.'
