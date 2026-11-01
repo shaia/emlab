@@ -17,6 +17,7 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { parse } from 'yaml';
+import { tex } from '../src/lib/tex.ts';
 
 const ROOT = join(import.meta.dirname, '..');
 const CONTENT = join(ROOT, 'src/content');
@@ -310,6 +311,15 @@ for (const { file, data } of workbooks) {
       if (!lesson.objectives.includes(o)) fail(w, `objective ${o} is not an objective of lesson ${data.lesson}`);
     }
     if (item.solution?.at(-1)?.kind !== 'result') fail(w, 'the full solution must end in a result step');
+    // the build renders these with the same strictness; checking here lets the edit hook catch a bad formula
+    const fields: [string, unknown][] = [['prompt', item.prompt], ['answer', item.answer], ...(item.solution ?? []).map((st, i): [string, unknown] => [`solution step ${i + 1}`, st.text])];
+    for (const [k, v] of fields) {
+      try {
+        tex(String(v ?? ''), k);
+      } catch (e) {
+        fail(w, (e as Error).message);
+      }
+    }
     if (item.diagram && !item.diagramAlt?.trim()) fail(w, 'a diagram needs diagramAlt (its accessible description)');
     if (item.diagram && /<script|on\w+=/i.test(item.diagram)) fail(w, 'the diagram SVG must not contain scripts or event handlers');
   }
