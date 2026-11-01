@@ -109,7 +109,8 @@ test.describe('live figures', () => {
     await setSlider(page, 'fig-1-2b', 4);
     await ground.click();
     await expect(readout).toContainText('על העלים: 0');
-    await expect(fig.locator('.sim-controls .hint', { hasText: 'אלקטרונים שעברו לאדמה' })).toContainText('4');
+    // the electroscope still holds −4e from the touch, and ends at +4e: 8 electrons go to the earth
+    await expect(fig.locator('.sim-controls .hint', { hasText: 'אלקטרונים שעברו לאדמה' })).toContainText(': 8');
     await ground.click();
     await setSlider(page, 'fig-1-2b', 0);
     await expect(readout).toContainText('q = +4e');
