@@ -122,8 +122,8 @@ export default function DriftWire(props: DriftWireProps) {
     const left = 0.06 * W;
     const right = 0.94 * W;
     const cy = H * 0.5;
-    // band height ∝ cross-section
-    const bh = Math.min(H * 0.62, 26 + 30 * st.area);
+    // band height ∝ cross-section (the 3 mm² wire fills the room), so the electrons in view ∝ A
+    const bh = (H * 0.62 * st.area) / 3;
     const top = cy - bh / 2;
     const len = right - left;
     const rand = rnd.current;
