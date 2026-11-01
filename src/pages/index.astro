@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import { chaptersWithQuestions } from '~/assessment/bank';
 import BaseLayout from '~/layouts/BaseLayout.astro';
-import CoverArt from '~/ui/CoverArt.astro';
+import BookPopup from '~/figures3d/BookPopup.astro';
 import { chapters, lessonSlug } from '~/course';
 import { pageExists, url } from '~/lib/url';
 import '~/styles/lesson.css';
@@ -32,7 +32,7 @@ const firstLesson = chapters.flatMap((c) => c.lessons).find((l) => written.has(l
         </div>
       </div>
       <div class="cover-figure">
-        <CoverArt />
+        <BookPopup />
       </div>
     </section>
 

@@ -1,0 +1,7 @@
+---
+/** The home page's pop-up book. The 2D cover drawing is the server HTML and the fallback; three.js loads lazily. */
+import CoverArt from '~/ui/CoverArt.astro';
+import BookPopup from './BookPopup';
+---
+
+<BookPopup client:visible><CoverArt /></BookPopup>
