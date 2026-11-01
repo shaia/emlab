@@ -31,6 +31,8 @@ test.describe('Bagrut question', () => {
     await expect(vg.locator('.qcard')).toHaveClass(/is-right/);
     expect((await progress(page)).attempts.at(-1)).toMatchObject({ qid: 'Q-1-bagrut-1/ג', hints: 1, correct: true });
     await expect(b.locator('.bagrut-score')).toContainText('10');
+    // feedback and explanations appear only now: they must not widen the page on a phone
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
 
     // part ה: open, graded by the rubric the student ticks
     const ve = b.locator('[data-part="ה"]');
