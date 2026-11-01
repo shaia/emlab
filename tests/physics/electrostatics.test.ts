@@ -78,6 +78,33 @@ describe('analytic limits', () => {
     expect(shellField(uC, 0.3, 0.1)).toBe(0);
     expect(relativeError(shellField(uC, 0.3, 0.6), (K * uC) / 0.36)).toBeLessThan(1e-12);
   });
+
+  it("a traced line's direction says which way E points along it: out of + and into −", () => {
+    const cases: PointCharge[][] = [
+      [{ x: 0, y: 0, q: uC }],
+      [{ x: 0, y: 0, q: -uC }],
+      [
+        { x: -0.3, y: 0, q: 2 * uC },
+        { x: 0.3, y: 0, q: -uC },
+      ],
+    ];
+    for (const cs of cases) {
+      const lines = fieldLines(cs, { bounds, coreRadius: 0.03, maxStep: 0.02, chargePerLine: uC / 4 });
+      expect(lines.length).toBeGreaterThan(0);
+      for (const l of lines) {
+        // the line starts on the charge it was traced from: + gives +1, − gives −1
+        const source = cs.find((c) => c.x === l.points[0][0] && c.y === l.points[0][1])!;
+        expect(l.direction).toBe(Math.sign(source.q));
+        // and the field at every step points along `points` times `direction`
+        for (let i = 2; i < l.points.length - 2; i++) {
+          const [ax, ay] = l.points[i];
+          const [bx, by] = l.points[i + 1];
+          const [ex, ey] = fieldAt(cs, (ax + bx) / 2, (ay + by) / 2);
+          expect(l.direction * (ex * (bx - ax) + ey * (by - ay))).toBeGreaterThan(0);
+        }
+      }
+    }
+  });
 });
 
 describe('scaling (dimensional proxy)', () => {

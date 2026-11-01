@@ -152,7 +152,7 @@ export default function FieldExplorer(props: FieldExplorerProps) {
   const [s, setS] = useState<State>(() => initial(props));
   const start = useRef<State>(initial(props));
   const drag = useRef<{ what: number | 'probe'; dx: number; dy: number } | null>(null);
-  const linesCache = useRef<{ key: string; lines: [number, number][][] }>({ key: '', lines: [] });
+  const linesCache = useRef<{ key: string; lines: { pts: [number, number][]; dir: 1 | -1 }[] }>({ key: '', lines: [] });
   const [live, setLive] = useState('');
   const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: props.taskLabels?.[id] ?? TASK_LABEL[id] ?? id }));
 
@@ -224,21 +224,22 @@ export default function FieldExplorer(props: FieldExplorerProps) {
           chargePerLine: LINE_Q,
           minLines: props.minLines ?? 6,
         });
-        linesCache.current = { key, lines: traced.map((l) => l.points.map(([x, y]) => toScreen(view, x, y))) };
+        linesCache.current = { key, lines: traced.map((l) => ({ pts: l.points.map(([x, y]) => toScreen(view, x, y)), dir: l.direction })) };
       }
       const phase = props.staticArrows ? 0 : (t * 28) % 70;
-      for (const pts of linesCache.current.lines) {
+      for (const { pts, dir } of linesCache.current.lines) {
         polyline(ctx, pts, p.efield, 1.6, { glow: p.efieldGlow, alpha: 0.9 });
-        // chevrons every 70 px along the line show the direction (and drift when motion is on)
+        // chevrons every 70 px along the line show the direction of E (and drift when motion is on);
+        // a line traced from a negative charge runs against E, so they turn round and drift back
         let acc = 0;
-        let next = 35 + phase;
+        let next = 35 + (dir > 0 ? phase : 70 - phase);
         for (let i = 1; i < pts.length; i++) {
           const dx = pts[i][0] - pts[i - 1][0];
           const dy = pts[i][1] - pts[i - 1][1];
           const seg = Math.hypot(dx, dy);
           while (seg > 0 && acc + seg >= next) {
             const f = (next - acc) / seg;
-            chevron(ctx, pts[i - 1][0] + dx * f, pts[i - 1][1] + dy * f, dx / seg, dy / seg, 5, p.efield);
+            chevron(ctx, pts[i - 1][0] + dx * f, pts[i - 1][1] + dy * f, (dir * dx) / seg, (dir * dy) / seg, 5, p.efield);
             next += 70;
           }
           acc += seg;

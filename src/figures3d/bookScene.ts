@@ -436,9 +436,7 @@ export function createBookScene(
       const pts = l.points.map(([x, y]) => texPx(x, y));
       polyline(g, pts, pal.efield, 6, { glow: glow ? pal.efieldGlow : undefined });
       // a line traced from a negative charge runs against E: its chevrons point the other way
-      const [sx, sy] = l.points[0];
-      const fromNeg = charges.some((c) => c.q < 0 && c.x === sx && c.y === sy);
-      const dir = fromNeg ? -1 : 1;
+      const dir = l.direction;
       let acc = 0;
       let next = 70;
       for (let i = 1; i < pts.length; i++) {

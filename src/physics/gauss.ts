@@ -62,15 +62,14 @@ export interface Crossing {
 
 /**
  * Where the traced field lines cross the polygon, with the direction of each crossing.
- * Lines are followed in the field's direction, which is the order of `points` for lines
- * started on positive charges and, for lines started on a negative charge, the reverse.
- * `reversed` flags those, so the caller need not know how the lines were built.
+ * Lines are followed in the field's direction: the order of `points`, or its reverse for a
+ * line whose `direction` is −1 (traced from a negative charge).
  */
-export function lineCrossings(lines: readonly (TracedLine & { reversed?: boolean })[], poly: readonly Vec2[]): Crossing[] {
+export function lineCrossings(lines: readonly TracedLine[], poly: readonly Vec2[]): Crossing[] {
   const orient = Math.sign(polygonArea(poly)) || 1;
   const out: Crossing[] = [];
   for (const line of lines) {
-    const pts = line.reversed ? [...line.points].reverse() : line.points;
+    const pts = line.direction < 0 ? [...line.points].reverse() : line.points;
     for (let k = 1; k < pts.length; k++) {
       const [ax, ay] = pts[k - 1];
       const [bx, by] = pts[k];

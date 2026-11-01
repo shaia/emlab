@@ -95,6 +95,12 @@ export interface TraceOptions {
 
 export interface TracedLine {
   points: Vec2[];
+  /**
+   * +1 when `points` run along E (a line traced from a positive charge), −1 when they run
+   * against it (traced from a negative charge). Anything that marks the field's direction on
+   * the line, or follows the line in the field's sense, must read this.
+   */
+  direction: 1 | -1;
   end: 'charge' | 'bounds' | 'steps' | 'null';
   /** index of the charge the line ended on, when end === 'charge' */
   endCharge?: number;
@@ -140,13 +146,13 @@ export function traceFieldLine(
     const [dNear] = nearestCharge(charges, x, y);
     const h = Math.max(coreRadius * 0.15, Math.min(maxStep, dNear * 0.2));
     const k1 = direction(charges, x, y, sgn);
-    if (!k1) return { points, end: 'null' };
+    if (!k1) return { points, direction: sgn, end: 'null' };
     const k2 = direction(charges, x + (h / 2) * k1[0], y + (h / 2) * k1[1], sgn);
-    if (!k2) return { points, end: 'null' };
+    if (!k2) return { points, direction: sgn, end: 'null' };
     const k3 = direction(charges, x + (h / 2) * k2[0], y + (h / 2) * k2[1], sgn);
-    if (!k3) return { points, end: 'null' };
+    if (!k3) return { points, direction: sgn, end: 'null' };
     const k4 = direction(charges, x + h * k3[0], y + h * k3[1], sgn);
-    if (!k4) return { points, end: 'null' };
+    if (!k4) return { points, direction: sgn, end: 'null' };
     x += (h / 6) * (k1[0] + 2 * k2[0] + 2 * k3[0] + k4[0]);
     y += (h / 6) * (k1[1] + 2 * k2[1] + 2 * k3[1] + k4[1]);
     points.push([x, y]);
@@ -154,7 +160,7 @@ export function traceFieldLine(
     const [d, idx] = nearestCharge(charges, x, y);
     if (d < coreRadius && i > 2) {
       points.push([charges[idx].x, charges[idx].y]);
-      return { points, end: 'charge', endCharge: idx };
+      return { points, direction: sgn, end: 'charge', endCharge: idx };
     }
     if (
       x < bounds.xmin - margin ||
@@ -162,10 +168,10 @@ export function traceFieldLine(
       y < bounds.ymin - margin ||
       y > bounds.ymax + margin
     ) {
-      return { points, end: 'bounds' };
+      return { points, direction: sgn, end: 'bounds' };
     }
   }
-  return { points, end: 'steps' };
+  return { points, direction: sgn, end: 'steps' };
 }
 
 export interface FieldLineOptions {

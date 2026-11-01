@@ -196,17 +196,12 @@ export default function GaussSurface(props: GaussSurfaceProps) {
   // the lines do not depend on the screen size, so the readout and the drawing always agree
   const fieldLinesNow = useMemo(() => {
     if (s.charges.length === 0) return [];
-    const traced = fieldLines(s.charges, {
+    return fieldLines(s.charges, {
       bounds: { xmin: -WORLD_W / 2, xmax: WORLD_W / 2, ymin: -WORLD_H / 2, ymax: WORLD_H / 2 },
       coreRadius: CORE_R,
       maxStep: 0.02,
       chargePerLine: LINE_UC,
       minLines: 1,
-    });
-    return traced.map((l) => {
-      const [sx, sy] = l.points[0];
-      const c = s.charges.find((k) => k.x === sx && k.y === sy);
-      return { ...l, reversed: !!c && c.q < 0 };
     });
   }, [s.charges]);
   const crossings = useMemo(() => (s.showLines ? lineCrossings(fieldLinesNow, s.poly) : []), [fieldLinesNow, s.poly, s.showLines]);
@@ -226,7 +221,7 @@ export default function GaussSurface(props: GaussSurfaceProps) {
           const dx = pts[i][0] - pts[i - 1][0];
           const dy = pts[i][1] - pts[i - 1][1];
           const seg = Math.hypot(dx, dy);
-          const sgn = l.reversed ? -1 : 1;
+          const sgn = l.direction;
           while (seg > 0 && acc + seg >= next) {
             const f = (next - acc) / seg;
             chevron(ctx, pts[i - 1][0] + dx * f, pts[i - 1][1] + dy * f, (sgn * dx) / seg, (sgn * dy) / seg, 4.5, p.efield);

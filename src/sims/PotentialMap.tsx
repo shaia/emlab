@@ -203,7 +203,7 @@ export default function PotentialMap(props: PotentialMapProps) {
     () =>
       s.preset === 'plates'
         ? []
-        : fieldLines(PRESETS[s.preset], { bounds: MAP, coreRadius: 0.04, maxStep: 0.01, chargePerLine: uC / 4 }).map((l) => l.points),
+        : fieldLines(PRESETS[s.preset], { bounds: MAP, coreRadius: 0.04, maxStep: 0.01, chargePerLine: uC / 4 }),
     [s.preset],
   );
 
@@ -242,7 +242,7 @@ export default function PotentialMap(props: PotentialMapProps) {
 
     // field lines (faint), then the equipotentials on top
     if (s.lines) {
-      for (const pts of traced) {
+      for (const { points: pts, direction: dir } of traced) {
         const scr = pts.map(([x, y]) => S(x, y));
         polyline(ctx, scr, withAlpha(p.efield, 0.5), 1.4);
         const mid = Math.floor(pts.length / 2);
@@ -250,7 +250,8 @@ export default function PotentialMap(props: PotentialMapProps) {
           const [ax, ay] = scr[mid - 1];
           const [bx, by] = scr[mid + 1];
           const L = Math.hypot(bx - ax, by - ay) || 1;
-          chevron(ctx, scr[mid][0], scr[mid][1], (bx - ax) / L, (by - ay) / L, 5, withAlpha(p.efield, 0.8));
+          // a line traced from a negative charge runs against E: the chevron turns round
+          chevron(ctx, scr[mid][0], scr[mid][1], (dir * (bx - ax)) / L, (dir * (by - ay)) / L, 5, withAlpha(p.efield, 0.8));
         }
       }
       if (s.preset === 'plates') {

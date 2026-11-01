@@ -123,14 +123,8 @@ describe('conservation and shape independence', () => {
     ];
     for (const cs of cases) {
       const lines = fieldLines(cs, { bounds, coreRadius: 0.04, maxStep: 0.02, chargePerLine: perLine, minLines: 1 });
-      // lines started on negative charges run against the field: mark them so crossings face the right way
-      const marked = lines.map((l) => {
-        const start = l.points[0];
-        const c = cs.find((k) => k.x === start[0] && k.y === start[1])!;
-        return { ...l, reversed: c.q < 0 };
-      });
       for (const poly of [circle(0, 0, 0.25), circle(0, 0, 1.0), circle(0.5, 0, 0.7)]) {
-        const x = lineCrossings(marked, poly);
+        const x = lineCrossings(lines, poly);
         const net = x.filter((k) => k.outward).length - x.filter((k) => !k.outward).length;
         const expected = Math.round(enclosedCharge(cs, poly) / perLine);
         expect(net).toBe(expected);
@@ -145,8 +139,7 @@ describe('conservation and shape independence', () => {
       { x: 0.2, y: 0, q: -2 * uC },
     ];
     const lines = fieldLines(cs, { bounds, coreRadius: 0.06, maxStep: 0.02, chargePerLine: 0.25 * uC, minLines: 1 });
-    const marked = lines.map((l) => ({ ...l, reversed: cs.find((k) => k.x === l.points[0][0] && k.y === l.points[0][1])!.q < 0 }));
-    const x = lineCrossings(marked, circle(0, 0, 0.5));
+    const x = lineCrossings(lines, circle(0, 0, 0.5));
     expect(x.filter((k) => k.outward).length).toBe(x.filter((k) => !k.outward).length);
   });
 
