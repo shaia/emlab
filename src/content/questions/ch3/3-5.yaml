@@ -1,0 +1,290 @@
+# Lesson 3.5 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/circuits.ts (seriesR, parallelR, and
+# solveCircuit on each circuit described).
+
+chapter: 3
+questions:
+  # ------------------------------------------------ OBJ-3.5-1: equivalent resistance
+  - id: Q-3.5-series-r
+    type: numeric
+    objectives: [OBJ-3.5-1]
+    prompt: >-
+      נגד של $4\,\Omega$ ונגד של $6\,\Omega$ מחוברים בטור. מה ההתנגדות השקולה? ענו באוהם.
+    answer: 10
+    unit: Ω
+    tolerance: 0.03
+    correctFeedback: 'נכון. בטור ההתנגדויות מתחברות: $R = 4 + 6 = 10\,\Omega$.'
+    wrongFeedback: 'בטור אותו זרם עובר בשני הנגדים, והמתחים מתחברים, ולכן $R = R_1 + R_2$.'
+    commonWrong:
+      - value: 2.4
+        feedback: 'השתמשתם בכלל של חיבור **במקביל**. בטור ההתנגדויות פשוט מתחברות.'
+
+  - id: Q-3.5-parallel-r
+    type: numeric
+    objectives: [OBJ-3.5-1]
+    prompt: >-
+      נגד של $4\,\Omega$ ונגד של $6\,\Omega$ מחוברים במקביל. מה ההתנגדות השקולה? ענו באוהם.
+    answer: 2.4
+    unit: Ω
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\dfrac{1}{R} = \dfrac14 + \dfrac16 = \dfrac{5}{12}$, ולכן $R = \dfrac{R_1R_2}{R_1 + R_2} = \dfrac{24}{10} = 2.4\,\Omega$: פחות מהקטנה שבהן.'
+    wrongFeedback: 'במקביל: $\dfrac1R = \dfrac1{R_1} + \dfrac1{R_2}$, ולשני נגדים $R = \dfrac{R_1R_2}{R_1 + R_2}$.'
+    commonWrong:
+      - value: 10
+        feedback: 'חיברתם את ההתנגדויות, כמו בטור. במקביל כל נגד הוא מסלול נוסף לזרם, וההתנגדות השקולה **קטנה**.'
+        misconception: MC-parallel-r-adds
+      - value: 0.417
+        feedback: 'חישבתם את $1/R$, ולא את $R$. צריך עוד להפוך: $R = 1/0.417 = 2.4\,\Omega$.'
+
+  - id: Q-3.5-parallel-less
+    type: mc
+    objectives: [OBJ-3.5-1]
+    qualitative: true
+    prompt: >-
+      לנגד של $10\,\Omega$ מחברים במקביל נגד של $100\,\Omega$. מה קורה להתנגדות השקולה?
+    choices:
+      - text: 'היא קטנה מעט, ויורדת מתחת ל-$10\,\Omega$.'
+        correct: true
+        feedback: 'נכון: $R = \dfrac{10\cdot100}{110} \approx 9.1\,\Omega$. מסלול נוסף לזרם תמיד מקטין את ההתנגדות השקולה, גם כשהוא עצמו מתנגד מאוד.'
+      - text: 'היא גדלה ל-$110\,\Omega$.'
+        feedback: 'זה החיבור בטור. במקביל הנגד השני הוא דרך נוספת לזרם, וההתנגדות השקולה קטנה.'
+        misconception: MC-parallel-r-adds
+      - text: 'היא הממוצע, $55\,\Omega$.'
+        feedback: 'ההתנגדות השקולה במקביל אינה ממוצע: היא קטנה מהקטנה שבהתנגדויות.'
+      - text: 'היא לא משתנה, כי הנגד הגדול כמעט לא מעביר זרם.'
+        feedback: 'הוא מעביר מעט זרם, אבל לא אפס, ולכן ההתנגדות השקולה קטנה, אם כי רק מעט.'
+
+  - id: Q-3.5-mixed-r
+    type: numeric
+    objectives: [OBJ-3.5-1]
+    level: mid
+    prompt: >-
+      נגד של $2\,\Omega$ מחובר בטור לזוג נגדים שמחוברים במקביל זה לזה: $6\,\Omega$ ו-$3\,\Omega$. מה ההתנגדות השקולה של כל הרשת? ענו באוהם.
+    answer: 4
+    unit: Ω
+    tolerance: 0.03
+    correctFeedback: 'נכון. הזוג במקביל: $\dfrac{6\cdot3}{6+3} = 2\,\Omega$. בטור עם $2\,\Omega$: $R = 2 + 2 = 4\,\Omega$.'
+    wrongFeedback: 'צמצמו צעד אחר צעד: קודם את הזוג שבמקביל לנגד אחד, ואז חברו אותו בטור.'
+    commonWrong:
+      - value: 11
+        feedback: 'חיברתם את שלושת הנגדים כאילו כולם בטור. הזוג $6\,\Omega$ ו-$3\,\Omega$ במקביל.'
+        misconception: MC-parallel-r-adds
+      - value: 1
+        feedback: 'חיברתם את שלושתם במקביל. הנגד של $2\,\Omega$ בטור עם הזוג.'
+
+  # ------------------------------------------------ OBJ-3.5-2: currents, voltages, powers
+  - id: Q-3.5-series-voltage
+    type: numeric
+    objectives: [OBJ-3.5-2]
+    prompt: >-
+      נגד של $2\,\Omega$ ונגד של $4\,\Omega$ מחוברים בטור לסוללה אידאלית של $12\,\text{V}$. מה המתח על הנגד של $4\,\Omega$? ענו בוולט.
+    answer: 8
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. $R = 6\,\Omega$, $I = 12/6 = 2\,\text{A}$ בשני הנגדים, ו-$V = IR = 2\cdot4 = 8\,\text{V}$. על הנגד של $2\,\Omega$ נשארים $4\,\text{V}$.'
+    wrongFeedback: 'בטור אותו זרם עובר בשני הנגדים. מצאו אותו, $I = \varepsilon/R$, ואז $V = IR$ לכל נגד.'
+    commonWrong:
+      - value: 6
+        feedback: 'חילקתם את המתח חצי-חצי. בטור המתח מתחלק לפי ההתנגדויות: על הנגד הגדול יותר המתח גדול יותר.'
+      - value: 4
+        feedback: 'זה המתח על הנגד של $2\,\Omega$. על הנגד הגדול יותר, באותו זרם, המתח גדול יותר.'
+
+  - id: Q-3.5-parallel-current
+    type: numeric
+    objectives: [OBJ-3.5-2]
+    prompt: >-
+      נגד של $3\,\Omega$ ונגד של $6\,\Omega$ מחוברים במקביל לסוללה אידאלית של $12\,\text{V}$. מה הזרם שהסוללה מספקת? ענו באמפר.
+    answer: 6
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. על כל נגד $12\,\text{V}$: $12/3 = 4\,\text{A}$ ו-$12/6 = 2\,\text{A}$. הזרמים מתאחדים: $6\,\text{A}$. או: $R = 2\,\Omega$ ו-$I = 12/2 = 6\,\text{A}$.'
+    wrongFeedback: 'במקביל על כל נגד המתח המלא. חשבו את הזרם בכל ענף וחברו, או מצאו את ההתנגדות השקולה.'
+    commonWrong:
+      - value: 1.33
+        feedback: 'חיברתם את הנגדים בטור, $12/9$. במקביל כל נגד מקבל את כל המתח.'
+        misconception: MC-parallel-r-adds
+      - value: 4
+        feedback: 'זה הזרם בנגד של $3\,\Omega$ בלבד. הסוללה מספקת את הזרם לשני הענפים.'
+
+  - id: Q-3.5-mixed-current
+    type: numeric
+    objectives: [OBJ-3.5-2]
+    level: mid
+    prompt: >-
+      ברשת של השאלה הקודמת ($2\,\Omega$ בטור עם $6\,\Omega$ ו-$3\,\Omega$ במקביל), הרשת מחוברת לסוללה אידאלית של $12\,\text{V}$. מה הזרם בנגד של $6\,\Omega$? ענו באמפר.
+    answer: 1
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. $R = 4\,\Omega$, $I = 12/4 = 3\,\text{A}$. על הזוג במקביל $V = 3\cdot2 = 6\,\text{V}$, ולכן בנגד של $6\,\Omega$ עובר $6/6 = 1\,\text{A}$ (וב-$3\,\Omega$ עוברים $2\,\text{A}$).'
+    wrongFeedback: 'מצאו את הזרם מהסוללה, אחר כך את המתח על הזוג שבמקביל, ורק אז את הזרם בנגד.'
+    commonWrong:
+      - value: 2
+        feedback: 'זה הזרם בנגד של $3\,\Omega$, או $12/6$ אילו על הנגד היה כל המתח. על הזוג שבמקביל רק $6\,\text{V}$, כי חלק מהמתח נמצא על הנגד של $2\,\Omega$.'
+      - value: 1.5
+        feedback: 'חילקתם את $3\,\text{A}$ חצי-חצי. במקביל הזרם מתחלק הפוך להתנגדויות: בנגד הגדול יותר עובר פחות.'
+
+  - id: Q-3.5-mixed-power
+    type: numeric
+    objectives: [OBJ-3.5-2]
+    level: bagrut
+    prompt: >-
+      באותה רשת ($2\,\Omega$ בטור עם $6\,\Omega \parallel 3\,\Omega$, על $12\,\text{V}$), מה ההספק בנגד של $2\,\Omega$? ענו בוואט.
+    answer: 18
+    unit: W
+    tolerance: 0.03
+    correctFeedback: 'נכון. כל הזרם, $3\,\text{A}$, עובר בו: $P = I^2R = 9\cdot2 = 18\,\text{W}$. בדיקה: הסוללה מספקת $12\cdot3 = 36\,\text{W}$, ו-$18 + 6 + 12 = 36$.'
+    wrongFeedback: 'מצאו את הזרם בנגד ($3\,\text{A}$, כל הזרם של הסוללה) והשתמשו ב-$P = I^2R$.'
+    commonWrong:
+      - value: 72
+        feedback: 'הצבתם ב-$P = V^2/R$ את כל המתח של הסוללה. על הנגד של $2\,\Omega$ יש רק $6\,\text{V}$.'
+      - value: 6
+        feedback: 'זה $IR$, המתח על הנגד. ההספק הוא $I^2R$.'
+
+  # ------------------------------------------------ OBJ-3.5-3: what changes if
+  - id: Q-3.5-remove-parallel
+    type: twotier
+    objectives: [OBJ-3.5-3]
+    qualitative: true
+    prompt: >-
+      שתי נורות זהות מחוברות במקביל לסוללה אידאלית, ושתיהן דולקות. מוציאים אחת מהן מהבית שלה. מה קורה לנורה השנייה?
+    choices:
+      - text: 'היא ממשיכה להאיר בדיוק כמו קודם.'
+        correct: true
+        feedback: נכון.
+      - text: 'היא מאירה חזק יותר, כי עכשיו כל הזרם עובר בה.'
+        feedback: 'הזרם בה לא היה "חצי מזרם קבוע". הוא נקבע לפי המתח עליה, שנשאר המתח של הסוללה.'
+        misconception: MC-battery-constant-current
+      - text: 'היא נכבית, כי המעגל נפתח.'
+        feedback: 'נפתח רק הענף של הנורה שהוצאה. לנורה השנייה יש ענף משלה, סגור.'
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: 'היא מחוברת ישר להדקי הסוללה, ולכן המתח עליה, ואיתו הזרם וההספק שלה, לא השתנו.'
+        correct: true
+        feedback: 'נכון. רק הזרם שהסוללה מספקת השתנה: הוא קטן לחצי.'
+      - text: 'הסוללה מספקת אותו זרם, ועכשיו אין עם מי להתחלק בו.'
+        feedback: 'הסוללה לא מספקת זרם קבוע. היא שומרת על מתח, והזרם נקבע לפי המעגל: עכשיו היא מספקת חצי ממה שסיפקה.'
+        misconception: MC-battery-constant-current
+      - text: 'ההתנגדות השקולה גדלה, ולכן הזרם בכל נורה קטן.'
+        feedback: 'ההתנגדות השקולה אכן גדלה, והזרם **מהסוללה** קטן. אבל בנורה שנשארה הזרם נקבע לפי המתח עליה, שלא השתנה.'
+
+  - id: Q-3.5-series-identical
+    type: mc
+    objectives: [OBJ-3.5-3]
+    qualitative: true
+    prompt: >-
+      שתי נורות זהות מחוברות בטור לסוללה. $L_1$ קרובה להדק החיובי ו-$L_2$ להדק השלילי. איזו מאירה יותר?
+    choices:
+      - text: 'הן מאירות באותה מידה.'
+        correct: true
+        feedback: 'נכון. אותו זרם עובר בשתיהן, ולנורות זהות אותו מתח ואותו הספק. הסדר לא משנה.'
+      - text: '$L_1$, כי הזרם מגיע אליה קודם.'
+        feedback: 'הזרם לא "מגיע" לנורות אחת אחרי השנייה, והוא לא נצרך בדרך: אותו זרם עובר בשתיהן.'
+        misconception: MC-series-first-brighter
+      - text: '$L_2$, כי האלקטרונים מגיעים אליה קודם.'
+        feedback: 'כיוון התנועה של האלקטרונים לא משנה את הזרם. בטור אותו זרם עובר בשתי הנורות.'
+        misconception: MC-series-first-brighter
+      - text: 'אף אחת מהן לא דולקת, כי המתח מתחלק.'
+        feedback: 'המתח מתחלק, $6\,\text{V}$ ו-$6\,\text{V}$ מתוך $12\,\text{V}$, אבל זה מספיק כדי ששתיהן יאירו, חלש יותר מנורה אחת לבד.'
+
+  - id: Q-3.5-short-bulb
+    type: mc
+    objectives: [OBJ-3.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      שתי נורות זהות, $L_1$ ו-$L_2$, מחוברות בטור לסוללה אידאלית. מחברים תיל משני צדי $L_2$. מה קורה?
+    choices:
+      - text: '$L_2$ נכבית, ו-$L_1$ מאירה חזק יותר.'
+        correct: true
+        feedback: 'נכון. שני צדי $L_2$ באותו פוטנציאל, ולכן אין עליה מתח. כל המתח עובר ל-$L_1$: מ-$6\,\text{V}$ ל-$12\,\text{V}$, והספק פי 4.'
+      - text: 'שתיהן ממשיכות להאיר כמו קודם.'
+        feedback: 'התיל משנה את המעגל: הוא מחבר את שני צדי $L_2$, ולכן אין עליה מתח.'
+        misconception: MC-shorted-bulb-unchanged
+      - text: '$L_2$ נכבית, ו-$L_1$ מאירה כמו קודם.'
+        feedback: 'ההתנגדות השקולה קטנה לחצי, ולכן הזרם מוכפל. $L_1$ מקבלת עכשיו את כל המתח.'
+        misconception: MC-battery-constant-current
+      - text: 'שתיהן נכבות, כי נוצר קצר.'
+        feedback: 'התיל עוקף רק את $L_2$. $L_1$ עדיין מחוברת בין ההדקים, ולכן היא דולקת, ואף חזק יותר.'
+
+  - id: Q-3.5-mixed-rank
+    type: rank
+    objectives: [OBJ-3.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      שלוש נורות זהות: $L_1$ מחוברת בטור לזוג $L_2$ ו-$L_3$, שמחוברות במקביל זו לזו. הרשת מחוברת לסוללה. סדרו את הנורות לפי הבהירות שלהן, מהחזקה לחלשה. נורות שמאירות באותה מידה שימו יחד.
+    items:
+      - { id: L1, label: '$L_1$' }
+      - { id: L2, label: '$L_2$' }
+      - { id: L3, label: '$L_3$' }
+    order: [L1, [L2, L3]]
+    correctFeedback: 'נכון. כל הזרם עובר ב-$L_1$, והוא מתחלק שווה בשווה בין $L_2$ ל-$L_3$. בזרם כפול, ההספק $I^2R$ גדול פי 4.'
+    wrongFeedback: 'עקבו אחרי הזרם: כמה ממנו עובר ב-$L_1$, ואיך הוא מתחלק בין שתי הנורות שבמקביל?'
+
+  - id: Q-3.5-mixed-close
+    type: mc
+    objectives: [OBJ-3.5-3]
+    qualitative: true
+    level: bagrut
+    prompt: >-
+      $L_1$ ו-$L_2$, נורות זהות, מחוברות בטור לסוללה אידאלית. מוסיפים נורה זהה שלישית, $L_3$, במקביל ל-$L_2$. מה קורה לבהירות של $L_1$ ושל $L_2$?
+    choices:
+      - text: '$L_1$ מאירה חזק יותר, ו-$L_2$ חלש יותר.'
+        correct: true
+        feedback: 'נכון. ההתנגדות השקולה קטנה ($6 + 3 = 9\,\Omega$ במקום $12\,\Omega$ לנורות של $6\,\Omega$), הזרם בסוללה וב-$L_1$ גדל, ו-$L_1$ לוקחת יותר מהמתח. לזוג שבמקביל נשאר פחות: על $L_2$ המתח יורד מ-$6\,\text{V}$ ל-$4\,\text{V}$.'
+      - text: 'שתיהן מאירות חלש יותר, כי יש יותר נורות.'
+        feedback: 'הוספת נורה במקביל **מקטינה** את ההתנגדות השקולה, והזרם מהסוללה גדל. $L_1$, שכל הזרם עובר בה, מאירה חזק יותר.'
+        misconception: MC-battery-constant-current
+      - text: '$L_1$ לא משתנה, ו-$L_2$ חלש יותר כי היא מתחלקת בזרם עם $L_3$.'
+        feedback: 'הזרם בסוללה לא קבוע: ההתנגדות השקולה קטנה, ולכן הזרם ב-$L_1$ גדל.'
+        misconception: MC-battery-constant-current
+      - text: 'שתיהן מאירות חזק יותר.'
+        feedback: '$L_1$ אכן חזקה יותר, אבל על $L_2$ נשאר פחות מתח, ולכן היא חלשה יותר.'
+
+  - id: Q-3.5-series-rated
+    type: twotier
+    objectives: [OBJ-3.5-3]
+    qualitative: true
+    level: bagrut
+    prompt: >-
+      על $L_1$ כתוב $12\,\text{V}$, $24\,\text{W}$, ועל $L_2$ כתוב $12\,\text{V}$, $12\,\text{W}$. מחברים אותן **בטור** לסוללה של $12\,\text{V}$. איזו מאירה יותר?
+    choices:
+      - text: '$L_2$, הנורה של $12\,\text{W}$.'
+        correct: true
+        feedback: 'נכון. $R_1 = 6\,\Omega$ ו-$R_2 = 12\,\Omega$. בטור הזרם שווה, $I = 12/18 = 0.67\,\text{A}$, ו-$P = I^2R$: $L_2$ מקבלת $5.3\,\text{W}$ ו-$L_1$ רק $2.7\,\text{W}$.'
+      - text: '$L_1$, הנורה של $24\,\text{W}$.'
+        feedback: 'הנורה של $24\,\text{W}$ מאירה יותר כששתיהן על המתח הנקוב (שיעור 3.4). בטור אף אחת מהן לא מקבלת $12\,\text{V}$, ומה שמשותף להן הוא הזרם.'
+        misconception: MC-rated-power-fixed
+      - text: 'שתיהן מאירות באותה מידה, כי אותו זרם עובר בשתיהן.'
+        feedback: 'אותו זרם, אבל התנגדויות שונות: ההספק $I^2R$ גדול יותר בנורה עם ההתנגדות הגדולה יותר.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'בטור הזרם שווה, ולכן ההספק $I^2R$ גדול יותר בנורה עם ההתנגדות הגדולה יותר.'
+        correct: true
+        feedback: 'נכון. זה ההפך ממה שקרה בשיעור 3.4, כשהנורות היו במקביל ו-$V$ היה משותף.'
+      - text: 'הנורה עם ההספק הנקוב הגדול יותר תמיד מאירה יותר.'
+        feedback: 'ההספק הנקוב הוא ההספק במתח הנקוב בלבד. בטור המתחים על הנורות אחרים.'
+        misconception: MC-rated-power-fixed
+      - text: 'הנורה עם ההתנגדות הקטנה יותר מעבירה יותר זרם.'
+        feedback: 'בטור אין "יותר זרם" באחת: אותו זרם עובר בשתיהן.'
+        misconception: MC-series-first-brighter
+
+  - id: Q-3.5-parallel-split
+    type: mc
+    objectives: [OBJ-3.5-2]
+    qualitative: true
+    prompt: >-
+      נגד של $2\,\Omega$ ונגד של $8\,\Omega$ מחוברים במקביל לסוללה. באיזה מהם זורם זרם גדול יותר?
+    choices:
+      - text: 'בנגד של $2\,\Omega$: הזרם בו גדול פי 4.'
+        correct: true
+        feedback: 'נכון. על שניהם אותו מתח, ו-$I = V/R$: הזרם מתחלק ביחס הפוך להתנגדויות.'
+      - text: 'בנגד של $8\,\Omega$, כי הוא מתנגד יותר ולכן "מושך" יותר.'
+        feedback: 'התנגדות גדולה מעבירה פחות זרם באותו מתח, לא יותר.'
+        misconception: MC-higher-r-brighter
+      - text: 'הזרם שווה, כי הם מחוברים לאותה סוללה.'
+        feedback: 'משותף להם המתח, לא הזרם. הזרם בכל ענף נקבע לפי ההתנגדות שבו.'
+        misconception: MC-battery-constant-current
+      - text: 'אי אפשר לדעת בלי לדעת את המתח של הסוללה.'
+        feedback: 'את הגודל המדויק אי אפשר לדעת, אבל את היחס כן: באותו מתח, הזרם ביחס הפוך להתנגדות.'

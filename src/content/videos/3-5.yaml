@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-3-5-series-parallel-lab
+  youtubeId: wkhNbiEw3fc
+  title: 'טור מקביל ניסוי'
+  channel: איליה וינוקור
+  lang: he
+  captions: []
+  minutes: 10
+  why: 'ניסוי מצולם בעברית עם ערכת מעגלים: מודדים זרם ומתח בחיבור בטור, ואחר כך בחיבור במקביל (לפי רשימת הפרקים בתיאור). לפני כל מדידה נסו לנבא מה יראה המכשיר.'
+  verified: '2026-11-01'
+
+- id: v-3-5-bulb-brightness
+  youtubeId: NjgxXcBfIII
+  title: 'Series and Parallel Circuits - Light Bulb Brightness'
+  channel: The Organic Chemistry Tutor
+  lang: en
+  captions: []
+  minutes: 10
+  why: 'דיון באנגלית בבהירות של שלוש נורות זהות בחיבור בטור ובחיבור במקביל, כשכל נורה מטופלת כנגד וחוק אוהם קובע את הזרם בה (לפי תיאור הסרטון). השוו לניתוח "מה משתנה אם…" שבשיעור.'
+  verified: '2026-11-01'

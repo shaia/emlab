@@ -1,0 +1,27 @@
+# Lesson 3.5 terms. Format and rules: see glossary/1-5.yaml.
+
+- id: equivalent-resistance
+  term: התנגדות שקולה
+  en: equivalent resistance
+  symbol: R_eq
+  unit: Ω
+  definition: ההתנגדות של נגד יחיד שאפשר להחליף בו רשת של נגדים, כך שהסוללה תספק אותו זרם באותו מתח. בטור R = R₁ + R₂ + …, ובמקביל 1/R = 1/R₁ + 1/R₂ + …
+  lesson: '3.5'
+
+- id: junction
+  term: צומת
+  en: junction (node)
+  definition: נקודה במעגל שבה נפגשים שלושה תילים או יותר. בצומת הזרם מתפצל או מתאחד.
+  lesson: '3.5'
+
+- id: branch
+  term: ענף
+  en: branch
+  definition: חלק של מעגל בין שני צמתים, שבו זורם זרם אחד. בחיבור במקביל כל רכיב נמצא בענף משלו, וכל הענפים מחוברים בין אותם שני צמתים.
+  lesson: '3.5'
+
+- id: ideal-battery
+  term: סוללה אידאלית
+  en: ideal battery
+  definition: סוללה שהמתח בין ההדקים שלה לא משתנה, כמה זרם שלא תספק. סוללה אמיתית קרובה לאידאלית כל עוד הזרם לא גדול מדי (שיעור 3.6).
+  lesson: '3.5'
