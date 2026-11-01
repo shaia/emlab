@@ -1,0 +1,359 @@
+# Chapter 2 Bagrut-style questions: a scenario with lettered parts (א, ב, ג…), 33 points each, as in
+# paper 036371. Format and rules: see questions/ch1/bagrut.yaml.
+#
+# Every number was computed with src/physics (potential.ts: pointPotential, pairEnergy, fieldWork,
+# speedAfter, connectSpheres, sphereSurfaceField; capacitors.ts: plateState, shareCharge), not by hand.
+
+chapter: 2
+questions:
+  # ------------------------------------------------------------ 1: two charges, potential and energy
+  - id: Q-2-bagrut-1
+    type: bagrut
+    title: פוטנציאל ליד שני מטענים
+    prompt: >-
+      שני מטענים נקודתיים קבועים נמצאים בריק על ציר $x$: המטען $Q_A = +4\,\mu\text{C}$ בראשית הציר, והמטען
+      $Q_B = -2\,\mu\text{C}$ בנקודה $x = 0.40\,\text{m}$. הנקודה P נמצאת באמצע ביניהם, ב-$x = 0.20\,\text{m}$.
+      הפוטנציאל באינסוף הוא אפס. השתמשו ב-$k = 9\cdot10^{9}\,\text{N}\cdot\text{m}^2/\text{C}^2$.
+    diagramAlt: ציר x עם מטען חיובי בראשית, מטען שלילי במרחק 0.40 מטר, ונקודה P באמצע ביניהם.
+    diagram: |
+      <svg viewBox="0 0 520 120" width="520" height="120" font-size="15" aria-hidden="true">
+        <line x1="20" y1="60" x2="490" y2="60" stroke="currentColor" stroke-width="1.5"/>
+        <polygon points="490,55 502,60 490,65" fill="currentColor"/>
+        <text x="496" y="82" fill="currentColor" font-style="italic">x</text>
+        <circle cx="60" cy="60" r="15" fill="var(--pos)"/>
+        <text x="60" y="67" text-anchor="middle" fill="#fff" font-weight="700" font-size="20">+</text>
+        <text x="60" y="30" text-anchor="middle" fill="currentColor">Q<tspan font-size="11" dy="3">A</tspan><tspan dy="-3"> = +4 μC</tspan></text>
+        <circle cx="380" cy="60" r="15" fill="var(--paper)" stroke="var(--neg)" stroke-width="3"/>
+        <text x="380" y="67" text-anchor="middle" fill="var(--neg)" font-weight="700" font-size="20">−</text>
+        <text x="380" y="30" text-anchor="middle" fill="currentColor">Q<tspan font-size="11" dy="3">B</tspan><tspan dy="-3"> = −2 μC</tspan></text>
+        <circle cx="220" cy="60" r="4.5" fill="currentColor"/>
+        <text x="220" y="42" text-anchor="middle" fill="currentColor" font-weight="700">P</text>
+        <line x1="60" y1="96" x2="380" y2="96" stroke="currentColor" stroke-width="1"/>
+        <line x1="60" y1="90" x2="60" y2="102" stroke="currentColor"/><line x1="380" y1="90" x2="380" y2="102" stroke="currentColor"/>
+        <text x="220" y="115" text-anchor="middle" fill="currentColor">0.40 m</text>
+      </svg>
+    parts:
+      - label: א
+        type: numeric
+        points: 5
+        level: mid
+        objectives: [OBJ-2.2-2]
+        prompt: מה הפוטנציאל בנקודה P?
+        answer: 9.0e4
+        unit: V
+        correctFeedback: 'נכון: $V_P = \dfrac{kQ_A}{0.20} + \dfrac{kQ_B}{0.20} = 1.8\cdot10^{5} - 0.9\cdot10^{5} = 9\cdot10^{4}\,\text{V}$.'
+        wrongFeedback: 'חברו את הפוטנציאלים של שני המטענים, $kQ/r$, כמספרים עם סימן.'
+        commonWrong:
+          - value: 2.7e5
+            feedback: 'חיברתם את הגדלים בלי הסימנים. $Q_B$ שלילי, והפוטנציאל שלו שלילי.'
+          - value: 4.5e5
+            feedback: 'חילקתם ב-$r^2$. בפוטנציאל המרחק לא בריבוע.'
+            misconception: MC-potential-inverse-square
+
+      - label: ב
+        type: numeric
+        points: 6
+        level: mid
+        objectives: [OBJ-2.2-3]
+        prompt: מביאים מטען $q = +2\,\text{nC}$ ממרחק רב מאוד אל הנקודה P. כמה עבודה עושה השדה החשמלי על $q$? ענו עם סימן.
+        answer: -1.8e-4
+        unit: J
+        correctFeedback: 'נכון: $W = q(V_\infty - V_P) = 2\cdot10^{-9}\cdot(0 - 9\cdot10^{4}) = -1.8\cdot10^{-4}\,\text{J}$. מטען חיובי שעולה לפוטנציאל גבוה יותר זז נגד הכוח.'
+        wrongFeedback: 'העבודה של השדה היא $q$ כפול הפוטנציאל בנקודת ההתחלה פחות הפוטנציאל בנקודת הסיום.'
+        commonWrong:
+          - value: 1.8e-4
+            feedback: 'זו העבודה של הכוח **החיצוני** שמביא את המטען לאט. עבודת השדה הפוכה בסימן.'
+            misconception: MC-work-raises-energy
+
+      - label: ג
+        type: numeric
+        points: 6
+        level: bagrut
+        objectives: [OBJ-2.2-2, OBJ-2.3-3]
+        prompt: באיזו נקודה בין שני המטענים הפוטנציאל אפס? כתבו את $x$ של הנקודה.
+        answer: 0.267
+        unit: m
+        correctFeedback: 'נכון: $\dfrac{kQ_A}{x} + \dfrac{kQ_B}{0.40 - x} = 0$, כלומר $\dfrac{4}{x} = \dfrac{2}{0.40 - x}$, ומכאן $x = 0.267\,\text{m}$, קרוב יותר למטען הקטן בגודלו.'
+        wrongFeedback: 'כתבו את סכום הפוטנציאלים בנקודה $x$, והשוו לאפס.'
+        commonWrong:
+          - value: 0.2
+            feedback: 'באמצע התרומות לא מבטלות זו את זו, כי המטענים שונים בגודלם. שם $V_P = 9\cdot10^{4}\,\text{V}$, כפי שחישבתם בסעיף א.'
+          - value: 0.133
+            feedback: 'הנקודה צריכה להיות קרובה יותר למטען **הקטן** בגודלו, $Q_B$, כדי שהתרומה שלו תשתווה לתרומה של $Q_A$.'
+        hints:
+          - 'המרחק מ-$Q_B$ הוא $0.40 - x$.'
+
+      - label: ד
+        type: twotier
+        points: 5
+        level: bagrut
+        qualitative: true
+        objectives: [OBJ-2.3-3]
+        prompt: האם בנקודה שמצאתם בסעיף ג גם השדה החשמלי אפס?
+        choices:
+          - text: לא. השדה שם מצביע ימינה, לכיוון $Q_B$.
+            correct: true
+            feedback: 'נכון. בין מטען חיובי למטען שלילי שני השדות מצביעים לאותו כיוון, אל המטען השלילי, ולכן הם מתחברים.'
+          - text: כן, כי הפוטנציאל שם אפס.
+            feedback: 'השדה תלוי בשיפוע של הפוטנציאל, לא בערך שלו. בנקודה הזו הפוטנציאל משתנה מהר, והשדה חזק.'
+            misconception: MC-zero-potential-zero-field
+          - text: לא. השדה שם מצביע שמאלה, לכיוון $Q_A$.
+            feedback: 'השדה יוצא ממטען חיובי ונכנס למטען שלילי. בין שניהם הוא מצביע מ-$Q_A$ אל $Q_B$, כלומר ימינה.'
+        reasonPrompt: ומה הנימוק?
+        reasons:
+          - text: 'השדה הוא השיפוע של הפוטנציאל, ובין שני מטענים מנוגדים שני השדות לאותו כיוון.'
+            correct: true
+            feedback: נכון.
+          - text: היכן שהפוטנציאל אפס, אין כוח על מטען.
+            feedback: 'אין קשר כזה. באמצע דיפול, למשל, $V = 0$ והשדה חזק.'
+            misconception: MC-zero-potential-zero-field
+          - text: השדות של שני המטענים מבטלים זה את זה בנקודה שבה הפוטנציאלים מתבטלים.
+            feedback: 'הפוטנציאלים הם סקלרים עם סימנים מנוגדים ולכן מתבטלים. השדות הם וקטורים, וכאן הם באותו כיוון.'
+            misconception: MC-potential-is-vector
+
+      - label: ה
+        type: open
+        points: 11
+        level: bagrut
+        objectives: [OBJ-2.1-3]
+        prompt: >-
+          חשבו את האנרגיה הפוטנציאלית החשמלית של מערכת שני המטענים $Q_A$ ו-$Q_B$, וקבעו כמה עבודה צריך להשקיע כדי
+          להרחיק אותם זה מזה עד מרחק רב מאוד. נמקו את סימן התשובה.
+        hints:
+          - '$U = kq_1q_2/r$, עם הסימנים. ובאינסוף $U = 0$.'
+        solution:
+          - { kind: formula, text: '$U = \dfrac{kQ_AQ_B}{r}$, והעבודה החיצונית בהרחקה איטית היא $W = U_\infty - U$.' }
+          - { kind: substitution, text: '$U = \dfrac{9\cdot10^{9}\cdot 4\cdot10^{-6}\cdot(-2\cdot10^{-6})}{0.40} = -0.18\,\text{J}$' }
+          - { kind: manipulation, text: 'במרחק רב מאוד $U_\infty = 0$, ולכן העבודה החיצונית היא $W = 0 - (-0.18) = +0.18\,\text{J}$.' }
+          - { kind: result, text: 'האנרגיה של המערכת $-0.18\,\text{J}$, וצריך להשקיע $0.18\,\text{J}$ כדי להפריד את המטענים: הם מושכים זה את זה.' }
+        rubric:
+          - text: כתבתי את הנוסחה $U = kq_1q_2/r$ לפני ההצבה.
+          - text: הצבתי את שני המטענים עם הסימנים ואת המרחק $0.40\,\text{m}$, וקיבלתי $-0.18\,\text{J}$.
+          - text: השתמשתי ב-$U = 0$ באינסוף כדי למצוא את העבודה, $+0.18\,\text{J}$.
+          - text: נימקתי את הסימן במשיכה בין מטענים מנוגדים.
+
+  # ------------------------------------------------------------ 2: a capacitor and an electron
+  - id: Q-2-bagrut-2
+    type: bagrut
+    title: קבל לוחות ואלקטרון
+    prompt: >-
+      קבל לוחות באוויר בנוי משני לוחות בשטח $0.02\,\text{m}^2$ כל אחד, במרחק $4\,\text{mm}$ זה מזה. הקבל מחובר לסוללה של
+      $600\,\text{V}$. התעלמו מאפקט הקצוות. השתמשו ב-$\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$,
+      $e = 1.6\cdot10^{-19}\,\text{C}$ ו-$m_e = 9.1\cdot10^{-31}\,\text{kg}$.
+    diagramAlt: שני לוחות מקבילים אנכיים, השמאלי חיובי והימני שלילי, במרחק 4 מילימטר, מחוברים לסוללה של 600 וולט.
+    diagram: |
+      <svg viewBox="0 0 360 170" width="360" height="170" font-size="14" aria-hidden="true">
+        <rect x="140" y="20" width="8" height="100" fill="var(--pos)" opacity="0.45"/>
+        <rect x="212" y="20" width="8" height="100" fill="var(--neg)" opacity="0.45"/>
+        <text x="128" y="74" text-anchor="middle" fill="currentColor" font-weight="700">+</text>
+        <text x="232" y="74" text-anchor="middle" fill="currentColor" font-weight="700">−</text>
+        <line x1="144" y1="120" x2="144" y2="150" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="216" y1="120" x2="216" y2="150" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="144" y1="150" x2="172" y2="150" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="188" y1="150" x2="216" y2="150" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="174" y1="138" x2="174" y2="162" stroke="currentColor" stroke-width="3"/>
+        <line x1="186" y1="143" x2="186" y2="157" stroke="currentColor" stroke-width="3"/>
+        <text x="180" y="130" text-anchor="middle" fill="currentColor">600 V</text>
+        <line x1="148" y1="12" x2="212" y2="12" stroke="currentColor" stroke-width="1"/>
+        <text x="180" y="9" text-anchor="middle" fill="currentColor" font-size="12">4 mm</text>
+      </svg>
+    parts:
+      - label: א
+        type: numeric
+        points: 5
+        level: mid
+        objectives: [OBJ-2.6-2]
+        prompt: מה הקיבול של הקבל?
+        answer: 4.425e-11
+        unit: F
+        correctFeedback: 'נכון: $C = \dfrac{\varepsilon_0A}{d} = \dfrac{8.85\cdot10^{-12}\cdot0.02}{4\cdot10^{-3}} = 4.4\cdot10^{-11}\,\text{F}$.'
+        wrongFeedback: '$C = \varepsilon_0A/d$, עם $d$ במטרים.'
+        commonWrong:
+          - value: 4.425e-14
+            feedback: 'הצבתם $d = 4$ במקום $4\cdot10^{-3}\,\text{m}$.'
+
+      - label: ב
+        type: numeric
+        points: 5
+        level: mid
+        objectives: [OBJ-2.6-3]
+        prompt: מה המטען על כל לוח?
+        answer: 2.655e-8
+        unit: C
+        correctFeedback: 'נכון: $Q = CV = 4.425\cdot10^{-11}\cdot600 = 2.7\cdot10^{-8}\,\text{C}$.'
+        wrongFeedback: '$Q = CV$, עם הקיבול מסעיף א.'
+        commonWrong:
+          - value: 7.375e-14
+            feedback: 'חילקתם את הקיבול במתח. המטען הוא $Q = CV$.'
+        standalone: false
+
+      - label: ג
+        type: numeric
+        points: 5
+        level: mid
+        objectives: [OBJ-2.3-2]
+        prompt: מה עוצמת השדה בין הלוחות?
+        answer: 1.5e5
+        unit: V/m
+        correctFeedback: 'נכון: $E = V/d = 600/(4\cdot10^{-3}) = 1.5\cdot10^{5}\,\text{V/m}$.'
+        wrongFeedback: 'בשדה אחיד $E = V/d$.'
+        commonWrong:
+          - value: 150
+            feedback: 'הצבתם $d = 4$ במקום $4\cdot10^{-3}\,\text{m}$.'
+
+      - label: ד
+        type: open
+        points: 10
+        level: bagrut
+        objectives: [OBJ-2.4-1]
+        prompt: >-
+          אלקטרון משתחרר ממנוחה ליד הלוח השלילי. חשבו את מהירותו כשהוא מגיע ללוח החיובי. כתבו את הפתרון בפורמט בגרות,
+          ונמקו את בחירת החוק.
+        hints:
+          - 'אין צורך בכוחות: האלקטרון עובר הפרש פוטנציאלים ידוע.'
+        solution:
+          - { kind: formula, text: 'שימור אנרגיה: $\tfrac12 mv^2 = eV$, כי השדה משמר והאנרגיה הקינטית שהאלקטרון מקבל היא $eV$.' }
+          - { kind: manipulation, text: '$v = \sqrt{\dfrac{2eV}{m}}$' }
+          - { kind: substitution, text: '$v = \sqrt{\dfrac{2\cdot1.6\cdot10^{-19}\,\text{C}\cdot600\,\text{V}}{9.1\cdot10^{-31}\,\text{kg}}}$' }
+          - { kind: result, text: '$v = 1.45\cdot10^{7}\,\text{m/s}$.' }
+        rubric:
+          - text: נימקתי את השימוש בשימור אנרגיה (השדה משמר, ידוע הפרש הפוטנציאלים).
+          - text: כתבתי $\tfrac12 mv^2 = eV$ ובודדתי את $v$ לפני ההצבה.
+          - text: הצבתי עם יחידות, את המסה של **אלקטרון**.
+          - text: קיבלתי בערך $1.5\cdot10^{7}\,\text{m/s}$, עם יחידות.
+
+      - label: ה
+        type: mc
+        points: 4
+        level: bagrut
+        qualitative: true
+        objectives: [OBJ-2.7-2, OBJ-2.4-2]
+        prompt: >-
+          מנתקים את הקבל מהסוללה, ואחר כך מרחיקים את הלוחות למרחק $8\,\text{mm}$. משחררים שוב אלקטרון ליד הלוח השלילי.
+          פי כמה תשתנה המהירות שבה הוא מגיע ללוח החיובי?
+        choices:
+          - text: היא תגדל פי $\sqrt2$.
+            correct: true
+            feedback: 'נכון. בקבל מנותק המטען קבוע, הקיבול קטן פי 2, ולכן המתח גדל פי 2, ל-$1200\,\text{V}$. $v \propto \sqrt V$, ולכן המהירות גדלה פי $\sqrt2$.'
+          - text: היא לא תשתנה, כי השדה בין הלוחות לא השתנה.
+            feedback: 'השדה אכן לא השתנה, אבל האלקטרון עובר עכשיו דרך כפולה בתוכו: המתח, $V = Ed$, כפול.'
+            misconception: MC-isolated-v-constant
+          - text: היא תגדל פי 2.
+            feedback: 'המתח כפול, אבל המהירות תלויה בשורש המתח: $\tfrac12 mv^2 = eV$.'
+            misconception: MC-speed-proportional-voltage
+          - text: היא תקטן פי $\sqrt2$, כי הקיבול קטן.
+            feedback: 'בקבל מנותק המטען קבוע, ולכן כשהקיבול קטן המתח דווקא **גדל**: $V = Q/C$.'
+            misconception: MC-isolated-v-constant
+
+      - label: ו
+        type: numeric
+        points: 4
+        level: mid
+        objectives: [OBJ-2.7-1]
+        prompt: כמה אנרגיה אגורה בקבל כשהוא מחובר לסוללה (לפני הניתוק)?
+        answer: 7.965e-6
+        unit: J
+        correctFeedback: 'נכון: $U = \tfrac12 CV^2 = \tfrac12\cdot4.425\cdot10^{-11}\cdot600^2 = 8.0\cdot10^{-6}\,\text{J}$.'
+        wrongFeedback: '$U = \tfrac12 CV^2$, עם הקיבול מסעיף א.'
+        commonWrong:
+          - value: 1.593e-5
+            feedback: 'שכחתם את ה-$\tfrac12$.'
+            misconception: MC-battery-work-all-stored
+        standalone: false
+
+  # ------------------------------------------------------------ 3: connecting conductors and capacitors
+  - id: Q-2-bagrut-3
+    type: bagrut
+    title: חיבור מוליכים וחיבור קבלים
+    prompt: >-
+      כדור מוליך A ברדיוס $6\,\text{cm}$ טעון במטען $+9\,\mu\text{C}$. כדור מוליך B ברדיוס $3\,\text{cm}$ לא טעון. הכדורים
+      רחוקים זה מזה. בחלק השני של השאלה, קבל של $6\,\mu\text{F}$ נטען לסוללה של $12\,\text{V}$, מנותק ממנה, ומחובר לקבל
+      ריק של $3\,\mu\text{F}$. השתמשו ב-$k = 9\cdot10^{9}\,\text{N}\cdot\text{m}^2/\text{C}^2$.
+    parts:
+      - label: א
+        type: numeric
+        points: 5
+        level: mid
+        objectives: [OBJ-2.5-1]
+        prompt: מה הפוטנציאל של כדור A לפני החיבור?
+        answer: 1.35e6
+        unit: V
+        correctFeedback: 'נכון: $V = \dfrac{kQ}{R} = \dfrac{9\cdot10^{9}\cdot9\cdot10^{-6}}{0.06} = 1.35\cdot10^{6}\,\text{V}$.'
+        wrongFeedback: 'הפוטנציאל של כדור מוליך הוא $kQ/R$.'
+        commonWrong:
+          - value: 2.25e7
+            feedback: 'חילקתם ב-$R^2$: זו עוצמת השדה על פני הכדור. הפוטנציאל הוא $kQ/R$.'
+            misconception: MC-potential-inverse-square
+
+      - label: ב
+        type: numeric
+        points: 6
+        level: bagrut
+        objectives: [OBJ-2.5-2]
+        prompt: מחברים את שני הכדורים בחוט מוליך דק. מה המטען על כדור B אחרי החיבור? ענו במיקרו-קולון.
+        answer: 3
+        unit: μC
+        correctFeedback: 'נכון. הפוטנציאלים משתווים, ולכן המטען מתחלק לפי הרדיוסים, $6:3$: על A $6\,\mu\text{C}$ ועל B $3\,\mu\text{C}$.'
+        wrongFeedback: 'שימור מטען ושוויון פוטנציאלים: $q_A + q_B = 9\,\mu\text{C}$ ו-$q_A/R_A = q_B/R_B$.'
+        commonWrong:
+          - value: 4.5
+            feedback: 'חילקתם חצי-חצי. המטען מתחלק כך שהפוטנציאלים שווים, כלומר לפי הרדיוסים.'
+            misconception: MC-equal-share-on-connect
+          - value: 6
+            feedback: 'זה המטען על A, הגדול. הכדור הקטן מקבל את החלק הקטן: $9\cdot\tfrac{3}{9} = 3\,\mu\text{C}$.'
+
+      - label: ג
+        type: mc
+        points: 5
+        level: mid
+        qualitative: true
+        objectives: [OBJ-2.5-4]
+        prompt: אחרי החיבור, ליד פני איזה כדור השדה החשמלי חזק יותר?
+        choices:
+          - text: ליד כדור B, הקטן.
+            correct: true
+            feedback: 'נכון. באותו פוטנציאל $E = V/R$: $E_B = 3\cdot10^{7}\,\text{N/C}$, כפול מ-$E_A = 1.5\cdot10^{7}\,\text{N/C}$.'
+          - text: ליד כדור A, כי יש עליו יותר מטען.
+            feedback: 'על A יותר מטען, אבל הוא מתפזר על שטח גדול פי 4. בסך הכול $E \propto 1/R$.'
+            misconception: MC-big-sphere-strong-field
+          - text: השדה שווה, כי הכדורים באותו פוטנציאל.
+            feedback: 'הפוטנציאל שווה, אבל השדה על פני כדור הוא $V/R$, ולכן תלוי ברדיוס.'
+          - text: השדה אפס ליד שניהם, כי הם מחוברים.
+            feedback: 'השדה אפס **בתוך** המוליכים. מחוץ להם, ליד פני השטח, יש שדה.'
+
+      - label: ד
+        type: numeric
+        points: 6
+        level: mid
+        objectives: [OBJ-2.8-3]
+        prompt: מה המתח המשותף על שני הקבלים אחרי החיבור?
+        answer: 8
+        unit: V
+        correctFeedback: 'נכון. המטען $Q = 6\,\mu\text{F}\cdot12\,\text{V} = 72\,\mu\text{C}$ נשמר, ו-$V = \dfrac{72}{6+3} = 8\,\text{V}$.'
+        wrongFeedback: 'המטען של הקבל הטעון נשמר, ואחרי החיבור הקבלים במקביל: $V = Q/(C_1 + C_2)$.'
+        commonWrong:
+          - value: 6
+            feedback: 'חילקתם את המתח חצי-חצי. מה שנשמר הוא המטען, והוא מתחלק לפי הקיבולים.'
+            misconception: MC-equal-share-on-connect
+          - value: 4
+            feedback: 'הצבתם במונה את הקבל הריק. המטען שנשמר הוא של הקבל הטעון, $6\,\mu\text{F}\cdot12\,\text{V}$.'
+
+      - label: ה
+        type: open
+        points: 11
+        level: bagrut
+        objectives: [OBJ-2.8-3, OBJ-2.7-3]
+        prompt: >-
+          חשבו את האנרגיה החשמלית הכוללת בקבלים לפני החיבור ואחריו. האם האנרגיה נשמרה? אם לא, הסבירו לאן הלך ההפרש.
+        hints:
+          - 'לפני: קבל אחד ב-$12\,\text{V}$. אחרי: שני קבלים, במתח שמצאתם בסעיף ד.'
+        solution:
+          - { kind: formula, text: '$U = \tfrac12 CV^2$ לכל קבל.' }
+          - { kind: substitution, text: 'לפני: $U = \tfrac12\cdot6\cdot10^{-6}\cdot12^2 = 4.32\cdot10^{-4}\,\text{J}$.' }
+          - { kind: substitution, text: 'אחרי: $U = \tfrac12\cdot(6+3)\cdot10^{-6}\cdot8^2 = 2.88\cdot10^{-4}\,\text{J}$.' }
+          - { kind: result, text: 'האנרגיה החשמלית קטנה ב-$1.44\cdot10^{-4}\,\text{J}$, שליש ממה שהיה. ההפרש הפך לחום בחוטים (ולפעמים לניצוץ). המטען נשמר, האנרגיה החשמלית לא.' }
+        rubric:
+          - text: חישבתי את האנרגיה לפני, $4.32\cdot10^{-4}\,\text{J}$.
+          - text: חישבתי את האנרגיה אחרי, עם המתח המשותף, $2.88\cdot10^{-4}\,\text{J}$.
+          - text: קבעתי שהאנרגיה החשמלית קטנה, וחישבתי את ההפרש, $1.44\cdot10^{-4}\,\text{J}$.
+          - text: הסברתי שההפרש הפך לחום בחוטים, ושהמטען, בניגוד לאנרגיה, נשמר.
