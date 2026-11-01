@@ -1,0 +1,22 @@
+# Lesson 2.7 terms. Format and rules: see glossary/1-5.yaml.
+
+- id: capacitor-energy
+  term: אנרגיה של קבל
+  en: energy stored in a capacitor
+  symbol: U
+  unit: J
+  definition: העבודה שנדרשה כדי לטעון את הקבל, שאגורה בשדה שבין הלוחות. U = ½QV = ½CV² = Q²/(2C). בגרף של המתח כפונקציה של המטען, זה השטח שמתחת לקו.
+  lesson: '2.7'
+
+- id: isolated-capacitor
+  term: קבל מנותק
+  en: isolated capacitor
+  definition: קבל שנותק מהסוללה אחרי שנטען. המטען על הלוחות לא יכול לצאת, ולכן Q קבוע. כשמשנים את המבנה (למשל מרחיקים את הלוחות), המתח והאנרגיה משתנים.
+  lesson: '2.7'
+
+- id: dielectric
+  term: חומר דיאלקטרי
+  en: dielectric
+  symbol: κ
+  definition: חומר מבודד שממלאים בו את המרווח בין לוחות קבל. הוא מגדיל את הקיבול פי κ, המקדם הדיאלקטרי של החומר (κ ≥ 1; לאוויר κ ≈ 1), כך ש-C = κε₀A/d.
+  lesson: '2.7'

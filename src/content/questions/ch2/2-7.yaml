@@ -1,0 +1,239 @@
+# Lesson 2.7 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/capacitors.ts (energyCV, energyQC, plateState).
+
+chapter: 2
+questions:
+  # ------------------------------------------------ OBJ-2.7-1: U = ½QV = ½CV² = Q²/2C
+  - id: Q-2.7-energy-cv
+    type: numeric
+    objectives: [OBJ-2.7-1]
+    prompt: >-
+      קבל של $4\,\mu\text{F}$ מחובר לסוללה של $50\,\text{V}$. כמה אנרגיה אגורה בו? ענו בג'אול.
+    answer: 5.0e-3
+    unit: J
+    tolerance: 0.03
+    correctFeedback: 'נכון: $U = \tfrac12 CV^2 = \tfrac12\cdot 4\cdot10^{-6}\cdot 50^2 = 5\cdot10^{-3}\,\text{J}$.'
+    wrongFeedback: '$U = \tfrac12 CV^2$, עם הקיבול בפאראד.'
+    commonWrong:
+      - value: 1.0e-2
+        feedback: 'שכחתם את ה-$\tfrac12$. האנרגיה היא שטח של **משולש** בגרף $V$–$Q$, חצי בסיס כפול גובה.'
+        misconception: MC-battery-work-all-stored
+      - value: 1.0e-4
+        feedback: 'חישבתם $\tfrac12 CV$, בלי ריבוע על המתח. האנרגיה היא $\tfrac12 CV^2$.'
+        misconception: MC-energy-linear-in-v
+
+  - id: Q-2.7-energy-qc
+    type: numeric
+    objectives: [OBJ-2.7-1]
+    prompt: >-
+      על קבל של $5\,\mu\text{F}$ יש מטען של $30\,\mu\text{C}$. כמה אנרגיה אגורה בו? ענו בג'אול.
+    answer: 9.0e-5
+    unit: J
+    tolerance: 0.03
+    correctFeedback: 'נכון: $U = \dfrac{Q^2}{2C} = \dfrac{(30\cdot10^{-6})^2}{2\cdot 5\cdot10^{-6}} = 9\cdot10^{-5}\,\text{J}$. (המתח $6\,\text{V}$, ו-$\tfrac12 QV$ נותן אותו דבר.)'
+    wrongFeedback: 'כשנתונים $Q$ ו-$C$, הכי נוח $U = Q^2/(2C)$.'
+    commonWrong:
+      - value: 1.8e-4
+        feedback: 'שכחתם את ה-2 במכנה: $U = Q^2/(2C)$.'
+
+  - id: Q-2.7-double-v
+    type: mc
+    objectives: [OBJ-2.7-1]
+    qualitative: true
+    prompt: >-
+      קבל מחובר לסוללה. מחליפים את הסוללה בסוללה שהמתח שלה כפול. פי כמה גדלה האנרגיה האגורה בקבל?
+    choices:
+      - text: פי 4.
+        correct: true
+        feedback: 'נכון. $U = \tfrac12 CV^2$: הקיבול לא השתנה, והמתח כפול, ולכן האנרגיה פי $2^2 = 4$. בגרף $V$–$Q$ המשולש גבוה פי 2 וגם רחב פי 2.'
+      - text: פי 2.
+        feedback: 'המתח כפול, אבל גם המטען כפול. האנרגיה היא $\tfrac12 QV$, ולכן גדלה פי $2\cdot2 = 4$.'
+        misconception: MC-energy-linear-in-v
+      - text: היא לא משתנה, כי הקיבול לא השתנה.
+        feedback: 'הקיבול לא השתנה, אבל האנרגיה תלויה גם במתח: $U = \tfrac12 CV^2$.'
+      - text: פי $\sqrt2$.
+        feedback: 'האנרגיה תלויה בריבוע המתח, לא בשורש שלו.'
+
+  - id: Q-2.7-area-meaning
+    type: mc
+    objectives: [OBJ-2.7-1]
+    qualitative: true
+    prompt: >-
+      בגרף של המתח על קבל כפונקציה של המטען שעליו, מה מייצג השטח שמתחת לקו?
+    choices:
+      - text: את האנרגיה האגורה בקבל.
+        correct: true
+        feedback: 'נכון. כל פס צר בגרף הוא $V\,\Delta q$, העבודה להעביר עוד קצת מטען. סכום הפסים הוא העבודה הכוללת, כלומר האנרגיה.'
+      - text: את הקיבול.
+        feedback: 'הקיבול קשור לשיפוע של הקו: $V = Q/C$, ולכן השיפוע הוא $1/C$. השטח הוא משהו אחר.'
+      - text: את המטען.
+        feedback: 'המטען נקרא על הציר האופקי, לא בשטח.'
+      - text: את העבודה שעשתה הסוללה.
+        feedback: 'הסוללה עושה עבודה $QV$, שטח של **מלבן**. בקבל נאגר רק המשולש, חצי מזה.'
+        misconception: MC-battery-work-all-stored
+
+  # ------------------------------------------------ OBJ-2.7-2: connected vs isolated
+  - id: Q-2.7-isolated-half-gap
+    type: twotier
+    objectives: [OBJ-2.7-2]
+    qualitative: true
+    prompt: >-
+      קבל נטען ומנותק מהסוללה. מקרבים את הלוחות זה לזה, לחצי מהמרחק. מה קורה לאנרגיה האגורה?
+    choices:
+      - text: היא קטנה פי 2.
+        correct: true
+        feedback: נכון.
+      - text: היא גדלה פי 2, כי הקיבול גדל פי 2.
+        feedback: 'זה היה נכון אילו המתח היה קבוע. בקבל מנותק המטען קבוע, ו-$U = Q^2/(2C)$ קטנה כש-$C$ גדל.'
+        misconception: MC-isolated-v-constant
+      - text: היא לא משתנה, כי הקבל מנותק.
+        feedback: 'הלוחות מושכים זה את זה. כשהם מתקרבים, המשיכה עושה עבודה, והאנרגיה האגורה קטנה.'
+        misconception: MC-isolated-energy-constant
+      - text: היא קטנה פי 4.
+        feedback: 'הקיבול גדל פי 2, ו-$U = Q^2/(2C)$ ביחס הפוך לקיבול, בחזקה ראשונה.'
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: 'המטען קבוע, ו-$U = Q^2/(2C)$ קטנה כשהקיבול גדל.'
+        correct: true
+        feedback: 'נכון. וגם המתח, $V = Q/C$, קטן פי 2.'
+      - text: 'המתח קבוע, ו-$U = \tfrac12 CV^2$ גדלה כשהקיבול גדל.'
+        feedback: 'המתח קבוע רק כשהקבל מחובר לסוללה. כאן הוא מנותק, והמתח משתנה.'
+        misconception: MC-isolated-v-constant
+      - text: אין לקבל ממי לקבל אנרגיה או למי לתת.
+        feedback: 'הכוח שמחזיק את הלוחות (או מזיז אותם) עושה עבודה. דרכו האנרגיה נכנסת ויוצאת.'
+        misconception: MC-isolated-energy-constant
+
+  - id: Q-2.7-connected-pull
+    type: mc
+    objectives: [OBJ-2.7-2]
+    qualitative: true
+    prompt: >-
+      קבל לוחות מחובר לסוללה. בלי לנתק אותו, מרחיקים את הלוחות למרחק כפול. מה נכון?
+    choices:
+      - text: המטען קטן פי 2, והאנרגיה קטנה פי 2.
+        correct: true
+        feedback: 'נכון. $C$ חצי, $V$ קבוע, ולכן $Q = CV$ חצי ו-$U = \tfrac12 CV^2$ חצי.'
+      - text: המטען לא משתנה, והמתח גדל פי 2.
+        feedback: 'זה מה שקורה בקבל **מנותק**. כאן הסוללה מחזיקה את המתח קבוע, ומטען חוזר אליה.'
+        misconception: MC-connected-q-constant
+      - text: המטען קטן פי 2, והאנרגיה גדלה פי 2.
+        feedback: 'בקבל מחובר $U = \tfrac12 CV^2$: המתח קבוע והקיבול חצי, ולכן גם האנרגיה חצי.'
+        misconception: MC-isolated-v-constant
+      - text: שום דבר לא משתנה, כי הסוללה לא השתנתה.
+        feedback: 'הקיבול השתנה. הסוללה שומרת על המתח, אבל המטען והאנרגיה משתנים.'
+
+  - id: Q-2.7-isolated-changes
+    type: multi
+    objectives: [OBJ-2.7-2]
+    qualitative: true
+    prompt: >-
+      קבל לוחות נטען ומנותק מהסוללה. מרחיקים את הלוחות זה מזה. סמנו את כל המשפטים הנכונים:
+    choices:
+      - text: המטען על הלוחות לא משתנה.
+        correct: true
+        feedback: נכון. הקבל מנותק, ולמטען אין לאן ללכת.
+      - text: המתח בין הלוחות גדל.
+        correct: true
+        feedback: 'נכון. $V = Q/C$, והקיבול קטן.'
+      - text: השדה בין הלוחות לא משתנה.
+        correct: true
+        feedback: 'נכון. $E = \sigma/\varepsilon_0$, וצפיפות המטען לא השתנתה.'
+      - text: המתח בין הלוחות לא משתנה.
+        feedback: 'המתח קבוע רק כשהקבל מחובר לסוללה. כאן $V = Q/C$ גדל.'
+        misconception: MC-isolated-v-constant
+      - text: האנרגיה האגורה לא משתנה.
+        feedback: 'מי שמרחיק את הלוחות עושה עבודה נגד המשיכה ביניהם, והאנרגיה גדלה.'
+        misconception: MC-isolated-energy-constant
+
+  - id: Q-2.7-isolated-voltage
+    type: numeric
+    objectives: [OBJ-2.7-2]
+    level: mid
+    prompt: >-
+      קבל לוחות נטען ל-$100\,\text{V}$ ומנותק מהסוללה. מרחיקים את הלוחות מ-$1$ מ"מ ל-$3$ מ"מ. מה המתח בין הלוחות עכשיו? ענו בוולט.
+    answer: 300
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. המטען קבוע והקיבול קטן פי 3, ולכן $V = Q/C$ גדל פי 3: $300\,\text{V}$. (גם: השדה לא השתנה, ו-$V = Ed$ עם מרחק פי 3.)'
+    wrongFeedback: 'בקבל מנותק המטען קבוע. מה קורה לקיבול, ולכן ל-$V = Q/C$?'
+    commonWrong:
+      - value: 100
+        feedback: 'המתח קבוע רק כשהקבל מחובר לסוללה. כאן הוא מנותק, והמטען הוא שקבוע.'
+        misconception: MC-isolated-v-constant
+      - value: 33.3
+        feedback: 'המתח לא קטן: הקיבול קטן פי 3, ו-$V = Q/C$ **גדל** פי 3.'
+        misconception: MC-connected-q-constant
+
+  # ------------------------------------------------ OBJ-2.7-3: where the energy comes from
+  - id: Q-2.7-battery-half
+    type: mc
+    objectives: [OBJ-2.7-3]
+    qualitative: true
+    prompt: >-
+      סוללה טוענת קבל ריק. הסוללה עושה עבודה $QV$, אבל בקבל נאגרת רק $\tfrac12 QV$. לאן הלך החצי השני?
+    choices:
+      - text: הוא הפך לחום בחוטים (ולפעמים לאור בניצוץ).
+        correct: true
+        feedback: 'נכון. בתחילת הטעינה הסוללה דוחפת מטען במתח מלא אל קבל שהמתח שלו כמעט אפס, וההפרש מתבזבז בחוטים.'
+      - text: הוא נאגר גם הוא בקבל, ולכן $U = QV$.
+        feedback: 'האנרגיה בקבל היא שטח המשולש בגרף $V$–$Q$, כלומר $\tfrac12 QV$. העבודה של הסוללה היא המלבן, $QV$.'
+        misconception: MC-battery-work-all-stored
+      - text: הוא נשאר בסוללה.
+        feedback: 'הסוללה עשתה עבודה $QV$, כלומר האנרגיה שלה ירדה ב-$QV$. החצי שלא נאגר בקבל לא חזר אליה.'
+      - text: האנרגיה לא נשמרת בטעינת קבל.
+        feedback: 'האנרגיה נשמרת. חלק ממנה פשוט הפך לחום, שהוא אנרגיה בצורה אחרת.'
+
+  - id: Q-2.7-battery-work
+    type: numeric
+    objectives: [OBJ-2.7-3]
+    prompt: >-
+      סוללה של $20\,\text{V}$ טוענת קבל ריק של $3\,\mu\text{F}$. כמה עבודה עשתה הסוללה? ענו בג'אול.
+    answer: 1.2e-3
+    unit: J
+    tolerance: 0.03
+    correctFeedback: 'נכון. $Q = CV = 6\cdot10^{-5}\,\text{C}$, והסוללה העבירה אותו דרך $20\,\text{V}$: $W = QV = 1.2\cdot10^{-3}\,\text{J}$. בקבל נאגרים רק $6\cdot10^{-4}\,\text{J}$.'
+    wrongFeedback: 'הסוללה מעבירה מטען $Q = CV$ דרך מתח $V$ קבוע. העבודה שלה היא $QV$.'
+    commonWrong:
+      - value: 6.0e-4
+        feedback: 'זו האנרגיה שנאגרה בקבל, $\tfrac12 QV$. הסוללה עשתה עבודה כפולה, $QV$: החצי השני הפך לחום.'
+        misconception: MC-battery-work-all-stored
+
+  - id: Q-2.7-pull-work
+    type: numeric
+    objectives: [OBJ-2.7-3, OBJ-2.7-2]
+    level: bagrut
+    prompt: >-
+      קבל של $2\,\mu\text{F}$ נטען ל-$100\,\text{V}$ ומנותק מהסוללה. כמה עבודה צריך לעשות כדי להרחיק את הלוחות שלו למרחק כפול? ענו בג'אול.
+    answer: 0.01
+    unit: J
+    tolerance: 0.03
+    correctFeedback: 'נכון. $Q = 2\cdot10^{-4}\,\text{C}$ קבוע. לפני: $U = Q^2/(2C) = 0.01\,\text{J}$. אחרי, עם $C = 1\,\mu\text{F}$: $0.02\,\text{J}$. העבודה היא ההפרש: $0.01\,\text{J}$.'
+    wrongFeedback: 'חשבו את האנרגיה לפני ואחרי, עם המטען הקבוע, $U = Q^2/(2C)$. העבודה היא ההפרש.'
+    commonWrong:
+      - value: -0.005
+        feedback: 'השתמשתם ב-$U = \tfrac12 CV^2$ עם המתח ההתחלתי. אבל בקבל מנותק המתח משתנה: הוא עולה ל-$200\,\text{V}$.'
+        misconception: MC-isolated-v-constant
+      - value: 0
+        feedback: 'הלוחות מושכים זה את זה, ולכן כדי להרחיק אותם צריך לעשות עבודה. היא נאגרת כאנרגיה בקבל.'
+        misconception: MC-isolated-energy-constant
+    hints:
+      - 'מה נשמר בקבל מנותק: המטען או המתח?'
+
+  - id: Q-2.7-why-work
+    type: mc
+    objectives: [OBJ-2.7-3]
+    qualitative: true
+    prompt: >-
+      למה צריך לעשות עבודה כדי להרחיק את הלוחות של קבל טעון מנותק?
+    choices:
+      - text: הלוחות טעונים במטענים מנוגדים ומושכים זה את זה.
+        correct: true
+        feedback: 'נכון. הרחקה נגד כוח המשיכה דורשת עבודה, והיא נאגרת כתוספת לאנרגיה של הקבל.'
+      - text: לא צריך, כי הקבל מנותק ואין זרם.
+        feedback: 'גם בלי זרם, המטענים על הלוחות מושכים זה את זה. מי שמרחיק אותם עושה עבודה נגד הכוח הזה.'
+        misconception: MC-isolated-energy-constant
+      - text: הלוחות דוחים זה את זה, וצריך להחזיק אותם.
+        feedback: 'למטענים מנוגדים יש משיכה, לא דחייה. אם הלוחות היו נדחים, הם היו מתרחקים לבד והאנרגיה הייתה קטנה.'
+      - text: כדי להתגבר על המשקל של הלוחות.
+        feedback: 'אפשר להרחיק את הלוחות לצדדים, בלי להרים אותם. העבודה כאן היא נגד הכוח החשמלי.'

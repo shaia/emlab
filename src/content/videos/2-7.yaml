@@ -1,0 +1,12 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-2-7-capacitor-energy
+  youtubeId: 45JUkYqNYj0
+  title: 'אנרגיה של קבל'
+  channel: KhanAcademyHebrew
+  lang: he
+  captions: [he]
+  minutes: 6
+  why: סרטון של האקדמיה של חאן בעברית על האנרגיה האגורה בקבל (לפי הכותרת). חפשו את השלב שבו האנרגיה מתקבלת מהשטח שמתחת לגרף, כמו באיור 2.7א.
+  verified: '2026-11-01'

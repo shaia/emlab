@@ -30,6 +30,7 @@ const TASK_LABEL: Record<string, string> = {
   area: 'כשהקבל מחובר לסוללה: הגדילו את שטח הלוחות. מה קרה לקיבול ולמטען?',
   gap: 'כשהקבל מחובר לסוללה: הגדילו את המרחק בין הלוחות פי 2. מה קרה לקיבול?',
   voltage: 'שנו את המתח של הסוללה. מה קרה למטען? ולקיבול?',
+  'double-v-energy': 'כשהקבל מחובר לסוללה: הכפילו את המתח. פי כמה גדלה האנרגיה?',
   'pull-disconnected': 'נתקו את הקבל מהסוללה, ואחר כך הרחיקו את הלוחות. מה קרה למטען, למתח ולשדה?',
   'pull-connected': 'כשהקבל מחובר לסוללה: הרחיקו את הלוחות. מה קרה למטען ולאנרגיה?',
   dielectric: 'הכניסו חומר מבודד בין הלוחות. מה קרה לקיבול?',
@@ -93,6 +94,8 @@ export default function CapacitorLab(props: CapacitorLabProps) {
   const [s, setS] = useState<State>(init);
   const [live, setLive] = useState('');
   const userActed = useRef(false);
+  // the battery voltage when the current step (or reset) began: 'double the voltage' is measured from it
+  const baseVolts = useRef(props.volts ?? 200);
   const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: TASK_LABEL[id] ?? id }));
 
   useEffect(
@@ -106,6 +109,7 @@ export default function CapacitorLab(props: CapacitorLabProps) {
           if (typeof st.volts === 'number') next.volts = st.volts;
           if (typeof st.slab === 'boolean') next.slab = st.slab;
           if (typeof st.connected === 'boolean') next.connected = st.connected;
+          baseVolts.current = next.volts;
           // a step starts from a charged capacitor at the battery's voltage
           const { A, d, kappa } = toSI(next);
           next.q = plateState(A, d, kappa, { V: next.volts }).Q;
@@ -131,6 +135,7 @@ export default function CapacitorLab(props: CapacitorLabProps) {
       if (has('area') && next.connected && patch.area !== undefined && patch.area !== prev.area) done('area');
       if (has('gap') && next.connected && patch.gap !== undefined && patch.gap >= 2 * prev.gap - 1e-9) done('gap');
       if (has('voltage') && next.connected && patch.volts !== undefined && patch.volts !== prev.volts) done('voltage');
+      if (has('double-v-energy') && next.connected && next.volts >= 2 * baseVolts.current) done('double-v-energy');
       if (has('pull-disconnected') && !next.connected && patch.gap !== undefined && patch.gap > prev.gap) done('pull-disconnected');
       if (has('pull-connected') && next.connected && patch.gap !== undefined && patch.gap > prev.gap) done('pull-connected');
       if (has('dielectric') && patch.slab === true) done('dielectric');
@@ -334,6 +339,7 @@ export default function CapacitorLab(props: CapacitorLabProps) {
       tasks={tasks}
       onReset={() => {
         userActed.current = false;
+        baseVolts.current = props.volts ?? 200;
         setS(init());
         setLive('האיור אופס.');
       }}
