@@ -1,0 +1,12 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-2-1-conservative
+  youtubeId: g7yJ4QvPoP8
+  title: 'כח חשמלי ככח משמר'
+  channel: מרכז שוורץ/רייסמן הדרכות למורי פיזיקה
+  lang: he
+  captions: []
+  minutes: 11
+  why: שיעור בעברית מסדרת הדרכה למורים לפיזיקה. לפי תיאור הסרטון, הוא מראה שהכוח החשמלי הוא כוח משמר, ומסיק מכך שאפשר להגדיר אנרגיה פוטנציאלית חשמלית. זה בדיוק המהלך של השיעור, בדרך אחרת.
+  verified: '2026-11-01'

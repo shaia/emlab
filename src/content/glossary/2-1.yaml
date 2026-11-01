@@ -1,0 +1,35 @@
+# Lesson 2.1 terms. Format and rules: see glossary/1-5.yaml.
+
+- id: field-work
+  term: עבודת השדה
+  en: work done by the field
+  symbol: W
+  unit: J
+  definition: העבודה שהכוח החשמלי עושה על מטען כשהוא עובר ממקום למקום. בשדה אחיד W = qEd, כאשר d הוא רכיב ההעתק בכיוון השדה. העבודה חיובית כשהמטען זז בכיוון הכוח, ושלילית כשהוא זז נגדו.
+  lesson: '2.1'
+
+- id: conservative-field
+  term: שדה משמר
+  en: conservative field
+  definition: שדה שבו העבודה שהוא עושה על מטען, בין שתי נקודות, לא תלויה במסלול אלא רק בנקודת ההתחלה ובנקודת הסיום. במסלול סגור העבודה של שדה משמר היא אפס. השדה האלקטרוסטטי ושדה הכבידה הם שדות משמרים.
+  lesson: '2.1'
+
+- id: closed-path
+  term: מסלול סגור
+  en: closed path
+  definition: מסלול שמסתיים בנקודה שבה התחיל.
+  lesson: '2.1'
+
+- id: electric-potential-energy
+  term: אנרגיה פוטנציאלית חשמלית
+  en: electric potential energy
+  symbol: U
+  unit: J
+  definition: אנרגיה שאגורה במערכת של מטענים בגלל המקומות שלהם. כשהשדה עושה עבודה W, האנרגיה הפוטנציאלית משתנה ב-ΔU = −W. לשני מטענים נקודתיים U = kq₁q₂/r, כשבוחרים U = 0 במרחק אינסופי.
+  lesson: '2.1'
+
+- id: reference-point
+  term: נקודת ייחוס
+  en: reference point
+  definition: המקום שבו בוחרים שהאנרגיה הפוטנציאלית (או הפוטנציאל) היא אפס. רק הפרשים של אנרגיה פוטנציאלית הם בעלי משמעות פיזיקלית, ולכן הבחירה חופשית. למטענים נקודתיים בוחרים בדרך כלל את האינסוף.
+  lesson: '2.1'
