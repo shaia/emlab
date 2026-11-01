@@ -1,0 +1,241 @@
+# Lesson 3.7 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/circuits.ts (solveCircuit on each circuit,
+# with each meter as a resistor). The numbers differ on purpose from the figures and the example.
+
+chapter: 3
+questions:
+  # ------------------------------------------------ OBJ-3.7-1: connecting meters, ideal meters
+  - id: Q-3.7-connect-ammeter
+    type: mc
+    objectives: [OBJ-3.7-1]
+    qualitative: true
+    prompt: >-
+      רוצים למדוד את הזרם בנורה שמחוברת לסוללה. איך מחברים את מד הזרם?
+    choices:
+      - text: 'בטור עם הנורה: פותחים את המעגל בנקודה אחת ומכניסים את המד, כך שהזרם עובר דרכו.'
+        correct: true
+        feedback: 'נכון. מד זרם מודד את מה שעובר דרכו, ולכן הוא חייב להיות בתוך המסלול של הזרם.'
+      - text: 'בין שני הקצוות של הנורה, כמו מד מתח.'
+        feedback: 'מד זרם כמעט בלי התנגדות, ולכן משני צדי הנורה הוא כמעט קצר: הזרם עובר בו במקום בנורה.'
+        misconception: MC-ammeter-across
+      - text: 'בין שני ההדקים של הסוללה.'
+        feedback: 'זה קצר של הסוללה דרך המד. מד זרם מחברים בטור, בתוך המסלול של הזרם.'
+        misconception: MC-ammeter-across
+      - text: 'לא משנה איך, כי המד מודד את הזרם בכל מקרה.'
+        feedback: 'משנה מאוד: מחובר לא נכון, מד זרם יוצר קצר ויכול להישרף.'
+
+  - id: Q-3.7-ideal-meters
+    type: mc
+    objectives: [OBJ-3.7-1]
+    qualitative: true
+    prompt: >-
+      מה ההתנגדות של מד זרם אידאלי, ומה של מד מתח אידאלי?
+    choices:
+      - text: 'מד זרם: אפס. מד מתח: אינסופית.'
+        correct: true
+        feedback: 'נכון. כך הם לא משנים את המעגל: מד הזרם בטור הוא כמו תיל, ומד המתח במקביל הוא כמו נתק.'
+      - text: 'מד זרם: אינסופית. מד מתח: אפס.'
+        feedback: 'הפוך. מד זרם בטור עם התנגדות גדולה היה עוצר את הזרם שהוא אמור למדוד, ומד מתח עם התנגדות אפס היה קצר.'
+      - text: 'לשניהם התנגדות אפס, כדי שלא יפריעו לזרם.'
+        feedback: 'מד מתח עם התנגדות אפס, במקביל לרכיב, היה קצר. מד מתח צריך להעביר כמה שפחות זרם.'
+        misconception: MC-meters-never-disturb
+      - text: 'לשניהם התנגדות שווה להתנגדות הרכיב שמודדים.'
+        feedback: 'אז המדים היו משנים את המעגל מאוד. מכשיר טוב הוא כזה שכמעט לא משנה את מה שהוא מודד.'
+
+  - id: Q-3.7-why-high-r
+    type: twotier
+    objectives: [OBJ-3.7-1]
+    qualitative: true
+    prompt: >-
+      למה מד מתח טוב צריך התנגדות גדולה מאוד?
+    choices:
+      - text: 'כדי שיעביר מעט מאוד זרם, וכך כמעט לא ישנה את המעגל שהוא מודד.'
+        correct: true
+        feedback: נכון.
+      - text: 'כדי שיעמוד במתחים גבוהים בלי להישרף.'
+        feedback: 'זו לא הסיבה העיקרית. מה שחשוב הוא שהמד כמעט לא ישנה את הזרמים והמתחים במעגל.'
+      - text: 'כדי שיעצור את הזרם ויוכל "לשקול" את המתח.'
+        feedback: 'מד המתח מחובר במקביל, ולא אמור לעצור את הזרם ברכיב. ההתנגדות הגדולה מבטיחה שכמעט לא יעבור בו זרם משלו.'
+        misconception: MC-voltmeter-in-line
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'הוא מחובר במקביל לרכיב, וכל זרם שעובר בו הוא כמו נגד נוסף במקביל, שמקטין את ההתנגדות השקולה ומשנה את המתח.'
+        correct: true
+        feedback: 'נכון. מד של $10\,\text{M}\Omega$ על רכיב של $100\,\Omega$ כמעט לא משנה כלום; מד של $100\,\Omega$ היה משנה הרבה.'
+      - text: 'מכשיר מדידה לעולם לא משנה את המעגל, וההתנגדות רק מגינה עליו.'
+        feedback: 'כל מכשיר אמיתי משנה את המעגל מעט. ההתנגדות הגדולה היא מה שמקטין את השינוי.'
+        misconception: MC-meters-never-disturb
+      - text: 'הזרם ברכיב חייב לעבור גם דרך מד המתח.'
+        feedback: 'במקביל, הזרם ברכיב לא עובר דרך מד המתח. רק זרם קטן, נפרד, עובר במד עצמו.'
+        misconception: MC-voltmeter-in-line
+
+  - id: Q-3.7-ammeter-drop
+    type: numeric
+    objectives: [OBJ-3.7-1]
+    level: mid
+    prompt: >-
+      למד זרם יש התנגדות של $0.2\,\Omega$, והוא מראה $3\,\text{A}$. מה המתח בין שני ההדקים של מד הזרם? ענו בוולט.
+    answer: 0.6
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. $V = IR = 3\cdot0.2 = 0.6\,\text{V}$. את המתח הזה המד "לוקח" מהמעגל, ולכן מד זרם טוב הוא בעל התנגדות קטנה ככל האפשר.'
+    wrongFeedback: 'מד זרם הוא נגד קטן בטור: $V = IR$.'
+    commonWrong:
+      - value: 15
+        feedback: 'חילקתם את הזרם בהתנגדות. המתח הוא זרם **כפול** התנגדות.'
+      - value: 0.0667
+        feedback: 'חילקתם את ההתנגדות בזרם. המתח הוא $V = IR$.'
+
+  # ------------------------------------------------ OBJ-3.7-2: wrong connections, real meters
+  - id: Q-3.7-voltmeter-in-series
+    type: mc
+    objectives: [OBJ-3.7-2]
+    qualitative: true
+    prompt: >-
+      תלמיד חיבר מד מתח **בטור** עם נורה, לסוללה של $9\,\text{V}$. מה יקרה?
+    choices:
+      - text: 'הנורה כמעט לא תאיר, ומד המתח יראה כמעט $9\,\text{V}$.'
+        correct: true
+        feedback: 'נכון. ההתנגדות הגדולה של המד כמעט עוצרת את הזרם, ולכן כמעט כל המתח של הסוללה נופל עליו.'
+      - text: 'הנורה תאיר כרגיל, ומד המתח יראה את המתח שעליה.'
+        feedback: 'מד מתח בטור לא מודד את המתח של הנורה. ההתנגדות שלו גדולה, והוא כמעט עוצר את הזרם במעגל.'
+        misconception: MC-voltmeter-in-line
+      - text: 'מד המתח יראה אפס, כי לא עובר בו זרם.'
+        feedback: 'עובר בו זרם קטן מאוד, ועל ההתנגדות הגדולה שלו נופל כמעט כל המתח: הוא יראה כמעט $9\,\text{V}$.'
+        misconception: MC-no-current-no-voltage
+      - text: 'מד המתח יישרף, כי כל הזרם עובר בו.'
+        feedback: 'הזרם יהיה קטן מאוד, בדיוק בגלל ההתנגדות הגדולה של המד. אין כאן סכנה.'
+
+  - id: Q-3.7-ammeter-across
+    type: twotier
+    objectives: [OBJ-3.7-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      תלמידה חיברה מד זרם **בין שני הקצוות** של נורה דולקת, שמחוברת לסוללה. מה יקרה?
+    choices:
+      - text: 'הנורה כמעט תכבה, וזרם גדול מאוד יעבור במד הזרם.'
+        correct: true
+        feedback: נכון.
+      - text: 'מד הזרם יראה את הזרם בנורה, והנורה תמשיך להאיר.'
+        feedback: 'מד זרם מודד את מה שעובר **דרכו**. משני צדי הנורה, רוב הזרם עובר בו במקום בנורה.'
+        misconception: MC-ammeter-across
+      - text: 'שום דבר לא ישתנה, כי מד זרם לא משפיע על המעגל.'
+        feedback: 'מד זרם הוא כמעט תיל. תיל משני צדי נורה הוא קצר שעוקף אותה (שיעור 3.5).'
+        misconception: MC-meters-never-disturb
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'למד זרם התנגדות קטנה מאוד, ולכן הוא עוקף את הנורה כמו תיל: זה כמעט קצר של הסוללה.'
+        correct: true
+        feedback: 'נכון. רק ההתנגדות הקטנה של המד וההתנגדות הפנימית של הסוללה מגבילות את הזרם, ומד זרם כזה יכול להישרף.'
+      - text: 'מד הזרם "שואב" את הזרם מהנורה.'
+        feedback: 'אין כאן שאיבה: הזרם מתחלק בין שני מסלולים, וכמעט כולו עובר במסלול עם ההתנגדות הקטנה, המד.'
+      - text: 'למד זרם יש התנגדות גדולה, ולכן הוא חוסם את הזרם.'
+        feedback: 'הפוך: למד זרם התנגדות קטנה מאוד. התנגדות גדולה יש למד מתח.'
+
+  - id: Q-3.7-loading
+    type: numeric
+    objectives: [OBJ-3.7-2]
+    level: bagrut
+    prompt: >-
+      שני נגדים של $20\,\text{k}\Omega$ מחוברים בטור לסוללה אידאלית של $9\,\text{V}$. מחברים מד מתח שההתנגדות שלו $20\,\text{k}\Omega$ בין שני הקצוות של אחד הנגדים. מה הוא יראה? ענו בוולט.
+    answer: 3
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. המד והנגד במקביל: $10\,\text{k}\Omega$. בטור עם $20\,\text{k}\Omega$: הזרם $9/30000 = 0.3\,\text{mA}$, והמתח על הזוג $0.3\,\text{mA}\cdot10\,\text{k}\Omega = 3\,\text{V}$, ולא $4.5\,\text{V}$ כמו בלי המד.'
+    wrongFeedback: 'המד הוא נגד של $20\,\text{k}\Omega$ במקביל לנגד שהוא מודד. מצאו את ההתנגדות השקולה של הזוג, ואז את חלוקת המתח.'
+    commonWrong:
+      - value: 4.5
+        feedback: 'זה המתח בלי המד. מד שההתנגדות שלו שווה לזו של הנגד משנה את המעגל: הוא מקטין את ההתנגדות של החלק שהוא מודד.'
+        misconception: MC-meters-never-disturb
+      - value: 6
+        feedback: 'זה המתח על הנגד **השני**, זה שהמד לא מחובר אליו.'
+
+  - id: Q-3.7-better-voltmeter
+    type: mc
+    objectives: [OBJ-3.7-2]
+    qualitative: true
+    prompt: >-
+      מודדים את המתח על נגד של $50\,\text{k}\Omega$ במעגל. איזה מד מתח ייתן את הקריאה הקרובה ביותר למתח שהיה שם בלי המד?
+    choices:
+      - text: 'מד שההתנגדות שלו $10\,\text{M}\Omega$.'
+        correct: true
+        feedback: 'נכון. ההתנגדות שלו גדולה פי 200 מזו של הנגד, ולכן הוא מעביר זרם זניח ומשנה את המעגל רק מעט.'
+      - text: 'מד שההתנגדות שלו $50\,\text{k}\Omega$, שווה לנגד.'
+        feedback: 'מד כזה, במקביל לנגד, מקטין את ההתנגדות של החלק לחצי, ומשנה מאוד את המתח.'
+        misconception: MC-meters-never-disturb
+      - text: 'מד שההתנגדות שלו $1\,\text{k}\Omega$.'
+        feedback: 'מד כזה במקביל לנגד של $50\,\text{k}\Omega$ הוא כמעט קצר עליו: הקריאה תהיה רחוקה מאוד מהמתח האמיתי.'
+      - text: 'כולם ייתנו אותה קריאה, כי מד מתח מודד בלי להשפיע.'
+        feedback: 'כל מד אמיתי משפיע מעט. ככל שההתנגדות שלו גדולה יותר ביחס לנגד, ההשפעה קטנה יותר.'
+        misconception: MC-meters-never-disturb
+
+  # ------------------------------------------------ OBJ-3.7-3: the rheostat
+  - id: Q-3.7-rheostat-up
+    type: mc
+    objectives: [OBJ-3.7-3]
+    qualitative: true
+    prompt: >-
+      נגד משתנה מחובר בטור לנורה ולסוללה. מגדילים את ההתנגדות של הנגד המשתנה. מה קורה?
+    choices:
+      - text: 'הזרם קטן, המתח על הנורה קטן, והיא מאירה פחות.'
+        correct: true
+        feedback: 'נכון. ההתנגדות השקולה גדלה, הזרם במעגל קטן, וחלק גדול יותר מהמתח נופל על הנגד המשתנה.'
+      - text: 'הנורה מאירה יותר, כי יש יותר התנגדות במעגל.'
+        feedback: 'התנגדות נוספת בטור מקטינה את הזרם בכל המעגל, גם בנורה.'
+        misconception: MC-rheostat-up-brighter
+      - text: 'הזרם לא משתנה, אבל המתח על הנורה קטן.'
+        feedback: 'בנורה אוהמית, אם המתח עליה קטן, גם הזרם בה קטן. והזרם בטור שווה בכל המעגל.'
+        misconception: MC-battery-constant-current
+      - text: 'שום דבר לא משתנה, כי הסוללה נותנת אותו מתח.'
+        feedback: 'הסוללה נותנת אותו מתח לכל המעגל, אבל הוא מתחלק עכשיו אחרת: יותר לנגד המשתנה, פחות לנורה.'
+
+  - id: Q-3.7-rheostat-power
+    type: numeric
+    objectives: [OBJ-3.7-3]
+    level: mid
+    prompt: >-
+      נורה של $4\,\Omega$ מחוברת בטור לנגד משתנה ולסוללה אידאלית של $6\,\text{V}$. הנגד המשתנה מכוון ל-$8\,\Omega$. מה ההספק של הנורה? ענו בוואט.
+    answer: 1
+    unit: W
+    tolerance: 0.03
+    correctFeedback: 'נכון. $I = \dfrac{6}{4 + 8} = 0.5\,\text{A}$, ו-$P = I^2R = 0.25\cdot4 = 1\,\text{W}$.'
+    wrongFeedback: 'מצאו את הזרם בטור, $I = \varepsilon/(R_{\text{L}} + R_{\text{v}})$, ואז $P = I^2R$ בנורה.'
+    commonWrong:
+      - value: 9
+        feedback: 'חישבתם כאילו הנורה לבד על $6\,\text{V}$: $6^2/4$. הנגד המשתנה בטור לוקח חלק מהמתח.'
+        misconception: MC-battery-constant-current
+      - value: 2
+        feedback: 'זה המתח על הנורה, $IR = 0.5\cdot4$. ההספק הוא $I^2R$.'
+
+  - id: Q-3.7-rheostat-range
+    type: numeric
+    objectives: [OBJ-3.7-3]
+    level: mid
+    prompt: >-
+      נורה של $4\,\Omega$ מחוברת בטור לנגד משתנה שאפשר לכוון מ-$0$ עד $20\,\Omega$, ולסוללה אידאלית של $6\,\text{V}$. מה הזרם **הקטן** ביותר שאפשר לקבל בנורה? ענו באמפר.
+    answer: 0.25
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. הזרם קטן ביותר כשהנגד המשתנה בהתנגדות המרבית: $I = \dfrac{6}{4 + 20} = 0.25\,\text{A}$. ובאפס: $6/4 = 1.5\,\text{A}$.'
+    wrongFeedback: 'הזרם הקטן ביותר מתקבל בהתנגדות המרבית של הנגד המשתנה, בטור עם הנורה.'
+    commonWrong:
+      - value: 0.3
+        feedback: 'שכחתם את הנורה: $6/20$. הנגד המשתנה והנורה בטור, וההתנגדויות מתחברות.'
+      - value: 1.5
+        feedback: 'זה הזרם **הגדול** ביותר, כשהנגד המשתנה באפס.'
+
+  - id: Q-3.7-rheostat-rank
+    type: rank
+    objectives: [OBJ-3.7-3]
+    qualitative: true
+    prompt: >-
+      נורה מחוברת בטור לנגד משתנה ולסוללה. סדרו את המצבים לפי הבהירות של הנורה, מהחזקה לחלשה.
+    items:
+      - { id: zero, label: 'הנגד המשתנה ב-$0\,\Omega$' }
+      - { id: mid, label: 'הנגד המשתנה ב-$10\,\Omega$' }
+      - { id: high, label: 'הנגד המשתנה ב-$30\,\Omega$' }
+    order: [zero, mid, high]
+    correctFeedback: 'נכון. ככל שהנגד המשתנה גדול יותר, הזרם בטור קטן יותר, והנורה מאירה פחות.'
+    wrongFeedback: 'בטור, הנגד המשתנה מוסיף התנגדות למעגל. התנגדות שקולה גדולה יותר נותנת זרם קטן יותר.'

@@ -133,7 +133,8 @@ const SUB: Record<string, string> = { '0': '₀', '1': '₁', '2': '₂', '3': '
 export function labelOf(id: string): string {
   const m = id.match(/^([A-Za-z]+)(\d*)$/);
   if (!m) return id;
-  const head = m[1] === 'eps' ? 'ε' : m[1];
+  // ε for a battery; Rᵥ (a subscript v) for a rheostat
+  const head = m[1] === 'eps' ? 'ε' : m[1] === 'Rv' ? 'Rᵥ' : m[1];
   return head + m[2].split('').map((d) => SUB[d] ?? d).join('');
 }
 

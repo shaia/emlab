@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-3-7-rheostat
+  youtubeId: WWYhDSfMDOQ
+  title: 'חשמל - מעגלי זרם - חיבור ריאוסטטי 1 - חיבור ריאוסטטי'
+  channel: מרכז שוורץ/רייסמן הדרכות למורי פיזיקה
+  lang: he
+  captions: []
+  minutes: 1
+  why: 'הדגמה קצרה בעברית איך מחברים נגד משתנה במעגל בחיבור ריאוסטטי (לפי תיאור הסרטון). בדקו לאן מחוברים התילים, והשוו לשרטוט הריאוסטט שבשיעור.'
+  verified: '2026-11-01'
+
+- id: v-3-7-meters
+  youtubeId: yE3eQ6q39f4
+  title: 'Voltmeters and Ammeters | Circuits | Physics | Khan Academy'
+  channel: khanacademymedicine
+  lang: en
+  captions: [en, he]
+  minutes: 8
+  why: 'שיעור באנגלית של האקדמיה של חאן על המכשירים שמודדים מתח וזרם (לפי תיאור הסרטון; יש כתוביות בעברית). השוו לכללי החיבור שבשיעור: אמפרמטר בטור, וולטמטר במקביל.'
+  verified: '2026-11-01'
