@@ -34,6 +34,8 @@ test.describe('live figures', () => {
     await fig.scrollIntoViewIfNeeded();
     await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
     await freezeSteps(page);
+    // a text step may have changed the figure before the freeze: start from its own state
+    await fig.getByRole('button', { name: 'איפוס' }).click();
     const canvas = fig.locator('canvas');
     const readout = fig.locator('.sim-readout');
     await expect(readout).toContainText('V = 6·10⁴ V');
@@ -56,6 +58,8 @@ test.describe('live figures', () => {
     await fig.scrollIntoViewIfNeeded();
     await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
     await freezeSteps(page);
+    // a text step may have changed the figure before the freeze: start from its own state
+    await fig.getByRole('button', { name: 'איפוס' }).click();
     const canvas = fig.locator('canvas');
     const readout = fig.locator('.sim-readout');
     // mid-gap: 400 V across 0.8 m

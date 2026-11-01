@@ -37,6 +37,8 @@ test.describe('live figure', () => {
     await fig.scrollIntoViewIfNeeded();
     await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
     await freezeSteps(page);
+    // a text step may have changed the figure before the freeze: start from its own state
+    await fig.getByRole('button', { name: 'איפוס' }).click();
     const readout = fig.locator('.sim-readout');
     const [, gap, volts] = [0, 1, 2].map((i) => fig.locator('input[type=range]').nth(i));
     const battery = fig.getByRole('button', { name: 'מחובר לסוללה' });

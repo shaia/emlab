@@ -34,6 +34,8 @@ test.describe('live figures', () => {
     await fig.scrollIntoViewIfNeeded();
     await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
     await freezeSteps(page);
+    // a text step may have changed the figure before the freeze: start from its own state
+    await fig.getByRole('button', { name: 'איפוס' }).click();
     const readout = fig.locator('.sim-readout');
     // 2 μC, 30 cm: V = kQ/r = 6·10⁴ V, E = kQ/r² = 2·10⁵ N/C
     await expect(readout).toContainText('V = 6·10⁴ V');
@@ -58,6 +60,8 @@ test.describe('live figures', () => {
     await fig.scrollIntoViewIfNeeded();
     await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
     await freezeSteps(page);
+    // a text step may have changed the figure before the freeze: start from its own state
+    await fig.getByRole('button', { name: 'איפוס' }).click();
     const readout = fig.locator('.sim-readout');
     const canvas = fig.locator('canvas');
     await canvas.focus();

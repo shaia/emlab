@@ -40,6 +40,8 @@ test.describe('live figures', () => {
     await fig.scrollIntoViewIfNeeded();
     await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
     await freezeSteps(page);
+    // a text step may have changed the figure before the freeze: start from its own state
+    await fig.getByRole('button', { name: 'איפוס' }).click();
     const readout = fig.locator('.sim-readout');
     const launch = fig.getByRole('button', { name: 'שגרו' });
     const [volts, , gap] = [0, 1, 2].map((i) => fig.locator('input[type=range]').nth(i));
@@ -69,6 +71,8 @@ test.describe('live figures', () => {
     await fig.scrollIntoViewIfNeeded();
     await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
     await freezeSteps(page);
+    // a text step may have changed the figure before the freeze: start from its own state
+    await fig.getByRole('button', { name: 'איפוס' }).click();
     const readout = fig.locator('.sim-readout');
     await fig.getByRole('button', { name: 'פרוטון', exact: true }).click();
     await setSlider(fig.locator('input[type=range]').nth(1), 500);
@@ -83,6 +87,8 @@ test.describe('live figures', () => {
     await fig.scrollIntoViewIfNeeded();
     await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
     await freezeSteps(page);
+    // a text step may have changed the figure before the freeze: start from its own state
+    await fig.getByRole('button', { name: 'איפוס' }).click();
     const readout = fig.locator('.sim-readout');
     // 5 MeV alpha on gold: r = kqQ/K = 4.55·10⁻¹⁴ m
     await fig.getByRole('button', { name: 'שגרו' }).click();

@@ -43,6 +43,8 @@ test.describe('live figures', () => {
     await fig.scrollIntoViewIfNeeded();
     await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
     await freezeSteps(page);
+    // a text step may have changed the figure before the freeze: start from its own state
+    await fig.getByRole('button', { name: 'איפוס' }).click();
     const canvas = fig.locator('canvas');
     const readout = fig.locator('.sim-readout');
     await canvas.focus();
@@ -77,6 +79,8 @@ test.describe('live figures', () => {
     await fig.scrollIntoViewIfNeeded();
     await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
     await freezeSteps(page);
+    // a text step may have changed the figure before the freeze: start from its own state
+    await fig.getByRole('button', { name: 'איפוס' }).click();
     const canvas = fig.locator('canvas');
     const readout = fig.locator('.sim-readout');
     await canvas.focus();
@@ -98,6 +102,8 @@ test.describe('live figures', () => {
     await fig.scrollIntoViewIfNeeded();
     await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
     await freezeSteps(page);
+    // a text step may have changed the figure before the freeze: start from its own state
+    await fig.getByRole('button', { name: 'איפוס' }).click();
     const canvas = fig.locator('canvas');
     const readout = fig.locator('.sim-readout');
     // A is 30 cm from Q: U = kQq/r = 6·10⁻⁵ J

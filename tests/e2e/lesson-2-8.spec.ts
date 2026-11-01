@@ -40,6 +40,8 @@ test.describe('live figures', () => {
     await fig.scrollIntoViewIfNeeded();
     await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
     await freezeSteps(page);
+    // a text step may have changed the figure before the freeze: start from its own state
+    await fig.getByRole('button', { name: 'איפוס' }).click();
     const readout = fig.locator('.sim-readout');
     // 2 μF and 3 μF on 12 V
     await expect(readout).toContainText('Ceq = 5 μF');
@@ -68,6 +70,8 @@ test.describe('live figures', () => {
     await fig.scrollIntoViewIfNeeded();
     await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
     await freezeSteps(page);
+    // a text step may have changed the figure before the freeze: start from its own state
+    await fig.getByRole('button', { name: 'איפוס' }).click();
     const readout = fig.locator('.sim-readout');
     // scrolling here can bring the "after the switch" step to mid-screen: start again from a charged C₁
     await fig.getByRole('button', { name: 'איפוס' }).click();

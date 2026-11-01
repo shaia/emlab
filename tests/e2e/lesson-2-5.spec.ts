@@ -40,6 +40,8 @@ test.describe('live figures', () => {
     await fig.scrollIntoViewIfNeeded();
     await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
     await freezeSteps(page);
+    // a text step may have changed the figure before the freeze: start from its own state
+    await fig.getByRole('button', { name: 'איפוס' }).click();
     const canvas = fig.locator('canvas');
     const readout = fig.locator('.sim-readout');
     // 2 μC on a 20 cm sphere: kQ/R = 9·10⁴ V; at 45 cm kQ/r = 4·10⁴ V
@@ -66,6 +68,8 @@ test.describe('live figures', () => {
     await fig.scrollIntoViewIfNeeded();
     await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
     await freezeSteps(page);
+    // a text step may have changed the figure before the freeze: start from its own state
+    await fig.getByRole('button', { name: 'איפוס' }).click();
     const readout = fig.locator('.sim-readout');
     const wire = fig.getByRole('button', { name: 'חיבור בתיל' });
     const earth = fig.getByRole('button', { name: 'הארקה של כדור 2' });
