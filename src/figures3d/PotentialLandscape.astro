@@ -1,0 +1,7 @@
+---
+/** The potential landscape for lesson MDX: <Spread figure={PotentialLandscape} figureProps={{…}}>. Loads three.js lazily. */
+import PotentialLandscape, { type PotentialLandscapeProps } from './PotentialLandscape';
+type Props = PotentialLandscapeProps;
+---
+
+<PotentialLandscape client:visible {...Astro.props} />

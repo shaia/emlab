@@ -257,6 +257,31 @@ describe('scaling (the dimensional proxy)', () => {
 });
 
 describe('convergence', () => {
+  it('E is minus the gradient of V: central differences of potentialAt converge to fieldAt at second order', () => {
+    const cs: PointCharge[] = [
+      { x: -0.4, y: 0, q: 2 * uC },
+      { x: 0.4, y: 0, q: -2 * uC },
+    ];
+    const gradErr = (x: number, y: number, h: number) => {
+      const gx = -(potentialAt(cs, x + h, y) - potentialAt(cs, x - h, y)) / (2 * h);
+      const gy = -(potentialAt(cs, x, y + h) - potentialAt(cs, x, y - h)) / (2 * h);
+      const [ex, ey] = fieldAt(cs, x, y);
+      return Math.hypot(gx - ex, gy - ey) / Math.hypot(ex, ey);
+    };
+    for (const [x, y] of [
+      [0.1, 0.2],
+      [0.3, -0.25],
+      [-0.7, 0.4],
+    ] as const) {
+      const coarse = gradErr(x, y, 4e-3);
+      const fine = gradErr(x, y, 2e-3);
+      // halving the step quarters the error: the field is the downhill slope of V, nothing else
+      expect(coarse / fine).toBeGreaterThan(3.5);
+      expect(coarse / fine).toBeLessThan(4.5);
+      expect(fine).toBeLessThan(1e-3);
+    }
+  });
+
   it('path-integrated work converges to the exact value at second order', () => {
     const src: PointCharge[] = [{ x: 0, y: 0, q: uC }];
     const field = (x: number, y: number) => fieldAt(src, x, y);

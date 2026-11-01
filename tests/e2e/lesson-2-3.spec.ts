@@ -19,13 +19,15 @@ test.describe('live figures', () => {
   test('every figure draws, in LTR physics space', async ({ page }) => {
     await page.goto(LESSON);
     const canvases = page.locator('.sim-stage canvas');
-    expect(await canvases.count()).toBe(2);
+    expect(await canvases.count()).toBe(3);
+    // the two potential maps are 2D canvases; the landscape (2.3ג) is WebGL and is checked below
     for (let i = 0; i < 2; i++) {
       const c = canvases.nth(i);
       await c.scrollIntoViewIfNeeded();
       await expect(c).toHaveCSS('direction', 'ltr');
       await expect.poll(() => inked(c)).toBeGreaterThan(200);
     }
+    await expect(canvases.nth(2)).toHaveCSS('direction', 'ltr');
   });
 
   test('dragging P along an equipotential circle keeps V fixed and ticks the task', async ({ page }) => {
@@ -126,5 +128,63 @@ test.describe('questions', () => {
     await expect(q).toHaveClass(/is-wrong/);
     const a = (await progress(page)).attempts.at(-1);
     expect(a).toMatchObject({ qid: 'Q-2.3-dipole-force', correct: false, confident: true, misconception: 'MC-zero-potential-zero-field' });
+  });
+});
+
+test.describe('the potential landscape (2.3ג)', () => {
+  /** P to the midpoint of the like pair by keyboard: it starts 30 cm above it */
+  const toSaddle = async (page: import('@playwright/test').Page, fig: import('@playwright/test').Locator) => {
+    await fig.getByRole('button', { name: 'שני מטענים זהים', exact: true }).click();
+    await fig.locator('canvas').focus();
+    for (let i = 0; i < 6; i++) await page.keyboard.press('ArrowDown');
+  };
+
+  test('the 3D landscape loads lazily; flat ground is zero field at a potential far from zero', async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (e) => errors.push(String(e)));
+    await page.goto(LESSON);
+    const fig = page.locator('#fig-2-3c');
+    await fig.scrollIntoViewIfNeeded();
+    await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
+    await freezeSteps(page);
+    await fig.getByRole('button', { name: 'איפוס' }).click();
+    // WebGL is available in the test browser: the figure switches to the 3D view
+    await expect(fig.locator('canvas')).toHaveAttribute('data-view', '3d');
+    const readout = fig.locator('.sim-readout');
+    await expect(readout).toContainText('V = 6·10⁴ V');
+    await toSaddle(page, fig);
+    await expect(readout).toContainText('E = 0');
+    await expect(readout).toContainText('V = 9·10⁴ V');
+    expect((await progress(page)).tasks['fig-2-3c:flat-spot']).toBeTruthy();
+    // flatten the landscape back into the map and raise it again: the readout does not change
+    await fig.getByRole('button', { name: 'מפה שטוחה' }).click();
+    await expect(fig.locator('canvas')).toHaveAttribute('data-lift', '0');
+    await fig.getByRole('button', { name: 'נוף של גבהים' }).click();
+    await expect(fig.locator('canvas')).toHaveAttribute('data-lift', '1');
+    await expect(readout).toContainText('V = 9·10⁴ V');
+    expect((await progress(page)).tasks['fig-2-3c:flatten']).toBeTruthy();
+    // in the dipole P sits on V = 0, on the steepest slope
+    await fig.getByRole('button', { name: 'דיפול', exact: true }).click();
+    await fig.locator('canvas').focus();
+    for (let i = 0; i < 6; i++) await page.keyboard.press('ArrowDown');
+    await expect(readout).toContainText('V = 0');
+    await expect(readout).toContainText('2.25·10⁵ N/C');
+    expect(errors).toEqual([]);
+  });
+
+  test('still mode draws the landscape in 2D, with the same readout', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('emlab:settings', JSON.stringify({ still: true, theme: 'auto' })));
+    await page.goto(LESSON);
+    const fig = page.locator('#fig-2-3c');
+    await fig.scrollIntoViewIfNeeded();
+    await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
+    await freezeSteps(page);
+    await fig.getByRole('button', { name: 'איפוס' }).click();
+    const canvas = fig.locator('canvas');
+    await expect(canvas).toHaveAttribute('data-view', '2d');
+    await expect.poll(() => inked(canvas)).toBeGreaterThan(200);
+    await toSaddle(page, fig);
+    await expect(fig.locator('.sim-readout')).toContainText('E = 0');
+    await expect(fig.locator('.sim-readout')).toContainText('V = 9·10⁴ V');
   });
 });
