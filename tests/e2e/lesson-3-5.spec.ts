@@ -143,7 +143,7 @@ test.describe('questions', () => {
     const q = page.locator('[data-qid="Q-3.5-short-bulb"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(q);
-    await q.locator('label', { hasText: 'שתיהן ממשיכות להאיר כמו קודם' }).click();
+    await q.locator('label', { hasText: 'שלושתן ממשיכות להאיר כמו קודם' }).click();
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-wrong/);
     const a = (await progress(page)).attempts.at(-1);

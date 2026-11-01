@@ -56,6 +56,7 @@ const PRESET_LABEL: Record<string, string> = {
   'parallel-pair': 'במקביל',
   mixed3: 'מעורב',
   blank: 'לוח ריק',
+  emf: 'סוללה אמיתית',
 };
 
 const TOOL_LABEL: Record<Tool, string> = {
@@ -100,6 +101,9 @@ const TASK_LABEL: Record<string, string> = {
   'mixed-add': 'במעורב: סגרו את המפסק כדי להוסיף את L₃. מה קורה ל-L₁ ול-L₂?',
   'build-series': 'בנו מעגל שבו שתי נורות דולקות בטור.',
   'build-parallel': 'בנו מעגל שבו שתי נורות דולקות במקביל.',
+  'load-down': 'הקטינו את ההתנגדות החיצונית R₁. מה קורה לזרם, ומה למתח בין ההדקים?',
+  'r-zero': 'הקטינו את ההתנגדות הפנימית לאפס. מה מראה עכשיו מד המתח?',
+  'short-emf': 'סגרו את המפסק, שמחבר את שני הצדדים של R₁ בתיל. מה הזרם, ומה המתח בין ההדקים?',
 };
 
 export interface CircuitLabProps {
@@ -303,14 +307,18 @@ export default function CircuitLab(props: CircuitLabProps) {
     if (has('short-L2') && st.preset === 'series-pair' && closedS) done('short-L2');
     if (has('add-parallel') && st.preset === 'parallel-pair' && closedS) done('add-parallel');
     if (has('mixed-add') && st.preset === 'mixed3' && closedS) done('mixed-add');
+    if (has('short-emf') && st.preset === 'emf' && closedS) done('short-emf');
     const battery = b.parts.find((p) => p.kind === 'battery');
     const emf = battery?.emf ?? 0;
     const lit = b.parts.filter((p) => p.kind === 'bulb' && Math.abs(so.parts[p.id]?.I ?? 0) > 1e-6);
-    if (lit.length >= 2 && emf > 0) {
-      const r = lit.map((p) => so.parts[p.id]);
-      // series: one current through both, each with only part of the EMF; parallel: each across the whole EMF
-      const series = r.some((a, i) => r.some((c, j) => i < j && Math.abs(Math.abs(a.I) - Math.abs(c.I)) < 1e-9 && Math.abs(a.V) < 0.99 * emf && Math.abs(c.V) < 0.99 * emf));
-      const parallel = r.filter((a) => Math.abs(Math.abs(a.V) - emf) < 0.01 * emf).length >= 2;
+    if (lit.length >= 2 && emf > 0 && battery) {
+      const Ibat = Math.abs(so.parts[battery.id].I);
+      // series: two bulbs that each carry the whole battery current, each with only part of the EMF
+      const whole = lit.filter((p) => Math.abs(Math.abs(so.parts[p.id].I) - Ibat) < 1e-9 && Math.abs(so.parts[p.id].V) < 0.99 * emf);
+      const series = whole.length >= 2;
+      // parallel: two bulbs whose ends sit on the same two wire-joined points
+      const ends = lit.map((p) => [groupKey(b, nodeOf(b, p.from)), groupKey(b, nodeOf(b, p.to))].sort().join('|'));
+      const parallel = ends.some((e, i) => ends.indexOf(e) !== i);
       if (has('build-series') && series) done('build-series');
       if (has('build-parallel') && parallel) done('build-parallel');
     }
@@ -643,6 +651,8 @@ export default function CircuitLab(props: CircuitLabProps) {
       const originalBulb = presetOf(prev.preset).board.parts.find((q) => q.kind === 'bulb');
       // doubled from the preset's own 6 V, with the bulb still as the preset left it
       if (key === 'emf' && has('double-emf') && original?.emf === 6 && v === 12 && bulb?.R === originalBulb?.R) done('double-emf');
+      if (key === 'R' && has('load-down') && before?.kind === 'resistor' && v < (original?.R ?? 0)) done('load-down');
+      if (key === 'r' && has('r-zero') && v === 0) done('r-zero');
       // below the preset's own resistance, at the doubled voltage
       if (key === 'R' && has('lower-R') && before?.kind === 'bulb' && v < (originalBulb?.R ?? 6) && next.board.parts.some((q) => q.kind === 'battery' && q.emf === 12)) done('lower-R');
       return next;

@@ -177,6 +177,31 @@ const mixed3: Preset = {
   },
 };
 
+/**
+ * A battery with internal resistance r: a voltmeter across its terminals, an ammeter, a load R₁,
+ * and a switch that shorts the load (3.6). The loop runs through the battery for the profile.
+ */
+const emf: Preset = {
+  board: {
+    cols: 6,
+    rows: 3,
+    parts: [
+      { id: 'eps', kind: 'battery', from: [0, 2], to: [0, 1], emf: 12, r: 1, locked: true },
+      ...run('wl', [0, 1], [0, 0], [1, 0], [2, 0]),
+      { id: 'V1', kind: 'voltmeter', from: [1, 0], to: [1, 1], locked: true },
+      w('wv', [1, 1], [1, 2]),
+      { id: 'A1', kind: 'ammeter', from: [2, 0], to: [3, 0], locked: true },
+      ...run('wt', [3, 0], [4, 0], [5, 0]),
+      { id: 'S', kind: 'switch', from: [3, 0], to: [3, 1], closed: false, locked: true },
+      w('ws', [3, 1], [3, 2]),
+      { id: 'R1', kind: 'resistor', from: [5, 0], to: [5, 1], R: 5, locked: true },
+      w('wr', [5, 1], [5, 2]),
+      ...run('wb', [5, 2], [4, 2], [3, 2], [2, 2], [1, 2], [0, 2]),
+    ],
+  },
+  loops: { main: [[0, 2], [0, 0], [5, 0], [5, 2]] },
+};
+
 /** an empty builder board with a battery (3.5) */
 const blank: Preset = {
   board: {
@@ -197,4 +222,5 @@ export const PRESETS: Record<string, Preset> = {
   'parallel-pair': parallelPair,
   mixed3,
   blank,
+  emf,
 };
