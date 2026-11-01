@@ -1,0 +1,37 @@
+# Lesson 3.6 terms. Format and rules: see glossary/1-5.yaml.
+
+- id: emf
+  term: כוח אלקטרו-מניע
+  en: electromotive force (emf)
+  symbol: ε
+  unit: V
+  definition: 'העבודה שהסוללה (או כל מקור) עושה על כל קולון של מטען שעובר דרכה, ε = W/q. למרות השם, זה לא כוח: היחידה היא וולט, ג''אול לקולון. בקיצור כא"מ. כשלא זורם זרם, מתח ההדקים שווה לכא"מ.'
+  lesson: '3.6'
+
+- id: internal-resistance
+  term: התנגדות פנימית
+  en: internal resistance
+  symbol: r
+  unit: Ω
+  definition: ההתנגדות של החומרים שבתוך הסוללה עצמה. הזרם שעובר בסוללה עובר גם בה, ולכן חלק מהכא"מ "נופל" בתוך הסוללה, Ir, וחלק מהאנרגיה הופך בה לחום.
+  lesson: '3.6'
+
+- id: terminal-voltage
+  term: מתח ההדקים
+  en: terminal voltage
+  symbol: V
+  unit: V
+  definition: המתח בין שני ההדקים של סוללה, זה שמד מתח המחובר אליהם מראה. כשהסוללה מספקת זרם I, מתח ההדקים הוא V = ε − Ir, קטן מהכא"מ.
+  lesson: '3.6'
+
+- id: load
+  term: עומס
+  en: load
+  definition: 'הרכיבים שהסוללה מזינה, מחוץ לה: נורה, נגד, מנוע. "להגדיל את העומס" פירושו לחבר רכיבים שמושכים יותר זרם, כלומר להקטין את ההתנגדות החיצונית.'
+  lesson: '3.6'
+
+- id: short-circuit-current
+  term: זרם קצר
+  en: short-circuit current
+  definition: הזרם שעובר בסוללה כשמחברים את ההדקים שלה בתיל בלי התנגדות. רק ההתנגדות הפנימית מגבילה אותו, I = ε/r, ומתח ההדקים יורד לאפס.
+  lesson: '3.6'

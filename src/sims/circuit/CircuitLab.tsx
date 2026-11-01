@@ -1123,7 +1123,8 @@ function drawPart(
     const away = vert ? (part.from[0] === cols - 1 ? 1 : -1) : part.from[1] === 0 ? -1 : 1;
     const nx = vert ? away : 0;
     const ny = vert ? 0 : away;
-    const off = 0.2 * c;
+    // outside the dashed box of the internal resistance, when there is one
+    const off = (part.r ? 0.38 : 0.2) * c;
     ctx.fillText('+', mx + ux * h * 2.2 + nx * off, my + uy * h * 2.2 + ny * off);
     ctx.fillText('−', mx - ux * h * 2.2 + nx * off, my - uy * h * 2.2 + ny * off);
   }
@@ -1138,7 +1139,7 @@ function drawPart(
     const side = vertical ? (part.from[0] === cols - 1 ? -1 : 1) : part.from[1] === 0 ? 1 : -1;
     // clear of the symbol: round symbols (bulb, meters) reach further from the wire
     const round = part.kind === 'bulb' || part.kind === 'ammeter' || part.kind === 'voltmeter';
-    const off = (part.kind === 'battery' ? 0.3 : round ? 0.34 : 0.27) * c + (round && !vertical ? 4 : 0);
+    const off = (part.kind === 'battery' ? (part.r ? 0.36 : 0.3) : round ? 0.34 : 0.27) * c + (round && !vertical ? 4 : 0);
     const lx = vertical ? mx + side * off : mx;
     const ly = vertical ? my : my + side * off;
     ctx.textAlign = vertical ? (side > 0 ? 'left' : 'right') : 'center';
@@ -1248,8 +1249,14 @@ function drawProfile(
   const box = g.strip!;
   const pts = expandLoop(loop);
   const n = pts.length;
-  const lo = Math.min(0, vmin);
-  const hi = Math.max(vmax, lo + 1);
+  // the levels the profile passes through: node potentials, and the peak inside a real battery
+  const levels = [0, ...pts.map((pt) => Vs[nodeOf(b, pt)])];
+  for (let k = 0; k < n; k++) {
+    const part = b.parts.find((q) => sameEdge(q, pts[k], pts[(k + 1) % n]));
+    if (part?.kind === 'battery' && part.r) levels.push(Vs[nodeOf(b, part.from)] + (part.emf ?? 0));
+  }
+  const lo = Math.min(0, vmin, ...levels);
+  const hi = Math.max(vmax, lo + 1, ...levels);
   const X = (u: number) => box.x + (u / n) * box.w;
   const Y = (v: number) => box.y + box.h - ((v - lo) / (hi - lo)) * box.h;
   ctx.save();
@@ -1266,8 +1273,11 @@ function drawProfile(
   ctx.direction = 'ltr';
   ctx.textAlign = 'right';
   ctx.textBaseline = 'middle';
-  for (const v of [lo, hi]) {
-    ctx.fillText(`${sci(v)} V`, box.x - 4, Y(v));
+  // one tick per distinct level, skipping any closer than 8% of the range to one already drawn
+  const ticks: number[] = [];
+  for (const v of [lo, hi, ...levels].sort((a, c) => c - a)) if (ticks.every((t) => Math.abs(t - v) > 0.08 * (hi - lo))) ticks.push(v);
+  for (const v of ticks) {
+    ctx.fillText(`${sci(clean(v))} V`, box.x - 4, Y(v));
     ctx.strokeStyle = withAlpha(p.ink3, 0.4);
     ctx.setLineDash([2, 4]);
     ctx.beginPath();

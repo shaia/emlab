@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-3-6-bagrut-emf
+  youtubeId: ffoWNkK-4Tg
+  title: 'בגרות פיזיקה חשמל 2015 שאלה 2 - מעגלי זרם: כא"מ, זרם ומתח הדקים במעגל הכולל סוללה ונורה'
+  channel: אריאל ליבזון - Ariel Libson
+  lang: he
+  captions: []
+  minutes: 12
+  why: 'פתרון בעברית של שאלה 2 מבגרות 2015 בחשמל, על כא"מ, זרם ומתח הדקים במעגל עם סוללה ונורה (לפי כותרת הסרטון). נסו לפתור בעצמכם לפני הצפייה, והשוו את דרך הפתרון.'
+  verified: '2026-11-01'
+
+- id: v-3-6-internal-resistance
+  youtubeId: a8d22YQ2qEw
+  title: 'Battery Internal Resistance'
+  channel: Ben Finio
+  lang: en
+  captions: []
+  minutes: 5
+  why: 'הסבר באנגלית מהי התנגדות פנימית של סוללה ולמה המתח שלה יורד כשמפעילים את המעגל (לפי תיאור הסרטון). זה בדיוק ההבדל בין הכא"מ לבין מתח ההדקים.'
+  verified: '2026-11-01'

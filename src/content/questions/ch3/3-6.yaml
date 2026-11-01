@@ -1,0 +1,237 @@
+# Lesson 3.6 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/circuits.ts (loopCurrent, terminalVoltage,
+# powerIR, solveCircuit). The numbers differ on purpose from figure 3.6א and the worked example.
+
+chapter: 3
+questions:
+  # ------------------------------------------------ OBJ-3.6-1: what the EMF is
+  - id: Q-3.6-emf-meaning
+    type: mc
+    objectives: [OBJ-3.6-1]
+    qualitative: true
+    prompt: >-
+      על סוללה כתוב $9\,\text{V}$: זה הכא"מ שלה. מה המשמעות?
+    choices:
+      - text: 'על כל קולון שעובר בה, הסוללה עושה עבודה של $9\,\text{J}$.'
+        correct: true
+        feedback: 'נכון. הכא"מ הוא עבודה ליחידת מטען, $\varepsilon = W/q$: $9\,\text{V} = 9\,\text{J/C}$.'
+      - text: 'הסוללה דוחפת את האלקטרונים בכוח של $9\,\text{N}$.'
+        feedback: 'למרות השם, כא"מ אינו כוח. הוא נמדד בוולט, ג''אול לקולון.'
+        misconception: MC-emf-is-force
+      - text: 'מד מתח על ההדקים שלה יראה תמיד $9\,\text{V}$.'
+        feedback: 'רק כשהיא לא מספקת זרם. כשזורם זרם, מתח ההדקים קטן מ-$9\,\text{V}$ בגלל ההתנגדות הפנימית.'
+        misconception: MC-terminal-equals-emf
+      - text: 'יש בה מטען של $9\,\text{C}$.'
+        feedback: 'סוללה אינה מיכל של מטען (שיעור 3.1). הכא"מ מודד אנרגיה לכל קולון שעובר בה.'
+        misconception: MC-battery-stores-charge
+
+  - id: Q-3.6-emf-work
+    type: numeric
+    objectives: [OBJ-3.6-1]
+    prompt: >-
+      סוללה שהכא"מ שלה $6\,\text{V}$ מספקת זרם, ובמשך זמן מסוים עוברים בה $20\,\text{C}$. כמה עבודה עושים התהליכים הכימיים שבסוללה על המטען הזה? ענו בג'אול.
+    answer: 120
+    unit: J
+    tolerance: 0.03
+    correctFeedback: 'נכון. $W = q\varepsilon = 20\cdot6 = 120\,\text{J}$. חלק מהאנרגיה הזאת מגיע לעומס, וחלק הופך לחום בתוך הסוללה.'
+    wrongFeedback: 'הכא"מ הוא עבודה לכל קולון: $W = q\varepsilon$.'
+    commonWrong:
+      - value: 3.33
+        feedback: 'חילקתם את המטען בכא"מ. העבודה היא **מכפלה**: $W = q\varepsilon$.'
+      - value: 0.3
+        feedback: 'חילקתם את הכא"מ במטען. העבודה היא $W = q\varepsilon$.'
+
+  - id: Q-3.6-open-vs-closed
+    type: twotier
+    objectives: [OBJ-3.6-1]
+    qualitative: true
+    prompt: >-
+      מד מתח שמחובר להדקי סוללה, כשלא מחובר אליה שום דבר אחר, מראה $1.5\,\text{V}$. מחברים לסוללה נורה, והיא דולקת. מה יראה מד המתח עכשיו?
+    choices:
+      - text: 'קצת פחות מ-$1.5\,\text{V}$.'
+        correct: true
+        feedback: נכון.
+      - text: 'בדיוק $1.5\,\text{V}$, כי זה המתח של הסוללה.'
+        feedback: '$1.5\,\text{V}$ הוא הכא"מ. כשהסוללה מספקת זרם, מתח ההדקים קטן ממנו.'
+        misconception: MC-terminal-equals-emf
+      - text: 'יותר מ-$1.5\,\text{V}$, כי עכשיו יש זרם.'
+        feedback: 'הזרם לא מוסיף מתח. הוא דווקא גורם לירידה בפוטנציאל בתוך הסוללה.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'הזרם עובר גם בתוך הסוללה, דרך ההתנגדות הפנימית שלה, ושם הפוטנציאל יורד ב-$Ir$.'
+        correct: true
+        feedback: 'נכון. $V = \varepsilon - Ir$: כשאין זרם, $V = \varepsilon$.'
+      - text: 'הנורה צורכת חלק מהמתח של הסוללה.'
+        feedback: 'מתח לא "נצרך". מה שקורה הוא שחלק מהכא"מ נופל בתוך הסוללה עצמה, על ההתנגדות הפנימית.'
+        misconception: MC-voltage-flows
+      - text: 'הסוללה מתרוקנת מהר כשמחברים אליה נורה.'
+        feedback: 'הירידה במתח ההדקים מיידית, ולא קשורה להתרוקנות. היא נובעת מההתנגדות הפנימית.'
+
+  # ------------------------------------------------ OBJ-3.6-2: I = ε/(R + r), V = ε − Ir
+  - id: Q-3.6-current
+    type: numeric
+    objectives: [OBJ-3.6-2]
+    prompt: >-
+      לסוללה כא"מ של $12\,\text{V}$ והתנגדות פנימית של $0.5\,\Omega$. מחברים אליה נגד של $5.5\,\Omega$. מה הזרם במעגל? ענו באמפר.
+    answer: 2
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. $I = \dfrac{\varepsilon}{R + r} = \dfrac{12}{5.5 + 0.5} = 2\,\text{A}$.'
+    wrongFeedback: 'הזרם עובר גם בנגד וגם בהתנגדות הפנימית, בטור: $I = \varepsilon/(R + r)$.'
+    commonWrong:
+      - value: 2.18
+        feedback: 'שכחתם את ההתנגדות הפנימית: $12/5.5$. הזרם עובר גם בתוך הסוללה.'
+        misconception: MC-terminal-equals-emf
+      - value: 24
+        feedback: 'חילקתם רק בהתנגדות הפנימית. זה היה הזרם אילו ההדקים היו מחוברים בתיל (קצר).'
+
+  - id: Q-3.6-terminal
+    type: numeric
+    objectives: [OBJ-3.6-2]
+    prompt: >-
+      באותו מעגל ($\varepsilon = 12\,\text{V}$, $r = 0.5\,\Omega$, $R = 5.5\,\Omega$), מה יראה מד מתח שמחובר להדקי הסוללה? ענו בוולט.
+    answer: 11
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. $V = \varepsilon - Ir = 12 - 2\cdot0.5 = 11\,\text{V}$, וזה גם $IR = 2\cdot5.5$.'
+    wrongFeedback: 'מתח ההדקים הוא הכא"מ פחות הירידה על ההתנגדות הפנימית: $V = \varepsilon - Ir$.'
+    commonWrong:
+      - value: 12
+        feedback: 'זה הכא"מ. כשזורם זרם, חלק ממנו נופל בתוך הסוללה.'
+        misconception: MC-terminal-equals-emf
+      - value: 1
+        feedback: 'זו הירידה בתוך הסוללה, $Ir$. מד המתח שעל ההדקים מראה את מה שנשאר: $\varepsilon - Ir$.'
+
+  - id: Q-3.6-find-r
+    type: numeric
+    objectives: [OBJ-3.6-2]
+    level: mid
+    prompt: >-
+      סוללה שהכא"מ שלה $9\,\text{V}$ מחוברת לנגד של $4\,\Omega$. מד מתח על ההדקים מראה $8\,\text{V}$. מה ההתנגדות הפנימית של הסוללה? ענו באוהם.
+    answer: 0.5
+    unit: Ω
+    tolerance: 0.03
+    correctFeedback: 'נכון. הזרם $I = V/R = 8/4 = 2\,\text{A}$. הירידה בתוך הסוללה $\varepsilon - V = 1\,\text{V}$, ולכן $r = 1/2 = 0.5\,\Omega$.'
+    wrongFeedback: 'מצאו את הזרם מהנגד החיצוני, $I = V/R$, ואז $r = (\varepsilon - V)/I$.'
+    commonWrong:
+      - value: 4.5
+        feedback: 'חילקתם את הכא"מ בזרם: זו ההתנגדות הכוללת, $R + r$. צריך להחסיר ממנה את $R$.'
+      - value: 4
+        feedback: 'זו ההתנגדות החיצונית, $V/I$. ההתנגדות הפנימית קשורה לירידה $\varepsilon - V$.'
+
+  - id: Q-3.6-power-loss
+    type: numeric
+    objectives: [OBJ-3.6-2]
+    level: bagrut
+    prompt: >-
+      לסוללה כא"מ של $9\,\text{V}$ והתנגדות פנימית של $1.5\,\Omega$, והיא מחוברת לנגד של $3\,\Omega$. כמה הספק הופך לחום **בתוך** הסוללה? ענו בוואט.
+    answer: 6
+    unit: W
+    tolerance: 0.03
+    correctFeedback: 'נכון. $I = 9/4.5 = 2\,\text{A}$, ובסוללה $P = I^2r = 4\cdot1.5 = 6\,\text{W}$. הנגד מקבל $I^2R = 12\,\text{W}$, והסוללה מספקת בסך הכול $\varepsilon I = 18\,\text{W}$.'
+    wrongFeedback: 'מצאו את הזרם, $I = \varepsilon/(R + r)$, ואז $P = I^2r$ בהתנגדות הפנימית.'
+    commonWrong:
+      - value: 12
+        feedback: 'זה ההספק בנגד החיצוני, $I^2R$. בתוך הסוללה משתמשים ב-$r$.'
+      - value: 18
+        feedback: 'זה כל ההספק של הכא"מ, $\varepsilon I$. רק חלק ממנו נשאר בסוללה.'
+
+  # ------------------------------------------------ OBJ-3.6-3: load and short circuit
+  - id: Q-3.6-short-current
+    type: numeric
+    objectives: [OBJ-3.6-3]
+    prompt: >-
+      לסוללת $1.5\,\text{V}$ התנגדות פנימית של $0.3\,\Omega$. מה הזרם אם מחברים את ההדקים שלה בתיל בלי התנגדות? ענו באמפר.
+    answer: 5
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. רק ההתנגדות הפנימית מגבילה את הזרם: $I = \varepsilon/r = 1.5/0.3 = 5\,\text{A}$. מתח ההדקים יורד לאפס, וכל ההספק, $7.5\,\text{W}$, מחמם את הסוללה.'
+    wrongFeedback: 'בקצר $R = 0$, ולכן $I = \varepsilon/(0 + r)$.'
+    commonWrong:
+      - value: 0.45
+        feedback: 'כפלתם את הכא"מ בהתנגדות. הזרם הוא $\varepsilon/r$.'
+      - value: 0.2
+        feedback: 'חילקתם את ההתנגדות בכא"מ. הפוך: $I = \varepsilon/r$.'
+
+  - id: Q-3.6-more-load
+    type: mc
+    objectives: [OBJ-3.6-3]
+    qualitative: true
+    prompt: >-
+      סוללה עם התנגדות פנימית מחוברת לנגד. מחליפים את הנגד בנגד שההתנגדות שלו **קטנה** יותר. מה קורה לזרם ולמתח ההדקים?
+    choices:
+      - text: 'הזרם גדל, ומתח ההדקים קטן.'
+        correct: true
+        feedback: 'נכון. $I = \varepsilon/(R + r)$ גדל, ולכן הירידה $Ir$ בתוך הסוללה גדלה, ו-$V = \varepsilon - Ir$ קטן.'
+      - text: 'הזרם גדל, ומתח ההדקים לא משתנה.'
+        feedback: 'זה נכון לסוללה אידאלית בלבד. בסוללה עם התנגדות פנימית, זרם גדול יותר מוריד יותר מתח בתוכה.'
+        misconception: MC-terminal-equals-emf
+      - text: 'הזרם ומתח ההדקים קטנים שניהם.'
+        feedback: 'התנגדות חיצונית קטנה יותר מעבירה זרם **גדול** יותר.'
+      - text: 'הזרם קטן, ומתח ההדקים גדל.'
+        feedback: 'הפוך: התנגדות קטנה יותר, זרם גדול יותר, ומתח הדקים קטן יותר.'
+
+  - id: Q-3.6-parallel-dim
+    type: twotier
+    objectives: [OBJ-3.6-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סוללה ישנה, שההתנגדות הפנימית שלה ניכרת, מזינה נורה. מוסיפים נורה זהה במקביל לראשונה. מה קורה לבהירות של הנורה הראשונה?
+    choices:
+      - text: 'היא נחלשת.'
+        correct: true
+        feedback: נכון.
+      - text: 'היא לא משתנה.'
+        feedback: 'זה נכון לסוללה אידאלית (שיעור 3.5). בסוללה עם התנגדות פנימית המתח על הנורות יורד.'
+        misconception: MC-real-battery-ideal
+      - text: 'היא מתחזקת.'
+        feedback: 'אין סיבה שתתחזק: המתח עליה רק יכול לרדת, כי הזרם הכולל גדל.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'הזרם הכולל מהסוללה גדל, הירידה $Ir$ בתוכה גדלה, ומתח ההדקים, שעליו שתי הנורות, קטן.'
+        correct: true
+        feedback: 'נכון. ככל ש-$r$ גדולה יותר, ההשפעה חזקה יותר.'
+      - text: 'שתי הנורות מתחלקות בזרם קבוע שהסוללה מספקת.'
+        feedback: 'הסוללה לא מספקת זרם קבוע: הזרם הכולל דווקא גדל. הנורה נחלשת כי מתח ההדקים יורד.'
+        misconception: MC-battery-constant-current
+      - text: 'הנורה מחוברת להדקי הסוללה, ולכן המתח עליה לא משתנה.'
+        feedback: 'היא מחוברת להדקים, אבל מתח ההדקים עצמו משתנה כשהזרם משתנה: $V = \varepsilon - Ir$.'
+        misconception: MC-real-battery-ideal
+
+  - id: Q-3.6-rank-terminal
+    type: rank
+    objectives: [OBJ-3.6-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לסוללה כא"מ של $12\,\text{V}$ והתנגדות פנימית של $1\,\Omega$. מחברים אליה, בכל פעם, עומס אחר. סדרו את המצבים לפי מתח ההדקים, מהגדול לקטן.
+    items:
+      - { id: open, label: 'שום דבר לא מחובר' }
+      - { id: r11, label: 'נגד של $11\,\Omega$' }
+      - { id: r5, label: 'נגד של $5\,\Omega$' }
+      - { id: r1, label: 'נגד של $1\,\Omega$' }
+    order: [open, r11, r5, r1]
+    correctFeedback: 'נכון: $12\,\text{V}$, $11\,\text{V}$, $10\,\text{V}$ ו-$6\,\text{V}$. ככל שההתנגדות החיצונית קטנה יותר, הזרם גדול יותר, ויותר מהכא"מ נופל בתוך הסוללה.'
+    wrongFeedback: 'חשבו לכל מצב את הזרם, $I = \varepsilon/(R + r)$, ואת $V = \varepsilon - Ir$. בלי עומס $I = 0$.'
+
+  - id: Q-3.6-energy-split
+    type: mc
+    objectives: [OBJ-3.6-2]
+    qualitative: true
+    prompt: >-
+      סוללה עם התנגדות פנימית מזינה נגד. לאן הולכת העבודה שהכא"מ עושה בכל שנייה, $\varepsilon I$?
+    choices:
+      - text: 'חלק ממנה, $I^2R$, לנגד, והשאר, $I^2r$, מחמם את הסוללה.'
+        correct: true
+        feedback: 'נכון. $\varepsilon I = I^2R + I^2r$: כופלים ב-$I$ את $\varepsilon = IR + Ir$.'
+      - text: 'כולה לנגד, כי הנגד הוא הרכיב היחיד במעגל.'
+        feedback: 'הזרם עובר גם בהתנגדות הפנימית, ושם חלק מהאנרגיה הופך לחום בתוך הסוללה.'
+        misconception: MC-terminal-equals-emf
+      - text: 'חלק לנגד, והשאר חוזר אל הסוללה ונאגר בה לפעם הבאה.'
+        feedback: 'האנרגיה שלא הגיעה לנגד לא נאגרת: היא הופכת לחום בתוך הסוללה.'
+        misconception: MC-battery-stores-charge
+      - text: 'כולה הופכת לחום בתוך הסוללה, והנגד מקבל רק את הזרם.'
+        feedback: 'הנגד מקבל אנרגיה, $I^2R$ בכל שנייה, ולכן הוא מתחמם או מאיר. רק החלק $I^2r$ נשאר בסוללה.'
+        misconception: MC-current-used-up
