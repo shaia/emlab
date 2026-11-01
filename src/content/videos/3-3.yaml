@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-3-3-wire-length
+  youtubeId: fGYPJKfMI5s
+  title: 'חשמל - מעגלי זרם - ניסוי אופין תיל - הקשר בין אורך התיל להתנגדותו - גירסה ב'
+  channel: מרכז שוורץ/רייסמן הדרכות למורי פיזיקה
+  lang: he
+  captions: []
+  minutes: 2
+  why: 'ניסוי אמיתי מצולם: משנים את אורכו של תיל ומודדים את המתח עליו ואת הזרם דרכו (לפי תיאור הסרטון). עצרו את הסרטון, רשמו מדידות, חשבו את ההתנגדות לפי היחס בין המתח לזרם, ובדקו איך היא תלויה באורך התיל.'
+  verified: '2026-11-01'
+
+- id: v-3-3-bulb-iv
+  youtubeId: z5pQ4hitt14
+  title: 'IV Characteristics of a Bulb Experiment - GCSE Physics Required Practical'
+  channel: Physics Online
+  lang: en
+  captions: []
+  minutes: 5
+  why: 'ניסוי אמיתי באנגלית: משנים את המתח על נורת להט בצעדים של כ-2 וולט ורושמים את הזרם, גם בקוטביות הפוכה (לפי תיאור הסרטון). עצרו ורשמו את הקריאות בעצמכם, שרטטו את הגרף ובדקו אם הוא קו ישר.'
+  verified: '2026-11-01'

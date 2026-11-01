@@ -1,0 +1,253 @@
+# Lesson 3.3 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/circuits.ts (filamentBulb for the 3 W, 6 V
+# bulb of figure 3.3א; wireResistance, roundArea and RESISTIVITY for the wires).
+
+chapter: 3
+questions:
+  # ------------------------------------------------ OBJ-3.3-1: R = V/I
+  - id: Q-3.3-ohm-current
+    type: numeric
+    objectives: [OBJ-3.3-1]
+    prompt: >-
+      על נגד של $30\,\Omega$ יש מתח של $12\,\text{V}$. מה הזרם בנגד? ענו באמפר.
+    answer: 0.4
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. $I = \dfrac{V}{R} = \dfrac{12}{30} = 0.4\,\text{A}$.'
+    wrongFeedback: 'מ-$R = V/I$ נובע $I = V/R$.'
+    commonWrong:
+      - value: 360
+        feedback: 'כפלתם את המתח בהתנגדות. הזרם הוא המתח **מחולק** בהתנגדות: התנגדות גדולה, זרם קטן.'
+      - value: 2.5
+        feedback: 'חילקתם את ההתנגדות במתח. הפוך: $I = V/R$.'
+
+  - id: Q-3.3-ohm-resistance
+    type: numeric
+    objectives: [OBJ-3.3-1]
+    prompt: >-
+      מתח של $9\,\text{V}$ מעביר ברכיב זרם של $0.15\,\text{A}$. מה ההתנגדות של הרכיב? ענו באוהם.
+    answer: 60
+    unit: Ω
+    tolerance: 0.03
+    correctFeedback: 'נכון. $R = \dfrac{V}{I} = \dfrac{9}{0.15} = 60\,\Omega$.'
+    wrongFeedback: 'ההתנגדות היא המתח מחולק בזרם: $R = V/I$.'
+    commonWrong:
+      - value: 1.35
+        feedback: 'כפלתם את המתח בזרם. ההתנגדות היא **מנה**: $R = V/I$.'
+      - value: 0.0167
+        feedback: 'חילקתם את הזרם במתח. זה $1/R$, לא $R$.'
+
+  - id: Q-3.3-ohm-voltage
+    type: numeric
+    objectives: [OBJ-3.3-1]
+    level: mid
+    prompt: >-
+      בנגד של $4\,\Omega$ זורם זרם של $2.5\,\text{A}$. מה המתח על הנגד? ענו בוולט.
+    answer: 10
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. $V = IR = 2.5\cdot4 = 10\,\text{V}$.'
+    wrongFeedback: 'מ-$R = V/I$ נובע $V = IR$.'
+    commonWrong:
+      - value: 1.6
+        feedback: 'חילקתם את ההתנגדות בזרם. המתח הוא זרם **כפול** התנגדות.'
+      - value: 0.625
+        feedback: 'חילקתם את הזרם בהתנגדות. המתח הוא זרם **כפול** התנגדות.'
+
+  - id: Q-3.3-double-voltage
+    type: mc
+    objectives: [OBJ-3.3-1]
+    qualitative: true
+    prompt: >-
+      מכפילים את המתח על נגד אוהמי. מה קורה?
+    choices:
+      - text: 'הזרם מוכפל, וההתנגדות לא משתנה.'
+        correct: true
+        feedback: 'נכון. בנגד אוהמי הזרם ביחס ישר למתח, ולכן היחס $V/I$ נשאר אותו דבר.'
+      - text: 'ההתנגדות מוכפלת, והזרם לא משתנה.'
+        feedback: 'ההתנגדות היא תכונה של הנגד, לא של המתח. כשהמתח גדל, הזרם גדל איתו, והיחס ביניהם קבוע.'
+        misconception: MC-resistance-depends-on-V
+      - text: 'גם הזרם וגם ההתנגדות מוכפלים.'
+        feedback: 'אילו גם $R$ הייתה מוכפלת, $I = V/R$ לא היה משתנה. בנגד אוהמי $R$ קבועה, והזרם מוכפל.'
+        misconception: MC-resistance-depends-on-V
+      - text: 'הזרם גדל פי 4.'
+        feedback: 'אין כאן ריבוע: $I = V/R$, ולכן מתח כפול נותן זרם כפול.'
+
+  # ------------------------------------------------ OBJ-3.3-2: ohmic and not
+  - id: Q-3.3-which-ohmic
+    type: mc
+    objectives: [OBJ-3.3-2]
+    qualitative: true
+    prompt: >-
+      מודדים את הזרם ברכיב בכמה מתחים, ומשרטטים גרף של הזרם כפונקציה של המתח. איזה גרף מראה שהרכיב אוהמי?
+    choices:
+      - text: 'קו ישר שעובר בראשית.'
+        correct: true
+        feedback: 'נכון. קו ישר דרך הראשית אומר שהזרם ביחס ישר למתח: $I/V$ קבוע, ולכן גם $R = V/I$ קבועה.'
+      - text: 'קו ישר שחותך את ציר הזרם מעל אפס.'
+        feedback: 'אז היה עובר זרם גם בלי מתח, וההתנגדות $V/I$ הייתה משתנה מנקודה לנקודה. רכיב אוהמי עובר בראשית.'
+      - text: 'עקומה שעולה ונעשית שטוחה יותר ככל שהמתח גדל.'
+        feedback: 'זה האופיין של נורת להט: ככל שהמתח גדל, ההתנגדות גדלה. זה רכיב לא אוהמי.'
+        misconception: MC-ohm-law-universal
+      - text: 'קו אופקי: אותו זרם בכל מתח.'
+        feedback: 'אז היחס $V/I$ היה גדל עם המתח. ההתנגדות לא הייתה קבועה.'
+
+  - id: Q-3.3-bulb-hotter
+    type: twotier
+    objectives: [OBJ-3.3-2]
+    qualitative: true
+    prompt: >-
+      מודדים את ההתנגדות של נורת להט פעם במתח של $1\,\text{V}$, ופעם במתח של $6\,\text{V}$, שבו היא מאירה חזק. מתי ההתנגדות גדולה יותר?
+    choices:
+      - text: 'במתח של $6\,\text{V}$.'
+        correct: true
+        feedback: נכון.
+      - text: 'ההתנגדות שווה, כי זו אותה נורה.'
+        feedback: 'זה נכון לנגד אוהמי. בנורה, היחס $V/I$ במתח של $6\,\text{V}$ גדול פי 2 בערך מאשר במתח של $1\,\text{V}$.'
+        misconception: MC-ohm-law-universal
+      - text: 'במתח של $1\,\text{V}$.'
+        feedback: 'הפוך: כשהנורה מאירה חזק, החוט חם יותר, וההתנגדות שלו גדולה יותר.'
+    reasonPrompt: למה?
+    reasons:
+      - text: 'בזרם גדול החוט חם יותר, היונים שלו רוטטים חזק יותר, והאלקטרונים מתנגשים בהם יותר.'
+        correct: true
+        feedback: 'נכון. במתכת, ההתנגדות גדלה עם הטמפרטורה.'
+      - text: 'במתח גבוה ההתנגדות תמיד גדלה, כי $R = V/I$.'
+        feedback: 'בנגד אוהמי, מתח גבוה נותן זרם גבוה באותו יחס, וההתנגדות לא משתנה. בנורה היא משתנה בגלל החום, לא בגלל המתח עצמו.'
+        misconception: MC-resistance-depends-on-V
+      - text: 'האור שהנורה פולטת חוסם את הזרם.'
+        feedback: 'האור לא חוסם את הזרם. הוא סימן לכך שהחוט חם מאוד, וזה מה שמגדיל את ההתנגדות.'
+
+  - id: Q-3.3-bulb-cold-resistance
+    type: numeric
+    objectives: [OBJ-3.3-2]
+    level: mid
+    prompt: >-
+      מדידות בנורת להט: במתח $6.0\,\text{V}$ הזרם $0.50\,\text{A}$, ובמתח $1.0\,\text{V}$ הזרם $0.17\,\text{A}$. מה ההתנגדות של הנורה במתח $1.0\,\text{V}$? ענו באוהם.
+    answer: 5.88
+    unit: Ω
+    tolerance: 0.03
+    correctFeedback: 'נכון. $R = \dfrac{V}{I} = \dfrac{1.0}{0.17} \approx 5.9\,\Omega$, פחות מחצי מההתנגדות במתח $6.0\,\text{V}$, שהיא $\dfrac{6.0}{0.50} = 12\,\Omega$. החוט הקר מתנגד פחות.'
+    wrongFeedback: 'בכל נקודה על האופיין $R = V/I$. השתמשו בזוג המספרים של המתח $1.0\,\text{V}$.'
+    commonWrong:
+      - value: 12
+        feedback: 'זו ההתנגדות במתח $6\,\text{V}$. הנורה אינה אוהמית: במתח נמוך החוט קר יותר, וההתנגדות שלו קטנה יותר.'
+        misconception: MC-ohm-law-universal
+      - value: 0.17
+        feedback: 'חילקתם את הזרם במתח. ההתנגדות היא $V/I$.'
+
+  - id: Q-3.3-graph-resistance
+    type: numeric
+    objectives: [OBJ-3.3-2]
+    prompt: >-
+      האופיין של נגד הוא קו ישר דרך הראשית, שעובר בנקודה $V = 8\,\text{V}$, $I = 0.2\,\text{A}$. מה ההתנגדות של הנגד? ענו באוהם.
+    answer: 40
+    unit: Ω
+    tolerance: 0.03
+    correctFeedback: 'נכון. $R = \dfrac{8}{0.2} = 40\,\Omega$, ובנגד אוהמי זו ההתנגדות בכל נקודה על הקו.'
+    wrongFeedback: 'קחו נקודה על הקו, וחשבו $R = V/I$.'
+    commonWrong:
+      - value: 0.025
+        feedback: 'זה השיפוע של הגרף, $I/V$, כלומר $1/R$. ההתנגדות היא ההפך: $V/I$.'
+      - value: 1.6
+        feedback: 'כפלתם את המתח בזרם. ההתנגדות היא $V/I$.'
+
+  # ------------------------------------------------ OBJ-3.3-3: R = ρL/A
+  - id: Q-3.3-rho-calc
+    type: numeric
+    objectives: [OBJ-3.3-3]
+    level: mid
+    prompt: >-
+      גוף חימום עשוי תיל ניכרום ($\rho = 1.1\cdot10^{-6}\,\Omega\cdot\text{m}$) באורך $2\,\text{m}$ ובקוטר $0.5$ מילימטר. מה ההתנגדות שלו? ענו באוהם.
+    answer: 11.2
+    unit: Ω
+    tolerance: 0.03
+    correctFeedback: 'נכון. $A = \dfrac{\pi d^2}{4} = \dfrac{\pi(0.5\cdot10^{-3})^2}{4} = 1.96\cdot10^{-7}\,\text{m}^2$, ו-$R = \dfrac{\rho L}{A} = \dfrac{1.1\cdot10^{-6}\cdot2}{1.96\cdot10^{-7}} \approx 11.2\,\Omega$.'
+    wrongFeedback: 'מצאו את שטח החתך מהקוטר, $A = \pi d^2/4$, במטר רבוע, ואז $R = \rho L/A$.'
+    commonWrong:
+      - value: 2.80
+        feedback: 'הצבתם את הקוטר במקום הרדיוס: $\pi d^2$ במקום $\pi d^2/4$, או $\pi r^2$ עם $r = 0.5$ מילימטר. הרדיוס הוא חצי מהקוטר.'
+      - value: 1.12e-5
+        feedback: 'הצבתם את שטח החתך במילימטר רבוע. צריך מטר רבוע: $1\,\text{mm}^2 = 10^{-6}\,\text{m}^2$.'
+    hints:
+      - 'הקוטר $0.5$ מילימטר הוא $0.5\cdot10^{-3}\,\text{m}$.'
+
+  - id: Q-3.3-double-length
+    type: mc
+    objectives: [OBJ-3.3-3]
+    qualitative: true
+    prompt: >-
+      מחליפים תיל בתיל מאותו חומר ובאותו עובי, אבל ארוך פי 2. מה קורה להתנגדות?
+    choices:
+      - text: 'היא גדלה פי 2.'
+        correct: true
+        feedback: 'נכון. $R = \rho L/A$ ביחס ישר לאורך: תיל ארוך פי 2 הוא כמו שני תילים זה אחרי זה, וכדי להעביר באותו זרם צריך מתח כפול.'
+      - text: 'היא גדלה פי 4.'
+        feedback: 'האורך מופיע ב-$R = \rho L/A$ בחזקה ראשונה, בלי ריבוע.'
+      - text: 'היא קטנה פי 2.'
+        feedback: 'הפוך: מסלול ארוך יותר מתנגד יותר, כי לאורך כולו האלקטרונים מתנגשים ביונים.'
+      - text: 'היא לא משתנה, כי החומר אותו חומר.'
+        feedback: 'החומר קובע את $\rho$, אבל ההתנגדות תלויה גם באורך ובשטח החתך.'
+
+  - id: Q-3.3-thicker
+    type: twotier
+    objectives: [OBJ-3.3-3]
+    qualitative: true
+    prompt: >-
+      שני תילי נחושת באותו אורך. הקוטר של התיל השני גדול פי 2. מה היחס בין ההתנגדויות?
+    choices:
+      - text: 'לתיל העבה התנגדות קטנה פי 4.'
+        correct: true
+        feedback: נכון.
+      - text: 'לתיל העבה התנגדות קטנה פי 2.'
+        feedback: 'ההתנגדות תלויה בשטח החתך, לא בקוטר. קוטר כפול נותן שטח גדול פי 4.'
+        misconception: MC-diameter-linear
+      - text: 'לתיל העבה התנגדות גדולה פי 4.'
+        feedback: 'תיל עבה לא מתנגד יותר. יש בו יותר מקום לזרם.'
+        misconception: MC-thicker-more-resistance
+    reasonPrompt: למה?
+    reasons:
+      - text: 'שטח החתך $\pi d^2/4$ גדל פי 4, ו-$R = \rho L/A$ ביחס הפוך לשטח.'
+        correct: true
+        feedback: 'נכון. תיל עם שטח חתך פי 4 הוא כמו ארבעה תילים דקים זה לצד זה.'
+      - text: 'בתיל עבה יש יותר חומר שמפריע לאלקטרונים.'
+        feedback: 'יש יותר חומר, אבל גם יותר אלקטרונים חופשיים ויותר מסלולים. בסך הכול תיל עבה מעביר זרם בקלות רבה יותר.'
+        misconception: MC-thicker-more-resistance
+      - text: 'ההתנגדות ביחס הפוך לקוטר.'
+        feedback: 'היא ביחס הפוך לשטח החתך, שהוא ביחס לריבוע הקוטר.'
+        misconception: MC-diameter-linear
+
+  - id: Q-3.3-rank-wires
+    type: rank
+    objectives: [OBJ-3.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סדרו את התילים לפי ההתנגדות שלהם, מהגדולה לקטנה. ההתנגדות הסגולית של ניכרום גדולה פי 65 בערך מזו של נחושת.
+    items:
+      - { id: cu1, label: 'נחושת, $1\,\text{m}$, שטח חתך $1\,\text{mm}^2$' }
+      - { id: cu2L, label: 'נחושת, $2\,\text{m}$, שטח חתך $1\,\text{mm}^2$' }
+      - { id: cu2A, label: 'נחושת, $1\,\text{m}$, שטח חתך $2\,\text{mm}^2$' }
+      - { id: ni, label: 'ניכרום, $1\,\text{m}$, שטח חתך $1\,\text{mm}^2$' }
+    order: [ni, cu2L, cu1, cu2A]
+    correctFeedback: 'נכון. הניכרום: $1.1\,\Omega$. הנחושת: $0.034\,\Omega$ לתיל הארוך, $0.017\,\Omega$ לתיל הבסיסי, ו-$0.0085\,\Omega$ לתיל העבה.'
+    wrongFeedback: 'השתמשו ב-$R = \rho L/A$: אורך כפול מכפיל את $R$, שטח כפול מקטין אותה פי 2, והחומר משנה את $\rho$.'
+
+  - id: Q-3.3-cut-half
+    type: numeric
+    objectives: [OBJ-3.3-3]
+    prompt: >-
+      לתיל אחיד יש התנגדות של $8\,\Omega$. חותכים אותו לשני חצאים שווים. מה ההתנגדות של כל חצי? ענו באוהם.
+    answer: 4
+    unit: Ω
+    tolerance: 0.03
+    correctFeedback: 'נכון. אותו חומר ואותו שטח חתך, וחצי מהאורך: לפי $R = \rho L/A$, חצי מההתנגדות.'
+    wrongFeedback: 'מה משתנה ב-$R = \rho L/A$ כשחותכים את התיל לשניים: החומר, השטח או האורך?'
+    commonWrong:
+      - value: 16
+        feedback: 'חיתוך מקצר את התיל. תיל קצר יותר מתנגד פחות, לא יותר.'
+      - value: 2
+        feedback: 'ההתנגדות ביחס ישר לאורך, לא לריבוע שלו. חצי אורך, חצי התנגדות.'
+      - value: 8
+        feedback: 'ההתנגדות אינה רק תכונה של החומר. היא תלויה גם באורך, ובחצי מהאורך היא חצי.'
