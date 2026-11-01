@@ -52,6 +52,11 @@ export default function WireLab(props: WireLabProps) {
   const [s, setS] = useState<State>(init);
   const [live, setLive] = useState('');
   const userActed = useRef(false);
+  /**
+   * The length and diameter the "double it" tasks compare against. A slider fires at every step of
+   * a drag, so the previous value is useless; the baseline moves only when another control changes.
+   */
+  const base = useRef({ L: s.L, d: s.d });
   const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: TASK_LABEL[id] ?? id }));
   const rho = RESISTIVITY[s.material];
   const A = roundArea(s.d * 1e-3);
@@ -61,11 +66,15 @@ export default function WireLab(props: WireLabProps) {
     () =>
       subscribeSteps(props.id, (st) => {
         userActed.current = false;
-        setS((prev) => ({
-          material: typeof st.material === 'string' && st.material in RESISTIVITY ? (st.material as Material) : prev.material,
-          L: typeof st.L === 'number' ? st.L : prev.L,
-          d: typeof st.d === 'number' ? st.d : prev.d,
-        }));
+        setS((prev) => {
+          const next = {
+            material: typeof st.material === 'string' && st.material in RESISTIVITY ? (st.material as Material) : prev.material,
+            L: typeof st.L === 'number' ? st.L : prev.L,
+            d: typeof st.d === 'number' ? st.d : prev.d,
+          };
+          base.current = { L: next.L, d: next.d };
+          return next;
+        });
       }),
     [props.id],
   );
@@ -76,8 +85,15 @@ export default function WireLab(props: WireLabProps) {
       const next = { ...prev, ...patch };
       const has = (t: string) => props.tasks?.includes(t);
       const done = (t: string) => markTask(`${props.id}:${t}`);
-      if (has('double-length') && patch.L !== undefined && Math.abs(patch.L - 2 * prev.L) < 1e-9) done('double-length');
-      if (has('double-diameter') && patch.d !== undefined && Math.abs(patch.d - 2 * prev.d) < 1e-9) done('double-diameter');
+      if (patch.L !== undefined) {
+        if (has('double-length') && Math.abs(patch.L - 2 * base.current.L) < 1e-9) done('double-length');
+        base.current.d = next.d;
+      }
+      if (patch.d !== undefined) {
+        if (has('double-diameter') && Math.abs(patch.d - 2 * base.current.d) < 1e-9) done('double-diameter');
+        base.current.L = next.L;
+      }
+      if (patch.material !== undefined) base.current = { L: next.L, d: next.d };
       if (has('material') && patch.material === 'nichrome' && prev.material !== 'nichrome') done('material');
       return next;
     });
@@ -149,7 +165,9 @@ export default function WireLab(props: WireLabProps) {
       tasks={tasks}
       onReset={() => {
         userActed.current = false;
-        setS(init());
+        const fresh = init();
+        base.current = { L: fresh.L, d: fresh.d };
+        setS(fresh);
         setLive('האיור אופס.');
       }}
       readout={

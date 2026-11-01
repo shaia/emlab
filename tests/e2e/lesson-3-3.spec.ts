@@ -71,10 +71,11 @@ test.describe('live figures', () => {
     // copper, 1 m, 0.5 mm
     await expect(readout).toContainText('R = ρL/A = 0.0866 Ω');
     const [len, dia] = [fig.locator('input[type=range]').nth(0), fig.locator('input[type=range]').nth(1)];
-    await setSlider(len, 2);
+    // step through every value a drag passes, as a real slider does: the task must still notice the doubling
+    for (const v of [1.25, 1.5, 1.75, 2]) await setSlider(len, v);
     await expect(readout).toContainText('R = ρL/A = 0.173 Ω');
     await setSlider(len, 1);
-    await setSlider(dia, 1);
+    for (const v of [0.6, 0.7, 0.8, 0.9, 1]) await setSlider(dia, v);
     await expect(readout).toContainText('R = ρL/A = 0.0216 Ω');
     await setSlider(dia, 0.5);
     await fig.getByRole('button', { name: 'ניכרום' }).click();
@@ -117,7 +118,7 @@ test.describe('questions', () => {
     const q = page.locator('[data-qid="Q-3.3-thicker"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(q);
-    await q.locator('label', { hasText: 'לתיל העבה התנגדות גדולה פי 4' }).click();
+    await q.locator('label', { hasText: 'העבה, התנגדות גדולה פי 4' }).click();
     await q.locator('label', { hasText: 'שטח החתך' }).first().click();
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-wrong/);

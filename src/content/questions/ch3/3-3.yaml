@@ -10,16 +10,16 @@ questions:
     type: numeric
     objectives: [OBJ-3.3-1]
     prompt: >-
-      על נגד של $30\,\Omega$ יש מתח של $12\,\text{V}$. מה הזרם בנגד? ענו באמפר.
-    answer: 0.4
+      על נגד של $20\,\Omega$ יש מתח של $9\,\text{V}$. מה הזרם בנגד? ענו באמפר.
+    answer: 0.45
     unit: A
     tolerance: 0.03
-    correctFeedback: 'נכון. $I = \dfrac{V}{R} = \dfrac{12}{30} = 0.4\,\text{A}$.'
+    correctFeedback: 'נכון. $I = \dfrac{V}{R} = \dfrac{9}{20} = 0.45\,\text{A}$.'
     wrongFeedback: 'מ-$R = V/I$ נובע $I = V/R$.'
     commonWrong:
-      - value: 360
+      - value: 180
         feedback: 'כפלתם את המתח בהתנגדות. הזרם הוא המתח **מחולק** בהתנגדות: התנגדות גדולה, זרם קטן.'
-      - value: 2.5
+      - value: 2.22
         feedback: 'חילקתם את ההתנגדות במתח. הפוך: $I = V/R$.'
 
   - id: Q-3.3-ohm-resistance
@@ -182,7 +182,7 @@ questions:
     choices:
       - text: 'היא גדלה פי 2.'
         correct: true
-        feedback: 'נכון. $R = \rho L/A$ ביחס ישר לאורך: תיל ארוך פי 2 הוא כמו שני תילים זה אחרי זה, וכדי להעביר באותו זרם צריך מתח כפול.'
+        feedback: 'נכון. $R = \rho L/A$ ביחס ישר לאורך: תיל ארוך פי 2 הוא כמו שני תילים זה אחרי זה, וכדי להעביר אותו זרם צריך מתח כפול.'
       - text: 'היא גדלה פי 4.'
         feedback: 'האורך מופיע ב-$R = \rho L/A$ בחזקה ראשונה, בלי ריבוע.'
       - text: 'היא קטנה פי 2.'
@@ -197,13 +197,13 @@ questions:
     prompt: >-
       שני תילי נחושת באותו אורך. הקוטר של התיל השני גדול פי 2. מה היחס בין ההתנגדויות?
     choices:
-      - text: 'לתיל העבה התנגדות קטנה פי 4.'
+      - text: 'לתיל השני, העבה, התנגדות קטנה פי 4.'
         correct: true
         feedback: נכון.
-      - text: 'לתיל העבה התנגדות קטנה פי 2.'
+      - text: 'לתיל השני, העבה, התנגדות קטנה פי 2.'
         feedback: 'ההתנגדות תלויה בשטח החתך, לא בקוטר. קוטר כפול נותן שטח גדול פי 4.'
         misconception: MC-diameter-linear
-      - text: 'לתיל העבה התנגדות גדולה פי 4.'
+      - text: 'לתיל השני, העבה, התנגדות גדולה פי 4.'
         feedback: 'תיל עבה לא מתנגד יותר. יש בו יותר מקום לזרם.'
         misconception: MC-thicker-more-resistance
     reasonPrompt: למה?
