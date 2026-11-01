@@ -12,26 +12,21 @@
 
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { fieldAt, fieldLines, potentialAt, type PointCharge } from '~/physics/electrostatics';
-import { K } from '~/physics/constants';
-import { contourFromGrid, fieldFromVoltage, pointPotential, type GridBounds } from '~/physics/potential';
+import { contourFromGrid, fieldFromVoltage, pointPotential } from '~/physics/potential';
 import type { Vec2 } from '~/physics/vec';
 import { markTask } from '~/progress/store';
 import { subscribeSteps } from '~/ui/steps';
 import { toScreen, toWorld, useFigureCanvas, type FrameInfo, type View } from './core/canvas';
 import { arrow, chargeDisc, chevron, paperGrid, polyline, withAlpha } from './core/ink';
-import { directionHe, sci } from './core/format';
+import { sci } from './core/format';
 import SimShell, { Toggle, type TaskDef } from './core/SimShell';
+import { CHARGE_PRESETS, CHARGE_PROBE_START, E_REF, eWords, MAP, PRESET_LABEL, uC, V_LEVELS, V_REF, vWords, type ChargePreset } from './potentialPresets';
 
-const uC = 1e-6;
 const WORLD_W = 2;
 const MAP_H = 1.15;
 const GRAPH_H = 0.6;
-const MAP: GridBounds = { xmin: -1, xmax: 1, ymin: -0.575, ymax: 0.575 };
 const NX = 140;
 const NY = 80;
-/** equipotentials every 2·10⁴ V up to 1.2·10⁵ V, both signs (and V = 0 where it exists) */
-const V_STEP = 2e4;
-const V_LEVELS = [-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6].map((k) => k * V_STEP);
 /** plates: + at x = −0.4 held at 400 V, − at x = +0.4 at 0 V */
 const PLATE_X = 0.4;
 const PLATE_V = 400;
@@ -40,43 +35,12 @@ const GRAPH_V = 1.4e5;
 /** P snaps to the midpoint of a pair from this close [m] */
 const SNAP = 0.035;
 
-export type MapPreset = 'single' | 'single-neg' | 'like' | 'dipole' | 'unequal' | 'plates';
+export type MapPreset = ChargePreset | 'plates';
 
-const PRESETS: Record<Exclude<MapPreset, 'plates'>, PointCharge[]> = {
-  single: [{ x: -0.2, y: 0, q: 2 * uC }],
-  'single-neg': [{ x: -0.2, y: 0, q: -2 * uC }],
-  like: [
-    { x: -0.4, y: 0, q: 2 * uC },
-    { x: 0.4, y: 0, q: 2 * uC },
-  ],
-  dipole: [
-    { x: -0.4, y: 0, q: 2 * uC },
-    { x: 0.4, y: 0, q: -2 * uC },
-  ],
-  unequal: [
-    { x: -0.4, y: 0, q: 4 * uC },
-    { x: 0.4, y: 0, q: -2 * uC },
-  ],
-};
+const PRESETS = CHARGE_PRESETS;
 
-const PRESET_LABEL: Record<MapPreset, string> = {
-  single: 'מטען חיובי',
-  'single-neg': 'מטען שלילי',
-  like: 'שני מטענים זהים',
-  dipole: 'דיפול',
-  unequal: 'מטענים שונים',
-  plates: 'שני לוחות',
-};
-
-/** P starts 30 cm from the single charge, on the bisector of a pair, mid-gap between plates */
-const PROBE_START: Record<MapPreset, Vec2> = {
-  single: [0.1, 0],
-  'single-neg': [0.1, 0],
-  like: [0, 0.3],
-  dipole: [0, 0.3],
-  unequal: [0, 0.3],
-  plates: [0, 0.2],
-};
+/** P starts as in CHARGE_PROBE_START, and mid-gap between the plates */
+const PROBE_START: Record<MapPreset, Vec2> = { ...CHARGE_PROBE_START, plates: [0, 0.2] };
 
 const TASK_LABEL: Record<string, string> = {
   'read-v': 'גררו את נקודת המדידה P למקומות שונים, וקראו את הפוטנציאל בכל אחד.',
@@ -125,16 +89,6 @@ function sample(preset: MapPreset, x: number, y: number): { V: number; E: Vec2 }
   const cs = PRESETS[preset];
   return { V: potentialAt(cs, x, y), E: fieldAt(cs, x, y) };
 }
-
-const vWords = (v: number) => (Math.abs(v) < 0.5 ? 'V = 0' : `V = ${sci(v)} V`);
-const eWords = (E: Vec2, unit = 'N/C') => {
-  const m = Math.hypot(E[0], E[1]);
-  return m < 1 ? 'E = 0' : `E = ${sci(m)} ${unit}, ${directionHe(Math.atan2(E[1], E[0]))}`;
-};
-
-/** A reference field and potential to judge "practically zero": those of 2 μC at 30 cm. */
-const E_REF = (K * 2 * uC) / 0.09;
-const V_REF = pointPotential(2 * uC, 0.3);
 
 export default function PotentialMap(props: PotentialMapProps) {
   const init = (): State => {
