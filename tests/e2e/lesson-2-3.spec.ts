@@ -90,7 +90,7 @@ test.describe('predict, then reveal', () => {
     const predict = page.locator('[data-predict-id="pred-2-3"]');
     await predict.scrollIntoViewIfNeeded();
     await expect(predict).not.toHaveClass(/is-open/);
-    await predict.locator('label.q-choice', { hasText: 'לכיוון המטען השלילי' }).click();
+    await predict.locator('label.q-choice', { hasText: 'השדה שווה בכל המקומות' }).click();
     await predict.getByRole('button', { name: 'זה החיזוי שלי' }).click();
     await expect(predict).toHaveClass(/is-open/);
   });

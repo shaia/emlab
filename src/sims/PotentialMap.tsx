@@ -322,14 +322,15 @@ export default function PotentialMap(props: PotentialMapProps) {
       });
     }
 
-    // the slice the graph shows
+    // the slice the graph shows: dotted grey, so it cannot be taken for a dashed negative equipotential
     if (graph) {
       const [x0, sy] = S(MAP.xmin, s.probe[1]);
       const [x1] = S(MAP.xmax, s.probe[1]);
       ctx.save();
-      ctx.strokeStyle = withAlpha(p.ink2, 0.6);
-      ctx.setLineDash([3, 5]);
-      ctx.lineWidth = 1.2;
+      ctx.strokeStyle = withAlpha(p.ink2, 0.7);
+      ctx.setLineDash([1.5, 4]);
+      ctx.lineCap = 'round';
+      ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(x0, sy);
       ctx.lineTo(x1, sy);
@@ -401,6 +402,21 @@ export default function PotentialMap(props: PotentialMapProps) {
         ctx.setLineDash([]);
         ctx.fillText(`${sci(m)} V`, gx0 + 4, gy(m) - 7);
       }
+      // x ticks every 20 cm, so a slope can be read off in V per metre
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.strokeStyle = p.ink3;
+      for (let x = -80; x <= 80; x += 20) {
+        const sx = gx(x / 100);
+        ctx.beginPath();
+        ctx.moveTo(sx, bottom);
+        ctx.lineTo(sx, bottom + 4);
+        ctx.stroke();
+        // 80 is left unlabelled: the axis title sits there
+        if (x % 40 === 0 && x < 80) ctx.fillText(`${x}`, sx, bottom + 5);
+      }
+      ctx.textAlign = 'right';
+      ctx.fillText('x (cm)', gx1, bottom + 5);
       // the curve, broken where it leaves the box (at a charge V runs off to ±∞)
       ctx.strokeStyle = p.equip;
       ctx.lineWidth = 2.4;
@@ -431,7 +447,7 @@ export default function PotentialMap(props: PotentialMapProps) {
       ctx.textBaseline = 'middle';
       ctx.font = `600 12px ${p.fontUi}`;
       ctx.fillStyle = p.ink;
-      ctx.fillText('V לאורך הקו המקווקו', gx1 - 4, my1 + 12);
+      ctx.fillText('V לאורך הקו המנוקד', gx1 - 4, my1 + 12);
       ctx.restore();
     }
   };
