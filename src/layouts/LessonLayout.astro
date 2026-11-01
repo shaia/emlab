@@ -19,9 +19,11 @@ interface Props {
   enrichment: boolean;
   prev: Link | null;
   next: Link | null;
+  /** the lesson's workbook page, when it has one */
+  workbook?: string | null;
 }
 
-const { id, title, subtitle, minutes, objectives, enrichment, prev, next } = Astro.props;
+const { id, title, subtitle, minutes, objectives, enrichment, prev, next, workbook = null } = Astro.props;
 const chapter = chapterOf(id);
 const [ch, n] = id.split('.');
 ---
@@ -51,6 +53,14 @@ const [ch, n] = id.split('.');
 
     <footer class="sheet sheet-narrow">
       <LessonEnd client:visible id={id} title={title} />
+      {
+        workbook && (
+          <p class="lesson-workbook">
+            <a class="btn primary" href={workbook}>תרגול נוסף ושאלות אתגר</a>
+            <span>עשר שאלות עם תשובות ופתרונות מלאים, ושתי שאלות ממבחני קבלה ומתחרויות.</span>
+          </p>
+        )
+      }
       <p class="lesson-nav">
         {prev && <a href={prev.href}>→ {prev.id} {prev.title}</a>}
         {next && <a href={next.href}>{next.id} {next.title} ←</a>}
@@ -69,6 +79,16 @@ const [ch, n] = id.split('.');
 </script>
 
 <style>
+  .lesson-workbook {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    margin: 18px 0 0;
+    font-family: var(--font-ui);
+    font-size: 0.92rem;
+    color: var(--ink-2);
+  }
   .lesson-nav {
     display: flex;
     justify-content: space-between;

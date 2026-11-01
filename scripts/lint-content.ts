@@ -7,8 +7,11 @@
  *   npx tsx scripts/lint-content.ts --file <p> # problems in one file only (the edit hook)
  *
  * --file skips completeness checks ("≥ 3 questions per objective", "every misconception is
- * detected", "every template part is present"): a lesson being written is incomplete by design,
- * and the hook must not block each save. CI runs the full lint.
+ * detected", "every template part is present", "10 + 2 workbook problems"): a lesson being written
+ * is incomplete by design, and the hook must not block each save. CI runs the full lint.
+ *
+ * A chapter counts as finished once its summary (src/content/summaries/ch<N>.mdx) exists: from then
+ * on every lesson in it must have 6 worked examples and a workbook. Unfinished chapters are listed.
  */
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -107,6 +110,26 @@ const yamlDir = <T>(name: string): (T & { file: string })[] =>
   readdirSync(join(CONTENT, name))
     .filter((f) => f.endsWith('.yaml'))
     .flatMap((f) => (yamlFile<T[]>(join(CONTENT, name, f)) ?? []).map((e) => ({ ...e, file: `src/content/${name}/${f}` })));
+
+interface WorkbookItem {
+  id: string;
+  objectives?: string[];
+  qualitative?: boolean;
+  level?: string;
+  prompt: string;
+  diagram?: string;
+  diagramAlt?: string;
+  answer: string;
+  solution?: { kind: string; text: string }[];
+}
+const workbookDir = join(CONTENT, 'workbook');
+const workbooks = (statSync(workbookDir, { throwIfNoEntry: false }) ? walk(workbookDir) : [])
+  .filter((f) => f.endsWith('.yaml'))
+  .map((f) => ({ file: rel(f), data: yamlFile<{ lesson: string; practice?: WorkbookItem[]; challenge?: WorkbookItem[] }>(f) }));
+const summaryDir = join(CONTENT, 'summaries');
+const summaries = (statSync(summaryDir, { throwIfNoEntry: false }) ? readdirSync(summaryDir) : [])
+  .filter((f) => /^ch\d+\.mdx$/.test(f))
+  .map((f) => ({ file: `src/content/summaries/${f}`, chapter: Number(f.match(/\d+/)![0]), body: readFileSync(join(summaryDir, f), 'utf8') }));
 
 const misconceptions = yamlDir<{ id: string; remedy: { lesson: string; anchor?: string } }>('misconceptions');
 const glossary = yamlDir<{ id: string; term: string; reject?: string[] }>('glossary');
@@ -254,11 +277,81 @@ for (const l of lessons) {
   }
 }
 
+/* ------------------------------------------------------------- workbooks */
+
+const seenW = new Set<string>();
+const workbookOf = new Map<string, string>();
+for (const { file, data } of workbooks) {
+  const lesson = lessonById.get(data.lesson);
+  if (!lesson) {
+    fail(file, `lesson ${data.lesson} is not written`);
+    continue;
+  }
+  if (!file.endsWith(`/${data.lesson.replace('.', '-')}.yaml`)) fail(file, `the workbook of lesson ${data.lesson} belongs in a file named ${data.lesson.replace('.', '-')}.yaml`);
+  workbookOf.set(data.lesson, file);
+  const practice = data.practice ?? [];
+  const challenge = data.challenge ?? [];
+  if (practice.length !== 10) fail(file, `${practice.length} practice problems (a workbook has 10)`, true);
+  if (challenge.length !== 2) fail(file, `${challenge.length} challenge problems (a workbook has 2)`, true);
+  for (const level of ['basic', 'mid', 'bagrut']) {
+    const k = practice.filter((p) => p.level === level).length;
+    if (k < 2) fail(file, `only ${k} practice problem(s) at level ${level} (aim for 3 basic, 4 mid, 3 bagrut)`, true);
+  }
+  if (practice.filter((p) => p.qualitative).length < 3) fail(file, 'fewer than 3 qualitative practice problems', true);
+  for (const o of lesson.objectives) {
+    if (!practice.some((p) => p.objectives?.includes(o))) fail(file, `objective ${o} has no practice problem`, true);
+  }
+  for (const item of [...practice, ...challenge]) {
+    const w = `${file} ${item.id}`;
+    if (seenW.has(item.id)) fail(w, 'duplicate workbook id');
+    seenW.add(item.id);
+    if (!item.id.startsWith(`W-${data.lesson}-`)) fail(w, `the id does not match lesson ${data.lesson}`);
+    for (const o of item.objectives ?? []) {
+      if (!lesson.objectives.includes(o)) fail(w, `objective ${o} is not an objective of lesson ${data.lesson}`);
+    }
+    if (item.solution?.at(-1)?.kind !== 'result') fail(w, 'the full solution must end in a result step');
+    if (item.diagram && !item.diagramAlt?.trim()) fail(w, 'a diagram needs diagramAlt (its accessible description)');
+    if (item.diagram && /<script|on\w+=/i.test(item.diagram)) fail(w, 'the diagram SVG must not contain scripts or event handlers');
+  }
+}
+
+/* ------------------------------------------------------------- chapter summaries */
+
+const SUMMARY_SECTIONS = ['הרעיון הגדול', 'מה חייבים לזכור', 'טעויות נפוצות', 'איך פותרים', 'רשימת בדיקה לפני מבחן'];
+const unfinished: string[] = [];
+const chaptersWithLessons = [...new Set(lessons.map((l) => Number(l.id.split('.')[0])))].sort((a, b) => a - b);
+for (const sm of summaries) {
+  if (!chaptersWithLessons.includes(sm.chapter)) fail(sm.file, `chapter ${sm.chapter} has no written lessons`);
+  const headings = [...sm.body.matchAll(/^## (.+)$/gm)].map((m) => m[1].trim());
+  SUMMARY_SECTIONS.forEach((h, i) => {
+    const at = headings.indexOf(h);
+    if (at < 0) fail(sm.file, `missing the section "## ${h}"`);
+    else if (at < headings.indexOf(SUMMARY_SECTIONS[i - 1] ?? h)) fail(sm.file, `"## ${h}" is out of order`);
+  });
+  for (const m of sm.body.matchAll(/<LessonLink\s+id="([^"]+)"(?:\s+anchor="([^"]+)")?/g)) {
+    const target = lessonById.get(m[1]);
+    if (!target) fail(sm.file, `<LessonLink id="${m[1]}">: lesson not written`);
+    else if (m[2] && !target.body.includes(`id="${m[2]}"`)) fail(sm.file, `<LessonLink id="${m[1]}" anchor="${m[2]}">: no such id in the lesson`);
+  }
+}
+for (const ch of chaptersWithLessons) {
+  const done = summaries.some((sm) => sm.chapter === ch);
+  for (const l of lessons.filter((x) => x.id.startsWith(`${ch}.`))) {
+    const examples = (l.body.match(/<Example\b/g) ?? []).length;
+    const missing = [examples < 6 && `${examples}/6 worked examples`, !workbookOf.has(l.id) && 'no workbook'].filter(Boolean);
+    if (!missing.length) continue;
+    if (done) fail(l.file, `chapter ${ch} has a summary, so the lesson needs 6 worked examples and a workbook: ${missing.join(', ')}`, true);
+    else unfinished.push(`${l.id}: ${missing.join(', ')}`);
+  }
+}
+
 /* ------------------------------------------------------------- glossary */
 
 const texts = [
   ...lessons.map((l) => ({ where: l.file, text: l.body })),
   ...questions.map(({ q, file }) => ({ where: `${file} ${q.id}`, text: JSON.stringify(q) })),
+  ...workbooks.map(({ file, data }) => ({ where: file, text: JSON.stringify(data) })),
+  ...summaries.map((sm) => ({ where: sm.file, text: sm.body })),
 ];
 for (const g of glossary) {
   for (const bad of g.reject ?? []) {
@@ -274,9 +367,15 @@ if (pending.length) {
   for (const p of pending) console.log(`  • ${p}`);
   console.log('');
 }
+if (unfinished.length && !onlyFile) {
+  console.log(`lint-content: ${unfinished.length} lesson(s) in chapters without a summary still lack worked examples or a workbook:
+`);
+  for (const u of unfinished) console.log(`  • ${u}`);
+  console.log('');
+}
 if (problems.length) {
   console.error(`lint-content: ${problems.length} problem(s)\n`);
   for (const p of problems) console.error(`  ✗ ${p}`);
   process.exit(1);
 }
-console.log(`lint-content: ok${onlyFile ? ` for ${onlyFile}` : ''} (${lessons.length} lessons, ${questions.length} questions, ${misconceptions.length} misconceptions, ${glossary.length} terms, ${videos.length} videos)`);
+console.log(`lint-content: ok${onlyFile ? ` for ${onlyFile}` : ''} (${lessons.length} lessons, ${questions.length} questions, ${misconceptions.length} misconceptions, ${glossary.length} terms, ${videos.length} videos, ${workbooks.length} workbooks, ${summaries.length} chapter summaries)`);

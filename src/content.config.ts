@@ -236,4 +236,65 @@ const videos = defineCollection({
   }),
 });
 
-export const collections = { lessons, questions, misconceptions, glossary, videos };
+/* ---- Lesson workbook: open practice problems and sourced challenge problems, answers hidden ---- */
+
+/** One step of a written solution in Bagrut format; the last one is the `result`. */
+const solutionStep = z.object({
+  kind: z.enum(['given', 'formula', 'manipulation', 'substitution', 'reasoning', 'result']),
+  text: z.string(),
+});
+const workbookItem = {
+  objectives: z.array(z.string()).min(1),
+  prompt: z.string(),
+  /** inline SVG markup drawn under the prompt (physics space, LTR) */
+  diagram: z.string().optional(),
+  /** accessible description of the diagram: required when there is one */
+  diagramAlt: z.string().optional(),
+  /** the short final answer: value with units and direction, or a one-line decision */
+  answer: z.string(),
+  solution: z.array(solutionStep).min(1),
+};
+const workbook = defineCollection({
+  loader: glob({ base: './src/content/workbook', pattern: '**/*.yaml' }),
+  schema: z.object({
+    lesson: z.string().regex(/^\d+\.\d+$/),
+    practice: z.array(
+      z.object({
+        id: z.string().regex(/^W-\d+\.\d+-\d{2}$/),
+        level: z.enum(['basic', 'mid', 'bagrut']),
+        qualitative: z.boolean().default(false),
+        ...workbookItem,
+      }),
+    ),
+    challenge: z.array(
+      z.object({
+        id: z.string().regex(/^W-\d+\.\d+-c\d$/),
+        /** 1 = hard (entrance-exam level), 2 = very hard (olympiad level) */
+        stars: z.union([z.literal(1), z.literal(2)]),
+        ...workbookItem,
+        /** where the problem comes from; only a source actually opened and read is cited */
+        source: z.object({
+          name: z.string(),
+          year: z.number().int().min(1900),
+          problem: z.string(),
+          url: z.string().url(),
+          /** the day the source was opened; an unquoted YAML date arrives as a Date */
+          verified: z.union([
+            z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+            z.date().transform((d) => d.toISOString().slice(0, 10)),
+          ]),
+          /** numbers or constants changed (to the formula sheet's), wording paraphrased */
+          adapted: z.boolean().default(true),
+        }),
+      }),
+    ),
+  }),
+});
+
+/** End-of-chapter summary: what to remember and how to solve the chapter's problems. */
+const summaries = defineCollection({
+  loader: glob({ base: './src/content/summaries', pattern: '*.mdx' }),
+  schema: z.object({ chapter: z.number().int().min(0).max(6), title: z.string() }),
+});
+
+export const collections = { lessons, questions, misconceptions, glossary, videos, workbook, summaries };

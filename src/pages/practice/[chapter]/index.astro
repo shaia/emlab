@@ -6,6 +6,7 @@ import { chapterQuestions, chaptersWithQuestions } from '~/assessment/bank';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { chapters, lessonSlug } from '~/course';
 import { url } from '~/lib/url';
+import { chaptersWithSummary, lessonsWithWorkbook } from '~/lib/companions';
 import '~/styles/lesson.css';
 import '~/styles/platform.css';
 
@@ -17,6 +18,8 @@ const { n } = Astro.props;
 const chapter = chapters.find((c) => c.n === n);
 const { byLesson, bagrut } = await chapterQuestions(n);
 const written = new Set((await getCollection('lessons')).map((l) => l.data.id));
+const workbooks = await lessonsWithWorkbook();
+const hasSummary = (await chaptersWithSummary()).has(n);
 const lessonTitle = (id: string) => chapter?.lessons.find((l) => l.id === id)?.title ?? '';
 
 const LEVELS = [
@@ -45,6 +48,7 @@ let counter = 0;
       </div>
       <div class="p-links">
         <a class="btn primary" href={url(`test/ch${n}/`)}>למבחן הפרק</a>
+        {hasSummary && <a class="btn" href={url(`summary/ch${n}/`)}>סיכום הפרק</a>}
         <a class="btn" href={url('')}>לתוכן העניינים</a>
       </div>
     </header>
@@ -55,6 +59,7 @@ let counter = 0;
           <h2 id={`pl-${lessonSlug(g.lesson || 'x')}`}>
             <span class="ltr">{g.lesson}</span> {lessonTitle(g.lesson)}
             {written.has(g.lesson) && <a href={url(`lessons/${lessonSlug(g.lesson)}/`)}>לשיעור</a>}
+            {workbooks.has(g.lesson) && <a href={url(`workbook/${lessonSlug(g.lesson)}/`)}>תרגול כתוב</a>}
           </h2>
           {LEVELS.map((l) => {
             const qs = g.questions.filter((q) => q.level === l.key);

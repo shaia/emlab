@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import LessonLayout from '~/layouts/LessonLayout.astro';
 import { lessonOrder, lessonSlug } from '~/course';
 import { url } from '~/lib/url';
+import { lessonsWithWorkbook } from '~/lib/companions';
 import Block from '~/components/Block.astro';
 import Check from '~/components/Check.astro';
 import Example from '~/components/Example.astro';
@@ -42,6 +43,7 @@ export async function getStaticPaths() {
 const { entry, prev, next } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
+const workbook = (await lessonsWithWorkbook()).has(d.id) ? url(`workbook/${lessonSlug(d.id)}/`) : null;
 const components = {
   Block,
   Check,
@@ -72,6 +74,7 @@ const components = {
   enrichment={d.enrichment}
   prev={prev}
   next={next}
+  workbook={workbook}
 >
   <Content components={components} />
 </LessonLayout>

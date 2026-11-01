@@ -439,3 +439,89 @@
   font: 0.88rem var(--font-ui);
   color: var(--ink-2);
 }
+
+/* ---------- lesson workbook ---------- */
+
+.wb-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 22px;
+}
+.wb-item {
+  padding: 16px 18px 6px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+}
+.wb-num {
+  margin: 0 0 6px;
+  font: 700 0.9rem var(--font-ui);
+  color: var(--ink-2);
+}
+/* inline math never wraps: a long formula scrolls inside its box instead of widening the page */
+.wb-text {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.wb-diagram {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--rule);
+  overflow-x: auto;
+}
+.wb-diagram svg {
+  display: block;
+  margin-inline: auto;
+  max-width: 100%;
+  height: auto;
+  color: var(--ink);
+  font-family: var(--font-ui);
+}
+.wb-stars {
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+.wb-source {
+  margin: 6px 0 0;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--ink-2);
+}
+.wb-source a {
+  unicode-bidi: isolate;
+}
+.wb-item .solution {
+  margin: 10px 0;
+}
+@media (max-width: 520px) {
+  .wb-item .sol-step {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+}
+
+/* ---------- chapter summary ---------- */
+
+.summary-body {
+  overflow-wrap: break-word;
+}
+.summary-body h2 {
+  margin-top: 1.6em;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--rule);
+}
+.summary-body h2:first-child {
+  margin-top: 0;
+}
+.summary-body li {
+  margin-bottom: 0.35em;
+}
+/* list items keep their markers visible; long formulas there go to display math */
+.summary-body p {
+  overflow-x: auto;
+  overflow-y: hidden;
+}

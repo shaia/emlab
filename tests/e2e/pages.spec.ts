@@ -12,7 +12,7 @@ const DIST = join(import.meta.dirname, '../../dist');
 const lessonPages = existsSync(join(DIST, 'lessons'))
   ? readdirSync(join(DIST, 'lessons')).map((d) => `/lessons/${d}/`)
   : [];
-const extra = ['me', 'formulas', 'glossary', 'practice', 'test'].flatMap((d) =>
+const extra = ['me', 'formulas', 'glossary', 'practice', 'test', 'workbook', 'summary'].flatMap((d) =>
   existsSync(join(DIST, d)) ? walkPages(join(DIST, d), `/${d}/`) : [],
 );
 const PAGES = ['/', ...lessonPages, ...extra];
