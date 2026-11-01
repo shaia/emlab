@@ -1,0 +1,21 @@
+# Lesson 2.8 terms. Format and rules: see glossary/1-5.yaml.
+
+- id: parallel-connection
+  term: חיבור במקביל
+  en: parallel connection
+  definition: חיבור שבו כל רכיב מחובר בין אותן שתי נקודות, ולכן המתח על כל הרכיבים זהה. בקבלים במקביל המטענים מתחברים, והקיבול השקול הוא C = C₁ + C₂ + …
+  lesson: '2.8'
+
+- id: series-connection
+  term: חיבור בטור
+  en: series connection
+  definition: חיבור שבו הרכיבים מחוברים זה אחר זה, בשרשרת אחת. בקבלים בטור על כל קבל אותו מטען, המתחים מתחברים, והקיבול השקול נתון ב-1/C = 1/C₁ + 1/C₂ + …
+  lesson: '2.8'
+
+- id: equivalent-capacitance
+  term: קיבול שקול
+  en: equivalent capacitance
+  symbol: C_eq
+  unit: F
+  definition: הקיבול של קבל יחיד שאפשר להחליף בו רשת של קבלים, כך שהסוללה תעביר אותו מטען באותו מתח.
+  lesson: '2.8'

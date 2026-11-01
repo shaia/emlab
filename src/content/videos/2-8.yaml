@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-2-8-series-parallel-hebrew
+  youtubeId: 7fDYHw76p2k
+  title: "שיעור מס' 9 קבלים בטור ובמקביל"
+  channel: יששכר חפץ
+  lang: he
+  captions: []
+  minutes: 5
+  why: שיעור קצר בעברית על קבלים בטור ובמקביל (לפי הכותרת; לסרטון אין תיאור מפורט). השוו לשני הכללים של השיעור, ובדקו שאתם יודעים מה משותף לקבלים בכל חיבור.
+  verified: '2026-11-01'
+
+- id: v-2-8-series-parallel
+  youtubeId: BIPi0vXdssE
+  title: 'Capacitors in Series and Parallel'
+  channel: Physics Videos by Eugene Khutoryansky
+  lang: en
+  captions: [en]
+  minutes: 5
+  why: הסבר אינטואיטיבי באנגלית, עם אנימציות, למה קבלים בטור נותנים קיבול קטן יותר, ובמקביל גדול יותר (לפי תיאור הסרטון).
+  verified: '2026-11-01'

@@ -1,0 +1,236 @@
+# Lesson 2.8 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/capacitors.ts (parallel, series, seriesString,
+# parallelBank, shareCharge).
+
+chapter: 2
+questions:
+  # ------------------------------------------------ OBJ-2.8-1: equivalent capacitance
+  - id: Q-2.8-parallel-c
+    type: numeric
+    objectives: [OBJ-2.8-1]
+    prompt: >-
+      קבל של $4\,\mu\text{F}$ וקבל של $6\,\mu\text{F}$ מחוברים במקביל. מה הקיבול השקול? ענו במיקרו-פאראד.
+    answer: 10
+    unit: μF
+    tolerance: 0.03
+    correctFeedback: 'נכון. במקביל הקיבולים מתחברים: $C = 4 + 6 = 10\,\mu\text{F}$.'
+    wrongFeedback: 'במקביל המתח משותף והמטענים מתחברים, ולכן $C = C_1 + C_2$.'
+    commonWrong:
+      - value: 2.4
+        feedback: 'השתמשתם בכלל של חיבור **בטור**. במקביל הקיבולים פשוט מתחברים.'
+
+  - id: Q-2.8-series-c
+    type: numeric
+    objectives: [OBJ-2.8-1]
+    prompt: >-
+      קבל של $4\,\mu\text{F}$ וקבל של $6\,\mu\text{F}$ מחוברים בטור. מה הקיבול השקול? ענו במיקרו-פאראד.
+    answer: 2.4
+    unit: μF
+    tolerance: 0.03
+    correctFeedback: 'נכון: $C = \dfrac{C_1C_2}{C_1 + C_2} = \dfrac{4\cdot6}{4+6} = 2.4\,\mu\text{F}$, פחות מהקטן שבהם.'
+    wrongFeedback: 'בטור: $\dfrac1C = \dfrac1{C_1} + \dfrac1{C_2}$, ולשני קבלים $C = \dfrac{C_1C_2}{C_1+C_2}$.'
+    commonWrong:
+      - value: 10
+        feedback: 'חיברתם את הקיבולים, כמו במקביל. בטור הקיבול השקול **קטן** מכל אחד מהקבלים.'
+        misconception: MC-series-capacitances-add
+      - value: 0.417
+        feedback: 'חישבתם את $1/C$, ולא את $C$: $\tfrac14 + \tfrac16 = 0.417$. צריך עוד להפוך: $C = 1/0.417 = 2.4\,\mu\text{F}$.'
+
+  - id: Q-2.8-two-equal-series
+    type: twotier
+    objectives: [OBJ-2.8-1]
+    qualitative: true
+    prompt: >-
+      שלושה קבלים זהים, כל אחד בקיבול $C$, מחוברים בטור. מה הקיבול השקול?
+    choices:
+      - text: $C/3$
+        correct: true
+        feedback: נכון. $1/C_{\text{eq}} = 3/C$.
+      - text: $3C$
+        feedback: 'זה הקיבול השקול שלהם **במקביל**. בטור הקיבול קטן.'
+        misconception: MC-series-capacitances-add
+      - text: $C$
+        feedback: 'הקבלים זהים, אבל בטור המתח מתחלק ביניהם, ולכן אותו מתח מספיק לפחות מטען.'
+      - text: $C/9$
+        feedback: '$1/C_{\text{eq}} = 1/C + 1/C + 1/C = 3/C$, ולכן $C_{\text{eq}} = C/3$, לא $C/9$.'
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: 'על כל קבל אותו מטען $Q$, והמתח של הסוללה מתחלק לשלושה: כל קבל מקבל $V/3$, ולכן $Q = C\cdot V/3$.'
+        correct: true
+        feedback: 'נכון. ואז $C_{\text{eq}} = Q/V = C/3$.'
+      - text: שלושה קבלים אוגרים פי 3 מטען.
+        feedback: 'זה נכון במקביל, שם כל קבל מקבל את המתח המלא. בטור כל קבל מקבל רק שליש מהמתח.'
+        misconception: MC-series-capacitances-add
+      - text: המטען מתחלק בין שלושת הקבלים.
+        feedback: 'בטור המטען לא מתחלק: על כל קבל אותו מטען. מה שמתחלק הוא המתח.'
+        misconception: MC-series-charge-by-c
+
+  - id: Q-2.8-series-vs-smallest
+    type: mc
+    objectives: [OBJ-2.8-1]
+    qualitative: true
+    prompt: >-
+      מחברים בטור קבלים של $2\,\mu\text{F}$, $3\,\mu\text{F}$ ו-$6\,\mu\text{F}$. מה נכון לגבי הקיבול השקול?
+    choices:
+      - text: 'הוא קטן מ-$2\,\mu\text{F}$ (למעשה $1\,\mu\text{F}$).'
+        correct: true
+        feedback: 'נכון. $\tfrac12 + \tfrac13 + \tfrac16 = 1$, ולכן $C = 1\,\mu\text{F}$. בטור הקיבול השקול תמיד קטן מהקטן שבקבלים.'
+      - text: 'הוא $11\,\mu\text{F}$.'
+        feedback: 'זה הסכום, כמו במקביל. בטור הופכים, מחברים והופכים שוב.'
+        misconception: MC-series-capacitances-add
+      - text: 'הוא בין $2\,\mu\text{F}$ ל-$6\,\mu\text{F}$, כמו ממוצע.'
+        feedback: 'הקיבול השקול בטור אינו ממוצע: כל קבל שמוסיפים מקטין אותו עוד.'
+      - text: 'הוא $6\,\mu\text{F}$, כי הקבל הגדול קובע.'
+        feedback: 'בטור דווקא הקבל **הקטן** משפיע הכי הרבה, והקיבול השקול קטן ממנו.'
+
+  # ------------------------------------------------ OBJ-2.8-2: charge and voltage on each capacitor
+  - id: Q-2.8-series-voltage
+    type: numeric
+    objectives: [OBJ-2.8-2]
+    level: mid
+    prompt: >-
+      קבל של $4\,\mu\text{F}$ וקבל של $6\,\mu\text{F}$ מחוברים בטור לסוללה של $20\,\text{V}$. מה המתח על הקבל של $4\,\mu\text{F}$? ענו בוולט.
+    answer: 12
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. $C = 2.4\,\mu\text{F}$, ולכן על כל קבל $Q = 2.4\cdot20 = 48\,\mu\text{C}$. $V = Q/C = 48/4 = 12\,\text{V}$, ועל השני $8\,\text{V}$.'
+    wrongFeedback: 'מצאו את המטען המשותף, $Q = C_{\text{eq}}V$, וחלקו בקיבול של הקבל.'
+    commonWrong:
+      - value: 10
+        feedback: 'חילקתם את המתח חצי-חצי. בטור על שני הקבלים אותו מטען, ולכן המתח גדול יותר על הקבל הקטן.'
+        misconception: MC-series-equal-voltage
+      - value: 8
+        feedback: 'זה המתח על הקבל של $6\,\mu\text{F}$. על הקטן ($4\,\mu\text{F}$) המתח גדול יותר: $V = Q/C$.'
+    hints:
+      - 'בטור, על כל קבל אותו מטען: $Q = C_{\text{eq}}V$.'
+
+  - id: Q-2.8-series-charge
+    type: mc
+    objectives: [OBJ-2.8-2]
+    qualitative: true
+    prompt: >-
+      קבל של $2\,\mu\text{F}$ וקבל של $5\,\mu\text{F}$ מחוברים בטור לסוללה. על איזה מהם יש יותר מטען?
+    choices:
+      - text: על שניהם אותו מטען.
+        correct: true
+        feedback: 'נכון. הלוחות הפנימיים מבודדים משאר המעגל, ולכן המטען שעובר לקבל אחד בא מהלוח של השני. מה ששונה הוא המתח.'
+      - text: על הקבל של $5\,\mu\text{F}$, כי הקיבול שלו גדול יותר.
+        feedback: 'זה נכון במקביל, שם המתח משותף. בטור המטען משותף, והקבל הגדול מקבל פחות **מתח**.'
+        misconception: MC-series-charge-by-c
+      - text: על הקבל של $2\,\mu\text{F}$, כי המתח עליו גדול יותר.
+        feedback: 'המתח עליו אכן גדול יותר, אבל המטען שווה: $Q = CV$, קיבול קטן כפול מתח גדול.'
+      - text: על הקבל שקרוב יותר לצד החיובי של הסוללה.
+        feedback: 'המיקום בשרשרת לא משנה. בטור על כל הקבלים אותו מטען.'
+
+  - id: Q-2.8-parallel-charge
+    type: mc
+    objectives: [OBJ-2.8-2]
+    qualitative: true
+    prompt: >-
+      קבל של $2\,\mu\text{F}$ וקבל של $5\,\mu\text{F}$ מחוברים במקביל לסוללה. מה נכון?
+    choices:
+      - text: המתח על שניהם שווה, ועל הקבל של $5\,\mu\text{F}$ מטען גדול פי 2.5.
+        correct: true
+        feedback: 'נכון. במקביל המתח משותף, ו-$Q = CV$ ביחס ישר לקיבול.'
+      - text: על שניהם אותו מטען, והמתחים שונים.
+        feedback: 'זה מה שקורה בטור. במקביל שני הקבלים מחוברים לאותן נקודות, ולכן המתח שווה.'
+        misconception: MC-parallel-equal-charge
+      - text: המתח של הסוללה מתחלק ביניהם.
+        feedback: 'המתח מתחלק בטור. במקביל כל קבל מקבל את המתח המלא של הסוללה.'
+        misconception: MC-series-equal-voltage
+      - text: על הקבל הקטן מטען גדול יותר.
+        feedback: 'במקביל המתח שווה, ולכן הקבל הגדול, עם $Q = CV$ גדול יותר, אוגר יותר.'
+        misconception: MC-parallel-equal-charge
+
+  - id: Q-2.8-mixed-charge
+    type: numeric
+    objectives: [OBJ-2.8-2]
+    level: bagrut
+    prompt: >-
+      קבל $C_1 = 2\,\mu\text{F}$ מחובר בטור לזוג קבלים שמחוברים ביניהם במקביל, $C_2 = 3\,\mu\text{F}$ ו-$C_3 = 1\,\mu\text{F}$. כל הרשת מחוברת לסוללה של $12\,\text{V}$.
+      מה המטען על $C_3$? ענו במיקרו-קולון.
+    answer: 4
+    unit: μC
+    tolerance: 0.03
+    correctFeedback: 'נכון. הזוג במקביל: $4\,\mu\text{F}$. בטור עם $C_1$: $\tfrac43\,\mu\text{F}$. המטען מהסוללה $16\,\mu\text{C}$, ולכן $V_1 = 8\,\text{V}$ ועל הזוג $4\,\text{V}$. $Q_3 = 1\cdot4 = 4\,\mu\text{C}$.'
+    wrongFeedback: 'צמצמו את הרשת לקבל אחד, מצאו את המטען מהסוללה, ואז חזרו אחורה: מה המתח על הזוג שבמקביל?'
+    commonWrong:
+      - value: 16
+        feedback: 'זה המטען על $C_1$, שעובר כולו לזוג. במקביל הוא מתחלק בין $C_2$ ל-$C_3$ לפי הקיבולים.'
+      - value: 12
+        feedback: 'זה המטען על $C_2$. על $C_3$, שהקיבול שלו קטן פי 3, המטען קטן פי 3.'
+      - value: 8
+        feedback: 'חילקתם את $16\,\mu\text{C}$ חצי-חצי בין $C_2$ ל-$C_3$. במקביל המתח משותף, והמטען לפי הקיבול.'
+        misconception: MC-parallel-equal-charge
+
+  - id: Q-2.8-mixed-rank
+    type: rank
+    objectives: [OBJ-2.8-2]
+    qualitative: true
+    prompt: >-
+      באותה רשת ($C_1 = 2\,\mu\text{F}$ בטור עם $C_2 = 3\,\mu\text{F}$ ו-$C_3 = 1\,\mu\text{F}$ במקביל, על $12\,\text{V}$), דרגו את המתחים על הקבלים, מהגדול לקטן:
+    items:
+      - id: c1
+        label: 'המתח על $C_1$'
+      - id: c2
+        label: 'המתח על $C_2$'
+      - id: c3
+        label: 'המתח על $C_3$'
+    order: [c1, [c2, c3]]
+    correctFeedback: 'נכון. $V_1 = 8\,\text{V}$. $C_2$ ו-$C_3$ במקביל, ולכן המתח עליהם שווה: $4\,\text{V}$ לכל אחד.'
+    wrongFeedback: 'קבלים במקביל, כמו $C_2$ ו-$C_3$, נמצאים תמיד באותו מתח. והמתח על $C_1$ ועל הזוג מתחבר ל-$12\,\text{V}$.'
+
+  # ------------------------------------------------ OBJ-2.8-3: a charged capacitor meets an empty one
+  - id: Q-2.8-share-voltage
+    type: numeric
+    objectives: [OBJ-2.8-3]
+    prompt: >-
+      קבל של $4\,\mu\text{F}$ נטען ל-$10\,\text{V}$ ומנותק מהסוללה. מחברים אותו לקבל ריק של $1\,\mu\text{F}$. מה המתח המשותף אחרי החיבור? ענו בוולט.
+    answer: 8
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. המטען $40\,\mu\text{C}$ נשמר, והקיבול הכולל $5\,\mu\text{F}$: $V = 40/5 = 8\,\text{V}$.'
+    wrongFeedback: 'המטען נשמר: $Q = C_1V_0$. אחרי החיבור הקבלים במקביל, ולכן $V = Q/(C_1 + C_2)$.'
+    commonWrong:
+      - value: 5
+        feedback: 'חילקתם את המתח חצי-חצי. מה שנשמר הוא המטען, והוא מתחלק לפי הקיבולים. הקבל הריק קטן, ולכן המתח יורד רק מעט.'
+        misconception: MC-equal-share-on-connect
+      - value: 10
+        feedback: 'חלק מהמטען עבר לקבל השני, ולכן המתח על הראשון ירד.'
+
+  - id: Q-2.8-share-energy
+    type: mc
+    objectives: [OBJ-2.8-3]
+    qualitative: true
+    prompt: >-
+      קבל טעון מחובר לקבל ריק **זהה** לו. מה קורה לאנרגיה החשמלית הכוללת?
+    choices:
+      - text: היא קטנה לחצי.
+        correct: true
+        feedback: 'נכון. המטען מתחלק חצי-חצי, והמתח יורד לחצי. $U = \tfrac12 CV^2$ לכל קבל: שני קבלים, כל אחד ברבע מהאנרגיה ההתחלתית. ביחד חצי.'
+      - text: היא לא משתנה, כי המטען נשמר.
+        feedback: 'המטען נשמר, אבל האנרגיה החשמלית לא. ההפרש הופך לחום בחוטים, כמו בחיבור שני כדורים מוליכים.'
+        misconception: MC-share-energy-conserved
+      - text: היא מוכפלת, כי עכשיו יש שני קבלים טעונים.
+        feedback: 'אין מקור שמוסיף אנרגיה. המטען רק עבר מקבל לקבל, ובדרך חלק מהאנרגיה הלך לאיבוד.'
+      - text: היא קטנה לרבע.
+        feedback: 'כל קבל לבד מקבל רבע, אבל יש שניים. ביחד חצי.'
+
+  - id: Q-2.8-energy-lost
+    type: numeric
+    objectives: [OBJ-2.8-3]
+    level: mid
+    prompt: >-
+      קבל של $4\,\mu\text{F}$ טעון ל-$10\,\text{V}$ מחובר לקבל ריק של $1\,\mu\text{F}$. כמה אנרגיה חשמלית הלכה לאיבוד בחיבור? ענו בג'אול.
+    answer: 4.0e-5
+    unit: J
+    tolerance: 0.03
+    correctFeedback: 'נכון. לפני: $\tfrac12\cdot4\cdot10^{-6}\cdot10^2 = 200\,\mu\text{J}$. אחרי, ב-$8\,\text{V}$: $\tfrac12\cdot5\cdot10^{-6}\cdot8^2 = 160\,\mu\text{J}$. הלכו לאיבוד $40\,\mu\text{J}$.'
+    wrongFeedback: 'חשבו את האנרגיה לפני (קבל אחד, $10\,\text{V}$) ואחרי (שני הקבלים, במתח המשותף), והחסירו.'
+    commonWrong:
+      - value: 0
+        feedback: 'המטען נשמר, אבל האנרגיה החשמלית לא. היא קטנה, וההפרש הפך לחום.'
+        misconception: MC-share-energy-conserved
+      - value: 1.6e-4
+        feedback: 'זו האנרגיה שנשארה, לא זו שהלכה לאיבוד. הלכו לאיבוד $200 - 160 = 40\,\mu\text{J}$.'
