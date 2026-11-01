@@ -20,7 +20,7 @@ import { markTask } from '~/progress/store';
 import { subscribeSteps } from '~/ui/steps';
 import { toScreen, toWorld, useFigureCanvas, type FrameInfo, type View } from './core/canvas';
 import { chargeDisc, chevron, paperGrid, polyline, withAlpha } from './core/ink';
-import { sciN as sci } from './gaussFormat';
+import { sci } from './core/format';
 import SimShell, { type TaskDef } from './core/SimShell';
 
 const uC = 1e-6;

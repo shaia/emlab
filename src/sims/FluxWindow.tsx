@@ -14,7 +14,7 @@ import { markTask } from '~/progress/store';
 import { subscribeSteps } from '~/ui/steps';
 import { toScreen, toWorld, useFigureCanvas, type FrameInfo } from './core/canvas';
 import { arrow, paperGrid, polyline, withAlpha } from './core/ink';
-import { sciN as sci } from './gaussFormat';
+import { sci } from './core/format';
 import SimShell, { Slider, type TaskDef } from './core/SimShell';
 
 const WORLD_W = 2;

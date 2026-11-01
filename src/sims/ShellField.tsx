@@ -15,7 +15,7 @@ import { markTask } from '~/progress/store';
 import { subscribeSteps } from '~/ui/steps';
 import { useFigureCanvas, type FrameInfo } from './core/canvas';
 import { arrow, withAlpha } from './core/ink';
-import { sciN as sci } from './gaussFormat';
+import { sci } from './core/format';
 import SimShell, { Slider, type TaskDef } from './core/SimShell';
 
 const uC = 1e-6;

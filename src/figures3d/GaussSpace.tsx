@@ -17,7 +17,7 @@ import { motionAllowed } from '~/progress/settings';
 import { subscribeSteps } from '~/ui/steps';
 import { readPalette, toScreen, useFigureCanvas, type FrameInfo } from '~/sims/core/canvas';
 import { chargeDisc, chevron, paperGrid, polyline, withAlpha } from '~/sims/core/ink';
-import { sciN as sci } from '~/sims/gaussFormat';
+import { sci } from '~/sims/core/format';
 import SimShell, { Slider, type TaskDef } from '~/sims/core/SimShell';
 import { webglAvailable } from './webgl';
 
