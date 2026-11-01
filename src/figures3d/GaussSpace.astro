@@ -1,0 +1,7 @@
+---
+/** The 3D Gauss figure for lesson MDX: <Spread figure={GaussSpace} figureProps={{…}}>. Loads three.js lazily. */
+import GaussSpace, { type GaussSpaceProps } from './GaussSpace';
+type Props = GaussSpaceProps;
+---
+
+<GaussSpace client:visible {...Astro.props} />

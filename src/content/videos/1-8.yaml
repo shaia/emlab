@@ -1,0 +1,22 @@
+# Curated YouTube clips. Every id was checked against YouTube oEmbed (exists, embeddable;
+# title and channel as below) on the `verified` date.
+
+- id: libson-shell
+  youtubeId: 31Mv1uFiE4A
+  title: 'שדה חשמלי של כדור וקליפה כדורית | חוק קולון והשדה החשמלי, שיעור מספר 7 | קורס חשמל, אריאל ליבזון'
+  channel: אריאל ליבזון - Ariel Libson
+  lang: he
+  captions: []
+  minutes: 15
+  why: שיעור בעברית על השדה של כדור ושל קליפה כדורית (לפי הכותרת). הוא מתוך קורס חשמל, וייתכן שהוא מפורט יותר מהשיעור כאן. משך הסרטון לא נבדק.
+  verified: '2026-10-31'
+
+- id: libson-plane
+  youtubeId: YQXfPkP8CLA
+  title: 'שדה ליד לוח חשמלי אינסופי | חוק קולון והשדה החשמלי, שיעור מספר 11 | קורס חשמל, אריאל ליבזון'
+  channel: אריאל ליבזון - Ariel Libson
+  lang: he
+  captions: []
+  minutes: 15
+  why: שיעור בעברית על השדה ליד לוח אינסופי (לפי הכותרת). הוא מתוך קורס חשמל. משך הסרטון לא נבדק.
+  verified: '2026-10-31'

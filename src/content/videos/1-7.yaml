@@ -1,0 +1,12 @@
+# Curated YouTube clips. Every id was checked against YouTube oEmbed (exists, embeddable;
+# title and channel as below) on the `verified` date.
+
+- id: khan-gauss-any-surface
+  youtubeId: jCuWaC0Oibw
+  title: 'Gauss law logical proof (any closed surface) | Electric charges & fields | Physics | Khan Academy'
+  channel: Khan Academy India - English
+  lang: en
+  captions: []
+  minutes: 12
+  why: הנימוק שחוק גאוס נכון לכל משטח סגור ולא רק לכדור (לפי כותרת הסרטון). אפשר להשוות אותו לספירת הקווים באיור 1.7ב. משך הסרטון לא נבדק.
+  verified: '2026-10-31'
