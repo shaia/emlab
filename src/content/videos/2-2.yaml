@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-2-2-potential
+  youtubeId: Gae-sNARqeg
+  title: 'פוטנציאל חשמלי'
+  channel: מרכז שוורץ/רייסמן הדרכות למורי פיזיקה
+  lang: he
+  captions: []
+  minutes: 11
+  why: שיעור בעברית מסדרת הדרכה למורים לפיזיקה. לפי תיאור הסרטון, הוא ממפה את המושגים של הפרק (כוח, שדה, עבודה, אנרגיה) ומגיע מהם אל מושג הפוטנציאל החשמלי, כמו המהלך של השיעור.
+  verified: '2026-11-01'
+
+- id: v-2-2-electron-volt
+  youtubeId: DjQl4J-jePc
+  title: 'Electron Volt Explained, Conversion to Joules, Basic Introduction'
+  channel: The Organic Chemistry Tutor
+  lang: en
+  captions: [en]
+  minutes: 11
+  why: הסבר באנגלית על האלקטרון-וולט, ואיך ממירים בין eV לג'אול ובחזרה (לפי תיאור הסרטון). שימו לב שבסרטון ה-eV מוצג כיחידה של אנרגיה, כמו בשיעור.
+  verified: '2026-11-01'

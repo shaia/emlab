@@ -1,0 +1,33 @@
+# Lesson 2.2 terms. Format and rules: see glossary/1-5.yaml.
+
+- id: electric-potential
+  term: פוטנציאל חשמלי
+  en: electric potential
+  symbol: V
+  unit: V
+  definition: האנרגיה הפוטנציאלית ליחידת מטען בנקודה, V = U/q. הפוטנציאל הוא תכונה של הנקודה, ולא תלוי במטען שמניחים בה. הוא גודל סקלרי (מספר עם סימן, בלי כיוון). של מטען נקודתי V = kQ/r, ו-V = 0 באינסוף.
+  lesson: '2.2'
+
+- id: volt
+  term: וולט
+  en: volt
+  symbol: V
+  definition: יחידת הפוטנציאל והמתח. וולט אחד הוא ג'אול לקולון, 1 V = 1 J/C.
+  lesson: '2.2'
+
+- id: voltage
+  term: מתח
+  en: voltage (potential difference)
+  symbol: V_AB
+  unit: V
+  definition: הפרש הפוטנציאלים בין שתי נקודות, V_AB = V_A − V_B. נקרא גם הפרש פוטנציאלים. העבודה שהשדה עושה על מטען q שעובר מ-A ל-B היא W = qV_AB.
+  lesson: '2.2'
+
+- id: electron-volt
+  term: אלקטרון-וולט
+  en: electron-volt
+  symbol: eV
+  unit: J
+  definition: יחידת אנרגיה. האנרגיה שמטען יסודי e מקבל כשהוא עובר הפרש פוטנציאלים של וולט אחד, 1 eV = 1.6·10⁻¹⁹ J. זו יחידה של אנרגיה, לא של פוטנציאל.
+  reject: [אלקטרונוולט]
+  lesson: '2.2'

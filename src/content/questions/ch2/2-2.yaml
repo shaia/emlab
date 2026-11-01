@@ -1,0 +1,238 @@
+# Lesson 2.2 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/potential.ts.
+
+chapter: 2
+questions:
+  # ------------------------------------------------ OBJ-2.2-1: V = U/q, volt, voltage, eV
+  - id: Q-2.2-double-test-charge
+    type: mc
+    objectives: [OBJ-2.2-1]
+    qualitative: true
+    prompt: >-
+      בנקודה P ליד מטען $Q$ מניחים מטען בוחן $q$. מחליפים אותו במטען $2q$. מה קורה לפוטנציאל בנקודה P, ומה לאנרגיה הפוטנציאלית?
+    choices:
+      - text: הפוטנציאל לא משתנה, והאנרגיה הפוטנציאלית מוכפלת.
+        correct: true
+        feedback: 'נכון. $V$ תלוי רק ב-$Q$ ובמקום. האנרגיה היא $U = qV$, ולכן היא ביחס ישר למטען שמניחים.'
+      - text: שניהם מוכפלים.
+        feedback: 'האנרגיה אכן מוכפלת, אבל $V = U/q$: גם המונה וגם המכנה מוכפלים, והמנה לא משתנה.'
+        misconception: MC-potential-equals-energy
+      - text: שניהם לא משתנים, כי $Q$ לא השתנה.
+        feedback: 'הפוטנציאל לא משתנה, אבל האנרגיה $U = qV$ תלויה גם במטען שמניחים בנקודה.'
+      - text: הפוטנציאל קטן פי 2, והאנרגיה לא משתנה.
+        feedback: 'הפוטנציאל לא תלוי במטען הבוחן בכלל. מה שנשמר הוא המנה $U/q$, ולא האנרגיה.'
+        misconception: MC-potential-equals-energy
+
+  - id: Q-2.2-energy-from-v
+    type: numeric
+    objectives: [OBJ-2.2-1]
+    prompt: >-
+      בנקודה מסוימת הפוטנציאל הוא $V = +500\,\text{V}$. מה האנרגיה הפוטנציאלית של מטען $q = -3\,\text{nC}$ שמונח בה? ענו בג'אול, עם סימן.
+    answer: -1.5e-6
+    unit: J
+    tolerance: 0.03
+    correctFeedback: 'נכון: $U = qV = (-3\cdot10^{-9})\cdot 500 = -1.5\cdot10^{-6}\,\text{J}$.'
+    wrongFeedback: 'הפוטנציאל הוא אנרגיה ליחידת מטען, ולכן $U = qV$. הציבו את המטען עם הסימן.'
+    commonWrong:
+      - value: 1.5e-6
+        feedback: 'המטען שלילי והפוטנציאל חיובי, ולכן $U = qV$ שלילית.'
+      - value: -6.0e-12
+        feedback: 'חילקתם את המטען בפוטנציאל. מהגדרה $V = U/q$, ולכן $U = qV$: מכפילים.'
+        misconception: MC-potential-equals-energy
+
+  - id: Q-2.2-ev-to-joule
+    type: numeric
+    objectives: [OBJ-2.2-1]
+    prompt: >-
+      פרוטון עובר הפרש פוטנציאלים של $2000\,\text{V}$, והשדה עושה עליו עבודה חיובית. כמה עבודה עשה השדה? ענו בג'אול.
+    answer: 3.2e-16
+    unit: J
+    tolerance: 0.03
+    correctFeedback: 'נכון: $W = eV = 1.6\cdot10^{-19}\cdot 2000 = 3.2\cdot10^{-16}\,\text{J}$, כלומר $2000\,\text{eV}$.'
+    wrongFeedback: 'העבודה היא המטען כפול הפרש הפוטנציאלים: $W = qV$, עם $q = e = 1.6\cdot10^{-19}\,\text{C}$.'
+    commonWrong:
+      - value: 2000
+        feedback: 'זו העבודה ב**אלקטרון-וולט**, $2000\,\text{eV}$. השאלה מבקשת ג''אול: כפלו ב-$1.6\cdot10^{-19}$.'
+        misconception: MC-ev-is-voltage
+      - value: 1.25e22
+        feedback: 'חילקתם ב-$e$ במקום לכפול. $1\,\text{eV} = 1.6\cdot10^{-19}\,\text{J}$, ולכן מכפילים.'
+    hints:
+      - '$1\,\text{eV} = 1.6\cdot10^{-19}\,\text{J}$.'
+
+  - id: Q-2.2-ev-meaning
+    type: mc
+    objectives: [OBJ-2.2-1]
+    qualitative: true
+    prompt: >-
+      בספר כתוב שאלקטרון בשפופרת "יש לו אנרגיה של $15\,\text{keV}$". מה זה אומר?
+    choices:
+      - text: 'האנרגיה שלו היא $15000\cdot 1.6\cdot10^{-19}\,\text{J}$: כמו האנרגיה שהשדה נותן לאלקטרון שעובר מתח של $15000\,\text{V}$.'
+        correct: true
+        feedback: 'נכון. eV היא יחידת אנרגיה, ו-k (קילו) הוא $10^{3}$: $15\,\text{keV} = 2.4\cdot10^{-15}\,\text{J}$.'
+      - text: הפוטנציאל במקום שבו נמצא האלקטרון הוא $15000\,\text{V}$.
+        feedback: 'eV איננה יחידה של פוטנציאל. היא מודדת אנרגיה, ולא אומרת מה הפוטנציאל במקום שבו האלקטרון נמצא.'
+        misconception: MC-ev-is-voltage
+      - text: המתח של הסוללה שמזינה את השפופרת הוא $15\,\text{V}$.
+        feedback: 'k פירושו אלף, ו-eV היא יחידה של אנרגיה, לא של מתח.'
+        misconception: MC-ev-is-voltage
+      - text: האלקטרון נושא מטען של $15000e$.
+        feedback: 'למטען של האלקטרון אין שינוי: הוא תמיד $e$. ה-eV מודד אנרגיה.'
+
+  # ------------------------------------------------ OBJ-2.2-2: V = kQ/r and superposition
+  - id: Q-2.2-point-v
+    type: numeric
+    objectives: [OBJ-2.2-2]
+    prompt: >-
+      מה הפוטנציאל במרחק $20$ ס"מ ממטען נקודתי $Q = -3\,\mu\text{C}$? ענו בוולט, עם סימן.
+    answer: -1.35e5
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון: $V = \dfrac{kQ}{r} = \dfrac{9\cdot10^{9}\cdot(-3\cdot10^{-6})}{0.2} = -1.35\cdot10^{5}\,\text{V}$.'
+    wrongFeedback: 'הציבו ב-$V = kQ/r$ את המטען עם הסימן ואת המרחק במטרים.'
+    commonWrong:
+      - value: -6.75e5
+        feedback: 'חילקתם ב-$r^2$. בפוטנציאל המרחק לא בריבוע: $V = kQ/r$.'
+        misconception: MC-potential-inverse-square
+      - value: 1.35e5
+        feedback: 'שכחתם את הסימן. סביב מטען שלילי הפוטנציאל שלילי.'
+
+  - id: Q-2.2-two-charges-sum
+    type: numeric
+    objectives: [OBJ-2.2-2]
+    level: mid
+    prompt: >-
+      מטען $+4\,\mu\text{C}$ נמצא $30$ ס"מ מנקודה P, ומטען $+2\,\mu\text{C}$ נמצא $60$ ס"מ ממנה, בכיוון אחר. מה הפוטנציאל ב-P? ענו בוולט.
+    answer: 1.5e5
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון: $V = \dfrac{9\cdot10^{9}\cdot 4\cdot10^{-6}}{0.3} + \dfrac{9\cdot10^{9}\cdot 2\cdot10^{-6}}{0.6} = 1.2\cdot10^{5} + 0.3\cdot10^{5} = 1.5\cdot10^{5}\,\text{V}$. הכיוונים לא משנים.'
+    wrongFeedback: 'חשבו את הפוטנציאל של כל מטען לבד, וחברו את שני המספרים. לפוטנציאל אין כיוון.'
+    commonWrong:
+      - value: 9.0e4
+        feedback: 'החסרתם את התרומות, כאילו הן בכיוונים מנוגדים. הפוטנציאל הוא סקלר: שני מטענים חיוביים תורמים שני מספרים חיוביים.'
+        misconception: MC-potential-is-vector
+    hints:
+      - 'השאלה לא אומרת באיזה כיוון נמצא כל מטען. האם הכיוון בכלל משנה?'
+
+  - id: Q-2.2-double-distance
+    type: twotier
+    objectives: [OBJ-2.2-2]
+    qualitative: true
+    prompt: >-
+      במרחק $r$ ממטען נקודתי הפוטנציאל הוא $V$ והשדה $E$. מה יהיה הפוטנציאל במרחק $2r$?
+    choices:
+      - text: $V/2$
+        correct: true
+        feedback: נכון. $V = kQ/r$ ביחס הפוך למרחק.
+      - text: $V/4$
+        feedback: 'זה מה שקורה לשדה, $E = kQ/r^2$. בפוטנציאל המרחק לא בריבוע.'
+        misconception: MC-potential-inverse-square
+      - text: $V$
+        feedback: 'הפוטנציאל תלוי במרחק: רחוק יותר מהמטען הוא קרוב יותר לאפס.'
+      - text: $2V$
+        feedback: 'רחוק יותר מהמטען הפוטנציאל קרוב יותר לאפס, לא גדול יותר.'
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: 'הפוטנציאל של מטען נקודתי הוא $kQ/r$, והמרחק בו בחזקה הראשונה.'
+        correct: true
+        feedback: נכון.
+      - text: 'הפוטנציאל והשדה מתנהגים אותו דבר, כי שניהם נובעים מחוק קולון.'
+        feedback: 'שניהם נובעים מחוק קולון, אבל בדרכים שונות. השדה הוא כוח ליחידת מטען, והפוטנציאל אנרגיה ליחידת מטען: $E \propto 1/r^2$ ו-$V \propto 1/r$.'
+        misconception: MC-potential-inverse-square
+      - text: 'הפוטנציאל לא תלוי במרחק, אלא רק במטען.'
+        feedback: 'הנוסחה $V = kQ/r$ תלויה במרחק.'
+
+  - id: Q-2.2-rank-v
+    type: rank
+    objectives: [OBJ-2.2-2]
+    qualitative: true
+    prompt: >-
+      דרגו את הפוטנציאל בארבע נקודות, מהגבוה לנמוך (שימו לב לסימן):
+    items:
+      - id: A
+        label: 'A: במרחק $r$ ממטען $+Q$'
+      - id: B
+        label: 'B: במרחק $2r$ ממטען $+Q$'
+      - id: C
+        label: 'C: באמצע בין $+Q$ ל-$-Q$'
+      - id: D
+        label: 'D: במרחק $r$ ממטען $-Q$'
+    order: [A, B, C, D]
+    correctFeedback: >-
+      נכון. $V_A = kQ/r$, $V_B = kQ/(2r)$, ב-C שתי התרומות מבטלות זו את זו ו-$V_C = 0$, ו-$V_D = -kQ/r$.
+    wrongFeedback: 'כתבו כל פוטנציאל כמספר כפול $kQ/r$, עם הסימן. ב-C חברו את התרומות של שני המטענים כמספרים.'
+    hints:
+      - 'ב-C המרחק משני המטענים שווה. מה הסכום של $kQ/d$ ושל $-kQ/d$?'
+
+  # ------------------------------------------------ OBJ-2.2-3: W = q(V_A − V_B), direction of motion
+  - id: Q-2.2-work-from-v
+    type: numeric
+    objectives: [OBJ-2.2-3]
+    prompt: >-
+      מטען $q = +2\,\mu\text{C}$ עובר מנקודה A, שבה $V_A = 300\,\text{V}$, לנקודה B, שבה $V_B = -100\,\text{V}$. כמה עבודה עשה השדה? ענו בג'אול.
+    answer: 8.0e-4
+    unit: J
+    tolerance: 0.03
+    correctFeedback: 'נכון: $W = q(V_A - V_B) = 2\cdot10^{-6}\cdot(300 - (-100)) = 2\cdot10^{-6}\cdot 400 = 8\cdot10^{-4}\,\text{J}$.'
+    wrongFeedback: 'השתמשו ב-$W = q(V_A - V_B)$, ושימו לב שמחסירים פוטנציאל שלילי.'
+    commonWrong:
+      - value: 4.0e-4
+        feedback: 'חישבתם הפרש של $200\,\text{V}$. אבל $300 - (-100) = 400$: מחסירים מספר שלילי.'
+      - value: -8.0e-4
+        feedback: 'הפכתם את הסדר. העבודה מ-A ל-B היא $q(V_A - V_B)$: הפוטנציאל של נקודת ההתחלה פחות הפוטנציאל של נקודת הסיום.'
+        misconception: MC-work-raises-energy
+
+  - id: Q-2.2-electron-direction
+    type: mc
+    objectives: [OBJ-2.2-3]
+    qualitative: true
+    prompt: >-
+      אלקטרון נמצא במנוחה בין שתי נקודות: מימינו נקודה שבה $V = 200\,\text{V}$, ומשמאלו נקודה שבה $V = 100\,\text{V}$. משחררים אותו. לאן הוא יתחיל לנוע?
+    choices:
+      - text: ימינה, לכיוון הפוטנציאל הגבוה.
+        correct: true
+        feedback: 'נכון. לאלקטרון $q < 0$, ולכן $U = qV$ קטנה כשהוא עובר לפוטנציאל גבוה יותר. השדה עושה עליו עבודה חיובית בתנועה הזו.'
+      - text: שמאלה, לכיוון הפוטנציאל הנמוך.
+        feedback: 'זה נכון למטען חיובי. לאלקטרון המטען שלילי: $U = qV$ קטנה דווקא כש-$V$ גדל.'
+        misconception: MC-electron-to-lower-potential
+      - text: הוא יישאר במקום, כי שני הפוטנציאלים חיוביים.
+        feedback: 'מה שקובע הוא **ההפרש** בין הפוטנציאלים. יש הפרש של $100\,\text{V}$, ולכן יש שדה וכוח.'
+      - text: אי אפשר לדעת בלי לדעת את השדה.
+        feedback: 'הפרש הפוטנציאלים מספיק. השדה מצביע מהגבוה לנמוך, והכוח על אלקטרון הפוך לשדה, כלומר לכיוון הגבוה.'
+
+  - id: Q-2.2-electron-ev
+    type: numeric
+    objectives: [OBJ-2.2-3, OBJ-2.2-1]
+    level: mid
+    prompt: >-
+      אלקטרון עובר מנקודה שבה $V = +50\,\text{V}$ לנקודה שבה $V = -150\,\text{V}$. כמה עבודה עשה עליו השדה? ענו באלקטרון-וולט, עם סימן.
+    answer: -200
+    unit: eV
+    tolerance: 0.03
+    correctFeedback: 'נכון: $W = q(V_A - V_B) = (-e)(50 - (-150))\,\text{V} = -200\,\text{eV}$. אלקטרון שיורד לפוטנציאל נמוך יותר זז נגד הכוח.'
+    wrongFeedback: 'הציבו $q = -e$ ב-$W = q(V_A - V_B)$. התוצאה יוצאת ישירות באלקטרון-וולט.'
+    commonWrong:
+      - value: 200
+        feedback: 'זה נכון למטען חיובי. לאלקטרון $q = -e$, ולכן הסימן מתהפך: מעבר לפוטנציאל נמוך יותר הוא נגד הכוח עליו.'
+        misconception: MC-electron-to-lower-potential
+      - value: -100
+        feedback: 'חישבתם הפרש של $100\,\text{V}$. אבל $50 - (-150) = 200$.'
+
+  - id: Q-2.2-same-potential
+    type: mc
+    objectives: [OBJ-2.2-3]
+    qualitative: true
+    prompt: >-
+      מטען עובר בין שתי נקודות שהפוטנציאל בשתיהן הוא $5000\,\text{V}$, במסלול שעובר גם בנקודות שהפוטנציאל בהן שונה. כמה עבודה עשה השדה בכל המסלול?
+    choices:
+      - text: אפס.
+        correct: true
+        feedback: 'נכון. $W = q(V_A - V_B) = q\cdot 0 = 0$. העבודה תלויה רק בפוטנציאל של נקודות ההתחלה והסיום.'
+      - text: $q\cdot 5000\,\text{V}$, כי זה הפוטנציאל בנקודות.
+        feedback: 'העבודה תלויה בהפרש הפוטנציאלים, לא בפוטנציאל עצמו. ההפרש כאן אפס.'
+      - text: תלוי בפוטנציאל בנקודות שבאמצע המסלול.
+        feedback: 'השדה משמר, ולכן הנקודות שבאמצע לא משנות את העבודה הכוללת. מה שמשנה הוא רק ההתחלה והסיום.'
+        misconception: MC-work-depends-on-path
+      - text: אי אפשר לדעת בלי לדעת את סימן המטען.
+        feedback: 'כשהפרש הפוטנציאלים אפס, העבודה אפס לכל מטען, חיובי או שלילי.'
