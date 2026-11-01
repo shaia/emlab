@@ -28,7 +28,9 @@ const E_UNIFORM = 1e4;
 const SOURCE: PointCharge = { x: -0.55, y: 0, q: 2 * uC };
 const CORE = 0.1;
 const RESAMPLE = 0.002;
-const ARRIVE = 0.05;
+const ARRIVE = 0.06;
+/** |W| below this reads as zero: 0.1% of the work A → B in the uniform field [J] */
+const W_ZERO = 1e-8;
 
 export type WorkMode = 'uniform' | 'point';
 
@@ -76,7 +78,7 @@ const fieldFor = (mode: WorkMode) =>
 
 const fresh = (mode: WorkMode, sign: 1 | -1): State => ({ mode, sign, path: [POINTS[mode].A], arrivals: [] });
 
-const workWords = (w: number) => (Math.abs(w) < 1e-9 ? 'W = 0' : `W = ${sci(w)} J`);
+const workWords = (w: number) => (Math.abs(w) < W_ZERO ? 'W = 0' : `W = ${sci(w)} J`);
 
 export default function WorkPath(props: WorkPathProps) {
   const [s, setS] = useState<State>(() => fresh(props.mode ?? 'uniform', props.sign ?? 1));
@@ -147,15 +149,26 @@ export default function WorkPath(props: WorkPathProps) {
       };
       const last = prev.path[prev.path.length - 1];
       const end = clamp(target);
-      const d = Math.hypot(end[0] - last[0], end[1] - last[1]);
-      if (d < RESAMPLE / 2) return prev;
-      const n = Math.max(1, Math.ceil(d / RESAMPLE));
-      const add: Vec2[] = [];
-      for (let i = 1; i <= n; i++) add.push(clamp([last[0] + ((end[0] - last[0]) * i) / n, last[1] + ((end[1] - last[1]) * i) / n]));
+      if (Math.hypot(end[0] - last[0], end[1] - last[1]) < RESAMPLE / 2) return prev;
+      const segment = (from: Vec2, to: Vec2): Vec2[] => {
+        const n = Math.max(1, Math.ceil(Math.hypot(to[0] - from[0], to[1] - from[1]) / RESAMPLE));
+        const pts: Vec2[] = [];
+        for (let i = 1; i <= n; i++) pts.push(clamp([from[0] + ((to[0] - from[0]) * i) / n, from[1] + ((to[1] - from[1]) * i) / n]));
+        return pts;
+      };
+      const { A: pA, B: pB } = POINTS[prev.mode];
+      const near = (pt: Vec2, c: Vec2) => Math.hypot(pt[0] - c[0], pt[1] - c[1]) < ARRIVE;
+      const wasAtB = near(last, pB);
+      const nowAtB = near(end, pB);
+      // once snapped, the charge stays on the point while the pointer wanders inside its circle
+      const on = (c: Vec2) => last[0] === c[0] && last[1] === c[1];
+      if ((on(pB) && nowAtB) || (on(pA) && prev.path.length > 1 && near(end, pA))) return prev;
+      // entering B's circle, or A's after a long trip, snaps the charge to the point itself:
+      // a hand can never stop exactly on B, and the lesson compares exact works there
+      const snap = nowAtB && !wasAtB ? pB : loopArmed.current && near(end, pA) && !near(last, pA) ? pA : null;
+      const add = snap ? [...segment(last, end), ...segment(end, snap)] : segment(last, end);
       const path = [...prev.path, ...add];
       let arrivals = prev.arrivals;
-      const wasAtB = Math.hypot(last[0] - POINTS[prev.mode].B[0], last[1] - POINTS[prev.mode].B[1]) < ARRIVE;
-      const nowAtB = Math.hypot(end[0] - POINTS[prev.mode].B[0], end[1] - POINTS[prev.mode].B[1]) < ARRIVE;
       if (nowAtB && !wasAtB) {
         const qq = prev.sign * nC;
         arrivals = [...arrivals, { length: pathLength(path), work: workAlongPath(qq, fieldFor(prev.mode), path) }].slice(-4);
@@ -326,8 +339,13 @@ export default function WorkPath(props: WorkPathProps) {
             אורך המסלול: <b class="q">{Math.round(L * 100)} cm</b>
           </span>
           <span>
-            שינוי האנרגיה הפוטנציאלית: <b class="q">ΔU = {Math.abs(W) < 1e-9 ? '0' : `${sci(-W)} J`}</b>
+            שינוי האנרגיה הפוטנציאלית: <b class="q">ΔU = {Math.abs(W) < W_ZERO ? '0' : `${sci(-W)} J`}</b>
           </span>
+          {s.mode === 'uniform' && (
+            <span>
+              השדה: <b class="q">E = {sci(E_UNIFORM)} N/C</b>
+            </span>
+          )}
           {U !== null && (
             <span>
               האנרגיה הפוטנציאלית של הזוג: <b class="q">U = {sci(U)} J</b>

@@ -46,23 +46,26 @@ test.describe('live figures', () => {
     const canvas = fig.locator('canvas');
     const readout = fig.locator('.sim-readout');
     await canvas.focus();
-    // A is at x = −0.5 m, B at x = +0.35 m: 8 long steps and 2 short ones end 1 cm short of B
+    // A is at x = −0.5 m, B at x = +0.35 m. Entering B's 6 cm circle snaps the charge onto B, and
+    // further presses inside the circle leave it there.
     const right = async () => {
       for (let i = 0; i < 8; i++) await canvas.press('Shift+ArrowRight');
       for (let i = 0; i < 2; i++) await canvas.press('ArrowRight');
     };
     await right();
-    // W = qE·d = 10⁻⁹ C · 10⁴ N/C · 0.84 m
-    await expect(readout).toContainText('W = 8.4·10⁻⁶ J');
-    await expect(readout).toContainText('84 cm');
+    // W = qE·d = 10⁻⁹ C · 10⁴ N/C · 0.85 m
+    await expect(readout).toContainText('W = 8.5·10⁻⁶ J');
+    await expect(readout).toContainText('85 cm');
+    await expect(readout).toContainText('E = 1·10⁴ N/C');
     await expect(fig.locator('.sim-tasks li').first()).toHaveClass(/done/);
 
     await fig.getByRole('button', { name: 'חזרה ל-A' }).click();
     await canvas.focus();
+    // up 40 cm, right 84 cm, then down onto B: 40 + 84 + 40 + the last 1 cm snap
     for (let i = 0; i < 4; i++) await canvas.press('Shift+ArrowUp');
     await right();
     for (let i = 0; i < 4; i++) await canvas.press('Shift+ArrowDown');
-    await expect(readout).toContainText('164 cm → W = 8.4·10⁻⁶ J');
+    await expect(readout).toContainText('165 cm → W = 8.5·10⁻⁶ J');
     const tasks = (await progress(page)).tasks;
     expect(tasks['fig-2-1a:reach-b']).toBeTruthy();
     expect(tasks['fig-2-1a:two-paths']).toBeTruthy();
