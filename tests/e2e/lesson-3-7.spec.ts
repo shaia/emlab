@@ -53,7 +53,7 @@ test.describe('live figures', () => {
     await expect(readout).toContainText('V₁: מראה 12 V');
     await fig.getByRole('button', { name: 'מד זרם במקביל' }).click();
     await expect(readout).toContainText('A₁: מראה 19.7 A');
-    await fig.getByRole('button', { name: 'מד מתח על מחלק מתח' }).click();
+    await fig.getByRole('button', { name: 'מד מתח על שני נגדים' }).click();
     await expect(readout).toContainText('V₁: מראה 4 V');
     const slider = fig.locator('input[type=range]').first();
     for (const v of [4.5, 5, 5.5, 6]) await setSlider(slider, v);
