@@ -258,12 +258,16 @@ questions:
     prompt: >-
       קליפה כדורית דקה ומוליכה, שמרכזה בראשית, טעונה ב-$+2\,\mu\text{C}$. פרוטון נמצא במרחק $0.25\,\text{m}$ ממרכז הקליפה, מחוץ לה, ומשוחרר ממנוחה.
       מה גודל התאוצה ההתחלתית שלו? ($k = 9\cdot10^{9}\,\text{N}\cdot\text{m}^2/\text{C}^2$, $e = 1.6\cdot10^{-19}\,\text{C}$, $m_p = 1.67\cdot10^{-27}\,\text{kg}$)
-    answer: 6.9e12
+    answer: 2.76e13
     unit: m/s²
     tolerance: 0.03
     correctFeedback: >-
-      נכון. מחוץ לקליפה השדה כמו של מטען נקודתי במרכז (גאוס): $E = \dfrac{kQ}{r^2} = \dfrac{9\cdot10^9\cdot 2\cdot10^{-6}}{0.25^2} = 7.2\cdot10^{4}\,\text{N/C}$.
-      התאוצה: $a = \dfrac{eE}{m_p} = 6.9\cdot10^{12}\,\text{m/s}^2$.
+      נכון. מחוץ לקליפה השדה כמו של מטען נקודתי במרכז (גאוס): $E = \dfrac{kQ}{r^2} = \dfrac{9\cdot10^9\cdot 2\cdot10^{-6}}{0.25^2} = 2.88\cdot10^{5}\,\text{N/C}$.
+      התאוצה: $a = \dfrac{eE}{m_p} = 2.8\cdot10^{13}\,\text{m/s}^2$.
     wrongFeedback: 'מחוץ לקליפה השדה כמו של מטען נקודתי שנמצא במרכז. חשבו אותו, ואז את התאוצה.'
+    commonWrong:
+      - value: 6.9e12
+        feedback: 'חילקתם ב-$r$ ולא ב-$r^2$. השדה של מטען נקודתי יורד כמו $1/r^2$: $E = 9\cdot10^9\cdot 2\cdot10^{-6}/0.25^2 = 2.88\cdot10^{5}\,\text{N/C}$.'
+        misconception: MC-field-linear-in-r
     hints:
       - 'השתמשו ב-$E = kQ/r^2$ עם $r$ מהמרכז.'
