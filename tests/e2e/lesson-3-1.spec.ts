@@ -129,7 +129,7 @@ test.describe('questions', () => {
     const q = page.locator('[data-qid="Q-3.1-wire-voltage"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(q);
-    await q.locator('label', { hasText: 'שגדל ככל שמרחיקים' }).click();
+    await q.locator('label', { hasText: 'חלק ניכר' }).click();
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-wrong/);
     const a = (await progress(page)).attempts.at(-1);
