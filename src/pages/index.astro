@@ -45,7 +45,10 @@ const firstLesson = chapters.flatMap((c) => c.lessons).find((l) => written.has(l
               <div class="chapter-head">
                 <span class="chapter-n">{c.n}</span>
                 <div>
-                  <h3>{c.title}</h3>
+                  <h3>
+                    {c.title}
+                    {c.beyondBagrut && <span class="chip">מעבר לבגרות</span>}
+                  </h3>
                   <p>{c.blurb}</p>
                 </div>
               </div>

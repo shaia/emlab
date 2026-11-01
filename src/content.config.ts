@@ -32,7 +32,7 @@ const lessons = defineCollection({
   loader: glob({ base: './src/content/lessons', pattern: '**/*.mdx' }),
   schema: z.object({
     id: z.string().regex(/^\d+\.\d+$/),
-    chapter: z.number().int().min(0).max(5),
+    chapter: z.number().int().min(0).max(6),
     order: z.number().int().min(1),
     title: z.string(),
     subtitle: z.string().optional(),

@@ -35,6 +35,7 @@ const [ch, n] = id.split('.');
         {subtitle && <p class="lesson-sub">{subtitle}</p>}
         <p class="lesson-meta">
           <span class="chip">כ-{minutes} דקות</span>
+          {chapter?.beyondBagrut && <span class="chip">מעבר לבגרות</span>}
           {enrichment && <span class="chip">העשרה</span>}
         </p>
       </div>

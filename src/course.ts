@@ -3,7 +3,8 @@
  *
  * Written lessons live in src/content/lessons as MDX; this list is the order and the
  * promise. The table of contents shows planned lessons as "coming soon", so the student
- * always sees the whole road (Ministry syllabus, 5 units, Bagrut paper 036371).
+ * always sees the whole road (Ministry syllabus, 5 units, Bagrut paper 036371), plus one
+ * bridge chapter beyond the Bagrut that leads into first-year university E&M.
  */
 
 export interface PlannedLesson {
@@ -18,6 +19,8 @@ export interface Chapter {
   blurb: string;
   /** syllabus hours, from the Ministry programme */
   hours?: number;
+  /** above the Bagrut: not in the syllabus, labelled so on the contents page and in its lessons */
+  beyondBagrut?: boolean;
   lessons: PlannedLesson[];
 }
 
@@ -119,6 +122,30 @@ export const chapters: Chapter[] = [
       { id: '5.6', title: 'שדה חשמלי מושרה' },
       { id: '5.7', title: 'גנרטור וזרם חילופין' },
       { id: '5.8', title: 'משוואות מקסוול' },
+    ],
+  },
+  {
+    n: 6,
+    title: 'גשר: מהבגרות לאוניברסיטה',
+    blurb: 'הכלים של פיזיקה 2 באוניברסיטה: אינטגרלים, שיפוע, דיברגנץ ורוטור, ומשוואות מקסוול בצורה המקומית.',
+    beyondBagrut: true,
+    lessons: [
+      { id: '6.1', title: 'נגזרת: קצב שינוי' },
+      { id: '6.2', title: 'אינטגרל: סכום של חתיכות קטנות' },
+      { id: '6.3', title: 'השפה של שדות' },
+      { id: '6.4', title: 'התפלגויות רציפות: מסכום לאינטגרל' },
+      { id: '6.5', title: 'שטף כאינטגרל משטח' },
+      { id: '6.6', title: 'אינטגרל קווי, פוטנציאל ושיפוע' },
+      { id: '6.7', title: 'דיברגנץ ומשפט הדיברגנץ' },
+      { id: '6.8', title: 'רוטור ומשפט סטוקס' },
+      { id: '6.9', title: 'משוואות פואסון ולפלס, ומטעני דמות' },
+      { id: '6.10', title: 'הדיפול החשמלי' },
+      { id: '6.11', title: 'חוק ביו-סבר' },
+      { id: '6.12', title: 'זרם ההעתקה' },
+      { id: '6.13', title: 'משוואות מקסוול בצורה דיפרנציאלית' },
+      { id: '6.14', title: 'גלים אלקטרומגנטיים ואנרגיה בשדה' },
+      { id: '6.15', title: 'יחסות ומגנטיות' },
+      { id: '6.16', title: 'חזרה: מהבגרות לאוניברסיטה' },
     ],
   },
 ];
