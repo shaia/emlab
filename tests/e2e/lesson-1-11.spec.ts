@@ -75,6 +75,8 @@ test.describe('live figures', () => {
     // a slider set before hydration, or a text step reaching mid-screen, resets the figure mid-test
     await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
     await freezeSteps(page);
+    // a step that reached mid-screen before the freeze may already have set the unit: start from the figure's own
+    await fig.getByRole('button', { name: 'איפוס' }).click();
     const readout = fig.locator('.sim-readout');
     const slider = fig.locator('input[type=range]').first();
     await expect(readout).toContainText('חלק מהנקודות נופלות בין הסימונים');
