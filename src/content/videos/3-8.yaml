@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-3-8-kirchhoff-hebrew
+  youtubeId: 8_wZJATon_A
+  title: 'חוקי קירכהוף'
+  channel: מרכז שוורץ/רייסמן הדרכות למורי פיזיקה
+  lang: he
+  captions: []
+  minutes: 12
+  why: 'פתרון מעגל באמצעות חוקי קירכהוף, בעברית, מסדרת הדרכה למורי פיזיקה (לפי תיאור הסרטון). נסו לכתוב את משוואת הצומת ואת משוואת הלולאה לפני שהן מופיעות.'
+  verified: '2026-11-01'
+
+- id: v-3-8-circuit-laws
+  youtubeId: m4jzgqZu-4s
+  title: 'Electric Circuits:  Basics of the voltage and current laws.'
+  channel: Physics Videos by Eugene Khutoryansky
+  lang: en
+  captions: [en, he]
+  minutes: 10
+  why: 'מבוא מונפש באנגלית למעגלים חשמליים, כולל חוק המתחים וחוק הזרמים של קירכהוף (לפי תיאור הסרטון; יש כתוביות בעברית).'
+  verified: '2026-11-01'

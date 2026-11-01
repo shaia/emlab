@@ -295,6 +295,40 @@ const rheostat: Preset = {
   },
 };
 
+/**
+ * Two batteries and two junctions (3.8): ε₁ = 12 V with R₁ = 3 Ω on the left, ε₂ = 3 V with
+ * R₂ = 3 Ω on the right, R₃ = 6 Ω across the junctions, an ammeter in each branch. The currents
+ * are 2 A, 1 A (into ε₂'s + terminal) and 1 A, as tests/physics/circuits.test.ts pins down.
+ */
+const kirchhoff: Preset = {
+  board: {
+    cols: 7,
+    rows: 3,
+    parts: [
+      { id: 'eps1', kind: 'battery', from: [0, 2], to: [0, 1], emf: 12, r: 0, locked: true },
+      w('wl', [0, 1], [0, 0]),
+      w('wt0', [0, 0], [1, 0]),
+      { id: 'R1', kind: 'resistor', from: [1, 0], to: [2, 0], R: 3, locked: true },
+      ...run('wt1', [2, 0], [3, 0], [4, 0]),
+      { id: 'R3', kind: 'resistor', from: [3, 0], to: [3, 1], R: 6, locked: true },
+      { id: 'A3', kind: 'ammeter', from: [3, 1], to: [3, 2], locked: true },
+      { id: 'R2', kind: 'resistor', from: [4, 0], to: [5, 0], R: 3, locked: true },
+      ...run('wt2', [5, 0], [6, 0], [6, 1]),
+      { id: 'eps2', kind: 'battery', from: [6, 2], to: [6, 1], emf: 3, r: 0, locked: true },
+      w('wb0', [6, 2], [5, 2]),
+      { id: 'A2', kind: 'ammeter', from: [5, 2], to: [4, 2], locked: true },
+      ...run('wb1', [4, 2], [3, 2], [2, 2]),
+      { id: 'A1', kind: 'ammeter', from: [2, 2], to: [1, 2], locked: true },
+      w('wb2', [1, 2], [0, 2]),
+    ],
+  },
+  loops: {
+    left: [[0, 2], [0, 0], [3, 0], [3, 2]],
+    right: [[6, 2], [6, 0], [3, 0], [3, 2]],
+    outer: [[0, 2], [0, 0], [6, 0], [6, 2]],
+  },
+};
+
 /** an empty builder board with a battery (3.5) */
 const blank: Preset = {
   board: {
@@ -321,4 +355,5 @@ export const PRESETS: Record<string, Preset> = {
   'a-parallel': aParallel,
   loading,
   rheostat,
+  kirchhoff,
 };

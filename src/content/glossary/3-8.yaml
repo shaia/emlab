@@ -1,0 +1,19 @@
+# Lesson 3.8 terms. Format and rules: see glossary/1-5.yaml.
+
+- id: junction-rule
+  term: חוק הצמתים
+  en: Kirchhoff's junction rule
+  definition: 'החוק הראשון של קירכהוף: בכל צומת, סכום הזרמים שנכנסים אליו שווה לסכום הזרמים שיוצאים ממנו. זה שימור המטען: מטען לא נוצר בצומת ולא מצטבר בו.'
+  lesson: '3.8'
+
+- id: loop-rule
+  term: חוק הלולאות
+  en: Kirchhoff's loop rule
+  definition: 'החוק השני של קירכהוף: סכום השינויים בפוטנציאל לאורך כל לולאה סגורה הוא אפס. הסיבה: לכל נקודה פוטנציאל אחד (השדה משמר), ולכן סיבוב שלם חוזר לאותו פוטנציאל.'
+  lesson: '3.8'
+
+- id: loop
+  term: לולאה
+  en: loop
+  definition: מסלול סגור במעגל, שיוצא מנקודה, עובר דרך רכיבים ותילים, וחוזר לאותה נקודה.
+  lesson: '3.8'

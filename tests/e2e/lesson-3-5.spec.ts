@@ -17,9 +17,11 @@ async function openFigure(page: Page, id: string) {
 /** screen position of grid point (i, j) on a CircuitLab board (cols × rows, no profile strip) */
 async function gridMapper(fig: Locator, cols: number, rows: number) {
   const box = (await fig.locator('canvas').boundingBox())!;
-  const c = Math.min(box.width / (cols - 1 + 1.3), box.height / (rows - 1 + 1.3));
+  // CircuitLab's geometry(): on a narrow stage a band of 34 px on top stays clear of the tool buttons
+  const top = box.width < 520 ? 34 : 0;
+  const c = Math.min(box.width / (cols - 1 + 1.3), (box.height - top) / (rows - 1 + 1.3));
   const ox = box.x + (box.width - (cols - 1) * c) / 2;
-  const oy = box.y + 0.65 * c + (box.height - (rows - 1 + 1.3) * c) / 2;
+  const oy = box.y + top + 0.65 * c + (box.height - top - (rows - 1 + 1.3) * c) / 2;
   return (i: number, j: number) => [ox + i * c, oy + j * c] as const;
 }
 

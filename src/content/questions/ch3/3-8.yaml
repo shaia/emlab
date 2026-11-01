@@ -1,0 +1,210 @@
+# Lesson 3.8 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/circuits.ts (solveCircuit). The two-battery
+# network here (15 V, 6 V; 3, 6, 6 Ω) differs from figure 3.8א and from the worked example.
+
+chapter: 3
+questions:
+  # ------------------------------------------------ OBJ-3.8-1: the junction rule
+  - id: Q-3.8-junction-missing
+    type: numeric
+    objectives: [OBJ-3.8-1]
+    prompt: >-
+      לצומת נכנסים שני זרמים, $3\,\text{A}$ ו-$1.5\,\text{A}$, ויוצאים ממנו שני תילים. בתיל אחד יוצא זרם של $2\,\text{A}$. מה הזרם בתיל השני? ענו באמפר.
+    answer: 2.5
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. נכנסים $3 + 1.5 = 4.5\,\text{A}$, ולכן יוצאים גם $4.5\,\text{A}$: בתיל השני $4.5 - 2 = 2.5\,\text{A}$.'
+    wrongFeedback: 'סכום הזרמים שנכנסים לצומת שווה לסכום הזרמים שיוצאים ממנו.'
+    commonWrong:
+      - value: 6.5
+        feedback: 'חיברתם את כל הזרמים, גם את היוצא. הזרם שיוצא צריך **להשלים** את מה שנכנס.'
+      - value: 2.25
+        feedback: 'חילקתם את הזרם הנכנס חצי-חצי. חוק הצמתים לא מחלק שווה: הוא רק אומר שהסכום נשמר.'
+        misconception: MC-junction-equal-split
+
+  - id: Q-3.8-junction-why
+    type: mc
+    objectives: [OBJ-3.8-1]
+    qualitative: true
+    prompt: >-
+      למה סכום הזרמים שנכנסים לצומת שווה תמיד לסכום הזרמים שיוצאים ממנו?
+    choices:
+      - text: 'כי המטען נשמר: מטען לא נוצר בצומת ולא מצטבר בו.'
+        correct: true
+        feedback: 'נכון. אילו נכנס יותר מטען ממה שיוצא, הצומת היה נטען עוד ועוד. במצב יציב זה לא קורה.'
+      - text: 'כי הזרם מתחלק בצומת שווה בשווה.'
+        feedback: 'הזרם לא מתחלק שווה בהכרח. החוק קובע רק את הסכום.'
+        misconception: MC-junction-equal-split
+      - text: 'כי האנרגיה נשמרת.'
+        feedback: 'שימור האנרגיה הוא הבסיס לחוק הלולאות. חוק הצמתים נובע משימור **המטען**.'
+      - text: 'כי המתח בצומת שווה בכל התילים.'
+        feedback: 'נכון שהצומת הוא נקודה אחת בפוטנציאל אחד, אבל זה לא מה שקובע את סכום הזרמים. את זה קובע שימור המטען.'
+
+  - id: Q-3.8-split
+    type: mc
+    objectives: [OBJ-3.8-1]
+    level: mid
+    prompt: >-
+      זרם של $8\,\text{A}$ מגיע לצומת, ומשם מתפצל לשני ענפים מקבילים: נגד של $2\,\Omega$ ונגד של $6\,\Omega$, שמתאחדים אחר כך בצומת שני. מה הזרם בכל ענף?
+    choices:
+      - text: '$6\,\text{A}$ בנגד של $2\,\Omega$ ו-$2\,\text{A}$ בנגד של $6\,\Omega$.'
+        correct: true
+        feedback: 'נכון. על שני הענפים אותו מתח, ולכן הזרם ביחס הפוך להתנגדות: פי 3 בענף של $2\,\Omega$. וגם $6 + 2 = 8$, כמו שחוק הצמתים דורש.'
+      - text: '$4\,\text{A}$ בכל ענף.'
+        feedback: 'חוק הצמתים קובע רק שהסכום $8\,\text{A}$. איך הזרם מתחלק תלוי בהתנגדויות, והן כאן שונות.'
+        misconception: MC-junction-equal-split
+      - text: '$2\,\text{A}$ בנגד של $2\,\Omega$ ו-$6\,\text{A}$ בנגד של $6\,\Omega$.'
+        feedback: 'הפוך: בענף עם התנגדות גדולה עובר **פחות** זרם, באותו מתח.'
+        misconception: MC-higher-r-brighter
+      - text: '$8\,\text{A}$ בכל ענף.'
+        feedback: 'אז מהצומת היו יוצאים $16\,\text{A}$, יותר ממה שנכנס. המטען לא יכול להיווצר בצומת.'
+
+  # ------------------------------------------------ OBJ-3.8-2: the loop rule
+  - id: Q-3.8-loop-why
+    type: twotier
+    objectives: [OBJ-3.8-2]
+    qualitative: true
+    prompt: >-
+      הולכים סביב לולאה סגורה במעגל, ומחברים את כל השינויים בפוטנציאל: עליות בסוללות וירידות בנגדים. מה יוצא?
+    choices:
+      - text: 'אפס.'
+        correct: true
+        feedback: נכון.
+      - text: 'הכא"מ של הסוללה.'
+        feedback: 'הכא"מ הוא העלייה. אחרי שמחסירים את כל הירידות בנגדים, הסכום הוא אפס.'
+        misconception: MC-loop-all-add
+      - text: 'מספר חיובי, שהולך לאיבוד כחום.'
+        feedback: 'האנרגיה שהופכת לחום היא בדיוק הירידות בנגדים, והן מאזנות את העליות. סכום השינויים בפוטנציאל הוא אפס.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'לכל נקודה פוטנציאל אחד, ולכן סיבוב שלם חוזר לאותו פוטנציאל שבו התחיל.'
+        correct: true
+        feedback: 'נכון. זה הנימוק משיעור 2.1: השדה האלקטרוסטטי משמר. בשיעור 3.1 ראינו את זה בגרף הגובה.'
+      - text: 'הזרם נגמר בסוף הלולאה.'
+        feedback: 'זרם לא נגמר (שיעור 3.2). הנימוק הוא שלכל נקודה פוטנציאל אחד.'
+        misconception: MC-current-used-up
+      - text: 'כל סוללה מתאזנת עם הנגד שלידה.'
+        feedback: 'אין צורך בהתאמה בין סוללה לנגד מסוים. רק הסכום של כל השינויים בלולאה הוא אפס.'
+
+  - id: Q-3.8-loop-sign
+    type: mc
+    objectives: [OBJ-3.8-2]
+    qualitative: true
+    prompt: >-
+      במעגל עם מסלול אחד יש סוללה $\varepsilon$ ושני נגדים, $R_1$ ו-$R_2$, והזרם $I$. הולכים סביב הלולאה עם כיוון הזרם, מההדק השלילי של הסוללה. איזו משוואה נכונה?
+    choices:
+      - text: '$\varepsilon - IR_1 - IR_2 = 0$'
+        correct: true
+        feedback: 'נכון. בסוללה, מ-− ל-+, הפוטנציאל עולה ב-$\varepsilon$. בכל נגד, בכיוון הזרם, הוא יורד ב-$IR$.'
+      - text: '$\varepsilon + IR_1 + IR_2 = 0$'
+        feedback: 'בנגד, בכיוון הזרם, הפוטנציאל **יורד**: הסימן של $IR$ הפוך לסימן של העלייה בסוללה.'
+        misconception: MC-loop-all-add
+      - text: '$\varepsilon - IR_1 + IR_2 = 0$'
+        feedback: 'בשני הנגדים הולכים בכיוון הזרם, ולכן בשניהם הפוטנציאל יורד: $-IR$ לכל אחד.'
+        misconception: MC-loop-all-add
+      - text: '$\varepsilon = I\,(R_1 - R_2)$'
+        feedback: 'הנגדים בטור, וההתנגדויות שלהם מתחברות: $\varepsilon = I\,(R_1 + R_2)$.'
+
+  - id: Q-3.8-opposing
+    type: numeric
+    objectives: [OBJ-3.8-2]
+    level: mid
+    prompt: >-
+      במעגל עם מסלול אחד יש שתי סוללות אידאליות, $9\,\text{V}$ ו-$3\,\text{V}$, שמחוברות כך שהן "נלחמות" זו בזו: ההדק החיובי של כל אחת פונה אל ההדק החיובי של השנייה. ההתנגדות הכוללת במעגל $4\,\Omega$. מה הזרם? ענו באמפר.
+    answer: 1.5
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. סביב הלולאה, עם כיוון הזרם: עלייה של $9\,\text{V}$, ירידה של $3\,\text{V}$ בסוללה ההפוכה, וירידה $IR$. $9 - 3 - 4I = 0$, ולכן $I = 1.5\,\text{A}$.'
+    wrongFeedback: 'כתבו משוואת לולאה. בסוללה שעוברים בה מ-+ ל-−, הפוטנציאל יורד.'
+    commonWrong:
+      - value: 3
+        feedback: 'חיברתם את שתי הסוללות. כשהן מחוברות זו מול זו, אחת מעלה את הפוטנציאל והשנייה מורידה.'
+        misconception: MC-loop-all-add
+      - value: 2.25
+        feedback: 'השתמשתם רק בסוללה של $9\,\text{V}$. גם הסוללה של $3\,\text{V}$ נמצאת בלולאה, והיא מורידה את הפוטנציאל.'
+
+  # ------------------------------------------------ OBJ-3.8-3: solving a two-battery circuit
+  - id: Q-3.8-solve-i3
+    type: numeric
+    objectives: [OBJ-3.8-3]
+    level: bagrut
+    prompt: >-
+      במעגל שני צמתים. בענף השמאלי סוללה אידאלית $\varepsilon_1 = 15\,\text{V}$ ונגד $R_1 = 3\,\Omega$, בענף הימני סוללה אידאלית $\varepsilon_2 = 6\,\text{V}$ ונגד $R_2 = 6\,\Omega$, ובענף האמצעי נגד $R_3 = 6\,\Omega$. ההדקים החיוביים של שתי הסוללות פונים אל אותו צומת. מה הזרם ב-$R_3$? ענו באמפר.
+    answer: 1.5
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. צומת: $I_1 + I_2 = I_3$. לולאות: $15 - 3I_1 - 6I_3 = 0$ ו-$6 - 6I_2 - 6I_3 = 0$. הפתרון: $I_1 = 2\,\text{A}$, $I_2 = -0.5\,\text{A}$, $I_3 = 1.5\,\text{A}$.'
+    wrongFeedback: 'סמנו זרם בכל ענף (למשל כולם יוצאים מההדקים החיוביים אל הצומת, ו-$I_3$ יורד דרך $R_3$). כתבו את חוק הצמתים ושתי משוואות לולאה, ופתרו.'
+    commonWrong:
+      - value: 2.5
+        feedback: 'חיברתם את גודלי הזרמים, $2 + 0.5$, בלי הסימן. $I_2 = -0.5\,\text{A}$: הזרם בענף הימני נכנס לסוללה $\varepsilon_2$, ולא יוצא ממנה.'
+        misconception: MC-negative-current-mistake
+      - value: 2
+        feedback: 'זה הזרם בענף השמאלי, $I_1$. לפי חוק הצמתים $I_3 = I_1 + I_2$.'
+    hints:
+      - 'משתי משוואות הלולאה בטאו את $I_1$ ואת $I_2$ באמצעות $I_3$, והציבו בחוק הצמתים.'
+
+  - id: Q-3.8-solve-i2
+    type: numeric
+    objectives: [OBJ-3.8-3]
+    level: bagrut
+    prompt: >-
+      באותו מעגל ($\varepsilon_1 = 15\,\text{V}$, $R_1 = 3\,\Omega$; $\varepsilon_2 = 6\,\text{V}$, $R_2 = 6\,\Omega$; $R_3 = 6\,\Omega$), מגדירים את $I_2$ כזרם שיוצא מההדק החיובי של $\varepsilon_2$ אל הצומת. מה $I_2$, עם הסימן? ענו באמפר.
+    answer: -0.5
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. $I_2 = -0.5\,\text{A}$: הזרם האמיתי זורם בכיוון ההפוך, מהצומת **אל** ההדק החיובי של $\varepsilon_2$. הסוללה הזאת נטענת.'
+    wrongFeedback: 'פתרו את שלוש המשוואות (צומת ושתי לולאות). אם יוצא מספר שלילי, השאירו את הסימן: הוא אומר משהו על הכיוון.'
+    commonWrong:
+      - value: 0.5
+        feedback: 'הגודל נכון, אבל הסימן חסר. לפי ההגדרה שבשאלה, הזרם האמיתי זורם בכיוון ההפוך, ולכן $I_2 = -0.5\,\text{A}$.'
+        misconception: MC-negative-current-mistake
+      - value: 1.5
+        feedback: 'זה הזרם ב-$R_3$, $I_3$. השאלה שואלת על הענף של $\varepsilon_2$.'
+
+  - id: Q-3.8-negative-meaning
+    type: twotier
+    objectives: [OBJ-3.8-3]
+    qualitative: true
+    prompt: >-
+      פותרים מעגל בחוקי קירכהוף, ואחד הזרמים יוצא $-0.5\,\text{A}$. מה זה אומר?
+    choices:
+      - text: 'הזרם בענף הזה הוא $0.5\,\text{A}$, בכיוון ההפוך לזה שסימנו.'
+        correct: true
+        feedback: נכון.
+      - text: 'יש טעות בפתרון, כי זרם לא יכול להיות שלילי.'
+        feedback: 'אין כאן טעות. את הכיוון בחרנו מראש, והסימן השלילי מתקן אותו.'
+        misconception: MC-negative-current-mistake
+      - text: 'בענף הזה לא זורם זרם.'
+        feedback: 'זרם של אפס היה יוצא $0$. כאן הגודל $0.5\,\text{A}$, בכיוון ההפוך.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'את כיווני הזרמים בוחרים לפני הפתרון, בלי לדעת אותם. הסימן של התוצאה אומר אם הבחירה הייתה נכונה.'
+        correct: true
+        feedback: 'נכון. המשוואות נכונות לכל בחירה, ולכן אפשר לבחור כרצוננו ולתת לסימן לתקן.'
+      - text: 'זרם שלילי פירושו אלקטרונים במקום מטען חיובי.'
+        feedback: 'הסימן לא מבחין בין סוגי נושאי מטען. הזרם המוסכם הוא תמיד בכיוון של מטען חיובי, והסימן מתקן את הכיוון שבחרנו.'
+        misconception: MC-electron-direction
+      - text: 'אם יוצא זרם שלילי, צריך לפתור מחדש עם הכיוון ההפוך.'
+        feedback: 'אין צורך: הפתרון כבר נותן את הגודל ואת הכיוון. פתרון מחדש ייתן $+0.5\,\text{A}$ בכיוון ההפוך, אותו דבר בדיוק.'
+        misconception: MC-negative-current-mistake
+
+  - id: Q-3.8-charged-battery
+    type: mc
+    objectives: [OBJ-3.8-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      באותו מעגל, $I_2 = -0.5\,\text{A}$: הזרם נכנס להדק החיובי של $\varepsilon_2 = 6\,\text{V}$. מה קורה לסוללה $\varepsilon_2$ מבחינת אנרגיה?
+    choices:
+      - text: 'היא מקבלת אנרגיה, $6\cdot0.5 = 3\,\text{W}$: היא נטענת.'
+        correct: true
+        feedback: 'נכון. כשזרם עובר בסוללה מ-+ ל-−, המטען "יורד" בה בפוטנציאל ומוסר לה אנרגיה, כמו מצבר שנטען.'
+      - text: 'היא מספקת אנרגיה, כמו כל סוללה.'
+        feedback: 'סוללה מספקת אנרגיה רק כשהזרם יוצא מההדק החיובי שלה. כאן הוא נכנס אליו.'
+        misconception: MC-battery-always-delivers
+      - text: 'לא עובר בה זרם, ולכן היא לא מקבלת ולא נותנת.'
+        feedback: 'עובר בה זרם של $0.5\,\text{A}$, בכיוון ההפוך מהרגיל.'
+      - text: 'היא נשרפת, כי זרם בכיוון הפוך אסור.'
+        feedback: 'סוללות נטענות בדיוק כך: זרם שנכנס להדק החיובי. זה מה שקורה למצבר של רכב כשהמנוע פועל.'

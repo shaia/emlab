@@ -60,8 +60,16 @@ const PRESET_LABEL: Record<string, string> = {
   meters: 'חיבור נכון',
   'v-series': 'מד מתח בטור',
   'a-parallel': 'מד זרם במקביל',
-  loading: 'מד מתח על מחלק מתח',
+  loading: 'מד מתח על שני נגדים',
   rheostat: 'נגד משתנה',
+  kirchhoff: 'שתי סוללות',
+};
+
+const LOOP_LABEL: Record<string, string> = {
+  main: 'הלולאה',
+  left: 'הלולאה השמאלית',
+  right: 'הלולאה הימנית',
+  outer: 'הלולאה החיצונית',
 };
 
 const TOOL_LABEL: Record<Tool, string> = {
@@ -111,9 +119,11 @@ const TASK_LABEL: Record<string, string> = {
   'short-emf': 'החזירו את r ל-1 Ω, וסגרו את המפסק, שמחבר את שני הצדדים של R₁ בתיל. מה הזרם, ומה המתח בין ההדקים?',
   'v-series': 'עברו ל"מד מתח בטור". מה מראה מד המתח, והאם הנורה דולקת?',
   'a-parallel': 'עברו ל"מד זרם במקביל". מה מראה מד הזרם, והאם הנורה דולקת?',
-  'meter-1M': 'הגדילו את ההתנגדות של מד המתח למגה-אוהם. מתי הוא מראה את המתח שהיה בלעדיו?',
+  'meter-1M': 'במעגל "מד מתח על שני נגדים", הגדילו את ההתנגדות של מד המתח למגה-אוהם. מתי הוא מראה את המתח שהיה בלעדיו?',
   dim: 'הגדילו את ההתנגדות של הנגד המשתנה. מה קורה לזרם ולבהירות של הנורה?',
   full: 'הקטינו את הנגד המשתנה לאפס. מה המתח על הנורה עכשיו?',
+  'loop-right': 'עברו ללולאה הימנית בגרף הגובה. האם גם היא חוזרת לגובה שבו התחילה?',
+  'eps2-delivers': 'הגדילו את הכא"מ של ε₂ עד שהזרם בה מתהפך, והיא מתחילה לספק אנרגיה במקום לקבל.',
 };
 
 export interface CircuitLabProps {
@@ -130,6 +140,8 @@ export interface CircuitLabProps {
   potentialToggle?: boolean;
   /** draw the height profile of this loop of the preset */
   profile?: string;
+  /** loops of the preset offered as chips for the profile (default: only `profile`) */
+  loops?: string[];
   /** offer a chip that shows electrons instead of the current */
   electronsToggle?: boolean;
   /** what the readout lists for each part (default V and I) */
@@ -150,6 +162,8 @@ interface State {
   probe: [Pt, Pt] | null;
   potential: boolean;
   electrons: boolean;
+  /** the loop whose height profile is drawn */
+  loop: string | null;
   selected: string | null;
   tool: Tool;
 }
@@ -181,10 +195,15 @@ interface Geo {
 const unitsW = (b: Board) => b.cols - 1 + 2 * MARGIN;
 const unitsH = (b: Board, profile: boolean) => b.rows - 1 + 2 * MARGIN + (profile ? STRIP : 0);
 
+/** on a narrow stage, a band on top stays clear of the reset and fullscreen buttons */
+const NARROW = 520;
+const TOP_BAND = 34;
+
 function geometry(w: number, h: number, b: Board, profile: boolean): Geo {
-  const c = Math.min(w / unitsW(b), h / unitsH(b, profile));
+  const top = w < NARROW ? TOP_BAND : 0;
+  const c = Math.min(w / unitsW(b), (h - top) / unitsH(b, profile));
   const ox = (w - (b.cols - 1) * c) / 2;
-  const oy = MARGIN * c + (h - unitsH(b, profile) * c) / 2;
+  const oy = top + MARGIN * c + (h - top - unitsH(b, profile) * c) / 2;
   const strip = profile ? { x: Math.max(44, ox - 0.2 * c), y: oy + (b.rows - 1 + MARGIN) * c + 0.1 * c, w: 0, h: (STRIP - 0.5) * c } : null;
   if (strip) strip.w = w - strip.x - Math.max(16, ox - 0.4 * c);
   return { c, ox, oy, strip };
@@ -240,6 +259,7 @@ export default function CircuitLab(props: CircuitLabProps) {
       probe: props.probe ? [props.probe[0], props.probe[1]] : null,
       potential: props.showPotential ?? false,
       electrons: false,
+      loop: props.profile ?? null,
       selected: null,
       tool: 'select',
     };
@@ -256,7 +276,7 @@ export default function CircuitLab(props: CircuitLabProps) {
   const sol = useMemo(() => solveBoard(s.board), [s.board]);
   const measure = props.measure ?? ['V', 'I'];
   const showValues = props.showValues ?? false;
-  const profileLoop = props.profile ? preset.loops?.[props.profile] : undefined;
+  const profileLoop = s.loop ? preset.loops?.[s.loop] : undefined;
   const pref = preset.pref ?? 24;
 
   useEffect(
@@ -270,6 +290,7 @@ export default function CircuitLab(props: CircuitLabProps) {
           }
           if (typeof st.potential === 'boolean') next.potential = st.potential;
           if (typeof st.electrons === 'boolean') next.electrons = st.electrons;
+          if (typeof st.loop === 'string') next.loop = st.loop;
           if (Array.isArray(st.probe) && next.probe) next.probe = st.probe as [Pt, Pt];
           const closed = st.closed as Record<string, boolean> | undefined;
           const values = st.values as Record<string, Partial<Part>> | undefined;
@@ -322,6 +343,9 @@ export default function CircuitLab(props: CircuitLabProps) {
     if (has('mixed-add') && st.preset === 'mixed3' && closedS) done('mixed-add');
     if (has('short-emf') && st.preset === 'emf' && closedS) done('short-emf');
     if (has('v-series') && st.preset === 'v-series') done('v-series');
+    if (has('loop-right') && st.loop === 'right') done('loop-right');
+    // a battery delivers when its current runs from − to + inside it
+    if (has('eps2-delivers') && (so.parts.eps2?.I ?? 0) > 1e-6) done('eps2-delivers');
     if (has('a-parallel') && st.preset === 'a-parallel') done('a-parallel');
     const battery = b.parts.find((p) => p.kind === 'battery');
     const emf = battery?.emf ?? 0;
@@ -668,7 +692,7 @@ export default function CircuitLab(props: CircuitLabProps) {
       if (key === 'emf' && has('double-emf') && original?.emf === 6 && v === 12 && bulb?.R === originalBulb?.R) done('double-emf');
       if (key === 'R' && has('load-down') && before?.kind === 'resistor' && v < (original?.R ?? 0)) done('load-down');
       if (key === 'r' && has('r-zero') && v === 0) done('r-zero');
-      if (key === 'R' && has('meter-1M') && before?.kind === 'voltmeter' && v >= 1e6) done('meter-1M');
+      if (key === 'R' && has('meter-1M') && prev.preset === 'loading' && before?.kind === 'voltmeter' && v >= 1e6) done('meter-1M');
       if (key === 'R' && has('dim') && before?.kind === 'rheostat' && v > (original?.R ?? 0)) done('dim');
       if (key === 'R' && has('full') && before?.kind === 'rheostat' && v < 0.01) done('full');
       // below the preset's own resistance, at the doubled voltage
@@ -706,7 +730,7 @@ export default function CircuitLab(props: CircuitLabProps) {
         />
       );
     const lo = part.kind === 'rheostat' ? 0 : 1;
-    return <Slider key={spec} label={custom ?? `ההתנגדות של ${name}`} value={part.R ?? 6} min={lo} max={24} step={1} format={ohms} onChange={(v) => setValue(id, 'R', Math.max(v, 1e-3))} />;
+    return <Slider key={spec} label={custom ?? `ההתנגדות של ${name}`} value={part.R ?? 6} min={lo} max={24} step={1} format={ohms} onChange={(v) => setValue(id, 'R', part.kind === 'rheostat' ? v : Math.max(v, 1e-3))} />;
   };
 
   return (
@@ -797,6 +821,15 @@ export default function CircuitLab(props: CircuitLabProps) {
               {switches.map((q) => (
                 <button type="button" key={q.id} class={`toggle ${q.closed ? 'on' : ''}`} aria-pressed={!!q.closed} onClick={() => toggleSwitch(q.id)}>
                   {q.closed ? `פתחו את ${labelOf(q.id)}` : `סגרו את ${labelOf(q.id)}`}
+                </button>
+              ))}
+            </div>
+          )}
+          {(props.loops ?? []).length > 1 && (
+            <div class="group" role="group" aria-label="הלולאה שבגרף הגובה">
+              {(props.loops ?? []).map((k) => (
+                <button type="button" key={k} class={`toggle ${s.loop === k ? 'on' : ''}`} aria-pressed={s.loop === k} onClick={() => act((prev) => ({ ...prev, loop: k }))}>
+                  {LOOP_LABEL[k] ?? k}
                 </button>
               ))}
             </div>
