@@ -1,4 +1,5 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
+import { freezeSteps } from './helpers';
 
 const LESSON = '/lessons/1-10/';
 
@@ -79,6 +80,9 @@ test.describe('live figures', () => {
     await page.goto(LESSON);
     const fig = page.locator('#fig-1-10c');
     await fig.scrollIntoViewIfNeeded();
+    // a slider set before hydration, or a text step reaching mid-screen, resets the drop mid-test
+    await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
+    await freezeSteps(page);
     const readout = fig.locator('.sim-readout').first();
     const record = fig.getByRole('button', { name: 'רשמו מדידה' });
     await expect(record).toBeDisabled();
