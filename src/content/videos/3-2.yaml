@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-3-2-current-basics
+  youtubeId: BXYD45DRgP0
+  title: 'מעגלי זרם - עקרונות בסיסיים'
+  channel: מרכז שוורץ/רייסמן הדרכות למורי פיזיקה
+  lang: he
+  captions: []
+  minutes: 11
+  why: 'שיעור בעברית (מסדרת הדרכה למורים) על עקרונות היסוד של מעגל: הזרם זהה לפני הצרכן ואחריו ובכל נקודה במעגל, והוא נקבע על ידי המתח ועל ידי הצרכנים ואופן חיבורם (לפי תיאור הסרטון). בדקו את עצמכם: האם הזרם "נגמר" בנורה?'
+  verified: '2026-11-01'
+
+- id: v-3-2-drift-velocity
+  youtubeId: ux6WJyDtlq0
+  title: 'Current and Drift Velocity'
+  channel: Flipping Physics
+  lang: en
+  captions: [en]
+  minutes: 5
+  why: 'הסבר באנגלית שמגדיר זרם ואת הכיוון המוסכם שלו (הפוך לתנועת האלקטרונים), גוזר את הקשר בין הזרם למהירות הסחיפה, ומסביר למה הנורה נדלקת מיד אף שמהירות הסחיפה היא בערך עשירית מילימטר בשנייה (לפי תיאור הסרטון ופרקיו).'
+  verified: '2026-11-01'

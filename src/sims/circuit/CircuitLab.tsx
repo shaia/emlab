@@ -49,6 +49,7 @@ const PRESET_LABEL: Record<string, string> = {
   simple: 'נורה אחת',
   series2: 'שתי נורות',
   unjoined: 'בנו בעצמכם',
+  ammeters: 'שני מדי זרם',
 };
 
 const TOOL_LABEL: Record<Tool, string> = {
@@ -83,6 +84,9 @@ const TASK_LABEL: Record<string, string> = {
   'probe-open': 'כשהמפסק פתוח: מדדו את המתח בין שני הצדדים של המפסק.',
   'probe-bulb': 'סגרו את המפסק, ומדדו את המתח בין שני הקצוות של הנורה.',
   light: 'חברו תילים כך שהנורה תדלק. גררו על הרשת כדי לצייר תיל.',
+  'close-switch': 'סגרו את המפסק, והשוו את מה שמראים שני מדי הזרם.',
+  electrons: 'הראו את האלקטרונים. לאיזה כיוון הם נעים, לעומת החצים הצהובים?',
+  'change-emf': 'שנו את המתח של הסוללה. האם שני מדי הזרם עדיין מראים אותו דבר?',
 };
 
 export interface CircuitLabProps {
@@ -105,7 +109,7 @@ export interface CircuitLabProps {
   measure?: Measure[];
   /** write resistances and EMFs beside the parts (default true) */
   showValues?: boolean;
-  /** sliders: 'L2:R', 'eps:emf', 'eps:r' */
+  /** sliders: 'L2:R', 'eps:emf', 'eps:r', with an optional label: 'eps:emf:המתח של הסוללה' */
   sliders?: string[];
   tasks?: string[];
 }
@@ -280,6 +284,8 @@ export default function CircuitLab(props: CircuitLabProps) {
         if (p.kind === 'bulb' && has('probe-bulb') && Math.abs(so.parts[p.id].I) > 1e-6) done('probe-bulb');
       }
     }
+    if (has('close-switch') && b.parts.some((p) => p.kind === 'switch' && p.closed) && b.parts.some((p) => Math.abs(so.parts[p.id]?.I ?? 0) > 1e-6)) done('close-switch');
+    if (has('electrons') && st.electrons && b.parts.some((p) => Math.abs(so.parts[p.id]?.I ?? 0) > 1e-6)) done('electrons');
     if (has('light') && b.parts.some((p) => p.kind === 'bulb' && Math.abs(so.parts[p.id]?.P ?? 0) > 0.05 * pref)) done('light');
   };
 
@@ -598,7 +604,12 @@ export default function CircuitLab(props: CircuitLabProps) {
     act((prev) => ({ ...prev, board: { ...prev.board, parts: prev.board.parts.map((q) => (q.id === id ? { ...q, closed: !q.closed } : q)) } }));
 
   const setValue = (id: string, key: 'R' | 'emf' | 'r', v: number) =>
-    act((prev) => ({ ...prev, board: { ...prev.board, parts: prev.board.parts.map((q) => (q.id === id ? { ...q, [key]: v } : q)) } }));
+    act((prev) => {
+      const next = { ...prev, board: { ...prev.board, parts: prev.board.parts.map((q) => (q.id === id ? { ...q, [key]: v } : q)) } };
+      const so = solveBoard(next.board);
+      if (key === 'emf' && has('change-emf') && so.ok && Object.values(so.parts).some((r) => Math.abs(r.I) > 1e-6)) done('change-emf');
+      return next;
+    });
 
   /* ---------------------------------------------------------- panel */
 
@@ -608,16 +619,16 @@ export default function CircuitLab(props: CircuitLabProps) {
   const offered = props.presets ?? [];
 
   const sliderFor = (spec: string) => {
-    const [id, key] = spec.split(':') as [string, 'R' | 'emf' | 'r'];
+    const [id, key, custom] = spec.split(':') as [string, 'R' | 'emf' | 'r', string | undefined];
     const part = s.board.parts.find((q) => q.id === id);
     if (!part) return null;
     const name = labelOf(id);
     if (key === 'emf')
-      return <Slider key={spec} label={`הכא"מ של ${name}`} value={part.emf ?? 12} min={1.5} max={24} step={1.5} format={volts} onChange={(v) => setValue(id, 'emf', v)} />;
+      return <Slider key={spec} label={custom ?? `הכא"מ של ${name}`} value={part.emf ?? 12} min={1.5} max={24} step={1.5} format={volts} onChange={(v) => setValue(id, 'emf', v)} />;
     if (key === 'r')
-      return <Slider key={spec} label={`ההתנגדות הפנימית של ${name}`} value={part.r ?? 0} min={0} max={4} step={0.5} format={ohms} onChange={(v) => setValue(id, 'r', v)} />;
+      return <Slider key={spec} label={custom ?? `ההתנגדות הפנימית של ${name}`} value={part.r ?? 0} min={0} max={4} step={0.5} format={ohms} onChange={(v) => setValue(id, 'r', v)} />;
     const lo = part.kind === 'rheostat' ? 0 : 1;
-    return <Slider key={spec} label={`ההתנגדות של ${name}`} value={part.R ?? 6} min={lo} max={24} step={1} format={ohms} onChange={(v) => setValue(id, 'R', Math.max(v, 1e-3))} />;
+    return <Slider key={spec} label={custom ?? `ההתנגדות של ${name}`} value={part.R ?? 6} min={lo} max={24} step={1} format={ohms} onChange={(v) => setValue(id, 'R', Math.max(v, 1e-3))} />;
   };
 
   return (

@@ -1,0 +1,51 @@
+# Lesson 3.2 terms. Format and rules: see glossary/1-5.yaml.
+
+- id: ampere
+  term: אמפר
+  en: ampere
+  symbol: A
+  definition: יחידת עוצמת הזרם. זרם של אמפר אחד הוא קולון אחד שעובר דרך חתך של התיל בכל שנייה, 1 A = 1 C/s.
+  lesson: '3.2'
+
+- id: cross-section
+  term: שטח חתך
+  en: cross-sectional area
+  symbol: A
+  unit: m²
+  definition: השטח של חתך הרוחב של תיל, כאילו חתכו אותו בסכין ניצב לאורכו. לתיל עגול בקוטר d, שטח החתך הוא πd²/4. מודדים אותו לעתים קרובות בממ"ר, מילימטר רבוע, 1 mm² = 10⁻⁶ m².
+  lesson: '3.2'
+
+- id: free-electrons
+  term: אלקטרונים חופשיים
+  en: free electrons
+  definition: האלקטרונים במתכת שאינם קשורים לאטום מסוים, ונעים בכל הגוף. בנחושת יש בערך אלקטרון חופשי אחד לכל אטום. בלי שדה הם נעים באקראי, ובשדה הם גם נסחפים לאט נגד כיוון השדה.
+  lesson: '3.2'
+
+- id: conventional-current
+  term: כיוון הזרם המוסכם
+  en: conventional current direction
+  definition: 'הכיוון שבו היה נע מטען חיובי: במעגל חיצוני מההדק החיובי של הסוללה אל השלילי, ובתוך הסוללה מהשלילי אל החיובי. בתיל מתכת האלקטרונים נעים בכיוון ההפוך.'
+  lesson: '3.2'
+
+- id: drift-velocity
+  term: מהירות סחיפה
+  en: drift velocity
+  symbol: v
+  unit: m/s
+  definition: המהירות הממוצעת שבה נושאי המטען מתקדמים לאורך התיל, מעבר לתנועה האקראית שלהם. בתיל נחושת רגיל היא בערך עשירית מילימטר בשנייה.
+  lesson: '3.2'
+
+- id: carrier-density
+  term: צפיפות נושאי המטען
+  en: charge-carrier density
+  symbol: n
+  unit: m⁻³
+  definition: מספר נושאי המטען (בתיל מתכת, האלקטרונים החופשיים) בכל מטר מעוקב של החומר. בנחושת n = 8.5·10²⁸ m⁻³.
+  lesson: '3.2'
+
+- id: ammeter
+  term: מד זרם
+  en: ammeter
+  symbol: A
+  definition: מכשיר שמראה את עוצמת הזרם שעוברת דרכו. מחברים אותו בטור, בתוך המעגל, כך שכל הזרם יעבור דרכו. מד זרם אידאלי מתנהג כמו תיל (שיעור 3.7).
+  lesson: '3.2'
