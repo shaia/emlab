@@ -28,11 +28,3 @@
   definition: מעטפת מוליכה, מלאה או מרשת, שבתוכה השדה החשמלי אפס כשהשדה החיצוני סטטי.
   reject: [כלוב פרדיי, כלוב פרדי]
   lesson: '1.9'
-
-- id: vacuum-permittivity
-  term: מתירות הריק
-  en: vacuum permittivity
-  symbol: ε₀
-  unit: C²/(N·m²)
-  definition: קבוע טבע, ε₀ = 8.85·10⁻¹² C²/(N·m²). הוא קשור לקבוע קולון, k = 1/(4πε₀), ולכן אותן נוסחאות אפשר לכתוב עם k או עם ε₀.
-  lesson: '1.9'
