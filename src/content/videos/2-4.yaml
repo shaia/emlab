@@ -1,0 +1,12 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-2-4-rutherford
+  youtubeId: XBqHkraf8iE
+  title: 'Rutherford Gold Foil Experiment - Backstage Science'
+  channel: BackstageScience
+  lang: en
+  captions: [en, he]
+  minutes: 4
+  why: פיזיקאי מסביר באנגלית, עם שחזור מודרני של הניסוי, את הפיזור של חלקיקי אלפא מרדיד זהב (לפי תיאור הסרטון). יש לו כתוביות בעברית. חפשו את החלקיקים המעטים שחוזרים לאחור, וחשבו מה זה אומר על המרחק שאליו הם התקרבו לגרעין.
+  verified: '2026-11-01'

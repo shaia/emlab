@@ -1,0 +1,230 @@
+# Lesson 2.4 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/potential.ts (speedAfter, gapTransit, closestApproach).
+
+chapter: 2
+questions:
+  # ------------------------------------------------ OBJ-2.4-1: speed and energy from the voltage
+  - id: Q-2.4-proton-speed
+    type: numeric
+    objectives: [OBJ-2.4-1]
+    prompt: >-
+      פרוטון מואץ ממנוחה דרך הפרש פוטנציאלים של $500\,\text{V}$. מה מהירותו בסוף?
+      ($e = 1.6\cdot10^{-19}\,\text{C}$, $m_p = 1.67\cdot10^{-27}\,\text{kg}$)
+    answer: 3.10e5
+    unit: m/s
+    tolerance: 0.03
+    correctFeedback: 'נכון: $\tfrac12 m_pv^2 = eV$, ולכן $v = \sqrt{\dfrac{2eV}{m_p}} = \sqrt{\dfrac{2\cdot1.6\cdot10^{-19}\cdot500}{1.67\cdot10^{-27}}} = 3.1\cdot10^{5}\,\text{m/s}$.'
+    wrongFeedback: 'השוו את האנרגיה הקינטית בסוף, $\tfrac12 mv^2$, לאנרגיה שהשדה נתן, $eV$.'
+    commonWrong:
+      - value: 2.19e5
+        feedback: 'שכחתם את ה-$\tfrac12$ באנרגיה הקינטית: $\tfrac12 mv^2 = eV$ נותן $v = \sqrt{2eV/m}$, עם 2 במונה.'
+      - value: 1.33e7
+        feedback: 'הצבתם את מסת האלקטרון. כאן החלקיק פרוטון, כבד פי 1800 בערך.'
+    hints:
+      - 'אנרגיה קינטית שהתקבלה: $K = eV$.'
+
+  - id: Q-2.4-gun-energy
+    type: numeric
+    objectives: [OBJ-2.4-1]
+    prompt: >-
+      בתותח אלקטרונים המתח הוא $3000\,\text{V}$, והאלקטרונים יוצאים מהקתודה במהירות זניחה. מה האנרגיה הקינטית של אלקטרון ביציאה? ענו בג'אול.
+    answer: 4.8e-16
+    unit: J
+    tolerance: 0.03
+    correctFeedback: 'נכון: $K = eV = 1.6\cdot10^{-19}\cdot3000 = 4.8\cdot10^{-16}\,\text{J}$, כלומר $3000\,\text{eV}$.'
+    wrongFeedback: 'האנרגיה הקינטית שווה לעבודת השדה, $K = eV$.'
+    commonWrong:
+      - value: 3000
+        feedback: 'זו האנרגיה ב**אלקטרון-וולט**. בג''אול: $3000\cdot1.6\cdot10^{-19}$.'
+        misconception: MC-ev-is-voltage
+
+  - id: Q-2.4-initial-speed
+    type: numeric
+    objectives: [OBJ-2.4-1]
+    level: mid
+    prompt: >-
+      אלקטרון נע במהירות $2\cdot10^{6}\,\text{m/s}$ ונכנס לאזור שבו הוא מואץ דרך הפרש פוטנציאלים של $100\,\text{V}$. מה מהירותו ביציאה?
+    answer: 6.26e6
+    unit: m/s
+    tolerance: 0.03
+    correctFeedback: 'נכון: $\tfrac12 mv^2 = \tfrac12 mv_0^2 + eV$, ולכן $v = \sqrt{v_0^2 + \dfrac{2eV}{m}} = \sqrt{(2\cdot10^{6})^2 + 3.52\cdot10^{13}} = 6.26\cdot10^{6}\,\text{m/s}$.'
+    wrongFeedback: 'אנרגיות מתחברות, מהירויות לא. כתבו את שימור האנרגיה עם האנרגיה הקינטית ההתחלתית.'
+    commonWrong:
+      - value: 7.93e6
+        feedback: 'חיברתם מהירויות: $2\cdot10^{6}$ ועוד המהירות שהאלקטרון היה מקבל ממנוחה. מה שמתחבר הוא **אנרגיות**: $\tfrac12 mv^2 = \tfrac12 mv_0^2 + eV$.'
+      - value: 5.93e6
+        feedback: 'זו המהירות שהאלקטרון היה מקבל ממנוחה. הוא נכנס עם מהירות התחלתית, ואנרגיית התנועה שלו מתחברת לאנרגיה מהשדה.'
+    hints:
+      - '$\tfrac12 mv^2 = \tfrac12 mv_0^2 + eV$.'
+
+  - id: Q-2.4-electron-proton
+    type: mc
+    objectives: [OBJ-2.4-1]
+    qualitative: true
+    prompt: >-
+      אלקטרון ופרוטון מואצים ממנוחה, כל אחד בכיוון שבו הוא מואץ, דרך אותו הפרש פוטנציאלים. מה נכון?
+    choices:
+      - text: לשניהם אותה אנרגיה קינטית, והאלקטרון מהיר יותר.
+        correct: true
+        feedback: 'נכון. האנרגיה היא $|q|V = eV$ לשניהם. מ-$\tfrac12 mv^2 = eV$, החלקיק הקל יותר מהיר יותר: פי $\sqrt{m_p/m_e} \approx 43$.'
+      - text: לשניהם אותה מהירות, כי הם עברו אותו מתח.
+        feedback: 'אותו מתח נותן אותה **אנרגיה**, לא אותה מהירות. עם מסה קטנה פי 1800, האלקטרון צריך מהירות גדולה בהרבה כדי לשאת אותה אנרגיה.'
+        misconception: MC-same-voltage-same-speed
+      - text: לפרוטון אנרגיה קינטית גדולה יותר, כי הוא כבד יותר.
+        feedback: 'האנרגיה שהשדה נותן היא $|q|V$, והיא לא תלויה במסה.'
+      - text: לאלקטרון אנרגיה גדולה פי 1800, כי הוא קל פי 1800.
+        feedback: 'האנרגיה $|q|V$ שווה לשניהם, כי גודל המטען שלהם שווה. המסה משפיעה רק על המהירות.'
+
+  # ------------------------------------------------ OBJ-2.4-2: only ΔV matters; will it get there?
+  - id: Q-2.4-wider-gap
+    type: twotier
+    objectives: [OBJ-2.4-2]
+    qualitative: true
+    prompt: >-
+      פרוטון מואץ ממנוחה בין שני לוחות שביניהם מתח קבוע, ומגיע ללוח השני במהירות $v$. מרחיקים את הלוחות פי 3, והמתח לא משתנה. באיזו מהירות יגיע הפרוטון עכשיו?
+    choices:
+      - text: $v$
+        correct: true
+        feedback: נכון. המהירות תלויה רק במתח.
+      - text: $3v$
+        feedback: 'הדרך ארוכה פי 3, אבל השדה חלש פי 3. העבודה, כוח כפול דרך, נשארת $eV$.'
+        misconception: MC-wider-gap-faster
+      - text: $\sqrt3\,v$
+        feedback: 'זה היה נכון אילו העבודה גדלה פי 3. אבל העבודה היא $eV$, והמתח לא השתנה.'
+        misconception: MC-wider-gap-faster
+      - text: $v/3$
+        feedback: 'השדה אכן חלש פי 3, אבל הפרוטון מואץ לאורך דרך ארוכה פי 3. העבודה הכוללת לא משתנה.'
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: 'האנרגיה הקינטית בסוף היא $eV$, והמתח לא השתנה.'
+        correct: true
+        feedback: 'נכון. גם דרך הכוחות: $W = eEd = e\dfrac{V}{d}d = eV$.'
+      - text: 'בדרך ארוכה יותר הפרוטון מואץ זמן רב יותר, ולכן מגיע מהר יותר.'
+        feedback: 'הוא מואץ זמן רב יותר, אבל בתאוצה קטנה יותר, כי השדה $E = V/d$ חלש יותר. שני האפקטים מתקזזים.'
+        misconception: MC-wider-gap-faster
+      - text: 'השדה חלש יותר, ולכן הפרוטון מגיע לאט יותר.'
+        feedback: 'השדה חלש יותר, אבל הוא פועל לאורך דרך ארוכה יותר.'
+
+  - id: Q-2.4-will-it-stop
+    type: mc
+    objectives: [OBJ-2.4-2]
+    qualitative: true
+    prompt: >-
+      לפרוטון יש אנרגיה קינטית של $300\,\text{eV}$, והוא נע לעבר אזור שבו הפוטנציאל גבוה ב-$500\,\text{V}$ מהפוטנציאל במקום שבו הוא נמצא. מה יקרה לו?
+    choices:
+      - text: הוא ייעצר לפני שיגיע לאזור, ויחזור.
+        correct: true
+        feedback: 'נכון. כדי לעלות $500\,\text{V}$ הפרוטון צריך $500\,\text{eV}$, ויש לו רק $300$. הוא ייעצר בנקודה שבה עלה $300\,\text{V}$, ויחזור.'
+      - text: הוא יאט, אבל בסוף יגיע לאזור.
+        feedback: 'חלקיק לא "עובר בסוף" כל מחסום. כשהאנרגיה הקינטית נגמרת, הוא נעצר והכוח מחזיר אותו.'
+        misconception: MC-climbs-any-hill
+      - text: הוא יגיע לאזור במהירות גדולה יותר, כי הפוטנציאל שם גבוה.
+        feedback: 'פרוטון, מטען חיובי, מאט כשהוא עולה בפוטנציאל: $U = qV$ גדלה, ו-$K$ קטנה.'
+        misconception: MC-electron-to-lower-potential
+      - text: הוא ייעצר בדיוק בכניסה לאזור ויישאר שם.
+        feedback: 'הוא ייעצר לפני הכניסה, כשיעלה $300\,\text{V}$ בלבד, ושם הכוח ימשיך לדחוף אותו אחורה. הוא לא יישאר במנוחה.'
+
+  - id: Q-2.4-stopping-voltage
+    type: numeric
+    objectives: [OBJ-2.4-2]
+    prompt: >-
+      לאלקטרון יש אנרגיה קינטית של $150\,\text{eV}$. מה הפרש הפוטנציאלים הקטן ביותר שעוצר אותו? ענו בוולט.
+    answer: 150
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. כדי לעצור אותו השדה צריך לקחת $150\,\text{eV}$, ואלקטרון מאבד $1\,\text{eV}$ על כל וולט שהוא "עולה" נגד הכוח עליו.'
+    wrongFeedback: 'אנרגיה ב-eV חלקי המטען ב-e נותנת וולטים: $V = K/e$.'
+    commonWrong:
+      - value: 2.4e-17
+        feedback: 'זו האנרגיה בג''אול. השאלה מבקשת מתח בוולט: $V = K/e = 150\,\text{eV}/e = 150\,\text{V}$.'
+        misconception: MC-ev-is-voltage
+      - value: 300
+        feedback: 'אין כאן גורם 2. האלקטרון מאבד $eV$ בדיוק, ולכן מספיק $150\,\text{V}$.'
+
+  - id: Q-2.4-four-v
+    type: mc
+    objectives: [OBJ-2.4-2, OBJ-2.4-1]
+    qualitative: true
+    prompt: >-
+      אלקטרון מואץ ממנוחה דרך מתח $V$ ומגיע למהירות $v$. איזה מתח יביא אותו (ממנוחה) למהירות $2v$?
+    choices:
+      - text: $4V$
+        correct: true
+        feedback: 'נכון. $\tfrac12 mv^2 = eV$: האנרגיה הקינטית ביחס ישר ל-$v^2$. מהירות כפולה דורשת אנרגיה גדולה פי 4.'
+      - text: $2V$
+        feedback: 'המתח קובע את האנרגיה, ולא את המהירות. מתח כפול נותן מהירות גדולה פי $\sqrt2$ בלבד.'
+        misconception: MC-speed-proportional-voltage
+      - text: $\sqrt2\,V$
+        feedback: 'הפוך: המהירות היא שגדלה כמו השורש של המתח, ולא המתח כמו השורש של המהירות.'
+      - text: $V$, כי המתח קובע את המהירות ולא משנה אותה.
+        feedback: 'במתח $V$ האלקטרון מגיע ל-$v$ בדיוק. כדי להגיע למהירות אחרת צריך מתח אחר.'
+
+  # ------------------------------------------------ OBJ-2.4-3: closest approach
+  - id: Q-2.4-alpha-gold
+    type: numeric
+    objectives: [OBJ-2.4-3]
+    level: mid
+    prompt: >-
+      חלקיק אלפא (מטען $2e$) שהאנרגיה הקינטית שלו $4\,\text{MeV}$ נורה ממרחק רב ישר לעבר גרעין זהב (מטען $79e$). מהו מרחק הגישה הקרוב ביותר?
+      ($1\,\text{MeV} = 10^{6}\,\text{eV}$)
+    answer: 5.69e-14
+    unit: m
+    tolerance: 0.03
+    correctFeedback: 'נכון: $r_{\min} = \dfrac{kqQ}{K} = \dfrac{9\cdot10^{9}\cdot(2\cdot1.6\cdot10^{-19})\cdot(79\cdot1.6\cdot10^{-19})}{4\cdot10^{6}\cdot1.6\cdot10^{-19}} = 5.7\cdot10^{-14}\,\text{m}$.'
+    wrongFeedback: 'בנקודת החזרה כל האנרגיה הקינטית הפכה לפוטנציאלית: $K = kqQ/r_{\min}$. המירו את $K$ לג''אול.'
+    commonWrong:
+      - value: 2.84e-14
+        feedback: 'הצבתם מטען $e$ לחלקיק האלפא. המטען שלו $2e$: שני פרוטונים.'
+      - value: 1.14e-13
+        feedback: 'הכפלתם ב-2 מיותר. בנקודת החזרה $K = kqQ/r$, בלי $\tfrac12$ ובלי 2.'
+    hints:
+      - 'בנקודת החזרה $K = 0$, ולכן $U = kqQ/r_{\min}$ שווה לאנרגיה ההתחלתית.'
+
+  - id: Q-2.4-at-turn
+    type: mc
+    objectives: [OBJ-2.4-3]
+    qualitative: true
+    prompt: >-
+      חלקיק אלפא נורה ישר לעבר גרעין, נעצר לרגע ברגע הגישה הקרובה ביותר, וחוזר. מה נכון לגבי האנרגיה שלו ברגע שבו הוא עוצר?
+    choices:
+      - text: האנרגיה הקינטית אפס, והאנרגיה הפוטנציאלית שווה לאנרגיה הקינטית שהייתה לו בהתחלה.
+        correct: true
+        feedback: נכון. האנרגיה הכוללת נשמרת. בנקודת החזרה כולה פוטנציאלית, ולכן הוא חוזר ומגיע רחוק באותה מהירות שבה התחיל.
+      - text: האנרגיה הכוללת שלו אפס, כי הוא עומד.
+        feedback: 'עומד פירושו $K = 0$, אבל האנרגיה הפוטנציאלית שם מקסימלית. אילו האנרגיה הכוללת הייתה אפס, מאיפה הייתה לו אנרגיה לחזור?'
+        misconception: MC-no-energy-at-turn
+      - text: האנרגיה הפוטנציאלית אפס, כי הכוח שם הכי חזק.
+        feedback: 'הכוח אכן הכי חזק שם, אבל האנרגיה הפוטנציאלית $kqQ/r$ היא הגדולה ביותר, לא אפס.'
+      - text: חלק מהאנרגיה הלך לאיבוד בהתנגשות, ולכן הוא חוזר לאט יותר.
+        feedback: 'אין כאן התנגשות: הדחייה החשמלית עוצרת אותו לפני שהוא נוגע בגרעין, והשדה משמר.'
+        misconception: MC-no-energy-at-turn
+
+  - id: Q-2.4-double-energy
+    type: twotier
+    objectives: [OBJ-2.4-3]
+    qualitative: true
+    prompt: >-
+      חלקיק אלפא שנורה לעבר גרעין מגיע עד מרחק $r$ ממנו. מכפילים את האנרגיה הקינטית שלו. עד איזה מרחק הוא יגיע?
+    choices:
+      - text: $r/2$
+        correct: true
+        feedback: נכון.
+      - text: $r/4$
+        feedback: 'כאן לא פועל חוק קולון עם הריבוע, אלא האנרגיה הפוטנציאלית $kqQ/r$, שבה המרחק בחזקה ראשונה.'
+        misconception: MC-potential-inverse-square
+      - text: $r/\sqrt2$
+        feedback: 'זה היה נכון אילו המרחק היה תלוי במהירות. הוא תלוי באנרגיה, והאנרגיה הוכפלה.'
+      - text: $2r$
+        feedback: 'עם יותר אנרגיה החלקיק מתקרב **יותר** לגרעין, כלומר המרחק קטן.'
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: '$r_{\min} = kqQ/K$: המרחק ביחס הפוך לאנרגיה הקינטית.'
+        correct: true
+        feedback: נכון.
+      - text: הכוח החשמלי ביחס הפוך לריבוע המרחק.
+        feedback: 'זה נכון לכוח, אבל השאלה על אנרגיה. האנרגיה הפוטנציאלית היא $kqQ/r$.'
+        misconception: MC-potential-inverse-square
+      - text: אנרגיה כפולה פירושה מהירות כפולה.
+        feedback: 'אנרגיה כפולה פירושה מהירות גדולה פי $\sqrt2$. ובכל מקרה $r_{\min}$ תלוי ישירות באנרגיה.'
+        misconception: MC-speed-proportional-voltage

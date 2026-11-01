@@ -1,0 +1,34 @@
+# Lesson 2.4 terms. Format and rules: see glossary/1-5.yaml.
+
+- id: energy-conservation-charge
+  term: שימור אנרגיה
+  en: conservation of energy
+  definition: כשרק השדה החשמלי עושה עבודה על מטען, הסכום של האנרגיה הקינטית והאנרגיה הפוטנציאלית שלו קבוע, ½mv² + qV = קבוע. מה שהאנרגיה הפוטנציאלית מאבדת, האנרגיה הקינטית מרוויחה, ולהפך.
+  lesson: '2.4'
+
+- id: electron-gun
+  term: תותח אלקטרונים
+  en: electron gun
+  definition: התקן שמאיץ אלקטרונים בעזרת מתח בין שתי אלקטרודות. אלקטרונים שיוצאים כמעט ממנוחה מהקתודה מקבלים אנרגיה קינטית eV, כאשר V הוא המתח. כך נוצרת הקרן בשפופרת קרן קתודית.
+  lesson: '2.4'
+
+- id: turning-point
+  term: נקודת החזרה
+  en: turning point
+  definition: המקום שבו חלקיק שנע נגד הכוח נעצר לרגע והופך כיוון. שם כל האנרגיה הקינטית שלו הפכה לאנרגיה פוטנציאלית.
+  lesson: '2.4'
+
+- id: closest-approach
+  term: מרחק הגישה הקרוב ביותר
+  en: distance of closest approach
+  symbol: r_min
+  unit: m
+  definition: המרחק הקטן ביותר שאליו מגיע חלקיק טעון שנורה ישר לעבר מטען באותו סימן. אם החלקיק בא ממרחק רב עם אנרגיה קינטית K, אז r_min = kqQ/K.
+  lesson: '2.4'
+
+- id: alpha-particle
+  term: חלקיק אלפא
+  en: alpha particle
+  symbol: α
+  definition: גרעין של אטום הליום, שני פרוטונים ושני נייטרונים. המטען שלו 2e, והמסה שלו בערך פי 4 ממסת הפרוטון.
+  lesson: '2.4'

@@ -6,9 +6,12 @@ import {
   closestApproach,
   connectSpheres,
   contourSegments,
+  earthedSphereCharge,
   fieldFromVoltage,
   fieldWork,
   fromEV,
+  gapPosition,
+  gapTransit,
   kineticGain,
   pairEnergy,
   pathLength,
@@ -16,6 +19,7 @@ import {
   speedAfter,
   sphereEnergy,
   sphereFieldAt,
+  sphereSurfaceField,
   spherePotentialAt,
   toEV,
   uniformPotential,
@@ -101,9 +105,53 @@ describe('analytic limits', () => {
       for (const p of [a, b]) expect(relativeError(Math.hypot(p[0], p[1]), (K * Q) / level)).toBeLessThan(0.02);
     }
   });
+  it('a gap transit from rest takes t = 2d/v and arrives exactly at the far plate', () => {
+    const g = gapTransit(-E_CHARGE, M_ELECTRON, 0, 1000, 0.04, 0);
+    expect(g.reaches).toBe(true);
+    expect(relativeError(g.time, (2 * 0.04) / g.vEnd)).toBeLessThan(1e-12);
+    expect(relativeError(gapPosition(g, 0, g.time), 0.04)).toBeLessThan(1e-9);
+  });
+
+  it('a proton fired against a field it cannot climb turns at x = v0²/(2|a|) and comes back at its launch speed', () => {
+    const v0 = Math.sqrt((2 * fromEV(500)) / M_PROTON);
+    const g = gapTransit(E_CHARGE, M_PROTON, 0, 1000, 0.1, v0);
+    expect(g.reaches).toBe(false);
+    // 500 eV against 1000 V: it climbs half way
+    expect(relativeError(g.xTurn, 0.05)).toBeLessThan(1e-9);
+    expect(g.vEnd).toBe(v0);
+    expect(Math.abs(gapPosition(g, v0, g.time))).toBeLessThan(1e-12);
+  });
+
+  it('a charge at rest in a field that pushes it back onto its plate does not move', () => {
+    const g = gapTransit(E_CHARGE, M_PROTON, 0, 500, 0.1, 0);
+    expect(g).toMatchObject({ reaches: false, vEnd: 0, time: 0, xTurn: 0 });
+  });
+  it('an earthed sphere near a charge q at distance D keeps −qR/D, which makes its centre V = 0', () => {
+    const q = 3 * uC;
+    const R = 0.1;
+    const D = 0.4;
+    const Q = earthedSphereCharge(q, D, R);
+    expect(relativeError(Q, -0.75 * uC)).toBeLessThan(1e-12);
+    expect(Math.abs(pointPotential(Q, R) + pointPotential(q, D))).toBeLessThan(1e-9);
+    expect(earthedSphereCharge(0, D, R)).toBe(0);
+  });
+
+  it('connected spheres: the smaller one has the stronger surface field, E ∝ 1/R', () => {
+    const r = connectSpheres(6 * uC, 0.1, 0, 0.2);
+    expect(relativeError(sphereSurfaceField(r.q1, 0.1), 2 * sphereSurfaceField(r.q2, 0.2))).toBeLessThan(1e-12);
+    expect(relativeError(sphereSurfaceField(r.q1, 0.1), sphereFieldAt(r.q1, 0.1, 0.1))).toBeLessThan(1e-12);
+  });
 });
 
 describe('conservation', () => {
+  it('in a gap transit ½mv² + qV is the same at both plates', () => {
+    const q = 2 * E_CHARGE;
+    const m = 4 * M_PROTON;
+    const v0 = 3e5;
+    const g = gapTransit(q, m, 1500, -500, 0.06, v0);
+    expect(relativeError(0.5 * m * g.vEnd ** 2 + q * -500, 0.5 * m * v0 ** 2 + q * 1500)).toBeLessThan(1e-12);
+  });
+
   it('the work of a point charge’s field does not depend on the path (conservative field)', () => {
     const src: PointCharge[] = [{ x: 0, y: 0, q: 2 * uC }];
     const field = (x: number, y: number) => fieldAt(src, x, y);
@@ -169,6 +217,20 @@ describe('conservation', () => {
 });
 
 describe('scaling (the dimensional proxy)', () => {
+  it('earthing to a body ever larger leaves ever less charge on the sphere: the earth is a sphere of huge radius', () => {
+    const small = connectSpheres(4 * uC, 0.1, 0, 1).q1;
+    const earthLike = connectSpheres(4 * uC, 0.1, 0, 6.4e6).q1;
+    expect(small).toBeGreaterThan(earthLike);
+    expect(earthLike / (4 * uC)).toBeLessThan(1e-7);
+  });
+
+  it('the arrival speed depends on the voltage, not on the gap: a gap 4× wider only takes 4× longer', () => {
+    const narrow = gapTransit(-E_CHARGE, M_ELECTRON, 0, 2000, 0.02, 0);
+    const wide = gapTransit(-E_CHARGE, M_ELECTRON, 0, 2000, 0.08, 0);
+    expect(relativeError(wide.vEnd, narrow.vEnd)).toBeLessThan(1e-12);
+    expect(relativeError(wide.time, 4 * narrow.time)).toBeLessThan(1e-12);
+  });
+
   it('potential is linear in Q and falls as 1/r (not 1/r²)', () => {
     expect(relativeError(pointPotential(2 * uC, 0.2), 2 * pointPotential(uC, 0.2))).toBeLessThan(1e-12);
     expect(relativeError(pointPotential(uC, 0.4), pointPotential(uC, 0.2) / 2)).toBeLessThan(1e-12);

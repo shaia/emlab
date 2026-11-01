@@ -168,6 +168,38 @@ export function speedAfter(q: number, m: number, deltaV: number, v0 = 0): number
 /** Kinetic energy gained by q falling through ΔV = V_end − V_start: ΔK = −qΔV [J]. */
 export const kineticGain = (q: number, deltaV: number): number => -q * deltaV;
 
+export interface GapTransit {
+  /** q reaches plate B; otherwise it turns back and returns to plate A */
+  reaches: boolean;
+  /** speed on arrival: at B if it reaches, back at A if it turns [m/s] */
+  vEnd: number;
+  /** time until arrival at B, or until it is back at A [s] */
+  time: number;
+  /** distance from A where it stops and turns; NaN if it reaches B [m] */
+  xTurn: number;
+  /** acceleration along A → B, qE/m [m/s²] */
+  accel: number;
+}
+
+/**
+ * q (mass m) leaves plate A (potential vA) with speed v0 toward plate B (potential vB), a
+ * distance d away, in the uniform field between them, E = (vA − vB)/d along A → B. The speed
+ * at B comes from energy conservation (speedAfter); the times from constant acceleration.
+ */
+export function gapTransit(q: number, m: number, vA: number, vB: number, d: number, v0: number): GapTransit {
+  const accel = (q * (vA - vB)) / (d * m);
+  const vEnd = speedAfter(q, m, vB - vA, v0);
+  if (Number.isFinite(vEnd) && (v0 > 0 || accel > 0)) {
+    // the average speed under constant acceleration is (v0 + v)/2
+    return { reaches: true, vEnd, time: (2 * d) / (v0 + vEnd), xTurn: Number.NaN, accel };
+  }
+  if (v0 === 0) return { reaches: false, vEnd: 0, time: 0, xTurn: 0, accel };
+  return { reaches: false, vEnd: v0, time: (-2 * v0) / accel, xTurn: (-v0 * v0) / (2 * accel), accel };
+}
+
+/** Distance from A of the charge in a gap transit at time t (0 ≤ t ≤ transit time) [m]. */
+export const gapPosition = (g: GapTransit, v0: number, t: number): number => v0 * t + 0.5 * g.accel * t * t;
+
 /**
  * Closest approach of q (mass m, speed v0) fired head-on at a fixed charge Q of the same sign,
  * starting a distance r0 away (Infinity: from far away). At the turning point all the kinetic
@@ -204,3 +236,14 @@ export function connectSpheres(Q1: number, R1: number, Q2: number, R2: number): 
   const Q = Q1 + Q2;
   return { q1: (Q * R1) / (R1 + R2), q2: (Q * R2) / (R1 + R2), V: (K * Q) / (R1 + R2) };
 }
+
+/**
+ * Charge left on an earthed conducting sphere (radius R) when a point charge q sits a distance
+ * D > R from its centre. The whole sphere is at V = 0, so its centre is too; the induced charge
+ * Q lies on the surface, all a distance R from the centre, so kQ/R + kq/D = 0 and Q = −qR/D.
+ * Exact for any arrangement of the surface charge; with q = 0 the earthed sphere is neutral.
+ */
+export const earthedSphereCharge = (q: number, D: number, R: number): number => (q === 0 ? 0 : (-q * R) / D);
+
+/** Field just outside a charged conducting sphere, kQ/R² [N/C], signed with Q. */
+export const sphereSurfaceField = (Q: number, R: number): number => (K * Q) / (R * R);
