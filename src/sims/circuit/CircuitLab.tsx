@@ -52,6 +52,10 @@ const PRESET_LABEL: Record<string, string> = {
   ammeters: 'שני מדי זרם',
   power: 'נורה ומדים',
   ratings: 'שתי נורות זו לצד זו',
+  'series-pair': 'בטור',
+  'parallel-pair': 'במקביל',
+  mixed3: 'מעורב',
+  blank: 'לוח ריק',
 };
 
 const TOOL_LABEL: Record<Tool, string> = {
@@ -91,6 +95,11 @@ const TASK_LABEL: Record<string, string> = {
   'change-emf': 'שנו את המתח של הסוללה. האם שני מדי הזרם עדיין מראים אותו דבר?',
   'double-emf': 'הכפילו את המתח של הסוללה, מ-6 V ל-12 V. פי כמה גדל ההספק של הנורה?',
   'lower-R': 'הקטינו את ההתנגדות של הנורה, באותו מתח. מה קורה להספק?',
+  'short-L2': 'בטור: סגרו את המפסק, שמחבר תיל מצד אחד של L₂ לצד השני. מה קורה לכל נורה?',
+  'add-parallel': 'במקביל: סגרו את המפסק כדי להוסיף את L₂. מה קורה ל-L₁?',
+  'mixed-add': 'במעורב: סגרו את המפסק כדי להוסיף את L₃. מה קורה ל-L₁ ול-L₂?',
+  'build-series': 'בנו מעגל שבו שתי נורות דולקות בטור.',
+  'build-parallel': 'בנו מעגל שבו שתי נורות דולקות במקביל.',
 };
 
 export interface CircuitLabProps {
@@ -290,6 +299,21 @@ export default function CircuitLab(props: CircuitLabProps) {
     }
     if (has('close-switch') && b.parts.some((p) => p.kind === 'switch' && p.closed) && b.parts.some((p) => Math.abs(so.parts[p.id]?.I ?? 0) > 1e-6)) done('close-switch');
     if (has('electrons') && st.electrons && b.parts.some((p) => Math.abs(so.parts[p.id]?.I ?? 0) > 1e-6)) done('electrons');
+    const closedS = b.parts.some((p) => p.kind === 'switch' && p.closed);
+    if (has('short-L2') && st.preset === 'series-pair' && closedS) done('short-L2');
+    if (has('add-parallel') && st.preset === 'parallel-pair' && closedS) done('add-parallel');
+    if (has('mixed-add') && st.preset === 'mixed3' && closedS) done('mixed-add');
+    const battery = b.parts.find((p) => p.kind === 'battery');
+    const emf = battery?.emf ?? 0;
+    const lit = b.parts.filter((p) => p.kind === 'bulb' && Math.abs(so.parts[p.id]?.I ?? 0) > 1e-6);
+    if (lit.length >= 2 && emf > 0) {
+      const r = lit.map((p) => so.parts[p.id]);
+      // series: one current through both, each with only part of the EMF; parallel: each across the whole EMF
+      const series = r.some((a, i) => r.some((c, j) => i < j && Math.abs(Math.abs(a.I) - Math.abs(c.I)) < 1e-9 && Math.abs(a.V) < 0.99 * emf && Math.abs(c.V) < 0.99 * emf));
+      const parallel = r.filter((a) => Math.abs(Math.abs(a.V) - emf) < 0.01 * emf).length >= 2;
+      if (has('build-series') && series) done('build-series');
+      if (has('build-parallel') && parallel) done('build-parallel');
+    }
     if (has('light') && b.parts.some((p) => p.kind === 'bulb' && Math.abs(so.parts[p.id]?.P ?? 0) > 0.05 * pref)) done('light');
   };
 
@@ -615,8 +639,12 @@ export default function CircuitLab(props: CircuitLabProps) {
       const before = prev.board.parts.find((q) => q.id === id);
       // against the preset's own battery: a slider fires at every step of a drag
       const original = presetOf(prev.preset).board.parts.find((q) => q.id === id);
-      if (key === 'emf' && has('double-emf') && original?.emf === 6 && v === 12) done('double-emf');
-      if (key === 'R' && has('lower-R') && before?.kind === 'bulb' && v < (before.R ?? 6)) done('lower-R');
+      const bulb = next.board.parts.find((q) => q.kind === 'bulb');
+      const originalBulb = presetOf(prev.preset).board.parts.find((q) => q.kind === 'bulb');
+      // doubled from the preset's own 6 V, with the bulb still as the preset left it
+      if (key === 'emf' && has('double-emf') && original?.emf === 6 && v === 12 && bulb?.R === originalBulb?.R) done('double-emf');
+      // below the preset's own resistance, at the doubled voltage
+      if (key === 'R' && has('lower-R') && before?.kind === 'bulb' && v < (originalBulb?.R ?? 6) && next.board.parts.some((q) => q.kind === 'battery' && q.emf === 12)) done('lower-R');
       return next;
     });
 

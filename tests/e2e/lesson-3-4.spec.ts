@@ -81,18 +81,18 @@ test.describe('predict, then reveal', () => {
 });
 
 test.describe('questions', () => {
-  test('numeric: "half the voltage, half the power" is caught as that misconception, then 15 W passes', async ({ page }) => {
+  test('numeric: "half the voltage, half the power" is caught as that misconception, then 25 W passes', async ({ page }) => {
     await page.goto(LESSON);
     const q = page.locator('[data-qid="Q-3.4-half-voltage"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(q);
     const input = q.locator('input[type=text]');
-    await input.fill('30');
+    await input.fill('50');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     const a = (await progress(page)).attempts.at(-1);
     expect(a).toMatchObject({ qid: 'Q-3.4-half-voltage', correct: false, misconception: 'MC-power-proportional-v', lesson: '3.4' });
     await q.getByRole('button', { name: 'נסו שוב' }).click();
-    await input.fill('15');
+    await input.fill('25');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-right/);
   });
@@ -102,7 +102,7 @@ test.describe('questions', () => {
     const q = page.locator('[data-qid="Q-3.4-kwh"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(q);
-    await q.locator('input[type=text]').fill('0.667');
+    await q.locator('input[type=text]').fill('1.25');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-wrong/);
     const a = (await progress(page)).attempts.at(-1);
