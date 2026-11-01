@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-3-1-switch-voltage
+  youtubeId: 5QcAe3QP1Jw
+  title: 'מה המתח על מפסק במעגל חשמלי ?'
+  channel: מרכז שוורץ/רייסמן הדרכות למורי פיזיקה
+  lang: he
+  captions: []
+  minutes: 6
+  why: 'שאלה לכיתה: מה יראה וולטמטר שמחובר למפסק, כשהמפסק פתוח וכשהוא סגור (לפי תיאור הסרטון, מתוך סדרת הדרכה למורי פיזיקה). נסו לענות לפני הצפייה, ובדקו את התשובה מול הפוטנציאל לאורך המעגל שבשיעור.'
+  verified: '2026-11-01'
+
+- id: v-3-1-current-voltage
+  youtubeId: 7C24GiWRFBc
+  title: 'זרם ומתח חשמליים'
+  channel: מכון דוידסון - סרטוני מדע
+  lang: he
+  captions: [he]
+  minutes: 5
+  why: 'סרטון קצר של מכון דוידסון על יסודות החשמל: מהו זרם, מהו מתח ומה ההבדל ביניהם (לפי תיאור הסרטון). שימו לב איזה משני המושגים הוא ה"דחיפה" ואיזה הוא התנועה עצמה.'
+  verified: '2026-11-01'
