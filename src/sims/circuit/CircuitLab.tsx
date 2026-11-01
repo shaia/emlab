@@ -63,6 +63,8 @@ const PRESET_LABEL: Record<string, string> = {
   loading: 'מד מתח על שני נגדים',
   rheostat: 'נגד משתנה',
   kirchhoff: 'שתי סוללות',
+  'cap-steady': 'קבל במקביל לנגד',
+  'cap-series': 'קבל בטור',
 };
 
 const LOOP_LABEL: Record<string, string> = {
@@ -772,6 +774,11 @@ export default function CircuitLab(props: CircuitLabProps) {
                 if (measure.includes('P')) bits.push(['מספקת', watts(r.P)]);
               } else if (q.kind === 'ammeter') bits.push(['מראה', amps(r.I)]);
               else if (q.kind === 'voltmeter') bits.push(['מראה', volts(Math.abs(r.V))]);
+              else if (q.kind === 'capacitor') {
+                bits.push(['', `V = ${volts(Math.abs(r.V))}`]);
+                bits.push(['', `I = ${amps(r.I)}`]);
+                bits.push(['', `Q = ${sci(clean((q.C ?? 0) * Math.abs(r.V)) * 1e6)} μC`]);
+              }
               else {
                 if (measure.includes('V')) bits.push(['', `V = ${volts(Math.abs(r.V))}`]);
                 if (measure.includes('I')) bits.push(['', `I = ${amps(r.I)}`]);
@@ -1203,7 +1210,7 @@ function drawPart(
     const side = vertical ? (part.from[0] === cols - 1 ? -1 : 1) : part.from[1] === 0 ? 1 : -1;
     // clear of the symbol: round symbols (bulb, meters) reach further from the wire
     const round = part.kind === 'bulb' || part.kind === 'ammeter' || part.kind === 'voltmeter';
-    const off = (part.kind === 'battery' ? (part.r ? 0.36 : 0.3) : round ? 0.34 : 0.27) * c + (round && !vertical ? 4 : 0);
+    const off = (part.kind === 'battery' ? (part.r ? 0.36 : 0.3) : round ? 0.34 : 0.27) * c + (!vertical ? 4 : 0);
     const lx = vertical ? mx + side * off : mx;
     const ly = vertical ? my : my + side * off;
     ctx.textAlign = vertical ? (side > 0 ? 'left' : 'right') : 'center';
@@ -1224,6 +1231,8 @@ function valueText(part: Part, r: { V: number; I: number; P: number } | undefine
     case 'bulb':
     case 'rheostat':
       return showValues ? ohms(part.R ?? 6) : '';
+    case 'capacitor':
+      return showValues ? `${sci((part.C ?? 100e-6) * 1e6)} μF` : '';
     case 'battery':
       return part.r ? `${volts(part.emf ?? 12)}, r = ${ohms(part.r)}` : volts(part.emf ?? 12);
     case 'ammeter':

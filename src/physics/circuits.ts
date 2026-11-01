@@ -160,6 +160,17 @@ export function rcDischarge(t: number, V0: number, R: number, C: number): RCStat
   return { q: C * vC, vC, I: vC / R };
 }
 
+/**
+ * The general RC curve: a capacitor at v0 heading for the voltage it would reach in the end,
+ * `target` (ε while charging, 0 while discharging), through R. vC = target + (v0 − target)·e^(−t/RC),
+ * and the current into the capacitor's + plate, I = (target − vC)/R, is negative while it discharges.
+ * rcCharge is the case v0 = 0, target = ε; rcDischarge is target = 0 (with the current's sign flipped).
+ */
+export function rcFrom(t: number, target: number, v0: number, R: number, C: number): RCState {
+  const vC = target + (v0 - target) * Math.exp(-t / (R * C));
+  return { q: C * vC, vC, I: (target - vC) / R };
+}
+
 /* ======================================================== the network solver */
 
 export type Element =

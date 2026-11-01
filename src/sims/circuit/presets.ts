@@ -329,6 +329,41 @@ const kirchhoff: Preset = {
   },
 };
 
+/** a capacitor in parallel with R₂, both in series with R₁: the steady state of a DC circuit (3.9) */
+const capSteady: Preset = {
+  board: {
+    cols: 5,
+    rows: 3,
+    parts: [
+      { id: 'eps', kind: 'battery', from: [0, 2], to: [0, 1], emf: 12, r: 0, locked: true },
+      ...run('wl', [0, 1], [0, 0], [1, 0]),
+      { id: 'R1', kind: 'resistor', from: [1, 0], to: [2, 0], R: 4, locked: true },
+      ...run('wt', [2, 0], [3, 0], [4, 0]),
+      w('wm', [2, 0], [2, 1]),
+      { id: 'R2', kind: 'resistor', from: [2, 1], to: [2, 2], R: 8, locked: true },
+      w('wc', [4, 0], [4, 1]),
+      { id: 'C1', kind: 'capacitor', from: [4, 1], to: [4, 2], C: 100e-6, locked: true },
+      ...run('wb', [4, 2], [3, 2], [2, 2], [1, 2], [0, 2]),
+    ],
+  },
+};
+
+/** a capacitor in series with a resistor and a battery, long after the switch closed (3.9) */
+const capSeries: Preset = {
+  board: {
+    cols: 5,
+    rows: 3,
+    parts: [
+      { id: 'eps', kind: 'battery', from: [0, 2], to: [0, 1], emf: 12, r: 0, locked: true },
+      ...run('wl', [0, 1], [0, 0], [1, 0]),
+      { id: 'R1', kind: 'resistor', from: [1, 0], to: [2, 0], R: 4, locked: true },
+      ...run('wt', [2, 0], [3, 0], [4, 0], [4, 1]),
+      { id: 'C1', kind: 'capacitor', from: [4, 1], to: [4, 2], C: 100e-6, locked: true },
+      ...run('wb', [4, 2], [3, 2], [2, 2], [1, 2], [0, 2]),
+    ],
+  },
+};
+
 /** an empty builder board with a battery (3.5) */
 const blank: Preset = {
   board: {
@@ -356,4 +391,6 @@ export const PRESETS: Record<string, Preset> = {
   loading,
   rheostat,
   kirchhoff,
+  'cap-steady': capSteady,
+  'cap-series': capSeries,
 };

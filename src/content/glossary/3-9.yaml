@@ -1,0 +1,27 @@
+# Lesson 3.9 terms. Format and rules: see glossary/1-5.yaml.
+
+- id: rc-circuit
+  term: מעגל RC
+  en: RC circuit
+  definition: 'מעגל שבו קבל נטען או נפרק דרך נגד. הזרם בו לא קבוע: הוא מתחיל גדול ודועך עם הזמן, כי המתח על הקבל משתנה.'
+  lesson: '3.9'
+
+- id: time-constant
+  term: קבוע זמן
+  en: time constant
+  symbol: τ
+  unit: s
+  definition: 'המכפלה τ = RC במעגל RC. היא קובעת את קצב הטעינה והפריקה: אחרי זמן τ, קבל שנטען מגיע לכ-63% מהמתח הסופי, וקבל שנפרק יורד לכ-37% מהמתח שהיה לו. אחרי כ-5τ התהליך כמעט הסתיים.'
+  lesson: '3.9'
+
+- id: steady-state
+  term: מצב יציב
+  en: steady state
+  definition: המצב שאליו מגיע מעגל אחרי זמן רב, כשהזרמים והמתחים כבר לא משתנים. במעגל זרם ישר במצב יציב לא עובר זרם בענף שיש בו קבל, והקבל מתנהג כמו נתק.
+  lesson: '3.9'
+
+- id: exponential-decay
+  term: דעיכה מעריכית
+  en: exponential decay
+  definition: 'שינוי שבו בכל פרק זמן שווה הגודל קטן באותו יחס, למשל לכ-37% מערכו בכל τ. כך דועך הזרם במעגל RC: מהר בהתחלה ולאט בסוף, בלי להגיע לאפס בדיוק.'
+  lesson: '3.9'

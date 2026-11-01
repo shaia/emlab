@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-3-9-rc-graphs
+  youtubeId: qKAC2yeTY-g
+  title: 'לראות פיזיקה - טעינה ופריקה של קבל גרפים ותובנות - העשרה'
+  channel: ShabtaiShpigler
+  lang: he
+  captions: []
+  minutes: 8
+  why: 'סרטון בעברית עם גרפים דינמיים: מתח הקבל בזמן הטעינה, זרם הטעינה והפריקה, ובסוף היחידות של RC (לפי רשימת הפרקים בתיאור). בדקו בעצמכם למה המכפלה RC נמדדת בשניות.'
+  verified: '2026-11-01'
+
+- id: v-3-9-scope-discharge
+  youtubeId: ae-iczfo1i4
+  title: 'Capacitor discharge with oscilloscope'
+  channel: Physics with Simon Poliakoff
+  lang: en
+  captions: []
+  minutes: 2
+  why: 'קבל אמיתי נפרק, ועל מסך האוסצילוסקופ (מכשיר שמצייר מתח כתלות בזמן) רואים את עקומת הפריקה (לפי תיאור הסרטון). השוו את צורת העקומה לגרף הפריקה שבשיעור.'
+  verified: '2026-11-01'

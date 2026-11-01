@@ -1,0 +1,246 @@
+# Lesson 3.9 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/circuits.ts (rcCharge, rcDischarge, rcFrom,
+# solveCircuit). The numbers differ on purpose from figures 3.9א, 3.9ב and the worked example.
+
+chapter: 3
+questions:
+  # ------------------------------------------------ OBJ-3.9-1: charging and discharging, qualitatively
+  - id: Q-3.9-initial-current
+    type: numeric
+    objectives: [OBJ-3.9-1]
+    prompt: >-
+      קבל ריק מחובר בטור לנגד של $4\,\text{k}\Omega$ ולמפסק, וסוללה אידאלית של $12\,\text{V}$. סוגרים את המפסק. מה הזרם ברגע הראשון? ענו במיליאמפר.
+    answer: 3
+    unit: mA
+    tolerance: 0.03
+    correctFeedback: 'נכון. ברגע הראשון אין על הקבל מטען, ולכן גם לא מתח: כל $12\,\text{V}$ על הנגד, ו-$I = 12/4000 = 3\cdot10^{-3}\,\text{A} = 3\,\text{mA}$. הקבל מתנהג לרגע כמו תיל.'
+    wrongFeedback: 'מה המתח על קבל ריק? אם הוא אפס, כמה מתח נשאר על הנגד?'
+    commonWrong:
+      - value: 0
+        feedback: 'הקבל לא חוסם את הזרם מההתחלה. כשהוא ריק אין עליו מתח, וכל המתח על הנגד. הזרם יורד לאפס רק כשהקבל מתמלא.'
+        misconception: MC-current-through-cap-steady
+      - value: 0.003
+        feedback: 'זה הזרם באמפר. השאלה מבקשת מיליאמפר: כפלו ב-1000.'
+
+  - id: Q-3.9-start-end
+    type: mc
+    objectives: [OBJ-3.9-1]
+    qualitative: true
+    prompt: >-
+      קבל ריק נטען דרך נגד מסוללה אידאלית. מה נכון לגבי הרגע הראשון, ולגבי זמן רב אחרי סגירת המפסק?
+    choices:
+      - text: 'בהתחלה: המתח על הקבל אפס והזרם מרבי. בסוף: המתח על הקבל שווה לכא"מ והזרם אפס.'
+        correct: true
+        feedback: 'נכון. בהתחלה הקבל כמו תיל, ובסוף כמו נתק.'
+      - text: 'בהתחלה: הזרם אפס, כי הקבל חוסם. בסוף: הזרם מרבי.'
+        feedback: 'הפוך. קבל ריק לא מתנגד לזרם, והזרם דועך ככל שהקבל מתמלא.'
+        misconception: MC-current-through-cap-steady
+      - text: 'הזרם קבוע כל הזמן, והמתח על הקבל עולה בקצב קבוע.'
+        feedback: 'הזרם לא קבוע: ככל שהמתח על הקבל גדל, נשאר פחות מתח על הנגד, והזרם קטן.'
+        misconception: MC-capacitor-instant
+      - text: 'הקבל מתמלא ברגע הסגירה, ומאז אין זרם.'
+        feedback: 'הנגד מגביל את הזרם, ולכן הטעינה לוקחת זמן: בערך $5RC$.'
+        misconception: MC-capacitor-instant
+
+  - id: Q-3.9-through-gap
+    type: twotier
+    objectives: [OBJ-3.9-1]
+    qualitative: true
+    prompt: >-
+      בזמן שקבל נטען, יש זרם בתילים שמחוברים אליו. האם מטען עובר דרך הרווח שבין הלוחות?
+    choices:
+      - text: 'לא.'
+        correct: true
+        feedback: נכון.
+      - text: 'כן, אחרת לא היה זרם בתילים.'
+        feedback: 'הזרם בתילים אפשרי גם בלי מעבר בין הלוחות: מטען זורם אל לוח אחד ומהלוח השני, ומצטבר עליהם.'
+        misconception: MC-charge-crosses-gap
+      - text: 'רק בהתחלה, כשהקבל ריק.'
+        feedback: 'בין הלוחות יש מבודד, ומטען לא עובר דרכו בשום שלב.'
+        misconception: MC-charge-crosses-gap
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'בין הלוחות יש מבודד. מטען מצטבר על הלוחות, $+Q$ על אחד ו-$-Q$ על השני, והזרם בתילים נמשך כל עוד המטען הזה גדל.'
+        correct: true
+        feedback: 'נכון. כשהמטען מפסיק לגדול, הזרם נעצר.'
+      - text: 'האלקטרונים קופצים בין הלוחות.'
+        feedback: 'אלקטרונים לא קופצים דרך המבודד. הם מצטברים על הלוח השלילי, ונלקחים מהלוח החיובי.'
+        misconception: MC-charge-crosses-gap
+      - text: 'הקבל אוגר זרם.'
+        feedback: 'קבל אוגר מטען (ואנרגיה), לא זרם. הזרם הוא הקצב שבו המטען על הלוחות משתנה.'
+
+  - id: Q-3.9-discharge
+    type: mc
+    objectives: [OBJ-3.9-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      קבל טעון מתחיל להתפרק דרך נגד. מה נכון לגבי הזרם בזמן הפריקה?
+    choices:
+      - text: 'הוא זורם בכיוון ההפוך לזרם הטעינה, מתחיל גדול ודועך.'
+        correct: true
+        feedback: 'נכון. המטען זורם מהלוח החיובי, דרך הנגד, אל הלוח השלילי. ככל שהמתח על הקבל יורד, הזרם קטן.'
+      - text: 'הוא זורם באותו כיוון כמו בטעינה.'
+        feedback: 'בטעינה המטען הולך **אל** הלוח החיובי, ובפריקה הוא חוזר **ממנו**: כיוון הפוך.'
+      - text: 'הוא קבוע, עד שהקבל מתרוקן בבת אחת.'
+        feedback: 'הזרם תלוי במתח על הקבל, $I = V_C/R$, והמתח הזה יורד בהדרגה. לכן גם הזרם דועך בהדרגה.'
+        misconception: MC-capacitor-instant
+      - text: 'אין זרם, כי אין סוללה במעגל.'
+        feedback: 'הקבל הטעון עצמו הוא מקור המתח: הוא דוחף את המטען דרך הנגד עד שהוא מתרוקן.'
+
+  # ------------------------------------------------ OBJ-3.9-2: the time constant
+  - id: Q-3.9-tau-calc
+    type: numeric
+    objectives: [OBJ-3.9-2]
+    prompt: >-
+      במעגל RC יש נגד של $47\,\text{k}\Omega$ וקבל של $100\,\mu\text{F}$. מה קבוע הזמן? ענו בשניות.
+    answer: 4.7
+    unit: s
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\tau = RC = 47\cdot10^3\,\Omega\cdot100\cdot10^{-6}\,\text{F} = 4.7\,\text{s}$.'
+    wrongFeedback: 'המירו ליחידות SI, $\text{k}\Omega = 10^3\,\Omega$ ו-$\mu\text{F} = 10^{-6}\,\text{F}$, ואז $\tau = RC$.'
+    commonWrong:
+      - value: 4700
+        feedback: 'כפלתם $47\cdot100$ בלי להמיר את הקידומות. $10^3\cdot10^{-6} = 10^{-3}$, ולכן התוצאה קטנה פי אלף.'
+      - value: 0.47
+        feedback: 'בדקו את הקידומות: $47\,\text{k}\Omega = 4.7\cdot10^4\,\Omega$ ו-$100\,\mu\text{F} = 10^{-4}\,\text{F}$.'
+
+  - id: Q-3.9-after-tau
+    type: numeric
+    objectives: [OBJ-3.9-2]
+    prompt: >-
+      קבל ריק נטען דרך נגד מסוללה אידאלית של $10\,\text{V}$. מה המתח על הקבל אחרי זמן של קבוע זמן אחד, $\tau$? ענו בוולט.
+    answer: 6.32
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. $V_C = \varepsilon\,(1 - e^{-1}) \approx 0.63\cdot10 = 6.3\,\text{V}$.'
+    wrongFeedback: 'אחרי $\tau$ אחד הקבל מגיע לכ-63% מהמתח הסופי.'
+    commonWrong:
+      - value: 3.68
+        feedback: 'זה 37%: המתח של קבל **שנפרק** אחרי $\tau$. בטעינה הוא מגיע ל-63%.'
+      - value: 5
+        feedback: 'הקבל לא נטען בקצב קבוע. אחרי $\tau$ הוא כבר עבר את החצי: 63%.'
+        misconception: MC-capacitor-instant
+      - value: 10
+        feedback: 'אחרי $\tau$ הקבל עוד לא מלא, רק 63%. הוא מגיע כמעט למלא אחרי כ-$5\tau$.'
+        misconception: MC-full-after-tau
+
+  - id: Q-3.9-read-tau
+    type: numeric
+    objectives: [OBJ-3.9-2]
+    level: mid
+    prompt: >-
+      בגרף של המתח על קבל שנטען מסוללה של $12\,\text{V}$, המתח מגיע ל-$7.6\,\text{V}$ אחרי $2\,\text{s}$. בערך מה קבוע הזמן? ענו בשניות.
+    answer: 2
+    unit: s
+    tolerance: 0.05
+    correctFeedback: 'נכון. $7.6/12 \approx 0.63$: זה בדיוק השבר שמגיעים אליו אחרי $\tau$ אחד. לכן $\tau \approx 2\,\text{s}$.'
+    wrongFeedback: 'חשבו איזה חלק מהמתח הסופי הקבל הגיע אליו. אחרי $\tau$ אחד הוא מגיע ל-63%.'
+    commonWrong:
+      - value: 1
+        feedback: 'אחרי $\tau$ אחד הקבל מגיע ל-63%, לא ל-100% ולא ל-50%. כאן הוא הגיע ל-63% אחרי $2\,\text{s}$.'
+      - value: 1.27
+        feedback: 'כפלתם את הזמן ב-0.63. ה-63% הוא שבר של המתח, לא של הזמן: הקבל הגיע ל-63% בדיוק אחרי $2\,\text{s}$.'
+
+  - id: Q-3.9-tau-emf
+    type: mc
+    objectives: [OBJ-3.9-2]
+    qualitative: true
+    prompt: >-
+      מחליפים את הסוללה במעגל RC בסוללה שהכא"מ שלה כפול, בלי לשנות את הנגד ואת הקבל. מה קורה לקבוע הזמן?
+    choices:
+      - text: 'הוא לא משתנה.'
+        correct: true
+        feedback: 'נכון. $\tau = RC$ לא תלוי בכא"מ. הקבל נטען למתח כפול, בזרם התחלתי כפול, אבל אחרי אותו $\tau$ הוא מגיע לאותם 63% מהמתח הסופי.'
+      - text: 'הוא קטן פי 2: הסוללה החזקה טוענת מהר יותר.'
+        feedback: 'הזרם אכן כפול, אבל גם המטען הסופי כפול. היחס נשאר, ו-$\tau = RC$ לא משתנה.'
+        misconception: MC-tau-depends-emf
+      - text: 'הוא גדל פי 2: יש יותר מטען לטעון.'
+        feedback: 'יותר מטען, אבל גם זרם גדול יותר באותו יחס. $\tau = RC$ תלוי רק בנגד ובקבל.'
+        misconception: MC-tau-depends-emf
+      - text: 'הוא גדל פי 4, כי האנרגיה גדלה פי 4.'
+        feedback: 'האנרגיה האגורה אכן גדלה פי 4, אבל קבוע הזמן לא קשור אליה: $\tau = RC$.'
+
+  - id: Q-3.9-full-after
+    type: mc
+    objectives: [OBJ-3.9-2]
+    qualitative: true
+    prompt: >-
+      במעגל RC, $\tau = 3\,\text{s}$. קבל ריק מתחיל להיטען. מה נכון?
+    choices:
+      - text: 'אחרי $3\,\text{s}$ הוא ב-63% מהמתח הסופי, ואחרי כ-$15\,\text{s}$ הוא כמעט מלא.'
+        correct: true
+        feedback: 'נכון. אחרי כ-$5\tau$ הקבל מגיע לכ-99%.'
+      - text: 'אחרי $3\,\text{s}$ הוא מלא.'
+        feedback: 'אחרי $\tau$ אחד הוא רק ב-63%. נשאר עוד פער של 37%, שנסגר לאט.'
+        misconception: MC-full-after-tau
+      - text: 'אחרי $3\,\text{s}$ הוא בחצי, ואחרי $6\,\text{s}$ מלא.'
+        feedback: 'הטעינה לא בקצב קבוע: אחרי $\tau$ הוא כבר ב-63%, ואחרי $2\tau$ ב-86%, עדיין לא מלא.'
+        misconception: MC-capacitor-instant
+      - text: 'הוא לעולם לא מגיע אפילו לחצי.'
+        feedback: 'הוא עובר את החצי עוד לפני $\tau$ אחד. רק את המתח הסופי בדיוק הוא לא משיג, אבל מתקרב אליו מאוד.'
+
+  # ------------------------------------------------ OBJ-3.9-3: steady state
+  - id: Q-3.9-steady-charge
+    type: numeric
+    objectives: [OBJ-3.9-3]
+    level: bagrut
+    prompt: >-
+      סוללה אידאלית של $12\,\text{V}$ מחוברת בטור לנגד $R_1 = 2\,\Omega$ ולזוג שמחובר במקביל: נגד $R_2 = 4\,\Omega$ וקבל של $10\,\mu\text{F}$. מה המטען על הקבל במצב יציב? ענו במיקרו-קולון.
+    answer: 80
+    unit: μC
+    tolerance: 0.03
+    correctFeedback: 'נכון. במצב יציב בענף של הקבל אין זרם, ולכן הזרם $I = 12/(2+4) = 2\,\text{A}$ עובר ב-$R_1$ וב-$R_2$. על $R_2$, וגם על הקבל שבמקביל לו, $V = 2\cdot4 = 8\,\text{V}$, ו-$Q = CV = 10\,\mu\text{F}\cdot8\,\text{V} = 80\,\mu\text{C}$.'
+    wrongFeedback: 'במצב יציב הקבל כמו נתק. מצאו את הזרם בנגדים, את המתח על $R_2$, ואז $Q = CV$.'
+    commonWrong:
+      - value: 120
+        feedback: 'שמתם על הקבל את כל $12\,\text{V}$. הקבל במקביל ל-$R_2$ בלבד, ועל $R_2$ רק $8\,\text{V}$.'
+      - value: 40
+        feedback: 'השתמשתם במתח על $R_1$, $4\,\text{V}$. הקבל מחובר במקביל ל-$R_2$.'
+
+  - id: Q-3.9-steady-branch
+    type: mc
+    objectives: [OBJ-3.9-3]
+    qualitative: true
+    prompt: >-
+      במעגל זרם ישר יש קבל שמחובר במקביל לנגד. מה נכון זמן רב אחרי סגירת המעגל?
+    choices:
+      - text: 'בענף של הקבל אין זרם, והמתח עליו שווה למתח על הנגד שבמקביל.'
+        correct: true
+        feedback: 'נכון. המטען על הקבל כבר לא משתנה, ולכן הוא כמו נתק. כל הזרם עובר בנגד.'
+      - text: 'הזרם מתחלק בין הקבל לנגד, כמו בין שני נגדים במקביל.'
+        feedback: 'במצב יציב קבל לא מעביר זרם. הוא מעביר זרם רק בזמן שהמטען עליו משתנה.'
+        misconception: MC-current-through-cap-steady
+      - text: 'כל הזרם עובר בקבל, כי אין לו התנגדות.'
+        feedback: 'בין הלוחות יש מבודד: במצב יציב קבל הוא כמו נתק, לא כמו תיל.'
+        misconception: MC-charge-crosses-gap
+      - text: 'המתח על הקבל אפס, כי לא עובר בו זרם.'
+        feedback: 'אין זרם, ובכל זאת יש מתח, כמו על מפסק פתוח (שיעור 3.1). המתח על הקבל שווה למתח על הנגד שבמקביל לו.'
+        misconception: MC-no-current-no-voltage
+
+  - id: Q-3.9-series-steady
+    type: twotier
+    objectives: [OBJ-3.9-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סוללה אידאלית של $9\,\text{V}$, נגד וקבל מחוברים בטור. מה המתח על הנגד זמן רב אחרי סגירת המעגל?
+    choices:
+      - text: '$0$'
+        correct: true
+        feedback: נכון.
+      - text: '$9\,\text{V}$'
+        feedback: '$9\,\text{V}$ הם המתח על **הקבל** בסוף. על הנגד אין מתח, כי אין בו זרם.'
+      - text: '$4.5\,\text{V}$, חצי לכל רכיב.'
+        feedback: 'המתח לא מתחלק חצי-חצי. בסוף כל המתח על הקבל.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'בסוף הקבל כמו נתק: לא עובר זרם, ולכן על הנגד $V = IR = 0$, וכל $9\,\text{V}$ על הקבל.'
+        correct: true
+        feedback: 'נכון. זה אותו היגיון כמו במפסק פתוח: כל המתח על הנתק.'
+      - text: 'הקבל "לוקח" את כל הזרם ולא משאיר לנגד.'
+        feedback: 'בטור אותו זרם בשני הרכיבים, ובסוף הוא אפס בשניהם.'
+        misconception: MC-current-through-cap-steady
+      - text: 'הנגד לא פעיל כשיש קבל במעגל.'
+        feedback: 'הנגד פעיל בזמן הטעינה, וקובע את קצבה. רק בסוף, כשהזרם אפס, אין עליו מתח.'

@@ -14,6 +14,7 @@ import {
   ratedResistance,
   rcCharge,
   rcDischarge,
+  rcFrom,
   RESISTIVITY,
   roundArea,
   seriesR,
@@ -166,6 +167,17 @@ describe('analytic limits', () => {
     expect(relativeError(rcCharge(0, 10, 1000, 100e-6).I, 10 / 1000)).toBeLessThan(1e-12);
     expect(relativeError(rcDischarge(tau, 10, 1000, 100e-6).vC, 10 * Math.exp(-1))).toBeLessThan(1e-12);
     expect(rcCharge(50 * tau, 10, 1000, 100e-6).I).toBeLessThan(1e-20);
+  });
+
+  it('the general RC curve reduces to charging from empty and to discharging, and is continuous at a switch', () => {
+    const [R, C] = [1e4, 100e-6];
+    for (const t of [0, 0.3, 1, 4]) {
+      expect(relativeError(rcFrom(t, 12, 0, R, C).vC + 1e-30, rcCharge(t, 12, R, C).vC + 1e-30)).toBeLessThan(1e-12);
+      expect(relativeError(-rcFrom(t, 0, 12, R, C).I, rcDischarge(t, 12, R, C).I)).toBeLessThan(1e-12);
+    }
+    // switching to discharge at t₁ starts from the voltage charging had reached
+    const v1 = rcCharge(0.7, 12, R, C).vC;
+    expect(relativeError(rcFrom(0, 0, v1, R, C).vC, v1)).toBeLessThan(1e-12);
   });
 
   it('a filament bulb draws its rated current at its rated voltage, and is ohmic with its cold resistance near zero volts', () => {
