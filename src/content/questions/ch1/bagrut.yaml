@@ -175,8 +175,7 @@ questions:
         points: 4
         level: mid
         qualitative: true
-        objectives: []
-        pendingObjectives: ['OBJ-1.7-TBD / OBJ-1.8-TBD: השדה בתוך מעטפת טעונה, מחוק גאוס']
+        objectives: [OBJ-1.8-2]
         prompt: מה עוצמת השדה החשמלי בנקודה שנמצאת בתוך המעטפת, במרחק $0.10\,\text{m}$ ממרכזה?
         choices:
           - text: אפס.
@@ -195,8 +194,7 @@ questions:
         type: numeric
         points: 6
         level: mid
-        objectives: [OBJ-1.5-3]
-        pendingObjectives: ['OBJ-1.8-TBD: שדה מחוץ למעטפת כדורית']
+        objectives: [OBJ-1.5-3, OBJ-1.8-2]
         prompt: מה עוצמת השדה החשמלי בנקודה P, במרחק $r = 0.40\,\text{m}$ ממרכז המעטפת?
         answer: 450
         unit: N/C
@@ -215,8 +213,7 @@ questions:
         type: numeric
         points: 6
         level: bagrut
-        objectives: []
-        pendingObjectives: ['OBJ-1.7-TBD: שטף חשמלי וחוק גאוס']
+        objectives: [OBJ-1.7-3]
         prompt: מה השטף החשמלי דרך משטח כדורי דמיוני ברדיוס $0.40\,\text{m}$, שמרכזו במרכז המעטפת?
         answer: 904
         unit: N·m²/C
@@ -235,8 +232,7 @@ questions:
         type: numeric
         points: 7
         level: mid
-        objectives: []
-        pendingObjectives: ['OBJ-1.8-TBD: שדה בין שני לוחות מקבילים טעונים']
+        objectives: [OBJ-1.8-3]
         prompt: מה עוצמת השדה החשמלי בין שני הלוחות?
         answer: 2.26e5
         unit: N/C
@@ -253,8 +249,7 @@ questions:
         points: 10
         level: bagrut
         qualitative: true
-        objectives: [OBJ-1.5-4]
-        pendingObjectives: ['OBJ-1.8-TBD: שדה של לוח אינסופי']
+        objectives: [OBJ-1.5-4, OBJ-1.8-3]
         prompt: >-
           הסבירו בעזרת עקרון הסופרפוזיציה ובעזרת השדה של לוח אחד, $E_1 = \sigma/(2\varepsilon_0)$, מדוע השדה בין הלוחות
           הוא $\sigma/\varepsilon_0$ ומדוע מחוץ ללוחות הוא אפס.
