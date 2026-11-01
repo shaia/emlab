@@ -1,0 +1,19 @@
+# Lesson 2.9 misconceptions. Each is detected by a tagged distractor in questions/ch2/2-9.yaml.
+
+- id: MC-slope-axes-swapped
+  title: השיפוע הוא תמיד הקיבול, בכל סדר צירים
+  belief: בגרף של מתח כפונקציה של מטען, השיפוע הוא הקיבול, כמו בגרף של מטען כפונקציה של מתח.
+  truth: השיפוע הוא Δ(ציר אנכי)/Δ(ציר אופקי). בגרף Q מול V השיפוע הוא Q/V = C. בגרף V מול Q השיפוע הוא V/Q = 1/C.
+  remedy: { lesson: '2.9', anchor: fig-2-9a, label: 'איור 2.9א: קראו מה בכל ציר ואת יחידות השיפוע' }
+
+- id: MC-capacitance-gap-straight
+  title: הקיבול יורד בקו ישר כשהמרחק גדל
+  belief: גרף של קיבול כפונקציה של המרחק בין הלוחות הוא קו ישר יורד.
+  truth: הקיבול ביחס הפוך למרחק, C = ε₀A/d. גרף של C מול d הוא עקומה, וגרף של C מול 1/d הוא קו ישר דרך הראשית.
+  remedy: { lesson: '2.9', anchor: fig-2-9b, label: 'איור 2.9ב: נסו את הצירים d ו-1/d' }
+
+- id: MC-slope-is-epsilon
+  title: השיפוע של C מול 1/d הוא ε₀
+  belief: בגרף של קיבול כפונקציה של 1/d, השיפוע הוא ε₀ עצמו.
+  truth: הקו הוא C = ε₀A·(1/d), ולכן השיפוע הוא ε₀A. כדי לקבל את ε₀ מחלקים את השיפוע בשטח הלוחות.
+  remedy: { lesson: '2.9', anchor: fig-2-9b, label: 'איור 2.9ב: קראו את השיפוע וחלקו בשטח' }

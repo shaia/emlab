@@ -1,0 +1,188 @@
+# Lesson 2.9 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics (capacitors.ts, potential.ts, lab.ts).
+
+chapter: 2
+questions:
+  # ------------------------------------------------ OBJ-2.9-1: C from a Q–V slope, U from an area
+  - id: Q-2.9-c-from-slope
+    type: numeric
+    objectives: [OBJ-2.9-1]
+    prompt: >-
+      בגרף של המטען על קבל כפונקציה של המתח עליו, קו המגמה עובר דרך הנקודות ($100\,\text{V}$, $2.2\cdot10^{-8}\,\text{C}$)
+      ו-($300\,\text{V}$, $6.6\cdot10^{-8}\,\text{C}$). מה הקיבול של הקבל? ענו בפאראד.
+    answer: 2.2e-10
+    unit: F
+    tolerance: 0.03
+    correctFeedback: 'נכון: השיפוע הוא $\dfrac{\Delta Q}{\Delta V} = \dfrac{6.6\cdot10^{-8} - 2.2\cdot10^{-8}}{300 - 100} = 2.2\cdot10^{-10}\,\text{F}$, וזה הקיבול.'
+    wrongFeedback: 'הקיבול הוא השיפוע של הקו: $\Delta Q/\Delta V$, משתי נקודות על הקו.'
+    commonWrong:
+      - value: 4.55e9
+        feedback: 'חישבתם $\Delta V/\Delta Q$. בגרף הזה המטען על הציר האנכי, ולכן השיפוע הוא $\Delta Q/\Delta V = C$.'
+        misconception: MC-slope-axes-swapped
+
+  - id: Q-2.9-axes-swapped
+    type: mc
+    objectives: [OBJ-2.9-1]
+    qualitative: true
+    prompt: >-
+      תלמיד שרטט את התוצאות של ניסוי קבל כך: המתח $V$ על הציר האנכי, והמטען $Q$ על הציר האופקי. מה מייצג השיפוע של הקו?
+    choices:
+      - text: את $1/C$.
+        correct: true
+        feedback: 'נכון. השיפוע הוא $\Delta V/\Delta Q$, וזה $1/C$. השטח מתחת לקו בגרף הזה הוא האנרגיה האגורה.'
+      - text: את $C$.
+        feedback: 'בגרף הזה השיפוע הוא $\Delta V/\Delta Q$, ההפך של $C$. השיפוע הוא $C$ רק כש-$Q$ על הציר האנכי.'
+        misconception: MC-slope-axes-swapped
+      - text: את האנרגיה האגורה.
+        feedback: 'האנרגיה היא **השטח** מתחת לקו בגרף הזה, לא השיפוע.'
+      - text: את השדה בין הלוחות.
+        feedback: 'השדה הוא $V/d$, והמרחק $d$ לא מופיע בגרף.'
+
+  - id: Q-2.9-area-energy
+    type: numeric
+    objectives: [OBJ-2.9-1]
+    level: mid
+    prompt: >-
+      בגרף של המתח על קבל כפונקציה של המטען, הקו עולה מהראשית עד הנקודה ($6.6\cdot10^{-8}\,\text{C}$, $300\,\text{V}$). כמה אנרגיה אגורה בקבל? ענו בג'אול.
+    answer: 9.9e-6
+    unit: J
+    tolerance: 0.03
+    correctFeedback: 'נכון. האנרגיה היא שטח המשולש: $U = \tfrac12 QV = \tfrac12\cdot6.6\cdot10^{-8}\cdot300 = 9.9\cdot10^{-6}\,\text{J}$.'
+    wrongFeedback: 'האנרגיה היא השטח מתחת לקו, משולש שבסיסו $Q$ וגובהו $V$.'
+    commonWrong:
+      - value: 1.98e-5
+        feedback: 'חישבתם שטח של מלבן, $QV$. מתחת לקו יש משולש: חצי מזה.'
+        misconception: MC-battery-work-all-stored
+
+  # ------------------------------------------------ OBJ-2.9-2: linearize C(d), ε₀ from the slope
+  - id: Q-2.9-straight-graph
+    type: mc
+    objectives: [OBJ-2.9-2]
+    qualitative: true
+    prompt: >-
+      מודדים את הקיבול של קבל לוחות בכמה מרחקים $d$ בין הלוחות. כדי לקבל קו ישר, מה כדאי לשים על הציר האופקי?
+    choices:
+      - text: $1/d$
+        correct: true
+        feedback: 'נכון. $C = \varepsilon_0A\cdot\dfrac1d$: ביחס ישר ל-$1/d$, ולכן הגרף של $C$ מול $1/d$ הוא קו ישר דרך הראשית.'
+      - text: $d$
+        feedback: 'הקיבול לא יורד בכמות קבועה לכל מילימטר: הוא ביחס הפוך למרחק. מול $d$ מתקבלת עקומה.'
+        misconception: MC-capacitance-gap-straight
+      - text: $d^2$
+        feedback: 'אין ריבוע בנוסחה $C = \varepsilon_0A/d$. מול $d^2$ מתקבלת עקומה.'
+      - text: $1/d^2$
+        feedback: 'זה מתאים לחוק קולון, שבו יש ריבוע. בקיבול המרחק בחזקה ראשונה: $1/d$.'
+
+  - id: Q-2.9-epsilon
+    type: numeric
+    objectives: [OBJ-2.9-2]
+    level: mid
+    prompt: >-
+      בגרף של הקיבול כפונקציה של $1/d$, לקבל ששטח הלוחות שלו $0.04\,\text{m}^2$, השיפוע של הקו המתאים ביותר הוא $3.54\cdot10^{-13}\,\text{F}\cdot\text{m}$.
+      מה הערך של $\varepsilon_0$ לפי הניסוי? ענו ב-$\text{C}^2/(\text{N}\cdot\text{m}^2)$.
+    answer: 8.85e-12
+    unit: C²/(N·m²)
+    tolerance: 0.03
+    correctFeedback: 'נכון. השיפוע הוא $\varepsilon_0A$, ולכן $\varepsilon_0 = \dfrac{3.54\cdot10^{-13}}{0.04} = 8.85\cdot10^{-12}$.'
+    wrongFeedback: 'כתבו את הקו: $C = (\varepsilon_0A)\cdot\dfrac1d$. השיפוע הוא $\varepsilon_0A$.'
+    commonWrong:
+      - value: 3.54e-13
+        feedback: 'זה השיפוע עצמו, $\varepsilon_0A$. כדי לקבל את $\varepsilon_0$ מחלקים בשטח הלוחות.'
+        misconception: MC-slope-is-epsilon
+      - value: 1.42e-14
+        feedback: 'הכפלתם בשטח במקום לחלק: השיפוע הוא $\varepsilon_0A$, ולכן $\varepsilon_0$ הוא השיפוע חלקי $A$.'
+
+  - id: Q-2.9-double-area
+    type: twotier
+    objectives: [OBJ-2.9-2]
+    qualitative: true
+    prompt: >-
+      חוזרים על הניסוי (קיבול מול $1/d$) עם קבל שהלוחות שלו בשטח כפול. מה יקרה לשיפוע של הקו הישר?
+    choices:
+      - text: הוא יוכפל.
+        correct: true
+        feedback: נכון.
+      - text: הוא לא ישתנה, כי $\varepsilon_0$ קבוע.
+        feedback: '$\varepsilon_0$ אכן קבוע, אבל השיפוע הוא $\varepsilon_0A$, והשטח הוכפל.'
+        misconception: MC-slope-is-epsilon
+      - text: הוא יקטן פי 2.
+        feedback: 'שטח גדול יותר נותן קיבול גדול יותר בכל מרחק, ולכן הקו תלול יותר.'
+      - text: הקו כבר לא יהיה ישר.
+        feedback: 'הקו נשאר ישר, כי $C$ עדיין ביחס ישר ל-$1/d$. רק השיפוע שלו משתנה.'
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: 'השיפוע של $C$ מול $1/d$ הוא $\varepsilon_0A$, ביחס ישר לשטח.'
+        correct: true
+        feedback: 'נכון. ומחלקים בשטח החדש, ו-$\varepsilon_0$ יוצא אותו מספר.'
+      - text: 'השיפוע הוא $\varepsilon_0$, שלא תלוי בקבל.'
+        feedback: 'השיפוע הוא $\varepsilon_0A$. רק אחרי החלוקה בשטח מקבלים את $\varepsilon_0$.'
+        misconception: MC-slope-is-epsilon
+      - text: 'יותר מטען על הלוחות מכופף את הקו.'
+        feedback: 'הקו נשאר ישר. המטען לא מופיע בגרף של קיבול מול $1/d$.'
+
+  # ------------------------------------------------ OBJ-2.9-3: combining laws in one problem
+  - id: Q-2.9-electron-speed
+    type: numeric
+    objectives: [OBJ-2.9-3]
+    prompt: >-
+      אלקטרון משתחרר ממנוחה ליד הלוח השלילי של קבל שמחובר לסוללה של $1500\,\text{V}$. באיזו מהירות הוא מגיע ללוח החיובי?
+    answer: 2.30e7
+    unit: m/s
+    tolerance: 0.03
+    correctFeedback: 'נכון: שימור אנרגיה, $\tfrac12 mv^2 = eV$, ולכן $v = \sqrt{\dfrac{2\cdot1.6\cdot10^{-19}\cdot1500}{9.1\cdot10^{-31}}} = 2.3\cdot10^{7}\,\text{m/s}$.'
+    wrongFeedback: 'השתמשו בשימור אנרגיה: האלקטרון מקבל אנרגיה קינטית $eV$.'
+    commonWrong:
+      - value: 1.62e7
+        feedback: 'שכחתם את ה-2: מ-$\tfrac12 mv^2 = eV$ יוצא $v = \sqrt{2eV/m}$.'
+      - value: 5.37e5
+        feedback: 'הצבתם את מסת הפרוטון. כאן החלקיק אלקטרון.'
+
+  - id: Q-2.9-which-law
+    type: mc
+    objectives: [OBJ-2.9-3]
+    qualitative: true
+    prompt: >-
+      פרוטון עובר בין שתי נקודות בשדה חשמלי לא אחיד, שהמתח ביניהן ידוע. מה הדרך הישירה ביותר למצוא את השינוי במהירות שלו?
+    choices:
+      - text: שימור אנרגיה, $\Delta(\tfrac12 mv^2) = -q\Delta V$.
+        correct: true
+        feedback: 'נכון. השינוי באנרגיה הקינטית תלוי רק בהפרש הפוטנציאלים, ולא בצורת השדה או במסלול.'
+      - text: לחשב את הכוח $qE$ ואת התאוצה, ואז $v^2 = v_0^2 + 2ad$.
+        feedback: 'הנוסחה $v^2 = v_0^2 + 2ad$ נכונה רק לתאוצה קבועה, כלומר לשדה אחיד. כאן השדה לא אחיד.'
+      - text: אי אפשר בלי לדעת את המסלול המדויק.
+        feedback: 'השדה משמר, ולכן העבודה, וגם השינוי באנרגיה הקינטית, לא תלויים במסלול.'
+        misconception: MC-work-depends-on-path
+      - text: חוק קולון בין הפרוטון לכל מטען שיוצר את השדה.
+        feedback: 'אפשר להתחיל משם, אבל זה דורש לחבר כוחות לאורך כל הדרך. הפוטנציאל כבר עשה את העבודה הזו בשבילכם.'
+
+  - id: Q-2.9-force-between
+    type: numeric
+    objectives: [OBJ-2.9-3]
+    prompt: >-
+      בין לוחות של קבל, במרחק $5$ מ"מ זה מזה, המתח $1500\,\text{V}$. מה גודל הכוח החשמלי על אלקטרון שנמצא בין הלוחות? ענו בניוטון.
+    answer: 4.8e-14
+    unit: N
+    tolerance: 0.03
+    correctFeedback: 'נכון. $E = V/d = 3\cdot10^{5}\,\text{V/m}$, ו-$F = eE = 1.6\cdot10^{-19}\cdot3\cdot10^{5} = 4.8\cdot10^{-14}\,\text{N}$, בכל מקום בין הלוחות.'
+    wrongFeedback: 'קודם השדה, $E = V/d$ עם $d$ במטרים, ואחר כך הכוח, $F = eE$.'
+    commonWrong:
+      - value: 4.8e-17
+        feedback: 'הצבתם $d = 5$ במקום $5\cdot10^{-3}\,\text{m}$.'
+
+  - id: Q-2.9-plate-charge
+    type: numeric
+    objectives: [OBJ-2.9-3]
+    level: bagrut
+    prompt: >-
+      קבל לוחות באוויר, שטח הלוחות $0.04\,\text{m}^2$ והמרחק ביניהם $5$ מ"מ, מחובר לסוללה של $1500\,\text{V}$. מה המטען על כל לוח? ענו בקולון.
+    answer: 1.06e-7
+    unit: C
+    tolerance: 0.03
+    correctFeedback: 'נכון. $C = \varepsilon_0A/d = 7.08\cdot10^{-11}\,\text{F}$, ולכן $Q = CV = 1.06\cdot10^{-7}\,\text{C}$.'
+    wrongFeedback: 'קודם הקיבול מהמבנה, $C = \varepsilon_0A/d$, ואחר כך $Q = CV$.'
+    commonWrong:
+      - value: 1.06e-10
+        feedback: 'הצבתם $d = 5$ במקום $5\cdot10^{-3}\,\text{m}$.'
+      - value: 4.72e-14
+        feedback: 'חילקתם את הקיבול במתח. המטען הוא $Q = CV$: מכפילים.'

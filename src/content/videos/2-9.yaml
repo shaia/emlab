@@ -1,0 +1,12 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-2-9-system-energy
+  youtubeId: MndDGEcyb6M
+  title: 'אנרגיה של מערכת מטענים'
+  channel: מרכז שוורץ/רייסמן הדרכות למורי פיזיקה
+  lang: he
+  captions: []
+  minutes: 9
+  why: שיעור בעברית מסדרת הדרכה למורים לפיזיקה. לפי תיאור הסרטון, הוא סוקר שאלות על אנרגיה במצב של שני מטענים חיוביים, ומבחין בין האנרגיה הפוטנציאלית של מערכת מטענים לבין האנרגיה של מטען שלישי בשדה שהם יוצרים. טוב כחזרה על שיעורים 2.1 ו-2.2.
+  verified: '2026-11-01'

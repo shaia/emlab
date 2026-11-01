@@ -1,0 +1,13 @@
+# Lesson 2.9 terms. Format and rules: see glossary/1-5.yaml.
+
+- id: charge-meter
+  term: מד מטען
+  en: charge meter (coulombmeter)
+  definition: מכשיר שמודד כמה מטען יש על גוף. מחברים אותו לקבל טעון, והוא מראה את המטען על הלוח, Q.
+  lesson: '2.9'
+
+- id: conductive-paper
+  term: נייר מוליך
+  en: conductive paper
+  definition: נייר שמוליך חשמל מעט. מציירים עליו אלקטרודות, מחברים אותן לסוללה, ומודדים במד מתח את הפוטנציאל בנקודות שונות. נקודות שבהן מד המתח מראה אותו מתח מחברים לקו שווה פוטנציאל.
+  lesson: '2.9'

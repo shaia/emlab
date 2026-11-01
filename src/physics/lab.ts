@@ -13,6 +13,7 @@
  * - Failure modes: fewer than two distinct x values leaves the slope undefined (NaN).
  */
 
+import { plateCapacitance } from './capacitors';
 import { G } from './constants';
 import { coulombForce } from './electrostatics';
 
@@ -132,5 +133,30 @@ function coulomb(): Dataset {
   return { x: r, y: F, linear: 'inv2', law: { slope: coulombForce(COULOMB_Q, COULOMB_Q, 1), intercept: 0 } };
 }
 
-export type DatasetId = 'spring' | 'fall' | 'coulomb';
-export const DATASETS: Record<DatasetId, Dataset> = { spring: spring(), fall: fall(), coulomb: coulomb() };
+/** The plate capacitor of lesson 2.9: plates of 400 cm² (0.04 m²) in air. */
+export const CAP_AREA = 0.04;
+export const CAP_GAP = 1e-3;
+
+/** Capacitor: charge it to set voltages, read the charge (a charge meter, 3 significant figures). */
+function capacitorQV(): Dataset {
+  const C = plateCapacitance(CAP_AREA, CAP_GAP);
+  const V = [50, 100, 150, 200, 250, 300];
+  const Q = measure((v) => C * v, V, 0.02, 13).map(sig3);
+  return { x: V, y: Q, linear: 'x', law: { slope: C, intercept: 0 } };
+}
+
+/** Capacitor: move the plates apart step by step, read the capacitance (a capacitance meter). */
+function capacitorGap(): Dataset {
+  const d = [1e-3, 1.5e-3, 2e-3, 3e-3, 4e-3, 6e-3];
+  const C = measure((x) => plateCapacitance(CAP_AREA, x), d, 0.025, 17).map(sig3);
+  return { x: d, y: C, linear: 'inv', law: { slope: plateCapacitance(CAP_AREA, 1), intercept: 0 } };
+}
+
+export type DatasetId = 'spring' | 'fall' | 'coulomb' | 'capacitor-qv' | 'capacitor-gap';
+export const DATASETS: Record<DatasetId, Dataset> = {
+  spring: spring(),
+  fall: fall(),
+  coulomb: coulomb(),
+  'capacitor-qv': capacitorQV(),
+  'capacitor-gap': capacitorGap(),
+};

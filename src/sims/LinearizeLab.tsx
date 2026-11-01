@@ -32,6 +32,8 @@ const SETS: Record<DatasetId, { title: string; x: Axis; y: Axis }> = {
   spring: { title: 'קפיץ: אורך מול הכוח שמותח אותו', x: { sym: 'F', unit: 'N' }, y: { sym: 'L', unit: 'm' } },
   fall: { title: 'נפילה חופשית: גובה מול זמן', x: { sym: 't', unit: 's' }, y: { sym: 'd', unit: 'm' } },
   coulomb: { title: 'שני כדורים טעונים: כוח מול מרחק', x: { sym: 'r', unit: 'm' }, y: { sym: 'F', unit: 'N' } },
+  'capacitor-qv': { title: 'קבל: מטען מול מתח', x: { sym: 'V', unit: 'V' }, y: { sym: 'Q', unit: 'C' } },
+  'capacitor-gap': { title: 'קבל: קיבול מול המרחק בין הלוחות', x: { sym: 'd', unit: 'm' }, y: { sym: 'C', unit: 'F' } },
 };
 
 const xSym = (a: Axis, t: Transform) => ({ x: a.sym, x2: `${a.sym}²`, sqrt: `√${a.sym}`, inv: `1/${a.sym}`, inv2: `1/${a.sym}²` })[t];
@@ -44,6 +46,7 @@ const TASK_LABEL: Record<string, string> = {
   'ruler-slope': 'הניחו את הסרגל (הקו הכחול) כך שיעבור קרוב ככל האפשר לכל הנקודות: גררו את שתי הנקודות שעליו.',
   'linearize-fall': 'בנפילה החופשית: מצאו מה לשים על הציר האופקי כדי שהנקודות יסתדרו על קו ישר.',
   'linearize-coulomb': 'בכדורים הטעונים: מצאו מה לשים על הציר האופקי כדי שהנקודות יסתדרו על קו ישר.',
+  'linearize-capacitor': 'בקבל שהלוחות שלו מתרחקים: מצאו מה לשים על הציר האופקי כדי שהנקודות יסתדרו על קו ישר.',
 };
 
 interface State {
@@ -177,6 +180,7 @@ export default function LinearizeLab(props: LinearizeLabProps) {
     const done = (t: string) => markTask(`${props.id}:${t}`);
     if (has('linearize-fall') && s.set === 'fall' && s.t === 'x2') done('linearize-fall');
     if (has('linearize-coulomb') && s.set === 'coulomb' && s.t === 'inv2') done('linearize-coulomb');
+    if (has('linearize-capacitor') && s.set === 'capacitor-gap' && s.t === 'inv') done('linearize-capacitor');
     if (
       has('ruler-slope') &&
       s.showRuler &&
