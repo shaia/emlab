@@ -1,0 +1,370 @@
+# Chapter 3 Bagrut-style questions: a scenario with lettered parts (א, ב, ג…), 33 points each, as in
+# paper 036371. Format and rules: see questions/ch1/bagrut.yaml.
+#
+# Every number was computed with src/physics (circuits.ts: parallelR, terminalVoltage, solveCircuit,
+# rcFrom; lab.ts: fitLine), not by hand.
+
+chapter: 3
+questions:
+  # ------------------------------------------------------------ 1: a real battery and a switch
+  - id: Q-3-bagrut-1
+    type: bagrut
+    title: סוללה, שלושה נגדים ומפסק
+    prompt: >-
+      סוללה עם כא"מ $\varepsilon = 12\,\text{V}$ והתנגדות פנימית $r = 2\,\Omega$ מחוברת לנגד $R_1 = 4\,\Omega$, שמחובר בטור
+      לנגד $R_2 = 6\,\Omega$. הנגד $R_3 = 3\,\Omega$ מחובר דרך המפסק S במקביל ל-$R_2$. מד מתח אידאלי מחובר בין ההדקים
+      של הסוללה. התנגדות התילים זניחה.
+    diagramAlt: >-
+      מעגל מלבני. בצד שמאל סוללה בתוך מסגרת מקווקוות, ומד מתח מחובר בין שני ההדקים שלה. בצלע העליונה הנגד R1. בצד ימין
+      הנגד R2, ומימינו ענף נוסף, במקביל ל-R2, עם המפסק S, פתוח, והנגד R3.
+    diagram: |
+      <svg viewBox="0 0 540 210" width="540" height="210" font-size="14" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="1.5" fill="none">
+          <polyline points="100,100 100,30 180,30"/>
+          <polyline points="240,30 440,30 440,55"/>
+          <polyline points="100,112 100,190 440,190 440,150"/>
+          <line x1="440" y1="91" x2="440" y2="100"/>
+          <line x1="360" y1="30" x2="360" y2="80"/>
+          <line x1="360" y1="140" x2="360" y2="190"/>
+          <polyline points="100,60 160,60 160,92"/>
+          <polyline points="160,120 160,150 100,150"/>
+          <rect x="180" y="22" width="60" height="16"/>
+          <rect x="352" y="80" width="16" height="60"/>
+          <rect x="432" y="100" width="16" height="50"/>
+          <circle cx="160" cy="106" r="14"/>
+          <line x1="440" y1="58" x2="458" y2="82"/>
+          <rect x="74" y="86" width="52" height="40" stroke-dasharray="4 3" stroke-width="1"/>
+        </g>
+        <line x1="84" y1="100" x2="116" y2="100" stroke="currentColor" stroke-width="2"/>
+        <line x1="92" y1="112" x2="108" y2="112" stroke="currentColor" stroke-width="4"/>
+        <circle cx="440" cy="58" r="3" fill="currentColor"/>
+        <circle cx="440" cy="88" r="3" fill="currentColor"/>
+        <circle cx="360" cy="30" r="3" fill="currentColor"/><circle cx="360" cy="190" r="3" fill="currentColor"/>
+        <circle cx="100" cy="60" r="3" fill="currentColor"/><circle cx="100" cy="150" r="3" fill="currentColor"/>
+        <text x="80" y="97" fill="currentColor" font-size="12">+</text>
+        <text x="66" y="102" text-anchor="end" fill="currentColor">ε = 12 V</text>
+        <text x="66" y="120" text-anchor="end" fill="currentColor">r = 2 Ω</text>
+        <text x="160" y="111" text-anchor="middle" fill="currentColor" font-weight="700">V</text>
+        <text x="210" y="15" text-anchor="middle" fill="currentColor">R<tspan font-size="10" dy="3">1</tspan><tspan dy="-3"> = 4 Ω</tspan></text>
+        <text x="344" y="114" text-anchor="end" fill="currentColor">R<tspan font-size="10" dy="3">2</tspan><tspan dy="-3"> = 6 Ω</tspan></text>
+        <text x="456" y="130" fill="currentColor">R<tspan font-size="10" dy="3">3</tspan><tspan dy="-3"> = 3 Ω</tspan></text>
+        <text x="464" y="74" fill="currentColor" font-weight="700">S</text>
+      </svg>
+    parts:
+      - label: א
+        type: numeric
+        points: 5
+        level: mid
+        objectives: [OBJ-3.6-2]
+        prompt: המפסק S פתוח. מה הזרם שהסוללה מספקת?
+        answer: 1
+        unit: A
+        correctFeedback: 'נכון: כשהמפסק פתוח, ב-$R_3$ לא עובר זרם, ו-$I = \dfrac{\varepsilon}{R_1 + R_2 + r} = \dfrac{12}{4 + 6 + 2} = 1\,\text{A}$.'
+        wrongFeedback: 'כשהמפסק פתוח, $R_1$ ו-$R_2$ בטור. אל תשכחו את ההתנגדות הפנימית: $I = \varepsilon/(R + r)$.'
+        commonWrong:
+          - value: 1.2
+            feedback: 'שכחתם את ההתנגדות הפנימית: $12/10$. גם הזרם שעובר בתוך הסוללה עובר דרך $r$.'
+          - value: 0.8
+            feedback: 'חיברתם גם את $R_3$ בטור. כשהמפסק פתוח, הענף של $R_3$ מנותק ולא עובר בו זרם.'
+
+      - label: ב
+        type: numeric
+        points: 5
+        level: mid
+        objectives: [OBJ-3.6-2]
+        prompt: המפסק S עדיין פתוח. מה מראה מד המתח?
+        answer: 10
+        unit: V
+        correctFeedback: 'נכון: מד המתח מודד את מתח ההדקים, $V = \varepsilon - Ir = 12 - 1\cdot2 = 10\,\text{V}$.'
+        wrongFeedback: 'מד המתח מחובר להדקים, ולכן הוא מראה את מתח ההדקים, $V = \varepsilon - Ir$.'
+        commonWrong:
+          - value: 12
+            feedback: 'זה הכא"מ. כשהסוללה מספקת זרם, חלק מהמתח נופל על ההתנגדות הפנימית, ומתח ההדקים קטן ממנו.'
+            misconception: MC-terminal-equals-emf
+          - value: 2
+            feedback: 'זה המתח שנופל בתוך הסוללה, $Ir$. מד המתח מראה את מה שנשאר: $\varepsilon - Ir$.'
+
+      - label: ג
+        type: twotier
+        points: 6
+        level: bagrut
+        qualitative: true
+        objectives: [OBJ-3.6-3, OBJ-3.5-3]
+        prompt: סוגרים את המפסק S. מה קורה למה שמראה מד המתח?
+        choices:
+          - text: הוא קטן.
+            correct: true
+            feedback: 'נכון. ההתנגדות החיצונית קטנה, הזרם גדל, והמתח שנופל בתוך הסוללה, $Ir$, גדל.'
+          - text: הוא לא משתנה, כי הכא"מ של הסוללה לא משתנה.
+            feedback: 'הכא"מ לא משתנה, אבל מד המתח מראה את מתח ההדקים, $\varepsilon - Ir$, וזה תלוי בזרם.'
+            misconception: MC-terminal-equals-emf
+          - text: הוא גדל, כי נוסף נגד למעגל.
+            feedback: 'הנגד נוסף **במקביל**, ולכן ההתנגדות השקולה קטנה. הזרם גדל, ומתח ההדקים קטן.'
+            misconception: MC-parallel-r-adds
+        reasonPrompt: ומה הנימוק?
+        reasons:
+          - text: ההתנגדות השקולה קטנה, הזרם בסוללה גדל, ולכן גדל המתח שנופל על ההתנגדות הפנימית.
+            correct: true
+            feedback: נכון.
+          - text: הסוללה מספקת תמיד אותו זרם, והוא מתחלק עכשיו בין יותר נגדים.
+            feedback: 'הסוללה לא מספקת זרם קבוע. הזרם נקבע לפי $\varepsilon/(R + r)$, וכשההתנגדות קטנה הוא גדל.'
+            misconception: MC-battery-constant-current
+          - text: המתח בין ההדקים תלוי רק בסוללה עצמה, לא במה שמחובר אליה.
+            feedback: 'זה נכון רק לסוללה אידאלית. בסוללה עם $r$, מתח ההדקים תלוי בזרם, והזרם תלוי במעגל.'
+            misconception: MC-terminal-equals-emf
+
+      - label: ד
+        type: numeric
+        points: 6
+        level: bagrut
+        objectives: [OBJ-3.5-2, OBJ-3.6-2]
+        prompt: המפסק S סגור. מה הזרם בנגד $R_3$?
+        answer: 1
+        unit: A
+        correctFeedback: 'נכון: $R_{23} = \dfrac{6\cdot3}{6+3} = 2\,\Omega$, ו-$I = \dfrac{12}{4 + 2 + 2} = 1.5\,\text{A}$. על הזוג $V_{23} = 1.5\cdot2 = 3\,\text{V}$, ולכן $I_3 = 3/3 = 1\,\text{A}$.'
+        wrongFeedback: 'מצאו את הזרם הכולל, אחר כך את המתח על הזוג שבמקביל, ורק אז את הזרם ב-$R_3$.'
+        commonWrong:
+          - value: 1.5
+            feedback: 'זה הזרם הכולל של הסוללה. הוא מתחלק בצומת בין $R_2$ ל-$R_3$.'
+          - value: 0.75
+            feedback: 'חילקתם את הזרם שווה בשווה. בענף עם ההתנגדות הקטנה עובר זרם גדול יותר: ב-$R_3$ עובר פי 2 מאשר ב-$R_2$.'
+            misconception: MC-junction-equal-split
+          - value: 0.5
+            feedback: 'זה הזרם ב-$R_2$, $3/6$. ב-$R_3$, שההתנגדות שלו קטנה יותר, עובר זרם גדול יותר.'
+          - value: 1.333
+            feedback: 'שכחתם את ההתנגדות הפנימית, ולכן יצא לכם זרם כולל של $2\,\text{A}$ במקום $1.5\,\text{A}$.'
+
+      - label: ה
+        type: open
+        points: 11
+        level: bagrut
+        objectives: [OBJ-3.4-3, OBJ-3.6-2, OBJ-3.10-3]
+        prompt: >-
+          המפסק S סגור. חשבו את ההספק שהסוללה מוסרת למעגל החיצוני ואת הנצילות שלה. השוו לנצילות כשהמפסק פתוח, והסבירו
+          את ההבדל.
+        hints:
+          - 'הנצילות היא היחס בין ההספק שיוצא מההדקים, $VI$, להספק של הכא"מ, $\varepsilon I$.'
+        solution:
+          - { kind: formula, text: '$P_{out} = VI$, $P_{\varepsilon} = \varepsilon I$, ולכן $\eta = \dfrac{VI}{\varepsilon I} = \dfrac{V}{\varepsilon}$, כאשר $V = \varepsilon - Ir$.' }
+          - { kind: substitution, text: 'כשהמפסק סגור $I = 1.5\,\text{A}$: $V = 12\,\text{V} - 1.5\,\text{A}\cdot2\,\Omega = 9\,\text{V}$, $P_{out} = 9\,\text{V}\cdot1.5\,\text{A} = 13.5\,\text{W}$, $P_{\varepsilon} = 12\,\text{V}\cdot1.5\,\text{A} = 18\,\text{W}$.' }
+          - { kind: manipulation, text: '$\eta = \dfrac{13.5}{18} = 0.75$. כשהמפסק פתוח, $\eta = \dfrac{10}{12} \approx 0.83$.' }
+          - { kind: result, text: 'ההספק במעגל החיצוני $13.5\,\text{W}$, והנצילות $75\%$, לעומת $83\%$ כשהמפסק פתוח. סגירת המפסק מגדילה את הזרם, ולכן חלק גדול יותר מהאנרגיה הופך לחום בהתנגדות הפנימית.' }
+        rubric:
+          - text: כתבתי את ההגדרה של הנצילות, היחס בין ההספק שיוצא מההדקים להספק של הכא"מ.
+          - text: מצאתי שכשהמפסק סגור מתח ההדקים $9\,\text{V}$, וההספק במעגל החיצוני $13.5\,\text{W}$.
+          - text: חישבתי נצילות של $75\%$ כשהמפסק סגור, ושל כ-$83\%$ כשהוא פתוח.
+          - text: הסברתי את ההבדל בזרם הגדול יותר, שמגדיל את ההספק שהולך לאיבוד בתוך הסוללה, $I^2r$.
+
+  # ------------------------------------------------------------ 2: EMF and internal resistance from data
+  - id: Q-3-bagrut-2
+    type: bagrut
+    title: מדידת כא״מ והתנגדות פנימית
+    prompt: >-
+      תלמידים חיברו סוללה לנגד משתנה, עם מד זרם בטור ומד מתח בין ההדקים של הסוללה. בכל פעם כיוונו את הנגד המשתנה
+      ורשמו את הזרם $I$ ואת מתח ההדקים $V$:
+      $$\begin{array}{c|c} I\,(\text{A}) & V\,(\text{V}) \\ \hline 0.10 & 2.84 \\ 0.20 & 2.68 \\ 0.30 & 2.51 \\ 0.40 & 2.36 \\ 0.50 & 2.20 \end{array}$$
+      שרטטו את מתח ההדקים כתלות בזרם, והעבירו קו ישר קרוב ככל האפשר לכל הנקודות.
+    parts:
+      - label: א
+        type: numeric
+        points: 6
+        level: mid
+        objectives: [OBJ-3.10-2]
+        prompt: מה הכא"מ של הסוללה, לפי הגרף?
+        answer: 3.0
+        unit: V
+        correctFeedback: 'נכון: הכא"מ הוא המתח בזרם אפס, החיתוך של הקו עם ציר המתח. הקו שעובר ליד הנקודות חותך אותו ב-$3.0\,\text{V}$.'
+        wrongFeedback: 'המשיכו את הקו שמאלה, עד שהזרם אפס. המתח שם הוא הכא"מ.'
+        commonWrong:
+          - value: 2.84
+            feedback: 'זה מתח ההדקים במדידה הראשונה, כשכבר עובר זרם של $0.10\,\text{A}$. הכא"מ הוא המתח בזרם **אפס**: המשיכו את הקו עד הציר.'
+            misconception: MC-terminal-equals-emf
+
+      - label: ב
+        type: numeric
+        points: 6
+        level: mid
+        objectives: [OBJ-3.10-2]
+        prompt: מה ההתנגדות הפנימית של הסוללה, לפי הגרף?
+        answer: 1.6
+        unit: Ω
+        tolerance: 0.07
+        correctFeedback: 'נכון: השיפוע של הקו הוא, למשל בין הנקודות $(0.10,\ 2.84)$ ו-$(0.50,\ 2.20)$, $\dfrac{2.20 - 2.84}{0.50 - 0.10} = -1.6\,\text{V/A}$. ההתנגדות הפנימית היא הגודל שלו, $r = 1.6\,\Omega$.'
+        wrongFeedback: 'השיפוע של הקו הוא $-r$. חשבו אותו משתי נקודות רחוקות על הקו.'
+        commonWrong:
+          - value: -1.6
+            feedback: 'זה השיפוע, עם הסימן. השיפוע הוא $-r$, ולכן $r = 1.6\,\Omega$: התנגדות אינה שלילית.'
+            misconception: MC-slope-positive-r
+          - value: 28.4
+            feedback: 'חילקתם מתח בזרם במדידה הראשונה, $2.84/0.10$. זו ההתנגדות של הנגד המשתנה באותה מדידה, לא $r$. את $r$ נותן השיפוע.'
+            misconception: MC-battery-line-origin
+          - value: 4.4
+            feedback: 'חילקתם מתח בזרם במדידה האחרונה, $2.20/0.50$. זו ההתנגדות של הנגד המשתנה באותה מדידה, לא $r$. את $r$ נותן השיפוע.'
+            misconception: MC-battery-line-origin
+          - value: 0.625
+            feedback: 'חישבתם $\Delta I/\Delta V$. השיפוע של גרף המתח כתלות בזרם הוא $\Delta V/\Delta I$.'
+
+      - label: ג
+        type: numeric
+        points: 5
+        level: bagrut
+        standalone: false
+        objectives: [OBJ-3.10-2, OBJ-3.6-3]
+        prompt: מה זרם הקצר של הסוללה, כלומר הזרם כשמחברים את ההדקים שלה בתיל?
+        answer: 1.875
+        unit: A
+        tolerance: 0.07
+        correctFeedback: 'נכון: בקצר מתח ההדקים אפס, $0 = \varepsilon - Ir$, ולכן $I = \dfrac{\varepsilon}{r} = \dfrac{3.0}{1.6} \approx 1.9\,\text{A}$. זה החיתוך של הקו עם ציר הזרם.'
+        wrongFeedback: 'בקצר $V = 0$. הציבו ב-$V = \varepsilon - Ir$, או המשיכו את הקו עד ציר הזרם.'
+        commonWrong:
+          - value: 0.533
+            feedback: 'חילקתם את $r$ ב-$\varepsilon$. זרם הקצר הוא $\varepsilon/r$.'
+          - value: 4.8
+            feedback: 'כפלתם את הכא"מ בהתנגדות הפנימית. זרם הקצר הוא $\varepsilon/r$.'
+
+      - label: ד
+        type: numeric
+        points: 5
+        level: bagrut
+        standalone: false
+        objectives: [OBJ-3.6-2, OBJ-3.4-1]
+        prompt: מחליפים את הנגד המשתנה בנגד של $4.4\,\Omega$. מה ההספק בנגד?
+        answer: 1.1
+        unit: W
+        tolerance: 0.07
+        correctFeedback: 'נכון: $I = \dfrac{\varepsilon}{R + r} = \dfrac{3.0}{4.4 + 1.6} = 0.5\,\text{A}$, ו-$P = I^2R = 0.5^2\cdot4.4 = 1.1\,\text{W}$.'
+        wrongFeedback: 'מצאו קודם את הזרם, $I = \varepsilon/(R + r)$, ואז $P = I^2R$.'
+        commonWrong:
+          - value: 2.045
+            feedback: 'חישבתם $\varepsilon^2/R$, כאילו כל הכא"מ נמצא על הנגד. חלק מהמתח נופל בתוך הסוללה.'
+            misconception: MC-terminal-equals-emf
+          - value: 1.5
+            feedback: 'זה ההספק של הכא"מ, $\varepsilon I$. חלק ממנו, $I^2r$, הופך לחום בתוך הסוללה, ובנגד נשאר פחות.'
+
+      - label: ה
+        type: open
+        points: 11
+        level: bagrut
+        standalone: false
+        objectives: [OBJ-3.4-2, OBJ-3.6-2, OBJ-3.10-3]
+        prompt: >-
+          על נורה כתוב $2.5\,\text{V}$, $1.0\,\text{W}$. מחברים אותה ישירות להדקים של הסוללה. הניחו שההתנגדות של הנורה
+          קבועה. האם הנורה תאיר בהספק הנקוב שלה? חשבו את ההספק שלה, ונמקו.
+        hints:
+          - 'מהנתונים הנקובים מוצאים את ההתנגדות של הנורה, $R = V^2/P$.'
+        solution:
+          - { kind: formula, text: '$R = \dfrac{V_0^2}{P_0}$, $I = \dfrac{\varepsilon}{R + r}$, $P = I^2R$.' }
+          - { kind: substitution, text: '$R = \dfrac{(2.5\,\text{V})^2}{1.0\,\text{W}} = 6.25\,\Omega$, $I = \dfrac{3.0\,\text{V}}{6.25\,\Omega + 1.6\,\Omega} \approx 0.382\,\text{A}$.' }
+          - { kind: manipulation, text: '$P = (0.382\,\text{A})^2\cdot6.25\,\Omega \approx 0.91\,\text{W}$. מתח ההדקים: $V = 3.0 - 0.38\cdot1.6 \approx 2.4\,\text{V}$.' }
+          - { kind: result, text: 'ההספק כ-$0.91\,\text{W}$, פחות מ-$1.0\,\text{W}$: מתח ההדקים, כ-$2.4\,\text{V}$, קטן מהמתח הנקוב $2.5\,\text{V}$, כי חלק מהכא"מ נופל על ההתנגדות הפנימית. הנורה מאירה מעט פחות מהנקוב.' }
+        rubric:
+          - text: מצאתי מהנתונים הנקובים את ההתנגדות של הנורה, $6.25\,\Omega$.
+          - text: חישבתי את הזרם עם ההתנגדות הפנימית, כ-$0.38\,\text{A}$.
+          - text: חישבתי את ההספק של הנורה, כ-$0.91\,\text{W}$.
+          - text: נימקתי שמתח ההדקים קטן מ-$2.5\,\text{V}$ בגלל הירידה $Ir$ בתוך הסוללה.
+
+  # ------------------------------------------------------------ 3: charging and discharging a capacitor
+  - id: Q-3-bagrut-3
+    type: bagrut
+    title: טעינה ופריקה של קבל
+    prompt: >-
+      קבל ריק שהקיבול שלו $C = 100\,\mu\text{F}$ מחובר בטור לנגד $R_1 = 20\,\text{k}\Omega$, למפסק ולסוללה אידאלית עם
+      כא"מ $\varepsilon = 10\,\text{V}$. ברגע $t = 0$ סוגרים את המפסק.
+    parts:
+      - label: א
+        type: numeric
+        points: 5
+        level: mid
+        objectives: [OBJ-3.9-1]
+        prompt: מה הזרם במעגל מיד אחרי שסוגרים את המפסק?
+        answer: 5.0e-4
+        unit: A
+        correctFeedback: 'נכון: ברגע הראשון הקבל ריק, המתח עליו אפס, וכל הכא"מ על הנגד: $I_0 = \dfrac{\varepsilon}{R_1} = \dfrac{10}{2\cdot10^{4}} = 5\cdot10^{-4}\,\text{A}$.'
+        wrongFeedback: 'ברגע הראשון על קבל ריק אין מתח. איזה מתח נמצא אז על הנגד?'
+        commonWrong:
+          - value: 0
+            feedback: 'בין הלוחות אין מעבר של מטען, אבל ברגע הראשון מטען זורם אל הלוחות, והקבל הריק מתנהג כמו תיל.'
+            misconception: MC-capacitor-blocks-always
+
+      - label: ב
+        type: numeric
+        points: 5
+        level: mid
+        objectives: [OBJ-3.9-2]
+        prompt: מה קבוע הזמן של הטעינה?
+        answer: 2
+        unit: s
+        correctFeedback: 'נכון: $\tau = R_1C = 2\cdot10^{4}\,\Omega\cdot10^{-4}\,\text{F} = 2\,\text{s}$.'
+        wrongFeedback: '$\tau = RC$, עם $R$ באוהם ו-$C$ בפאראד.'
+        commonWrong:
+          - value: 2000
+            feedback: 'כפלתם $20\cdot100$, בלי להמיר קילו-אוהם ומיקרו-פאראד ליחידות SI.'
+          - value: 0.5
+            feedback: 'חישבתם $1/(RC)$. קבוע הזמן הוא $RC$ עצמו.'
+
+      - label: ג
+        type: twotier
+        points: 6
+        level: bagrut
+        qualitative: true
+        objectives: [OBJ-3.9-2]
+        prompt: מה המתח על הקבל ברגע $t = 2\,\text{s}$?
+        choices:
+          - text: כ-$6.3\,\text{V}$.
+            correct: true
+            feedback: 'נכון. אחרי זמן $\tau$ הקבל מגיע לכ-63% מהמתח הסופי.'
+          - text: '$10\,\text{V}$: הקבל כבר מלא.'
+            feedback: 'אחרי $\tau$ הקבל עוד לא מלא. הוא מגיע לכ-63% מהמתח הסופי, ואחרי כ-$5\tau$ הוא כמעט מלא.'
+            misconception: MC-full-after-tau
+          - text: '$5\,\text{V}$: חצי מהכא"מ.'
+            feedback: 'המתח לא עולה בקצב קבוע. בהתחלה הוא עולה מהר, ואחרי $\tau$ הוא כבר מעבר לחצי, כ-63%.'
+            misconception: MC-capacitor-instant
+        reasonPrompt: ומה הנימוק?
+        reasons:
+          - text: 'אחרי זמן $\tau$ המרחק מהמתח הסופי קטן פי $e$, כלומר נשאר כ-37% ממנו.'
+            correct: true
+            feedback: נכון.
+          - text: קבוע הזמן הוא הזמן שלוקח לקבל להיטען עד הסוף.
+            feedback: 'לא. הטעינה מתקרבת למתח הסופי בלי להגיע אליו, ו-$\tau$ מודד את הקצב שלה.'
+            misconception: MC-full-after-tau
+          - text: המתח על הקבל עולה בקצב קבוע עד שהוא מגיע לכא"מ.
+            feedback: 'הזרם קטן ככל שהקבל מתמלא, ולכן גם המתח עולה לאט יותר ויותר.'
+            misconception: MC-capacitor-instant
+
+      - label: ד
+        type: numeric
+        points: 6
+        level: bagrut
+        objectives: [OBJ-3.9-3]
+        prompt: מה המטען על הקבל זמן רב אחרי שסוגרים את המפסק?
+        answer: 1.0e-3
+        unit: C
+        correctFeedback: 'נכון: במצב יציב לא עובר זרם, על הנגד אין מתח, וכל הכא"מ על הקבל: $Q = C\varepsilon = 10^{-4}\cdot10 = 10^{-3}\,\text{C}$.'
+        wrongFeedback: 'במצב יציב הזרם אפס. כמה מתח נשאר אז על הנגד, וכמה על הקבל?'
+        commonWrong:
+          - value: 5.0e-4
+            feedback: 'חילקתם את הכא"מ בין הנגד לקבל. במצב יציב לא עובר זרם, ולכן על הנגד אין מתח, וכל הכא"מ על הקבל.'
+            misconception: MC-current-through-cap-steady
+          - value: 6.3e-4
+            feedback: 'זה המטען אחרי זמן $\tau$. אחרי זמן רב הקבל טעון עד הסוף, למתח של הכא"מ.'
+            misconception: MC-full-after-tau
+
+      - label: ה
+        type: open
+        points: 11
+        level: bagrut
+        objectives: [OBJ-3.9-2, OBJ-3.9-1]
+        prompt: >-
+          אחרי שהקבל נטען לגמרי, מנתקים אותו מהסוללה ומחברים את שני הלוחות שלו לנגד $R_2 = 10\,\text{k}\Omega$. חשבו את
+          קבוע הזמן של הפריקה, את המתח על הקבל שנייה אחת אחרי החיבור, ואת כל האנרגיה שהופכת לחום בנגד עד שהקבל נפרק.
+        hints:
+          - 'בפריקה המתח יורד פי $e$ בכל זמן $\tau$. והאנרגיה שהקבל אגר היא $\tfrac12CV^2$.'
+        solution:
+          - { kind: formula, text: '$\tau_2 = R_2C$, $V(t) = V_0e^{-t/\tau_2}$, $E = \tfrac12CV_0^2$.' }
+          - { kind: substitution, text: '$\tau_2 = 10^{4}\,\Omega\cdot10^{-4}\,\text{F} = 1\,\text{s}$, $V(1\,\text{s}) = 10\,\text{V}\cdot e^{-1}$, $E = \tfrac12\cdot10^{-4}\,\text{F}\cdot(10\,\text{V})^2$.' }
+          - { kind: manipulation, text: '$V(1\,\text{s}) \approx 0.37\cdot10 \approx 3.7\,\text{V}$, $E = 5\cdot10^{-3}\,\text{J}$.' }
+          - { kind: result, text: 'קבוע הזמן $1\,\text{s}$. אחרי שנייה אחת, זמן $\tau_2$ אחד, נשאר על הקבל כ-37% מהמתח, כ-$3.7\,\text{V}$. כל האנרגיה שהקבל אגר, $5\,\text{mJ}$, הופכת לחום בנגד.' }
+        rubric:
+          - text: חישבתי את קבוע הזמן של הפריקה עם $R_2$, $1\,\text{s}$, ולא עם $R_1$.
+          - text: השתמשתי בכך שאחרי זמן $\tau$ נשאר כ-37% מהמתח, וקיבלתי כ-$3.7\,\text{V}$.
+          - text: חישבתי את האנרגיה שהקבל אגר, $\tfrac12CV^2 = 5\,\text{mJ}$, ונימקתי שכולה הופכת לחום בנגד.
