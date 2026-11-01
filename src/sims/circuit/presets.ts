@@ -84,4 +84,40 @@ const ammeters: Preset = {
   },
 };
 
-export const PRESETS: Record<string, Preset> = { simple, series2, unjoined, ammeters };
+/** a bulb with an ammeter in line and a voltmeter across it: P = VI (3.4) */
+const power: Preset = {
+  board: {
+    cols: 5,
+    rows: 3,
+    parts: [
+      { id: 'eps', kind: 'battery', from: [0, 2], to: [0, 1], emf: 6, r: 0, locked: true },
+      ...run('wl', [0, 1], [0, 0], [1, 0]),
+      { id: 'A1', kind: 'ammeter', from: [1, 0], to: [2, 0], locked: true },
+      ...run('wt', [2, 0], [3, 0], [4, 0]),
+      w('wm', [2, 0], [2, 1]),
+      { id: 'L1', kind: 'bulb', from: [2, 1], to: [2, 2], R: 6, locked: true },
+      w('wv', [4, 0], [4, 1]),
+      { id: 'V1', kind: 'voltmeter', from: [4, 1], to: [4, 2], locked: true },
+      ...run('wb', [4, 2], [3, 2], [2, 2], [1, 2], [0, 2]),
+    ],
+  },
+};
+
+/** two bulbs rated for 12 V, 24 W and 12 W, each straight across the battery (3.4) */
+const ratings: Preset = {
+  board: {
+    cols: 5,
+    rows: 3,
+    parts: [
+      { id: 'eps', kind: 'battery', from: [0, 2], to: [0, 1], emf: 12, r: 0, locked: true },
+      ...run('wl', [0, 1], [0, 0], [1, 0], [2, 0], [3, 0], [4, 0]),
+      { id: 'L1', kind: 'bulb', from: [2, 0], to: [2, 1], R: 6, locked: true },
+      w('w1', [2, 1], [2, 2]),
+      { id: 'L2', kind: 'bulb', from: [4, 0], to: [4, 1], R: 12, locked: true },
+      w('w2', [4, 1], [4, 2]),
+      ...run('wb', [4, 2], [3, 2], [2, 2], [1, 2], [0, 2]),
+    ],
+  },
+};
+
+export const PRESETS: Record<string, Preset> = { simple, series2, unjoined, ammeters, power, ratings };

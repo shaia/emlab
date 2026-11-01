@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-3-4-efficiency
+  youtubeId: qS31qKo4CNo
+  title: 'מעגלי-זרם - נצילות'
+  channel: מרכז שוורץ/רייסמן הדרכות למורי פיזיקה
+  lang: he
+  captions: []
+  minutes: 4
+  why: 'שיעור קצר בעברית (מסדרת הדרכה למורים) שמגדיר נצילות ודן בנצילות של נורת להט, של קומקום ושל דוד שמש (לפי תיאור הסרטון). חשבו לאן הולכת האנרגיה שאינה מנוצלת בכל אחד מהם.'
+  verified: '2026-11-01'
+
+- id: v-3-4-kwh
+  youtubeId: SMPhh8gT_1E
+  title: 'What is a kWh - kilowatt hour  + CALCULATIONS 💡💰 energy bill'
+  channel: The Engineering Mindset
+  lang: en
+  captions: [en]
+  minutes: 6
+  why: 'הסבר באנגלית מהי קילוואט-שעה ואיך היא קשורה לוואט ולג''אול, ובסוף דוגמאות לחישוב צריכת החשמל ולחשבון החשמל (לפי תיאור הסרטון). לפי הבהרה בתיאור, ההמרה מקילוואט לוואט בדקה 2:06 נאמרת באופן מבלבל: מכפילים את מספר הקילוואטים ב-1000.'
+  verified: '2026-11-01'

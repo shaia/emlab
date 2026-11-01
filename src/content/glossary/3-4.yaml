@@ -1,0 +1,36 @@
+# Lesson 3.4 terms. Format and rules: see glossary/1-5.yaml.
+
+- id: electric-power
+  term: הספק חשמלי
+  en: electric power
+  symbol: P
+  unit: W
+  definition: קצב העברת האנרגיה החשמלית לרכיב, כלומר האנרגיה שהוא מקבל בכל שנייה, P = VI. ברכיב עם התנגדות R אפשר לכתוב גם P = I²R ו-P = V²/R.
+  lesson: '3.4'
+
+- id: watt
+  term: וואט
+  en: watt
+  symbol: W
+  definition: יחידת ההספק. הספק של וואט אחד הוא ג'אול אחד בכל שנייה, 1 W = 1 J/s = 1 V·A.
+  lesson: '3.4'
+
+- id: kilowatt-hour
+  term: קילוואט-שעה
+  en: kilowatt-hour
+  symbol: kWh
+  definition: 'יחידה של אנרגיה, לא של הספק: האנרגיה שמכשיר של קילוואט אחד צורך בשעה אחת, 1 kWh = 3.6·10⁶ J. בה נמדדת צריכת החשמל בחשבון החשמל. בקיצור קוט"ש.'
+  lesson: '3.4'
+
+- id: rated-values
+  term: הנתונים הנקובים
+  en: rated values
+  definition: המתח וההספק שכתובים על מכשיר, למשל 230 V, 60 W. הם אומרים שכשמחברים את המכשיר למתח הנקוב הוא צורך את ההספק הנקוב. במתח אחר ההספק אחר.
+  lesson: '3.4'
+
+- id: efficiency
+  term: נצילות
+  en: efficiency
+  symbol: η
+  definition: החלק מההספק (או מהאנרגיה) שמכשיר מקבל, שהופך לצורה המועילה שבשבילה בנו אותו, η = P_מועיל/P_כולל. היא קטנה מ-1 (מ-100%), והשאר הופך בדרך כלל לחום.
+  lesson: '3.4'

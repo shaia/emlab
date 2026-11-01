@@ -50,6 +50,8 @@ const PRESET_LABEL: Record<string, string> = {
   series2: 'שתי נורות',
   unjoined: 'בנו בעצמכם',
   ammeters: 'שני מדי זרם',
+  power: 'נורה ומדים',
+  ratings: 'שתי נורות זו לצד זו',
 };
 
 const TOOL_LABEL: Record<Tool, string> = {
@@ -87,6 +89,8 @@ const TASK_LABEL: Record<string, string> = {
   'close-switch': 'סגרו את המפסק, והשוו את מה שמראים שני מדי הזרם.',
   electrons: 'הראו את האלקטרונים. לאיזה כיוון הם נעים, לעומת החצים הצהובים?',
   'change-emf': 'שנו את המתח של הסוללה. האם שני מדי הזרם עדיין מראים אותו דבר?',
+  'double-emf': 'הכפילו את המתח של הסוללה, מ-6 V ל-12 V. פי כמה גדל ההספק של הנורה?',
+  'lower-R': 'הקטינו את ההתנגדות של הנורה, באותו מתח. מה קורה להספק?',
 };
 
 export interface CircuitLabProps {
@@ -107,7 +111,7 @@ export interface CircuitLabProps {
   electronsToggle?: boolean;
   /** what the readout lists for each part (default V and I) */
   measure?: Measure[];
-  /** write resistances and EMFs beside the parts (default true) */
+  /** write each resistor's and bulb's resistance beside it (default false: lessons 3.1–3.2 come before resistance) */
   showValues?: boolean;
   /** sliders: 'L2:R', 'eps:emf', 'eps:r', with an optional label: 'eps:emf:המתח של הסוללה' */
   sliders?: string[];
@@ -225,7 +229,7 @@ export default function CircuitLab(props: CircuitLabProps) {
   const preset = presetOf(s.preset);
   const sol = useMemo(() => solveBoard(s.board), [s.board]);
   const measure = props.measure ?? ['V', 'I'];
-  const showValues = props.showValues ?? true;
+  const showValues = props.showValues ?? false;
   const profileLoop = props.profile ? preset.loops?.[props.profile] : undefined;
   const pref = preset.pref ?? 24;
 
@@ -378,7 +382,7 @@ export default function CircuitLab(props: CircuitLabProps) {
     }
 
     const Iref = ok ? Math.max(1e-6, ...Object.values(sol.parts).map((r) => Math.abs(r.I))) : 1;
-    for (const part of b.parts) drawPart(ctx, g, p, part, ok ? sol.parts[part.id] : undefined, b.cols, pref);
+    for (const part of b.parts) drawPart(ctx, g, p, part, ok ? sol.parts[part.id] : undefined, b.cols, pref, showValues);
 
     // potential labels: once per wire-joined group, at a node a non-wire part touches
     if (s.potential && ok) {
@@ -608,6 +612,11 @@ export default function CircuitLab(props: CircuitLabProps) {
       const next = { ...prev, board: { ...prev.board, parts: prev.board.parts.map((q) => (q.id === id ? { ...q, [key]: v } : q)) } };
       const so = solveBoard(next.board);
       if (key === 'emf' && has('change-emf') && so.ok && Object.values(so.parts).some((r) => Math.abs(r.I) > 1e-6)) done('change-emf');
+      const before = prev.board.parts.find((q) => q.id === id);
+      // against the preset's own battery: a slider fires at every step of a drag
+      const original = presetOf(prev.preset).board.parts.find((q) => q.id === id);
+      if (key === 'emf' && has('double-emf') && original?.emf === 6 && v === 12) done('double-emf');
+      if (key === 'R' && has('lower-R') && before?.kind === 'bulb' && v < (before.R ?? 6)) done('lower-R');
       return next;
     });
 
@@ -675,6 +684,13 @@ export default function CircuitLab(props: CircuitLabProps) {
                 if (measure.includes('I')) bits.push(['', `I = ${amps(r.I)}`]);
                 if (measure.includes('P')) bits.push(['', `P = ${watts(r.P)}`]);
               }
+              // all-LTR readings go in one span: commas between separate LTR spans reorder in RTL
+              if (bits.every(([he]) => !he))
+                return (
+                  <span key={q.id}>
+                    {labelOf(q.id)}: <b class="q">{bits.map(([, qty]) => qty).join(', ')}</b>
+                  </span>
+                );
               return (
                 <span key={q.id}>
                   {labelOf(q.id)}:{' '}
@@ -907,6 +923,7 @@ function drawPart(
   r: { V: number; I: number; P: number } | undefined,
   cols: number,
   pref: number,
+  showValues: boolean,
 ) {
   const [x0, y0] = scr(g, part.from);
   const [x1, y1] = scr(g, part.to);
@@ -1074,14 +1091,16 @@ function drawPart(
   }
   if (part.kind !== 'wire') {
     const lines = [labelOf(part.id)];
-    const val = valueText(part, r);
+    const val = valueText(part, r, showValues);
     if (val) lines.push(val);
     // beside the edge, on the inner side of the loop where there is room
     const vertical = Math.abs(uy) > Math.abs(ux);
     // vertical parts: label to the right, except in the last column (inward, to the left);
     // horizontal parts: label above, except in the top row (inward, below)
     const side = vertical ? (part.from[0] === cols - 1 ? -1 : 1) : part.from[1] === 0 ? 1 : -1;
-    const off = (part.kind === 'battery' ? 0.3 : 0.27) * c;
+    // clear of the symbol: round symbols (bulb, meters) reach further from the wire
+    const round = part.kind === 'bulb' || part.kind === 'ammeter' || part.kind === 'voltmeter';
+    const off = (part.kind === 'battery' ? 0.3 : round ? 0.34 : 0.27) * c + (round && !vertical ? 4 : 0);
     const lx = vertical ? mx + side * off : mx;
     const ly = vertical ? my : my + side * off;
     ctx.textAlign = vertical ? (side > 0 ? 'left' : 'right') : 'center';
@@ -1096,8 +1115,12 @@ function drawPart(
   ctx.restore();
 }
 
-function valueText(part: Part, r: { V: number; I: number; P: number } | undefined): string {
+function valueText(part: Part, r: { V: number; I: number; P: number } | undefined, showValues: boolean): string {
   switch (part.kind) {
+    case 'resistor':
+    case 'bulb':
+    case 'rheostat':
+      return showValues ? ohms(part.R ?? 6) : '';
     case 'battery':
       return part.r ? `${volts(part.emf ?? 12)}, r = ${ohms(part.r)}` : volts(part.emf ?? 12);
     case 'ammeter':

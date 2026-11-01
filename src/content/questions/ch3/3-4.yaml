@@ -1,0 +1,242 @@
+# Lesson 3.4 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/circuits.ts (powerVI, powerIR, powerVR,
+# ratedResistance, KWH, efficiency); G = 10 from src/physics/constants.ts.
+
+chapter: 3
+questions:
+  # ------------------------------------------------ OBJ-3.4-1: P = VI, I²R, V²/R
+  - id: Q-3.4-power-vi
+    type: numeric
+    objectives: [OBJ-3.4-1]
+    prompt: >-
+      מגהץ מחובר לשקע של $230\,\text{V}$, וזורם בו זרם של $4\,\text{A}$. מה ההספק שלו? ענו בוואט.
+    answer: 920
+    unit: W
+    tolerance: 0.03
+    correctFeedback: 'נכון. $P = VI = 230\cdot4 = 920\,\text{W}$: בכל שנייה המגהץ מקבל $920\,\text{J}$.'
+    wrongFeedback: 'הספק הוא מתח כפול זרם: $P = VI$.'
+    commonWrong:
+      - value: 57.5
+        feedback: 'חילקתם את המתח בזרם. זו ההתנגדות, $R = V/I$, לא ההספק.'
+      - value: 0.0174
+        feedback: 'חילקתם את הזרם במתח. ההספק הוא **מכפלה**, $P = VI$.'
+
+  - id: Q-3.4-power-i2r
+    type: numeric
+    objectives: [OBJ-3.4-1]
+    prompt: >-
+      בנגד של $5\,\Omega$ זורם זרם של $3\,\text{A}$. מה ההספק בנגד? ענו בוואט.
+    answer: 45
+    unit: W
+    tolerance: 0.03
+    correctFeedback: 'נכון. $P = I^2R = 3^2\cdot5 = 45\,\text{W}$.'
+    wrongFeedback: 'כשנתונים זרם והתנגדות, $P = I^2R$ (כי $V = IR$, ו-$P = VI = I\cdot IR$).'
+    commonWrong:
+      - value: 15
+        feedback: 'שכחתם להעלות את הזרם בריבוע. $IR = 15$ הוא המתח על הנגד. ההספק $P = I^2R$.'
+      - value: 75
+        feedback: 'העליתם בריבוע את ההתנגדות במקום את הזרם: $P = I^2R$, לא $IR^2$.'
+
+  - id: Q-3.4-power-v2r
+    type: numeric
+    objectives: [OBJ-3.4-1]
+    level: mid
+    prompt: >-
+      על נגד של $8\,\Omega$ יש מתח של $12\,\text{V}$. מה ההספק בנגד? ענו בוואט.
+    answer: 18
+    unit: W
+    tolerance: 0.03
+    correctFeedback: 'נכון. $P = \dfrac{V^2}{R} = \dfrac{144}{8} = 18\,\text{W}$. אפשר גם בשני שלבים: $I = 12/8 = 1.5\,\text{A}$, ו-$P = VI = 12\cdot1.5 = 18\,\text{W}$.'
+    wrongFeedback: 'כשנתונים מתח והתנגדות, $P = V^2/R$.'
+    commonWrong:
+      - value: 1.5
+        feedback: 'זה הזרם, $V/R$. כדי לקבל הספק, כפלו אותו במתח.'
+      - value: 96
+        feedback: 'כפלתם את המתח בהתנגדות. $P = V^2/R$: ההתנגדות במכנה.'
+
+  - id: Q-3.4-double-voltage
+    type: mc
+    objectives: [OBJ-3.4-1]
+    qualitative: true
+    prompt: >-
+      מכפילים את המתח על נגד שההתנגדות שלו קבועה. פי כמה גדל ההספק בנגד?
+    choices:
+      - text: 'פי 4.'
+        correct: true
+        feedback: 'נכון. המתח מוכפל, ולכן גם הזרם מוכפל, ו-$P = VI$ גדל פי $2\cdot2 = 4$. או ישר: $P = V^2/R$.'
+      - text: 'פי 2.'
+        feedback: 'גם המתח וגם הזרם מוכפלים, וההספק הוא המכפלה שלהם.'
+        misconception: MC-power-proportional-v
+      - text: 'הוא לא משתנה, כי זה אותו נגד.'
+        feedback: 'ההתנגדות לא משתנה, אבל ההספק כן: הוא תלוי במתח שמפעילים.'
+        misconception: MC-rated-power-fixed
+      - text: 'פי 8.'
+        feedback: 'אין כאן חזקה שלישית: $P = V^2/R$.'
+
+  # ------------------------------------------------ OBJ-3.4-2: rated values
+  - id: Q-3.4-rated-resistance
+    type: numeric
+    objectives: [OBJ-3.4-2]
+    prompt: >-
+      על נורה כתוב $230\,\text{V}$, $60\,\text{W}$. מה ההתנגדות שלה כשהיא דולקת במתח הנקוב? ענו באוהם.
+    answer: 882
+    unit: Ω
+    tolerance: 0.03
+    correctFeedback: 'נכון. $R = \dfrac{V^2}{P} = \dfrac{230^2}{60} \approx 882\,\Omega$.'
+    wrongFeedback: 'מ-$P = V^2/R$ נובע $R = V^2/P$.'
+    commonWrong:
+      - value: 3.83
+        feedback: 'חילקתם את המתח בהספק. צריך את **ריבוע** המתח: $R = V^2/P$.'
+      - value: 0.261
+        feedback: 'זה הזרם, $P/V$, באמפר, לא ההתנגדות.'
+
+  - id: Q-3.4-rated-current
+    type: numeric
+    objectives: [OBJ-3.4-2]
+    prompt: >-
+      על קומקום כתוב $230\,\text{V}$, $2000\,\text{W}$. מה הזרם בו כשהוא פועל? ענו באמפר.
+    answer: 8.70
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. $I = \dfrac{P}{V} = \dfrac{2000}{230} \approx 8.7\,\text{A}$.'
+    wrongFeedback: 'מ-$P = VI$ נובע $I = P/V$.'
+    commonWrong:
+      - value: 0.115
+        feedback: 'חילקתם את המתח בהספק. הפוך: $I = P/V$.'
+      - value: 460000
+        feedback: 'כפלתם את ההספק במתח. הזרם הוא $P/V$.'
+
+  - id: Q-3.4-half-voltage
+    type: numeric
+    objectives: [OBJ-3.4-2]
+    level: mid
+    prompt: >-
+      נורה שעליה כתוב $230\,\text{V}$, $60\,\text{W}$ מחוברת למתח של $115\,\text{V}$. נניח שההתנגדות שלה לא משתנה. מה ההספק שלה? ענו בוואט.
+    answer: 15
+    unit: W
+    tolerance: 0.03
+    correctFeedback: 'נכון. ההתנגדות $R = 230^2/60 \approx 882\,\Omega$ קבועה, ו-$P = V^2/R = 115^2/882 = 15\,\text{W}$. חצי מהמתח, רבע מההספק.'
+    wrongFeedback: 'מה שנשאר קבוע הוא ההתנגדות, לא ההספק. מצאו את $R$ מהנתונים הנקובים, ואז $P = V^2/R$ במתח החדש.'
+    commonWrong:
+      - value: 30
+        feedback: 'חצי מהמתח נותן גם חצי מהזרם, ולכן רבע מההספק, לא חצי.'
+        misconception: MC-power-proportional-v
+      - value: 60
+        feedback: '$60\,\text{W}$ הוא ההספק **במתח הנקוב**, $230\,\text{V}$. במתח אחר ההספק אחר.'
+        misconception: MC-rated-power-fixed
+
+  - id: Q-3.4-side-by-side
+    type: twotier
+    objectives: [OBJ-3.4-2]
+    qualitative: true
+    prompt: >-
+      על נורה $L_1$ כתוב $12\,\text{V}$, $24\,\text{W}$, ועל נורה $L_2$ כתוב $12\,\text{V}$, $12\,\text{W}$. מחברים כל אחת מהן ישר לשני ההדקים של סוללה של $12\,\text{V}$. איזו נורה מאירה חזק יותר?
+    choices:
+      - text: '$L_1$.'
+        correct: true
+        feedback: 'נכון. שתיהן במתח הנקוב, ולכן כל אחת צורכת את ההספק שכתוב עליה: $24\,\text{W}$ מול $12\,\text{W}$.'
+      - text: '$L_2$.'
+        feedback: 'ל-$L_2$ אמנם התנגדות גדולה יותר ($12\,\Omega$ מול $6\,\Omega$), אבל כשהמתח שווה, ההתנגדות הגדולה מעבירה פחות זרם ומקבלת פחות הספק.'
+        misconception: MC-higher-r-brighter
+      - text: 'הן מאירות באותה מידה, כי המתח עליהן שווה.'
+        feedback: 'המתח שווה, אבל הזרמים שונים. ההספק $P = VI$ גדול יותר בנורה שזורם בה יותר זרם.'
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: 'המתח על שתיהן שווה, ו-$P = V^2/R$: ההתנגדות של $L_1$ קטנה יותר, ולכן ההספק שלה גדול יותר.'
+        correct: true
+        feedback: 'נכון. $R_1 = 12^2/24 = 6\,\Omega$ ו-$R_2 = 12^2/12 = 12\,\Omega$.'
+      - text: 'נורה עם התנגדות גדולה יותר מתחממת יותר, כי היא מתנגדת לזרם.'
+        feedback: 'זה נכון רק כשהזרם בשתיהן שווה (בטור, $P = I^2R$). כאן המתח שווה, ו-$P = V^2/R$.'
+        misconception: MC-higher-r-brighter
+      - text: 'נורה עם הספק נקוב גדול יותר מאירה יותר בכל חיבור.'
+        feedback: 'לא בכל חיבור. כאן שתיהן במתח הנקוב, ולכן זה נכון. אבל בחיבור בטור (שיעור 3.5) דווקא הנורה של $12\,\text{W}$ תאיר יותר.'
+        misconception: MC-rated-power-fixed
+
+  # ------------------------------------------------ OBJ-3.4-3: energy, kWh, efficiency
+  - id: Q-3.4-energy-joule
+    type: numeric
+    objectives: [OBJ-3.4-3]
+    prompt: >-
+      תנור חימום של $1500\,\text{W}$ פועל $10$ דקות. כמה אנרגיה חשמלית הוא צורך? ענו בג'אול.
+    answer: 900000
+    unit: J
+    tolerance: 0.03
+    correctFeedback: 'נכון. $E = Pt = 1500\cdot600 = 9\cdot10^5\,\text{J}$.'
+    wrongFeedback: 'אנרגיה היא הספק כפול זמן, $E = Pt$, עם הזמן בשניות.'
+    commonWrong:
+      - value: 15000
+        feedback: 'כפלתם בזמן בדקות. בג''אול צריך שניות: $10$ דקות הן $600\,\text{s}$.'
+      - value: 150
+        feedback: 'חילקתם את ההספק בזמן. אנרגיה היא הספק **כפול** זמן.'
+
+  - id: Q-3.4-kwh
+    type: numeric
+    objectives: [OBJ-3.4-3]
+    prompt: >-
+      מזגן של $2\,\text{kW}$ פועל $3$ שעות. כמה אנרגיה הוא צורך? ענו בקילוואט-שעה.
+    answer: 6
+    unit: kWh
+    tolerance: 0.03
+    correctFeedback: 'נכון. $E = Pt = 2\,\text{kW}\cdot3\,\text{h} = 6\,\text{kWh}$, כלומר $6\cdot3.6\cdot10^6 = 2.16\cdot10^7\,\text{J}$.'
+    wrongFeedback: 'בקילוואט-שעה: ההספק בקילוואט כפול הזמן בשעות.'
+    commonWrong:
+      - value: 0.667
+        feedback: 'חילקתם את ההספק בזמן. קילוואט-שעה הוא הספק **כפול** זמן.'
+        misconception: MC-kwh-is-power
+      - value: 6000
+        feedback: 'זה $6000\,\text{Wh}$, וואט-שעה. בקילוואט-שעה התשובה קטנה פי 1000.'
+
+  - id: Q-3.4-kwh-unit
+    type: mc
+    objectives: [OBJ-3.4-3]
+    qualitative: true
+    prompt: >-
+      בחשבון החשמל כתוב שהבית צרך $450$ קילוואט-שעה בחודש. איזה גודל מודד קילוואט-שעה?
+    choices:
+      - text: 'אנרגיה.'
+        correct: true
+        feedback: 'נכון. קילוואט-שעה הוא הספק כפול זמן: $1\,\text{kWh} = 1000\,\text{W}\cdot3600\,\text{s} = 3.6\cdot10^6\,\text{J}$.'
+      - text: 'הספק: כמה קילוואט צורכים בכל שעה.'
+        feedback: 'זה לא "קילוואט לשעה", אלא קילוואט **כפול** שעה. הספק כפול זמן הוא אנרגיה.'
+        misconception: MC-kwh-is-power
+      - text: 'זרם.'
+        feedback: 'זרם נמדד באמפר. קילוואט-שעה הוא הספק כפול זמן, כלומר אנרגיה.'
+      - text: 'מטען.'
+        feedback: 'מטען נמדד בקולון. קילוואט-שעה הוא הספק כפול זמן, כלומר אנרגיה.'
+
+  - id: Q-3.4-efficiency
+    type: numeric
+    objectives: [OBJ-3.4-3]
+    level: mid
+    prompt: >-
+      מנוע חשמלי מחובר ל-$12\,\text{V}$, וזורם בו זרם של $2\,\text{A}$. הוא מרים משקולת של $3\,\text{kg}$ במהירות קבועה של $0.6\,\text{m/s}$. מה הנצילות של המנוע? ענו באחוזים. ($g = 10\,\text{m/s}^2$)
+    answer: 75
+    unit: '%'
+    tolerance: 0.03
+    correctFeedback: 'נכון. ההספק החשמלי $P = VI = 24\,\text{W}$. ההספק המועיל, קצב הגדלת האנרגיה הפוטנציאלית, $mgv = 3\cdot10\cdot0.6 = 18\,\text{W}$. $\eta = 18/24 = 0.75 = 75\%$.'
+    wrongFeedback: 'מצאו את ההספק החשמלי, $VI$, ואת ההספק המועיל, $mgv$ (הכוח כפול המהירות). הנצילות היא המועיל חלקי הכולל.'
+    commonWrong:
+      - value: 133
+        feedback: 'חילקתם את הכולל במועיל. הנצילות היא **מועיל חלקי כולל**, ולכן תמיד קטנה מ-100%.'
+      - value: 0.75
+        feedback: 'זו הנצילות כשבר. השאלה מבקשת אחוזים: כפלו ב-100.'
+
+  - id: Q-3.4-energy-lost
+    type: mc
+    objectives: [OBJ-3.4-3]
+    qualitative: true
+    prompt: >-
+      הנצילות של נורת להט, כמקור אור, היא בערך $5\%$. מה קורה לשאר האנרגיה החשמלית שהיא מקבלת?
+    choices:
+      - text: 'היא הופכת לחום: הנורה מחממת את הסביבה.'
+        correct: true
+        feedback: 'נכון. האנרגיה נשמרת: כמעט כולה הופכת לחום, ורק מעט לאור. נורת להט היא תנור טוב יותר משהיא מנורה.'
+      - text: 'היא נעלמת.'
+        feedback: 'אנרגיה לא נעלמת. היא רק עוברת לצורה אחרת, כאן בעיקר לחום.'
+        misconception: MC-energy-lost
+      - text: 'היא חוזרת אל הסוללה עם הזרם.'
+        feedback: 'המטען חוזר אל הסוללה, אבל עם פחות אנרגיה: את האנרגיה הוא מסר לנורה, והיא הפכה בה לחום ולאור.'
+        misconception: MC-current-used-up
+      - text: 'היא נשארת אגורה בחוט הלהט לשימוש מאוחר יותר.'
+        feedback: 'חוט הלהט לא אוגר אנרגיה. כל מה שהוא מקבל הוא מוסר מיד לסביבה, כחום וכאור.'
