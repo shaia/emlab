@@ -106,10 +106,18 @@ test.describe('live figures', () => {
     await page.goto(LESSON);
     const fig = page.locator('#fig-1-10c');
     await fig.scrollIntoViewIfNeeded();
-    await setSlider(fig.locator('input[type=range]').first(), 10);
-    await expect(fig.locator('.sim-readout').first()).toContainText('הטיפה יורדת');
-    await setSlider(fig.locator('input[type=range]').first(), 100);
-    await expect(fig.locator('.sim-readout').first()).toContainText('הטיפה עולה');
+    await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
+    const slider = fig.locator('input[type=range]').first();
+    const readout = fig.locator('.sim-readout').first();
+    // a text step that scrolls to mid-screen can reset the figure: set the field again until it holds
+    await expect(async () => {
+      await setSlider(slider, 10);
+      await expect(readout).toContainText('הטיפה יורדת', { timeout: 1000 });
+    }).toPass({ timeout: 15_000 });
+    await expect(async () => {
+      await setSlider(slider, 100);
+      await expect(readout).toContainText('הטיפה עולה', { timeout: 1000 });
+    }).toPass({ timeout: 15_000 });
   });
 });
 
