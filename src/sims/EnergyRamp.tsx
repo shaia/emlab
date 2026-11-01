@@ -17,7 +17,7 @@
  */
 
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import { E_CHARGE, K, M_ELECTRON, M_PROTON } from '~/physics/constants';
+import { E_CHARGE, M_ELECTRON, M_PROTON } from '~/physics/constants';
 import { closestApproach, fromEV, gapPosition, gapTransit, pairEnergy, toEV, type GapTransit } from '~/physics/potential';
 import { markTask } from '~/progress/store';
 import { motionAllowed } from '~/progress/settings';
@@ -419,20 +419,29 @@ export default function EnergyRamp(props: EnergyRampProps) {
             <span>
               השדה בין הלוחות: <b class="q">E = {sci(Math.abs(E))} V/m{E !== 0 ? (E > 0 ? ', ימינה' : ', שמאלה') : ''}</b>
             </span>
-            <span>
-              {transit.reaches ? (
-                <>
-                  מהירות בהגעה ללוח הימני: <b class="q">v = {sci(transit.vEnd)} m/s</b>
-                </>
-              ) : (
-                <>
-                  לא מגיע: <b class="q">נעצר אחרי {Math.round(transit.xTurn * 100)} cm וחוזר</b>
-                </>
-              )}
-            </span>
-            <span>
-              אנרגיה קינטית בלוח הימני: <b class="q">{transit.reaches ? `${Math.round(s.k0 + (P.q / E_CHARGE) * s.vLeft)} eV` : '—'}</b>
-            </span>
+            {/* the outcome shows only after a launch: the learner predicts, then presses */}
+            {!s.launched ? (
+              <span>
+                התוצאה: <b class="q">לחצו "שגרו"</b>
+              </span>
+            ) : (
+              <>
+                <span>
+                  {transit.reaches ? (
+                    <>
+                      מהירות בהגעה ללוח הימני: <b class="q">v = {sci(transit.vEnd)} m/s</b>
+                    </>
+                  ) : (
+                    <>
+                      לא מגיע: <b class="q">נעצר אחרי {Math.round(transit.xTurn * 100)} cm וחוזר</b>
+                    </>
+                  )}
+                </span>
+                <span>
+                  אנרגיה קינטית בלוח הימני: <b class="q">{transit.reaches ? `${Math.round(s.k0 + (P.q / E_CHARGE) * s.vLeft)} eV` : '—'}</b>
+                </span>
+              </>
+            )}
             {last && s.log.length > 1 && (
               <span>
                 שיגורים:{' '}
@@ -447,10 +456,7 @@ export default function EnergyRamp(props: EnergyRampProps) {
         ) : (
           <>
             <span>
-              מרחק הגישה הקרוב ביותר: <b class="q">r_min = {sci(rMin)} m</b>
-            </span>
-            <span>
-              כאן <b class="q">kqQ/K = {sci((K * P.q * GOLD_Z * E_CHARGE) / kFar)} m</b>
+              מרחק הגישה הקרוב ביותר: <b class="q">{s.launched ? `r_min = ${sci(rMin)} m` : 'לחצו "שגרו"'}</b>
             </span>
             {s.log.length > 1 && (
               <span>

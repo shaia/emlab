@@ -88,7 +88,7 @@ questions:
         correct: true
         feedback: נכון. המהירות תלויה רק במתח.
       - text: $3v$
-        feedback: 'הדרך ארוכה פי 3, אבל השדה חלש פי 3. העבודה, כוח כפול דרך, נשארת $eV$.'
+        feedback: 'הדרך ארוכה פי 3, אבל השדה חלש פי 3. העבודה, הכוח כפול המרחק ($eE\cdot d$), נשארת $eV$.'
         misconception: MC-wider-gap-faster
       - text: $\sqrt3\,v$
         feedback: 'זה היה נכון אילו העבודה גדלה פי 3. אבל העבודה היא $eV$, והמתח לא השתנה.'
@@ -176,8 +176,8 @@ questions:
     commonWrong:
       - value: 2.84e-14
         feedback: 'הצבתם מטען $e$ לחלקיק האלפא. המטען שלו $2e$: שני פרוטונים.'
-      - value: 1.14e-13
-        feedback: 'הכפלתם ב-2 מיותר. בנקודת החזרה $K = kqQ/r$, בלי $\tfrac12$ ובלי 2.'
+      - value: 5.69e-8
+        feedback: 'שכחתם את המגה: $4\,\text{MeV} = 4\cdot10^{6}\,\text{eV} = 6.4\cdot10^{-13}\,\text{J}$, ולא $4\cdot1.6\cdot10^{-19}\,\text{J}$.'
     hints:
       - 'בנקודת החזרה $K = 0$, ולכן $U = kqQ/r_{\min}$ שווה לאנרגיה ההתחלתית.'
 

@@ -44,17 +44,19 @@ test.describe('live figures', () => {
     const launch = fig.getByRole('button', { name: 'שגרו' });
     const [volts, , gap] = [0, 1, 2].map((i) => fig.locator('input[type=range]').nth(i));
     // an electron from rest through 1000 V: v = √(2eV/m) = 1.88·10⁷ m/s, K = 1000 eV
-    await expect(readout).toContainText('v = 1.88·10⁷ m/s');
+    // the outcome is held back until the learner launches
+    await expect(readout).toContainText('לחצו "שגרו"');
     await launch.click();
+    await expect(readout).toContainText('v = 1.88·10⁷ m/s');
     await setSlider(gap, 0.3);
+    await launch.click();
     await expect(readout).toContainText('v = 1.88·10⁷ m/s');
-    await launch.click();
     await setSlider(volts, -500);
+    await launch.click();
     await expect(readout).toContainText('v = 1.33·10⁷ m/s');
-    await launch.click();
     await setSlider(volts, -2000);
-    await expect(readout).toContainText('v = 2.65·10⁷ m/s');
     await launch.click();
+    await expect(readout).toContainText('v = 2.65·10⁷ m/s');
     const tasks = (await progress(page)).tasks;
     expect(tasks['fig-2-4a:launch']).toBeTruthy();
     expect(tasks['fig-2-4a:gap-same']).toBeTruthy();
@@ -70,8 +72,8 @@ test.describe('live figures', () => {
     const readout = fig.locator('.sim-readout');
     await fig.getByRole('button', { name: 'פרוטון', exact: true }).click();
     await setSlider(fig.locator('input[type=range]').nth(1), 500);
-    await expect(readout).toContainText('נעצר אחרי 30 cm');
     await fig.getByRole('button', { name: 'שגרו' }).click();
+    await expect(readout).toContainText('נעצר אחרי 30 cm');
     expect((await progress(page)).tasks['fig-2-4a:stop']).toBeTruthy();
   });
 
@@ -83,11 +85,11 @@ test.describe('live figures', () => {
     await freezeSteps(page);
     const readout = fig.locator('.sim-readout');
     // 5 MeV alpha on gold: r = kqQ/K = 4.55·10⁻¹⁴ m
+    await fig.getByRole('button', { name: 'שגרו' }).click();
     await expect(readout).toContainText('r_min = 4.55·10⁻¹⁴ m');
-    await fig.getByRole('button', { name: 'שגרו' }).click();
     await setSlider(fig.locator('input[type=range]').first(), 10);
-    await expect(readout).toContainText('r_min = 2.28·10⁻¹⁴ m');
     await fig.getByRole('button', { name: 'שגרו' }).click();
+    await expect(readout).toContainText('r_min = 2.28·10⁻¹⁴ m');
     const tasks = (await progress(page)).tasks;
     expect(tasks['fig-2-4b:closest']).toBeTruthy();
     expect(tasks['fig-2-4b:double-k']).toBeTruthy();
