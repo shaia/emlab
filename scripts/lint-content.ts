@@ -247,9 +247,10 @@ for (const l of lessons) {
     if (!glossaryIds.has(m[1])) fail(l.file, `<Term id="${m[1]}"> is not in glossary.yaml`);
   }
 
-  // JS strings in MDX props turn "\f", "\v", "\t"… into control characters: TeX there must be doubled
+  // JS strings in MDX props turn "\f", "\v", "\t"… into control characters: TeX there must be doubled.
+  // Only an unescaped backslash before a letter is a problem; "\\sqrt" is the doubled form.
   for (const m of l.body.matchAll(/=\{[\s\S]*?\}\}?/g)) {
-    if (/'[^']*\\[a-z][^']*'/.test(m[0])) fail(l.file, `TeX backslash inside a JS string prop (${m[0].slice(0, 40)}…): use a "..." attribute or \\\\`);
+    if (/'[^']*?(?<!\\)\\[a-z][^']*'/.test(m[0])) fail(l.file, `TeX backslash inside a JS string prop (${m[0].slice(0, 40)}…): use a "..." attribute or \\\\`);
   }
 }
 

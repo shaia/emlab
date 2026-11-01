@@ -51,3 +51,30 @@ export function directionHe(rad: number): string {
   const i = Math.round(((rad + 2 * Math.PI) % (2 * Math.PI)) / (Math.PI / 4)) % 8;
   return names[i];
 }
+
+/**
+ * The number m·10ᵉ written out in full ("0.000015", "3,000,000"), from the digits of m, so no
+ * floating-point noise creeps in. m is a short decimal such as 1.5; thousands get commas.
+ */
+export function decimalOf(m: number, e: number): string {
+  const [int, frac = ''] = String(Math.abs(m)).split('.');
+  const digits = (int + frac).replace(/^0+/, '') || '0';
+  // position of the decimal point, counted from the first significant digit
+  const point = int.replace(/^0+/, '').length + e;
+  let out: string;
+  if (point <= 0) out = `0.${'0'.repeat(-point)}${digits}`;
+  else if (point >= digits.length) out = digits + '0'.repeat(point - digits.length);
+  else out = `${digits.slice(0, point)}.${digits.slice(point)}`;
+  const [i, f] = out.split('.');
+  const grouped = i.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return (m < 0 ? '−' : '') + (f ? `${grouped}.${f}` : grouped);
+}
+
+/** SI prefixes by power of ten. */
+export const PREFIXES: Record<number, string> = { [-12]: 'p', [-9]: 'n', [-6]: 'μ', [-3]: 'm', 0: '', 3: 'k', 6: 'M', 9: 'G' };
+
+/** m·10ᵉ with the prefix that leaves a number from 1 to 999: (1.5, −5, 'C') → "15 μC". */
+export function prefixed(m: number, e: number, unit: string): string {
+  const pe = Math.max(-12, Math.min(9, 3 * Math.floor(e / 3)));
+  return `${decimalOf(m, e - pe)} ${PREFIXES[pe]}${unit}`;
+}
