@@ -37,6 +37,8 @@ const PLATE_X = 0.4;
 const PLATE_V = 400;
 const PLATE_LEVELS = [50, 100, 150, 200, 250, 300, 350];
 const GRAPH_V = 1.4e5;
+/** P snaps to the midpoint of a pair from this close [m] */
+const SNAP = 0.035;
 
 export type MapPreset = 'single' | 'single-neg' | 'like' | 'dipole' | 'unequal' | 'plates';
 
@@ -292,7 +294,7 @@ export default function PotentialMap(props: PotentialMapProps) {
         [-PLATE_X, 1],
         [PLATE_X, -1],
       ] as const) {
-        const [sx, sy0] = S(x, 0.5);
+        const [sx, sy0] = S(x, 0.44);
         const [, sy1] = S(x, -0.5);
         ctx.fillStyle = withAlpha(sign > 0 ? p.pos : p.neg, 0.4);
         ctx.fillRect(sx - 4, sy0, 8, sy1 - sy0);
@@ -308,14 +310,16 @@ export default function PotentialMap(props: PotentialMapProps) {
           ctx.fillText(sign > 0 ? '+' : '−', sx + (sign > 0 ? -14 : 14), gy);
         }
         ctx.font = `600 12px ${p.fontUi}`;
-        ctx.fillText(sign > 0 ? `${PLATE_V} V` : '0 V', sx, sy1 + 12);
+        ctx.fillText(sign > 0 ? `${PLATE_V} V` : '0 V', sx, sy0 - 9);
       }
     } else {
-      for (const c of charges) {
+      charges.forEach((c, i) => {
         const [sx, sy] = S(c.x, c.y);
         const v = Math.round((c.q / uC) * 10) / 10;
-        chargeDisc(ctx, sx, sy, 14, c.q, p, { label: `${v > 0 ? '+' : '−'}${Math.abs(v)} μC` });
-      }
+        // a pair is numbered so the readout's V₁ and V₂ can be matched to the charges
+        const name = charges.length > 1 ? `q${i === 0 ? '₁' : '₂'} = ` : '';
+        chargeDisc(ctx, sx, sy, 14, c.q, p, { label: `${name}${v > 0 ? '+' : '−'}${Math.abs(v)} μC` });
+      });
     }
 
     // the slice the graph shows
@@ -349,13 +353,11 @@ export default function PotentialMap(props: PotentialMapProps) {
     ctx.arc(px, py, 8, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(px - 4, py);
-    ctx.lineTo(px + 4, py);
-    ctx.moveTo(px, py - 4);
-    ctx.lineTo(px, py + 4);
-    ctx.stroke();
+    // a hollow ring with a dot: a place, not a charge (a "+" inside would read as a positive charge)
     ctx.fillStyle = p.ink;
+    ctx.beginPath();
+    ctx.arc(px, py, 2.4, 0, Math.PI * 2);
+    ctx.fill();
     ctx.font = `700 13px ${p.fontUi}`;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'bottom';
@@ -366,7 +368,8 @@ export default function PotentialMap(props: PotentialMapProps) {
     if (graph) {
       const [gx0] = S(-0.95, 0);
       const [gx1] = S(0.95, 0);
-      const top = my1 + 14;
+      // the gap between the map and the box holds the graph's title
+      const top = my1 + 24;
       const bottom = base.h - 22;
       const vmax = s.preset === 'plates' ? 1.1 * PLATE_V : GRAPH_V;
       const vmin = s.preset === 'plates' ? -0.1 * PLATE_V : -GRAPH_V;
@@ -425,10 +428,10 @@ export default function PotentialMap(props: PotentialMapProps) {
       ctx.fill();
       ctx.direction = 'rtl';
       ctx.textAlign = 'right';
-      ctx.textBaseline = 'top';
+      ctx.textBaseline = 'middle';
       ctx.font = `600 12px ${p.fontUi}`;
       ctx.fillStyle = p.ink;
-      ctx.fillText('V לאורך הקו המקווקו', gx1 - 4, top + 4);
+      ctx.fillText('V לאורך הקו המקווקו', gx1 - 4, my1 + 12);
       ctx.restore();
     }
   };
@@ -436,7 +439,11 @@ export default function PotentialMap(props: PotentialMapProps) {
   const { canvasRef, invalidate, viewRef } = useFigureCanvas(draw, { worldWidth: WORLD_W, worldHeight: worldH, animate: false });
   useEffect(invalidate, [s]);
 
-  const clamp = (pt: Vec2): Vec2 => [Math.max(-0.95, Math.min(0.95, pt[0])), Math.max(-0.52, Math.min(0.52, pt[1]))];
+  const clamp = (pt: Vec2): Vec2 => {
+    // near the midpoint of a pair P snaps onto it: a hand never lands exactly where the lesson says E = 0 or V = 0
+    if (charges.length === 2 && Math.hypot(pt[0], pt[1]) < SNAP) return [0, 0];
+    return [Math.max(-0.95, Math.min(0.95, pt[0])), Math.max(-0.52, Math.min(0.52, pt[1]))];
+  };
   const mapView = (): View | null => (viewRef.current ? { ...viewRef.current, oy: shift } : null);
   const onPointerDown = (e: PointerEvent) => {
     const v = mapView();
