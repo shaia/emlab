@@ -92,8 +92,9 @@ export default function PotentialLandscape(props: PotentialLandscapeProps) {
     return { preset, probe: CHARGE_PROBE_START[preset], lifted: true };
   };
   const [s, setS] = useState<State>(initial);
-  // a change that came from a text step must not tick a task: only the learner's own moves do
-  const fromStep = useRef(false);
+  // a state a text step produced must not tick a task: only the learner's own moves do. The state
+  // object itself is remembered, not a flag: two steps can land before the effect runs once
+  const fromStep = useRef<State | null>(null);
   const lowered = useRef(false);
   const [live, setLive] = useState('');
   const [want3d, setWant3d] = useState(false);
@@ -122,7 +123,6 @@ export default function PotentialLandscape(props: PotentialLandscapeProps) {
   useEffect(
     () =>
       subscribeSteps(props.id, (st) => {
-        fromStep.current = true;
         setS((prev) => {
           const next = { ...prev };
           if (typeof st.preset === 'string' && st.preset in CHARGE_PRESETS && st.preset !== prev.preset) {
@@ -131,6 +131,7 @@ export default function PotentialLandscape(props: PotentialLandscapeProps) {
           }
           if (Array.isArray(st.probe) && st.probe.length === 2) next.probe = [Number(st.probe[0]), Number(st.probe[1])];
           if (typeof st.lifted === 'boolean') next.lifted = st.lifted;
+          fromStep.current = next;
           return next;
         });
       }),
@@ -141,10 +142,7 @@ export default function PotentialLandscape(props: PotentialLandscapeProps) {
   const Emag = Math.hypot(h.E[0], h.E[1]);
 
   useEffect(() => {
-    if (fromStep.current) {
-      fromStep.current = false;
-      return;
-    }
+    if (s === fromStep.current) return;
     const has = (t: string) => props.tasks?.includes(t);
     const done = (t: string) => markTask(`${props.id}:${t}`);
     if (!s.lifted) lowered.current = true;
