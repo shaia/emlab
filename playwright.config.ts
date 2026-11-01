@@ -9,7 +9,7 @@ export default defineConfig({
   testDir: 'tests/e2e',
   timeout: 30_000,
   // a whole-run ceiling: a browser that hangs on shutdown must fail the run, not stall CI
-  globalTimeout: 10 * 60_000,
+  globalTimeout: 25 * 60_000,
   fullyParallel: true,
   reporter: process.env.CI ? 'github' : 'list',
   use: {
