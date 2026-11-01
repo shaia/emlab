@@ -1,7 +1,8 @@
 # Lesson 3.6 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
 # rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
 # Every number below was recomputed with src/physics/circuits.ts (loopCurrent, terminalVoltage,
-# powerIR, solveCircuit). The numbers differ on purpose from figure 3.6א and the worked example.
+# powerIR, solveCircuit). The data and the answers differ on purpose from figure 3.6א and the worked
+# example (which run at 2 A), so a learner cannot answer from memory.
 
 chapter: 3
 questions:
@@ -73,34 +74,34 @@ questions:
     type: numeric
     objectives: [OBJ-3.6-2]
     prompt: >-
-      לסוללה כא"מ של $12\,\text{V}$ והתנגדות פנימית של $0.5\,\Omega$. מחברים אליה נגד של $5.5\,\Omega$. מה הזרם במעגל? ענו באמפר.
-    answer: 2
+      לסוללה כא"מ של $9\,\text{V}$ והתנגדות פנימית של $0.5\,\Omega$. מחברים אליה נגד של $2.5\,\Omega$. מה הזרם במעגל? ענו באמפר.
+    answer: 3
     unit: A
     tolerance: 0.03
-    correctFeedback: 'נכון. $I = \dfrac{\varepsilon}{R + r} = \dfrac{12}{5.5 + 0.5} = 2\,\text{A}$.'
+    correctFeedback: 'נכון. $I = \dfrac{\varepsilon}{R + r} = \dfrac{9}{2.5 + 0.5} = 3\,\text{A}$.'
     wrongFeedback: 'הזרם עובר גם בנגד וגם בהתנגדות הפנימית, בטור: $I = \varepsilon/(R + r)$.'
     commonWrong:
-      - value: 2.18
-        feedback: 'שכחתם את ההתנגדות הפנימית: $12/5.5$. הזרם עובר גם בתוך הסוללה.'
+      - value: 3.6
+        feedback: 'שכחתם את ההתנגדות הפנימית: $9/2.5$. הזרם עובר גם בתוך הסוללה.'
         misconception: MC-terminal-equals-emf
-      - value: 24
+      - value: 18
         feedback: 'חילקתם רק בהתנגדות הפנימית. זה היה הזרם אילו ההדקים היו מחוברים בתיל (קצר).'
 
   - id: Q-3.6-terminal
     type: numeric
     objectives: [OBJ-3.6-2]
     prompt: >-
-      באותו מעגל ($\varepsilon = 12\,\text{V}$, $r = 0.5\,\Omega$, $R = 5.5\,\Omega$), מה יראה מד מתח שמחובר להדקי הסוללה? ענו בוולט.
-    answer: 11
+      באותו מעגל ($\varepsilon = 9\,\text{V}$, $r = 0.5\,\Omega$, $R = 2.5\,\Omega$), מה יראה מד מתח שמחובר להדקי הסוללה? ענו בוולט.
+    answer: 7.5
     unit: V
     tolerance: 0.03
-    correctFeedback: 'נכון. $V = \varepsilon - Ir = 12 - 2\cdot0.5 = 11\,\text{V}$, וזה גם $IR = 2\cdot5.5$.'
+    correctFeedback: 'נכון. $V = \varepsilon - Ir = 9 - 3\cdot0.5 = 7.5\,\text{V}$, וזה גם $IR = 3\cdot2.5$.'
     wrongFeedback: 'מתח ההדקים הוא הכא"מ פחות הירידה על ההתנגדות הפנימית: $V = \varepsilon - Ir$.'
     commonWrong:
-      - value: 12
+      - value: 9
         feedback: 'זה הכא"מ. כשזורם זרם, חלק ממנו נופל בתוך הסוללה.'
         misconception: MC-terminal-equals-emf
-      - value: 1
+      - value: 1.5
         feedback: 'זו הירידה בתוך הסוללה, $Ir$. מד המתח שעל ההדקים מראה את מה שנשאר: $\varepsilon - Ir$.'
 
   - id: Q-3.6-find-r
@@ -108,33 +109,35 @@ questions:
     objectives: [OBJ-3.6-2]
     level: mid
     prompt: >-
-      סוללה שהכא"מ שלה $9\,\text{V}$ מחוברת לנגד של $4\,\Omega$. מד מתח על ההדקים מראה $8\,\text{V}$. מה ההתנגדות הפנימית של הסוללה? ענו באוהם.
-    answer: 0.5
+      סוללה שהכא"מ שלה $6\,\text{V}$ מחוברת לנגד של $5\,\Omega$. מד מתח על ההדקים מראה $5\,\text{V}$. מה ההתנגדות הפנימית של הסוללה? ענו באוהם.
+    answer: 1
     unit: Ω
     tolerance: 0.03
-    correctFeedback: 'נכון. הזרם $I = V/R = 8/4 = 2\,\text{A}$. הירידה בתוך הסוללה $\varepsilon - V = 1\,\text{V}$, ולכן $r = 1/2 = 0.5\,\Omega$.'
+    correctFeedback: 'נכון. הזרם $I = V/R = 5/5 = 1\,\text{A}$. הירידה בתוך הסוללה $\varepsilon - V = 1\,\text{V}$, ולכן $r = 1/1 = 1\,\Omega$.'
     wrongFeedback: 'מצאו את הזרם מהנגד החיצוני, $I = V/R$, ואז $r = (\varepsilon - V)/I$.'
     commonWrong:
-      - value: 4.5
+      - value: 6
         feedback: 'חילקתם את הכא"מ בזרם: זו ההתנגדות הכוללת, $R + r$. צריך להחסיר ממנה את $R$.'
-      - value: 4
+      - value: 5
         feedback: 'זו ההתנגדות החיצונית, $V/I$. ההתנגדות הפנימית קשורה לירידה $\varepsilon - V$.'
+      - value: 0.833
+        feedback: 'חישבתם את הזרם כאילו כל הכא"מ על הנגד, $6/5 = 1.2\,\text{A}$, וחילקתם בו את הירידה $1\,\text{V}$. את הזרם מוצאים מהמתח שבאמת על הנגד, מתח ההדקים: $5/5 = 1\,\text{A}$.'
 
   - id: Q-3.6-power-loss
     type: numeric
     objectives: [OBJ-3.6-2]
     level: bagrut
     prompt: >-
-      לסוללה כא"מ של $9\,\text{V}$ והתנגדות פנימית של $1.5\,\Omega$, והיא מחוברת לנגד של $3\,\Omega$. כמה הספק הופך לחום **בתוך** הסוללה? ענו בוואט.
-    answer: 6
+      לסוללה כא"מ של $9\,\text{V}$ והתנגדות פנימית של $1\,\Omega$, והיא מחוברת לנגד של $2\,\Omega$. כמה הספק הופך לחום **בתוך** הסוללה? ענו בוואט.
+    answer: 9
     unit: W
     tolerance: 0.03
-    correctFeedback: 'נכון. $I = 9/4.5 = 2\,\text{A}$, ובסוללה $P = I^2r = 4\cdot1.5 = 6\,\text{W}$. הנגד מקבל $I^2R = 12\,\text{W}$, והסוללה מספקת בסך הכול $\varepsilon I = 18\,\text{W}$.'
+    correctFeedback: 'נכון. $I = 9/3 = 3\,\text{A}$, ובסוללה $P = I^2r = 9\cdot1 = 9\,\text{W}$. הנגד מקבל $I^2R = 18\,\text{W}$, והכא"מ עושה עבודה בהספק $\varepsilon I = 27\,\text{W}$.'
     wrongFeedback: 'מצאו את הזרם, $I = \varepsilon/(R + r)$, ואז $P = I^2r$ בהתנגדות הפנימית.'
     commonWrong:
-      - value: 12
-        feedback: 'זה ההספק בנגד החיצוני, $I^2R$. בתוך הסוללה משתמשים ב-$r$.'
       - value: 18
+        feedback: 'זה ההספק בנגד החיצוני, $I^2R$. בתוך הסוללה משתמשים ב-$r$.'
+      - value: 27
         feedback: 'זה כל ההספק של הכא"מ, $\varepsilon I$. רק חלק ממנו נשאר בסוללה.'
 
   # ------------------------------------------------ OBJ-3.6-3: load and short circuit
@@ -206,14 +209,14 @@ questions:
     qualitative: true
     level: mid
     prompt: >-
-      לסוללה כא"מ של $12\,\text{V}$ והתנגדות פנימית של $1\,\Omega$. מחברים אליה, בכל פעם, עומס אחר. סדרו את המצבים לפי מתח ההדקים, מהגדול לקטן.
+      לסוללה כא"מ של $9\,\text{V}$ והתנגדות פנימית של $1.5\,\Omega$. מחברים אליה, בכל פעם, נגד אחר. סדרו את המצבים לפי מתח ההדקים, מהגדול לקטן.
     items:
       - { id: open, label: 'שום דבר לא מחובר' }
-      - { id: r11, label: 'נגד של $11\,\Omega$' }
-      - { id: r5, label: 'נגד של $5\,\Omega$' }
-      - { id: r1, label: 'נגד של $1\,\Omega$' }
+      - { id: r11, label: 'נגד של $13.5\,\Omega$' }
+      - { id: r5, label: 'נגד של $4.5\,\Omega$' }
+      - { id: r1, label: 'נגד של $1.5\,\Omega$' }
     order: [open, r11, r5, r1]
-    correctFeedback: 'נכון: $12\,\text{V}$, $11\,\text{V}$, $10\,\text{V}$ ו-$6\,\text{V}$. ככל שההתנגדות החיצונית קטנה יותר, הזרם גדול יותר, ויותר מהכא"מ נופל בתוך הסוללה.'
+    correctFeedback: 'נכון: $9\,\text{V}$, $8.1\,\text{V}$, $6.75\,\text{V}$ ו-$4.5\,\text{V}$. ככל שההתנגדות החיצונית קטנה יותר, הזרם גדול יותר, ויותר מהכא"מ נופל בתוך הסוללה.'
     wrongFeedback: 'חשבו לכל מצב את הזרם, $I = \varepsilon/(R + r)$, ואת $V = \varepsilon - Ir$. בלי עומס $I = 0$.'
 
   - id: Q-3.6-energy-split
@@ -231,7 +234,5 @@ questions:
         misconception: MC-terminal-equals-emf
       - text: 'חלק לנגד, והשאר חוזר אל הסוללה ונאגר בה לפעם הבאה.'
         feedback: 'האנרגיה שלא הגיעה לנגד לא נאגרת: היא הופכת לחום בתוך הסוללה.'
-        misconception: MC-battery-stores-charge
       - text: 'כולה הופכת לחום בתוך הסוללה, והנגד מקבל רק את הזרם.'
         feedback: 'הנגד מקבל אנרגיה, $I^2R$ בכל שנייה, ולכן הוא מתחמם או מאיר. רק החלק $I^2r$ נשאר בסוללה.'
-        misconception: MC-current-used-up

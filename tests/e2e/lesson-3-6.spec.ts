@@ -75,18 +75,18 @@ test.describe('predict, then reveal', () => {
 });
 
 test.describe('questions', () => {
-  test('numeric: "the terminal voltage is the EMF" is caught as that misconception, then 11 V passes', async ({ page }) => {
+  test('numeric: "the terminal voltage is the EMF" is caught as that misconception, then 7.5 V passes', async ({ page }) => {
     await page.goto(LESSON);
     const q = page.locator('[data-qid="Q-3.6-terminal"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(q);
     const input = q.locator('input[type=text]');
-    await input.fill('12');
+    await input.fill('9');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     const a = (await progress(page)).attempts.at(-1);
     expect(a).toMatchObject({ qid: 'Q-3.6-terminal', correct: false, misconception: 'MC-terminal-equals-emf', lesson: '3.6' });
     await q.getByRole('button', { name: 'נסו שוב' }).click();
-    await input.fill('11');
+    await input.fill('7.5');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-right/);
   });

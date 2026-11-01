@@ -202,6 +202,99 @@ const emf: Preset = {
   loops: { main: [[0, 2], [0, 0], [5, 0], [5, 2]] },
 };
 
+/** real meters, rightly placed: the ammeter (0.1 Ω) in line, the voltmeter (10 kΩ) across the bulb (3.7) */
+const metersRight: Preset = {
+  board: {
+    cols: 5,
+    rows: 3,
+    parts: [
+      { id: 'eps', kind: 'battery', from: [0, 2], to: [0, 1], emf: 12, r: 0, locked: true },
+      ...run('wl', [0, 1], [0, 0], [1, 0]),
+      { id: 'A1', kind: 'ammeter', from: [1, 0], to: [2, 0], R: 0.1, locked: true },
+      ...run('wt', [2, 0], [3, 0], [4, 0]),
+      w('wm', [2, 0], [2, 1]),
+      { id: 'L1', kind: 'bulb', from: [2, 1], to: [2, 2], R: 6, locked: true },
+      w('wv', [4, 0], [4, 1]),
+      { id: 'V1', kind: 'voltmeter', from: [4, 1], to: [4, 2], R: 1e4, locked: true },
+      ...run('wb', [4, 2], [3, 2], [2, 2], [1, 2], [0, 2]),
+    ],
+  },
+};
+
+/** the voltmeter put in line, where the ammeter belongs (3.7) */
+const vSeries: Preset = {
+  board: {
+    cols: 5,
+    rows: 3,
+    parts: [
+      { id: 'eps', kind: 'battery', from: [0, 2], to: [0, 1], emf: 12, r: 0, locked: true },
+      ...run('wl', [0, 1], [0, 0], [1, 0]),
+      { id: 'V1', kind: 'voltmeter', from: [1, 0], to: [2, 0], R: 1e4, locked: true },
+      w('wm', [2, 0], [2, 1]),
+      { id: 'L1', kind: 'bulb', from: [2, 1], to: [2, 2], R: 6, locked: true },
+      ...run('wb', [2, 2], [1, 2], [0, 2]),
+    ],
+  },
+};
+
+/** the ammeter put across the bulb, where the voltmeter belongs: a short through the meter (3.7) */
+const aParallel: Preset = {
+  board: {
+    cols: 5,
+    rows: 3,
+    parts: [
+      { id: 'eps', kind: 'battery', from: [0, 2], to: [0, 1], emf: 12, r: 0.5, locked: true },
+      ...run('wl', [0, 1], [0, 0], [1, 0], [2, 0], [3, 0], [4, 0]),
+      w('wm', [2, 0], [2, 1]),
+      { id: 'L1', kind: 'bulb', from: [2, 1], to: [2, 2], R: 6, locked: true },
+      w('wa', [4, 0], [4, 1]),
+      { id: 'A1', kind: 'ammeter', from: [4, 1], to: [4, 2], R: 0.1, locked: true },
+      ...run('wb', [4, 2], [3, 2], [2, 2], [1, 2], [0, 2]),
+    ],
+  },
+};
+
+/** two 10 kΩ resistors on 12 V, and a voltmeter of adjustable resistance across the lower one (3.7) */
+const loading: Preset = {
+  board: {
+    cols: 5,
+    rows: 3,
+    parts: [
+      { id: 'eps', kind: 'battery', from: [0, 2], to: [0, 1], emf: 12, r: 0, locked: true },
+      ...run('wl', [0, 1], [0, 0], [1, 0]),
+      { id: 'R1', kind: 'resistor', from: [1, 0], to: [2, 0], R: 1e4, locked: true },
+      ...run('wt', [2, 0], [3, 0], [4, 0]),
+      w('wm', [2, 0], [2, 1]),
+      { id: 'R2', kind: 'resistor', from: [2, 1], to: [2, 2], R: 1e4, locked: true },
+      w('wv', [4, 0], [4, 1]),
+      { id: 'V1', kind: 'voltmeter', from: [4, 1], to: [4, 2], R: 1e4, locked: true },
+      ...run('wb', [4, 2], [3, 2], [2, 2], [1, 2], [0, 2]),
+    ],
+  },
+};
+
+/** a rheostat in series with a bulb, an ammeter in line and a voltmeter across the bulb (3.7) */
+const rheostat: Preset = {
+  board: {
+    cols: 5,
+    rows: 3,
+    parts: [
+      { id: 'eps', kind: 'battery', from: [0, 2], to: [0, 1], emf: 12, r: 0, locked: true },
+      ...run('wl', [0, 1], [0, 0], [1, 0]),
+      { id: 'Rv', kind: 'rheostat', from: [1, 0], to: [2, 0], R: 6, locked: true },
+      ...run('wt', [2, 0], [3, 0], [4, 0]),
+      w('wm', [2, 0], [2, 1]),
+      { id: 'L1', kind: 'bulb', from: [2, 1], to: [2, 2], R: 6, locked: true },
+      w('wv', [4, 0], [4, 1]),
+      { id: 'V1', kind: 'voltmeter', from: [4, 1], to: [4, 2], locked: true },
+      ...run('wb', [4, 2], [3, 2]),
+      w('wb2', [3, 2], [2, 2]),
+      { id: 'A1', kind: 'ammeter', from: [2, 2], to: [1, 2], locked: true },
+      w('wb3', [1, 2], [0, 2]),
+    ],
+  },
+};
+
 /** an empty builder board with a battery (3.5) */
 const blank: Preset = {
   board: {
@@ -223,4 +316,9 @@ export const PRESETS: Record<string, Preset> = {
   mixed3,
   blank,
   emf,
+  meters: metersRight,
+  'v-series': vSeries,
+  'a-parallel': aParallel,
+  loading,
+  rheostat,
 };

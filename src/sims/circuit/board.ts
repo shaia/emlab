@@ -59,7 +59,8 @@ export function elementOf(b: Board, p: Part): Element {
     case 'resistor':
     case 'bulb':
     case 'rheostat':
-      return { kind: 'R', a, b: c, R: p.R ?? 6 };
+      // a rheostat turned all the way down is a plain wire (the solver cannot divide by zero ohms)
+      return (p.R ?? 6) > 1e-9 ? { kind: 'R', a, b: c, R: p.R ?? 6 } : { kind: 'wire', a, b: c };
     case 'battery':
       return { kind: 'battery', a, b: c, emf: p.emf ?? 12, r: p.r ?? 0 };
     case 'switch':

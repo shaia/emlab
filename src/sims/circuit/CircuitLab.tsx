@@ -57,6 +57,11 @@ const PRESET_LABEL: Record<string, string> = {
   mixed3: 'מעורב',
   blank: 'לוח ריק',
   emf: 'סוללה אמיתית',
+  meters: 'חיבור נכון',
+  'v-series': 'מד מתח בטור',
+  'a-parallel': 'מד זרם במקביל',
+  loading: 'מד מתח על מחלק מתח',
+  rheostat: 'נגד משתנה',
 };
 
 const TOOL_LABEL: Record<Tool, string> = {
@@ -103,7 +108,12 @@ const TASK_LABEL: Record<string, string> = {
   'build-parallel': 'בנו מעגל שבו שתי נורות דולקות במקביל.',
   'load-down': 'הקטינו את ההתנגדות החיצונית R₁. מה קורה לזרם, ומה למתח בין ההדקים?',
   'r-zero': 'הקטינו את ההתנגדות הפנימית לאפס. מה מראה עכשיו מד המתח?',
-  'short-emf': 'סגרו את המפסק, שמחבר את שני הצדדים של R₁ בתיל. מה הזרם, ומה המתח בין ההדקים?',
+  'short-emf': 'החזירו את r ל-1 Ω, וסגרו את המפסק, שמחבר את שני הצדדים של R₁ בתיל. מה הזרם, ומה המתח בין ההדקים?',
+  'v-series': 'עברו ל"מד מתח בטור". מה מראה מד המתח, והאם הנורה דולקת?',
+  'a-parallel': 'עברו ל"מד זרם במקביל". מה מראה מד הזרם, והאם הנורה דולקת?',
+  'meter-1M': 'הגדילו את ההתנגדות של מד המתח למגה-אוהם. מתי הוא מראה את המתח שהיה בלעדיו?',
+  dim: 'הגדילו את ההתנגדות של הנגד המשתנה. מה קורה לזרם ולבהירות של הנורה?',
+  full: 'הקטינו את הנגד המשתנה לאפס. מה המתח על הנורה עכשיו?',
 };
 
 export interface CircuitLabProps {
@@ -126,7 +136,10 @@ export interface CircuitLabProps {
   measure?: Measure[];
   /** write each resistor's and bulb's resistance beside it (default false: lessons 3.1–3.2 come before resistance) */
   showValues?: boolean;
-  /** sliders: 'L2:R', 'eps:emf', 'eps:r', with an optional label: 'eps:emf:המתח של הסוללה' */
+  /**
+   * sliders: 'L2:R', 'eps:emf', 'eps:r', with an optional label: 'eps:emf:המתח של הסוללה'. A meter's
+   * resistance spans decades: 'V1:R:label:log' slides log₁₀ R from 1 kΩ to 1 MΩ.
+   */
   sliders?: string[];
   tasks?: string[];
 }
@@ -149,7 +162,7 @@ const clean = (x: number) => (Math.abs(x) < 1e-9 ? 0 : x);
 const volts = (V: number) => (Number.isNaN(V) ? '—' : `${sci(clean(V))} V`);
 const amps = (I: number) => `${sci(Math.abs(clean(I)))} A`;
 const watts = (P: number) => `${sci(Math.abs(clean(P)))} W`;
-const ohms = (R: number) => `${sci(R)} Ω`;
+const ohms = (R: number) => (R >= 1e6 ? `${sci(R / 1e6)} MΩ` : R >= 1e3 ? `${sci(R / 1e3)} kΩ` : `${sci(R)} Ω`);
 
 /* -------------------------------------------------------------- geometry */
 
@@ -308,6 +321,8 @@ export default function CircuitLab(props: CircuitLabProps) {
     if (has('add-parallel') && st.preset === 'parallel-pair' && closedS) done('add-parallel');
     if (has('mixed-add') && st.preset === 'mixed3' && closedS) done('mixed-add');
     if (has('short-emf') && st.preset === 'emf' && closedS) done('short-emf');
+    if (has('v-series') && st.preset === 'v-series') done('v-series');
+    if (has('a-parallel') && st.preset === 'a-parallel') done('a-parallel');
     const battery = b.parts.find((p) => p.kind === 'battery');
     const emf = battery?.emf ?? 0;
     const lit = b.parts.filter((p) => p.kind === 'bulb' && Math.abs(so.parts[p.id]?.I ?? 0) > 1e-6);
@@ -653,6 +668,9 @@ export default function CircuitLab(props: CircuitLabProps) {
       if (key === 'emf' && has('double-emf') && original?.emf === 6 && v === 12 && bulb?.R === originalBulb?.R) done('double-emf');
       if (key === 'R' && has('load-down') && before?.kind === 'resistor' && v < (original?.R ?? 0)) done('load-down');
       if (key === 'r' && has('r-zero') && v === 0) done('r-zero');
+      if (key === 'R' && has('meter-1M') && before?.kind === 'voltmeter' && v >= 1e6) done('meter-1M');
+      if (key === 'R' && has('dim') && before?.kind === 'rheostat' && v > (original?.R ?? 0)) done('dim');
+      if (key === 'R' && has('full') && before?.kind === 'rheostat' && v < 0.01) done('full');
       // below the preset's own resistance, at the doubled voltage
       if (key === 'R' && has('lower-R') && before?.kind === 'bulb' && v < (originalBulb?.R ?? 6) && next.board.parts.some((q) => q.kind === 'battery' && q.emf === 12)) done('lower-R');
       return next;
@@ -666,7 +684,7 @@ export default function CircuitLab(props: CircuitLabProps) {
   const offered = props.presets ?? [];
 
   const sliderFor = (spec: string) => {
-    const [id, key, custom] = spec.split(':') as [string, 'R' | 'emf' | 'r', string | undefined];
+    const [id, key, custom, scale] = spec.split(':') as [string, 'R' | 'emf' | 'r', string | undefined, string | undefined];
     const part = s.board.parts.find((q) => q.id === id);
     if (!part) return null;
     const name = labelOf(id);
@@ -674,6 +692,19 @@ export default function CircuitLab(props: CircuitLabProps) {
       return <Slider key={spec} label={custom ?? `הכא"מ של ${name}`} value={part.emf ?? 12} min={1.5} max={24} step={1.5} format={volts} onChange={(v) => setValue(id, 'emf', v)} />;
     if (key === 'r')
       return <Slider key={spec} label={custom ?? `ההתנגדות הפנימית של ${name}`} value={part.r ?? 0} min={0} max={4} step={0.5} format={ohms} onChange={(v) => setValue(id, 'r', v)} />;
+    if (scale === 'log')
+      return (
+        <Slider
+          key={spec}
+          label={custom ?? `ההתנגדות של ${name}`}
+          value={Math.log10(part.R ?? 1e4)}
+          min={3}
+          max={6}
+          step={0.5}
+          format={(x) => ohms(Math.round(10 ** x))}
+          onChange={(x) => setValue(id, 'R', Math.round(10 ** x))}
+        />
+      );
     const lo = part.kind === 'rheostat' ? 0 : 1;
     return <Slider key={spec} label={custom ?? `ההתנגדות של ${name}`} value={part.R ?? 6} min={lo} max={24} step={1} format={ohms} onChange={(v) => setValue(id, 'R', Math.max(v, 1e-3))} />;
   };
