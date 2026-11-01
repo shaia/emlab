@@ -62,6 +62,7 @@ const TASK_LABEL: Record<string, string> = {
   'lines-double': 'לחצו על המטען והגדילו אותו פי 2. כמה קווים נוספו? מה קרה לצפיפות הקווים ליד המטען?',
   'probe-tangent': 'גררו את מטען הבוחן למקומות שונים. באיזה כיוון החץ E ביחס לקווים שליד מטען הבוחן?',
   'flip-sign': 'לחצו על אחד המטענים והפכו את סימנו. לאן הולכים עכשיו הקווים שיוצאים מהמטען החיובי?',
+  'show-lines': 'הדליקו את קווי השדה בכפתור שמתחת לאיור.',
 };
 
 /** One field line per this much charge: the rule "the number of lines is proportional to the charge". */
@@ -118,6 +119,8 @@ export interface FieldExplorerProps {
   /** show the q₀ slider (default true) */
   showQ0Control?: boolean;
   tasks?: string[];
+  /** the lesson's own wording for some tasks (lesson 0.1 introduces the figure before its physics) */
+  taskLabels?: Record<string, string>;
 }
 
 function initial(p: FieldExplorerProps): State {
@@ -151,7 +154,7 @@ export default function FieldExplorer(props: FieldExplorerProps) {
   const drag = useRef<{ what: number | 'probe'; dx: number; dy: number } | null>(null);
   const linesCache = useRef<{ key: string; lines: [number, number][][] }>({ key: '', lines: [] });
   const [live, setLive] = useState('');
-  const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: TASK_LABEL[id] ?? id }));
+  const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: props.taskLabels?.[id] ?? TASK_LABEL[id] ?? id }));
 
   // text steps beside the figure set its state
   useEffect(
@@ -197,6 +200,7 @@ export default function FieldExplorer(props: FieldExplorerProps) {
     if (has('probe-tangent') && s.showLines && s.showProbe && Math.hypot(s.probe[0] - st.probe[0], s.probe[1] - st.probe[1]) > 0.2) {
       done('probe-tangent');
     }
+    if (has('show-lines') && s.showLines) done('show-lines');
     if (has('find-null') && s.charges.length >= 2 && s.showProbe) {
       const [ex, ey] = fieldAt(s.charges, s.probe[0], s.probe[1]);
       if (Math.hypot(ex, ey) < 0.12 * refField(s.charges)) done('find-null');

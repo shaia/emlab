@@ -122,7 +122,8 @@ test.describe('reference pages', () => {
     for (const name of ['המסלול שלי', 'דף נוסחאות', 'מילון']) {
       await expect(page.locator('header nav').getByRole('link', { name })).toBeVisible();
     }
-    await expect(page.getByRole('link', { name: 'דף תרגול' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'מבחן פרק' })).toBeVisible();
+    // one practice page and one chapter test per chapter with a question bank (chapters 0 and 1 so far)
+    await expect(page.getByRole('link', { name: 'דף תרגול' }).first()).toBeVisible();
+    await expect(page.getByRole('link', { name: 'מבחן פרק' }).first()).toBeVisible();
   });
 });

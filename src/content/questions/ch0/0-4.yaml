@@ -1,0 +1,278 @@
+# Chapter 0 question bank, lesson 0.4. Format and rules: see questions/ch1/1-5.yaml.
+# Numbers recomputed with src/physics/lab.ts (springLength, fitLine) and constants.ts (K).
+
+chapter: 0
+questions:
+  # ---------------------------------------------------------------- 0.4 graphs and linearization
+  - id: Q-0.4-slope-calc
+    type: numeric
+    objectives: [OBJ-0.4-1]
+    prompt: >-
+      בגרף של מקום (ב-m) מול זמן (ב-s), קו ישר עובר בנקודות $(2\,\text{s},\ 3\,\text{m})$ ו-$(6\,\text{s},\ 11\,\text{m})$. מה השיפוע שלו?
+    answer: 2
+    unit: m/s
+    tolerance: 0.02
+    correctFeedback: 'נכון: $\dfrac{\Delta y}{\Delta x} = \dfrac{11 - 3}{6 - 2} = \dfrac{8\,\text{m}}{4\,\text{s}} = 2\,\text{m/s}$. בגרף של מקום מול זמן, השיפוע הוא המהירות.'
+    wrongFeedback: 'השיפוע הוא השינוי בציר האנכי חלקי השינוי בציר האופקי, בין שתי הנקודות.'
+    commonWrong:
+      - value: 0.5
+        feedback: 'הפכתם את השבר: $\Delta x/\Delta y$. השיפוע הוא $\Delta y/\Delta x$.'
+      - value: 1.83
+        feedback: 'חילקתם $y$ ב-$x$ של נקודה אחת ($11/6$). זה שווה לשיפוע רק כשהקו עובר בראשית, וכאן הוא לא.'
+        misconception: MC-slope-from-data-points
+      - value: 1.5
+        feedback: 'חילקתם $y$ ב-$x$ של נקודה אחת ($3/2$). זה שווה לשיפוע רק כשהקו עובר בראשית, וכאן הוא לא.'
+        misconception: MC-slope-from-data-points
+
+  - id: Q-0.4-slope-units
+    type: mc
+    objectives: [OBJ-0.4-1]
+    qualitative: true
+    prompt: >-
+      בגרף, על הציר האנכי מהירות ב-$\text{m/s}$, ועל הציר האופקי זמן ב-$\text{s}$. מה היחידות של השיפוע?
+    choices:
+      - text: '$\text{m/s}^2$'
+        correct: true
+        feedback: 'נכון. $\text{m/s}$ חלקי $\text{s}$ הם $\text{m/s}^2$: השיפוע של גרף מהירות-זמן הוא התאוצה.'
+      - text: לשיפוע אין יחידות. הוא רק מספר.
+        feedback: 'לשיפוע יש יחידות: היחידות של הציר האנכי חלקי היחידות של הציר האופקי. הן אומרות איזה גודל פיזיקלי הוא מייצג.'
+        misconception: MC-slope-no-units
+      - text: '$\text{m/s}$'
+        feedback: 'אלה היחידות של הציר האנכי בלבד. השיפוע הוא $\Delta y/\Delta x$, ולכן מחלקים גם ביחידות של $x$.'
+        misconception: MC-slope-no-units
+      - text: '$\text{s}^2/\text{m}$'
+        feedback: 'הפכתם את השבר. השיפוע הוא יחידות $y$ חלקי יחידות $x$.'
+
+  - id: Q-0.4-intercept-meaning
+    type: mc
+    objectives: [OBJ-0.4-1, OBJ-0.4-2]
+    qualitative: true
+    prompt: >-
+      בגרף של האורך של קפיץ $L$ מול הכוח $F$ שמותח אותו, הקו הישר חותך את הציר האנכי ב-$0.12\,\text{m}$. מה המשמעות?
+    choices:
+      - text: זה האורך של הקפיץ כשלא תלוי עליו כלום.
+        correct: true
+        feedback: 'נכון. בנקודת החיתוך $F = 0$, ולכן זה האורך הטבעי של הקפיץ.'
+      - text: זה האורך שבו הקפיץ נקרע.
+        feedback: 'בנקודת החיתוך עם הציר האנכי $F = 0$. זה המצב בלי שום עומס, ההפך מקריעה.'
+      - text: זו שגיאת מדידה, כי הקו של קפיץ חייב לעבור בראשית.
+        feedback: 'קו שעובר בראשית פירושו שבלי כוח האורך הוא אפס. אבל לקפיץ יש אורך גם בלי כוח. כאן הקשר קווי, ולא יחס ישר.'
+        misconception: MC-linear-means-proportional
+
+  - id: Q-0.4-slope-points
+    type: twotier
+    objectives: [OBJ-0.4-1]
+    qualitative: true
+    prompt: >-
+      ציירתם את הקו המתאים ביותר לנקודות המדידה. מאילו נקודות כדאי לחשב את השיפוע שלו?
+    choices:
+      - text: משתי נקודות על הקו, רחוקות זו מזו.
+        correct: true
+        feedback: נכון. נקודות על הקו, ולא נקודות מדידה, ורחוקות זו מזו.
+      - text: משתי מדידות מהטבלה, הראשונה והאחרונה.
+        feedback: 'כך מתעלמים מכל שאר המדידות, וכל שגיאה בשתי האלה עוברת לשיפוע. הקו המתאים ביותר כבר "שקלל" את כולן.'
+        misconception: MC-slope-from-data-points
+      - text: משתי נקודות על הקו, קרובות זו לזו.
+        feedback: 'בנקודות קרובות $\Delta x$ קטן, ושגיאה קטנה בקריאת הגרף משנה את השיפוע הרבה. בחרו נקודות רחוקות.'
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: הקו שקלל את השגיאות של כל המדידות, ונקודות רחוקות מקטינות את ההשפעה של שגיאה בקריאת הגרף.
+        correct: true
+        feedback: בדיוק. ועוד הרגל טוב לבגרות, מסמנים על הגרף את שתי הנקודות שבחרתם, כדי שאפשר יהיה לבדוק את החישוב.
+      - text: המדידות הן הנתונים האמיתיים, והקו הוא רק קישוט.
+        feedback: 'לכל מדידה יש שגיאה. הקו הוא הדרך לשקלל את כולן, ולכן השיפוע שלו טוב יותר מכל זוג מדידות.'
+        misconception: MC-slope-from-data-points
+      - text: כך החישוב קצר יותר.
+        feedback: החישוב באורך זהה בכל מקרה. הסיבה היא הדיוק.
+
+  - id: Q-0.4-proportional
+    type: mc
+    objectives: [OBJ-0.4-2]
+    qualitative: true
+    prompt: >-
+      איזה גרף מתאר **יחס ישר** בין $y$ לבין $x$?
+    choices:
+      - text: קו ישר שעובר בראשית.
+        correct: true
+        feedback: נכון. רק אז הכפלה של $x$ מכפילה גם את $y$.
+      - text: כל קו ישר.
+        feedback: 'קו ישר שלא עובר בראשית הוא קשר קווי, $y = ax + b$, אבל לא יחס ישר: הכפלת $x$ לא מכפילה את $y$.'
+        misconception: MC-linear-means-proportional
+      - text: קו ישר יורד.
+        feedback: 'בקו יורד, $y$ קטן כש-$x$ גדל. ביחס ישר הם גדלים יחד.'
+      - text: עקומה שעולה כל הזמן.
+        feedback: 'בעקומה, הכפלת $x$ לא מכפילה את $y$ בדיוק פי 2. יחס ישר הוא תמיד קו ישר.'
+
+  - id: Q-0.4-double-L
+    type: numeric
+    objectives: [OBJ-0.4-2]
+    prompt: >-
+      קפיץ שאורכו הטבעי $0.12\,\text{m}$ מתארך לפי חוק הוק, עם $k = 50\,\text{N/m}$. כשתולים עליו כוח של $2\,\text{N}$, אורכו $0.16\,\text{m}$.
+      מה יהיה אורכו בכוח של $4\,\text{N}$?
+    answer: 0.2
+    unit: m
+    tolerance: 0.02
+    correctFeedback: 'נכון: $L = L_0 + F/k = 0.12 + 4/50 = 0.20\,\text{m}$. ההתארכות הוכפלה (מ-4 ס"מ ל-8 ס"מ), אבל האורך לא.'
+    wrongFeedback: 'האורך הוא האורך הטבעי ועוד ההתארכות. רק ההתארכות ביחס ישר לכוח.'
+    commonWrong:
+      - value: 0.32
+        feedback: 'הכפלתם את כל האורך. אבל רק ההתארכות, $L - L_0$, ביחס ישר לכוח. האורך הטבעי לא משתנה.'
+        misconception: MC-linear-means-proportional
+      - value: 0.08
+        feedback: 'זו ההתארכות בלבד. האורך הוא האורך הטבעי ועוד ההתארכות.'
+
+  - id: Q-0.4-twotier-origin
+    type: twotier
+    objectives: [OBJ-0.4-2]
+    qualitative: true
+    prompt: >-
+      הגרף של $y$ מול $x$ הוא קו ישר שעולה, וחותך את הציר האנכי ב-$y = 5$. מכפילים את $x$. האם גם $y$ מוכפל?
+    choices:
+      - text: לא.
+        correct: true
+        feedback: נכון. הקו לא עובר בראשית, ולכן זה לא יחס ישר.
+      - text: כן.
+        feedback: 'בקו שעובר בראשית התשובה הייתה כן. כאן כבר ב-$x = 0$ יש $y = 5$, וה-5 הזה לא מוכפל כשמכפילים את $x$.'
+        misconception: MC-linear-means-proportional
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: '$y = 5 + ax$. כשמכפילים את $x$, רק החלק $ax$ מוכפל, וה-5 נשאר.'
+        correct: true
+        feedback: 'בדיוק. למשל עם $a = 1$: ב-$x = 2$, $y = 7$, וב-$x = 4$, $y = 9$. לא פי 2.'
+      - text: בקו ישר כל גודל ביחס ישר לגודל השני.
+        feedback: 'רק בקו ישר שעובר בראשית. נקודת החיתוך $y = 5$ מוסיפה קבוע שלא מוכפל.'
+        misconception: MC-linear-means-proportional
+      - text: '$y$ מוכפל רק אם השיפוע שלילי.'
+        feedback: 'סימן השיפוע לא משנה את העניין. מה שקובע הוא אם הקו עובר בראשית.'
+
+  - id: Q-0.4-choose-fall
+    type: mc
+    objectives: [OBJ-0.4-3]
+    prompt: >-
+      בנפילה חופשית ממנוחה $d = \tfrac12 g t^2$. מה כדאי לשים על הציר האופקי כדי שהגרף של $d$ יהיה קו ישר?
+    choices:
+      - text: '$t^2$'
+        correct: true
+        feedback: 'נכון. $d = (\tfrac12 g)\cdot t^2$ הוא קו ישר מול $t^2$, עם שיפוע $\tfrac12 g$.'
+      - text: '$t$'
+        feedback: 'מול $t$ הנקודות מתעקמות כלפי מעלה, כי $d$ תלוי בריבוע של $t$.'
+        misconception: MC-curve-means-no-law
+      - text: '$\sqrt{t}$'
+        feedback: 'מול $\sqrt t$ העקומה עוד חזקה יותר. כדי לקבל קו ישר שמים על הציר את מה שמופיע בנוסחה: $t^2$.'
+      - text: '$1/t$'
+        feedback: 'מול $1/t$ הגרף יורד, אבל $d$ גדל עם הזמן. שימו על הציר את מה שמופיע בנוסחה: $t^2$.'
+
+  - id: Q-0.4-choose-inverse
+    type: twotier
+    objectives: [OBJ-0.4-3]
+    qualitative: true
+    prompt: >-
+      הכוח בין שני כדורים טעונים קטן כשמרחיקים אותם. תלמיד שם על הציר האופקי $1/r$, וקיבל עקומה. מה זה אומר?
+    choices:
+      - text: 'שהכוח לא ביחס הפוך ל-$r$. צריך לנסות גודל אחר, למשל $1/r^2$.'
+        correct: true
+        feedback: 'נכון. בדיוק כך מגלים שהכוח החשמלי יורד כמו $1/r^2$.'
+      - text: שהמדידות שגויות, כי כוח שקטן עם המרחק הוא תמיד ביחס הפוך.
+        feedback: 'גודל שקטן עם המרחק יכול לקטון בהרבה דרכים: כמו $1/r$, כמו $1/r^2$ או אחרת. העקומה היא מידע, לא שגיאה.'
+        misconception: MC-decreasing-means-inverse
+      - text: שאין קשר פשוט בין הכוח למרחק.
+        feedback: 'עקומה מול $1/r$ אומרת רק שהקשר אינו $1/r$. ייתכן מאוד שהוא קשר פשוט אחר. נסו $1/r^2$.'
+        misconception: MC-curve-means-no-law
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: 'גודל שקטן כש-$r$ גדל יכול להתנהג כמו $1/r$, כמו $1/r^2$ או אחרת. רק הגרף מכריע.'
+        correct: true
+        feedback: בדיוק. ליניאריזציה היא דרך לבדוק איזה מהקשרים מתאים לנתונים.
+      - text: כל עקומה בגרף פירושה שגיאת מדידה.
+        feedback: 'עקומה יכולה להיות חוק טבע מדויק, למשל $d = \tfrac12 gt^2$ מול $t$. שגיאות מדידה מפזרות נקודות סביב הקו, הן לא מעקמות אותו.'
+        misconception: MC-curve-means-no-law
+      - text: ביחס הפוך מקבלים תמיד קו ישר מול $r$ עצמו.
+        feedback: 'ביחס הפוך, גרף מול $r$ הוא עקומה. הקו הישר מתקבל מול $1/r$.'
+        misconception: MC-decreasing-means-inverse
+
+  - id: Q-0.4-choose-sqrt
+    type: mc
+    objectives: [OBJ-0.4-3]
+    prompt: >-
+      בניסוי נמצא שזמן $T$ קשור לאורך $L$ לפי $T = c\sqrt{L}$, כאשר $c$ קבוע. מה כדאי לשים על הציר האופקי כדי שהגרף של $T$ יהיה קו ישר?
+    choices:
+      - text: '$\sqrt{L}$'
+        correct: true
+        feedback: 'נכון. $T = c\cdot\sqrt L$ הוא קו ישר מול $\sqrt L$, עם שיפוע $c$, דרך הראשית.'
+      - text: '$L$'
+        feedback: 'מול $L$ הגרף מתעקם ומשתטח, כי $T$ גדל כמו השורש של $L$.'
+        misconception: MC-curve-means-no-law
+      - text: '$L^2$'
+        feedback: 'מול $L^2$ העקומה עוד חזקה יותר. שימו על הציר את מה שמופיע בנוסחה: $\sqrt L$.'
+      - text: '$1/L$'
+        feedback: '$T$ גדל עם $L$, ולכן מול $1/L$ הגרף יורד ומתעקם. שימו על הציר את מה שמופיע בנוסחה.'
+
+  - id: Q-0.4-g-from-slope
+    type: numeric
+    objectives: [OBJ-0.4-4]
+    prompt: >-
+      בניסוי נפילה חופשית ציירו גרף של $d$ (ב-m) מול $t^2$ (ב-$\text{s}^2$). השיפוע של הקו המתאים ביותר הוא $4.9\,\text{m/s}^2$. מה ערך $g$ לפי הניסוי?
+    answer: 9.8
+    unit: m/s²
+    tolerance: 0.02
+    correctFeedback: 'נכון. $d = \tfrac12 g t^2$, ולכן השיפוע הוא $\tfrac12 g$, ו-$g = 2\cdot 4.9 = 9.8\,\text{m/s}^2$.'
+    wrongFeedback: 'השוו את $d = \tfrac12 g t^2$ לקו ישר $y = a\,x$, עם $x = t^2$. השיפוע $a$ הוא מה שמכפיל את $t^2$.'
+    commonWrong:
+      - value: 4.9
+        feedback: 'זה השיפוע עצמו. אבל השיפוע הוא $\tfrac12 g$, ולכן $g$ כפול ממנו.'
+      - value: 2.45
+        feedback: 'חילקתם ב-2 במקום להכפיל. השיפוע הוא חצי מ-$g$, ולכן $g$ גדול ממנו.'
+
+  - id: Q-0.4-k-from-slope
+    type: numeric
+    objectives: [OBJ-0.4-4]
+    prompt: >-
+      בגרף של האורך של קפיץ $L$ (ב-m) מול הכוח $F$ (ב-N), השיפוע של הקו המתאים ביותר הוא $0.025\,\text{m/N}$. מה קבוע הקפיץ $k$?
+    answer: 40
+    unit: N/m
+    tolerance: 0.02
+    correctFeedback: 'נכון. $L = L_0 + F/k$, ולכן השיפוע הוא $1/k$, ו-$k = 1/0.025 = 40\,\text{N/m}$.'
+    wrongFeedback: 'השוו את $L = L_0 + \frac{1}{k}F$ לקו ישר $y = b + a\,x$. השיפוע $a$ הוא מה שמכפיל את $F$.'
+    commonWrong:
+      - value: 0.025
+        feedback: 'זה השיפוע, ויחידותיו $\text{m/N}$. היחידות של $k$ הן $\text{N/m}$, ההפך. השיפוע הוא $1/k$.'
+        misconception: MC-slope-no-units
+
+  - id: Q-0.4-slope-meaning-coulomb
+    type: mc
+    objectives: [OBJ-0.4-4]
+    qualitative: true
+    prompt: >-
+      בשיעור 1.3 תפגשו את חוק קולון, $F = \dfrac{kq_1q_2}{r^2}$: $F$ הוא הכוח בין שני כדורים טעונים, $q_1$ ו-$q_2$ הם המטענים שלהם,
+      $r$ המרחק ביניהם, ו-$k$ קבוע (לא קבוע הקפיץ). בגרף של $F$ מול $1/r^2$, מה מייצג השיפוע?
+    choices:
+      - text: '$kq_1q_2$'
+        correct: true
+        feedback: 'נכון. $F = (kq_1q_2)\cdot\dfrac{1}{r^2}$, ולכן מה שמכפיל את $1/r^2$ הוא השיפוע. יחידותיו $\text{N}\cdot\text{m}^2$.'
+      - text: '$k$ בלבד'
+        feedback: 'גם $q_1q_2$ מכפילים את $1/r^2$. השיפוע הוא כל מה שעומד ליד הגודל שעל הציר האופקי.'
+      - text: '$1/r^2$'
+        feedback: '$1/r^2$ הוא מה ששמים על הציר האופקי. השיפוע הוא מה שמכפיל אותו.'
+      - text: לשיפוע אין כאן משמעות פיזיקלית.
+        feedback: 'יש: השיפוע הוא $kq_1q_2$, ויחידותיו $\text{N}\cdot\text{m}^2$. מהשיפוע אפשר למצוא את המטענים.'
+        misconception: MC-slope-no-units
+
+  - id: Q-0.4-coulomb-q
+    type: numeric
+    objectives: [OBJ-0.4-4]
+    level: bagrut
+    prompt: >-
+      שני כדורים קטנים טעונים באותו מטען חשמלי $q$. מטען מודדים ביחידה קולון, $\text{C}$.
+      בגרף של הכוח ביניהם $F$ מול $1/r^2$, השיפוע של הקו המתאים ביותר הוא $2.25\cdot10^{-5}\,\text{N}\cdot\text{m}^2$.
+      לפי חוק קולון $F = kq_1q_2/r^2$, כאן עם $q_1 = q_2 = q$, ו-$k = 9\cdot10^{9}\,\text{N}\cdot\text{m}^2/\text{C}^2$ הוא קבוע קולון (לא קבוע הקפיץ). מה $q$?
+    answer: 5.0e-8
+    unit: C
+    tolerance: 0.02
+    correctFeedback: >-
+      נכון. השיפוע הוא $kq^2$, ולכן $q = \sqrt{\dfrac{2.25\cdot10^{-5}}{9\cdot10^{9}}} = \sqrt{2.5\cdot10^{-15}} = 5\cdot10^{-8}\,\text{C}$, כלומר $50\,\text{nC}$.
+    wrongFeedback: 'השיפוע הוא $kq_1q_2 = kq^2$. בודדו את $q$.'
+    commonWrong:
+      - value: 2.5e-15
+        feedback: 'זה $q^2$. נשאר להוציא שורש.'
+    hints:
+      - 'כדי להוציא שורש מ-$2.5\cdot10^{-15}$, כתבו אותו קודם כ-$25\cdot10^{-16}$.'

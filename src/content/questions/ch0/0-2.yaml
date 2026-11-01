@@ -1,0 +1,280 @@
+# Chapter 0 question bank, lesson 0.2. Format and rules: see questions/ch1/1-5.yaml.
+# Numbers recomputed with src/physics/vec.ts (len, fromPolar, angle).
+
+chapter: 0
+questions:
+  # ---------------------------------------------------------------- 0.2 vectors and directions
+  - id: Q-0.2-vector-or-scalar
+    type: multi
+    objectives: [OBJ-0.2-1]
+    qualitative: true
+    prompt: >-
+      אילו מהגדלים האלה הם וקטורים? סמנו את כל התשובות הנכונות.
+    choices:
+      - text: כוח
+        correct: true
+        feedback: נכון. לכוח יש גודל וגם כיוון. דחיפה ימינה ודחיפה שמאלה הן לא אותו כוח.
+      - text: מסה
+        feedback: מסה היא סקלר. ל-$3\,\text{kg}$ אין כיוון.
+      - text: מהירות
+        correct: true
+        feedback: נכון. מהירות היא וקטור. לגודל שלה, בלי הכיוון, קוראים לפעמים "מהירות סקלרית".
+      - text: זמן
+        feedback: זמן הוא סקלר. מספר עם יחידות, בלי כיוון במרחב.
+      - text: מטען חשמלי
+        feedback: 'מטען הוא סקלר, גם כשהוא שלילי. הסימן שלו הוא תכונה של המטען, לא כיוון במרחב: למטען שלילי אין "צד".'
+      - text: תאוצה
+        correct: true
+        feedback: נכון. לתאוצה יש כיוון, למשל תאוצת הנפילה החופשית מצביעה למטה.
+
+  - id: Q-0.2-magnitude
+    type: numeric
+    objectives: [OBJ-0.2-1]
+    prompt: >-
+      לכוח $\vec F$ יש רכיב x של $6\,\text{N}$ ורכיב y של $8\,\text{N}$. מה הגודל של $\vec F$?
+    answer: 10
+    unit: N
+    tolerance: 0.02
+    correctFeedback: 'נכון: $|\vec F| = \sqrt{6^2 + 8^2} = \sqrt{100} = 10\,\text{N}$.'
+    wrongFeedback: 'הרכיבים הם הניצבים במשולש ישר-זווית, והכוח הוא היתר. השתמשו במשפט פיתגורס.'
+    commonWrong:
+      - value: 14
+        feedback: 'חיברתם את הרכיבים. אבל הם ניצבים זה לזה, ולכן הגודל הוא היתר: $\sqrt{6^2+8^2}$, לא $6 + 8$.'
+        misconception: MC-magnitude-sum-components
+      - value: 100
+        feedback: 'זה $6^2 + 8^2$. נשאר להוציא שורש.'
+    hints:
+      - 'ציירו את שני הרכיבים כניצבים במשולש ישר-זווית. מה הצלע השלישית?'
+
+  - id: Q-0.2-component-bigger
+    type: mc
+    objectives: [OBJ-0.2-1]
+    qualitative: true
+    prompt: >-
+      לווקטור $\vec B$ יש גודל של $5\,\text{N}$. האם רכיב ה-x שלו יכול להיות $7\,\text{N}$?
+    choices:
+      - text: לא. רכיב לא יכול להיות גדול מגודל הווקטור.
+        correct: true
+        feedback: נכון. הרכיב הוא ניצב במשולש ישר-זווית שהווקטור הוא היתר שלו, וניצב תמיד קצר מהיתר (או שווה לו, כשהווקטור לאורך הציר).
+      - text: כן, אם הזווית מתאימה.
+        feedback: 'בשום זווית. $B_x = |\vec B|\cos\theta$, ו-$\cos\theta$ לא גדול מ-1. לכן $B_x$ לא עולה על $5\,\text{N}$.'
+        misconception: MC-component-bigger
+      - text: 'כן, אם רכיב ה-y שלילי: $7 + (-2) = 5$.'
+        feedback: 'הגודל הוא לא סכום הרכיבים אלא $\sqrt{B_x^2 + B_y^2}$. עם $B_x = 7$ הגודל כבר לפחות 7.'
+        misconception: MC-magnitude-sum-components
+
+  - id: Q-0.2-components-angle
+    type: numeric
+    objectives: [OBJ-0.2-1]
+    prompt: >-
+      כוח של $10\,\text{N}$ פועל בזווית של $30^\circ$ מעל ציר x החיובי. מה רכיב ה-x שלו?
+      ($\cos 30^\circ \approx 0.866$, $\sin 30^\circ = 0.5$)
+    answer: 8.66
+    unit: N
+    tolerance: 0.02
+    correctFeedback: 'נכון: $F_x = F\cos\theta = 10 \cdot 0.866 = 8.66\,\text{N}$.'
+    wrongFeedback: 'הרכיב שצמוד לזווית הוא $F\cos\theta$, והרכיב שמול הזווית הוא $F\sin\theta$.'
+    commonWrong:
+      - value: 5
+        feedback: 'זה $F\sin 30^\circ$, רכיב ה-y. רכיב ה-x צמוד לזווית שנמדדת מציר x, ולכן הוא מקבל $\cos$.'
+      - value: 11.55
+        feedback: 'חילקתם ב-$\cos 30^\circ$ במקום להכפיל. רכיב לא יכול לצאת גדול מהכוח עצמו.'
+        misconception: MC-component-bigger
+
+  - id: Q-0.2-perp-sum
+    type: numeric
+    objectives: [OBJ-0.2-2]
+    prompt: >-
+      על גוף פועלים שני כוחות: $5\,\text{N}$ ימינה ו-$12\,\text{N}$ למעלה. מה גודל הכוח השקול?
+    answer: 13
+    unit: N
+    tolerance: 0.02
+    correctFeedback: 'נכון: הכוחות ניצבים זה לזה, ולכן $F = \sqrt{5^2 + 12^2} = 13\,\text{N}$.'
+    wrongFeedback: 'שרשרו את הכוחות, ראש לזנב. הם יוצרים משולש ישר-זווית, והשקול הוא היתר.'
+    commonWrong:
+      - value: 17
+        feedback: 'חיברתם את הגדלים. זה נכון רק כששני הכוחות באותו כיוון. כאן הם ניצבים, ולכן משתמשים בפיתגורס.'
+        misconception: MC-add-magnitudes-always
+      - value: 7
+        feedback: 'חיסרתם את הגדלים. זה נכון רק כשהכוחות בכיוונים מנוגדים. כאן הם ניצבים.'
+        misconception: MC-add-magnitudes-always
+
+  - id: Q-0.2-line-signs
+    type: numeric
+    objectives: [OBJ-0.2-2]
+    prompt: >-
+      על ציר x פועלים שלושה כוחות: $7\,\text{N}$ בכיוון החיובי, $3\,\text{N}$ בכיוון השלילי ו-$2\,\text{N}$ בכיוון השלילי.
+      מה רכיב ה-x של הכוח השקול? (כתבו מספר עם סימן.)
+    answer: 2
+    unit: N
+    tolerance: 0.02
+    correctFeedback: 'נכון: $7 + (-3) + (-2) = +2\,\text{N}$, כלומר $2\,\text{N}$ בכיוון החיובי.'
+    wrongFeedback: 'תנו לכל כוח סימן לפי הכיוון שלו, ואז חברו את המספרים עם הסימנים.'
+    commonWrong:
+      - value: 12
+        feedback: 'חיברתם את כל הגדלים, בלי סימנים. כוחות בכיוון השלילי מקבלים מינוס.'
+        misconception: MC-add-magnitudes-always
+      - value: -2
+        feedback: 'הסימן הפוך. רוב הכוח, $7\,\text{N}$, בכיוון החיובי.'
+
+  - id: Q-0.2-rank-sums
+    type: rank
+    objectives: [OBJ-0.2-2]
+    qualitative: true
+    prompt: >-
+      שני כוחות, של $3\,\text{N}$ ושל $4\,\text{N}$, פועלים על גוף בשלושה סידורים שונים.
+      דרגו את גודל הכוח השקול, מהגדול לקטן:
+    items:
+      - id: perp
+        label: הכוחות ניצבים זה לזה
+      - id: opposite
+        label: הכוחות בכיוונים מנוגדים
+      - id: same
+        label: הכוחות באותו כיוון
+    order: [same, perp, opposite]
+    correctFeedback: 'נכון. באותו כיוון $7\,\text{N}$, במאונך $\sqrt{3^2+4^2} = 5\,\text{N}$, ובכיוונים מנוגדים $1\,\text{N}$.'
+    wrongFeedback: 'שרטטו כל סידור ראש לזנב. באיזה סידור החצים "עובדים יחד", ובאיזה הם מבטלים זה את זה?'
+
+  - id: Q-0.2-sum-vector
+    type: vector
+    objectives: [OBJ-0.2-2]
+    qualitative: true
+    prompt: >-
+      הווקטור $\vec A$ מצביע ימינה, והווקטור $\vec B$ מצביע למעלה. לשניהם אותו גודל. מה הכיוון של $\vec A + \vec B$?
+    answer: ne
+    correctFeedback: 'נכון. כשמשרשרים את $\vec B$ לקצה של $\vec A$, הסכום הוא האלכסון: ימינה ולמעלה, ב-$45^\circ$.'
+    wrong:
+      - dir: e
+        feedback: 'זה הכיוון של $\vec A$ לבדו. הסכום כולל גם את $\vec B$, שמוסיף רכיב למעלה.'
+      - dir: n
+        feedback: 'זה הכיוון של $\vec B$ לבדו. הסכום כולל גם את $\vec A$, שמוסיף רכיב ימינה.'
+      - dir: zero
+        feedback: 'וקטורים מתבטלים רק כשהם מנוגדים. כאן הם ניצבים, והסכום שלהם אינו אפס.'
+    wrongFeedback: 'שרשרו את $\vec B$ לקצה של $\vec A$, וחברו את ההתחלה של $\vec A$ לסוף של $\vec B$.'
+
+  - id: Q-0.2-minus-A
+    type: vector
+    objectives: [OBJ-0.2-3]
+    qualitative: true
+    prompt: >-
+      הווקטור $\vec A$ מצביע ימינה. מה הכיוון של $\vec C = -2\vec A$?
+    answer: w
+    correctFeedback: 'נכון. כפל במספר שלילי הופך את הכיוון, וה-2 מכפיל את האורך.'
+    wrong:
+      - dir: e
+        feedback: 'זה הכיוון של $2\vec A$. המינוס הופך את הכיוון.'
+      - dir: zero
+        feedback: 'וקטור כפול מספר שלילי לא נעלם ולא "יורד מתחת לאפס". הוא מצביע לכיוון ההפוך, וארוך פי 2.'
+        misconception: MC-negative-vector-smaller
+    wrongFeedback: 'מה עושה המינוס לכיוון? ומה עושה ה-2 לאורך?'
+
+  - id: Q-0.2-minus-magnitude
+    type: mc
+    objectives: [OBJ-0.2-3]
+    qualitative: true
+    prompt: >-
+      לווקטור $\vec A$ יש גודל של $4\,\text{N}$. מה הגודל של הווקטור $\vec D = -3\vec A$?
+    choices:
+      - text: '$12\,\text{N}$'
+        correct: true
+        feedback: 'נכון. הגודל מוכפל ב-3, והמינוס רק הופך את הכיוון. גודל של וקטור אף פעם אינו שלילי.'
+      - text: '$-12\,\text{N}$'
+        feedback: 'גודל של וקטור הוא אורך, והוא לא יכול להיות שלילי. המינוס אומר "בכיוון ההפוך", לא "קטן מאפס".'
+        misconception: MC-negative-vector-smaller
+      - text: '$4\,\text{N}$'
+        feedback: 'הכפל ב-3 משנה את האורך. רק כפל ב-$(-1)$ משאיר את הגודל ומשנה רק את הכיוון.'
+      - text: '$1\,\text{N}$'
+        feedback: 'זה $4 - 3$. כאן מכפילים, לא מחסירים.'
+        misconception: MC-negative-vector-smaller
+
+  - id: Q-0.2-qE-preview
+    type: twotier
+    objectives: [OBJ-0.2-3]
+    prompt: >-
+      בפרק 1 נכתוב $\vec F = q\vec E$: הכוח על מטען $q$ שווה למטען (מספר, סקלר) כפול וקטור שנקרא השדה, $\vec E$.
+      מה אפשר לומר על $\vec F$ כש-$q$ שלילי?
+    choices:
+      - text: '$\vec F$ מצביע הפוך ל-$\vec E$.'
+        correct: true
+        feedback: נכון. כפל וקטור במספר שלילי הופך את הכיוון שלו.
+      - text: '$\vec F$ מצביע כמו $\vec E$, אבל קצר יותר.'
+        feedback: 'מספר שלילי לא מקצר את הווקטור, הוא הופך את כיוונו.'
+        misconception: MC-negative-vector-smaller
+      - text: '$\vec F$ שווה לאפס.'
+        feedback: 'וקטור כפול מספר שלילי (שאינו אפס) אינו אפס. הוא מצביע לכיוון ההפוך.'
+        misconception: MC-negative-vector-smaller
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: 'כפל של וקטור במספר שלילי הופך את הכיוון שלו, והגודל מוכפל ב-$|q|$.'
+        correct: true
+        feedback: בדיוק. זה כל מה שצריך בשביל הכיוון של כוח חשמלי על מטען שלילי.
+      - text: מספר שלילי מקטין כל דבר שמכפילים בו.
+        feedback: 'זה נכון למספרים, אבל לא לווקטורים. וקטור כפול $(-1)$ שומר על גודלו ומתהפך.'
+        misconception: MC-negative-vector-smaller
+      - text: מטען שלילי הוא כיוון במרחב.
+        feedback: 'מטען הוא סקלר. הסימן שלו לא מצביע לשום מקום, אבל כשמכפילים בו וקטור, הוא הופך את כיוונו.'
+
+  - id: Q-0.2-dot-meaning
+    type: vector
+    objectives: [OBJ-0.2-4]
+    qualitative: true
+    allowOutIn: true
+    prompt: >-
+      בשרטוט, ליד הנקודה P, מופיע הסימן ⊙. מה הכיוון של הווקטור שהוא מתאר?
+    answer: out
+    correctFeedback: נכון. ⊙ הוא החוד של חץ שמתקרב אליכם, החוצה מהדף.
+    wrong:
+      - dir: in
+        feedback: 'זה ⊗. הנקודה שבתוך העיגול היא החוד של חץ שבא אליכם, החוצה מהדף.'
+        misconception: MC-dot-cross-swap
+      - dir: n
+        feedback: '"למעלה" הוא כיוון בתוך הדף. ⊙ מתאר כיוון ניצב לדף.'
+    wrongFeedback: 'דמיינו חץ שעף ישר אליכם, מתוך הדף. מה רואים ממנו?'
+
+  - id: Q-0.2-cross-meaning
+    type: vector
+    objectives: [OBJ-0.2-4]
+    allowOutIn: true
+    prompt: >-
+      וקטור מצביע ניצב לדף, לתוך הדף, הרחק מכם. בחרו את הכיוון שלו.
+    answer: in
+    correctFeedback: נכון. מסמנים אותו ⊗, הנוצות בזנב של חץ שמתרחק מכם.
+    wrong:
+      - dir: out
+        feedback: 'זה ⊙, החוצה מהדף. וקטור שמתרחק מכם נכנס לדף, ומסמנים אותו ⊗.'
+        misconception: MC-dot-cross-swap
+      - dir: zero
+        feedback: 'הווקטור לא אפס. הוא רק מצביע לכיוון שאי אפשר לצייר כחץ על הדף, ולכן יש לו סימן מיוחד.'
+    wrongFeedback: 'ניצב לדף יש שני כיוונים: אליכם או מכם. איזה מהם כאן?'
+
+  - id: Q-0.2-arrow-model
+    type: mc
+    objectives: [OBJ-0.2-4]
+    qualitative: true
+    prompt: >-
+      מסתכלים ישר על דף, וחץ טס ישר אליכם, מתוך הדף. מה רואים?
+    choices:
+      - text: נקודה בתוך עיגול, ⊙. זה החוד של החץ, שמתקרב.
+        correct: true
+        feedback: נכון. לכן ⊙ פירושו "החוצה מהדף".
+      - text: איקס בתוך עיגול, ⊗. אלה הנוצות של החץ.
+        feedback: את הנוצות רואים רק כשהחץ מתרחק מכם, ואז הוא נכנס לדף. חץ שבא אליכם מראה לכם את החוד.
+        misconception: MC-dot-cross-swap
+      - text: חץ רגיל, כי חץ תמיד נראה כמו חץ.
+        feedback: 'מקדימה, חץ מצטמק לעיגול קטן. ראו באיור 0.2ג מה קורה כשמטים את המבט עד שמסתכלים ישר על הדף.'
+
+  - id: Q-0.2-opposite-of-out
+    type: vector
+    objectives: [OBJ-0.2-4, OBJ-0.2-3]
+    allowOutIn: true
+    prompt: >-
+      הווקטור $\vec A$ מסומן ⊙. מה הכיוון של הווקטור $\vec B = -\vec A$?
+    answer: in
+    correctFeedback: 'נכון. המינוס הופך את הכיוון: מ"החוצה מהדף" ל"לתוך הדף", ⊗.'
+    wrong:
+      - dir: out
+        feedback: 'זה הכיוון של $\vec A$ עצמו. המינוס הופך את הכיוון.'
+      - dir: zero
+        feedback: 'הווקטור $-\vec A$ לא נעלם. יש לו אותו גודל כמו ל-$\vec A$, בכיוון ההפוך.'
+        misconception: MC-negative-vector-smaller
+    wrongFeedback: 'מה ההפך של "החוצה מהדף"?'

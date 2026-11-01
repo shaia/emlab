@@ -94,8 +94,8 @@ export default function SimShell(p: Props) {
   );
 }
 
-/** A labelled toggle chip for the control panel. */
-export function Toggle(p: { label: string; on: boolean; onChange: (v: boolean) => void; swatch?: string }) {
+/** A labelled toggle chip for the control panel. A label with math ("1/r") passes <bdi dir="ltr">. */
+export function Toggle(p: { label: ComponentChildren; on: boolean; onChange: (v: boolean) => void; swatch?: string }) {
   return (
     <button type="button" class={`toggle ${p.on ? 'on' : ''}`} aria-pressed={p.on} onClick={() => p.onChange(!p.on)}>
       {p.swatch && <span class="swatch" style={{ background: p.swatch }} aria-hidden="true" />}

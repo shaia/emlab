@@ -1,0 +1,38 @@
+# Glossary terms introduced in this lesson. Format and rules: see glossary/1-5.yaml.
+
+- id: slope
+  term: שיפוע
+  en: slope
+  definition: בקו ישר, השינוי בגודל שעל הציר האנכי לכל יחידה של הגודל שעל הציר האופקי, Δy/Δx. יחידות השיפוע הן יחידות y חלקי יחידות x.
+  lesson: '0.4'
+
+- id: intercept
+  term: נקודת החיתוך עם הציר
+  en: intercept
+  definition: הנקודה שבה קו ישר חותך את הציר האנכי, כלומר הערך של y כאשר x = 0.
+  lesson: '0.4'
+
+- id: best-fit-line
+  term: הקו המתאים ביותר
+  en: line of best fit
+  definition: הקו הישר שעובר קרוב ככל האפשר לכל נקודות המדידה, חלקן מעליו וחלקן מתחתיו. את השיפוע מחשבים משתי נקודות עליו, ולא משתי מדידות.
+  lesson: '0.4'
+
+- id: direct-proportion
+  term: יחס ישר
+  en: direct proportion
+  definition: קשר שבו הכפלת x פי כמה מכפילה גם את y פי אותו מספר. הגרף שלו הוא קו ישר שעובר בראשית.
+  lesson: '0.4'
+
+- id: linear-relation
+  term: קשר קווי
+  en: linear relation
+  definition: קשר שהגרף שלו הוא קו ישר, y = ax + b. כאשר b אינו אפס הקו לא עובר בראשית, וזה אינו יחס ישר.
+  lesson: '0.4'
+
+- id: linearization
+  term: ליניאריזציה
+  en: linearization
+  definition: בחירה של מה לשים על הצירים, למשל t² במקום t, כך שקשר שאינו קווי ייראה בגרף כקו ישר. מהשיפוע של הקו מוצאים גודל פיזיקלי.
+  reject: [לינאריזציה]
+  lesson: '0.4'

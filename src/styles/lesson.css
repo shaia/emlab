@@ -65,7 +65,8 @@
   position: sticky;
   top: 16px;
   margin: 0;
-  max-height: calc(100vh - 32px);
+  /* end above the floating capsule (fixed 16px from the bottom), or it hides the tasks and caption */
+  max-height: calc(100vh - 48px - var(--capsule-h));
   overflow-y: auto;
   scrollbar-width: thin;
 }
@@ -165,6 +166,29 @@
 }
 .block > h2 {
   margin-top: 0.15em;
+}
+
+/* data tables (lab measurements, the prefix table): a wide table scrolls inside itself on a phone
+   instead of widening the page */
+.block table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 0.8em 0 1em;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+}
+.block th,
+.block td {
+  padding: 5px 12px;
+  border-bottom: 1px solid var(--rule);
+  text-align: start;
+  white-space: nowrap;
+}
+.block th {
+  font-weight: 700;
+  border-bottom: 1.5px solid var(--ink-3);
 }
 
 /* ---------- steps (scrollytelling) ---------- */

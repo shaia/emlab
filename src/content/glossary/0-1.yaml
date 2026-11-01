@@ -1,0 +1,14 @@
+# Glossary terms introduced in this lesson. Format and rules: see glossary/1-5.yaml.
+
+- id: prediction
+  term: חיזוי
+  en: prediction
+  definition: תשובה שמתחייבים אליה לפני שרואים את הניסוי או את ההסבר. בקורס החיזוי נשמר, ובסוף השיעור משווים אותו למה שגיליתם.
+  lesson: '0.1'
+
+- id: misconception
+  term: תפיסה שגויה
+  en: misconception
+  definition: רעיון שנשמע הגיוני ושרבים מאמינים בו, אבל הוא סותר את מה שקורה בניסוי. בקורס מזהים אותה לפי טעות שעונים עליה בביטחון.
+  reject: [תפיסה מוטעית]
+  lesson: '0.1'

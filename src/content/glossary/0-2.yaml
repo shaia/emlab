@@ -1,0 +1,42 @@
+# Glossary terms introduced in this lesson. Format and rules: see glossary/1-5.yaml.
+
+- id: scalar
+  term: סקלר
+  en: scalar
+  definition: גודל שמתואר במספר אחד ויחידות, בלי כיוון. למשל מסה, זמן, אנרגיה ומטען חשמלי. סקלר יכול להיות שלילי, אבל הסימן שלו הוא לא כיוון במרחב.
+  reject: [סקלאר, סקאלר]
+  lesson: '0.2'
+
+- id: vector
+  term: וקטור
+  en: vector
+  definition: 'גודל פיזיקלי שמתואר במספר וגם בכיוון, למשל כוח, מהירות ושדה חשמלי. מציירים אותו כחץ: האורך הוא המספר, והחץ מצביע לכיוון.'
+  lesson: '0.2'
+
+- id: vector-component
+  term: רכיב של וקטור
+  en: vector component
+  symbol: A_x, A_y
+  definition: ההיטל של וקטור על אחד הצירים. וקטור במישור הוא סכום של רכיב x ורכיב y, ומחברים וקטורים על ידי חיבור הרכיבים של כל ציר בנפרד. רכיב יכול להיות שלילי, ואף פעם אינו גדול מגודל הווקטור.
+  lesson: '0.2'
+
+- id: vector-magnitude
+  term: גודל של וקטור
+  en: magnitude
+  symbol: '|A|'
+  definition: אורך החץ של וקטור, מספר שאינו שלילי. מהרכיבים מחשבים אותו לפי משפט פיתגורס.
+  lesson: '0.2'
+
+- id: out-of-page
+  term: החוצה מהדף
+  en: out of the page
+  symbol: ⊙
+  definition: כיוון ניצב לדף, מהדף אל הקורא. מסמנים אותו ⊙, החוד של חץ שמתקרב אליכם.
+  lesson: '0.2'
+
+- id: into-page
+  term: לתוך הדף
+  en: into the page
+  symbol: ⊗
+  definition: כיוון ניצב לדף, מהקורא אל תוך הדף. מסמנים אותו ⊗, הנוצות בזנב של חץ שמתרחק מכם.
+  lesson: '0.2'
