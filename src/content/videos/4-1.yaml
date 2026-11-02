@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-4-1-magnet-secrets
+  youtubeId: 6JMA74tXIJM
+  title: 'הסודות של המגנט'
+  channel: מילכה ברקו גרש
+  lang: he
+  captions: []
+  minutes: 7.5
+  why: 'סרטון בעברית על קטבים ושדות מגנטיים, על מה שקורה בתוך ברזל וניקל שגורם להם להימשך, ועל השדה המגנטי של כדור הארץ (לפי תיאור הסרטון). שימו לב להסבר למה דווקא ברזל, ניקל וקובלט נמשכים, ולמה מצפן פונה צפונה.'
+  verified: '2026-11-02'
+
+- id: v-4-1-iron-filings
+  youtubeId: 1Nr-KtlMIKI
+  title: 'SEE a Magnetic Field with Iron Fillings'
+  channel: Chris Pattison
+  lang: en
+  captions: []
+  minutes: 0.5
+  why: 'חצי דקה של ניסוי אמיתי: נסורת ברזל שמפזרים על מגנט מוט מסתדרת לאורך קווי השדה (לפי תיאור הסרטון). השוו לקווים של איור 4.1א: איפה הנסורת צפופה, ואיך הקווים יוצאים מקוטב אחד ונכנסים לשני.'
+  verified: '2026-11-02'
