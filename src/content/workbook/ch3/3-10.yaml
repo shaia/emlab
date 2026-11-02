@@ -431,7 +431,7 @@ practice:
           $$Q = CV = 1.0\cdot10^{-3}\cdot4.5 = 4.5\cdot10^{-3}\ \text{C}$$
       - kind: substitution
         text: >-
-          (ד) דרך הסוללה עבר המטען $\Delta Q = Q_{\text{after}} - Q_{\text{before}} = 4.5\cdot10^{-3}\,\text{C}$, והכא״מ עשה עליו עבודה $\varepsilon$ לכל קולון:
+          (ד) המטען על הקבל עלה מאפס ל-$Q$, ולכן דרך הסוללה עבר המטען $\Delta Q$ (המטען בסוף פחות המטען בהתחלה), $\Delta Q = 4.5\cdot10^{-3}\,\text{C}$. הכא״מ עשה עליו עבודה $\varepsilon$ לכל קולון:
           $$W = \varepsilon\,\Delta Q = 4.5\cdot4.5\cdot10^{-3} = 2.03\cdot10^{-2}\ \text{J}
           \qquad
           U = \tfrac12 CV^2 = \tfrac12\cdot1.0\cdot10^{-3}\cdot4.5^2 = 1.01\cdot10^{-2}\ \text{J}$$
