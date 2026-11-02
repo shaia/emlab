@@ -478,9 +478,9 @@ challenge:
 
           (ב) מטען של $+1\,\mu\text{C}$ במרכז.
     source:
-      name: IIT-JEE (JEE Advanced)
+      name: IIT-JEE
       year: 2009
-      problem: 'Paper 1 (question number not shown on the page)'
-      url: https://competishun.com/a-disk-of-radius-a-4-having-a-uniformly-distributed-charge-6c-is-placed-in-the-x-y-plane-with-its-centre-at-a-200-a-rod-of-length-a-carrying-a-uniformly-distributed-charge-8-c-is-placed-on-the-x-axis/
+      problem: 'Paper I, Part III (Physics), Q47'
+      url: https://jeeadv.ac.in/past_qps/2009_1.pdf
       verified: '2026-11-02'
       adapted: true

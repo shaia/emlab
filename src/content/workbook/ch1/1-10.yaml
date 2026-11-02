@@ -539,7 +539,7 @@ challenge:
     source:
       name: JEE Advanced
       year: 2020
-      problem: 'Paper 1, Physics, multiple-correct question (the page opened did not print its number)'
-      url: https://competishun.com/a-uniform-electric-field-vece-400-sqrt3-haty-mathrmnc-1-is-applied-in-a-region-a-charged-particle-of-mass-m-carrying-positive-charge-q-is-projected-in-this-region-with-an-initial-speed-of-2-sqrt10-tim/
+      problem: 'Paper 1, Physics, Q.10'
+      url: https://jeeadv.ac.in/past_qps/2020_1_English.pdf
       verified: '2026-11-02'
       adapted: true

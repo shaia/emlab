@@ -574,9 +574,9 @@ challenge:
         text: >-
           כדי להחזיק את שני חצאי הכדור צמודים צריך כוח $F = \dfrac{\sigma^2}{2\varepsilon_0}\pi R^2 = \dfrac{kQ^2}{8R^2} \approx 0.45\,\text{N}$. בפרט $F$ ביחס ישר ל-$\sigma^2R^2/\varepsilon_0$.
     source:
-      name: IIT-JEE (JEE Advanced)
+      name: IIT-JEE
       year: 2010
-      problem: 'Paper 2, Question 44'
-      url: https://cracku.in/44-a-uniformly-charged-thin-spherical-shell-of-radius-x-jee-advanced-2010-paper-2
+      problem: 'Paper 2, Part III (Physics), Q44'
+      url: https://jeeadv.ac.in/past_qps/2010_2.pdf
       verified: '2026-11-02'
       adapted: true
