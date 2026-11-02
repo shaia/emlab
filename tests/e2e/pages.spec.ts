@@ -50,7 +50,9 @@ test.describe('every page', () => {
       });
       await page.waitForTimeout(300);
       expect(errors).toEqual([]);
-      // nothing may widen the page: sideways scrolling on a phone misplaces every tap
+      // nothing may widen the page: sideways scrolling on a phone misplaces every tap. Worked solutions are closed
+      // at load, and a long inline formula inside one widened the page only once it was opened, so open them all.
+      await page.evaluate(() => document.querySelectorAll('details').forEach((d) => d.setAttribute('open', '')));
       const { sw, cw } = await page.evaluate(() => ({
         sw: document.documentElement.scrollWidth,
         cw: document.documentElement.clientWidth,
