@@ -1,0 +1,13 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title supports; duration and captions were
+# not confirmed (the watch page did not expose them), so `minutes` is a conservative estimate.
+
+- id: v-4-9-dc-motor
+  youtubeId: CWulQ1ZSE3c
+  title: 'How does an Electric Motor work?  (DC Motor)'
+  channel: Jared Owen
+  lang: en
+  captions: []
+  minutes: 6
+  why: 'הנפשה באנגלית שמסבירה איך עובד מנוע זרם ישר (לפי כותרת הסרטון). חפשו את הסליל בין המגנטים, את הטבעת המפוצלת ואת המברשות, והשוו למצב "מנוע" באיור 4.9א.'
+  verified: '2026-11-02'
