@@ -2,7 +2,8 @@
 # "Worked examples, workbook".
 # W-04's table was generated with src/physics/lab.ts (compassReadings, r = 2 cm, B_E = 3.2·10⁻⁵ T, seed 47) and its slope
 # recomputed with fitLine; the values "read on the line" are the least-squares line at those x values. W-06 is the lesson's
-# dataset with one reading spoiled on purpose. W-08 and W-c2 tables are whole-degree readings of the exact law; their fits
+# dataset with one reading spoiled on purpose. W-08 and W-c2 tables are whole-degree readings near the exact law (within
+# ±1°, as lab readings: W-08's 0.20 A entry is 45° where the law gives 44.5°); their fits
 # were recomputed with fitLine. Every other number was recomputed with src/physics/magnetism.ts (straightWireField,
 # loopCenterField, parallelWiresForce, wireForce, lorentzMagnitude) and src/physics/compass.ts.
 # Map convention: north up, east right, "out of the page" = up, toward the viewer.
