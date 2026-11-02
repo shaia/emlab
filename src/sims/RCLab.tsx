@@ -386,6 +386,8 @@ function drawCircuit(
         if (d <= sg.L) {
           const x = sg.a[0] + ((sg.b[0] - sg.a[0]) * d) / sg.L;
           const y = sg.a[1] + ((sg.b[1] - sg.a[1]) * d) / sg.L;
+          // no charge crosses the gap between the plates
+          if (x === xC && Math.abs(y - cyC) < 10) break;
           ctx.beginPath();
           ctx.arc(x, y, 3.2, 0, Math.PI * 2);
           ctx.fill();
