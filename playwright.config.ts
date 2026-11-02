@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
-// Locally the installed Edge is used (no browser download); CI installs Playwright's Chromium.
-const channel = process.env.CI ? undefined : 'msedge';
+// Local runs and CI both use Playwright's own Chromium. Local Edge hung at browser shutdown, so a run never exited.
+// After upgrading @playwright/test, run `npx playwright install chromium` once, or every test fails at launch.
 // one preview server per checkout: parallel worktrees each set their own E2E_PORT
 const port = Number(process.env.E2E_PORT ?? 4321);
 
@@ -17,8 +17,8 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
   projects: [
-    { name: 'desktop', use: { ...devices['Desktop Chrome'], channel, viewport: { width: 1366, height: 900 } } },
-    { name: 'mobile', use: { ...devices['Pixel 7'], channel } },
+    { name: 'desktop', use: { ...devices['Desktop Chrome'], viewport: { width: 1366, height: 900 } } },
+    { name: 'mobile', use: { ...devices['Pixel 7'] } },
   ],
   webServer: {
     // tests run against the built site, exactly what GitHub Pages serves
