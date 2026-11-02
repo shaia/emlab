@@ -1,0 +1,583 @@
+# Workbook, lesson 3.9 (the RC circuit). Format and rules: see .claude/CLAUDE.md, "Worked examples, workbook".
+# Every number was recomputed with src/physics/circuits.ts: rcCharge / rcDischarge for the curves, solveCircuit for the
+# steady states (capacitor open) and for "the first moment" (one tiny backward-Euler step from an empty capacitor), and
+# advance() to check the discharge of W-3.9-08 and the heat of W-3.9-c2.
+# In a >- block, consecutive lines fold into one paragraph: every part (א, ב, …) starts after a blank line.
+# Sign convention, as in chapter 2: ΔQ = after − before, and the battery's work is W = V·ΔQ.
+
+lesson: '3.9'
+practice:
+  - id: W-3.9-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-3.9-2]
+    prompt: >-
+      קבל ריק של $2.2\,\mu\text{F}$ נטען דרך נגד של $1\,\text{M}\Omega$ מסוללה אידאלית של $10\,\text{V}$.
+
+      א. מה קבוע הזמן?
+
+      ב. בערך כמה זמן עובר עד שהקבל כמעט מלא?
+
+      ג. בערך מה המתח על הקבל $4.4\,\text{s}$ אחרי סגירת המפסק?
+    answer: >-
+      א. $\tau = 2.2\,\text{s}$.
+
+      ב. כ-$5\tau$, כלומר כ-$11\,\text{s}$.
+
+      ג. כ-$8.6\,\text{V}$.
+    solution:
+      - kind: given
+        text: '$C = 2.2\,\mu\text{F} = 2.2\cdot10^{-6}\,\text{F}$, $R = 1\,\text{M}\Omega = 10^{6}\,\Omega$, $\varepsilon = 10\,\text{V}$.'
+      - kind: formula
+        text: '$\tau = RC$.'
+      - kind: substitution
+        text: 'א. $\tau = 10^{6}\,\Omega\cdot2.2\cdot10^{-6}\,\text{F} = 2.2\,\text{s}$. הקידומות מגה ומיקרו מבטלות זו את זו: $10^{6}\cdot10^{-6} = 1$.'
+      - kind: reasoning
+        text: 'ב. אחרי כ-$5\tau$ הטעינה כמעט הסתיימה: $5\cdot2.2\,\text{s} = 11\,\text{s}$.'
+      - kind: reasoning
+        text: >-
+          ג. $4.4\,\text{s}$ הן $2\tau$. אחרי $\tau$ הקבל ב-63% מהמתח הסופי, ובכל $\tau$ נוסף נסגר שוב 63% מהפער שנשאר, ולכן אחרי $2\tau$ הוא ב-$63\% + 0.63\cdot37\% \approx 86\%$:
+          $$V_C \approx 0.86\cdot10\,\text{V} \approx 8.6\,\text{V}$$
+      - kind: result
+        text: >-
+          א. $\tau = 2.2\,\text{s}$.
+
+          ב. כ-$11\,\text{s}$.
+
+          ג. כ-$8.6\,\text{V}$.
+
+  - id: W-3.9-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-3.9-1]
+    prompt: >-
+      לפניכם שלוש צורות של גרף, כתלות בזמן: (1) עולה מאפס, מהר בהתחלה ולאט בסוף, ומתקרב לערך קבוע; (2) מתחיל בערך הגדול ביותר ודועך לאפס, מהר בהתחלה ולאט בסוף; (3) קו ישר אופקי.
+
+      א. קבל ריק נטען דרך נגד מסוללה אידאלית. איזו צורה מתארת כל אחד מהגדלים: המתח על הקבל, המתח על הנגד, הזרם במעגל, והמטען על הקבל?
+
+      ב. אחרי שהקבל התמלא מעבירים את המתג כך שהקבל מתפרק דרך הנגד, בלי הסוללה. איזו צורה מתארת עכשיו את המתח על הקבל, את גודל הזרם ואת המטען?
+
+      ג. בזמן הטעינה, איזה גודל מתואר בצורה (3)? נמקו.
+    answer: >-
+      א. המתח על הקבל והמטען: (1). המתח על הנגד והזרם: (2).
+
+      ב. שלושתם: (2).
+
+      ג. המתח של הסוללה, שהוא גם הסכום של המתח על הקבל ושל המתח על הנגד.
+    solution:
+      - kind: reasoning
+        text: >-
+          א. הקבל מתחיל ריק, ולכן $V_C = 0$, ונטען עד $\varepsilon$, בהתחלה מהר ובסוף לאט: צורה (1). המטען $q = CV_C$, ולכן גם הוא בצורה (1).
+          על הנגד נשאר $V_R = \varepsilon - V_C$: בהתחלה כל $\varepsilon$, ובסוף אפס, צורה (2). הזרם $I = V_R/R$ מתנהג כמו המתח על הנגד: צורה (2).
+      - kind: reasoning
+        text: >-
+          ב. בפריקה אין סוללה. המתח על הקבל יורד מהמתח שהיה לו לאפס, ודועך: צורה (2). הזרם הוא $V_C/R$, ולכן גודלו דועך באותה צורה, אבל כיוונו הפוך לזרם הטעינה. המטען $q = CV_C$ דועך יחד עם המתח.
+      - kind: reasoning
+        text: >-
+          ג. לפי חוק הלולאות, בכל רגע $V_C + V_R = \varepsilon$. כשאחד עולה השני יורד באותה מידה, והסכום שלהם, המתח של הסוללה האידאלית, קבוע.
+      - kind: result
+        text: >-
+          א. $V_C$ ו-$q$: צורה (1). $V_R$ ו-$I$: צורה (2).
+
+          ב. $V_C$, גודל הזרם ו-$q$: צורה (2).
+
+          ג. המתח של הסוללה, $V_C + V_R = \varepsilon$.
+
+  - id: W-3.9-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-3.9-1]
+    prompt: >-
+      סוללה אידאלית של $6\,\text{V}$, מפסק, נגד של $1.5\,\text{k}\Omega$ וקבל ריק של $47\,\mu\text{F}$ מחוברים בטור. סוגרים את המפסק.
+      מצאו את המתח על הנגד, את המתח על הקבל, את הזרם ואת המטען על הקבל, פעם ברגע הראשון ופעם זמן רב אחר כך.
+    answer: >-
+      ברגע הראשון: $V_R = 6\,\text{V}$, $V_C = 0$, $I = 4\,\text{mA}$, $Q = 0$.
+
+      זמן רב אחר כך: $V_R = 0$, $V_C = 6\,\text{V}$, $I = 0$, $Q \approx 2.8\cdot10^{-4}\,\text{C}$.
+    solution:
+      - kind: given
+        text: '$\varepsilon = 6\,\text{V}$, $R = 1.5\cdot10^{3}\,\Omega$, $C = 47\cdot10^{-6}\,\text{F}$. הקבל ריק כשסוגרים את המפסק.'
+      - kind: reasoning
+        text: >-
+          ברגע הראשון אין מטען על הקבל, ולכן גם אין עליו מתח ($V = Q/C$). הקבל מתנהג כמו תיל, וכל המתח של הסוללה על הנגד.
+      - kind: formula
+        text: '$I = \dfrac{V_R}{R}$ ו-$Q = CV_C$.'
+      - kind: substitution
+        text: 'ברגע הראשון: $I_0 = \dfrac{6\,\text{V}}{1.5\cdot10^{3}\,\Omega} = 4\cdot10^{-3}\,\text{A}$.'
+      - kind: reasoning
+        text: >-
+          זמן רב אחר כך הקבל מלא ומתנהג כמו נתק: אין זרם, ולכן על הנגד $V_R = IR = 0$, וכל $6\,\text{V}$ של הסוללה על הקבל.
+      - kind: substitution
+        text: 'זמן רב אחר כך: $Q = 47\cdot10^{-6}\,\text{F}\cdot6\,\text{V} = 2.82\cdot10^{-4}\,\text{C}$.'
+      - kind: result
+        text: >-
+          ברגע הראשון: $V_R = 6\,\text{V}$, $V_C = 0$, $I = 4\,\text{mA}$, $Q = 0$.
+
+          זמן רב אחר כך: $V_R = 0$, $V_C = 6\,\text{V}$, $I = 0$, $Q \approx 2.8\cdot10^{-4}\,\text{C}$.
+
+  - id: W-3.9-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-3.9-1, OBJ-3.9-2]
+    prompt: >-
+      קבל ריק נטען דרך נגד מסוללה אידאלית של $9\,\text{V}$. מד זרם אידאלי מראה $3\,\text{mA}$ ברגע הסגירה, ו-$1.1\,\text{mA}$ אחרי $0.6\,\text{s}$.
+
+      א. מה ההתנגדות של הנגד?
+
+      ב. מה קבוע הזמן, ומה הקיבול?
+
+      ג. מה המתח על הקבל אחרי $0.6\,\text{s}$? בדקו שהתשובה מתאימה למה שידוע על טעינה אחרי $\tau$ אחד.
+    answer: >-
+      א. $R = 3\,\text{k}\Omega$.
+
+      ב. $\tau \approx 0.6\,\text{s}$, $C \approx 200\,\mu\text{F}$.
+
+      ג. $V_C \approx 5.7\,\text{V}$, כ-63% מ-$9\,\text{V}$.
+    solution:
+      - kind: given
+        text: '$\varepsilon = 9\,\text{V}$, $I_0 = 3\cdot10^{-3}\,\text{A}$, ואחרי $t = 0.6\,\text{s}$ הזרם $I = 1.1\cdot10^{-3}\,\text{A}$.'
+      - kind: reasoning
+        text: 'א. ברגע הסגירה הקבל ריק ואין עליו מתח, ולכן כל $9\,\text{V}$ על הנגד: $I_0 = \varepsilon/R$.'
+      - kind: manipulation
+        text: 'מכפילים את שני האגפים ב-$R$ ומחלקים ב-$I_0$: $R = \dfrac{\varepsilon}{I_0}$.'
+      - kind: substitution
+        text: 'א. $R = \dfrac{9\,\text{V}}{3\cdot10^{-3}\,\text{A}} = 3\cdot10^{3}\,\Omega$.'
+      - kind: reasoning
+        text: >-
+          ב. $\dfrac{1.1\,\text{mA}}{3\,\text{mA}} \approx 0.37$: בטעינה הזרם יורד ל-37% מהזרם ההתחלתי אחרי $\tau$ אחד, ולכן $\tau \approx 0.6\,\text{s}$.
+          מ-$\tau = RC$, מחלקים ב-$R$ הידוע:
+          $$C = \frac{\tau}{R} = \frac{0.6\,\text{s}}{3\cdot10^{3}\,\Omega} = 2\cdot10^{-4}\,\text{F}$$
+      - kind: reasoning
+        text: >-
+          ג. לפי חוק הלולאות $V_C = \varepsilon - V_R = \varepsilon - IR$:
+          $$V_C = 9\,\text{V} - 1.1\cdot10^{-3}\,\text{A}\cdot3\cdot10^{3}\,\Omega = 9\,\text{V} - 3.3\,\text{V} = 5.7\,\text{V}$$
+          ואכן $5.7/9 \approx 0.63$: אחרי $\tau$ אחד הקבל ב-63% מהמתח הסופי.
+      - kind: result
+        text: >-
+          א. $R = 3\,\text{k}\Omega$.
+
+          ב. $\tau \approx 0.6\,\text{s}$ ו-$C \approx 200\,\mu\text{F}$.
+
+          ג. $V_C \approx 5.7\,\text{V}$.
+
+  - id: W-3.9-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-3.9-2]
+    prompt: >-
+      במעגל RC קבל ריק נטען מסוללה אידאלית. בכל סעיף משנים רק דבר אחד, לעומת המעגל המקורי. קבעו ונמקו, לכל שינוי, פי כמה משתנים: קבוע הזמן $\tau$, הזרם ברגע הראשון, המטען הסופי על הקבל, והזמן שבו הקבל מגיע לחצי מהמתח הסופי שלו.
+
+      א. ההתנגדות גדלה פי 2.
+
+      ב. הקיבול קטן פי 2.
+
+      ג. הכא״מ גדל פי 2.
+    answer: >-
+      א. $\tau$ פי 2, הזרם ההתחלתי פי חצי, המטען הסופי לא משתנה, זמן החצי פי 2.
+
+      ב. $\tau$ פי חצי, הזרם ההתחלתי לא משתנה, המטען הסופי פי חצי, זמן החצי פי חצי.
+
+      ג. $\tau$ לא משתנה, הזרם ההתחלתי פי 2, המטען הסופי פי 2, זמן החצי לא משתנה.
+    solution:
+      - kind: reasoning
+        text: >-
+          שלוש עובדות מספיקות: $\tau = RC$; ברגע הראשון הקבל ריק, ולכן $I_0 = \varepsilon/R$; ובסוף כל המתח על הקבל, ולכן $Q = C\varepsilon$.
+      - kind: reasoning
+        text: >-
+          הזמן עד חצי מהמתח הסופי: לכל מעגל RC אותה צורת עקומה, אם מודדים את הזמן ביחידות של $\tau$. אחרי $\tau$ אחד כל קבל ב-63% מהמתח הסופי שלו, אחרי $2\tau$ ב-86%, וכך גם לכל שבר אחר. לכן חצי מהמתח הסופי מושג תמיד באותו מספר של קבועי זמן, קצת לפני $\tau$ אחד, וזמן החצי משתנה בדיוק כמו $\tau$.
+      - kind: reasoning
+        text: >-
+          א. $R$ פי 2: $\tau = RC$ פי 2; $I_0 = \varepsilon/R$ פי חצי; $Q = C\varepsilon$ לא תלוי ב-$R$; זמן החצי פי 2.
+      - kind: reasoning
+        text: >-
+          ב. $C$ פי חצי: $\tau$ פי חצי; $I_0 = \varepsilon/R$ לא תלוי ב-$C$; $Q = C\varepsilon$ פי חצי; זמן החצי פי חצי.
+      - kind: reasoning
+        text: >-
+          ג. $\varepsilon$ פי 2: $\tau = RC$ לא משתנה; $I_0$ פי 2; $Q$ פי 2. הקבל נטען למתח כפול בזרם כפול, ולכן מגיע לחצי מהמתח הסופי, הכפול, באותו זמן.
+      - kind: result
+        text: >-
+          א. $\tau$ גדל פי 2, $I_0$ קטן פי 2, $Q$ לא משתנה, זמן החצי גדל פי 2.
+
+          ב. $\tau$ קטן פי 2, $I_0$ לא משתנה, $Q$ קטן פי 2, זמן החצי קטן פי 2.
+
+          ג. $\tau$ לא משתנה, $I_0$ גדל פי 2, $Q$ גדל פי 2, זמן החצי לא משתנה.
+
+  - id: W-3.9-06
+    level: mid
+    qualitative: false
+    objectives: [OBJ-3.9-3]
+    prompt: >-
+      לסוללה כא״מ של $12\,\text{V}$ והתנגדות פנימית של $1\,\Omega$. בין ההדקים שלה מחוברים, במקביל זה לזה, נגד של $5\,\Omega$ וקבל של $20\,\mu\text{F}$.
+
+      א. מה המתח על הקבל, ומה המטען עליו, זמן רב אחרי החיבור?
+
+      ב. מנתקים את הנגד, והקבל נשאר מחובר לסוללה. מה המתח על הקבל, ומה המטען עליו, זמן רב אחר כך? בכמה השתנה המטען?
+    answer: >-
+      א. $V_C = 10\,\text{V}$, $Q = 200\,\mu\text{C}$.
+
+      ב. $V_C = 12\,\text{V}$, $Q = 240\,\mu\text{C}$: המטען גדל ב-$40\,\mu\text{C}$.
+    solution:
+      - kind: given
+        text: '$\varepsilon = 12\,\text{V}$, $r = 1\,\Omega$, $R = 5\,\Omega$, $C = 20\cdot10^{-6}\,\text{F}$.'
+      - kind: reasoning
+        text: >-
+          א. במצב יציב בענף של הקבל אין זרם, והקבל כמו נתק. הזרם עובר בסוללה ובנגד בלבד, וההתנגדות הפנימית בטור לנגד. הקבל מחובר בין ההדקים, ולכן המתח עליו הוא מתח ההדקים, שהוא גם המתח על הנגד.
+      - kind: formula
+        text: '$I = \dfrac{\varepsilon}{R + r}$, $V = IR$, $Q = CV$.'
+      - kind: substitution
+        text: >-
+          א. $$I = \frac{12\,\text{V}}{5\,\Omega + 1\,\Omega} = 2\,\text{A} \qquad V_C = 2\,\text{A}\cdot5\,\Omega = 10\,\text{V} \qquad Q = 20\cdot10^{-6}\,\text{F}\cdot10\,\text{V} = 2\cdot10^{-4}\,\text{C}$$
+      - kind: reasoning
+        text: >-
+          ב. בלי הנגד, במצב יציב אין זרם בכלל: גם לא בסוללה. לכן אין מתח על ההתנגדות הפנימית, $Ir = 0$, ומתח ההדקים שווה לכא״מ. הקבל נטען ל-$12\,\text{V}$.
+      - kind: substitution
+        text: 'ב. $Q = 20\cdot10^{-6}\,\text{F}\cdot12\,\text{V} = 2.4\cdot10^{-4}\,\text{C}$, כלומר $\Delta Q = 240\,\mu\text{C} - 200\,\mu\text{C} = 40\,\mu\text{C}$.'
+      - kind: result
+        text: >-
+          א. $V_C = 10\,\text{V}$ ו-$Q = 200\,\mu\text{C}$.
+
+          ב. $V_C = 12\,\text{V}$ ו-$Q = 240\,\mu\text{C}$; המטען גדל ב-$40\,\mu\text{C}$.
+
+  - id: W-3.9-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-3.9-1, OBJ-3.9-3]
+    prompt: >-
+      שלוש נורות זהות, $L_1$, $L_2$ ו-$L_3$, וקבל ריק מחוברים לסוללה אידאלית ולמפסק כך: $L_1$ בטור עם הסוללה והמפסק, ואחריה שני ענפים שמחוברים במקביל זה לזה. בענף אחד $L_2$ לבדה, ובענף השני $L_3$ בטור עם הקבל. נתייחס לנורות כאל נגדים שההתנגדות שלהם קבועה.
+
+      א. סוגרים את המפסק. דרגו את הנורות לפי עוצמת ההארה ברגע הראשון.
+
+      ב. דרגו אותן זמן רב אחר כך.
+
+      ג. אילו נורות מתחזקות עם הזמן, ואילו נחלשות?
+    answer: >-
+      א. $L_1$ מאירה הכי חזק, ו-$L_2$ ו-$L_3$ שוות זו לזו.
+
+      ב. $L_1$ ו-$L_2$ שוות זו לזו, ו-$L_3$ כבויה.
+
+      ג. $L_2$ מתחזקת, $L_1$ ו-$L_3$ נחלשות.
+    solution:
+      - kind: reasoning
+        text: >-
+          נסמן את ההתנגדות של כל נורה ב-$R$ ואת הכא״מ ב-$\varepsilon$. נורה מאירה חזק יותר כשהזרם בה גדול יותר, כי $P = I^2R$ וההתנגדות של כל הנורות שווה.
+      - kind: reasoning
+        text: >-
+          א. ברגע הראשון הקבל ריק ומתנהג כמו תיל. אז $L_2$ ו-$L_3$ הן שני נגדים שווים במקביל, $R/2$, בטור עם $L_1$. ההתנגדות השקולה $1.5R$, ולכן ב-$L_1$ זורם $\dfrac{\varepsilon}{1.5R}$, והזרם הזה מתחלק שווה בשווה בין $L_2$ ל-$L_3$: בכל אחת $\dfrac{\varepsilon}{3R}$.
+      - kind: reasoning
+        text: >-
+          ב. במצב יציב הקבל כמו נתק: בענף של $L_3$ אין זרם. נשארו $L_1$ ו-$L_2$ בטור, ובשתיהן $\dfrac{\varepsilon}{2R}$.
+      - kind: reasoning
+        text: >-
+          ג. נשווה: ב-$L_1$ הזרם יורד מ-$\dfrac{\varepsilon}{1.5R}$ אל $\dfrac{\varepsilon}{2R}$, וב-$L_2$ הוא עולה מ-$\dfrac{\varepsilon}{3R}$ אל $\dfrac{\varepsilon}{2R}$. ב-$L_3$ הוא יורד מ-$\dfrac{\varepsilon}{3R}$ לאפס, כי ככל שהקבל נטען המתח עליו גדל, והוא דוחק את הזרם בענף שלו.
+      - kind: result
+        text: >-
+          א. $L_1$ הכי חזקה; $L_2 = L_3$.
+
+          ב. $L_1 = L_2$; $L_3$ כבויה.
+
+          ג. $L_2$ מתחזקת; $L_1$ ו-$L_3$ נחלשות.
+
+  - id: W-3.9-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-3.9-1, OBJ-3.9-2, OBJ-3.9-3]
+    prompt: >-
+      במעגל שבאיור, סוללה אידאלית של $12\,\text{V}$, מפסק S ונגד $R_1 = 2\,\Omega$ מחוברים בטור לשני ענפים שמחוברים במקביל זה לזה. בענף אחד נגד $R_2 = 4\,\Omega$, ובענף השני נגד $R_3 = 4\,\Omega$ בטור עם קבל של $10\,\mu\text{F}$. בהתחלה הקבל ריק.
+
+      א. סוגרים את המפסק. מה הזרם בכל נגד ברגע הראשון? מה מראה מד מתח אידאלי שמחובר ל-$R_3$?
+
+      ב. מה הזרם בכל נגד, ומה מראה המד שעל $R_3$, זמן רב אחר כך? מה המתח על הקבל, ומה המטען עליו?
+
+      ג. זמן רב אחרי הסגירה פותחים את המפסק. דרך אילו נגדים מתפרק הקבל? מה קבוע הזמן של הפריקה, ומה הזרם ב-$R_2$ ברגע הראשון אחריה?
+    diagram: >-
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 200" width="360" height="200" fill="none" stroke="currentColor" stroke-width="1.5">
+      <line x1="30" y1="30" x2="60" y2="30"/>
+      <circle cx="62" cy="30" r="2.5"/>
+      <line x1="64" y1="29" x2="96" y2="16"/>
+      <circle cx="100" cy="30" r="2.5"/>
+      <line x1="102" y1="30" x2="130" y2="30"/>
+      <rect x="130" y="22" width="40" height="16"/>
+      <line x1="170" y1="30" x2="320" y2="30"/>
+      <line x1="30" y1="30" x2="30" y2="92"/>
+      <line x1="16" y1="92" x2="44" y2="92"/>
+      <line x1="24" y1="102" x2="36" y2="102" stroke-width="4"/>
+      <line x1="30" y1="102" x2="30" y2="170"/>
+      <line x1="30" y1="170" x2="320" y2="170"/>
+      <line x1="220" y1="30" x2="220" y2="80"/>
+      <rect x="212" y="80" width="16" height="40"/>
+      <line x1="220" y1="120" x2="220" y2="170"/>
+      <line x1="320" y1="30" x2="320" y2="50"/>
+      <rect x="312" y="50" width="16" height="40"/>
+      <line x1="320" y1="90" x2="320" y2="122"/>
+      <line x1="306" y1="122" x2="334" y2="122" stroke-width="2.5"/>
+      <line x1="306" y1="130" x2="334" y2="130" stroke-width="2.5"/>
+      <line x1="320" y1="130" x2="320" y2="170"/>
+      <circle cx="220" cy="30" r="3" fill="currentColor" stroke="none"/>
+      <circle cx="220" cy="170" r="3" fill="currentColor" stroke="none"/>
+      <g fill="currentColor" stroke="none" font-size="13">
+      <text x="8" y="88">+</text>
+      <text x="48" y="102">12 V</text>
+      <text x="74" y="14">S</text>
+      <text x="122" y="56">R1 = 2 Ω</text>
+      <text x="206" y="104" text-anchor="end">R2 = 4 Ω</text>
+      <text x="304" y="74" text-anchor="end">R3 = 4 Ω</text>
+      <text x="300" y="132" text-anchor="end">C = 10 μF</text>
+      </g>
+      </svg>
+    diagramAlt: >-
+      מעגל מלבני. בצלע השמאלית סוללה של 12 וולט, והקו הארוך שלה, הצד החיובי, למעלה. בחוט העליון, משמאל לימין, מפסק S ונגד R1 של 2 אוהם. אחריו שני ענפים אנכיים שיורדים אל החוט התחתון: נגד R2 של 4 אוהם, ומימינו נגד R3 של 4 אוהם ומתחתיו קבל C של 10 מיקרופאראד.
+    answer: >-
+      א. ב-$R_1$ זורם $3\,\text{A}$, וב-$R_2$ וב-$R_3$ זורם $1.5\,\text{A}$ בכל אחד; המד מראה $6\,\text{V}$.
+
+      ב. ב-$R_1$ וב-$R_2$ זורם $2\,\text{A}$, וב-$R_3$ אין זרם; המד מראה $0$; $V_C = 8\,\text{V}$ ו-$Q = 80\,\mu\text{C}$.
+
+      ג. דרך $R_2$ ו-$R_3$ בטור; $\tau = 8\cdot10^{-5}\,\text{s}$; ב-$R_2$ זורם $1\,\text{A}$.
+    solution:
+      - kind: given
+        text: '$\varepsilon = 12\,\text{V}$, $R_1 = 2\,\Omega$, $R_2 = R_3 = 4\,\Omega$, $C = 10\cdot10^{-6}\,\text{F}$. הקבל ריק כשסוגרים את המפסק.'
+      - kind: reasoning
+        text: >-
+          א. ברגע הראשון הקבל ריק, אין עליו מתח, והוא מתנהג כמו תיל. אז $R_2$ ו-$R_3$ שני נגדים שווים במקביל, $\dfrac{4\cdot4}{4+4} = 2\,\Omega$, בטור עם $R_1$: ההתנגדות השקולה $4\,\Omega$.
+      - kind: substitution
+        text: >-
+          א. $I_1 = \dfrac{12\,\text{V}}{4\,\Omega} = 3\,\text{A}$. הענפים שווים, ולכן הזרם מתחלק שווה בשווה: $1.5\,\text{A}$ ב-$R_2$ ו-$1.5\,\text{A}$ ב-$R_3$. על $R_3$: $V = 1.5\,\text{A}\cdot4\,\Omega = 6\,\text{V}$.
+      - kind: reasoning
+        text: >-
+          ב. במצב יציב הקבל כמו נתק, ולכן בענף של $R_3$ והקבל אין זרם. $R_1$ ו-$R_2$ נשארים בטור: $I = \dfrac{12\,\text{V}}{2\,\Omega + 4\,\Omega} = 2\,\text{A}$. ב-$R_3$ אין זרם, ולכן אין עליו מתח: $V = IR = 0$.
+      - kind: reasoning
+        text: >-
+          ב. הענף של $R_3$ והקבל מחובר במקביל ל-$R_2$, ולכן המתח על כל הענף שווה למתח על $R_2$, $2\,\text{A}\cdot4\,\Omega = 8\,\text{V}$. על $R_3$ אין מתח, ולכן כל $8\,\text{V}$ על הקבל:
+          $$Q = CV_C = 10\cdot10^{-6}\,\text{F}\cdot8\,\text{V} = 8\cdot10^{-5}\,\text{C}$$
+      - kind: reasoning
+        text: >-
+          ג. פתיחת המפסק מנתקת את הסוללה ואת $R_1$. נשארת לולאה אחת: הקבל, $R_3$ ו-$R_2$, והקבל מתפרק דרך שני הנגדים, שמחוברים עכשיו בטור: אותו זרם עובר בשניהם. לכן ההתנגדות בלולאה $R_2 + R_3 = 8\,\Omega$, ו-$\tau = (R_2 + R_3)\,C$.
+      - kind: substitution
+        text: >-
+          ג. $\tau = 8\,\Omega\cdot10\cdot10^{-6}\,\text{F} = 8\cdot10^{-5}\,\text{s}$. ברגע הראשון המתח על הקבל עדיין $8\,\text{V}$, ולכן $I = \dfrac{8\,\text{V}}{8\,\Omega} = 1\,\text{A}$, ב-$R_3$ וגם ב-$R_2$.
+      - kind: result
+        text: >-
+          א. $I_1 = 3\,\text{A}$, $I_2 = I_3 = 1.5\,\text{A}$; המד מראה $6\,\text{V}$.
+
+          ב. $I_1 = I_2 = 2\,\text{A}$, $I_3 = 0$; המד מראה $0$; $V_C = 8\,\text{V}$, $Q = 80\,\mu\text{C}$.
+
+          ג. דרך $R_2$ ו-$R_3$ בטור; $\tau = 8\cdot10^{-5}\,\text{s}$; ב-$R_2$ זורם $1\,\text{A}$, חצי מהזרם שזרם בו רגע לפני הפתיחה.
+
+  - id: W-3.9-09
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-3.9-1, OBJ-3.9-2]
+    prompt: >-
+      במבזק של מצלמה, קבל של $100\,\mu\text{F}$ טעון למתח של $300\,\text{V}$. ברגע הצילום הוא מתפרק דרך נורת המבזק, שההתנגדות שלה $4\,\Omega$ (נתייחס אליה כקבועה).
+
+      א. כמה אנרגיה אגורה בקבל לפני הצילום?
+
+      ב. מה קבוע הזמן, ומה הזרם ברגע הראשון של הפריקה?
+
+      ג. איזה חלק מהאנרגיה ההתחלתית נשאר בקבל אחרי זמן $\tau$?
+
+      ד. מה ההספק הממוצע של הנורה במשך ה-$\tau$ הראשון?
+    answer: >-
+      א. $4.5\,\text{J}$.
+
+      ב. $\tau = 4\cdot10^{-4}\,\text{s}$, $I_0 = 75\,\text{A}$.
+
+      ג. כ-14% (ליתר דיוק 13.5%), לא 37%.
+
+      ד. כ-$9.7\cdot10^{3}\,\text{W}$.
+    solution:
+      - kind: given
+        text: '$C = 100\cdot10^{-6}\,\text{F} = 10^{-4}\,\text{F}$, $V_0 = 300\,\text{V}$, $R = 4\,\Omega$.'
+      - kind: formula
+        text: '$U = \tfrac12 CV^2$, $\tau = RC$, $I_0 = \dfrac{V_0}{R}$, ולהספק ממוצע $P = \dfrac{E}{t}$.'
+      - kind: substitution
+        text: >-
+          א. $U_0 = \tfrac12\cdot10^{-4}\,\text{F}\cdot(300\,\text{V})^2 = 4.5\,\text{J}$.
+
+          ב. $\tau = 4\,\Omega\cdot10^{-4}\,\text{F} = 4\cdot10^{-4}\,\text{s}$, ו-$I_0 = \dfrac{300\,\text{V}}{4\,\Omega} = 75\,\text{A}$.
+      - kind: reasoning
+        text: >-
+          ג. אחרי $\tau$ **המתח** יורד ל-37%: $V \approx 0.37\cdot300\,\text{V} \approx 110\,\text{V}$. האנרגיה תלויה בריבוע המתח, ולכן היא יורדת פי $0.37^2$:
+          $$\frac{U}{U_0} = \left(\frac{V}{V_0}\right)^2 \approx 0.37^2 \approx 0.14$$
+          חישוב מדויק יותר, עם $e^{-1} = 0.368$, נותן $0.368^2 \approx 0.135$, כלומר $U \approx 0.135\cdot4.5\,\text{J} \approx 0.61\,\text{J}$.
+      - kind: reasoning
+        text: >-
+          ד. במשך ה-$\tau$ הראשון יצאו מהקבל $4.5\,\text{J} - 0.61\,\text{J} \approx 3.9\,\text{J}$, וכולם עברו בנורה (ההתנגדות היחידה במעגל), שם הפכו לאור ולחום:
+          $$P = \frac{3.9\,\text{J}}{4\cdot10^{-4}\,\text{s}} \approx 9.7\cdot10^{3}\,\text{W}$$
+          את המספר $9.7$ קיבלנו מ-$3.89\,\text{J}$, לפני העיגול ל-$3.9$.
+      - kind: result
+        text: >-
+          א. $4.5\,\text{J}$.
+
+          ב. $\tau = 4\cdot10^{-4}\,\text{s}$ ו-$I_0 = 75\,\text{A}$.
+
+          ג. כ-14%: כ-$0.6\,\text{J}$. רוב האנרגיה, כ-86%, יוצאת כבר ב-$\tau$ הראשון.
+
+          ד. כ-$9.7\cdot10^{3}\,\text{W}$, כמעט עשרה קילוואט.
+
+  - id: W-3.9-10
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-3.9-1, OBJ-3.9-2]
+    prompt: >-
+      במעגל עם מתג דו-כיווני, במצב A המתג מחבר קבל ריק של $50\,\mu\text{F}$ בטור לנגד $R_1 = 10\,\text{k}\Omega$ ולסוללה אידאלית של $10\,\text{V}$. במצב B הוא מחבר את הקבל לנגד $R_2 = 5\,\text{k}\Omega$ בלבד, בלי הסוללה. המתג במצב A במשך $1.0\,\text{s}$, ואז מעבירים אותו בבת אחת למצב B.
+
+      א. מה קבוע הזמן במצב A, ומה במצב B?
+
+      ב. מה המתח על הקבל ברגע ההעברה? מה הזרם בקבל רגע לפני ההעברה?
+
+      ג. מה הזרם בקבל רגע אחרי ההעברה, ובאיזה כיוון, בהשוואה לזרם רגע לפניה?
+
+      ד. בערך מה המתח על הקבל $0.25\,\text{s}$ אחרי ההעברה?
+    answer: >-
+      א. $\tau_A = 0.5\,\text{s}$, $\tau_B = 0.25\,\text{s}$.
+
+      ב. כ-$8.6\,\text{V}$; כ-$0.14\,\text{mA}$.
+
+      ג. כ-$1.7\,\text{mA}$, בכיוון ההפוך: הזרם קפץ פי יותר מ-10 והתהפך.
+
+      ד. כ-$3.2\,\text{V}$.
+    solution:
+      - kind: given
+        text: '$C = 50\cdot10^{-6}\,\text{F}$, $R_1 = 10^{4}\,\Omega$, $R_2 = 5\cdot10^{3}\,\Omega$, $\varepsilon = 10\,\text{V}$. המתג במצב A במשך $1.0\,\text{s}$.'
+      - kind: formula
+        text: '$\tau = RC$, ובכל רגע $I = \dfrac{V_R}{R}$.'
+      - kind: substitution
+        text: 'א. $\tau_A = 10^{4}\,\Omega\cdot50\cdot10^{-6}\,\text{F} = 0.5\,\text{s}$, ו-$\tau_B = 5\cdot10^{3}\,\Omega\cdot50\cdot10^{-6}\,\text{F} = 0.25\,\text{s}$.'
+      - kind: reasoning
+        text: >-
+          ב. $1.0\,\text{s}$ הן $2\tau_A$, ולכן הקבל ב-86% מהמתח הסופי: $V_C \approx 0.86\cdot10\,\text{V} \approx 8.6\,\text{V}$. על $R_1$ נשאר $10\,\text{V} - 8.6\,\text{V} = 1.4\,\text{V}$, ולכן רגע לפני ההעברה
+          $$I = \frac{1.4\,\text{V}}{10^{4}\,\Omega} = 1.4\cdot10^{-4}\,\text{A}$$
+      - kind: reasoning
+        text: >-
+          ג. ברגע ההעברה המטען על הקבל עוד לא השתנה, ולכן גם המתח עליו: $8.6\,\text{V}$. עכשיו כל המתח הזה על $R_2$, והקבל דוחף מטען מהלוח החיובי שלו דרך $R_2$, כלומר בכיוון ההפוך לזרם הטעינה:
+          $$I = \frac{8.6\,\text{V}}{5\cdot10^{3}\,\Omega} \approx 1.7\cdot10^{-3}\,\text{A}$$
+          המתח על הקבל לא קופץ, כי הוא תלוי במטען, והמטען משתנה רק בהדרגה. הזרם, לעומת זאת, יכול לקפוץ: הוא נקבע בכל רגע לפי המתח על הנגד שמחובר עכשיו.
+      - kind: reasoning
+        text: 'ד. $0.25\,\text{s}$ הן $\tau_B$ אחד, והמתח יורד ל-37%: $V_C \approx 0.37\cdot8.6\,\text{V} \approx 3.2\,\text{V}$.'
+      - kind: result
+        text: >-
+          א. $\tau_A = 0.5\,\text{s}$ ו-$\tau_B = 0.25\,\text{s}$.
+
+          ב. $V_C \approx 8.6\,\text{V}$, ו-$I \approx 0.14\,\text{mA}$.
+
+          ג. $I \approx 1.7\,\text{mA}$, בכיוון ההפוך לזרם שלפני ההעברה.
+
+          ד. $V_C \approx 3.2\,\text{V}$.
+
+challenge:
+  - id: W-3.9-c1
+    stars: 1
+    objectives: [OBJ-3.9-1, OBJ-3.9-2]
+    prompt: >-
+      נגד של $2\,\text{k}\Omega$ וקבל ריק של $5\,\mu\text{F}$ מחוברים בטור למתג דו-כיווני. ברגע $t = 0$ המתג מחבר אותם לסוללה אידאלית של $5\,\text{V}$, וברגע $t = 0.020\,\text{s}$ הוא עובר למצב שבו הוא מחבר את קצה הנגד ישירות ללוח השני של הקבל, בלי הסוללה. נסמן ב-$V_R$ את הפוטנציאל של קצה הנגד שמחובר למתג פחות הפוטנציאל של קצהו השני, שמחובר לקבל, וב-$V_C$ את המתח על הקבל.
+
+      א. מה קבוע הזמן? כמה קבועי זמן נמשך החיבור לסוללה?
+
+      ב. מצאו את $V_C$ ואת $V_R$ ברגעים $t = 0$, $t = 0.010\,\text{s}$, ורגע לפני $t = 0.020\,\text{s}$.
+
+      ג. מצאו את $V_C$ ואת $V_R$ רגע אחרי $t = 0.020\,\text{s}$, וברגע $t = 0.030\,\text{s}$.
+
+      ד. שרטטו על אותם צירים, מ-$t = 0$ עד $t = 0.06\,\text{s}$, את $V_C$, את $V_R$ ואת הסכום $V_C + V_R$.
+    answer: >-
+      א. $\tau = 0.010\,\text{s}$; החיבור נמשך $2\tau$.
+
+      ב. ב-$t = 0$: $V_C = 0$, $V_R = 5\,\text{V}$. ב-$t = 0.010\,\text{s}$: $V_C \approx 3.2\,\text{V}$, $V_R \approx 1.8\,\text{V}$. לפני $0.020\,\text{s}$: $V_C \approx 4.3\,\text{V}$, $V_R \approx 0.7\,\text{V}$.
+
+      ג. אחרי $0.020\,\text{s}$: $V_C \approx 4.3\,\text{V}$, $V_R \approx -4.3\,\text{V}$. ב-$t = 0.030\,\text{s}$: $V_C \approx 1.6\,\text{V}$, $V_R \approx -1.6\,\text{V}$.
+
+      ד. $V_C$ עולה ואז דועך לאפס בלי לקפוץ; $V_R$ דועך מ-$5\,\text{V}$, קופץ לערך שלילי, $V_R \approx -4.3\,\text{V}$, ודועך חזרה לאפס; הסכום $5\,\text{V}$ עד $0.020\,\text{s}$, ואפס אחר כך.
+    solution:
+      - kind: given
+        text: '$R = 2\cdot10^{3}\,\Omega$, $C = 5\cdot10^{-6}\,\text{F}$, $\varepsilon = 5\,\text{V}$. החיבור לסוללה מ-$t = 0$ עד $t = 0.020\,\text{s}$.'
+      - kind: substitution
+        text: 'א. $\tau = RC = 2\cdot10^{3}\,\Omega\cdot5\cdot10^{-6}\,\text{F} = 10^{-2}\,\text{s}$. החיבור נמשך $0.020\,\text{s} = 2\tau$.'
+      - kind: reasoning
+        text: >-
+          ב. בזמן החיבור, לפי חוק הלולאות, $V_C + V_R = \varepsilon = 5\,\text{V}$ בכל רגע. ב-$t = 0$ הקבל ריק: $V_C = 0$ ו-$V_R = 5\,\text{V}$.
+          אחרי $\tau$ הקבל ב-63%: $V_C \approx 0.63\cdot5\,\text{V} \approx 3.2\,\text{V}$, ו-$V_R = 5\,\text{V} - 3.2\,\text{V} \approx 1.8\,\text{V}$.
+          אחרי $2\tau$ הוא ב-86%: $V_C \approx 0.86\cdot5\,\text{V} \approx 4.3\,\text{V}$, ו-$V_R \approx 0.7\,\text{V}$.
+      - kind: reasoning
+        text: >-
+          ג. ברגע המעבר המטען על הקבל לא משתנה, ולכן $V_C$ נשאר כ-$4.3\,\text{V}$. בלולאה החדשה אין סוללה: הנגד והקבל מחוברים זה לזה, ולכן עכשיו $V_C + V_R = 0$ בכל רגע, ו-$V_R \approx -4.3\,\text{V}$. הסימן התהפך כי הזרם התהפך: הקבל מתפרק, ומטען זורם בנגד בכיוון ההפוך לזרם הטעינה.
+          אחרי $\tau$ נוסף, ב-$t = 0.030\,\text{s}$, המתח על הקבל יורד ל-37%: $V_C \approx 0.37\cdot4.3\,\text{V} \approx 1.6\,\text{V}$, ו-$V_R \approx -1.6\,\text{V}$.
+      - kind: reasoning
+        text: >-
+          ד. $V_C$: עולה מאפס, מהר בהתחלה, עד כ-$4.3\,\text{V}$ ב-$0.020\,\text{s}$, ואחר כך דועך לאפס. הגרף שלו רציף, בלי קפיצה, כי המטען משתנה רק בהדרגה.
+          $V_R$: מתחיל ב-$5\,\text{V}$ ודועך עד כ-$0.7\,\text{V}$, ב-$0.020\,\text{s}$ קופץ בבת אחת לערך שלילי, $V_R \approx -4.3\,\text{V}$, ואז דועך חזרה לאפס. ב-$0.06\,\text{s}$, כ-$4\tau$ אחרי המעבר, שני הגרפים כמעט באפס.
+          הסכום הוא $5\,\text{V}$ עד $0.020\,\text{s}$, ואפס אחר כך: זו צורת המתח שהמתג "נותן" לנגד ולקבל יחד.
+      - kind: result
+        text: >-
+          א. $\tau = 0.010\,\text{s}$; החיבור נמשך $2\tau$.
+
+          ב. $(V_C, V_R)$: $(0, 5\,\text{V})$, $(3.2\,\text{V}, 1.8\,\text{V})$, $(4.3\,\text{V}, 0.7\,\text{V})$.
+
+          ג. $(4.3\,\text{V}, -4.3\,\text{V})$ ואז $(1.6\,\text{V}, -1.6\,\text{V})$.
+
+          ד. $V_C$ רציף; $V_R$ קופץ ב-$0.020\,\text{s}$ מ-$0.7\,\text{V}$ אל $V_R \approx -4.3\,\text{V}$; הסכום $5\,\text{V}$ ואז אפס.
+    source:
+      name: British Physics Olympiad (BPhO), Round 1
+      year: 2015
+      problem: 'Round 1, 13 November 2015, Section 2, Question 4(a)'
+      url: https://www.bpho.org.uk/Papers/R1/2015Nov_R1_S2.pdf
+      verified: '2026-11-02'
+      adapted: true
+
+  - id: W-3.9-c2
+    stars: 2
+    objectives: [OBJ-3.9-1]
+    prompt: >-
+      קבל ריק של $100\,\mu\text{F}$ נטען דרך נגד של $1\,\text{k}\Omega$ ממקור מתח אידאלי שאפשר לכוון את המתח שלו. בכל שלב המתח נשאר קבוע זמן רב לעומת $RC$, כך שהקבל מספיק להיטען עד המתח של המקור.
+
+      א. תהליך 1: מכוונים את המקור ל-$12\,\text{V}$ בבת אחת. מה העבודה של המקור, מה האנרגיה שנאגרת בקבל, וכמה חום מתפתח בנגד?
+
+      ב. תהליך 2: מכוונים את המקור ל-$4\,\text{V}$ ומחכים, אחר כך ל-$8\,\text{V}$ ומחכים, ולבסוף ל-$12\,\text{V}$ ומחכים, בלי לפרוק את הקבל בין השלבים. מה העבודה של המקור בכל שלב, וכמה חום מתפתח בנגד בסך הכול?
+
+      ג. הראו שבשלב שבו המקור מכוון למתח $V$ והקבל מתחיל במתח $V - \Delta V$, מתפתח בנגד חום של $\tfrac12 C\,(\Delta V)^2$. מכאן מצאו את החום הכולל כשמגיעים ל-$12\,\text{V}$ ב-$N$ שלבים שווים. מה קורה לחום כש-$N$ גדל מאוד?
+    answer: >-
+      א. $W = 14.4\,\text{mJ}$, $U = 7.2\,\text{mJ}$, חום $7.2\,\text{mJ}$.
+
+      ב. $1.6$, $3.2$ ו-$4.8\,\text{mJ}$: בסך הכול $9.6\,\text{mJ}$; חום $2.4\,\text{mJ}$, שליש מהחום של תהליך 1.
+
+      ג. החום הכולל $\dfrac{CV_0^2}{2N}$, כאשר $V_0 = 12\,\text{V}$: $\dfrac{7.2\,\text{mJ}}{N}$. כש-$N$ גדל מאוד החום שואף לאפס.
+    solution:
+      - kind: given
+        text: '$C = 10^{-4}\,\text{F}$, $R = 10^{3}\,\Omega$, מתח סופי $V_0 = 12\,\text{V}$. כל שלב נמשך זמן רב לעומת $RC = 0.1\,\text{s}$.'
+      - kind: formula
+        text: >-
+          המקור מעביר מטען $\Delta Q$ (המטען אחרי פחות המטען לפני) במתח קבוע $V$, ולכן עבודתו $W = V\,\Delta Q$. האנרגיה בקבל $U = \tfrac12 CV^2$. מקור אידאלי, ואין במעגל התנגדות מלבד הנגד, ולכן לפי שימור האנרגיה החום בנגד הוא $W - \Delta U$.
+      - kind: substitution
+        text: >-
+          א. $\Delta Q = CV_0 = 10^{-4}\,\text{F}\cdot12\,\text{V} = 1.2\cdot10^{-3}\,\text{C}$, ולכן $W = 12\,\text{V}\cdot1.2\cdot10^{-3}\,\text{C} = 14.4\,\text{mJ}$.
+          $U = \tfrac12\cdot10^{-4}\,\text{F}\cdot(12\,\text{V})^2 = 7.2\,\text{mJ}$, והחום $14.4\,\text{mJ} - 7.2\,\text{mJ} = 7.2\,\text{mJ}$: חצי, כמו בשיעור.
+      - kind: substitution
+        text: >-
+          ב. בכל שלב המתח על הקבל עולה ב-$4\,\text{V}$, ולכן בכל שלב $\Delta Q = 10^{-4}\,\text{F}\cdot4\,\text{V} = 4\cdot10^{-4}\,\text{C}$. העבודה בכל שלב היא המתח של המקור באותו שלב כפול $\Delta Q$:
+          $$W_1 = 4\,\text{V}\cdot4\cdot10^{-4}\,\text{C} = 1.6\,\text{mJ} \qquad W_2 = 8\,\text{V}\cdot4\cdot10^{-4}\,\text{C} = 3.2\,\text{mJ} \qquad W_3 = 12\,\text{V}\cdot4\cdot10^{-4}\,\text{C} = 4.8\,\text{mJ}$$
+          בסך הכול $9.6\,\text{mJ}$. הקבל מסיים באותם $7.2\,\text{mJ}$, ולכן החום $9.6\,\text{mJ} - 7.2\,\text{mJ} = 2.4\,\text{mJ}$.
+      - kind: manipulation
+        text: >-
+          ג. בשלב אחד: $\Delta Q = C\,\Delta V$, ולכן $W = VC\,\Delta V$. האנרגיה בקבל גדלה ב-
+          $$\Delta U = \tfrac12 CV^2 - \tfrac12 C\,(V - \Delta V)^2 = \tfrac12 C\left(2V\,\Delta V - (\Delta V)^2\right) = CV\,\Delta V - \tfrac12 C\,(\Delta V)^2$$
+          ולכן החום בשלב הוא $W - \Delta U = \tfrac12 C\,(\Delta V)^2$. הוא לא תלוי ב-$V$ ולא ב-$R$, רק בקפיצה $\Delta V$.
+      - kind: reasoning
+        text: >-
+          ג. ב-$N$ שלבים שווים $\Delta V = V_0/N$, ובכל שלב אותו חום. החום הכולל:
+          $$N\cdot\tfrac12 C\left(\frac{V_0}{N}\right)^2 = \frac{CV_0^2}{2N} = \frac{7.2\,\text{mJ}}{N}$$
+          בדיקה: $N = 1$ נותן $7.2\,\text{mJ}$, כמו ב-(א), ו-$N = 3$ נותן $2.4\,\text{mJ}$, כמו ב-(ב). כש-$N$ גדל מאוד, החום שואף לאפס: טעינה בצעדים קטנים מאוד, שבה המקור תמיד רק מעט מעל המתח של הקבל, כמעט לא מבזבזת אנרגיה.
+      - kind: reasoning
+        text: >-
+          המסקנה "חצי מהעבודה הופך לחום" נכונה רק בתנאי שלה: קבל ריק שנטען בבת אחת ממקור שהמתח שלו קבוע לאורך כל הטעינה. החום תלוי בקפיצת המתח על הנגד ברגע הראשון של כל שלב.
+      - kind: result
+        text: >-
+          א. $W = 14.4\,\text{mJ}$, $U = 7.2\,\text{mJ}$, חום $7.2\,\text{mJ}$.
+
+          ב. $1.6$, $3.2$ ו-$4.8\,\text{mJ}$, בסך הכול $9.6\,\text{mJ}$; חום $2.4\,\text{mJ}$.
+
+          ג. בכל שלב $\tfrac12 C\,(\Delta V)^2$; ב-$N$ שלבים $\dfrac{7.2\,\text{mJ}}{N}$, ששואף לאפס כש-$N$ גדל מאוד.
+    source:
+      name: JEE Advanced
+      year: 2017
+      problem: 'Paper 2, Physics, Section 3, Paragraph 1, Q.15 and Q.16'
+      url: https://jeeadv.ac.in/past_qps/2017_2.pdf
+      verified: '2026-11-02'
+      adapted: true
