@@ -239,8 +239,19 @@ for (const m of misconceptions) {
 /* -------------------------------------------------------------- lessons */
 
 const TEMPLATE = ['Hook', 'Predict', 'Explore', 'Explain', 'Example', 'Check', 'Watch', 'Summary'];
+/** A prose line of MDX: Markdown joins it with its neighbours into one paragraph. */
+const prose = (s: string) => s.trim() !== '' && !/^\s*(<|\$\$|\||-|\*|#)/.test(s) && !s.includes('="') && !s.includes('$$');
 for (const l of lessons) {
-  const blocks = [...l.body.matchAll(/<(Hook|Predict|Explore|Explain|Example|Check|Watch|Summary)\b/g)].map((m) => m[1]);
+  // Markdown joins consecutive lines, so a part "(ב)" right after a text line, or after a sentence on the same line,
+  // renders inside the previous paragraph. Twenty lessons shipped that way before this check.
+  let inMath = false;
+  l.body.split('\n').forEach((line, i, all) => {
+    if (line.trim() === '$$') inMath = !inMath;
+    if (inMath || !prose(line)) return;
+    const joined = /^\s*(\([א-ח]\)|[א-ח]\.)\s/.test(line) && i > 0 && prose(all[i - 1]);
+    if (joined || /[.?!:]\s+\([א-ח]\)\s/.test(line)) fail(l.file, `body line ${i + 1}: a part (א)/(ב) joins the previous paragraph; start it on its own line after a blank line`);
+  });
+  const blocks =[...l.body.matchAll(/<(Hook|Predict|Explore|Explain|Example|Check|Watch|Summary)\b/g)].map((m) => m[1]);
   for (const b of TEMPLATE) if (!blocks.includes(b)) fail(l.file, `lesson template: missing <${b}>`, true);
   let last = -1;
   for (const b of blocks) {
