@@ -1,0 +1,292 @@
+# Lesson 6.12 question bank (the displacement current). Strings may hold $inline$ / $$display$$ TeX and
+# **bold**; they are rendered at build time. YAML note: plain and single-quoted strings keep backslashes
+# literally. Every number below was recomputed with src/physics/displacement.ts (gapField, gapState),
+# circuits.ts (rcCharge) and constants.ts (EPS0_DISPLAY, MU0); the data differ on purpose from figure
+# 6.12א and the worked examples.
+
+chapter: 6
+questions:
+  # ------------------------------------------------ OBJ-6.12-1: the paradox, and why the sum is surface-independent
+  - id: Q-6.12-paradox
+    type: twotier
+    objectives: [OBJ-6.12-1]
+    qualitative: true
+    prompt: >-
+      תיל מוביל זרם $I$ לקבל שנטען. סביב התיל יש מסלול אמפר, ועליו נפרשת שקית שעוברת בין לוחות הקבל בלי לגעת בתיל. איזו סירקולציה **מנבא** חוק אמפר **בלי** התיקון של מקסוול, אם מחשבים את הזרם הכלוא דרך השקית?
+    choices:
+      - text: 'החוק מנבא סירקולציה אפס, בניגוד למה שהוא מנבא עם משטח שטוח על אותו מסלול, $\mu_0 I$.'
+        correct: true
+        feedback: נכון.
+      - text: 'החוק מנבא $\mu_0 I$, כמו עם כל משטח על אותו מסלול.'
+        feedback: 'הסירקולציה **האמיתית** היא אכן $\mu_0 I$, כי השדה על המסלול לא תלוי במשטח. אבל החוק בלי התיקון סופר רק זרם הולכה, ודרך השקית לא עובר אף מטען: הוא מנבא אפס, וזו הסתירה.'
+      - text: 'החוק מנבא $\mu_0 I$, כי זרם הולכה $I$ עובר דרך השקית: המטענים ממשיכים בין הלוחות.'
+        feedback: 'שום מטען לא עובר בין הלוחות: הוא נערם עליהם. אילו עבר, הקבל לא היה נטען.'
+        misconception: MC-displacement-is-charge-flow
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'זרם ההולכה דרך השקית הוא אפס, אבל השדה המגנטי על המסלול, ולכן הסירקולציה, לא תלוי במשטח שדמיינו.'
+        correct: true
+        feedback: 'נכון. שתי תשובות לאותו מסלול: זה הפרדוקס שמקסוול פתר בזרם ההעתקה.'
+      - text: 'בין הלוחות אין שדה מגנטי, ולכן גם על המסלול אין.'
+        feedback: 'המסלול נמצא סביב התיל, ושם יש שדה $\mu_0 I/(2\pi r)$. וגם בין הלוחות יש שדה מגנטי בזמן הטעינה.'
+        misconception: MC-no-field-between-plates
+      - text: 'השקית רחוקה מהתיל, ולכן השדה עליה חלש.'
+        feedback: 'השקית היא משטח דמיוני; היא לא משנה את השדה על המסלול. רק הזרם שעובר דרכה משתנה.'
+
+  - id: Q-6.12-why-same
+    type: mc
+    objectives: [OBJ-6.12-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      למה הצד הימני של חוק אמפר-מקסוול, $\mu_0(I + \varepsilon_0\,d\Phi_E/dt)$, חייב לצאת זהה לכל משטח פתוח שמסלול נתון הוא השפה שלו?
+    choices:
+      - text: 'כי הצד השמאלי, הסירקולציה $\oint \vec B\cdot d\vec l$, תלוי רק במסלול, לא במשטח.'
+        correct: true
+        feedback: 'נכון. משפט סטוקס אומר את אותו דבר: הסירקולציה היא שטף דרך **כל** משטח על המסלול. ושימור המטען עם חוק גאוס מבטיחים שהסכום אכן זהה.'
+      - text: 'כי זרם ההולכה זהה דרך כל משטח.'
+        feedback: 'ליד קבל שנטען זה לא נכון: משטח אחד חוצה את התיל, ושקית בין הלוחות לא. רק **הסכום** עם זרם ההעתקה זהה.'
+      - text: 'כי זרם ההעתקה זהה דרך כל משטח.'
+        feedback: 'דרך משטח שטוח סביב התיל אין שטף כלל, ודרך שקית בין הלוחות יש. כל אחד משני הזרמים לבדו תלוי במשטח; הסכום לא.'
+      - text: 'הוא לא חייב; בוחרים את המשטח הנוח.'
+        feedback: 'אילו התשובה הייתה תלויה במשטח, החוק היה נותן לאותו מסלול כמה סירקולציות שונות. בוחרים משטח נוח לחישוב, אבל כולם נותנים אותו דבר.'
+
+  - id: Q-6.12-steady
+    type: mc
+    objectives: [OBJ-6.12-1]
+    qualitative: true
+    prompt: >-
+      במעגל בלי קבל זורם זרם קבוע. האם גם כאן חוק אמפר בלי התיקון של מקסוול נותן תשובות שונות למשטחים שונים על אותו מסלול?
+    choices:
+      - text: 'לא. בזרם קבוע מטען לא נערם בשום מקום, ולכן דרך כל משטח על המסלול עובר אותו זרם הולכה.'
+        correct: true
+        feedback: 'נכון. שני משטחים יחד סוגרים נפח, ומה שנכנס דרך אחד יוצא דרך השני. בלי הצטברות מטען אין שדה חשמלי שמשתנה, והתיקון אפס.'
+      - text: 'כן, תמיד יש משטח שהתיל לא חוצה.'
+        feedback: 'משטח שהשפה שלו מקיפה את התיל חייב לחצות אותו, כל עוד התיל לא נגמר. התיל נקטע רק בקבל.'
+      - text: 'כן, כי זרם העתקה עובר גם בתוך התיל.'
+        feedback: 'בזרם קבוע השדה בתיל לא משתנה, ולכן אין זרם העתקה. ובכל מקרה, זרם העתקה אינו תנועה של מטען.'
+        misconception: MC-displacement-is-charge-flow
+
+  # ------------------------------------------------ OBJ-6.12-2: computing I_d, I_d = I between the plates
+  - id: Q-6.12-id-rate
+    type: numeric
+    objectives: [OBJ-6.12-2]
+    prompt: >-
+      בקבל עם לוחות עגולים ברדיוס $4\,\text{cm}$ השדה החשמלי בין הלוחות גדל בקצב של $5\cdot10^{12}\,\text{V/(m}\cdot\text{s)}$. מה זרם ההעתקה בין הלוחות? ענו באמפר.
+    answer: 0.222
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. $I_d = \varepsilon_0\pi a^2\,\dfrac{dE}{dt} = 8.85\cdot10^{-12}\cdot\pi\cdot0.04^2\cdot5\cdot10^{12} \approx 0.222\,\text{A}$.'
+    wrongFeedback: 'השטף הוא $E$ כפול שטח הלוח, $\pi a^2$, ולכן $I_d = \varepsilon_0\pi a^2\,dE/dt$, עם $a$ במטרים.'
+    commonWrong:
+      - value: 0.0708
+        feedback: 'שכחתם את $\pi$: שטח הלוח הוא $\pi a^2$, לא $a^2$.'
+      - value: 5.56
+        feedback: 'השתמשתם ב-$\pi a$ במקום $\pi a^2$. השטף הוא השדה כפול **שטח**.'
+      - value: 2224
+        feedback: 'הצבתם את הרדיוס בסנטימטרים, $4$ במקום $0.04\,\text{m}$.'
+      - value: 0.89
+        feedback: 'הצבתם את הקוטר, $8\,\text{cm}$, במקום הרדיוס.'
+
+  - id: Q-6.12-id-rc
+    type: numeric
+    objectives: [OBJ-6.12-2]
+    level: mid
+    prompt: >-
+      קבל לא טעון נטען דרך נגד של $30\,\text{k}\Omega$ מסוללה של $9\,\text{V}$. מה זרם ההעתקה בין הלוחות אחרי זמן של $2\tau$, כש-$\tau = RC$? ענו במיקרו-אמפר ($\mu\text{A}$).
+    answer: 40.6
+    unit: μA
+    tolerance: 0.03
+    correctFeedback: 'נכון. בין הלוחות $I_d = I = \dfrac{\varepsilon}{R}\,e^{-t/RC} = \dfrac{9}{3\cdot10^4}\,e^{-2} \approx 4.06\cdot10^{-5}\,\text{A}$. הקיבול ומידות הלוחות לא נחוצים.'
+    wrongFeedback: 'זרם ההעתקה בין הלוחות שווה לזרם בתיל בכל רגע, והזרם במעגל RC דועך כמו $e^{-t/RC}$.'
+    commonWrong:
+      - value: 300
+        feedback: 'זה הזרם ברגע סגירת המתג, $\varepsilon/R$. אחרי $2\tau$ הוא קטן פי $e^2$.'
+      - value: 259
+        feedback: 'השתמשתם בצורה של הטעינה, $1 - e^{-2}$: כך גדל המטען, ואיתו השדה. זרם ההעתקה תלוי בקצב השינוי של השדה, והוא דועך.'
+        misconception: MC-displacement-follows-field
+      - value: 110
+        feedback: 'זה הזרם אחרי $\tau$ אחד, $e^{-1}$. השאלה שואלת על $2\tau$.'
+      - value: 0
+        feedback: 'בין הלוחות אין זרם הולכה, אבל יש זרם העתקה, והוא שווה לזרם בתיל.'
+        misconception: MC-displacement-is-charge-flow
+
+  - id: Q-6.12-id-disc
+    type: numeric
+    objectives: [OBJ-6.12-2]
+    level: mid
+    prompt: >-
+      בתיל שמוביל זרם לקבל עם לוחות עגולים ברדיוס $6\,\text{cm}$ זורם ברגע מסוים $8\,\text{mA}$. מה זרם ההעתקה דרך דיסקה דמיונית ברדיוס $3\,\text{cm}$, באמצע הרווח ושמרכזה על הציר? ענו במיליאמפר.
+    answer: 2
+    unit: mA
+    tolerance: 0.03
+    correctFeedback: 'נכון. השדה אחיד בין הלוחות, והדיסקה תופסת $(3/6)^2 = 1/4$ מהשטף, ולכן $1/4$ מזרם ההעתקה: $8/4 = 2\,\text{mA}$.'
+    wrongFeedback: 'השטף דרך הדיסקה הוא $E\pi r^2$, החלק $r^2/a^2$ מכל השטף. כל השטף נותן זרם העתקה של $8\,\text{mA}$.'
+    commonWrong:
+      - value: 4
+        feedback: 'לקחתם את היחס בין הרדיוסים, $1/2$. השטף תלוי בשטח, כלומר ביחס בין **ריבועי** הרדיוסים.'
+      - value: 8
+        feedback: 'זה זרם ההעתקה דרך כל הרווח. דיסקה קטנה מהלוחות תופסת רק חלק מהשטף.'
+      - value: 0
+        feedback: 'אמנם אין מטען שעובר דרך הדיסקה, אבל יש שטף חשמלי שגדל, וזה זרם ההעתקה.'
+        misconception: MC-displacement-is-charge-flow
+
+  - id: Q-6.12-largest
+    type: mc
+    objectives: [OBJ-6.12-2, OBJ-6.12-4]
+    qualitative: true
+    prompt: >-
+      קבל לא טעון נטען דרך נגד. באיזה רגע זרם ההעתקה בין הלוחות הוא הגדול ביותר?
+    choices:
+      - text: 'ברגע סגירת המתג, כשהשדה בין הלוחות עדיין אפס.'
+        correct: true
+        feedback: 'נכון. אז הזרם בתיל הכי גדול, $\varepsilon/R$, והשדה גדל הכי מהר. זרם ההעתקה תלוי בקצב השינוי של השדה.'
+      - text: 'כשהקבל כמעט מלא, כי אז השדה הכי חזק.'
+        feedback: 'כשהקבל כמעט מלא השדה כמעט לא משתנה, וזרם ההעתקה כמעט אפס. מה שקובע הוא $dE/dt$, לא $E$.'
+        misconception: MC-displacement-follows-field
+      - text: 'אחרי זמן $\tau$, באמצע הטעינה.'
+        feedback: 'זרם ההעתקה שווה לזרם בתיל, והוא רק דועך מרגע סגירת המתג. אחרי $\tau$ נשארים ממנו כ-37%.'
+      - text: 'הוא קבוע לאורך כל הטעינה.'
+        feedback: 'הוא שווה לזרם בתיל, שדועך במעגל RC כמו $e^{-t/RC}$.'
+
+  # ------------------------------------------------ OBJ-6.12-3: the Ampère–Maxwell law and B between the plates
+  - id: Q-6.12-b-inside
+    type: numeric
+    objectives: [OBJ-6.12-3]
+    level: mid
+    prompt: >-
+      קבל עם לוחות עגולים ברדיוס $5\,\text{cm}$ נטען בזרם של $2\,\text{A}$. מה השדה המגנטי בין הלוחות, במרחק $2\,\text{cm}$ מהציר? ענו במיקרוטסלה ($\mu\text{T}$).
+    answer: 3.2
+    unit: μT
+    tolerance: 0.03
+    correctFeedback: 'נכון. מעגל ברדיוס $2\,\text{cm}$ מקיף $(2/5)^2$ מזרם ההעתקה, ולכן $B\cdot2\pi r = \mu_0 I\,r^2/a^2$ ו-$B = \dfrac{\mu_0 I r}{2\pi a^2} = \dfrac{4\pi\cdot10^{-7}\cdot2\cdot0.02}{2\pi\cdot0.05^2} = 3.2\cdot10^{-6}\,\text{T}$.'
+    wrongFeedback: 'הפעילו את חוק אמפר-מקסוול על מעגל ברדיוס $r$ בין הלוחות: הוא מקיף רק את החלק $r^2/a^2$ של זרם ההעתקה.'
+    commonWrong:
+      - value: 20
+        feedback: 'השתמשתם ב-$\mu_0 I/(2\pi r)$, כמו ליד תיל. בין הלוחות מעגל קטן מקיף רק חלק מזרם ההעתקה.'
+        misconception: MC-gap-field-like-wire
+      - value: 0
+        feedback: 'בין הלוחות אין זרם הולכה, אבל זרם ההעתקה יוצר שדה מגנטי כמו זרם.'
+        misconception: MC-no-field-between-plates
+      - value: 8
+        feedback: 'זה השדה בשפת הלוחות, $\mu_0 I/(2\pi a)$. במרחק $2\,\text{cm}$ השדה קטן יותר, באותו יחס כמו $r/a$.'
+      - value: 0.16
+        feedback: 'חילקתם ב-$a$ ולא ב-$a^2$. היחס הנכון: $B = \mu_0 I r/(2\pi a^2)$.'
+
+  - id: Q-6.12-b-profile
+    type: rank
+    objectives: [OBJ-6.12-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      קבל עם לוחות עגולים ברדיוס $a$ נטען. דרגו את גודל השדה המגנטי במישור שבאמצע הרווח, בנקודות שבמרחקים הבאים מהציר, מהגדול לקטן. אם שניים שווים, שימו אותם יחד.
+    items:
+      - { id: r0, label: 'על הציר, $r = 0$' }
+      - { id: rhalf, label: '$r = a/2$' }
+      - { id: ra, label: 'בשפת הלוחות, $r = a$' }
+      - { id: r2a, label: '$r = 2a$' }
+      - { id: r3a, label: '$r = 3a$' }
+    order: [ra, [rhalf, r2a], r3a, r0]
+    correctFeedback: 'נכון. בפנים $B \propto r$, ובחוץ $B \propto 1/r$: בשפה הוא הגדול ביותר, ב-$a/2$ וב-$2a$ הוא חצי ממנו, ב-$3a$ שליש, ועל הציר אפס.'
+    wrongFeedback: 'בתוך שפת הלוחות מעגל ברדיוס $r$ מקיף רק $r^2/a^2$ מזרם ההעתקה, ולכן $B = \mu_0 I r/(2\pi a^2)$. מחוץ לשפה $B = \mu_0 I/(2\pi r)$.'
+
+  - id: Q-6.12-discharge
+    type: mc
+    objectives: [OBJ-6.12-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      קבל טעון נפרק דרך נגד. מה קורה לשדה המגנטי בין הלוחות, לעומת הטעינה?
+    choices:
+      - text: 'הוא קיים, וכיוונו הפוך: השדה החשמלי קטן, ולכן $d\Phi_E/dt$ שלילי.'
+        correct: true
+        feedback: 'נכון. גם בפריקה השדה החשמלי משתנה, אבל קטן. זרם ההעתקה, כמו הזרם בתיל, הפוך לזה שבטעינה, וכך גם השדה המגנטי.'
+      - text: 'אין שדה מגנטי, כי זרם העתקה יש רק בטעינה.'
+        feedback: 'זרם העתקה יש בכל פעם שהשטף משתנה, גדל או קטן. בפריקה הוא בכיוון ההפוך.'
+        misconception: MC-displacement-follows-field
+      - text: 'הוא קיים, באותו כיוון כמו בטעינה, כי השדה החשמלי באותו כיוון.'
+        feedback: 'כיוון השדה המגנטי נקבע לפי $d\vec E/dt$, לא לפי $\vec E$. השדה החשמלי לא התהפך, אבל עכשיו הוא קטן.'
+        misconception: MC-displacement-follows-field
+      - text: 'בין הלוחות אף פעם אין שדה מגנטי.'
+        feedback: 'בזמן שהשדה החשמלי משתנה יש שדה מגנטי בין הלוחות, והוא מקיף את הציר.'
+        misconception: MC-no-field-between-plates
+
+  - id: Q-6.12-law-form
+    type: mc
+    objectives: [OBJ-6.12-3]
+    prompt: >-
+      איזה מהביטויים הוא חוק אמפר-מקסוול? ($I$ הוא זרם ההולכה ו-$\Phi_E$ השטף החשמלי, שניהם דרך משטח שהמסלול הוא השפה שלו.)
+    choices:
+      - text: '$\oint \vec B\cdot d\vec l = \mu_0\left(I + \varepsilon_0\,\dfrac{d\Phi_E}{dt}\right)$'
+        correct: true
+        feedback: 'נכון: זרם ההולכה ועוד זרם ההעתקה, שניהם דרך אותו משטח.'
+      - text: '$\oint \vec B\cdot d\vec l = \mu_0\left(I + \varepsilon_0\,\Phi_E\right)$'
+        feedback: 'בחוק מופיע **קצב השינוי** של השטף, לא השטף עצמו. שטף קבוע, כמו בקבל מלא, לא יוצר שדה מגנטי.'
+        misconception: MC-displacement-follows-field
+      - text: '$\oint \vec B\cdot d\vec l = \mu_0 I$'
+        feedback: 'זה חוק אמפר בלי התיקון. ליד קבל שנטען הוא נותן תשובות שונות למשטחים שונים.'
+      - text: '$\oint \vec B\cdot d\vec l = \mu_0\varepsilon_0\,\dfrac{dI}{dt}$'
+        feedback: 'לא קצב השינוי של הזרם, אלא קצב השינוי של השטף החשמלי, ונוסף לזרם ההולכה עצמו.'
+
+  # ------------------------------------------------ OBJ-6.12-4: not a flow of charge
+  - id: Q-6.12-no-charge
+    type: twotier
+    objectives: [OBJ-6.12-4]
+    qualitative: true
+    prompt: >-
+      בזמן שקבל נטען, האם מטען חשמלי עובר דרך הרווח שבין הלוחות?
+    choices:
+      - text: 'לא. המטען נערם על הלוחות; ברווח רק השדה החשמלי משתנה.'
+        correct: true
+        feedback: נכון.
+      - text: 'כן, וזה זרם ההעתקה.'
+        feedback: 'אילו מטען עבר מלוח ללוח, הקבל היה מתפרק במקום להיטען. זרם ההעתקה אינו תנועה של מטען.'
+        misconception: MC-displacement-is-charge-flow
+      - text: 'כן, אבל רק כשהמתח על הקבל גבוה.'
+        feedback: 'במתח גבוה מאוד הרווח יכול להיפרץ (ניצוץ), אבל זה כבר לא קבל תקין. בטעינה רגילה שום מטען לא חוצה את הרווח.'
+    reasonPrompt: ומה, אם כן, נותן את השדה המגנטי בין הלוחות?
+    reasons:
+      - text: 'השדה החשמלי שמשתנה: $\varepsilon_0\,d\Phi_E/dt$ מופיע בחוק אמפר-מקסוול במקום שבו מופיע זרם.'
+        correct: true
+        feedback: 'נכון. זרם ההעתקה נמדד באמפר ויוצר שדה מגנטי כמו זרם, אבל הוא שדה, לא מטענים.'
+      - text: 'אלקטרונים שקופצים בין הלוחות ויוצרים זרם קטן.'
+        feedback: 'אין אלקטרונים שקופצים: הרווח מבודד, והוא יכול להיות אפילו ריק. השדה המגנטי נוצר מהשדה החשמלי שמשתנה.'
+        misconception: MC-displacement-is-charge-flow
+      - text: 'בין הלוחות אין שדה מגנטי; הוא נמצא רק סביב התיל.'
+        feedback: 'בזמן הטעינה יש שדה מגנטי גם בין הלוחות. מחוץ לשפת הלוחות הוא בדיוק כמו ליד התיל.'
+        misconception: MC-no-field-between-plates
+
+  - id: Q-6.12-vacuum
+    type: mc
+    objectives: [OBJ-6.12-4]
+    qualitative: true
+    prompt: >-
+      שני קבלים זהים נטענים באותו מעגל, בדיוק באותו קצב. בראשון יש אוויר בין הלוחות, ובשני שאבו את כל האוויר והשאירו ריק. באיזה מהם יש זרם העתקה בין הלוחות?
+    choices:
+      - text: 'בשניהם, ובאותו גודל: הוא תלוי רק ב-$\varepsilon_0$ ובקצב השינוי של השטף.'
+        correct: true
+        feedback: 'נכון. בהגדרה $I_d = \varepsilon_0\,d\Phi_E/dt$ אין שום חומר. בשניהם הוא שווה לזרם בתיל.'
+      - text: 'רק בזה שיש בו אוויר, כי בריק אין מה שיזוז.'
+        feedback: 'זרם העתקה אינו תנועה של משהו. הוא קיים גם בריק, ולכן גלי רדיו ואור עוברים בריק (שיעור 6.14).'
+        misconception: MC-displacement-is-charge-flow
+      - text: 'באף אחד מהם, כי זרם העתקה יש רק בחומרים מוליכים.'
+        feedback: 'במוליך הקבל היה מתפרק. זרם העתקה הוא שדה חשמלי שמשתנה, והוא קיים בכל מקום שבו השטף משתנה.'
+        misconception: MC-displacement-is-charge-flow
+
+  - id: Q-6.12-full
+    type: mc
+    objectives: [OBJ-6.12-4]
+    qualitative: true
+    level: mid
+    prompt: >-
+      קבל נטען הרבה זמן, והוא מלא. השדה החשמלי בין הלוחות הוא עכשיו הגדול ביותר שהיה בכל הטעינה. מה השדה המגנטי בין הלוחות?
+    choices:
+      - text: 'אפס: השדה החשמלי כבר לא משתנה, ואין זרם העתקה.'
+        correct: true
+        feedback: 'נכון. זרם ההעתקה תלוי ב-$dE/dt$. גם בתיל הזרם אפס, ולכן אין שדה מגנטי בשום מקום.'
+      - text: 'הגדול ביותר, כי השדה החשמלי הגדול ביותר.'
+        feedback: 'השדה המגנטי נוצר משדה חשמלי **שמשתנה**. שדה חשמלי קבוע, חזק ככל שיהיה, לא יוצר שדה מגנטי.'
+        misconception: MC-displacement-follows-field
+      - text: 'כמו ליד תיל, $\mu_0 I/(2\pi r)$ עם הזרם ההתחלתי.'
+        feedback: 'הזרם ההתחלתי כבר דעך. עכשיו גם הזרם בתיל אפס.'
+        misconception: MC-gap-field-like-wire
