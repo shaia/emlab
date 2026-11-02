@@ -1,0 +1,673 @@
+# Workbook, lesson 3.10 (lab: EMF and internal resistance; the chapter's review). Format and rules: see .claude/CLAUDE.md,
+# "Worked examples, workbook".
+# Every table was generated with src/physics/lab.ts (measure, seeded scatter: W-04 seed 47, W-08 seed 59) and every slope
+# recomputed with fitLine; the values "read on the line" are the least-squares line at those x values. Every circuit number
+# was recomputed with src/physics/circuits.ts (solveCircuit, advance, rcCharge, loopCurrent, terminalVoltage, parallelR).
+# The learner works on paper, so a line drawn by eye whose slope is within about 5% of the fit counts as right.
+# In a >- block, consecutive lines fold into one paragraph: every part (א, ב, …) starts after a blank line.
+
+lesson: '3.10'
+practice:
+  - id: W-3.10-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-3.10-1, OBJ-3.10-2]
+    prompt: >-
+      במעגל המדידה מד המתח מחובר בין שני ההדקים של סוללה, ומד הזרם, הנגד המשתנה והמפסק מחוברים אליה בטור. המדים אידאליים.
+
+      (א) כשהמפסק פתוח, מד המתח מראה $1.58\,\text{V}$. מה הכא״מ של הסוללה? נמקו.
+
+      (ב) סוגרים את המפסק. מד הזרם מראה $0.40\,\text{A}$, ומד המתח מראה $1.38\,\text{V}$. מה ההתנגדות הפנימית של הסוללה?
+
+      (ג) מה ההתנגדות של הנגד המשתנה באותה מדידה?
+    answer: >-
+      (א) $\varepsilon = 1.58\,\text{V}$.
+
+      (ב) $r = 0.50\,\Omega$.
+
+      (ג) $R = 3.45\,\Omega$.
+    solution:
+      - kind: given
+        text: >-
+          מפסק פתוח: $V_0 = 1.58\,\text{V}$. מפסק סגור: $I = 0.40\,\text{A}$, $V = 1.38\,\text{V}$.
+      - kind: reasoning
+        text: >-
+          (א) כשהמפסק פתוח, הלולאה של הנגד המשתנה פתוחה, ומד מתח אידאלי לא מעביר זרם. לכן הזרם בסוללה אפס, ואין ירידת מתח בתוכה: מד המתח מראה את הכא״מ, $\varepsilon = 1.58\,\text{V}$.
+      - kind: formula
+        text: >-
+          (ב) $V = \varepsilon - Ir$. מעבירים את $V$ לצד אחד ואת $Ir$ לצד השני: $Ir = \varepsilon - V$, ומחלקים ב-$I$ כדי לבודד את $r$:
+          $$r = \frac{\varepsilon - V}{I}$$
+      - kind: substitution
+        text: >-
+          $$r = \frac{1.58 - 1.38}{0.40} = \frac{0.20}{0.40} = 0.50\ \Omega$$
+      - kind: substitution
+        text: >-
+          (ג) מחוץ לסוללה יש רק את הנגד המשתנה ואת מד הזרם, ועל מד זרם אידאלי אין מתח. לכן מתח ההדקים כולו על הנגד המשתנה:
+          $$R = \frac{V}{I} = \frac{1.38}{0.40} = 3.45\ \Omega$$
+          בדיקה: $I = \dfrac{\varepsilon}{R + r} = \dfrac{1.58}{3.45 + 0.50} = 0.40\,\text{A}$.
+      - kind: result
+        text: >-
+          (א) $\varepsilon = 1.58\,\text{V}$, כי בלי זרם אין ירידת מתח בתוך הסוללה.
+
+          (ב) $r = 0.50\,\Omega$.
+
+          (ג) $R = 3.45\,\Omega$. שימו לב: $V/I$ נותן את ההתנגדות של הנגד המשתנה, לא את $r$.
+
+  - id: W-3.10-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-3.10-1, OBJ-3.10-2]
+    prompt: >-
+      במעגל המדידה של איור 3.10א (סוללה עם $\varepsilon = 4.5\,\text{V}$ ו-$r = 1.5\,\Omega$, מד המתח על ההדקים) תלמיד מוסיף נגד קבוע של $1.5\,\Omega$ בטור לנגד המשתנה, "כדי להגן על הסוללה". מד המתח נשאר מחובר בין שני ההדקים של הסוללה.
+
+      (א) האם הנגד הנוסף משנה את החיתוך של הקו עם ציר המתח, או את השיפוע שלו? נמקו.
+
+      (ב) מה הוא כן משנה, ולמה זה טוב?
+    answer: >-
+      (א) לא: האופיין תלוי רק בסוללה, החיתוך נשאר $\varepsilon$, והשיפוע נשאר $m = -r$.
+
+      (ב) הוא מגביל את הזרם הגדול ביותר ל-$1.5\,\text{A}$ (במקום $3\,\text{A}$), כך שגם כשהנגד המשתנה באפס אין קצר.
+    solution:
+      - kind: reasoning
+        text: >-
+          (א) מד המתח מודד את מה שבין שני ההדקים, ושם יש רק את הסוללה. לכן כל מדידה נותנת נקודה על הקו $V = \varepsilon - Ir$, שתלוי רק ב-$\varepsilon$ וב-$r$ של הסוללה. כל מה שמחובר מחוץ להדקים, הנגד המשתנה והנגד הנוסף יחד, הוא רק העומס: הוא קובע איזה זרם יעבור, כלומר **איפה** על הקו תהיה הנקודה, אבל לא את הקו עצמו. החיתוך נשאר $\varepsilon$ והשיפוע נשאר $m = -r$.
+      - kind: reasoning
+        text: >-
+          (ב) הוא משנה את טווח הזרמים. בלעדיו, כשמזיזים את הנגד המשתנה לאפס, ההדקים מחוברים בתיל: זה קצר, עם הזרם $\varepsilon/r = 3\,\text{A}$, והסוללה מתחממת מאוד. עם הנגד הנוסף, גם כשהנגד המשתנה באפס נשארת התנגדות חיצונית של $1.5\,\Omega$, והזרם הגדול ביותר הוא
+          $$I = \frac{\varepsilon}{R + r} = \frac{4.5}{1.5 + 1.5} = 1.5\ \text{A}$$
+          כלומר הנקודות יכסו רק את החצי השמאלי של הקו, עד $1.5\,\text{A}$, וזה מספיק כדי לשרטט אותו.
+      - kind: result
+        text: >-
+          (א) לא. החיתוך הוא עדיין $\varepsilon$ והשיפוע עדיין $m = -r$, כי מד המתח מחובר על ההדקים, והאופיין תלוי רק בסוללה.
+
+          (ב) הנגד הנוסף מגביל את הזרם ל-$1.5\,\text{A}$ לכל היותר ומונע קצר. החיסרון היחיד: הנקודות מכסות טווח זרמים קטן יותר.
+
+  - id: W-3.10-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-3.10-2]
+    prompt: >-
+      האופיין של סוללה, כשממשיכים אותו עד הצירים, חותך את ציר המתח ב-$1.60\,\text{V}$ ואת ציר הזרם ב-$2.0\,\text{A}$.
+
+      (א) מה ההתנגדות הפנימית של הסוללה?
+
+      (ב) מה יהיה מתח ההדקים כשהסוללה מספקת $0.50\,\text{A}$, ומה אז ההתנגדות של העומס?
+    answer: >-
+      (א) $r = 0.80\,\Omega$.
+
+      (ב) $V = 1.2\,\text{V}$, ועומס של $2.4\,\Omega$.
+    solution:
+      - kind: given
+        text: >-
+          החיתוך עם ציר המתח הוא הכא״מ: $\varepsilon = 1.60\,\text{V}$. החיתוך עם ציר הזרם הוא זרם הקצר: $I_0 = 2.0\,\text{A}$.
+      - kind: formula
+        text: >-
+          (א) בזרם הקצר מתח ההדקים אפס: $0 = \varepsilon - I_0 r$. מעבירים אגף, $I_0 r = \varepsilon$, ומחלקים ב-$I_0$:
+          $$r = \frac{\varepsilon}{I_0}$$
+          אפשר לראות את זה גם כשיפוע: הקו יורד $1.60\,\text{V}$ לאורך $2.0\,\text{A}$.
+      - kind: substitution
+        text: >-
+          $$r = \frac{1.60}{2.0} = 0.80\ \Omega$$
+      - kind: substitution
+        text: >-
+          (ב) $$V = \varepsilon - Ir = 1.60 - 0.50\cdot0.80 = 1.20\ \text{V}$$
+          העומס מחובר בין ההדקים, ולכן המתח עליו הוא מתח ההדקים:
+          $$R = \frac{V}{I} = \frac{1.20}{0.50} = 2.4\ \Omega$$
+      - kind: result
+        text: >-
+          (א) $r = 0.80\,\Omega$.
+
+          (ב) $V = 1.2\,\text{V}$, והעומס $2.4\,\Omega$.
+
+  - id: W-3.10-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-3.10-2]
+    prompt: >-
+      במעבדה מדדו את מתח ההדקים $V$ של סוללה ואת הזרם $I$ שהיא מספקת, בשישה כיוונים של נגד משתנה:
+
+      $$\begin{array}{c|cccccc} I\ (\text{A}) & 0.4 & 0.8 & 1.2 & 1.6 & 2.0 & 2.4 \\ \hline V\ (\text{V}) & 8.22 & 7.34 & 6.60 & 5.81 & 5.00 & 4.21 \end{array}$$
+
+      (א) שרטטו את $V$ כתלות ב-$I$, העבירו קו ישר קרוב לכל הנקודות, ומצאו ממנו את הכא״מ ואת ההתנגדות הפנימית.
+
+      (ב) מה זרם הקצר של הסוללה?
+
+      (ג) איזה חלק מהעבודה של הכא״מ מקבל הנגד המשתנה במדידה האחרונה? למה החלק הזה קטן?
+    answer: >-
+      (א) $\varepsilon \approx 9.0\,\text{V}$, $r \approx 2.0\,\Omega$.
+
+      (ב) $I_0 \approx 4.5\,\text{A}$.
+
+      (ג) כ-$47\%$: בזרם גדול חלק גדול מהעבודה הופך לחום בתוך הסוללה.
+    solution:
+      - kind: given
+        text: >-
+          שש מדידות. הקו המתאים ביותר עובר בנקודות $(0.4\,\text{A},\ 8.19\,\text{V})$ ו-$(2.4\,\text{A},\ 4.21\,\text{V})$. הנקודה השנייה היא במקרה גם המדידה האחרונה. הראשונה נמצאת $0.03\,\text{V}$ מתחת למדידה הראשונה.
+      - kind: formula
+        text: >-
+          $V = \varepsilon - Ir$: החיתוך עם ציר המתח הוא $\varepsilon$, והשיפוע הוא $m = -r$.
+      - kind: substitution
+        text: >-
+          (א) $$m = \frac{4.21 - 8.19}{2.4 - 0.4} = \frac{-3.98}{2.0} = -1.99\ \text{V/A}$$
+          ולכן $r = 1.99\,\Omega$. מהנקודה הראשונה ממשיכים את הקו עד $I = 0$: הזרם קטן ב-$0.4\,\text{A}$, והמתח עולה ב-$1.99\cdot0.4 = 0.80\,\text{V}$:
+          $$\varepsilon = 8.19 + 0.80 = 8.99\ \text{V}$$
+      - kind: substitution
+        text: >-
+          (ב) בזרם הקצר $V = 0$, ולכן $I_0 r = \varepsilon$. מחלקים ב-$r$:
+          $$I_0 = \frac{\varepsilon}{r} = \frac{8.99}{1.99} = 4.5\ \text{A}$$
+      - kind: formula
+        text: >-
+          (ג) הכא״מ עושה עבודה בהספק $\varepsilon I$, ומההדקים יוצא ההספק $VI$ (שיעורים 3.4 ו-3.6). החלק שמגיע לנגד המשתנה הוא
+          $$\eta = \frac{VI}{\varepsilon I} = \frac{V}{\varepsilon}$$
+      - kind: substitution
+        text: >-
+          $$\eta = \frac{4.21}{8.99} = 0.47$$
+      - kind: reasoning
+        text: >-
+          החלק שנשאר, $Ir/\varepsilon$, הולך לחום בתוך הסוללה. הוא גדל עם הזרם: ב-$2.4\,\text{A}$ הירידה בתוך הסוללה היא $2.4\cdot1.99 \approx 4.8\,\text{V}$, יותר ממחצית הכא״מ.
+      - kind: result
+        text: >-
+          (א) $\varepsilon \approx 9.0\,\text{V}$ ו-$r \approx 2.0\,\Omega$ (מקו שמשרטטים ביד, כל ערך של $r$ בין $1.9\,\Omega$ ל-$2.1\,\Omega$ נכון).
+
+          (ב) $I_0 \approx 4.5\,\text{A}$.
+
+          (ג) $\eta \approx 47\%$. בזרם גדול הירידה בתוך הסוללה גדולה, ולכן חלק גדול מהעבודה של הכא״מ הופך לחום בסוללה עצמה.
+
+  - id: W-3.10-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-3.10-1]
+    prompt: >-
+      בניסוי מדידת הכא״מ וההתנגדות הפנימית (סוללה עם $r$ של כ-$1.5\,\Omega$) המדים אינם אידאליים: ההתנגדות של מד הזרם $1\,\Omega$, וההתנגדות של מד המתח $5\,\text{k}\Omega$. יש שתי דרכים לחבר אותם:
+
+      חיבור א: מד המתח בין שני ההדקים של הסוללה, ומד הזרם בטור לנגד המשתנה, כך שהוא מודד רק את הזרם בנגד המשתנה.
+
+      חיבור ב: מד הזרם צמוד להדק החיובי, כך שעובר בו כל הזרם של הסוללה, ומד המתח מחובר רק על הנגד המשתנה.
+
+      קבעו ונמקו: באיזה חיבור השיפוע של הגרף נותן את $r$ כמעט בדיוק, ומה נותן השיפוע בחיבור השני?
+    answer: >-
+      בחיבור א. בחיבור ב השיפוע נותן $r + R_A \approx 2.5\,\Omega$, כ-$67\%$ יותר מ-$r$.
+    solution:
+      - kind: given
+        text: >-
+          $R_A = 1\,\Omega$ (מד הזרם), $R_V = 5\,\text{k}\Omega = 5000\,\Omega$ (מד המתח), $r \approx 1.5\,\Omega$.
+      - kind: reasoning
+        text: >-
+          חיבור ב: בין שתי נקודות החיבור של מד המתח יש רק את הנגד המשתנה. ההדק החיובי של הסוללה ומד הזרם נמצאים מחוץ להן, ולכן מד המתח מראה את מתח ההדקים פחות הירידה על מד הזרם:
+          $$V = \varepsilon - Ir - IR_A = \varepsilon - I\,(r + R_A)$$
+          השיפוע הוא $m = -(r + R_A) = -2.5\,\text{V/A}$: מד הזרם "נכנס" להתנגדות הפנימית, והטעות היא $1\,\Omega$ מתוך $1.5\,\Omega$.
+      - kind: reasoning
+        text: >-
+          חיבור א: מד המתח מראה בדיוק את מתח ההדקים. הטעות כאן אחרת: מד המתח מעביר זרם קטן, $V/R_V$, שעובר בסוללה אבל לא במד הזרם. לכן מד הזרם מראה מעט פחות מהזרם של הסוללה. הזרם הזה קטן מאוד: לכל היותר $\dfrac{4.5\,\text{V}}{5000\,\Omega} \approx 0.9\,\text{mA}$, לעומת זרמים של עשיריות אמפר בניסוי.
+      - kind: reasoning
+        text: >-
+          חישוב מלא של המעגל (עם $\varepsilon = 4.5\,\text{V}$, ונגד משתנה ב-$6\,\Omega$ ואחר כך ב-$2\,\Omega$) נותן בחיבור א שיפוע של $m = -1.4996\,\text{V/A}$, כלומר טעות של $0.03\%$, ובחיבור ב שיפוע של $m = -2.50\,\text{V/A}$.
+      - kind: result
+        text: >-
+          חיבור א טוב יותר: מד מתח עם התנגדות גדולה מאוד, ישר על ההדקים, מעביר זרם זניח, והשיפוע נותן את $r$ כמעט בדיוק. בחיבור ב מד הזרם נמצא בתוך הקטע שמד המתח "רואה" כסוללה, והשיפוע נותן $r + R_A \approx 2.5\,\Omega$.
+
+  - id: W-3.10-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-3.10-2, OBJ-3.10-3]
+    prompt: >-
+      ברכב, המצבר (סוללה של $12\,\text{V}$ עם התנגדות פנימית קטנה) מזין את הפנסים. כשמפעילים את המנוע החשמלי שמניע את הרכב (המתנע), הפנסים מתעממים לרגע. המתנע מחובר למצבר במקביל לפנסים, ובזמן ההנעה הוא מתנהג כמו נגד עם התנגדות קטנה מאוד.
+
+      (א) קבעו ונמקו בעזרת האופיין של המצבר: למה הפנסים מתעממים?
+
+      (ב) מה היה קורה לפנסים אילו המצבר היה סוללה אידאלית?
+
+      (ג) מצבר ישן מעמעם את הפנסים יותר ממצבר חדש. למה?
+    answer: >-
+      (א) המתנע מגדיל מאוד את הזרם, ולכן מתח ההדקים, $\varepsilon - Ir$, יורד, וההספק בפנסים, $V^2/R$, קטן.
+
+      (ב) מתח ההדקים לא היה משתנה, והפנסים לא היו מתעממים.
+
+      (ג) למצבר ישן $r$ גדולה יותר: האופיין שלו תלול יותר, ובאותו זרם מתח ההדקים יורד יותר.
+    solution:
+      - kind: reasoning
+        text: >-
+          (א) הפנסים מחוברים ישר בין ההדקים, ולכן המתח עליהם הוא מתח ההדקים. כשמחברים את המתנע במקביל, ההתנגדות החיצונית השקולה קטנה מאוד (שיעור 3.5), והזרם מהמצבר גדל מאוד. על האופיין $V = \varepsilon - Ir$, הנקודה על האופיין זזה ימינה ולמטה: הירידה $Ir$ בתוך המצבר גדלה, ומתח ההדקים קטן. ההתנגדות של הפנסים לא השתנתה, ולכן ההספק בהם, $P = V^2/R$, קטן, והם מתעממים.
+      - kind: reasoning
+        text: >-
+          (ב) לסוללה אידאלית $r = 0$, והאופיין שלה הוא קו אופקי: $V = \varepsilon$ בכל זרם. המתח על הפנסים נשאר $12\,\text{V}$, והם לא מתעממים. העמעום הוא סימן לכך שלמצבר יש התנגדות פנימית.
+      - kind: reasoning
+        text: >-
+          (ג) למצבר ישן התנגדות פנימית גדולה יותר. האופיין שלו יורד בתלילות רבה יותר, ולכן כשהזרם גדל, מתח ההדקים יורד יותר.
+      - kind: substitution
+        text: >-
+          בדיקה במספרים (פנסים של $2\,\Omega$ ביחד, מתנע של $0.06\,\Omega$, $\varepsilon = 12\,\text{V}$). עם $r = 0.04\,\Omega$, לפני ההנעה מתח ההדקים $11.8\,\text{V}$, ובזמן ההנעה (זרם של כ-$120\,\text{A}$) רק $7.1\,\text{V}$: ההספק בפנסים יורד לכ-$37\%$. עם $r = 0.01\,\Omega$ המתח יורד רק ל-$10.2\,\text{V}$, וההספק לכ-$74\%$.
+      - kind: result
+        text: >-
+          (א) המתנע מגדיל מאוד את הזרם, הירידה $Ir$ בתוך המצבר גדלה, ומתח ההדקים, שהוא המתח על הפנסים, קטן. לכן ההספק בפנסים קטן.
+
+          (ב) עם $r = 0$ מתח ההדקים קבוע, והפנסים לא היו מתעממים.
+
+          (ג) למצבר ישן $r$ גדולה יותר, ובאותו זרם מתח ההדקים שלו יורד יותר.
+
+  - id: W-3.10-07
+    level: mid
+    qualitative: false
+    objectives: [OBJ-3.10-2, OBJ-3.10-3]
+    prompt: >-
+      יש שתי סוללות זהות, כל אחת עם $\varepsilon = 4.5\,\text{V}$ ו-$r = 1.5\,\Omega$ (הסוללה של איור 3.10ב).
+
+      (א) מחברים אותן בטור (ההדק החיובי של אחת לשלילי של השנייה). מה החיתוך של האופיין של הזוג עם ציר המתח, מה השיפוע שלו, ומה זרם הקצר?
+
+      (ב) מחברים אותן במקביל (חיובי לחיובי ושלילי לשלילי). ענו על אותן שאלות.
+
+      (ג) איזה חיבור נותן זרם גדול יותר בנגד של $1\,\Omega$? ובנגד של $6\,\Omega$?
+    answer: >-
+      (א) $9\,\text{V}$, שיפוע $m = -3\,\text{V/A}$, זרם קצר $3\,\text{A}$.
+
+      (ב) $4.5\,\text{V}$, שיפוע $m = -0.75\,\text{V/A}$, זרם קצר $6\,\text{A}$.
+
+      (ג) ב-$1\,\Omega$ החיבור במקביל ($2.57\,\text{A}$ מול $2.25\,\text{A}$). ב-$6\,\Omega$ החיבור בטור ($1.0\,\text{A}$ מול $0.67\,\text{A}$).
+    solution:
+      - kind: reasoning
+        text: >-
+          (א) בטור עובר אותו זרם $I$ בשתי הסוללות. הולכים מההדק השלילי של הזוג לחיובי: כל סוללה מוסיפה $\varepsilon - Ir$, ולכן
+          $$V = 2\varepsilon - I\cdot2r = 9 - 3I$$
+          החיתוך $9\,\text{V}$, השיפוע $m = -3\,\text{V/A}$, וזרם הקצר $\dfrac{2\varepsilon}{2r} = \dfrac{9}{3} = 3\,\text{A}$, אותו זרם קצר כמו של סוללה אחת.
+      - kind: reasoning
+        text: >-
+          (ב) במקביל שתי הסוללות מחוברות לאותם שני הדקים, ולכן על שתיהן אותו מתח הדקים $V$. הן זהות, ולכן לפי $V = \varepsilon - I_1r$ גם הזרם בכל אחת זהה: כל אחת מספקת חצי מהזרם הכולל, $I/2$ (חוק הצמתים, שיעור 3.8). לכן
+          $$V = \varepsilon - \frac{I}{2}\,r = 4.5 - 0.75I$$
+          החיתוך $4.5\,\text{V}$, השיפוע $m = -0.75\,\text{V/A}$, וזרם הקצר $\dfrac{4.5}{0.75} = 6\,\text{A}$.
+      - kind: formula
+        text: >-
+          (ג) לזוג יש כא״מ שקול והתנגדות פנימית שקולה, ולכן $I = \dfrac{\varepsilon_{\text{eq}}}{R + r_{\text{eq}}}$.
+      - kind: substitution
+        text: >-
+          בנגד של $1\,\Omega$: בטור $\dfrac{9}{1 + 3} = 2.25\,\text{A}$, ובמקביל $\dfrac{4.5}{1 + 0.75} = 2.57\,\text{A}$.
+
+          בנגד של $6\,\Omega$: בטור $\dfrac{9}{6 + 3} = 1.0\,\text{A}$, ובמקביל $\dfrac{4.5}{6 + 0.75} = 0.67\,\text{A}$.
+      - kind: reasoning
+        text: >-
+          בעומס קטן רוב ההתנגדות במעגל היא בתוך הסוללות, ולכן עדיף להקטין אותה, וזה החיבור במקביל. בעומס גדול רוב ההתנגדות בחוץ, ועדיף כא״מ גדול יותר, וזה החיבור בטור. שני החיבורים נותנים אותו זרם בעומס של $1.5\,\Omega$ (בשניהם $2\,\text{A}$).
+      - kind: result
+        text: >-
+          (א) בטור: $9\,\text{V}$, שיפוע $m = -3\,\text{V/A}$, זרם קצר $3\,\text{A}$.
+
+          (ב) במקביל: $4.5\,\text{V}$, שיפוע $m = -0.75\,\text{V/A}$, זרם קצר $6\,\text{A}$.
+
+          (ג) בנגד של $1\,\Omega$ החיבור במקביל נותן יותר ($2.57\,\text{A}$ מול $2.25\,\text{A}$). בנגד של $6\,\Omega$ החיבור בטור נותן יותר ($1.0\,\text{A}$ מול $0.67\,\text{A}$).
+
+  - id: W-3.10-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-3.10-1, OBJ-3.10-2]
+    prompt: >-
+      לתלמידה אין מד זרם. יש לה סוללה, מד מתח אידאלי וכמה נגדים שההתנגדות שלהם ידועה. בכל פעם היא מחברת נגד אחר $R$ בין שני ההדקים של הסוללה, ומד המתח, שמחובר בין ההדקים, מראה את המתח $V$:
+
+      $$\begin{array}{c|cccccc} R\ (\Omega) & 1 & 2 & 3 & 5 & 8 & 12 \\ \hline V\ (\text{V}) & 2.39 & 3.44 & 3.98 & 4.58 & 5.02 & 5.35 \end{array}$$
+
+      (א) הראו ש-$\dfrac{1}{V} = \dfrac{1}{\varepsilon} + \dfrac{r}{\varepsilon}\cdot\dfrac{1}{R}$.
+
+      (ב) שרטטו גרף מתאים, ומצאו ממנו את הכא״מ ואת ההתנגדות הפנימית של הסוללה. רמז: בשני הצירים יש גדלים שצריך לחשב מהטבלה.
+
+      (ג) למה לא משרטטים פשוט את $V$ כתלות ב-$R$?
+    answer: >-
+      (א) ראו בפתרון.
+
+      (ב) $\varepsilon \approx 6.0\,\text{V}$, $r \approx 1.5\,\Omega$.
+
+      (ג) הגרף של $V$ כתלות ב-$R$ הוא עקומה, ואי אפשר לקרוא ממנה את $\varepsilon$ ואת $r$ בעזרת קו ישר.
+    solution:
+      - kind: formula
+        text: >-
+          (א) בלולאה יש סוללה ונגד $R$ (מד המתח האידאלי לא מעביר זרם): $I = \dfrac{\varepsilon}{R + r}$. המתח על הנגד הוא מתח ההדקים, $V = IR = \dfrac{\varepsilon R}{R + r}$.
+      - kind: manipulation
+        text: >-
+          הופכים את שני האגפים ומפרקים את השבר לשני חלקים:
+          $$\frac{1}{V} = \frac{R + r}{\varepsilon R} = \frac{R}{\varepsilon R} + \frac{r}{\varepsilon R} = \frac{1}{\varepsilon} + \frac{r}{\varepsilon}\cdot\frac{1}{R}$$
+          זה קו ישר, $y = mx + b$, כאשר $y = 1/V$ ו-$x = 1/R$: השיפוע $m = r/\varepsilon$, והחיתוך עם הציר האנכי $b = 1/\varepsilon$.
+      - kind: given
+        text: >-
+          (ב) מחשבים את שני הצירים:
+          $$\begin{array}{c|cccccc} 1/R\ (\Omega^{-1}) & 1 & 0.500 & 0.333 & 0.200 & 0.125 & 0.0833 \\ \hline 1/V\ (\text{V}^{-1}) & 0.418 & 0.291 & 0.251 & 0.218 & 0.199 & 0.187 \end{array}$$
+          הקו המתאים ביותר עובר בנקודה $(1\,\Omega^{-1},\ 0.418\,\text{V}^{-1})$, שהיא במקרה גם המדידה של $R = 1\,\Omega$, ובנקודה $(0.0833\,\Omega^{-1},\ 0.188\,\text{V}^{-1})$, $0.001$ מעל המדידה של $R = 12\,\Omega$.
+      - kind: substitution
+        text: >-
+          $$m = \frac{0.418 - 0.188}{1 - 0.0833} = \frac{0.230}{0.917} = 0.251\ \Omega/\text{V}$$
+          את החיתוך מוצאים כשממשיכים את הקו מ-$x = 0.0833$ עד $x = 0$:
+          $$b = 0.188 - 0.251\cdot0.0833 = 0.167\ \text{V}^{-1}$$
+      - kind: manipulation
+        text: >-
+          מ-$b = 1/\varepsilon$ מקבלים $\varepsilon = 1/b$. מ-$m = r/\varepsilon$, כופלים את שני האגפים ב-$\varepsilon$ כדי לבודד את $r$: $r = m\,\varepsilon$.
+      - kind: substitution
+        text: >-
+          $$\varepsilon = \frac{1}{0.167} = 5.99\ \text{V}
+          \qquad
+          r = 0.251\cdot5.99 = 1.50\ \Omega$$
+      - kind: reasoning
+        text: >-
+          (ג) $V = \dfrac{\varepsilon R}{R + r}$ עולה עם $R$ ומתקרב לאט ל-$\varepsilon$, בלי להגיע אליו: זו עקומה. מעקומה קשה לקרוא את $\varepsilon$ (הוא רק הערך שאליו היא מתקרבת), ואין לה שיפוע אחד שנותן את $r$. אחרי הליניאריזציה כל אחד משני הגדלים נקרא מקו ישר.
+      - kind: result
+        text: >-
+          (א) $\dfrac{1}{V} = \dfrac{1}{\varepsilon} + \dfrac{r}{\varepsilon}\cdot\dfrac{1}{R}$: בגרף של $1/V$ כתלות ב-$1/R$ החיתוך הוא $1/\varepsilon$ והשיפוע $r/\varepsilon$.
+
+          (ב) $\varepsilon \approx 6.0\,\text{V}$ ו-$r \approx 1.5\,\Omega$ (מקו שמשרטטים ביד, כל ערך של $r$ בין $1.4\,\Omega$ ל-$1.6\,\Omega$ נכון).
+
+          (ג) הגרף של $V$ כתלות ב-$R$ הוא עקומה שמתקרבת ל-$\varepsilon$, ומעקומה אי אפשר לקרוא שיפוע וחיתוך.
+
+  - id: W-3.10-09
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-3.10-3]
+    prompt: >-
+      הסוללה של איור 3.10ב ($\varepsilon = 4.5\,\text{V}$, $r = 1.5\,\Omega$) מחוברת בטור למפסק S, לנגד $R = 7.5\,\Omega$ ולקבל ריק שהקיבול שלו $C = 1000\,\mu\text{F}$. מד מתח אידאלי מחובר בין שני ההדקים של הסוללה. ברגע $t = 0$ סוגרים את המפסק.
+
+      (א) מה הזרם במעגל ומה מראה מד המתח מיד אחרי שסוגרים את המפסק?
+
+      (ב) מה קבוע הזמן של הטעינה? מה המתח על הקבל אחרי זמן של קבוע זמן אחד?
+
+      (ג) מה מראה מד המתח זמן רב אחרי שסגרו את המפסק? מה אז המטען על הקבל?
+
+      (ד) כמה עבודה עשה הכא״מ במהלך כל הטעינה, כמה אנרגיה אגורה בקבל בסופה, וכמה חום נוצר בנגד ובתוך הסוללה?
+    diagramAlt: >-
+      מעגל מלבני. בצד שמאל סוללה בתוך מסגרת מקווקוות, ההדק החיובי למעלה, ומד מתח מחובר בין שני ההדקים שלה. בצלע העליונה
+      המפסק S, פתוח, ואחריו הנגד R. בצד ימין הקבל C. הצלע התחתונה חוזרת אל ההדק השלילי של הסוללה.
+    diagram: |
+      <svg viewBox="0 0 540 215" width="540" height="215" font-size="14" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="1.5" fill="none">
+          <polyline points="100,104 100,40 180,40"/>
+          <polyline points="216,40 290,40"/>
+          <rect x="290" y="32" width="60" height="16"/>
+          <polyline points="350,40 420,40 420,108"/>
+          <polyline points="420,120 420,190 100,190 100,116"/>
+          <line x1="180" y1="40" x2="212" y2="24"/>
+          <polyline points="100,60 160,60 160,101"/>
+          <polyline points="160,129 160,170 100,170"/>
+          <circle cx="160" cy="115" r="14"/>
+          <rect x="74" y="90" width="52" height="40" stroke-dasharray="4 3" stroke-width="1"/>
+        </g>
+        <line x1="84" y1="104" x2="116" y2="104" stroke="currentColor" stroke-width="2"/>
+        <line x1="92" y1="116" x2="108" y2="116" stroke="currentColor" stroke-width="4"/>
+        <line x1="400" y1="108" x2="440" y2="108" stroke="currentColor" stroke-width="2.5"/>
+        <line x1="400" y1="120" x2="440" y2="120" stroke="currentColor" stroke-width="2.5"/>
+        <circle cx="180" cy="40" r="3" fill="currentColor"/><circle cx="216" cy="40" r="3" fill="currentColor"/>
+        <circle cx="100" cy="60" r="3" fill="currentColor"/><circle cx="100" cy="170" r="3" fill="currentColor"/>
+        <text x="80" y="101" fill="currentColor" font-size="12">+</text>
+        <text x="66" y="108" text-anchor="end" fill="currentColor">ε = 4.5 V</text>
+        <text x="66" y="126" text-anchor="end" fill="currentColor">r = 1.5 Ω</text>
+        <text x="160" y="120" text-anchor="middle" fill="currentColor" font-weight="700">V</text>
+        <text x="198" y="62" text-anchor="middle" fill="currentColor">S</text>
+        <text x="320" y="22" text-anchor="middle" fill="currentColor">R = 7.5 Ω</text>
+        <text x="448" y="119" fill="currentColor">C = 1000 μF</text>
+      </svg>
+    answer: >-
+      (א) $I = 0.50\,\text{A}$, ומד המתח מראה $3.75\,\text{V}$.
+
+      (ב) $\tau = 9.0\,\text{ms}$; המתח על הקבל $2.84\,\text{V}$.
+
+      (ג) $4.5\,\text{V}$; $Q = 4.5\cdot10^{-3}\,\text{C}$.
+
+      (ד) $W = 2.03\cdot10^{-2}\,\text{J}$, $U = 1.01\cdot10^{-2}\,\text{J}$; חום $8.4\cdot10^{-3}\,\text{J}$ בנגד ו-$1.7\cdot10^{-3}\,\text{J}$ בסוללה.
+    solution:
+      - kind: given
+        text: >-
+          $\varepsilon = 4.5\,\text{V}$, $r = 1.5\,\Omega$, $R = 7.5\,\Omega$, $C = 1000\,\mu\text{F} = 1.0\cdot10^{-3}\,\text{F}$. הקבל ריק ב-$t = 0$.
+      - kind: reasoning
+        text: >-
+          (א) ברגע הראשון אין מטען על הקבל, ולכן אין עליו מתח: הוא מתנהג כמו תיל (שיעור 3.9). בלולאה נשארות שתי התנגדויות בטור, $R$ ו-$r$.
+      - kind: substitution
+        text: >-
+          $$I_0 = \frac{\varepsilon}{R + r} = \frac{4.5}{7.5 + 1.5} = 0.50\ \text{A}
+          \qquad
+          V_0 = \varepsilon - I_0 r = 4.5 - 0.50\cdot1.5 = 3.75\ \text{V}$$
+      - kind: reasoning
+        text: >-
+          (ב) המטען שמגיע לקבל עובר גם דרך $R$ וגם דרך ההתנגדות הפנימית, בטור. לכן בקבוע הזמן מופיעה ההתנגדות הכוללת של הלולאה, $R + r$, ולא רק $R$.
+      - kind: substitution
+        text: >-
+          $$\tau = (R + r)\,C = 9.0\cdot1.0\cdot10^{-3} = 9.0\cdot10^{-3}\ \text{s} = 9.0\ \text{ms}$$
+          אחרי קבוע זמן אחד הקבל מגיע לכ-$63\%$ מהמתח הסופי, $\varepsilon$: $0.632\cdot4.5 = 2.84\,\text{V}$.
+      - kind: reasoning
+        text: >-
+          (ג) זמן רב אחרי הסגירה הקבל מלא ומתנהג כמו נתק: הזרם אפס. בלי זרם אין ירידת מתח לא בנגד ולא בתוך הסוללה, ולכן מד המתח מראה $\varepsilon = 4.5\,\text{V}$, וגם המתח על הקבל הוא $4.5\,\text{V}$. במהלך הטעינה מד המתח עלה מ-$3.75\,\text{V}$ ל-$4.5\,\text{V}$, כי הזרם קטן.
+      - kind: substitution
+        text: >-
+          $$Q = CV = 1.0\cdot10^{-3}\cdot4.5 = 4.5\cdot10^{-3}\ \text{C}$$
+      - kind: substitution
+        text: >-
+          (ד) דרך הסוללה עבר המטען $\Delta Q = Q_{\text{after}} - Q_{\text{before}} = 4.5\cdot10^{-3}\,\text{C}$, והכא״מ עשה עליו עבודה $\varepsilon$ לכל קולון:
+          $$W = \varepsilon\,\Delta Q = 4.5\cdot4.5\cdot10^{-3} = 2.03\cdot10^{-2}\ \text{J}
+          \qquad
+          U = \tfrac12 CV^2 = \tfrac12\cdot1.0\cdot10^{-3}\cdot4.5^2 = 1.01\cdot10^{-2}\ \text{J}$$
+      - kind: reasoning
+        text: >-
+          ההפרש, $W - U = 1.01\cdot10^{-2}\,\text{J}$, הפך לחום. בדיוק חצי מהעבודה הלך לחום, וזה נכון רק בתנאי של הבעיה הזו: קבל שנטען **מריק** דרך התנגדויות, מכא״מ קבוע. בכל רגע עובר אותו זרם ב-$R$ וב-$r$, וההספק בכל אחת מהן הוא $I^2R$, ולכן החום מתחלק ביחס ההתנגדויות, $7.5 : 1.5 = 5 : 1$.
+      - kind: substitution
+        text: >-
+          בנגד: $\tfrac56\cdot1.01\cdot10^{-2} = 8.4\cdot10^{-3}\,\text{J}$. בתוך הסוללה: $\tfrac16\cdot1.01\cdot10^{-2} = 1.7\cdot10^{-3}\,\text{J}$.
+      - kind: result
+        text: >-
+          (א) $I = 0.50\,\text{A}$, ומד המתח מראה $3.75\,\text{V}$.
+
+          (ב) $\tau = (R + r)C = 9.0\,\text{ms}$; אחרי קבוע זמן אחד המתח על הקבל $2.84\,\text{V}$.
+
+          (ג) מד המתח מראה $4.5\,\text{V}$, הכא״מ; $Q = 4.5\cdot10^{-3}\,\text{C}$.
+
+          (ד) $W = 2.03\cdot10^{-2}\,\text{J}$, $U = 1.01\cdot10^{-2}\,\text{J}$, וחום של $8.4\cdot10^{-3}\,\text{J}$ בנגד ו-$1.7\cdot10^{-3}\,\text{J}$ בתוך הסוללה.
+
+  - id: W-3.10-10
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-3.10-2, OBJ-3.10-3]
+    prompt: >-
+      שתי נקודות על האופיין של סוללה ישנה, 1, שנקראו מהקו: בזרם $0.4\,\text{A}$ מתח ההדקים $3.9\,\text{V}$, ובזרם $1.2\,\text{A}$ הוא $2.7\,\text{V}$.
+
+      (א) מצאו את הכא״מ $\varepsilon_1$ ואת ההתנגדות הפנימית $r_1$ של הסוללה הישנה.
+
+      (ב) מחברים אותה במקביל לסוללה חדשה, 2, עם $\varepsilon_2 = 4.8\,\text{V}$ ו-$r_2 = 0.5\,\Omega$ (חיובי לחיובי), ושתיהן מזינות נגד $R = 4\,\Omega$, כמו באיור. מצאו את הזרם בכל סוללה ובנגד.
+
+      (ג) מנתקים את הנגד, ושתי הסוללות נשארות מחוברות זו לזו. מה הזרם עכשיו, ובאיזה כיוון הוא עובר בסוללה הישנה? מה ההספק שכל כא״מ נותן או מקבל, וכמה הופך לחום?
+    diagramAlt: >-
+      שלושה ענפים במקביל בין צלע עליונה לצלע תחתונה. משמאל הסוללה הישנה 1 בתוך מסגרת מקווקוות, באמצע הסוללה החדשה 2 בתוך
+      מסגרת מקווקוות, ומימין הנגד R. בשתי הסוללות ההדק החיובי למעלה.
+    diagram: |
+      <svg viewBox="0 0 520 215" width="520" height="215" font-size="14" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="1.5" fill="none">
+          <polyline points="100,104 100,40 420,40 420,80"/>
+          <polyline points="100,116 100,180 420,180 420,140"/>
+          <line x1="280" y1="40" x2="280" y2="104"/>
+          <line x1="280" y1="116" x2="280" y2="180"/>
+          <rect x="412" y="80" width="16" height="60"/>
+          <rect x="74" y="90" width="52" height="40" stroke-dasharray="4 3" stroke-width="1"/>
+          <rect x="254" y="90" width="52" height="40" stroke-dasharray="4 3" stroke-width="1"/>
+        </g>
+        <line x1="84" y1="104" x2="116" y2="104" stroke="currentColor" stroke-width="2"/>
+        <line x1="92" y1="116" x2="108" y2="116" stroke="currentColor" stroke-width="4"/>
+        <line x1="264" y1="104" x2="296" y2="104" stroke="currentColor" stroke-width="2"/>
+        <line x1="272" y1="116" x2="288" y2="116" stroke="currentColor" stroke-width="4"/>
+        <circle cx="280" cy="40" r="3" fill="currentColor"/><circle cx="280" cy="180" r="3" fill="currentColor"/>
+        <text x="80" y="101" fill="currentColor" font-size="12">+</text>
+        <text x="260" y="101" fill="currentColor" font-size="12">+</text>
+        <text x="66" y="108" text-anchor="end" fill="currentColor">ε<tspan font-size="10" dy="3">1</tspan></text>
+        <text x="66" y="128" text-anchor="end" fill="currentColor">r<tspan font-size="10" dy="3">1</tspan></text>
+        <text x="246" y="108" text-anchor="end" fill="currentColor">ε<tspan font-size="10" dy="3">2</tspan><tspan dy="-3"> = 4.8 V</tspan></text>
+        <text x="246" y="128" text-anchor="end" fill="currentColor">r<tspan font-size="10" dy="3">2</tspan><tspan dy="-3"> = 0.5 Ω</tspan></text>
+        <text x="436" y="115" fill="currentColor">R = 4 Ω</text>
+        <text x="100" y="152" text-anchor="middle" fill="currentColor" font-size="12">1</text>
+        <text x="280" y="152" text-anchor="middle" fill="currentColor" font-size="12">2</text>
+      </svg>
+    answer: >-
+      (א) $\varepsilon_1 = 4.5\,\text{V}$, $r_1 = 1.5\,\Omega$.
+
+      (ב) בסוללה 1: $0.12\,\text{A}$, בסוללה 2: $0.96\,\text{A}$, בנגד: $1.08\,\text{A}$.
+
+      (ג) $0.15\,\text{A}$, והוא נכנס לסוללה הישנה בהדק החיובי שלה. הכא״מ החדש נותן $0.72\,\text{W}$, הישן מקבל $0.675\,\text{W}$, ו-$0.045\,\text{W}$ הופכים לחום.
+    solution:
+      - kind: substitution
+        text: >-
+          (א) השיפוע של האופיין:
+          $$m = \frac{2.7 - 3.9}{1.2 - 0.4} = \frac{-1.2}{0.8} = -1.5\ \text{V/A}$$
+          ולכן $r_1 = 1.5\,\Omega$. מ-$0.4\,\text{A}$ עד אפס המתח עולה ב-$1.5\cdot0.4 = 0.6\,\text{V}$: $\varepsilon_1 = 3.9 + 0.6 = 4.5\,\text{V}$.
+      - kind: reasoning
+        text: >-
+          (ב) לשתי הסוללות ולנגד יש אותם שני צמתים, ולכן על שלושתם אותו מתח $V$: מתח ההדקים של כל סוללה הוא המתח על הנגד. מסמנים את הזרם בכל סוללה מהשלילי לחיובי בתוכה, $I_1$ ו-$I_2$, ואת הזרם בנגד $I_R$.
+      - kind: formula
+        text: >-
+          חוק הלולאות לכל סוללה עם הנגד, וחוק הצמתים בצומת העליון:
+          $$V = \varepsilon_1 - I_1 r_1 = \varepsilon_2 - I_2 r_2 = I_R R
+          \qquad
+          I_1 + I_2 = I_R$$
+      - kind: manipulation
+        text: >-
+          מבודדים כל זרם בעזרת $V$: $I_1 = \dfrac{\varepsilon_1 - V}{r_1}$, $I_2 = \dfrac{\varepsilon_2 - V}{r_2}$, $I_R = \dfrac{V}{R}$, ומציבים בחוק הצמתים:
+          $$\frac{4.5 - V}{1.5} + \frac{4.8 - V}{0.5} = \frac{V}{4}$$
+      - kind: substitution
+        text: >-
+          מפרקים כל שבר: $3 - 0.667V + 9.6 - 2V = 0.25V$. מעבירים את כל האיברים עם $V$ לצד אחד: $12.6 = 2.917V$, ומחלקים ב-$2.917$:
+          $$V = \frac{12.6}{2.917} = 4.32\ \text{V}$$
+          $$I_1 = \frac{4.5 - 4.32}{1.5} = 0.12\ \text{A}
+          \qquad
+          I_2 = \frac{4.8 - 4.32}{0.5} = 0.96\ \text{A}
+          \qquad
+          I_R = \frac{4.32}{4} = 1.08\ \text{A}$$
+          בדיקה בצומת: $0.12 + 0.96 = 1.08\,\text{A}$.
+      - kind: reasoning
+        text: >-
+          (ג) בלי הנגד נשארת לולאה אחת: שתי הסוללות, חיובי מול חיובי, כך שהכא״מים שלהן פועלים זה נגד זה. הכא״מ הגדול יותר, של הסוללה החדשה, קובע את כיוון הזרם: הזרם יוצא מההדק החיובי של הסוללה החדשה ונכנס לסוללה הישנה **בהדק החיובי שלה**, כלומר עובר בה מהחיובי לשלילי. אם מסמנים, כמו ב-(ב), את $I_1$ מהשלילי לחיובי, הוא יוצא שלילי.
+      - kind: substitution
+        text: >-
+          חוק הלולאות: $\varepsilon_2 - \varepsilon_1 = I\,(r_1 + r_2)$, ולכן
+          $$I = \frac{4.8 - 4.5}{1.5 + 0.5} = 0.15\ \text{A}$$
+          הכא״מ החדש נותן $\varepsilon_2 I = 4.8\cdot0.15 = 0.72\,\text{W}$. הכא״מ הישן מקבל $\varepsilon_1 I = 4.5\cdot0.15 = 0.675\,\text{W}$, כי הזרם עובר בו נגד הכיוון שהוא דוחף. לחום: $I^2(r_1 + r_2) = 0.15^2\cdot2 = 0.045\,\text{W}$. בדיקה: $0.675 + 0.045 = 0.72\,\text{W}$.
+      - kind: result
+        text: >-
+          (א) $\varepsilon_1 = 4.5\,\text{V}$, $r_1 = 1.5\,\Omega$.
+
+          (ב) $I_1 = 0.12\,\text{A}$, $I_2 = 0.96\,\text{A}$, $I_R = 1.08\,\text{A}$; מתח ההדקים המשותף $4.32\,\text{V}$.
+
+          (ג) $I = 0.15\,\text{A}$, מהסוללה החדשה אל ההדק החיובי של הסוללה הישנה. הכא״מ החדש נותן $0.72\,\text{W}$, הישן מקבל $0.675\,\text{W}$, ו-$0.045\,\text{W}$ הופכים לחום בהתנגדויות הפנימיות. לכן לא משאירים סוללה ישנה מחוברת במקביל לחדשה.
+
+challenge:
+  - id: W-3.10-c1
+    stars: 1
+    objectives: [OBJ-3.10-1, OBJ-3.10-2]
+    prompt: >-
+      סוללה, נגד ומד זרם מחוברים בטור. כשהנגד הוא $4.0\,\Omega$, מד הזרם מראה $0.60\,\text{A}$. מחברים נגד של $12\,\Omega$ במקביל לנגד של $4.0\,\Omega$, ועכשיו מד הזרם מראה $0.75\,\text{A}$. ההתנגדות של מד הזרם זניחה.
+
+      (א) מצאו את הכא״מ ואת ההתנגדות הפנימית של הסוללה.
+
+      (ב) מסירים את הנגד של $4.0\,\Omega$, ונשאר רק הנגד של $12\,\Omega$. מה יראה מד הזרם?
+
+      (ג) מתברר שההתנגדות של מד הזרם אינה זניחה, אלא $0.20\,\Omega$. איזו מהתוצאות של (א) צריך לתקן, ומה הערך המתוקן?
+    answer: >-
+      (א) $\varepsilon = 3.0\,\text{V}$, $r = 1.0\,\Omega$.
+
+      (ב) $0.23\,\text{A}$.
+
+      (ג) הכא״מ נשאר $3.0\,\text{V}$; ההתנגדות הפנימית המתוקנת $0.80\,\Omega$.
+    solution:
+      - kind: given
+        text: >-
+          מדידה 1: $R_1 = 4.0\,\Omega$, $I_1 = 0.60\,\text{A}$. מדידה 2: $4.0\,\Omega$ במקביל ל-$12\,\Omega$, $I_2 = 0.75\,\text{A}$.
+      - kind: substitution
+        text: >-
+          ההתנגדות השקולה במדידה 2 (שיעור 3.5):
+          $$R_2 = \frac{4.0\cdot12}{4.0 + 12} = 3.0\ \Omega$$
+      - kind: formula
+        text: >-
+          בשתי המדידות זו אותה סוללה, ולכן $\varepsilon = I\,(R + r)$ בשתיהן:
+          $$\varepsilon = 0.60\,(4.0 + r)
+          \qquad
+          \varepsilon = 0.75\,(3.0 + r)$$
+          שני נעלמים ושתי משוואות: זה הרעיון של כל מדידה של כא״מ והתנגדות פנימית, כאן עם שתי נקודות בלבד.
+      - kind: manipulation
+        text: >-
+          משווים את שני הביטויים ל-$\varepsilon$: $2.4 + 0.60r = 2.25 + 0.75r$. מעבירים את האיברים עם $r$ לצד אחד ואת המספרים לשני: $2.4 - 2.25 = 0.75r - 0.60r$, כלומר $0.15 = 0.15r$.
+      - kind: substitution
+        text: >-
+          $$r = \frac{0.15}{0.15} = 1.0\ \Omega
+          \qquad
+          \varepsilon = 0.60\cdot(4.0 + 1.0) = 3.0\ \text{V}$$
+          בדיקה במדידה 2: $0.75\cdot(3.0 + 1.0) = 3.0\,\text{V}$.
+      - kind: substitution
+        text: >-
+          (ב) $$I = \frac{\varepsilon}{R + r} = \frac{3.0}{12 + 1.0} = 0.23\ \text{A}$$
+      - kind: reasoning
+        text: >-
+          (ג) מד הזרם בטור, ולכן ההתנגדות שלו מתווספת לכל המעגל: בשתי המשוואות מופיע $r + R_A$ במקום $r$. אותו פתרון בדיוק נותן עכשיו $r + R_A = 1.0\,\Omega$ ו-$\varepsilon = 3.0\,\text{V}$. הכא״מ לא משתנה, וההתנגדות הפנימית האמיתית היא $1.0 - 0.20 = 0.80\,\Omega$. התשובה של (ב) לא משתנה, כי גם בה מופיע אותו $r + R_A$.
+      - kind: result
+        text: >-
+          (א) $\varepsilon = 3.0\,\text{V}$ ו-$r = 1.0\,\Omega$.
+
+          (ב) $0.23\,\text{A}$.
+
+          (ג) הכא״מ נכון. ההתנגדות הפנימית המתוקנת היא $0.80\,\Omega$, כי מה שחישבנו ב-(א) הוא $r + R_A$.
+    source:
+      name: British Physics Olympiad (BPhO), Round 1
+      year: 2017
+      problem: 'Round 1, 17 November 2017, Section 1, Question 1(h)'
+      url: https://www.bpho.org.uk/Papers/R1/2017Nov_R1_S1.pdf
+      verified: '2026-11-02'
+      adapted: true
+
+  - id: W-3.10-c2
+    stars: 2
+    objectives: [OBJ-3.10-2, OBJ-3.10-3]
+    prompt: >-
+      סוללה עם כא״מ $\varepsilon$ והתנגדות פנימית $r$ מחוברת ל-$N$ נורות זהות, כולן במקביל זו לזו. ההתנגדות של כל נורה היא $R$, והיא לא משתנה עם הזרם.
+
+      (א) הביעו את ההספק הכולל בנורות באמצעות $\varepsilon$, $r$, $R$ ו-$N$.
+
+      (ב) מתברר שההספק הכולל בנורות גדול יותר כש-$N = 5$ מאשר בכל מספר אחר של נורות. מה התחום האפשרי של $r$, באמצעות $R$? רמז: השוו את ההספק ב-$N$ נורות להספק ב-$N + 1$ נורות.
+
+      (ג) האופיין של סוללה מסוימת חותך את ציר המתח ב-$6.0\,\text{V}$ ואת ציר הזרם ב-$2.5\,\text{A}$, וההתנגדות של כל נורה $12\,\Omega$. בדקו שהסוללה עומדת בתנאי של (ב), ומצאו את ההספק הכולל בחמש נורות ואת מתח ההדקים.
+    answer: >-
+      (א) $P = \dfrac{\varepsilon^2 NR}{(rN + R)^2}$.
+
+      (ב) $\dfrac{R}{\sqrt{30}} < r < \dfrac{R}{\sqrt{20}}$, כלומר בערך $0.18R < r < 0.22R$.
+
+      (ג) $r = 2.4\,\Omega$, בתוך התחום $2.19\,\Omega < r < 2.68\,\Omega$; $P = 3.75\,\text{W}$, ומתח ההדקים $3.0\,\text{V}$.
+    solution:
+      - kind: formula
+        text: >-
+          (א) $N$ נגדים זהים במקביל שקולים ל-$R/N$ (שיעור 3.5). הזרם מהסוללה $I = \dfrac{\varepsilon}{r + R/N}$, וכולו עובר בנורות. ההספק בהן $P = I^2\cdot\dfrac{R}{N}$.
+      - kind: manipulation
+        text: >-
+          כופלים את המונה ואת המכנה של $I$ ב-$N$: $I = \dfrac{\varepsilon N}{rN + R}$. לכן
+          $$P = \frac{\varepsilon^2 N^2}{(rN + R)^2}\cdot\frac{R}{N} = \frac{\varepsilon^2 NR}{(rN + R)^2}$$
+      - kind: manipulation
+        text: >-
+          (ב) כותבים $P = \dfrac{\varepsilon^2 R}{D(N)}$, כאשר
+          $$D(N) = \frac{(rN + R)^2}{N} = r^2N + 2rR + \frac{R^2}{N}$$
+          $\varepsilon$ ו-$R$ קבועים, ולכן הספק גדול יותר פירושו $D$ קטן יותר.
+      - kind: manipulation
+        text: >-
+          ההפרש בין שני מספרי נורות סמוכים (האיבר $2rR$ מתקזז):
+          $$D(N + 1) - D(N) = r^2 + \frac{R^2}{N + 1} - \frac{R^2}{N} = r^2 - \frac{R^2}{N(N + 1)}$$
+      - kind: reasoning
+        text: >-
+          כש-$N$ גדל, $N(N + 1)$ גדל, ולכן ההפרש הזה רק עולה: בהתחלה הוא שלילי ($D$ יורד, ההספק עולה), ומנקודה מסוימת חיובי ($D$ עולה, ההספק יורד). לכן להספק יש שיא אחד, ו"$N = 5$ הוא הטוב ביותר" שקול לשני תנאים בלבד: ההספק ב-5 גדול מזה שב-4, וגדול מזה שב-6.
+      - kind: substitution
+        text: >-
+          ההספק ב-5 גדול מזה שב-4 כש-$D(5) - D(4) < 0$, כלומר $r^2 < \dfrac{R^2}{4\cdot5}$. ההספק ב-5 גדול מזה שב-6 כש-$D(6) - D(5) > 0$, כלומר $r^2 > \dfrac{R^2}{5\cdot6}$. מוציאים שורש (כל הגדלים חיוביים):
+          $$\frac{R}{\sqrt{30}} < r < \frac{R}{\sqrt{20}}
+          \qquad\Rightarrow\qquad
+          0.183R < r < 0.224R$$
+      - kind: substitution
+        text: >-
+          (ג) מהאופיין: $r = \dfrac{\varepsilon}{I_0} = \dfrac{6.0}{2.5} = 2.4\,\Omega$. עם $R = 12\,\Omega$ התחום של (ב) הוא $2.19\,\Omega < r < 2.68\,\Omega$, ו-$2.4\,\Omega$ בתוכו.
+          $$P(5) = \frac{6.0^2\cdot5\cdot12}{(2.4\cdot5 + 12)^2} = \frac{2160}{576} = 3.75\ \text{W}$$
+          לשם השוואה, $P(4) = 3.70\,\text{W}$ ו-$P(6) = 3.72\,\text{W}$.
+      - kind: substitution
+        text: >-
+          מתח ההדקים: $I = \dfrac{6.0}{2.4 + 12/5} = 1.25\,\text{A}$, ו-$V = \varepsilon - Ir = 6.0 - 1.25\cdot2.4 = 3.0\,\text{V}$.
+      - kind: result
+        text: >-
+          (א) $P = \dfrac{\varepsilon^2 NR}{(rN + R)^2}$.
+
+          (ב) $\dfrac{R}{\sqrt{30}} < r < \dfrac{R}{\sqrt{20}}$, כלומר $0.183R < r < 0.224R$.
+
+          (ג) $r = 2.4\,\Omega$ נמצא בתחום ($2.19\,\Omega$ עד $2.68\,\Omega$). בחמש נורות $P = 3.75\,\text{W}$, ומתח ההדקים $3.0\,\text{V}$.
+    source:
+      name: USA Physics Olympiad (USAPhO), Quarterfinal Exam
+      year: 2009
+      problem: 'Question 4'
+      url: https://www.aapt.org/physicsteam/2010/upload/2009_QtrFinal.pdf
+      verified: '2026-11-02'
+      adapted: true
