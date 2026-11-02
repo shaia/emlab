@@ -496,7 +496,7 @@ challenge:
       <text x="74" y="15">20 kΩ</text>
       <text x="118" y="89">5 kΩ</text>
       <text x="203" y="89">15 kΩ</text>
-      <text x="314" y="89">10 kΩ</text>
+      <text x="300" y="89">10 kΩ</text>
       <text x="200" y="12">S</text>
       <text x="6" y="72">+</text>
       <text x="8" y="96">−</text>
@@ -547,7 +547,7 @@ challenge:
       adapted: true
 
   - id: W-3.5-c2
-    stars: 2
+    stars: 1
     objectives: [OBJ-3.5-1, OBJ-3.5-2]
     prompt: >-
       רשת אינסופית של נגדים זהים, כל אחד בהתנגדות $r$, בנויה כמו באיור: לאורך התיל העליון נגדים בטור, ואחרי כל אחד מהם נגד "שלב" שיורד אל התיל התחתון. הרשת ממשיכה ימינה בלי סוף.
