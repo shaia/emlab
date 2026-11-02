@@ -1,0 +1,14 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title, the upload description and the chapter
+# list support; lengths and chapter times come from the watch page (lengthSeconds, chapters).
+
+- id: v-6-4-matimatix-ring
+  youtubeId: wj_kwwhABDw
+  title: 'חשמל ומגנטיות למהנדסים: 12. שדה חשמלי מעל טבעת טעונה'
+  channel: MATIMATIX
+  lang: he
+  captions: []
+  minutes: 8
+  why: 'סרטון בעברית מתוך סדרה של קורס חשמל ומגנטיות למהנדסים. לפי הכותרת, הוא עוסק בשדה החשמלי מעל טבעת טעונה, הטבעת של איור 6.4א. השוו את הפיתוח שבו לפיתוח שבשיעור.'
+  verified: '2026-11-02'
+
