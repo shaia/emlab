@@ -1,0 +1,25 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title, the upload description and its chapter
+# list support; the lengths come from the watch page (lengthSeconds).
+
+- id: v-4-3-review-coil-solenoid
+  youtubeId: S97h80_94qE
+  title: 'מגנטיות חזרה מהירה 2019'
+  channel: איליה וינוקור
+  lang: he
+  captions: []
+  start: 573
+  end: 1353
+  minutes: 13
+  why: 'קטע מתוך שיעור חזרה בעברית על מגנטיות לבגרות: לפי רשימת הפרקים של הסרטון, מ-9:33 "שדה מגנטי של סליל מעגלי (כריכה מעגלית)" ומ-13:48 סליל ארוך (בסרטון קוראים לו "סילונית"). הקטע נעצר לפני הנושא הבא. השוו את הנוסחאות ואת כללי הכיוון שבו לאלה שבשיעור.'
+  verified: '2026-11-02'
+
+- id: v-4-3-solenoid-filings
+  youtubeId: FzPO92Jxxt8
+  title: 'Magnetic Field Demo: Solenoid'
+  channel: Physics Demos
+  lang: en
+  captions: [en]
+  minutes: 3
+  why: 'הדגמה קצרה מאוניברסיטת יוטה: השדה של סליל, כפי שמראים אותו גרגרי ברזל (לפי תיאור הסרטון). חפשו את הקווים הישרים והצפופים בתוך הסליל, ואת הצורה שבחוץ, שדומה לשדה של מגנט מוט באיור 4.3א.'
+  verified: '2026-11-02'
