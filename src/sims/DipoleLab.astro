@@ -1,0 +1,7 @@
+---
+/** Lesson-6.10 figure: <Spread figure={DipoleLab} figureProps={{ scene: 'far' | 'torque' | 'slab', … }}>. */
+import DipoleLab, { type DipoleLabProps } from './DipoleLab';
+type Props = DipoleLabProps;
+---
+
+<DipoleLab client:visible {...Astro.props} />
