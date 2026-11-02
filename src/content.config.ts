@@ -36,7 +36,8 @@ const lessons = defineCollection({
     order: z.number().int().min(1),
     title: z.string(),
     subtitle: z.string().optional(),
-    minutes: z.number().int().min(5).max(60),
+    // the 60-minute cap applies to the Bagrut chapters only and lives in lint-content; chapter 6 has no cap
+    minutes: z.number().int().min(5).max(180),
     objectives: z.array(objective).min(1),
     prerequisites: z.array(z.string()).default([]),
     videos: z.array(z.string()).default([]),

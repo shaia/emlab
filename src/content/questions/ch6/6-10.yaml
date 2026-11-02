@@ -1,0 +1,354 @@
+# Lesson 6.10 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/dipole.ts (pointDipolePotential, axisFieldFar,
+# bisectorFieldFar, dipoleTorqueZ, dipoleEnergy, polarisedSlab) and constants.ts; the script is
+# recompute-6-10.ts in the session scratchpad. The data differ on purpose from the figures and the examples.
+
+chapter: 6
+questions:
+  # ------------------------------------------------ OBJ-6.10-1: the dipole moment and the far potential
+  - id: Q-6.10-p-direction
+    type: mc
+    objectives: [OBJ-6.10-1]
+    qualitative: true
+    prompt: >-
+      מטען $+q$ נמצא בנקודה A, ומטען $-q$ בנקודה B, מימין ל-A. לאן מצביע מומנט הדיפול $\vec p$, ומה גודלו?
+    choices:
+      - text: 'שמאלה, מ-B אל A, וגודלו $q\cdot AB$.'
+        correct: true
+        feedback: 'נכון. $\vec p$ מוגדר מהמטען השלילי אל החיובי: מ-B אל A. גודלו המטען כפול המרחק.'
+      - text: 'ימינה, מ-A אל B, וגודלו $q\cdot AB$.'
+        feedback: 'זה כיוון השדה **בין** המטענים, מהחיובי אל השלילי. מומנט הדיפול מוגדר הפוך: מהשלילי אל החיובי.'
+        misconception: MC-dipole-moment-direction
+      - text: 'שמאלה, וגודלו $2q\cdot AB$, כי יש שני מטענים.'
+        feedback: 'הכיוון נכון, אבל $p = qd$: המטען של **אחד** מהם כפול המרחק. המטען הכולל של הדיפול אפס.'
+      - text: 'אין לו כיוון: מומנט הדיפול הוא מספר, כמו המטען.'
+        feedback: 'מומנט הדיפול הוא וקטור. הכיוון שלו קובע, למשל, לאן מצביע השדה על הציר ולאן מסתובב הדיפול בשדה.'
+
+  - id: Q-6.10-p-value
+    type: numeric
+    objectives: [OBJ-6.10-1]
+    level: basic
+    prompt: >-
+      בזוג יונים, מטענים של $+e$ ו-$-e$ נמצאים במרחק $0.24\,\text{nm}$ זה מזה. מה מומנט הדיפול שלהם? ענו ביחידות של $10^{-30}\,\text{C}\cdot\text{m}$.
+    answer: 38.4
+    unit: '10⁻³⁰ C·m'
+    tolerance: 0.03
+    correctFeedback: 'נכון. $p = ed = 1.6\cdot10^{-19}\cdot0.24\cdot10^{-9} = 3.84\cdot10^{-29}\,\text{C}\cdot\text{m}$, כלומר $38.4\cdot10^{-30}\,\text{C}\cdot\text{m}$.'
+    wrongFeedback: '$p = qd$: מטען אחד כפול המרחק בין המטענים, במטרים.'
+    commonWrong:
+      - value: 76.8
+        feedback: 'כפלתם במטען של שני היונים, $2e$. במומנט הדיפול נכנס המטען של אחד מהם: $p = ed$.'
+      - value: 19.2
+        feedback: 'כפלתם בחצי מהמרחק. $d$ הוא כל המרחק בין שני המטענים.'
+
+  - id: Q-6.10-potential-far
+    type: numeric
+    objectives: [OBJ-6.10-1]
+    level: mid
+    prompt: >-
+      לדיפול נקודתי מומנט $p = 4\cdot10^{-11}\,\text{C}\cdot\text{m}$. מה הפוטנציאל בנקודה שנמצאת במרחק $20\,\text{cm}$ ממנו, בזווית $60^\circ$ מכיוון $\vec p$? ענו בוולט.
+    answer: 4.5
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. $V = \dfrac{kp\cos\theta}{r^2} = \dfrac{9\cdot10^9\cdot4\cdot10^{-11}\cdot0.5}{0.2^2} = 4.5\,\text{V}$.'
+    wrongFeedback: 'רחוק מהדיפול $V = kp\cos\theta/r^2$: ריבוע במכנה, ו-$\cos\theta$ של הזווית מכיוון $\vec p$.'
+    commonWrong:
+      - value: 9
+        feedback: 'שכחתם את $\cos\theta$. רק על הציר הפוטנציאל $kp/r^2$; בזווית $60^\circ$ הוא חצי מזה.'
+      - value: 0.9
+        feedback: 'חילקתם ב-$r$ ולא ב-$r^2$. הפוטנציאל של דיפול יורד כמו $1/r^2$, כי החלק $kq/r$ מתבטל בין שני המטענים.'
+      - value: 7.79
+        feedback: 'השתמשתם ב-$\sin\theta$. הפוטנציאל תלוי ב-$\cos\theta$: הוא הכי גדול על הציר ($\theta = 0$) ואפס על האנך.'
+
+  - id: Q-6.10-potential-bisector
+    type: twotier
+    objectives: [OBJ-6.10-1, OBJ-6.10-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בכל נקודה על האנך האמצעי של דיפול הפוטנציאל אפס. מניחים שם אלקטרון. האם פועל עליו כוח חשמלי?
+    choices:
+      - text: 'כן.'
+        correct: true
+        feedback: נכון.
+      - text: 'לא, כי הפוטנציאל שם אפס.'
+        feedback: 'הכוח תלוי בשדה, כלומר בקצב השינוי של הפוטנציאל, ולא בערך שלו.'
+        misconception: MC-zero-potential-zero-field
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: '$\vec E = -\nabla V$: לאורך האנך $V$ קבוע, אבל בכיוון הציר הוא משתנה, ולכן יש שם שדה, $kp/r^3$, מקביל לציר.'
+        correct: true
+        feedback: 'נכון. השדה ניצב לקווים שבהם $V$ קבוע, והאנך הוא קו כזה. השדה עליו מקביל לציר ומנוגד ל-$\vec p$.'
+      - text: 'כשהפוטנציאל אפס, האנרגיה של האלקטרון אפס, ולכן אין כוח.'
+        feedback: 'אנרגיה אפס בנקודה לא אומרת שהיא לא משתנה כשזזים. הכוח הוא מינוס קצב השינוי של האנרגיה.'
+        misconception: MC-zero-potential-zero-field
+      - text: 'השדות של שני המטענים מבטלים זה את זה על האנך, כמו הפוטנציאלים.'
+        feedback: 'הפוטנציאלים מתבטלים, כי הם מספרים עם סימנים הפוכים. השדות הם וקטורים: הרכיבים הניצבים לציר מתבטלים, אבל הרכיבים לאורך הציר מתחברים.'
+
+  # ------------------------------------------------ OBJ-6.10-2: the far field, 1/r³, and the check against the exact field
+  - id: Q-6.10-double-distance
+    type: mc
+    objectives: [OBJ-6.10-2]
+    qualitative: true
+    prompt: >-
+      במרחק $r$ מדיפול, גדול בהרבה מהמרחק בין מטעניו, השדה $E$. מה השדה במרחק $2r$, באותו כיוון מהדיפול?
+    choices:
+      - text: '$E/8$.'
+        correct: true
+        feedback: 'נכון. רחוק מהדיפול $E \propto 1/r^3$, ובמרחק כפול $E$ קטן פי $2^3 = 8$. באיור 6.10א זה השיפוע $-3$ בגרף הלוגריתמי.'
+      - text: '$E/4$, כמו בחוק קולון.'
+        feedback: 'זה נכון למטען אחד. בדיפול השדות של שני המטענים כמעט מבטלים זה את זה, ומה שנשאר דועך מהר יותר, כמו $1/r^3$.'
+        misconception: MC-dipole-field-inverse-square
+      - text: '$E/2$.'
+        feedback: 'כך דועך השדה של תיל טעון ארוך, $2k\lambda/r$, לא של דיפול. בדיפול $E \propto 1/r^3$.'
+      - text: '$E/16$.'
+        feedback: '$1/r^4$ חזק מדי. הפוטנציאל של דיפול דועך כמו $1/r^2$, וגזירה אחת לפי $r$ מוסיפה חזקה אחת: $1/r^3$.'
+
+  - id: Q-6.10-axis-field
+    type: numeric
+    objectives: [OBJ-6.10-2]
+    level: basic
+    prompt: >-
+      לדיפול קטן מומנט $p = 3\cdot10^{-12}\,\text{C}\cdot\text{m}$. מה עוצמת השדה שלו על הציר, במרחק $15\,\text{cm}$ ממנו? ענו ב-N/C.
+    answer: 16
+    unit: N/C
+    tolerance: 0.03
+    correctFeedback: 'נכון. $E = \dfrac{2kp}{r^3} = \dfrac{2\cdot9\cdot10^9\cdot3\cdot10^{-12}}{0.15^3} = 16\,\text{N/C}$.'
+    wrongFeedback: 'על הציר, רחוק מהדיפול, $E = 2kp/r^3$.'
+    commonWrong:
+      - value: 8
+        feedback: 'זו הנוסחה של האנך האמצעי, $kp/r^3$. על הציר השדה כפול: $2kp/r^3$.'
+      - value: 2.4
+        feedback: 'חילקתם ב-$r^2$. השדה של דיפול דועך כמו $1/r^3$, לא כמו השדה של מטען.'
+        misconception: MC-dipole-field-inverse-square
+      - value: 1.2
+        feedback: 'גם $kp/r^2$ במקום $2kp/r^3$: גם החזקה של $r$ וגם המקדם 2 של הציר חסרים.'
+        misconception: MC-dipole-field-inverse-square
+
+  - id: Q-6.10-rank-points
+    type: rank
+    objectives: [OBJ-6.10-2]
+    level: mid
+    prompt: >-
+      דיפול קטן ($d = 1\,\text{mm}$). דרגו את עוצמת השדה בארבע נקודות, מהחזקה לחלשה.
+    items:
+      - id: A
+        label: 'על הציר, $10\,\text{cm}$ מהדיפול'
+      - id: B
+        label: 'על האנך האמצעי, $10\,\text{cm}$ מהדיפול'
+      - id: C
+        label: 'על הציר, $20\,\text{cm}$ מהדיפול'
+      - id: D
+        label: 'על האנך האמצעי, $5\,\text{cm}$ מהדיפול'
+    order: [D, A, B, C]
+    correctFeedback: 'נכון. ביחידות של $kp/(0.1\,\text{m})^3$: D $= 8$ (חצי המרחק, פי $2^3$), A $= 2$ (הציר כפול מהאנך), B $= 1$, C $= 2/8 = 0.25$.'
+    wrongFeedback: 'השתמשו ב-$2kp/r^3$ על הציר וב-$kp/r^3$ על האנך. חצי מרחק נותן פי 8, לא פי 4.'
+
+  - id: Q-6.10-gradient
+    type: mc
+    objectives: [OBJ-6.10-2]
+    level: mid
+    prompt: >-
+      הפוטנציאל של דיפול רחוק הוא $V = \dfrac{kp\cos\theta}{r^2}$. מהו הרכיב הרדיאלי של השדה, $E_r = -\dfrac{\partial V}{\partial r}$?
+    choices:
+      - text: '$\dfrac{2kp\cos\theta}{r^3}$'
+        correct: true
+        feedback: 'נכון. $\theta$ קבוע, ו-$\dfrac{d}{dr}r^{-2} = -2r^{-3}$. המינוס של $-\nabla V$ הופך את הסימן.'
+      - text: '$-\dfrac{2kp\cos\theta}{r^3}$'
+        feedback: 'הנגזרת עצמה, $\partial V/\partial r$, היא $-2kp\cos\theta/r^3$. השדה הוא **מינוס** הנגזרת.'
+      - text: '$\dfrac{kp\cos\theta}{r^3}$'
+        feedback: 'חסר המקדם 2: בכלל החזקה $(r^{n})^\prime = n\,r^{n-1}$, והחזקה $-2$ יורדת לפני הביטוי.'
+      - text: '$\dfrac{kp\sin\theta}{r^3}$'
+        feedback: 'זה הרכיב השני, $E_\theta = -\tfrac1r\,\partial V/\partial\theta$. בגזירה לפי $r$ הזווית קבועה, ו-$\cos\theta$ נשאר.'
+
+  - id: Q-6.10-loglog
+    type: twotier
+    objectives: [OBJ-6.10-2]
+    qualitative: true
+    level: bagrut
+    prompt: >-
+      מודדים את עוצמת השדה על ציר של דיפול, במרחק $s$ מהמטען החיובי, ומציירים גרף לוגריתמי. קרוב מאוד למטען ($s \ll d$) השיפוע $-2$, ורחוק ($s \gg d$) השיפוע $-3$. מה זה אומר?
+    choices:
+      - text: 'קרוב למטען השדה נקבע כמעט רק על ידו, ורחוק השדה הוא הפרש קטן בין שני שדות כמעט שווים.'
+        correct: true
+        feedback: נכון.
+      - text: 'יש טעות במדידה: השדה של מטענים תמיד דועך כמו $1/r^2$.'
+        feedback: 'כל מטען לחוד אכן נותן $1/r^2$, אבל רחוק מהדיפול השדות של שניהם כמעט מבטלים זה את זה, וההפרש דועך כמו $1/r^3$.'
+        misconception: MC-dipole-field-inverse-square
+      - text: 'רחוק מהדיפול המטען השלילי חזק יותר מהחיובי.'
+        feedback: 'המטענים שווים בגודלם. רחוק, המרחקים משניהם כמעט שווים, ולכן השדות שלהם כמעט שווים ומבטלים זה את זה.'
+    reasonPrompt: למה דווקא $-3$?
+    reasons:
+      - text: 'ההפרש בין $kq/r^2$ בשתי נקודות שרחוקות $d$ זו מזו הוא בערך הנגזרת כפול $d$: $\dfrac{2kq}{r^3}\cdot d$.'
+        correct: true
+        feedback: 'נכון. הגזירה של $1/r^2$ נותנת $1/r^3$, ולכן השיפוע $-3$.'
+      - text: 'כי שני מטענים נותנים $1/r^2$ כפול $1/r$.'
+        feedback: 'שדות של שני מטענים מתחברים, לא מוכפלים. ה-$1/r^3$ בא מההפרש ביניהם, כלומר מנגזרת.'
+      - text: 'כי השדה של כל אחד מהמטענים דועך כמו $1/r^3$.'
+        feedback: 'השדה של כל מטען לחוד דועך כמו $1/r^2$: זה השיפוע $-2$ שרואים קרוב למטען.'
+        misconception: MC-dipole-field-inverse-square
+
+  # ------------------------------------------------ OBJ-6.10-3: torque and energy in a uniform field
+  - id: Q-6.10-net-force
+    type: twotier
+    objectives: [OBJ-6.10-3]
+    qualitative: true
+    prompt: >-
+      מניחים דיפול בשדה חשמלי אחיד, כש-$\vec p$ בזווית $40^\circ$ מכיוון השדה, ומשחררים אותו ממנוחה. מה יקרה?
+    choices:
+      - text: 'הדיפול יסתובב, אבל מרכזו לא יזוז.'
+        correct: true
+        feedback: נכון.
+      - text: 'הדיפול כולו יאיץ בכיוון השדה.'
+        feedback: 'על המטען החיובי פועל כוח $qE$ בכיוון השדה, ועל השלילי כוח שווה בכיוון ההפוך. הכוח השקול אפס.'
+        misconception: MC-dipole-uniform-net-force
+      - text: 'שום דבר: הכוחות מבטלים זה את זה.'
+        feedback: 'הכוחות מבטלים זה את זה, אבל הם לא פועלים לאורך אותו קו. לכן יש מומנט, והדיפול מסתובב.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'הכוחות $\pm qE$ שווים ומנוגדים, ולכל אחד זרוע $\tfrac d2\sin\theta$ שמסובבת לאותו כיוון: $\tau = pE\sin\theta$.'
+        correct: true
+        feedback: 'נכון. באיור 6.10ב רואים את שני חיצי הכוח: שווים, מנוגדים, ומסובבים את המוט לאותו כיוון.'
+      - text: 'המטען החיובי נדחף חזק יותר, כי הוא בכיוון השדה.'
+        feedback: 'בשדה אחיד הכוח על כל מטען הוא $qE$, בכל מקום. שני המטענים שווים בגודלם, ולכן גם הכוחות.'
+        misconception: MC-dipole-uniform-net-force
+      - text: 'מומנט פועל רק על גוף שיש לו מטען כולל.'
+        feedback: 'למומנט לא צריך מטען כולל: צריך שני כוחות שלא על אותו קו. גם כריכה עם זרם בשדה מגנטי (שיעור 4.10) מסתובבת בלי כוח שקול.'
+
+  - id: Q-6.10-torque
+    type: numeric
+    objectives: [OBJ-6.10-3]
+    level: basic
+    prompt: >-
+      דיפול שמומנטו $2.5\cdot10^{-10}\,\text{C}\cdot\text{m}$ נמצא בשדה אחיד של $2\cdot10^{4}\,\text{N/C}$, ו-$\vec p$ בזווית $60^\circ$ מכיוון השדה. מה גודל מומנט הכוח עליו? ענו ב-$\mu\text{N}\cdot\text{m}$.
+    answer: 4.33
+    unit: μN·m
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\tau = pE\sin\theta = 2.5\cdot10^{-10}\cdot2\cdot10^{4}\cdot\sin60^\circ \approx 4.33\cdot10^{-6}\,\text{N}\cdot\text{m}$.'
+    wrongFeedback: '$\tau = pE\sin\theta$, כש-$\theta$ הזווית בין $\vec p$ לשדה.'
+    commonWrong:
+      - value: 2.5
+        feedback: 'השתמשתם ב-$\cos\theta$. המומנט אפס כש-$\vec p$ בכיוון השדה ($\theta = 0$), ולכן הוא תלוי ב-$\sin\theta$.'
+      - value: 5
+        feedback: 'זה $pE$, המומנט הגדול ביותר, כש-$\vec p$ ניצב לשדה. בזווית $60^\circ$ כופלים ב-$\sin60^\circ$.'
+
+  - id: Q-6.10-equilibrium
+    type: mc
+    objectives: [OBJ-6.10-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בשדה אחיד המומנט על דיפול אפס בשני מצבים: כש-$\vec p$ בכיוון השדה, וכש-$\vec p$ נגד השדה. מה נכון?
+    choices:
+      - text: 'רק המצב שבו $\vec p$ בכיוון השדה יציב: שם האנרגיה $-pE$ מינימלית, ובהטיה קטנה המומנט מחזיר את הדיפול.'
+        correct: true
+        feedback: 'נכון. נגד השדה האנרגיה $+pE$ מקסימלית, ובהטיה קטנה המומנט מרחיק את הדיפול: שיווי משקל רופף.'
+      - text: 'שני המצבים יציבים, כי בשניהם המומנט אפס.'
+        feedback: 'מומנט אפס אומר רק ששם יש שיווי משקל. כדי לדעת אם הוא יציב בודקים מה קורה בהטיה קטנה, או אם האנרגיה שם מינימלית.'
+        misconception: MC-dipole-both-equilibria-stable
+      - text: 'רק המצב שבו $\vec p$ נגד השדה יציב, כי שם האנרגיה הכי גדולה.'
+        feedback: 'גוף מגיע למנוחה במקום שבו האנרגיה **מינימלית**, כמו כדור בתחתית עמק. אנרגיה מקסימלית היא ראש גבעה.'
+      - text: 'אף אחד מהם לא יציב, כי בשדה אחיד הדיפול נע כל הזמן.'
+        feedback: 'בשדה אחיד אין על הדיפול כוח שקול, והמומנט אפס בשני המצבים. דיפול שהונח בכיוון השדה נשאר במנוחה.'
+        misconception: MC-dipole-uniform-net-force
+
+  - id: Q-6.10-flip-work
+    type: numeric
+    objectives: [OBJ-6.10-3]
+    level: mid
+    prompt: >-
+      דיפול שמומנטו $3\cdot10^{-10}\,\text{C}\cdot\text{m}$ נמצא בשדה אחיד של $5\cdot10^{4}\,\text{N/C}$, כש-$\vec p$ בכיוון השדה. כמה עבודה צריך לעשות כדי לסובב אותו לאט עד ש-$\vec p$ יצביע נגד השדה? ענו במיקרו-ג׳אול.
+    answer: 30
+    unit: μJ
+    tolerance: 0.03
+    correctFeedback: 'נכון. $W = U(180^\circ) - U(0) = pE - (-pE) = 2pE = 2\cdot3\cdot10^{-10}\cdot5\cdot10^{4} = 3\cdot10^{-5}\,\text{J}$.'
+    wrongFeedback: 'העבודה היא השינוי באנרגיה, $U = -pE\cos\theta$, מ-$0^\circ$ ל-$180^\circ$.'
+    commonWrong:
+      - value: 15
+        feedback: 'זה $pE$: העבודה מ-$0^\circ$ ל-$90^\circ$ בלבד. מ-$90^\circ$ ל-$180^\circ$ האנרגיה עולה ב-$pE$ נוספים.'
+      - value: 0
+        feedback: 'בשני הקצוות המומנט אפס, אבל האנרגיה שונה: $-pE$ בכיוון השדה ו-$+pE$ נגדו.'
+        misconception: MC-dipole-both-equilibria-stable
+
+  # ------------------------------------------------ OBJ-6.10-4: polarisation of matter
+  - id: Q-6.10-dielectric-field
+    type: mc
+    objectives: [OBJ-6.10-4]
+    qualitative: true
+    prompt: >-
+      מכניסים לוח של חומר מבודד בין לוחות של קבל טעון ומנותק. למה השדה בתוך החומר חלש יותר מהשדה שהיה שם קודם?
+    choices:
+      - text: 'המולקולות הופכות לדיפולים בכיוון השדה, ועל פני החומר נשארות שכבות של מטען קשור שיוצרות שדה הפוך.'
+        correct: true
+        feedback: 'נכון. השכבה השלילית פונה ללוח החיובי, והחיובית ללוח השלילי, והשדה שלהן מחליש את השדה של הלוחות: $E = E_0/\kappa$.'
+      - text: 'החומר בולע חלק מקווי השדה.'
+        feedback: 'קווי שדה לא נבלעים: הם מתחילים ונגמרים במטענים. בחומר חלק מהקווים נגמרים על השכבה השלילית שעל פני החומר ומתחילים מחדש בשכבה החיובית.'
+      - text: 'החומר מוליך, ובתוך מוליך השדה אפס.'
+        feedback: 'חומר מבודד לא מוליך: המטענים לא זורמים בו, רק זזים מעט בתוך כל מולקולה. לכן השדה נחלש ולא מתאפס.'
+      - text: 'החומר מוסיף מטען שלילי שמנטרל חלק מהמטען שעל הלוח החיובי.'
+        feedback: 'החומר לא מוסיף שום מטען: הוא נשאר ניטרלי. הקיטוב רק מסדר מחדש את המטען שכבר בו.'
+        misconception: MC-dielectric-adds-charge
+
+  - id: Q-6.10-slab-charge
+    type: mc
+    objectives: [OBJ-6.10-4]
+    qualitative: true
+    prompt: >-
+      לוח זכוכית ניטרלי מקוטב בשדה חשמלי: על פן אחד שלו יש מטען קשור שלילי, ועל הפן השני חיובי. מה המטען הכולל של הלוח?
+    choices:
+      - text: 'אפס.'
+        correct: true
+        feedback: 'נכון. הקיטוב מזיז מטען בתוך כל מולקולה, ולא מוסיף מטען. שתי השכבות שוות בגודלן ומנוגדות בסימנן.'
+      - text: 'שלילי, כי השדה מושך אלקטרונים לתוך הזכוכית.'
+        feedback: 'במבודד אלקטרונים לא נכנסים ולא יוצאים. כל אלקטרון נשאר במולקולה שלו, רק זז מעט בתוכה.'
+        misconception: MC-dielectric-adds-charge
+      - text: 'תלוי בעוצמת השדה: בשדה חזק המטען גדל.'
+        feedback: 'בשדה חזק השכבות אכן צפופות יותר, אבל שתיהן גדלות יחד. הסכום נשאר אפס.'
+        misconception: MC-dielectric-adds-charge
+
+  - id: Q-6.10-neutral-attraction
+    type: twotier
+    objectives: [OBJ-6.10-4, OBJ-6.10-3]
+    qualitative: true
+    level: bagrut
+    prompt: >-
+      מסרק טעון מושך פיסות נייר ניטרליות. מחליפים אותו במסרק שטעון במטען מהסימן ההפוך. מה יקרה לפיסות הנייר?
+    choices:
+      - text: 'הן יימשכו גם אל המסרק החדש.'
+        correct: true
+        feedback: נכון.
+      - text: 'הן יידחו, כי הסימן התהפך.'
+        feedback: 'הדיפולים בנייר מסתדרים תמיד בכיוון השדה: כשהשדה מתהפך, גם הם מתהפכים. הצד הקרוב למסרק תמיד מנוגד לו בסימן.'
+        misconception: MC-polarisation-sign-matters
+      - text: 'לא יקרה כלום: על גוף ניטרלי לא פועל כוח.'
+        feedback: 'על גוף ניטרלי מקוטב פועל כוח כשהשדה לא אחיד: הקצה הקרוב למסרק נמצא בשדה חזק יותר מהקצה הרחוק.'
+        misconception: MC-dipole-uniform-net-force
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'ליד המסרק השדה לא אחיד: הקצה של הדיפול שקרוב למסרק נמשך בכוח גדול יותר מזה שהקצה הרחוק נדחה, ולכן הכוח השקול אל המסרק.'
+        correct: true
+        feedback: 'נכון. בשדה אחיד הכוח השקול היה אפס. כאן הוא לא אפס, והוא תמיד אל האזור שבו השדה חזק, בלי קשר לסימן של המסרק.'
+      - text: 'בנייר יש מטען שנמשך לכל סימן.'
+        feedback: 'הנייר ניטרלי. מה שמושך אותו הוא הקיטוב: הצד הקרוב נטען בסימן הפוך למסרק.'
+        misconception: MC-polarisation-sign-matters
+      - text: 'בשדה אחיד דיפול נמשך תמיד בכיוון השדה.'
+        feedback: 'בשדה אחיד הכוחות על שני הקצוות שווים ומנוגדים, והכוח השקול אפס. כוח שקול יש רק בשדה לא אחיד.'
+        misconception: MC-dipole-uniform-net-force
+
+  - id: Q-6.10-slab-sigma
+    type: numeric
+    objectives: [OBJ-6.10-4]
+    level: bagrut
+    prompt: >-
+      בין לוחות של קבל השדה בלי חומר הוא $E_0 = 4\cdot10^{5}\,\text{N/C}$. ממלאים את המרווח בחומר עם $\kappa = 2.5$ (המטען על הלוחות לא משתנה). מה צפיפות המטען הקשור על פני החומר? ענו ב-$\mu\text{C/m}^2$. ($\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$.)
+    answer: 2.12
+    unit: μC/m²
+    tolerance: 0.03
+    correctFeedback: 'נכון. בפנים $E = E_0/\kappa = 1.6\cdot10^{5}\,\text{N/C}$, ומ-$E = E_0 - \sigma_b/\varepsilon_0$: $\sigma_b = \varepsilon_0(E_0 - E) = 8.85\cdot10^{-12}\cdot2.4\cdot10^{5} \approx 2.12\cdot10^{-6}\,\text{C/m}^2$.'
+    wrongFeedback: 'מצאו קודם את השדה בפנים, $E_0/\kappa$. ההפרש $E_0 - E$ הוא השדה של שכבות המטען הקשור, $\sigma_b/\varepsilon_0$.'
+    commonWrong:
+      - value: 3.54
+        feedback: 'זה $\varepsilon_0 E_0$: צפיפות המטען על הלוחות עצמם. המטען הקשור קטן ממנה, כי הוא מבטל רק חלק מהשדה.'
+      - value: 1.42
+        feedback: 'זה $\varepsilon_0 E$, עם השדה שבפנים. השכבות הקשורות יוצרות את **ההפרש** $E_0 - E$.'

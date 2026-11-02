@@ -76,6 +76,7 @@ interface Lesson {
   objectives: string[];
   videos: string[];
   figures: string[];
+  minutes: number;
   body: string;
   raw: string;
 }
@@ -89,13 +90,14 @@ const lessons: Lesson[] = walk(join(CONTENT, 'lessons'))
       fail(rel(file), 'no frontmatter');
       return null;
     }
-    const fm = parse(m[1]) as { id: string; objectives: { id: string }[]; videos?: string[]; figures?: string[] };
+    const fm = parse(m[1]) as { id: string; objectives: { id: string }[]; videos?: string[]; figures?: string[]; minutes: number };
     return {
       file: rel(file),
       id: fm.id,
       objectives: fm.objectives.map((o) => o.id),
       videos: fm.videos ?? [],
       figures: fm.figures ?? [],
+      minutes: fm.minutes,
       body: m[2],
       raw,
     };
@@ -281,6 +283,8 @@ for (const l of lessons) {
       if (!seenQ.has(qid)) fail(l.file, `<Check> asks for unknown question ${qid}`, true);
     }
   }
+  // A Bagrut-chapter lesson fits one 60-minute sitting, worked examples included; a chapter beyond the Bagrut has no cap.
+  if (!BEYOND_BAGRUT.has(Number(l.id.split('.')[0])) && l.minutes > 60) fail(l.file, `minutes: ${l.minutes} is over the 60-minute cap of a Bagrut chapter`);
   // Chapter 6 (beyond the Bagrut) exists to build the limit-check habit, so every worked example must show one.
   if (BEYOND_BAGRUT.has(Number(l.id.split('.')[0]))) {
     for (const m of l.body.matchAll(/<Example\s+id="([^"]+)"[\s\S]*?<\/Example>/g)) {

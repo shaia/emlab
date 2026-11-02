@@ -1,0 +1,31 @@
+# Lesson 6.12 terms (the displacement current). Format and rules: see glossary/1-5.yaml.
+
+- id: open-surface
+  term: משטח פתוח
+  en: open surface
+  definition: 'משטח שיש לו שפה: עקומה סגורה שבה הוא נגמר, כמו שפת הפה של שקית. דף שטוח שגבולו מעגל, וגם שקית שנפתחת באותו מעגל, הם שני משטחים פתוחים עם אותה שפה. בחוק אמפר הזרם הכלוא נמדד דרך משטח פתוח שהמסלול הוא השפה שלו.'
+  lesson: '6.12'
+
+- id: conduction-current
+  term: זרם הולכה
+  en: conduction current
+  symbol: 'I'
+  unit: A
+  definition: 'זרם של מטענים שנעים בפועל, כמו האלקטרונים בתיל: כמות המטען שעוברת דרך משטח בשנייה. זה הזרם של פרק 3, וכאן מוסיפים לו את השם "הולכה" כדי להבדיל אותו מזרם ההעתקה.'
+  lesson: '6.12'
+
+- id: displacement-current
+  term: זרם העתקה
+  en: displacement current
+  symbol: 'I_d = \varepsilon_0\,\frac{d\Phi_E}{dt}'
+  unit: A
+  definition: 'ε₀ כפול קצב השינוי של השטף החשמלי דרך משטח. אין בו שום תנועה של מטענים: זה שדה חשמלי שמשתנה בזמן. הוא נמדד באמפר ויוצר שדה מגנטי בדיוק כמו זרם הולכה באותו גודל. בין לוחות קבל שנטען הוא שווה לזרם בתיל.'
+  reject: [זרם תזוזה, זרם הסחה]
+  lesson: '6.12'
+
+- id: ampere-maxwell-law
+  term: חוק אמפר-מקסוול
+  en: Ampère–Maxwell law
+  symbol: '\oint \vec B\cdot d\vec l = \mu_0\left(I + \varepsilon_0\,\frac{d\Phi_E}{dt}\right)'
+  definition: 'חוק אמפר בצורתו השלמה: הסירקולציה של השדה המגנטי סביב מסלול סגור שווה ל-μ₀ כפול סכום זרם ההולכה וזרם ההעתקה דרך משטח פתוח כלשהו שהמסלול הוא השפה שלו. עם התיקון של מקסוול הסכום יוצא זהה לכל משטח, כי מה שזרם ההולכה מוסיף למטען הכלוא, השטף החשמלי מוסיף לזרם ההעתקה.'
+  lesson: '6.12'
