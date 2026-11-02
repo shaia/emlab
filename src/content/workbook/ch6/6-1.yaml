@@ -1,0 +1,547 @@
+# Workbook, lesson 6.1 (the derivative). Format and rules: see .claude/CLAUDE.md, "Worked examples, workbook",
+# and the chapter-6 solution shape (law … limit, units, result).
+# Every number was recomputed with src/physics/calculus.ts (secantSlope, derivative) and rates.ts
+# (powerSecant, dischargeCurrent, oscillator*), constants from constants.ts; script recompute-6-1.ts in the
+# session scratchpad. In a >- block, consecutive lines fold into one paragraph: every part (א, ב, …) starts
+# after a blank line.
+
+lesson: '6.1'
+practice:
+  - id: W-6.1-01
+    level: basic
+    qualitative: true
+    objectives: [OBJ-6.1-1]
+    prompt: >-
+      גרף המקום של מכונית כתלות בזמן, $x(t)$, בנוי משלושה חלקים. בחלק הראשון הוא קו ישר שעולה. בחלק השני הוא אופקי. בחלק השלישי הוא עקומה שעולה ונעשית תלולה יותר ויותר.
+
+      א. באיזה חלק המהירות אפס?
+
+      ב. באיזה חלק המהירות קבועה ושונה מאפס? איך רואים את זה בגרף?
+
+      ג. מה קורה למהירות בחלק השלישי?
+
+      ד. בחלק השני המכונית רחוקה מנקודת ההתחלה יותר מאשר בחלק הראשון. האם זה אומר שבחלק השני המהירות שלה גדולה יותר?
+    answer: >-
+      א. בחלק השני.
+
+      ב. בחלק הראשון: השיפוע של קו ישר קבוע.
+
+      ג. היא גדלה.
+
+      ד. לא: המהירות היא השיפוע, לא הגובה. בחלק השני השיפוע אפס.
+    solution:
+      - kind: law
+        text: >-
+          $v = dx/dt$: המהירות ברגע היא השיפוע של המשיק לגרף $x(t)$ באותו רגע.
+      - kind: reasoning
+        text: >-
+          א. בחלק האופקי השיפוע אפס, ולכן $v = 0$: המכונית עומדת.
+
+          ב. לקו ישר יש אותו שיפוע בכל נקודה, ולכן בחלק הראשון המהירות קבועה. הקו עולה, ולכן היא חיובית.
+
+          ג. בחלק השלישי המשיק נעשה תלול יותר ויותר, ולכן המהירות גדלה: המכונית מאיצה.
+
+          ד. הגובה של הגרף הוא המקום, והשיפוע הוא המהירות. בחלק השני הגרף גבוה אבל אופקי.
+      - kind: limit
+        text: >-
+          בדיקה מול מקרה ידוע: מכונית שעומדת ברמזור נמצאת כל הזמן באותו מקום, והגרף שלה אופקי. אפס שיפוע, אפס מהירות.
+      - kind: units
+        text: >-
+          השיפוע של מקום (m) לפי זמן (s) נמדד ב-$\text{m/s}$, יחידה של מהירות.
+      - kind: result
+        text: >-
+          א. בחלק השני. ב. בחלק הראשון. ג. גדלה. ד. לא: מקום רחוק אינו מהירות גדולה.
+
+  - id: W-6.1-02
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.1-1]
+    prompt: >-
+      המטען שעבר דרך חתך של תיל מרגע $t = 0$ הוא $q = 3t^2 + 2t$ (במיליקולון, כש-$t$ בשניות).
+
+      א. מה הזרם הממוצע בין $t = 1\,\text{s}$ ל-$t = 2\,\text{s}$?
+
+      ב. מצאו את שיפוע המיתר בין $t = 1\,\text{s}$ לרגע $1 + \Delta t$, כביטוי ב-$\Delta t$. אל תשתמשו בכללי הגזירה.
+
+      ג. מה הזרם ברגע $t = 1\,\text{s}$?
+    answer: >-
+      א. $11\,\text{mA}$.
+
+      ב. $8 + 3\Delta t$ (מיליאמפר).
+
+      ג. $8\,\text{mA}$.
+    solution:
+      - kind: given
+        text: >-
+          $q(t) = 3t^2 + 2t$ במיליקולון. לכן $q(1) = 5\,\text{mC}$ ו-$q(2) = 16\,\text{mC}$.
+      - kind: law
+        text: >-
+          זרם ממוצע הוא $\Delta q/\Delta t$ (שיעור 3.2). הזרם ברגע הוא הנגזרת, $I = dq/dt$: הגבול של $\Delta q/\Delta t$ כש-$\Delta t \to 0$.
+      - kind: manipulation
+        text: >-
+          א. $\dfrac{\Delta q}{\Delta t} = \dfrac{16 - 5}{1} = 11\,\text{mA}$.
+
+          ב. $q(1 + \Delta t) = 3(1 + 2\Delta t + \Delta t^2) + 2 + 2\Delta t = 5 + 8\Delta t + 3\Delta t^2$. מחסירים $q(1) = 5$ ומחלקים ב-$\Delta t$ (שאינו אפס): $\dfrac{\Delta q}{\Delta t} = 8 + 3\Delta t$.
+
+          ג. כש-$\Delta t \to 0$ האיבר $3\Delta t$ נעלם, ונשאר $8\,\text{mA}$.
+      - kind: limit
+        text: >-
+          $\Delta t = 1$ בביטוי של (ב) נותן $11$, התשובה של (א). $\Delta t = 0.01$ נותן $8.03$, קרוב ל-8. וגם מהכללים: $I = 6t + 2$, וב-$t = 1$ זה 8.
+      - kind: units
+        text: >-
+          מיליקולון לשנייה הם מיליאמפר.
+      - kind: result
+        text: >-
+          א. $11\,\text{mA}$. ב. $8 + 3\Delta t$. ג. $8\,\text{mA}$.
+
+  - id: W-6.1-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.1-2]
+    prompt: >-
+      גזרו:
+
+      א. $y = 7x^4$
+
+      ב. $y = \dfrac{3}{x^2}$
+
+      ג. $y = 2x^3 - 5x + 4$
+
+      ד. $x(t) = 4\cos t$, ומצאו את הנגזרת ברגע $t = \pi/6$.
+    answer: >-
+      א. $28x^3$.
+
+      ב. $-6/x^3$.
+
+      ג. $6x^2 - 5$.
+
+      ד. $-4\sin t$; ב-$\pi/6$: $-2$.
+    solution:
+      - kind: law
+        text: >-
+          $(x^n)' = n\,x^{n-1}$ לכל $n$ שלם, גם שלילי. קבוע שכופל יוצא החוצה, סכום נגזר איבר איבר, הנגזרת של קבוע אפס, ו-$(\cos t)' = -\sin t$.
+      - kind: manipulation
+        text: >-
+          א. $7\cdot4x^3 = 28x^3$.
+
+          ב. $3x^{-2}$, ולכן $3\cdot(-2)x^{-3} = -6x^{-3} = -\dfrac{6}{x^3}$.
+
+          ג. $2\cdot3x^2 - 5\cdot1 + 0 = 6x^2 - 5$.
+
+          ד. $-4\sin t$, וב-$t = \pi/6$: $-4\cdot\tfrac12 = -2$.
+      - kind: limit
+        text: >-
+          ב-(ב) הגרף של $3/x^2$ יורד כשמתרחקים מהראשית בצד החיובי, ולכן ב-$x > 0$ הנגזרת צריכה להיות שלילית: $-6/x^3 < 0$. ב-(ד) ב-$t = 0$ הנגזרת $-4\sin 0 = 0$: שם ל-$4\cos t$ יש שיא, והמשיק אופקי.
+      - kind: units
+        text: >-
+          כאן אין יחידות: אלה פונקציות של מספרים (ב-(ד) הזווית ברדיאנים).
+      - kind: result
+        text: >-
+          א. $28x^3$. ב. $-6/x^3$. ג. $6x^2 - 5$. ד. $-4\sin t$, ו-$-2$ ב-$t = \pi/6$.
+
+  - id: W-6.1-04
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.1-1, OBJ-6.1-2]
+    prompt: >-
+      בתוך לוח עבה וטעון באחידות, הפוטנציאל לאורך ציר $x$ שניצב ללוח הוא $V(x) = 200 - 2\cdot10^{4}\,x^2$ (בוולט, כש-$x$ במטרים), עבור $-0.05 \le x \le 0.05$. אמצע הלוח ב-$x = 0$.
+
+      א. מצאו את השדה $E_x = -dV/dx$ כפונקציה של $x$.
+
+      ב. מה השדה באמצע הלוח, ומה הוא ב-$x = 0.05\,\text{m}$ וב-$x = -0.05\,\text{m}$ (גודל וכיוון)?
+
+      ג. באמצע הלוח הפוטנציאל הכי גבוה. למה דווקא שם השדה אפס?
+
+      ד. האם הלוח טעון בחיובי או בשלילי? נמקו לפי כיוון השדה.
+    answer: >-
+      א. $E_x = 4\cdot10^{4}\,x$ (ב-$\text{N/C}$).
+
+      ב. אפס באמצע; $2000\,\text{N/C}$ בכיוון $+x$ ב-$x = 0.05\,\text{m}$, ו-$2000\,\text{N/C}$ בכיוון $-x$ ב-$x = -0.05\,\text{m}$.
+
+      ג. בשיא של $V$ השיפוע אפס.
+
+      ד. בחיובי: השדה מצביע החוצה מהאמצע לשני הצדדים.
+    solution:
+      - kind: law
+        text: >-
+          $E_x = -dV/dx$ (שיעור 2.3, בצורה המדויקת), וכלל החזקה.
+      - kind: manipulation
+        text: >-
+          א. $\dfrac{dV}{dx} = 0 - 2\cdot10^{4}\cdot2x = -4\cdot10^{4}\,x$, ולכן $E_x = 4\cdot10^{4}\,x$.
+
+          ב. $E_x(0) = 0$. $E_x(0.05) = 4\cdot10^{4}\cdot0.05 = 2000\,\text{N/C}$: חיובי, בכיוון $+x$. $E_x(-0.05) = -2000\,\text{N/C}$: בכיוון $-x$.
+      - kind: reasoning
+        text: >-
+          ג. השדה הוא מינוס השיפוע של $V$, לא הגובה שלו. באמצע הגרף של $V$ מגיע לשיא, ושם המשיק אופקי.
+
+          ד. משני צדי האמצע השדה מצביע הרחק ממנו: ימינה מימין, שמאלה משמאל. שדה שמצביע החוצה מאזור נוצר ממטען חיובי בתוכו.
+      - kind: limit
+        text: >-
+          סימטריה: הלוח זהה משני צדי האמצע, ולכן השדה באמצע לא יכול להצביע לאף צד, כלומר הוא אפס, כמו שיצא. ובדיקה בצעד קטן: $V(0.05) = 150\,\text{V}$ ו-$V(0.051) = 147.98\,\text{V}$, ולכן $-\Delta V/\Delta x \approx 2020\,\text{N/C}$, קרוב ל-$2000$.
+      - kind: units
+        text: >-
+          המקדם $2\cdot10^{4}$ ביחידות $\text{V/m}^2$, ולכן $E_x$ ביחידות $\text{V/m} = \text{N/C}$.
+      - kind: result
+        text: >-
+          א. $E_x = 4\cdot10^{4}\,x$. ב. $0$; $2000\,\text{N/C}$ החוצה משני הצדדים. ג. בשיא השיפוע אפס. ד. חיובי.
+
+  - id: W-6.1-05
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.1-2]
+    prompt: >-
+      הנגזרת של $y = x^4$ מתוך שיפוע המיתר.
+
+      א. פתחו את $(x + \Delta x)^4$, ומצאו את שיפוע המיתר בין $x$ ל-$x + \Delta x$. (רמז: כמה דרכים יש לבחור $\Delta x$ מזוג סוגריים אחד מתוך ארבעה? משניים מתוך ארבעה?)
+
+      ב. מה הגבול כש-$\Delta x \to 0$?
+
+      ג. חשבו את שיפוע המיתר ב-$x = 1$ עם $\Delta x = 0.1$, בשתי דרכים: מהביטוי של (א), וישירות מ-$\dfrac{1.1^4 - 1^4}{0.1}$.
+    answer: >-
+      א. $4x^3 + 6x^2\,\Delta x + 4x\,\Delta x^2 + \Delta x^3$.
+
+      ב. $4x^3$.
+
+      ג. $4.641$ בשתי הדרכים.
+    solution:
+      - kind: law
+        text: >-
+          הנגזרת היא הגבול של שיפוע המיתר: $\displaystyle\lim_{\Delta x\to0}\frac{(x+\Delta x)^4 - x^4}{\Delta x}$.
+      - kind: manipulation
+        text: >-
+          א. בכפל של ארבעה זוגות סוגריים: $\Delta x$ מאחד מהם בלבד, 4 דרכים; משניים, 6 דרכים; משלושה, 4 דרכים; מכולם, דרך אחת. לכן $(x + \Delta x)^4 = x^4 + 4x^3\Delta x + 6x^2\Delta x^2 + 4x\Delta x^3 + \Delta x^4$. מחסירים $x^4$ ומחלקים ב-$\Delta x$: $4x^3 + 6x^2\Delta x + 4x\Delta x^2 + \Delta x^3$.
+
+          ב. כל האיברים חוץ מהראשון מוכפלים ב-$\Delta x$ ונעלמים, ונשאר $4x^3$: כלל החזקה עם $n = 4$.
+      - kind: substitution
+        text: >-
+          ג. מהביטוי: $4 + 6\cdot0.1 + 4\cdot0.01 + 0.001 = 4.641$. ישירות: $1.1^4 = 1.4641$, ו-$\dfrac{1.4641 - 1}{0.1} = 4.641$.
+      - kind: limit
+        text: >-
+          עם $\Delta x = 0.01$ הביטוי נותן $4.0604$, ועם $\Delta x$ קטן יותר הוא מתקרב עוד ל-$4x^3 = 4$. ההפרש קטן בערך פי 10 כש-$\Delta x$ קטן פי 10, כי האיבר המוביל שנשאר הוא $6x^2\Delta x$.
+      - kind: units
+        text: >-
+          אין יחידות: $x$ ו-$y$ מספרים.
+      - kind: result
+        text: >-
+          א. $4x^3 + 6x^2\Delta x + 4x\Delta x^2 + \Delta x^3$. ב. $4x^3$. ג. $4.641$.
+
+  - id: W-6.1-06
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.1-3]
+    prompt: >-
+      גזרו לפי $t$ בעזרת כלל השרשרת:
+
+      א. $\cos(5t)$
+
+      ב. $e^{3t}$
+
+      ג. $(2t + 1)^3$. בדקו את התוצאה בדרך אחרת: פתחו את הסוגריים וגזרו איבר איבר.
+    answer: >-
+      א. $-5\sin(5t)$.
+
+      ב. $3e^{3t}$.
+
+      ג. $6(2t + 1)^2$.
+    solution:
+      - kind: law
+        text: >-
+          כלל השרשרת: $\dfrac{dy}{dt} = \dfrac{dy}{du}\cdot\dfrac{du}{dt}$. בכל סעיף מסמנים ב-$u$ את מה שבפנים.
+      - kind: manipulation
+        text: >-
+          א. $u = 5t$: $(\cos u)' = -\sin u$ ו-$du/dt = 5$, ולכן $-5\sin(5t)$.
+
+          ב. $u = 3t$: $(e^u)' = e^u$ ו-$du/dt = 3$, ולכן $3e^{3t}$.
+
+          ג. $u = 2t + 1$: $(u^3)' = 3u^2$ ו-$du/dt = 2$, ולכן $6(2t + 1)^2$.
+      - kind: limit
+        text: >-
+          בדיקה של (ג) בדרך אחרת: $(2t + 1)^3 = 8t^3 + 12t^2 + 6t + 1$, והנגזרת $24t^2 + 24t + 6 = 6(4t^2 + 4t + 1) = 6(2t + 1)^2$. אותה תוצאה. ובדיקה של (ב) ליד $t = 0$: השיפוע של $e^{3t}$ שם $3$, כלומר הפונקציה גדלה פי 3 מהר יותר מ-$e^t$, כמו שמצפים מזמן שרץ פי 3 מהר.
+      - kind: units
+        text: >-
+          אם $t$ בשניות, המקדמים 5 ו-3 ביחידות $1/\text{s}$, כדי שמה שבתוך ה-$\cos$ וה-$e$ יהיה בלי יחידות. לכן הנגזרות ביחידות של הפונקציה חלקי שנייה, כמו שצריך.
+      - kind: result
+        text: >-
+          א. $-5\sin(5t)$. ב. $3e^{3t}$. ג. $6(2t + 1)^2$.
+
+  - id: W-6.1-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.1-1, OBJ-6.1-3]
+    prompt: >-
+      שני קבלים טעונים לאותו מטען $Q_0$ ומתחילים להתפרק באותו רגע, כל אחד דרך נגד משלו. לראשון קבוע זמן $\tau_1 = 1\,\text{s}$, ולשני $\tau_2 = 3\,\text{s}$.
+
+      א. באיזה קבל הזרם ההתחלתי גדול יותר, ופי כמה?
+
+      ב. מה היחס בין הזרמים ברגע $t = 3\,\text{s}$? באיזה קבל הזרם גדול יותר עכשיו?
+
+      ג. הסבירו בלי חישוב, בעזרת הגרפים של $q(t)$, למה הסדר מתהפך.
+    answer: >-
+      א. בראשון, פי 3.
+
+      ב. בשני, פי כ-2.5.
+
+      ג. הראשון התרוקן כמעט לגמרי, והגרף שלו כבר כמעט אופקי.
+    solution:
+      - kind: law
+        text: >-
+          $q = Q_0 e^{-t/\tau}$, ובכלל השרשרת $I = -\dfrac{dq}{dt} = \dfrac{Q_0}{\tau}e^{-t/\tau}$.
+      - kind: substitution
+        text: >-
+          א. $I_1(0)/I_2(0) = \tau_2/\tau_1 = 3$.
+
+          ב. $I_1(3) = Q_0e^{-3} \approx 0.0498\,Q_0$ (ביחידות של קולון לשנייה), ו-$I_2(3) = \tfrac{Q_0}{3}e^{-1} \approx 0.123\,Q_0$. היחס $I_2/I_1 \approx 2.46$.
+      - kind: reasoning
+        text: >-
+          ג. הזרם הוא השיפוע של $q(t)$. הקבל הראשון מתחיל בשיפוע תלול יותר, ולכן מאבד מטען מהר. אחרי 3 שניות נשאר לו רק כ-5% מהמטען, והשיפוע של גרף שכמעט הגיע לאפס קטן. לשני נשאר כ-37% מהמטען, והגרף שלו עדיין יורד בשיפוע ניכר.
+      - kind: limit
+        text: >-
+          מקרים קיצוניים: כש-$\tau \to 0$ כל המטען יוצא כמעט מיד (זרם עצום לרגע ואז אפס), וכש-$\tau \to \infty$ הזרם קטן מאוד אבל נמשך זמן רב. בכל המקרים כל המטען $Q_0$ יוצא בסוף, ולכן זרם גדול בהתחלה מחייב זרם קטן אחר כך.
+      - kind: units
+        text: >-
+          $Q_0/\tau$: קולון לשנייה, אמפר.
+      - kind: result
+        text: >-
+          א. בראשון, פי 3. ב. בשני, פי כ-$2.5$. ג. המהיר התרוקן, והשיפוע שלו כמעט אפס.
+
+  - id: W-6.1-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.1-3]
+    prompt: >-
+      מסה על קפיץ נעה לפי $x = A\cos(\omega t)$, עם $A = 2\,\text{cm}$ ו-$\omega = 10\pi\,\text{rad/s}$.
+
+      א. מצאו את המהירות $v(t)$ ואת התאוצה $a(t)$.
+
+      ב. מה המקום, המהירות והתאוצה ברגע $t = 1/30\,\text{s}$?
+
+      ג. מה המהירות הגדולה ביותר ומה התאוצה הגדולה ביותר?
+
+      ד. הראו שבכל רגע $v^2 + \omega^2x^2 = (A\omega)^2$, ובדקו את זה במספרים של (ב).
+    answer: >-
+      א. $v = -A\omega\sin(\omega t)$, $a = -A\omega^2\cos(\omega t)$.
+
+      ב. $x = 1\,\text{cm}$, $v \approx -0.544\,\text{m/s}$, $a \approx -9.87\,\text{m/s}^2$.
+
+      ג. $0.628\,\text{m/s}$ ו-$19.7\,\text{m/s}^2$.
+
+      ד. $0.296 + 0.0987 \approx 0.395 \approx 0.628^2$.
+    solution:
+      - kind: given
+        text: >-
+          $A = 0.02\,\text{m}$, $\omega = 10\pi\,\text{rad/s}$. ברגע $t = 1/30\,\text{s}$ הזווית $\omega t = \pi/3$.
+      - kind: law
+        text: >-
+          $v = dx/dt$, $a = dv/dt$, כלל השרשרת עם $u = \omega t$, ו-$(\cos u)' = -\sin u$, $(\sin u)' = \cos u$.
+      - kind: manipulation
+        text: >-
+          א. $v = -A\omega\sin(\omega t)$ ו-$a = -A\omega^2\cos(\omega t) = -\omega^2x$.
+
+          ד. $v^2 + \omega^2x^2 = A^2\omega^2\sin^2(\omega t) + \omega^2A^2\cos^2(\omega t) = A^2\omega^2$, כי $\sin^2 + \cos^2 = 1$.
+      - kind: substitution
+        text: >-
+          ב. $x = 0.02\cos(\pi/3) = 0.01\,\text{m}$. $v = -0.02\cdot10\pi\cdot\sin(\pi/3) \approx -0.544\,\text{m/s}$. $a = -0.02\cdot(10\pi)^2\cdot\tfrac12 \approx -9.87\,\text{m/s}^2$.
+
+          ג. $v_{\max} = A\omega = 0.02\cdot10\pi \approx 0.628\,\text{m/s}$, $a_{\max} = A\omega^2 = 0.02\cdot(10\pi)^2 \approx 19.7\,\text{m/s}^2$.
+
+          ד. $v^2 \approx 0.296$, $\omega^2x^2 = (10\pi\cdot0.01)^2 \approx 0.0987$; הסכום $\approx 0.395$, ו-$(A\omega)^2 = 0.628^2 \approx 0.395$.
+      - kind: limit
+        text: >-
+          ב-$t = 0$ המסה בקצה, $x = A$, ושם $v = 0$ ו-$a = -A\omega^2$: היא עוצרת לרגע ונמשכת חזרה, כמו בקצה של קפיץ. הזהות של (ד) היא שימור אנרגיה: אם מכפילים אותה ב-$m/2$ ומציבים $\omega^2 = k/m$, מקבלים $\tfrac12mv^2 + \tfrac12kx^2 = \tfrac12kA^2$.
+      - kind: units
+        text: >-
+          $A\omega$ ב-$\text{m/s}$, $A\omega^2$ ב-$\text{m/s}^2$; בזהות של (ד) שני האיברים ב-$\text{m}^2/\text{s}^2$.
+      - kind: result
+        text: >-
+          א. $v = -A\omega\sin(\omega t)$, $a = -A\omega^2\cos(\omega t)$. ב. $1\,\text{cm}$, $-0.544\,\text{m/s}$, $-9.87\,\text{m/s}^2$. ג. $0.628\,\text{m/s}$, $19.7\,\text{m/s}^2$. ד. מתקיים.
+
+  - id: W-6.1-09
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.1-1, OBJ-6.1-2]
+    prompt: >-
+      **דיפול** הוא זוג מטענים $+q$ ו-$-q$ במרחק $d$ זה מזה (שיעור 1.5). רחוק ממנו, על הקו שעובר דרך שני המטענים, הפוטנציאל הוא בקירוב $V = \dfrac{kp}{x^2}$, כש-$p = qd$ ו-$x$ המרחק ממרכז הדיפול.
+
+      א. מצאו את השדה $E_x = -dV/dx$ על הקו.
+
+      ב. חשבו את השדה ב-$x = 0.5\,\text{m}$ וב-$x = 1\,\text{m}$, עבור $p = 2\cdot10^{-9}\,\text{C}\cdot\text{m}$.
+
+      ג. כשמכפילים את המרחק, פי כמה קטן השדה? השוו לשדה של מטען נקודתי.
+    answer: >-
+      א. $E_x = \dfrac{2kp}{x^3}$.
+
+      ב. $288\,\text{N/C}$ ו-$36\,\text{N/C}$.
+
+      ג. פי 8; שדה של מטען נקודתי קטן פי 4.
+    solution:
+      - kind: law
+        text: >-
+          $E_x = -dV/dx$, וכלל החזקה עם $n = -2$.
+      - kind: manipulation
+        text: >-
+          א. $V = kp\,x^{-2}$, ולכן $\dfrac{dV}{dx} = kp\cdot(-2)x^{-3}$ ו-$E_x = \dfrac{2kp}{x^3}$.
+      - kind: substitution
+        text: >-
+          ב. $E_x(0.5) = \dfrac{2\cdot9\cdot10^{9}\cdot2\cdot10^{-9}}{0.5^3} = \dfrac{36}{0.125} = 288\,\text{N/C}$. $E_x(1) = 36\,\text{N/C}$.
+      - kind: reasoning
+        text: >-
+          ג. $E \propto 1/x^3$, ולכן מרחק כפול נותן שדה קטן פי $2^3 = 8$ ($288/36 = 8$). שדה של מטען נקודתי יורד כמו $1/x^2$, פי 4. רחוק מהדיפול השדות של שני המטענים כמעט מבטלים זה את זה, ולכן השדה דועך מהר יותר.
+      - kind: limit
+        text: >-
+          כש-$d \to 0$ (כלומר $p \to 0$) שני המטענים מתלכדים ומבטלים זה את זה, והשדה אפס. וכיוון: $V > 0$ פירושו שהמטען $+q$ קרוב יותר לנקודה, ולכן השדה שם מצביע הרחק ממנו, לכיוון $x$ גדל. $E_x > 0$ מתאים לכך.
+      - kind: units
+        text: >-
+          $kp/x^3$: $\dfrac{\text{N}\cdot\text{m}^2}{\text{C}^2}\cdot\dfrac{\text{C}\cdot\text{m}}{\text{m}^3} = \text{N/C}$.
+      - kind: result
+        text: >-
+          א. $2kp/x^3$. ב. $288\,\text{N/C}$ ו-$36\,\text{N/C}$. ג. פי 8, לעומת פי 4 במטען נקודתי.
+
+  - id: W-6.1-10
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.1-3]
+    prompt: >-
+      קבל של $200\,\mu\text{F}$, טעון ל-$10\,\text{V}$, מתפרק דרך נגד של $5\,\text{k}\Omega$. המתח עליו הוא $V(t) = V_0\,e^{-t/\tau}$.
+
+      א. מה $\tau$, ומה קצב השינוי של המתח, $dV/dt$, ברגע הראשון?
+
+      ב. האנרגיה בקבל היא $U = \tfrac12CV^2$ (שיעור 2.7). כתבו את $U(t)$ וגזרו אותה.
+
+      ג. ההספק שמתפתח בנגד הוא $P = I^2R$. הראו ש-$P = -dU/dt$ בכל רגע, והסבירו את המשמעות.
+
+      ד. חשבו את ההספק ברגע הראשון ואחרי $0.5\,\text{s}$.
+    answer: >-
+      א. $\tau = 1\,\text{s}$, $dV/dt = -10\,\text{V/s}$.
+
+      ב. $U = \tfrac12CV_0^2e^{-2t/\tau}$, $dU/dt = -\dfrac{CV_0^2}{\tau}e^{-2t/\tau}$.
+
+      ג. $-dU/dt = \dfrac{V_0^2}{R}e^{-2t/\tau} = I^2R$: האנרגיה שהקבל מאבד הופכת לחום בנגד.
+
+      ד. $0.02\,\text{W}$ ו-$7.36\cdot10^{-3}\,\text{W}$.
+    solution:
+      - kind: given
+        text: >-
+          $C = 2\cdot10^{-4}\,\text{F}$, $V_0 = 10\,\text{V}$, $R = 5\cdot10^{3}\,\Omega$, ולכן $\tau = RC = 1\,\text{s}$.
+      - kind: law
+        text: >-
+          כלל השרשרת: $\dfrac{d}{dt}e^{-t/\tau} = -\dfrac{1}{\tau}e^{-t/\tau}$. שימור אנרגיה: האנרגיה שעוזבת את הקבל בכל רגע מגיעה לנגד.
+      - kind: manipulation
+        text: >-
+          א. $\dfrac{dV}{dt} = -\dfrac{V_0}{\tau}e^{-t/\tau}$, וב-$t = 0$: $-V_0/\tau$.
+
+          ב. $U = \tfrac12C\,V_0^2e^{-2t/\tau}$. עם $u = -2t/\tau$: $\dfrac{dU}{dt} = \tfrac12CV_0^2e^{-2t/\tau}\cdot\left(-\dfrac{2}{\tau}\right) = -\dfrac{CV_0^2}{\tau}e^{-2t/\tau}$.
+
+          ג. הזרם $I = V/R = \dfrac{V_0}{R}e^{-t/\tau}$, ולכן $P = I^2R = \dfrac{V_0^2}{R}e^{-2t/\tau}$. מצד שני, $-\dfrac{dU}{dt} = \dfrac{CV_0^2}{RC}e^{-2t/\tau} = \dfrac{V_0^2}{R}e^{-2t/\tau}$. שני הביטויים שווים.
+      - kind: substitution
+        text: >-
+          א. $dV/dt = -10/1 = -10\,\text{V/s}$.
+
+          ד. $P(0) = \dfrac{10^2}{5\cdot10^{3}} = 0.02\,\text{W}$. $P(0.5) = 0.02\cdot e^{-1} \approx 7.36\cdot10^{-3}\,\text{W}$.
+      - kind: limit
+        text: >-
+          ב-$t = 0$ ההספק $V_0^2/R$, ההספק של נגד שמחובר למתח $V_0$ (שיעור 3.4). כש-$t \to \infty$ ההספק אפס. האנרגיה דועכת עם $2t/\tau$, פי 2 מהר יותר מהמתח, כי היא תלויה ב-$V^2$.
+      - kind: units
+        text: >-
+          $CV_0^2/\tau$: $\text{F}\cdot\text{V}^2/\text{s} = \text{J/s} = \text{W}$, ו-$V_0^2/R$: $\text{V}^2/\Omega = \text{W}$.
+      - kind: result
+        text: >-
+          א. $1\,\text{s}$, $-10\,\text{V/s}$. ב. $dU/dt = -\dfrac{CV_0^2}{\tau}e^{-2t/\tau}$. ג. $P = -dU/dt$: שימור אנרגיה. ד. $0.02\,\text{W}$ ו-$7.36\cdot10^{-3}\,\text{W}$.
+
+challenge:
+  - id: W-6.1-c1
+    stars: 1
+    objectives: [OBJ-6.1-3]
+    prompt: >-
+      גוף נע לאורך ציר $x$ כך שהזמן שעבר תלוי במקום לפי $t = \alpha x^2 + \beta x$, עם $\alpha = 0.5\,\text{s/m}^2$ ו-$\beta = 0.2\,\text{s/m}$ (ב-$t = 0$ הגוף ב-$x = 0$).
+
+      א. הסבירו למה $\dfrac{dt}{dx} = \dfrac{1}{v}$. (רמז: כלל השרשרת על $\dfrac{dt}{dx}\cdot\dfrac{dx}{dt}$.)
+
+      ב. גזרו את $\dfrac1v = 2\alpha x + \beta$ לפי הזמן, והראו שהתאוצה היא $a = -2\alpha v^3$.
+
+      ג. מה המהירות והתאוצה כשהגוף ב-$x = 1\,\text{m}$?
+
+      ד. מה קורה כש-$\alpha \to 0$? האם זה הגיוני?
+    answer: >-
+      א. $\dfrac{dt}{dx}\cdot\dfrac{dx}{dt} = \dfrac{dt}{dt} = 1$.
+
+      ב. $a = -2\alpha v^3$.
+
+      ג. $v \approx 0.833\,\text{m/s}$, $a \approx -0.579\,\text{m/s}^2$.
+
+      ד. $a \to 0$: תנועה במהירות קבועה $1/\beta$.
+    solution:
+      - kind: law
+        text: >-
+          כלל השרשרת, $v = dx/dt$, $a = dv/dt$, וכלל החזקה עם $n = -1$.
+      - kind: reasoning
+        text: >-
+          א. לפי כלל השרשרת $\dfrac{dt}{dx}\cdot\dfrac{dx}{dt} = \dfrac{dt}{dt} = 1$, ולכן $\dfrac{dt}{dx} = \dfrac{1}{dx/dt} = \dfrac1v$: כמה שניות לוקח כל מטר.
+      - kind: manipulation
+        text: >-
+          מגזירת $t = \alpha x^2 + \beta x$ לפי $x$: $\dfrac1v = 2\alpha x + \beta$.
+
+          ב. גוזרים את שני האגפים לפי $t$. משמאל, עם $u = v$: $\dfrac{d}{dt}v^{-1} = -v^{-2}\dfrac{dv}{dt} = -\dfrac{a}{v^2}$. מימין: $2\alpha\dfrac{dx}{dt} = 2\alpha v$. לכן $-\dfrac{a}{v^2} = 2\alpha v$, כלומר $a = -2\alpha v^3$.
+      - kind: substitution
+        text: >-
+          ג. $\dfrac1v = 2\cdot0.5\cdot1 + 0.2 = 1.2\,\text{s/m}$, ולכן $v \approx 0.833\,\text{m/s}$, ו-$a = -2\cdot0.5\cdot0.833^3 \approx -0.579\,\text{m/s}^2$.
+      - kind: limit
+        text: >-
+          ד. כש-$\alpha \to 0$: $t = \beta x$, כלומר $x = t/\beta$, תנועה במהירות קבועה $1/\beta = 5\,\text{m/s}$, והנוסחה נותנת $a = 0$: מתאים. כש-$\alpha > 0$ כל מטר נוסף לוקח יותר זמן מהקודם, ולכן הגוף מאט, וסימן התאוצה שלילי: גם מתאים.
+      - kind: units
+        text: >-
+          $\alpha$ ב-$\text{s/m}^2$ ו-$v^3$ ב-$\text{m}^3/\text{s}^3$: $\alpha v^3$ ב-$\text{m/s}^2$, יחידה של תאוצה.
+      - kind: result
+        text: >-
+          ב. $a = -2\alpha v^3$. ג. $v \approx 0.833\,\text{m/s}$, $a \approx -0.579\,\text{m/s}^2$. ד. תנועה שוות מהירות, $a = 0$.
+    source:
+      name: JEE Main
+      year: 2024
+      problem: '31 January 2024, Shift 1: t = αx² + βx, acceleration in terms of velocity'
+      url: https://competishun.com/jee-main_310124_s1_rm/
+      verified: '2026-11-02'
+      adapted: true
+
+  - id: W-6.1-c2
+    stars: 1
+    objectives: [OBJ-6.1-1, OBJ-6.1-2]
+    prompt: >-
+      האנרגיה הפוטנציאלית של שני אטומים במולקולה דו-אטומית, כשהמרחק ביניהם $x$, היא בקירוב $U(x) = \dfrac{a}{x^{12}} - \dfrac{b}{x^{6}}$, כש-$a$ ו-$b$ קבועים חיוביים. הכוח בין האטומים הוא $F = -dU/dx$, בדיוק כמו ש-$E = -dV/dx$ (ואכן $U = qV$ נותן $F = qE$).
+
+      א. מצאו את $F(x)$. מתי הכוח דוחה ($F > 0$) ומתי מושך?
+
+      ב. מצאו את מרחק שיווי המשקל $x_0$.
+
+      ג. **אנרגיית הפירוק** $D$ היא האנרגיה שצריך להשקיע כדי להרחיק את האטומים משיווי משקל עד מרחק אינסופי: $D = U(\infty) - U(x_0)$. הראו ש-$D = \dfrac{b^2}{4a}$.
+    answer: >-
+      א. $F = \dfrac{12a}{x^{13}} - \dfrac{6b}{x^{7}}$: דוחה במרחק קטן מ-$x_0$, מושך במרחק גדול ממנו.
+
+      ב. $x_0 = (2a/b)^{1/6}$.
+
+      ג. $U(x_0) = -\dfrac{b^2}{4a}$, ולכן $D = \dfrac{b^2}{4a}$.
+    solution:
+      - kind: law
+        text: >-
+          $F = -dU/dx$, וכלל החזקה עם $n = -12$ ו-$n = -6$.
+      - kind: manipulation
+        text: >-
+          א. $\dfrac{dU}{dx} = -12a\,x^{-13} + 6b\,x^{-7}$, ולכן $F = \dfrac{12a}{x^{13}} - \dfrac{6b}{x^{7}}$. נוציא גורם משותף: $F = \dfrac{6}{x^{7}}\left(\dfrac{2a}{x^{6}} - b\right)$. הסוגריים חיוביים כש-$x^6 < 2a/b$ (דחייה) ושליליים כש-$x^6 > 2a/b$ (משיכה).
+
+          ב. בשיווי משקל $F = 0$: $x_0^6 = \dfrac{2a}{b}$.
+
+          ג. מציבים $x_0^6 = 2a/b$ ו-$x_0^{12} = 4a^2/b^2$: $U(x_0) = \dfrac{a\,b^2}{4a^2} - \dfrac{b\cdot b}{2a} = \dfrac{b^2}{4a} - \dfrac{b^2}{2a} = -\dfrac{b^2}{4a}$. $U(\infty) = 0$, ולכן $D = \dfrac{b^2}{4a}$.
+      - kind: limit
+        text: >-
+          רחוק מאוד, $x \to \infty$, שני האיברים של $F$ שואפים לאפס, והאיבר המושך $-6b/x^7$ דועך לאט יותר, ולכן הוא שולט: האטומים נמשכים, אבל חלש. קרוב מאוד, $x \to 0$, האיבר הדוחה $12a/x^{13}$ שולט: האטומים לא נכנסים זה בתוך זה. ו-$x_0$ הוא בדיוק השפל של $U$, שם השיפוע אפס.
+      - kind: units
+        text: >-
+          $a/x^{12}$ באנרגיה, ולכן $a$ ב-$\text{J}\cdot\text{m}^{12}$ ו-$b$ ב-$\text{J}\cdot\text{m}^{6}$. אז $a/b$ ב-$\text{m}^6$ (כמו $x_0^6$), ו-$b^2/a$ ב-$\text{J}$ (כמו $D$). $F$: $\text{J/m} = \text{N}$.
+      - kind: result
+        text: >-
+          א. $F = 12a/x^{13} - 6b/x^7$. ב. $x_0 = (2a/b)^{1/6}$. ג. $D = b^2/(4a)$.
+    source:
+      name: AIEEE (JEE Main)
+      year: 2010
+      problem: 'Question 5 (Physics): dissociation energy of a diatomic molecule with U(x) = a/x¹² − b/x⁶'
+      url: https://cracku.in/5-the-potential-energy-function-for-the-force-betwee-x-nta-jee-main-2010
+      verified: '2026-11-02'
+      adapted: true

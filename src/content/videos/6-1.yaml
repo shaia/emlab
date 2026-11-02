@@ -1,0 +1,24 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below) on the
+# `verified` date. Lengths come from the watch page (lengthSeconds); the Hebrew caption track was listed in
+# the watch page's captionTracks, and each description credits a Hebrew translator. `why` claims only what
+# the title, the description and its chapter list support.
+
+- id: v-6-1-paradox
+  youtubeId: 9vKqVkMQHKk
+  title: 'The paradox of the derivative | Chapter 2, Essence of calculus'
+  channel: 3Blue1Brown
+  lang: en
+  captions: [he]
+  minutes: 17
+  why: 'פרק מהסדרה "המהות של החשבון הדיפרנציאלי". לפי התיאור, הוא שואל מה זה "קצב שינוי רגעי" כשהשינוי קורה לאורך זמן, ומדגים עם מד מהירות שמודד מרחק בפרק זמן קצר מאוד. זו אותה שאלה שפתחה את השיעור.'
+  verified: '2026-11-02'
+
+- id: v-6-1-power-rule
+  youtubeId: S0_qX4VJhMQ
+  title: 'Derivative formulas through geometry | Chapter 3, Essence of calculus'
+  channel: 3Blue1Brown
+  lang: en
+  captions: [he]
+  minutes: 18
+  why: 'לפי רשימת הפרקים בתיאור: הנגזרות של x², של x³, של xⁿ ("כלל החזקה"), של 1/x ושל sin, כל אחת עם הסבר גאומטרי. זו בדיוק רשימת הנגזרות של השיעור, בדרך אחרת מהמיתר.'
+  verified: '2026-11-02'
