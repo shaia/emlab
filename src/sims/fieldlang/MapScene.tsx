@@ -38,9 +38,9 @@ const GRID_Y = [-0.3, -0.15, 0, 0.15, 0.3];
 export type Axis = 'x' | 'y';
 
 const TASK_LABEL: Record<string, string> = {
-  'zero-x': 'מצאו נקודה P, לא ליד המטען, שבה ⁦∂V/∂x = 0⁩. האם השדה שם אפס?',
-  shrink: 'הקטינו את Δ עד הסוף, והשוו את ⁦ΔV/Δx⁩ ל-⁦∂V/∂x⁩. מה קרה למיתר בגרף?',
-  'zero-y': 'עברו ל-⁦∂/∂y⁩, ומצאו נקודה שבה ⁦∂V/∂y = 0⁩.',
+  'zero-x': 'מצאו נקודה P, לא ליד המטען, שבה הנגזרת החלקית לפי x היא אפס. האם השדה שם אפס?',
+  shrink: 'הקטינו את הצעד עד הסוף, והשוו את מנת ההפרשים לנגזרת החלקית. מה קרה למיתר בגרף?',
+  'zero-y': 'עברו לנגזרת לפי y, ומצאו נקודה שבה היא אפס.',
 };
 
 interface State {
@@ -244,7 +244,7 @@ export default function MapScene(props: MapSceneProps) {
       const u = u0 + ((u1 - u0) * i) / 60;
       if (Math.hypot(ax === 'x' ? u : fixed, ax === 'x' ? fixed : u) >= 0.03) peak = Math.max(peak, slice(u));
     }
-    const vTop = Math.max(60, Math.ceil((1.3 * Math.min(peak, 3 * Math.max(vP, slice(uP + h)))) / 20) * 20);
+    const vTop = Math.max(60, Math.ceil((1.6 * Math.min(peak, 3 * Math.max(vP, slice(uP + h)))) / 20) * 20);
     const X = (u: number) => l + ((u - u0) / (u1 - u0)) * (r - l);
     const Y = (v: number) => b - (v / vTop) * (b - t);
     ctx.save();

@@ -37,8 +37,8 @@ const NAME_HE: Record<Which, string> = {
 
 const TASK_LABEL: Record<string, string> = {
   'move-origin': 'גררו את הראשית O למקום אחר. מה השתנה בקריאות, ומה לא?',
-  'negative-q': 'הפכו את המטען לשלילי. מה קרה ל-⁦R = r − r′⁩, ומה קרה ל-E?',
-  'right-angle': 'הזיזו את P עד שהזווית בין r ל-R תהיה ⁦90°⁩. מה שווה אז ⁦r·R⁩?',
+  'negative-q': 'הפכו את המטען לשלילי. מה קרה לווקטור ההפרדה R, ומה קרה ל-E?',
+  'right-angle': 'הזיזו את P עד שהזווית בין r ל-R תהיה ישרה. מה שווה אז המכפלה הסקלרית שלהם?',
 };
 
 interface State {
