@@ -32,7 +32,7 @@ export type Species = 'p' | 'd' | 'alpha' | 'hminus';
 
 const SPECIES: Record<Species, { q: number; m: number; name: string; short: string; dash?: number[] }> = {
   p: { q: E_CHARGE, m: M_PROTON, name: 'פרוטון', short: 'p' },
-  d: { q: E_CHARGE, m: 2 * M_PROTON, name: 'דאוטרון', short: 'd', dash: [7, 4] },
+  d: { q: E_CHARGE, m: 2 * M_PROTON, name: 'דויטרון', short: 'd', dash: [7, 4] },
   alpha: { q: 2 * E_CHARGE, m: 4 * M_PROTON, name: 'חלקיק אלפא', short: 'α', dash: [2, 4] },
   hminus: { q: -E_CHARGE, m: M_PROTON + 2 * M_ELECTRON, name: 'יון מימן שלילי', short: 'H⁻' },
 };
