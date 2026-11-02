@@ -122,6 +122,7 @@ interface WorkbookItem {
   diagramAlt?: string;
   answer: string;
   solution?: { kind: string; text: string }[];
+  source?: { name: string; year: number; problem: string; url: string };
 }
 const workbookDir = join(CONTENT, 'workbook');
 const workbooks = (statSync(workbookDir, { throwIfNoEntry: false }) ? walk(workbookDir) : [])
@@ -281,6 +282,7 @@ for (const l of lessons) {
 /* ------------------------------------------------------------- workbooks */
 
 const seenW = new Set<string>();
+const seenSource = new Map<string, string>(); // "<url> <problem number>" or "@<page url>" -> the challenge id that uses it
 const workbookOf = new Map<string, string>();
 for (const { file, data } of workbooks) {
   const lesson = lessonById.get(data.lesson);
@@ -319,6 +321,18 @@ for (const { file, data } of workbooks) {
       } catch (e) {
         fail(w, (e as Error).message);
       }
+    }
+    if (item.source) {
+      // two agents writing lessons in parallel once picked the same olympiad problem
+      // "Q27" and "Question 27" in the same paper are one problem
+      const number = item.source.problem.toLowerCase().replace(/\b(question|problem|q)\.?\s*/g, '').replace(/[^a-z0-9()]/g, '');
+      const key = `${item.source.url} ${number}`;
+      // a web page usually holds one problem, so a shared page URL is the same problem; a PDF holds a whole paper
+      const page = /\.pdf$/i.test(item.source.url) ? null : `@${item.source.url}`;
+      const other = seenSource.get(key) ?? (page ? seenSource.get(page) : undefined);
+      if (other) fail(w, `the same source problem as ${other}; a challenge problem is used once in the course`);
+      seenSource.set(key, item.id);
+      if (page) seenSource.set(page, item.id);
     }
     if (item.diagram && !item.diagramAlt?.trim()) fail(w, 'a diagram needs diagramAlt (its accessible description)');
     if (item.diagram && /<script|on\w+=/i.test(item.diagram)) fail(w, 'the diagram SVG must not contain scripts or event handlers');
