@@ -336,8 +336,16 @@ for (const { file, data } of workbooks) {
     if (item.source) {
       // two agents writing lessons in parallel once picked the same olympiad problem
       // In one paper, "Q27", "Question 27" and "Section 2, Q.9 and Q.10" are compared by their question numbers
-      const numbers = [...item.source.problem.matchAll(/\b(?:question|problem|q)\.?\s*(\d+[a-z]?(?:\([a-z0-9]+\))*)/gi)].map((m) => m[1].toLowerCase());
+      const bare = /^\s*\d+[a-z]?\s*$/i.test(item.source.problem) ? [item.source.problem.trim().toLowerCase()] : [];
+      const numbers = [
+        ...bare,
+        ...[...item.source.problem.matchAll(/\b(?:question|problem|q)\.?\s*(\d+[a-z]?(?:\([a-z0-9]+\))*)/gi)].map((m) => m[1].toLowerCase()),
+      ];
       const keys = (numbers.length ? numbers : [item.source.problem.toLowerCase().replace(/[^a-z0-9()]/g, '')]).map((n) => `${item.source!.url} ${n}`);
+      // one exam is often hosted at several URLs (4.4 and 4.10 cited two PDFs of PhysicsBowl 2018 for Q37):
+      // also key on the competition, the year and the question number
+      const exam = item.source.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+      for (const n of numbers) keys.push(`#${exam} ${item.source.year} ${n}`);
       // a web page usually holds one problem, so a shared page URL is the same problem; a PDF holds a whole paper
       if (!/\.pdf$/i.test(item.source.url)) keys.push(`@${item.source.url}`);
       const other = keys.map((k) => seenSource.get(k)).find(Boolean);
