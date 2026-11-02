@@ -1,0 +1,497 @@
+# Workbook, lesson 6.7 (divergence and the divergence theorem). Format and rules: see .claude/CLAUDE.md,
+# "Worked examples, workbook", and the chapter 6 solution shape (law … limit, units, result).
+# Every number was recomputed with src/physics/constants.ts (EPS0_DISPLAY); script w67.ts in the session
+# scratchpad. In a >- block, consecutive lines fold into one paragraph: every part (א, ב, …) starts after a
+# blank line.
+
+lesson: '6.7'
+practice:
+  - id: W-6.7-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.7-1, OBJ-6.7-2]
+    prompt: >-
+      בתוך אזור מסוים השדה החשמלי הוא $\vec E = \kappa\,(x,\ y,\ z)$, עם $\kappa = 6\cdot10^{4}\,\text{N}/(\text{C}\cdot\text{m})$: הוא מצביע הרחק מהראשית, וגודלו גדל עם המרחק ממנה.
+
+      א. חשבו את $\nabla\cdot\vec E$.
+
+      ב. מה צפיפות המטען באזור?
+    answer: >-
+      א. $\nabla\cdot\vec E = 3\kappa = 1.8\cdot10^{5}\,\text{N}/(\text{C}\cdot\text{m})$.
+
+      ב. $\rho = 3\varepsilon_0\kappa \approx 1.59\cdot10^{-6}\,\text{C/m}^3$, אחידה.
+    solution:
+      - kind: law
+        text: >-
+          $\nabla\cdot\vec E = \dfrac{\partial E_x}{\partial x} + \dfrac{\partial E_y}{\partial y} + \dfrac{\partial E_z}{\partial z} = \dfrac{\rho}{\varepsilon_0}$.
+      - kind: manipulation
+        text: >-
+          כל רכיב הוא $\kappa$ כפול הקואורדינטה שלו, ולכן כל אחת משלוש הנגזרות החלקיות היא $\kappa$. הסכום $3\kappa$, ו-$\rho = 3\varepsilon_0\kappa$.
+      - kind: limit
+        text: >-
+          אם $\kappa \to 0$ אין שדה ואין מטען. ואם רק רכיב אחד היה קיים, למשל $E_x = \kappa x$, הצפיפות הייתה שליש: $\varepsilon_0\kappa$.
+      - kind: units
+        text: >-
+          $\dfrac{\text{C}^2}{\text{N}\cdot\text{m}^2}\cdot\dfrac{\text{N}}{\text{C}\cdot\text{m}} = \dfrac{\text{C}}{\text{m}^3}$.
+      - kind: substitution
+        text: >-
+          $\nabla\cdot\vec E = 3\cdot6\cdot10^{4} = 1.8\cdot10^{5}\,\text{N}/(\text{C}\cdot\text{m})$, ו-$\rho = 8.85\cdot10^{-12}\cdot1.8\cdot10^{5} \approx 1.59\cdot10^{-6}\,\text{C/m}^3$.
+      - kind: result
+        text: >-
+          א. $1.8\cdot10^{5}\,\text{N}/(\text{C}\cdot\text{m})$. ב. $1.59\cdot10^{-6}\,\text{C/m}^3$, באותו ערך בכל נקודה באזור.
+
+  - id: W-6.7-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-6.7-1, OBJ-6.7-2]
+    prompt: >-
+      לכל אחד מהשדות הבאים, שבהם $a$ ו-$E_0$ קבועים חיוביים, קבעו בלי מספרים: האם $\nabla\cdot\vec E$ שווה לאפס? האם יש מטען באזור?
+
+      א. $\vec E = (E_0,\ 0,\ 0)$.
+
+      ב. $\vec E = (0,\ a\,y,\ 0)$.
+
+      ג. $\vec E = (a\,y,\ 0,\ 0)$: השדה מצביע לאורך $x$, וגודלו גדל עם $y$.
+
+      ד. $\vec E = (a\,x,\ -a\,y,\ 0)$.
+    answer: >-
+      א. אפס, אין מטען. ב. $a$, יש מטען $\varepsilon_0 a$. ג. אפס, אין מטען, אף שהשדה משתנה. ד. אפס, אין מטען, אף שאף רכיב אינו קבוע.
+    solution:
+      - kind: law
+        text: >-
+          $\nabla\cdot\vec E = \partial E_x/\partial x + \partial E_y/\partial y + \partial E_z/\partial z$: כל רכיב נגזר רק לפי המשתנה **שלו**.
+      - kind: reasoning
+        text: >-
+          א. כל הרכיבים קבועים, ולכן כל הנגזרות אפס.
+
+          ב. $\partial(a y)/\partial y = a$: הרכיב $E_y$ גדל בכיוון שלו, ומתיבה זעירה יוצא יותר משנכנס.
+
+          ג. $E_x = a y$ לא תלוי ב-$x$, ולכן $\partial E_x/\partial x = 0$. השדה משתנה, אבל בכיוון $y$, הניצב לו: דרך הפאה הימנית של תיבה יוצא בדיוק מה שנכנס דרך השמאלית.
+
+          ד. $\partial E_x/\partial x = a$ ו-$\partial E_y/\partial y = -a$: מה שגדל בכיוון אחד קטן באותו קצב בכיוון השני.
+      - kind: limit
+        text: >-
+          בשדה ב, אם $a \to 0$ הוא נעלם, ואיתו המטען. בשדה ד, אם היה רק $E_x = a x$ (בלי $E_y$), היה מטען $\varepsilon_0 a$: הרכיב $E_y$ הוא שמבטל אותו.
+      - kind: units
+        text: >-
+          $a$ ביחידות $\text{N}/(\text{C}\cdot\text{m})$, כמו הדיברגנץ, ו-$\varepsilon_0 a$ ב-$\text{C/m}^3$.
+      - kind: result
+        text: >-
+          רק בשדה ב יש מטען, בצפיפות $\varepsilon_0 a$. בשדות א, ג ו-ד הדיברגנץ אפס, ושלושתם אינם אפס.
+
+  - id: W-6.7-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.7-1, OBJ-6.7-2]
+    prompt: >-
+      חיישן קטן בצורת קובייה שצלעה $2\,\text{cm}$ מודד את השטף דרך כל אחת משש הפאות שלו (חיובי החוצה), ב-$\text{N}\cdot\text{m}^2/\text{C}$: $+0.45$ ו-$-0.30$ בשתי הפאות שניצבות ל-$x$, $+0.12$ ו-$-0.12$ בשתיים שניצבות ל-$y$, ו-$+0.05$ ו-$-0.02$ בשתיים שניצבות ל-$z$.
+
+      א. מה השטף נטו?
+
+      ב. הערכו את $\nabla\cdot\vec E$ בתוך החיישן ואת צפיפות המטען שם.
+    answer: >-
+      א. $0.18\,\text{N}\cdot\text{m}^2/\text{C}$.
+
+      ב. $\nabla\cdot\vec E \approx 2.25\cdot10^{4}\,\text{N}/(\text{C}\cdot\text{m})$, ו-$\rho \approx 1.99\cdot10^{-7}\,\text{C/m}^3$.
+    solution:
+      - kind: law
+        text: >-
+          $\nabla\cdot\vec E \approx \dfrac{1}{V}\oint \vec E\cdot d\vec A$ כשהתיבה קטנה, ו-$\rho = \varepsilon_0\,\nabla\cdot\vec E$.
+      - kind: manipulation
+        text: >-
+          השטף נטו הוא סכום השטפים, עם הסימנים: $0.45 - 0.30 + 0.12 - 0.12 + 0.05 - 0.02 = 0.18\,\text{N}\cdot\text{m}^2/\text{C}$. הנפח $V = (0.02)^3 = 8\cdot10^{-6}\,\text{m}^3$.
+      - kind: substitution
+        text: >-
+          $\dfrac{\Phi}{V} = \dfrac{0.18}{8\cdot10^{-6}} = 2.25\cdot10^{4}\,\text{N}/(\text{C}\cdot\text{m})$, ו-$\rho \approx 8.85\cdot10^{-12}\cdot2.25\cdot10^{4} \approx 1.99\cdot10^{-7}\,\text{C/m}^3$.
+      - kind: limit
+        text: >-
+          זו הערכה: היחס של קובייה בגודל סופי הוא ממוצע של הדיברגנץ על הקובייה. ככל שהחיישן קטן יותר, ההערכה מתקרבת לערך בנקודה. אילו כל זוג פאות היה נותן שטפים שווים והפוכים, הסכום היה אפס, ולא היה מטען.
+      - kind: units
+        text: >-
+          $\dfrac{\text{N}\cdot\text{m}^2/\text{C}}{\text{m}^3} = \dfrac{\text{N}}{\text{C}\cdot\text{m}}$.
+      - kind: result
+        text: >-
+          א. $0.18\,\text{N}\cdot\text{m}^2/\text{C}$. ב. כ-$2.25\cdot10^{4}\,\text{N}/(\text{C}\cdot\text{m})$, וצפיפות של כ-$2\cdot10^{-7}\,\text{C/m}^3$.
+
+  - id: W-6.7-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.7-2]
+    prompt: >-
+      לוח עבה מאוד רחב, בעובי $2d = 4\,\text{cm}$, טעון באחידות. ציר $x$ ניצב ללוח, ומרכזו ב-$x = 0$. בתוך הלוח השדה הוא $E_x = C\,x$ (ו-$E_y = E_z = 0$). במרחק $1\,\text{cm}$ ממרכז הלוח מודדים $E_x = 3000\,\text{N/C}$.
+
+      א. מה צפיפות המטען בלוח?
+
+      ב. מה השדה מחוץ ללוח, ולמה שם $\nabla\cdot\vec E = 0$?
+
+      ג. בדקו את התוצאה מול השדה של לוח דק (שיעור 1.8), עם אותו מטען ליחידת שטח.
+    answer: >-
+      א. $\rho \approx 2.66\cdot10^{-6}\,\text{C/m}^3$.
+
+      ב. $6000\,\text{N/C}$, הרחק מהלוח, קבוע: לא משתנה עם $x$.
+
+      ג. $\sigma = 2\rho d \approx 1.06\cdot10^{-7}\,\text{C/m}^2$, ו-$\sigma/(2\varepsilon_0) = 6000\,\text{N/C}$.
+    solution:
+      - kind: law
+        text: >-
+          $\nabla\cdot\vec E = \rho/\varepsilon_0$, וכאן נשאר רק $\partial E_x/\partial x$.
+      - kind: manipulation
+        text: >-
+          $\partial(C x)/\partial x = C$, ולכן $\rho = \varepsilon_0 C$, ו-$C = E_x/x = 3000/0.01 = 3\cdot10^{5}\,\text{N}/(\text{C}\cdot\text{m})$.
+      - kind: substitution
+        text: >-
+          א. $\rho = 8.85\cdot10^{-12}\cdot3\cdot10^{5} \approx 2.66\cdot10^{-6}\,\text{C/m}^3$.
+
+          ב. השדה רציף בדופן, $x = d$: $E = C d = 3\cdot10^{5}\cdot0.02 = 6000\,\text{N/C}$. מחוץ ללוח אין מטען, ולכן $\partial E_x/\partial x = 0$: השדה נשאר $6000\,\text{N/C}$ בכל מרחק.
+
+          ג. המטען ליחידת שטח של הלוח כולו: $\sigma = \rho\cdot2d \approx 2.66\cdot10^{-6}\cdot0.04 \approx 1.06\cdot10^{-7}\,\text{C/m}^2$, ו-$\dfrac{\sigma}{2\varepsilon_0} = \dfrac{1.06\cdot10^{-7}}{2\cdot8.85\cdot10^{-12}} \approx 6000\,\text{N/C}$.
+      - kind: limit
+        text: >-
+          כשהעובי שואף לאפס עם אותו $\sigma$, השדה בחוץ נשאר $\sigma/(2\varepsilon_0)$, והשדה קופץ מ-$-\sigma/(2\varepsilon_0)$ ל-$+\sigma/(2\varepsilon_0)$ בתוך שכבה דקה: הלוח הדק של שיעור 1.8.
+      - kind: units
+        text: >-
+          $C$ ביחידות $\text{N}/(\text{C}\cdot\text{m})$; $\varepsilon_0 C$ ב-$\text{C/m}^3$; $\rho d$ ב-$\text{C/m}^2$.
+      - kind: result
+        text: >-
+          א. $2.66\cdot10^{-6}\,\text{C/m}^3$. ב. $6000\,\text{N/C}$ בכל מקום מחוץ ללוח, הרחק ממנו. ג. מתאים ללוח דק עם $\sigma \approx 1.06\cdot10^{-7}\,\text{C/m}^2$.
+
+  - id: W-6.7-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.7-2]
+    prompt: >-
+      תלמיד אומר: "סביב מטען נקודתי חיובי קווי השדה מתפזרים לכל הכיוונים, ולכן בכל נקודה סביבו $\nabla\cdot\vec E > 0$."
+
+      א. האם הוא צודק? נמקו בעזרת תיבה קטנה שנמצאת ליד המטען ולא מכילה אותו.
+
+      ב. איפה בכל זאת הדיברגנץ של השדה הזה שונה מאפס?
+    answer: >-
+      א. לא. בתיבה שלא מכילה את המטען אין מטען, והשטף נטו שלה אפס: $\nabla\cdot\vec E = 0$ בכל נקודה ריקה.
+
+      ב. רק בנקודה שבה נמצא המטען.
+    solution:
+      - kind: law
+        text: >-
+          $\nabla\cdot\vec E = \rho/\varepsilon_0$, ובמשטח סגור $\oint \vec E\cdot d\vec A = Q_{\text{in}}/\varepsilon_0$.
+      - kind: reasoning
+        text: >-
+          א. בתיבה קטנה ליד המטען השדה נכנס בצד הקרוב, שם הוא חזק, ויוצא בצד הרחוק, שם הוא חלש יותר אבל מתפזר על פני יותר שטח. אין בתיבה מטען, ולכן לפי חוק גאוס השטף נטו אפס. ההתפזרות של הקווים בדיוק מפצה על החלשות השדה.
+      - kind: reasoning
+        text: >-
+          ב. כל השטף, $q/\varepsilon_0$, יוצא מהנקודה שבה המטען. שם, ורק שם, תיבה זעירה מכילה מטען, והיחס שטף חלקי נפח גדל בלי גבול כשהיא מתכווצת.
+      - kind: limit
+        text: >-
+          אם מחליפים את המטען הנקודתי בכדור קטן טעון באחידות, הדיברגנץ שונה מאפס בכל הכדור, $\rho/\varepsilon_0$, ואפס בחוץ. כשהכדור מתכווץ, האזור קטן והערך גדל, והאינטגרל נשאר $q/\varepsilon_0$.
+      - kind: units
+        text: >-
+          אין מספרים. השוואה בין שטף ($\text{N}\cdot\text{m}^2/\text{C}$) למטען חלקי $\varepsilon_0$ (אותן יחידות).
+      - kind: result
+        text: >-
+          א. לא: מחוץ למטען $\nabla\cdot\vec E = 0$. ב. רק במקום שבו המטען עצמו.
+
+  - id: W-6.7-06
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.7-1, OBJ-6.7-3]
+    prompt: >-
+      באזור מסוים השדה הוא $\vec E = b\,(x^2,\ -2xy,\ 0)$, עם $b$ קבוע חיובי.
+
+      א. חשבו את $\nabla\cdot\vec E$. מה זה אומר על המטען באזור?
+
+      ב. בלי לחשב אף פאה, מה השטף נטו דרך פני קובייה שכולה באזור?
+    answer: >-
+      א. $\nabla\cdot\vec E = 2bx - 2bx = 0$: אין מטען באזור.
+
+      ב. אפס.
+    solution:
+      - kind: law
+        text: >-
+          $\nabla\cdot\vec E = \partial E_x/\partial x + \partial E_y/\partial y$, ומשפט הדיברגנץ $\oint \vec E\cdot d\vec A = \int (\nabla\cdot\vec E)\,dV$.
+      - kind: manipulation
+        text: >-
+          $\dfrac{\partial(b x^2)}{\partial x} = 2bx$. ב-$E_y = -2bxy$ גוזרים לפי $y$ ומחזיקים את $x$ קבוע: $\dfrac{\partial(-2bxy)}{\partial y} = -2bx$. הסכום אפס בכל נקודה.
+      - kind: reasoning
+        text: >-
+          ב. לפי משפט הדיברגנץ השטף נטו הוא האינטגרל של הדיברגנץ על הנפח, ואינטגרל של אפס הוא אפס, באיזו קובייה שלא תהיה.
+      - kind: limit
+        text: >-
+          אם מוחקים את $E_y$, נשאר $\vec E = (b x^2,\ 0,\ 0)$, שהדיברגנץ שלו $2bx$, כמו בדוגמה 5 של השיעור: הרכיב $E_y$ הוא בדיוק מה שמבטל את המטען.
+      - kind: units
+        text: >-
+          $b$ ביחידות $\text{N}/(\text{C}\cdot\text{m}^2)$, ו-$bx$ ב-$\text{N}/(\text{C}\cdot\text{m})$, יחידה של דיברגנץ.
+      - kind: result
+        text: >-
+          א. $\nabla\cdot\vec E = 0$: אין מטען, אף שהשדה משתנה ממקום למקום. ב. השטף נטו אפס.
+
+  - id: W-6.7-07
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.7-3]
+    prompt: >-
+      במוט ארוך שטעון באחידות, בצפיפות $\rho = 3\cdot10^{-6}\,\text{C/m}^3$, משרטטים גליל סגור דמיוני על אותו ציר, ברדיוס $2\,\text{cm}$ ובאורך $10\,\text{cm}$, כולו בתוך המוט.
+
+      א. חשבו את השטף נטו דרך פני הגליל בעזרת משפט הדיברגנץ.
+
+      ב. חשבו אותו שוב בעזרת השדה על פני הגליל, $E = \rho s/(2\varepsilon_0)$, והשוו.
+    answer: >-
+      א. $\Phi = \dfrac{\rho\pi s^2 L}{\varepsilon_0} \approx 42.6\,\text{N}\cdot\text{m}^2/\text{C}$.
+
+      ב. $E\cdot2\pi s L$ נותן אותו מספר.
+    solution:
+      - kind: law
+        text: >-
+          $\oint \vec E\cdot d\vec A = \int_V (\nabla\cdot\vec E)\,dV$, ובתוך המוט $\nabla\cdot\vec E = \rho/\varepsilon_0$.
+      - kind: manipulation
+        text: >-
+          א. הדיברגנץ אחיד, ולכן האינטגרל הוא הדיברגנץ כפול נפח הגליל: $\Phi = \dfrac{\rho}{\varepsilon_0}\,\pi s^2 L$.
+
+          ב. השדה רדיאלי: דרך שני הבסיסים לא עובר שטף, ועל הדופן הוא ניצב לה ובגודל קבוע: $\Phi = E\cdot2\pi s L = \dfrac{\rho s}{2\varepsilon_0}\,2\pi s L = \dfrac{\rho\pi s^2 L}{\varepsilon_0}$.
+      - kind: substitution
+        text: >-
+          $\Phi = \dfrac{3\cdot10^{-6}\cdot\pi\cdot(0.02)^2\cdot0.1}{8.85\cdot10^{-12}} \approx 42.6\,\text{N}\cdot\text{m}^2/\text{C}$.
+      - kind: limit
+        text: >-
+          כש-$s \to 0$ השטף שואף לאפס כמו $s^2$, כמו הנפח: הגליל מכיל פחות ופחות מטען. השטף חלקי הנפח נשאר $\rho/\varepsilon_0$ בכל רדיוס.
+      - kind: units
+        text: >-
+          $\dfrac{\text{C/m}^3\cdot\text{m}^3}{\text{C}^2/(\text{N}\cdot\text{m}^2)} = \dfrac{\text{N}\cdot\text{m}^2}{\text{C}}$.
+      - kind: result
+        text: >-
+          בשתי הדרכים $\Phi \approx 42.6\,\text{N}\cdot\text{m}^2/\text{C}$.
+
+  - id: W-6.7-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.7-1, OBJ-6.7-3]
+    prompt: >-
+      בקובייה שצלעה $L = 10\,\text{cm}$, שפינה אחת שלה בראשית והצלעות לאורך הצירים החיוביים, השדה הוא $\vec E = (a\,x^3,\ 0,\ 0)$, עם $a = 2\cdot10^{7}\,\text{N}/(\text{C}\cdot\text{m}^3)$.
+
+      א. מצאו את צפיפות המטען כפונקציה של $x$. איפה בקובייה היא הגדולה ביותר, ומה ערכה שם?
+
+      ב. חשבו את המטען הכולל בקובייה בעזרת אינטגרל על הנפח.
+
+      ג. בדקו את התוצאה בעזרת השטף דרך פני הקובייה.
+    answer: >-
+      א. $\rho = 3\varepsilon_0 a x^2$; הגדולה ביותר בפאה $x = L$: $\rho \approx 5.31\cdot10^{-6}\,\text{C/m}^3$.
+
+      ב. $Q = \varepsilon_0 a L^5 \approx 1.77\cdot10^{-9}\,\text{C}$.
+
+      ג. השטף $aL^5 = 200\,\text{N}\cdot\text{m}^2/\text{C}$, ו-$\varepsilon_0\cdot200$ נותן אותו מטען.
+    solution:
+      - kind: law
+        text: >-
+          $\rho = \varepsilon_0\,\nabla\cdot\vec E$, ו-$Q = \int \rho\,dV = \varepsilon_0\oint \vec E\cdot d\vec A$.
+      - kind: manipulation
+        text: >-
+          א. $\nabla\cdot\vec E = \partial(a x^3)/\partial x = 3a x^2$, ולכן $\rho = 3\varepsilon_0 a x^2$: אפס בפאה $x = 0$, וגדלה לכיוון הפאה $x = L$.
+      - kind: manipulation
+        text: >-
+          ב. $\rho$ תלויה רק ב-$x$, ולכן מחלקים את הקובייה לפרוסות בעובי $dx$ ובשטח $L^2$: $Q = \int_0^L 3\varepsilon_0 a x^2\,L^2\,dx = 3\varepsilon_0 a L^2\cdot\dfrac{L^3}{3} = \varepsilon_0 a L^5$.
+      - kind: manipulation
+        text: >-
+          ג. רק הפאות שניצבות ל-$x$ תורמות. בפאה $x = 0$ השדה אפס, ובפאה $x = L$ הוא $a L^3$ החוצה, על שטח $L^2$: $\Phi = a L^5$, ו-$Q = \varepsilon_0\Phi$.
+      - kind: substitution
+        text: >-
+          $\rho(L) = 3\cdot8.85\cdot10^{-12}\cdot2\cdot10^{7}\cdot0.01 \approx 5.31\cdot10^{-6}\,\text{C/m}^3$. $\Phi = 2\cdot10^{7}\cdot(0.1)^5 = 200\,\text{N}\cdot\text{m}^2/\text{C}$, ו-$Q = 8.85\cdot10^{-12}\cdot200 \approx 1.77\cdot10^{-9}\,\text{C}$.
+      - kind: limit
+        text: >-
+          כש-$L \to 0$, $Q/V = \varepsilon_0 a L^2 \to 0$: הצפיפות בפינה שבראשית אפס, כמו ש-$3\varepsilon_0 a x^2$ נותן ב-$x = 0$.
+      - kind: units
+        text: >-
+          $a$ ב-$\text{N}/(\text{C}\cdot\text{m}^3)$, ולכן $aL^5$ ב-$\text{N}\cdot\text{m}^2/\text{C}$, ו-$\varepsilon_0 a L^5$ ב-$\text{C}$.
+      - kind: result
+        text: >-
+          א. $\rho = 3\varepsilon_0 a x^2$, עד $5.31\cdot10^{-6}\,\text{C/m}^3$ בפאה $x = L$. ב, ג. $Q \approx 1.77\cdot10^{-9}\,\text{C}$ בשתי הדרכים.
+
+  - id: W-6.7-09
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.7-2, OBJ-6.7-3]
+    prompt: >-
+      כדור פורח עולה בענן סערה רחב ומודד את $E_z$ (חיובי כלפי מעלה). התוצאות: מתחת ל-$4\,\text{km}$, $E_z = +20\,\text{kV/m}$ קבוע. בין $4$ ל-$5\,\text{km}$, $E_z$ יורד בקו ישר ל-$-80\,\text{kV/m}$. בין $5$ ל-$6\,\text{km}$ הוא עולה בקו ישר בחזרה ל-$+20\,\text{kV/m}$, ומעל $6\,\text{km}$ הוא שוב קבוע.
+
+      א. מה צפיפות המטען בכל אחד מארבעת האזורים?
+
+      ב. כמה מטען יש בעמוד ששטח הבסיס שלו קמ״ר אחד, בכל שכבה, ובשתיהן יחד?
+
+      ג. איך נראה השדה מעל $6\,\text{km}$ לעומת מתחת ל-$4\,\text{km}$, ולמה זה מתאים לתשובה של סעיף ב?
+    answer: >-
+      א. מתחת ל-$4\,\text{km}$ ומעל $6\,\text{km}$: אפס. בין $4$ ל-$5$: $-8.85\cdot10^{-10}\,\text{C/m}^3$. בין $5$ ל-$6$: $+8.85\cdot10^{-10}\,\text{C/m}^3$.
+
+      ב. $-0.885\,\text{C}$ ו-$+0.885\,\text{C}$; יחד אפס.
+
+      ג. אותו שדה, $+20\,\text{kV/m}$: המטען הכולל בין הגבהים אפס.
+    solution:
+      - kind: law
+        text: >-
+          $\rho = \varepsilon_0\,\partial E_z/\partial z$ (השדה לא משתנה בכיוונים האופקיים), ובעמוד ששטחו $A$: $Q = \varepsilon_0 A\,\Delta E_z$.
+      - kind: manipulation
+        text: >-
+          בכל אזור שבו $E_z$ קבוע, הנגזרת אפס. בשכבה התחתונה השיפוע $\dfrac{-80 - 20}{1}\,\text{kV/m}$ לקילומטר, כלומר $-100\,\text{V/m}^2$; בעליונה $+100\,\text{V/m}^2$.
+      - kind: substitution
+        text: >-
+          א. $\rho = \pm8.85\cdot10^{-12}\cdot100 = \pm8.85\cdot10^{-10}\,\text{C/m}^3$.
+
+          ב. $Q = 8.85\cdot10^{-12}\cdot10^{6}\cdot(\mp10^{5}) = \mp0.885\,\text{C}$: שלילי בשכבה התחתונה, חיובי בעליונה.
+      - kind: reasoning
+        text: >-
+          ג. בין $4$ ל-$6\,\text{km}$ השינוי הכולל ב-$E_z$ הוא אפס, ולכן $\varepsilon_0 A\,\Delta E_z = 0$: המטען הכולל בעמוד אפס. זה חוק גאוס על קופסה שהבסיס התחתון שלה ב-$4\,\text{km}$ והעליון ב-$6\,\text{km}$: מה שנכנס מלמטה יוצא מלמעלה.
+      - kind: limit
+        text: >-
+          אילו השכבה העליונה הייתה חסרה, השדה מעל $5\,\text{km}$ היה נשאר $-80\,\text{kV/m}$: הקפיצה של $-100\,\text{kV/m}$ מתאימה לשכבת מטען שלילי, כמו לוח טעון ב-$\sigma = \varepsilon_0\,\Delta E$.
+      - kind: units
+        text: >-
+          $\varepsilon_0 A\,\Delta E$: $\dfrac{\text{C}^2}{\text{N}\cdot\text{m}^2}\cdot\text{m}^2\cdot\dfrac{\text{N}}{\text{C}} = \text{C}$.
+      - kind: result
+        text: >-
+          א. $0$, $-8.85\cdot10^{-10}$, $+8.85\cdot10^{-10}$, $0\,\text{C/m}^3$. ב. $\mp0.885\,\text{C}$ לקמ״ר, ויחד אפס. ג. אותו שדה למעלה ולמטה.
+
+  - id: W-6.7-10
+    level: bagrut
+    qualitative: true
+    objectives: [OBJ-6.7-2, OBJ-6.7-3]
+    prompt: >-
+      כדור ברדיוס $R$ טעון באחידות במטען $Q$. מה משתנה, ומה לא, אם מגדילים את הרדיוס שלו ל-$2R$ ומשאירים את אותו מטען? קבעו ונמקו לכל אחד מאלה:
+
+      א. הדיברגנץ של השדה בתוך הכדור.
+
+      ב. השטף נטו דרך פני כדור ברדיוס $3R$ סביב המרכז.
+
+      ג. השדה במרחק $3R$ מהמרכז.
+
+      ד. הדיברגנץ במרחק $3R$ מהמרכז.
+    answer: >-
+      א. קטן פי 8. ב. לא משתנה, $Q/\varepsilon_0$. ג. לא משתנה. ד. אפס בשני המקרים.
+    solution:
+      - kind: law
+        text: >-
+          $\nabla\cdot\vec E = \rho/\varepsilon_0$, ומשפט הדיברגנץ $\oint \vec E\cdot d\vec A = \int (\nabla\cdot\vec E)\,dV$.
+      - kind: reasoning
+        text: >-
+          א. הנפח גדל פי $2^3 = 8$ עם אותו מטען, ולכן $\rho = Q/(\tfrac43\pi R^3)$ קטנה פי 8, ואיתה הדיברגנץ.
+      - kind: reasoning
+        text: >-
+          ב. פני הכדור מקיפים את כל הכדור בשני המקרים. האינטגרל של הדיברגנץ הוא $\rho V/\varepsilon_0 = Q/\varepsilon_0$: הדיברגנץ קטן פי 8 והנפח גדל פי 8.
+      - kind: reasoning
+        text: >-
+          ג. בגלל הסימטריה השדה על פני הכדור שווה בגודלו בכל נקודה ומאונך לה, ולכן $E\cdot4\pi(3R)^2 = Q/\varepsilon_0$ בשני המקרים: אותו שדה.
+
+          ד. במרחק $3R$ אין מטען בשני המקרים, ולכן הדיברגנץ אפס, אף שהשדה שם לא אפס.
+      - kind: limit
+        text: >-
+          בכיוון ההפוך, כשהכדור מתכווץ לנקודה, הדיברגנץ בפנים גדל בלי גבול והאזור שלו מתכווץ: מטען נקודתי, ששדהו בחוץ זהה.
+      - kind: units
+        text: >-
+          אין מספרים; בסעיף ב, $\rho V/\varepsilon_0$ ביחידות $\text{N}\cdot\text{m}^2/\text{C}$, כמו שטף.
+      - kind: result
+        text: >-
+          רק הדיברגנץ בתוך הכדור משתנה (פי 8 פחות). השטף, השדה בחוץ והדיברגנץ האפס בחוץ לא משתנים.
+
+challenge:
+  - id: W-6.7-c1
+    stars: 1
+    objectives: [OBJ-6.7-1, OBJ-6.7-2]
+    prompt: >-
+      הפוטנציאל החשמלי באזור תלוי רק ב-$x$:
+
+      $V(x) = -2Cd\,(x + d/2)$ עבור $x < -d$; $V(x) = C x^2$ עבור $-d < x < d$; ו-$V(x) = 2Cd\,(x - d/2)$ עבור $x > d$,
+
+      עם $C = 3\cdot10^{5}\,\text{V/m}^2$ ו-$d = 1\,\text{cm}$.
+
+      א. מצאו את השדה החשמלי בכל אחד משלושת האזורים (שיעור 6.6: $\vec E = -\nabla V$).
+
+      ב. מצאו את צפיפות המטען בכל אזור. איזו התפלגות מטען יוצרת את הפוטנציאל הזה?
+
+      ג. בדקו את השדה מחוץ לאזור הטעון מול השדה של לוח דק עם אותו מטען ליחידת שטח.
+    answer: >-
+      א. בפנים $E_x = -2Cx$; מימין $E_x = -2Cd = -6000\,\text{N/C}$; משמאל $E_x = +6000\,\text{N/C}$.
+
+      ב. בפנים $\rho = -2\varepsilon_0 C \approx -5.31\cdot10^{-6}\,\text{C/m}^3$, ובחוץ אפס: לוח עבה טעון שלילית, בעובי $2d$.
+
+      ג. $\sigma = -2\varepsilon_0 C\cdot2d \approx -1.06\cdot10^{-7}\,\text{C/m}^2$, ו-$|\sigma|/(2\varepsilon_0) = 6000\,\text{N/C}$, לכיוון הלוח.
+    solution:
+      - kind: law
+        text: >-
+          $\vec E = -\nabla V$, וכאן $E_x = -dV/dx$; ו-$\nabla\cdot\vec E = \rho/\varepsilon_0$.
+      - kind: manipulation
+        text: >-
+          א. בפנים $E_x = -2Cx$. מימין $E_x = -2Cd$, ומשמאל $E_x = +2Cd$. בשני הקצוות, $x = \pm d$, השדה שבפנים ($\mp2Cd$) מתחבר לשדה שבחוץ: השדה רציף, ולכן אין שם לוח דק של מטען.
+      - kind: manipulation
+        text: >-
+          ב. בפנים $\nabla\cdot\vec E = \partial(-2Cx)/\partial x = -2C$, ולכן $\rho = -2\varepsilon_0 C$. בחוץ $E_x$ קבוע, הנגזרת אפס ו-$\rho = 0$.
+      - kind: substitution
+        text: >-
+          $\rho = -2\cdot8.85\cdot10^{-12}\cdot3\cdot10^{5} \approx -5.31\cdot10^{-6}\,\text{C/m}^3$. $2Cd = 2\cdot3\cdot10^{5}\cdot0.01 = 6000\,\text{N/C}$. $\sigma = \rho\cdot2d \approx -5.31\cdot10^{-6}\cdot0.02 \approx -1.06\cdot10^{-7}\,\text{C/m}^2$.
+      - kind: limit
+        text: >-
+          לוח דק עם צפיפות משטחית $\sigma$ נותן מכל צד שדה $|\sigma|/(2\varepsilon_0) = \dfrac{1.06\cdot10^{-7}}{2\cdot8.85\cdot10^{-12}} \approx 6000\,\text{N/C}$, ולוח שלילי מושך את השדה אליו: מימין השדה שמאלה ($E_x < 0$), ומשמאל ימינה. זה מה שקיבלנו. ובגבול $d \to 0$ עם אותו $\sigma$, השדה בחוץ נשאר, והקפיצה מתרכזת בשכבה דקה.
+      - kind: units
+        text: >-
+          $C$ ב-$\text{V/m}^2$, ולכן $Cx$ ב-$\text{V/m} = \text{N/C}$, ו-$\varepsilon_0 C$ ב-$\dfrac{\text{C}^2}{\text{N}\cdot\text{m}^2}\cdot\dfrac{\text{N}}{\text{C}\cdot\text{m}} = \text{C/m}^3$.
+      - kind: result
+        text: >-
+          א. $-2Cx$ בפנים, $\mp6000\,\text{N/C}$ בחוץ. ב. לוח עבה בעובי $2\,\text{cm}$ עם $\rho \approx -5.31\cdot10^{-6}\,\text{C/m}^3$. ג. מתאים ללוח דק עם $\sigma \approx -1.06\cdot10^{-7}\,\text{C/m}^2$.
+    source:
+      name: MIT OpenCourseWare, 8.022 Physics II (Fall 2004), Assignment 2
+      year: 2004
+      problem: 'Problem 6(b), 6(c): the charge distribution that gives a piecewise potential, and its field'
+      url: https://www.ocw.mit.edu/courses/8-022-physics-ii-electricity-and-magnetism-fall-2004/86c67a2a80e1881fcbf5e110d75c48c8_pset2.pdf
+      verified: '2026-11-02'
+      adapted: true
+
+  - id: W-6.7-c2
+    stars: 2
+    objectives: [OBJ-6.7-1, OBJ-6.7-2, OBJ-6.7-3]
+    prompt: >-
+      הגדרת הדיברגנץ, שטף נטו ליחידת נפח, עובדת גם עם "תיבות" שאינן קוביות.
+
+      א. שדה רדיאלי סביב ציר, $\vec E = F(s)\,\hat s$, כש-$s$ המרחק מהציר. קחו קליפה גלילית על אותו ציר, בין $s$ ל-$s + \Delta s$, בגובה $h$. מה השטף נטו דרכה? חלקו בנפח שלה, ושאפו $\Delta s \to 0$, כדי להראות ש-$\nabla\cdot\vec E = \dfrac{1}{s}\,\dfrac{d}{ds}\big(s\,F\big)$.
+
+      ב. עשו את אותו דבר לשדה רדיאלי סביב נקודה, $\vec E = F(r)\,\hat r$, עם קליפה כדורית בין $r$ ל-$r + \Delta r$, והראו ש-$\nabla\cdot\vec E = \dfrac{1}{r^2}\,\dfrac{d}{dr}\big(r^2 F\big)$.
+
+      ג. בדקו: מה הדיברגנץ של השדה של קו טעון, $F = \lambda/(2\pi\varepsilon_0 s)$, ושל מטען נקודתי, $F = kq/r^2$, מחוץ למקור?
+
+      ד. בתוך כדור מסוים השדה רדיאלי, $F = A r^2$, עם $A = 2\cdot10^{8}\,\text{N}/(\text{C}\cdot\text{m}^2)$. מצאו את $\rho(r)$, ואת ערכו ב-$r = 1\,\text{cm}$.
+    answer: >-
+      א. $\Phi = 2\pi h\big[(s + \Delta s)F(s + \Delta s) - sF(s)\big]$, וחלקי $2\pi s h\,\Delta s$ זה שואף ל-$\dfrac{1}{s}\dfrac{d(sF)}{ds}$.
+
+      ב. $\dfrac{1}{r^2}\dfrac{d(r^2F)}{dr}$.
+
+      ג. אפס בשניהם: $sF$ ו-$r^2F$ קבועים.
+
+      ד. $\rho = 4\varepsilon_0 A r \approx 7.08\cdot10^{-5}\,\text{C/m}^3$ ב-$r = 1\,\text{cm}$.
+    solution:
+      - kind: law
+        text: >-
+          $\nabla\cdot\vec E = \lim\limits_{V\to0} \dfrac{1}{V}\oint \vec E\cdot d\vec A$, ו-$\rho = \varepsilon_0\,\nabla\cdot\vec E$.
+      - kind: manipulation
+        text: >-
+          א. דרך שני הבסיסים השדה מקביל להם ולא עובר שטף. בדופן החיצונית השדה יוצא, $F(s + \Delta s)$ על שטח $2\pi(s + \Delta s)h$; בפנימית האנך "החוצה" מצביע אל הציר, ולכן השטף שם $-F(s)\cdot2\pi s h$. הנפח $2\pi s h\,\Delta s$ (כשהקליפה דקה). היחס הוא $\dfrac{1}{s}\cdot\dfrac{(s + \Delta s)F(s + \Delta s) - sF(s)}{\Delta s}$, והשבר הוא מנת ההפרשים של הפונקציה $sF$, שבגבול היא הנגזרת שלה (שיעור 6.1).
+      - kind: manipulation
+        text: >-
+          ב. באותה דרך: השטף $4\pi\big[(r + \Delta r)^2F(r + \Delta r) - r^2F(r)\big]$, והנפח $4\pi r^2\,\Delta r$. היחס שואף ל-$\dfrac{1}{r^2}\dfrac{d(r^2F)}{dr}$.
+      - kind: manipulation
+        text: >-
+          ג. בקו טעון $sF = \lambda/(2\pi\varepsilon_0)$, קבוע, ולכן הנגזרת אפס. במטען נקודתי $r^2F = kq$, קבוע. שני הדיברגנצים אפס מחוץ למקור, כמו שחוק גאוס דורש.
+      - kind: manipulation
+        text: >-
+          ד. $r^2F = Ar^4$, הנגזרת $4Ar^3$, וחלקי $r^2$: $\nabla\cdot\vec E = 4Ar$, ולכן $\rho = 4\varepsilon_0 A r$.
+      - kind: substitution
+        text: >-
+          $\rho(0.01\,\text{m}) = 4\cdot8.85\cdot10^{-12}\cdot2\cdot10^{8}\cdot0.01 \approx 7.08\cdot10^{-5}\,\text{C/m}^3$.
+      - kind: limit
+        text: >-
+          בכדור טעון באחידות $F = kQr/R^3$ בפנים, ו-$\dfrac{1}{r^2}\dfrac{d}{dr}\Big(\dfrac{kQr^3}{R^3}\Big) = \dfrac{3kQ}{R^3} = \dfrac{\rho}{\varepsilon_0}$: הנוסחה נותנת את מה שמצאנו ברכיבים בשיעור. ובשדה אחיד שאינו רדיאלי היא לא חלה: היא נכונה רק לשדה בצורה $F(r)\,\hat r$.
+      - kind: units
+        text: >-
+          $\dfrac{1}{r^2}\dfrac{d(r^2F)}{dr}$ ביחידות $\dfrac{\text{N/C}}{\text{m}}$, יחידה של דיברגנץ; $A r$ ב-$\text{N}/(\text{C}\cdot\text{m})$.
+      - kind: result
+        text: >-
+          א, ב. $\dfrac{1}{s}\dfrac{d(sF)}{ds}$ ו-$\dfrac{1}{r^2}\dfrac{d(r^2F)}{dr}$. ג. אפס לשני השדות מחוץ למקור. ד. $\rho = 4\varepsilon_0 A r \approx 7.08\cdot10^{-5}\,\text{C/m}^3$ ב-$1\,\text{cm}$.
+    source:
+      name: MIT OpenCourseWare, 8.022 Physics II (Fall 2004), Assignment 2
+      year: 2004
+      problem: 'Problem 8: divergence in cylindrical and spherical coordinates, from the flux through a thin shell'
+      url: https://www.ocw.mit.edu/courses/8-022-physics-ii-electricity-and-magnetism-fall-2004/86c67a2a80e1881fcbf5e110d75c48c8_pset2.pdf
+      verified: '2026-11-02'
+      adapted: true
