@@ -38,11 +38,11 @@ test.describe('live figures', () => {
     await expect(page.locator('.sim-tasks li.done')).toHaveCount(0);
   });
 
-  test('the three figures draw, in LTR physics space', async ({ page }) => {
+  test('the figure draws, in LTR physics space', async ({ page }) => {
     await page.goto(LESSON);
     const canvases = page.locator('.sim-stage canvas');
-    expect(await canvases.count()).toBe(3);
-    for (let i = 0; i < 3; i++) {
+    expect(await canvases.count()).toBe(1);
+    for (let i = 0; i < 1; i++) {
       const c = canvases.nth(i);
       await c.scrollIntoViewIfNeeded();
       await expect(c).toHaveCSS('direction', 'ltr');
@@ -95,7 +95,8 @@ test.describe('live figures', () => {
   });
 
   test('ring: the axial field peaks at R/√2, not at the centre', async ({ page }) => {
-    const fig = await openFigure(page, 'fig-6-4b');
+    const fig = await openFigure(page, 'fig-6-4a');
+    await fig.getByRole('button', { name: 'טבעת', exact: true }).click();
     const readout = fig.locator('.sim-readout');
     const canvas = fig.locator('canvas');
     await canvas.focus();
@@ -103,18 +104,19 @@ test.describe('live figures', () => {
     for (let i = 0; i < 16; i++) await canvas.press('ArrowLeft');
     await expect(readout).toContainText('z = 7 cm');
     await expect(readout).toContainText('E = 1390 N/C');
-    expect((await progress(page)).tasks['fig-6-4b:ring-peak']).toBeTruthy();
+    expect((await progress(page)).tasks['fig-6-4a:ring-peak']).toBeTruthy();
   });
 
   test('disc: more rings bring the sum to the closed form', async ({ page }) => {
-    const fig = await openFigure(page, 'fig-6-4c');
+    const fig = await openFigure(page, 'fig-6-4a');
+    await fig.getByRole('button', { name: 'דיסקה', exact: true }).click();
     const readout = fig.locator('.sim-readout');
     await expect(readout).toContainText('E = 4420 N/C');
     await expect(readout).toContainText('E = 3980 N/C');
     await expect(readout).toContainText('7200 N/C');
     await setSlider(fig.locator('input[type=range]').first(), 30);
     await expect(readout).toContainText('פחות מ-0.1%');
-    expect((await progress(page)).tasks['fig-6-4c:disc-converge']).toBeTruthy();
+    expect((await progress(page)).tasks['fig-6-4a:disc-converge']).toBeTruthy();
     await noSideways(page);
   });
 });
@@ -134,17 +136,17 @@ test.describe('predict, then reveal', () => {
 });
 
 test.describe('questions', () => {
-  test('numeric: adding magnitudes without cos θ gets targeted feedback, then 1200 N/C passes', async ({ page }) => {
+  test('numeric: treating the rod as a charge at its near end gets targeted feedback, then 240 N/C passes', async ({ page }) => {
     await page.goto(LESSON);
-    const q = page.locator('[data-qid="Q-6.4-ring-axis"]');
+    const q = page.locator('[data-qid="Q-6.4-rod-axis"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(q);
     const input = q.locator('input[type=text]');
-    await input.fill('2000');
+    await input.fill('720');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
-    await expect(q.locator('.q-feedback')).toContainText('הרכיבים הניצבים לציר מתבטלים');
+    await expect(q.locator('.q-feedback')).toContainText('בקצה הקרוב');
     await q.getByRole('button', { name: 'נסו שוב' }).click();
-    await input.fill('1200');
+    await input.fill('240');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-right/);
     await noSideways(page);

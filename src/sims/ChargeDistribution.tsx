@@ -55,7 +55,7 @@ const MODE_LABEL: Record<Mode, string> = { rod: 'מוט', ring: 'טבעת', disc
 
 const TASK_LABEL: Record<string, string> = {
   'rod-converge': 'קרבו את P למוט, עד 3 ס״מ ממנו (ולא מעבר לקצה), והגדילו את N עד שההפרש בין הסכום לאינטגרל קטן מ-1%.',
-  'rod-line': 'מצאו מקום (או אורך מוט) שבו השדה של המוט שווה, בהפרש של פחות מ-1%, לשדה של תיל אינסופי.',
+  'rod-line': 'הגדילו את המוט וקרבו אליו את P, עד שהשדה שלו שווה, בהפרש של פחות מ-2%, לשדה של תיל אינסופי.',
   'rod-point': 'מצאו מקום (או אורך מוט) שבו השדה של המוט שווה, בהפרש של פחות מ-2%, לשדה של מטען נקודתי.',
   'ring-centre': 'בחרו טבעת, והביאו את P למרכז הטבעת. מה קורה לשרשרת החצים?',
   'ring-peak': 'מצאו את המקום על הציר שבו השדה של הטבעת חזק ביותר.',
@@ -186,7 +186,7 @@ export default function ChargeDistribution(props: ChargeDistributionProps) {
     const [x, y] = s.probe;
     if (s.mode === 'rod') {
       if (has('rod-converge') && Math.abs(y) <= 0.03 && Math.abs(x) <= s.L / 2 && sumErr < 0.01) done('rod-converge');
-      if (has('rod-line') && y !== 0 && Math.abs(rodM.exact - rodM.line) / rodM.line < 0.01) done('rod-line');
+      if (has('rod-line') && y !== 0 && Math.abs(rodM.exact - rodM.line) / rodM.line < 0.02) done('rod-line');
       if (has('rod-point') && Math.abs(rodM.exact - rodM.point) / rodM.point < 0.02) done('rod-point');
     }
     if (s.mode === 'ring') {
@@ -331,7 +331,8 @@ export default function ChargeDistribution(props: ChargeDistributionProps) {
     legend(ctx, p, v.w - 14, 58);
   };
 
-  const probeDot = (ctx: CanvasRenderingContext2D, p: Palette, x: number, y: number) => {
+  /** the probe; `labelAt` moves its "P" off the body (the ring view), with a thin leader back to the dot */
+  const probeDot = (ctx: CanvasRenderingContext2D, p: Palette, x: number, y: number, labelAt?: Vec2) => {
     ctx.save();
     ctx.fillStyle = p.paper;
     ctx.strokeStyle = p.accent;
@@ -342,9 +343,23 @@ export default function ChargeDistribution(props: ChargeDistributionProps) {
     ctx.stroke();
     ctx.fillStyle = p.ink;
     ctx.font = `600 13px ${p.fontUi}`;
-    ctx.textAlign = 'left';
-    ctx.textBaseline = 'bottom';
-    ctx.fillText('P', x + 7, y - 6);
+    if (labelAt) {
+      ctx.strokeStyle = withAlpha(p.ink2, 0.7);
+      ctx.lineWidth = 1;
+      ctx.setLineDash([2, 3]);
+      ctx.beginPath();
+      ctx.moveTo(x, y + 7);
+      ctx.lineTo(labelAt[0], labelAt[1] - 9);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText('P', labelAt[0], labelAt[1] - 7);
+    } else {
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText('P', x + 7, y - 6);
+    }
     ctx.restore();
   };
 
@@ -425,7 +440,8 @@ export default function ChargeDistribution(props: ChargeDistributionProps) {
       ctx.setLineDash([5, 4]);
       arrow(ctx, px, py, px + sc * ringM.exact, py, { color: p.ink, width: 1.6, head: 10 });
       ctx.setLineDash([]);
-      probeDot(ctx, p, px, py);
+      // below the ring's lowest piece, so the label never sits on the body
+      probeDot(ctx, p, px, py, [px, sy0 + k * RING_R + 24]);
     } else {
       const pieces = disc!;
       // the disc face, then each ring of pieces
