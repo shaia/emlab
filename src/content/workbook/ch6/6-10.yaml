@@ -436,10 +436,10 @@ challenge:
         text: >-
           א. $\vec\tau = \vec p\times\vec E$, בכל נקודה. ב. תנודות הרמוניות, $T \approx 0.63\,\text{s}$. ג. $T \to 0$ בשדה חזק, $T \to \infty$ במסה גדולה.
     source:
-      name: MIT 8.02, Problem Solving Session 1 (Electric Dipoles and Torque)
-      year: 2012
-      problem: 'Problem 2: Electric Dipole in a Uniform Electric Field, Questions 2–3'
-      url: https://web.mit.edu/8.02t/www/test/materials/ProblemSolving/PS01%20Electric%20Dipole.pdf
+      name: JEE Main
+      year: 2019
+      problem: '8 April 2019, Shift 2, Question 15: angular frequency of a dipole of two equal masses slightly rotated in a uniform field'
+      url: https://cracku.in/15-an-electric-dipole-is-formed-by-two-equal-and-oppo-x-nta-jee-main-8-apr-2019-shift-2-physics
       verified: '2026-11-02'
       adapted: true
 
