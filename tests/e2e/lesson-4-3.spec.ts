@@ -36,8 +36,8 @@ test.describe('live figures', () => {
   test('every figure draws, in LTR physics space', async ({ page }) => {
     await page.goto(LESSON);
     const canvases = page.locator('.sim-stage canvas');
-    expect(await canvases.count()).toBe(2);
-    for (let i = 0; i < 2; i++) {
+    expect(await canvases.count()).toBe(1);
+    for (let i = 0; i < 1; i++) {
       const c = canvases.nth(i);
       await c.scrollIntoViewIfNeeded();
       await expect(c).toHaveCSS('direction', 'ltr');
@@ -78,41 +78,6 @@ test.describe('live figures', () => {
     expect(tasks['fig-4-3a:half-length']).toBeTruthy();
   });
 
-  test("Ampère: a circle round the wire sums to μ₀I; moved off the wire, the sum is zero", async ({ page }) => {
-    const fig = await openFigure(page, 'fig-4-3b');
-    const readout = fig.locator('.sim-readout');
-    await expect(readout).toContainText('6.28·10⁻⁶ T·m');
-    await expect(readout).toContainText('I = 5 A');
-    const canvas = fig.locator('canvas');
-    await canvas.focus();
-    // space selects the probe, then the whole path; shift+arrow moves it 5 cm
-    await canvas.press(' ');
-    await canvas.press(' ');
-    for (let i = 0; i < 4; i++) await canvas.press('Shift+ArrowRight');
-    await expect(readout).toContainText('I = 0 A');
-    await expect(readout).toContainText('B∥·Δℓ סביב המסלול: 0 T·m');
-    // the probe still reads a field: zero sum is not zero field
-    await expect(readout).not.toContainText('בגשש: B = 0 T');
-    expect((await progress(page)).tasks['fig-4-3b:ampere-zero']).toBeTruthy();
-  });
-
-  test('Ampère in a solenoid: a rectangle across one row encloses 400 A, and the inside edge carries the sum', async ({ page }) => {
-    const fig = await openFigure(page, 'fig-4-3b');
-    const readout = fig.locator('.sim-readout');
-    await fig.getByRole('button', { name: 'סליל', exact: true }).click();
-    await expect(readout).toContainText('I = 400 A');
-    await expect(readout).toContainText('μ₀I = 5.03·10⁻⁴ T·m');
-    await expect(readout).toContainText('למטה 4.93·10⁻⁴');
-    const canvas = fig.locator('canvas');
-    await canvas.focus();
-    await canvas.press(' ');
-    await canvas.press(' ');
-    await canvas.press('ArrowUp');
-    await expect(readout).toContainText('I = 400 A');
-    expect((await progress(page)).tasks['fig-4-3b:ampere-solenoid']).toBeTruthy();
-    const sw = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-    expect(sw).toBeLessThanOrEqual(0);
-  });
 });
 
 test.describe('predict, then reveal', () => {
@@ -121,7 +86,10 @@ test.describe('predict, then reveal', () => {
     const predict = page.locator('[data-predict-id="pred-4-3"]');
     await predict.scrollIntoViewIfNeeded();
     await expect(predict).not.toHaveClass(/is-open/);
-    await predict.locator('label.q-choice', { hasText: 'קרוב לכריכות' }).click();
+    // a choice clicked before the island hydrates lands in the static HTML and is lost
+    const choice = predict.locator('label.q-choice', { hasText: 'קרוב לכריכות' });
+    await hydrated(choice);
+    await choice.click();
     await predict.getByRole('button', { name: 'זה החיזוי שלי' }).click();
     await expect(predict).toHaveClass(/is-open/);
   });

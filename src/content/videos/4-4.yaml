@@ -1,0 +1,13 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support; the
+# length comes from the watch page (lengthSeconds).
+
+- id: v-4-4-crash-course
+  youtubeId: 5fqwJyt4Lus
+  title: "Ampère's Law: Crash Course Physics #33"
+  channel: CrashCourse
+  lang: en
+  captions: []
+  minutes: 9
+  why: 'פרק באנגלית: לפי תיאור הסרטון, הוא מספר על הניסויים של אמפר בתילים ובזרמים, אחרי שאורסטד גילה את הקשר בין חשמל למגנטיות, ועל החוק שנקרא היום על שמו. השוו את הדרך שבה החוק מוצג שם לסכום שבשיעור.'
+  verified: '2026-11-02'

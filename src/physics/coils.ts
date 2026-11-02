@@ -5,14 +5,15 @@
  *
  * MODEL SPECIFICATION
  * - System: coaxial circular turns of thin wire, their axis along x through (x0, y0) in the page,
- *   and straight wires perpendicular to the page. The page cuts every turn twice, at y0 + R and
+ *   straight thin wires perpendicular to the page, and a thick straight wire (radius R) with its
+ *   current spread evenly over the cross-section. The page cuts every turn twice, at y0 + R and
  *   y0 − R. Figure coordinates: x right, y up, z out of the page (⊙).
  * - Dynamics: each turn contributes the exact field of a circular loop (`loopField` in
  *   magnetism.ts); a turn with I > 0 makes B point along +x on the axis, so its top cut carries the
  *   current out of the page (⊙) and its bottom cut into it (⊗). Wires use `wireFieldAt`. The sums of
  *   B·Δℓ use the midpoint rule on pieces no longer than `h`.
  * - Boundary: fields vanish at infinity; no magnetic materials (no iron core).
- * - Ignored: the thickness of the wire, the leads that feed the turns, the pitch of a winding (every
+ * - Ignored: the thickness of the thin wires (the thick wire is the one exception), the leads that feed the turns, the pitch of a winding (every
  *   turn is a closed circle), the field of a solenoid's current along its length.
  * - Valid when: a closed path stays further from every cut than a few pieces h; then the sum equals
  *   μ₀ times the enclosed current to the accuracy of the midpoint rule.
@@ -20,6 +21,7 @@
  *   enclosed current. `distanceToPath` lets callers refuse such a path.
  */
 
+import { MU0 } from './constants';
 import { loopField, wireFieldAt, type Solenoid, type Wire } from './magnetism';
 import type { Vec2 } from './vec';
 
@@ -167,4 +169,56 @@ export function rectPath(x1: number, y1: number, x2: number, y2: number): Vec2[]
     [r, t],
     [l, t],
   ];
+}
+
+/* ------------------------------------------------------------------ a thick wire */
+
+/**
+ * A long straight wire of radius R perpendicular to the page at (cx, cy), carrying I spread evenly
+ * over its cross-section (I > 0 out of the page, ⊙). Ampère's law on a circle of radius r around
+ * its axis gives B·2πr = μ₀I·(r²/R²) inside, so B = μ₀Ir/(2πR²) grows linearly from zero on the
+ * axis; outside, B = μ₀I/(2πr) as for a thin wire. The field circles the axis counterclockwise for
+ * I > 0 [T].
+ */
+export interface ThickWire {
+  x: number;
+  y: number;
+  R: number;
+  I: number;
+}
+
+export function thickWireFieldAt(w: ThickWire, x: number, y: number): Vec2 {
+  const dx = x - w.x;
+  const dy = y - w.y;
+  const r2 = dx * dx + dy * dy;
+  if (r2 === 0) return [0, 0];
+  // B/r along the counterclockwise unit (−dy, dx)/r: inside μ₀I/(2πR²), outside μ₀I/(2πr²)
+  const k = (MU0 * w.I) / (2 * Math.PI * Math.max(r2, w.R * w.R));
+  return [-k * dy, k * dx];
+}
+
+/** Magnitude of the thick wire's field at distance r from its axis [T]. */
+export const thickWireField = (I: number, R: number, r: number): number =>
+  r < R ? (MU0 * Math.abs(I) * r) / (2 * Math.PI * R * R) : (MU0 * Math.abs(I)) / (2 * Math.PI * r);
+
+/**
+ * The fraction of a disc (centre (cx, cy), radius R) that lies inside a closed polygon, by counting
+ * the centres of an n×n grid of equal cells over the disc's bounding square. For a uniform current
+ * this fraction times I is the current the path encloses. Error ≈ perimeter·cell/area, below 1% at
+ * the default n.
+ */
+export function discFractionInside(path: readonly Vec2[], cx: number, cy: number, R: number, n = 240): number {
+  let inDisc = 0;
+  let both = 0;
+  const h = (2 * R) / n;
+  for (let i = 0; i < n; i++) {
+    const x = cx - R + (i + 0.5) * h;
+    for (let j = 0; j < n; j++) {
+      const y = cy - R + (j + 0.5) * h;
+      if ((x - cx) ** 2 + (y - cy) ** 2 > R * R) continue;
+      inDisc++;
+      if (inside(path, x, y)) both++;
+    }
+  }
+  return inDisc === 0 ? 0 : both / inDisc;
 }
