@@ -1,0 +1,23 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below) on the
+# `verified` date. `why` claims only what the title, the upload description and its chapter list support;
+# the length comes from the watch page (lengthSeconds).
+
+- id: v-6-9-images
+  youtubeId: JN57M_DFNk0
+  title: 'Why do Metals Act like Mirrors for Charges? | The Method of Images the Intuitive Way'
+  channel: Slipping Hexagons
+  lang: en
+  captions: []
+  minutes: 6
+  why: 'סרטון באנגלית על שיטת מטעני הדמות במקרה הקלסי של מטען מול מתכת. לפי התיאור שלו, הוא מסביר את המקרה הזה בעזרת סופרפוזיציה, בלי משפט היחידות, כדי שהדמות לא תיראה כמו קסם; לפי רשימת הפרקים, הבעיה מוצגת מ-0:55 והפתרון מ-4:43. אחרי השיעור השוו: אנחנו הצדקנו את הדמות במשפט היחידות.'
+  verified: '2026-11-02'
+
+- id: v-6-9-saddle
+  youtubeId: XTJznUkAmIY
+  title: 'Rotating Saddle'
+  channel: Harvard Natural Sciences Lecture Demonstrations
+  lang: en
+  captions: []
+  minutes: 3.5
+  why: 'הדגמה מהרווארד, כמעט בלי דיבור: לפי התיאור, כדור על משטח בצורת אוכף נשאר יציב כשהאוכף מסתובב במהירות המתאימה. האוכף הוא "פוטנציאל" שאין לו מינימום, כמו פוטנציאל חשמלי במקום ריק, והסיבוב הופך לסירוגין את הכיוון היציב והלא יציב. לפי התיאור זה אנלוג מכני למלכודת פאול, שבה כולאים יונים בשדה חשמלי משתנה, כדי לעקוף את משפט ארנשו.'
+  verified: '2026-11-02'

@@ -1,0 +1,474 @@
+# Workbook, lesson 6.9 (Poisson, Laplace, images). Format and rules: see .claude/CLAUDE.md, "Worked examples,
+# workbook" and "Chapter 6". Every number was recomputed with src/physics (constants.ts EPS0_DISPLAY,
+# laplace.ts imageForce/inducedDensity/imagePotential, relaxation.ts lineImage*, sphereImage*); script
+# recompute-6-9.ts in the session scratchpad. In a >- block, consecutive lines fold into one paragraph: every
+# part (א, ב, …) starts after a blank line.
+
+lesson: '6.9'
+practice:
+  - id: W-6.9-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.9-1]
+    prompt: >-
+      בתוך כדור טעון הפוטנציאל הוא $V = V_0 - \beta\left(x^2 + y^2 + z^2\right)$, עם $\beta = 1000\,\text{V/m}^2$.
+
+      א. מה צפיפות המטען בתוך הכדור?
+
+      ב. מה גודל השדה במרחק $r = 5\,\text{cm}$ מהמרכז, ולאן הוא מצביע?
+    answer: >-
+      א. $\rho = 6\beta\varepsilon_0 \approx 5.31\cdot10^{-8}\,\text{C/m}^3$, חיובי.
+
+      ב. $100\,\text{V/m}$, החוצה מהמרכז.
+    solution:
+      - kind: given
+        text: >-
+          $V = V_0 - \beta r^2$, $\beta = 1000\,\text{V/m}^2$, $r = 0.05\,\text{m}$.
+      - kind: law
+        text: >-
+          משוואת פואסון, $\nabla^2 V = -\rho/\varepsilon_0$, ו-$\vec E = -\nabla V$.
+      - kind: manipulation
+        text: >-
+          לכל אחד משלושת הכיוונים $\partial^2 V/\partial x^2 = -2\beta$, ולכן $\nabla^2 V = -6\beta$ ו-$\rho = 6\beta\varepsilon_0$. הגרדיאנט: $\nabla V = -2\beta(x, y, z)$, ולכן $\vec E = 2\beta\,\vec r$, בגודל $2\beta r$ והחוצה.
+      - kind: limit
+        text: >-
+          במרכז, $r = 0$, השדה אפס, כמו שהסימטריה דורשת. השדה גדל כמו $r$, כמו בתוך כדור טעון באחידות לפי חוק גאוס (שיעור 1.8), ו-$\beta \to 0$ נותן $\rho \to 0$.
+      - kind: units
+        text: >-
+          $\beta\varepsilon_0$: $\text{V/m}^2\cdot\text{C}^2/(\text{N}\cdot\text{m}^2) = \text{C/m}^3$; $\beta r$: $\text{V/m}$.
+      - kind: substitution
+        text: >-
+          א. $\rho = 6\cdot1000\cdot8.85\cdot10^{-12} \approx 5.31\cdot10^{-8}\,\text{C/m}^3$.
+
+          ב. $E = 2\cdot1000\cdot0.05 = 100\,\text{V/m}$.
+      - kind: result
+        text: >-
+          א. $5.31\cdot10^{-8}\,\text{C/m}^3$, חיובי. ב. $100\,\text{V/m}$, החוצה מהמרכז.
+
+  - id: W-6.9-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-6.9-1, OBJ-6.9-2]
+    prompt: >-
+      ($a$ ו-$b$ קבועים חיוביים.) באילו מהפוטנציאלים הבאים אין מטען בשום מקום? באילו יש, ומה סימנו?
+
+      1. $V = ax + by$. 2. $V = a\left(x^2 + y^2\right)$. 3. $V = axy$. 4. $V = a\left(x^2 - y^2\right)$. 5. $V = a\left(x^2 + y^2 - 2z^2\right)$.
+
+      ב. לפוטנציאל 2 יש מינימום בראשית. איך זה מתיישב עם הכלל "באזור ריק אין מינימום"?
+    answer: >-
+      1, 3, 4 ו-5: אין מטען. 2: יש מטען שלילי, $\rho = -4a\varepsilon_0$.
+
+      ב. דווקא בגלל המינימום: ב-2 האזור לא ריק, ויש בו מטען שלילי.
+    solution:
+      - kind: law
+        text: >-
+          $\nabla^2 V = -\rho/\varepsilon_0$: אין מטען בדיוק כשסכום שלוש הנגזרות השניות אפס.
+      - kind: manipulation
+        text: >-
+          1. כל הנגזרות השניות אפס. 2. $2a + 2a = 4a$. 3. $\partial^2(axy)/\partial x^2 = 0$, וכך גם לפי $y$: סכום אפס. 4. $2a - 2a = 0$. 5. $2a + 2a - 4a = 0$.
+      - kind: reasoning
+        text: >-
+          רק ב-2 הלפלסיאן שונה מאפס, $\nabla^2 V = 4a > 0$, ולכן $\rho = -4a\varepsilon_0 < 0$. פוטנציאל שבנקודה נמוך מהממוצע של סביבתו מעיד על מטען שלילי שם.
+      - kind: limit
+        text: >-
+          כש-$a \to 0$ כל הפוטנציאלים קבועים (או קוויים, ב-1), ואין מטען בשום מקום; וב-3 וב-4 יש נקודות אוכף, לא שיא ולא שקע, כמו שמשוואת לפלס מתירה.
+      - kind: result
+        text: >-
+          אין מטען ב-1, 3, 4, 5; ב-2 מטען שלילי, $\rho = -4a\varepsilon_0$. המינימום של 2 אפשרי רק כי שם יש מטען.
+
+  - id: W-6.9-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.9-2]
+    prompt: >-
+      רשת רלקסציה חד-ממדית: חמש נקודות בשורה, במרווחים שווים. הנקודה השמאלית קבועה ב-$0\,\text{V}$ והימנית ב-$80\,\text{V}$; שלוש הנקודות האמצעיות, $A$, $B$, $C$ (משמאל לימין), חופשיות ומתחילות מ-$0$. בכל סבב של שיטת יעקובי כל נקודה חופשית מקבלת את הממוצע של שתי שכנותיה מהסבב **הקודם**.
+
+      א. מה הערכים של $A$, $B$ ו-$C$ אחרי הסבב הראשון ואחרי השני?
+
+      ב. לאילו ערכים הרשת מתכנסת? הסבירו בלי לחשב סבבים.
+    answer: >-
+      א. אחרי סבב 1: $0$, $0$, $40\,\text{V}$. אחרי סבב 2: $0$, $20$, $40\,\text{V}$.
+
+      ב. $20$, $40$, $60\,\text{V}$: קו ישר בין $0$ ל-$80\,\text{V}$.
+    solution:
+      - kind: given
+        text: >-
+          קצוות: $0$ ו-$80\,\text{V}$; התחלה: $A = B = C = 0$. בממד אחד הממוצע הוא של שתי שכנות.
+      - kind: substitution
+        text: >-
+          סבב 1: $A = (0 + 0)/2 = 0$, $B = (0 + 0)/2 = 0$, $C = (0 + 80)/2 = 40\,\text{V}$.
+
+          סבב 2: $A = (0 + 0)/2 = 0$, $B = (0 + 40)/2 = 20\,\text{V}$, $C = (0 + 80)/2 = 40\,\text{V}$.
+      - kind: law
+        text: >-
+          בפתרון כל נקודה שווה לממוצע שכנותיה, כלומר $V'' = 0$ בממד אחד: $V$ קווי בין הקצוות.
+      - kind: limit
+        text: >-
+          אם שני הקצוות היו שווים, הפתרון היה קבוע; כאן קו ישר מ-$0$ ל-$80\,\text{V}$ בארבעה מרווחים: $20\,\text{V}$ לכל מרווח. ואכן $A = (0 + 40)/2$, $B = (20 + 60)/2$, $C = (40 + 80)/2$.
+      - kind: result
+        text: >-
+          א. $(0, 0, 40)$ ואחר כך $(0, 20, 40)$. ב. $(20, 40, 60)\,\text{V}$.
+
+  - id: W-6.9-04
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.9-2]
+    prompt: >-
+      ממציא מציע "מלכודת" ליון חיובי: שישה מטענים חיוביים קבועים, אחד על כל צד של היון (מעל, מתחת, מימין, משמאל, מלפנים ומאחור), כולם באותו מרחק ממנו.
+
+      א. הראו שבמרכז הכוח על היון אפס.
+
+      ב. קבעו ונמקו בלי חישוב: האם היון בשיווי משקל יציב?
+
+      ג. מלכודות יונים אמיתיות משתמשות בשדה חשמלי שמשתנה בזמן, או משלבות שדה מגנטי. למה הן לא סותרות את מה שמצאתם בסעיף ב?
+    answer: >-
+      א. מהסימטריה: כל זוג מטענים נגדיים דוחה בכוחות שווים והפוכים.
+
+      ב. לא: במרכז הריק אין לפוטנציאל מינימום (משפט ארנשו), ויש כיוון שבו היון בורח.
+
+      ג. משפט ארנשו עוסק רק בכוחות אלקטרוסטטיים, שדה חשמלי קבוע בזמן.
+    solution:
+      - kind: reasoning
+        text: >-
+          א. כל מטען דוחה את היון בכוח $kQq/a^2$ הרחק ממנו, והמטען שמולו דוחה בכוח שווה בכיוון ההפוך. שלושת הזוגות מתבטלים.
+      - kind: law
+        text: >-
+          יציבות של מטען חיובי דורשת מינימום של הפוטנציאל של המטענים האחרים, אבל במרכז, שבו אין מטענים אחרים, הפוטנציאל שלהם מקיים $\nabla^2 V = 0$: סכום שלוש הנגזרות השניות אפס.
+      - kind: reasoning
+        text: >-
+          ב. בכיוונים שבהם $\partial^2 V/\partial x_i^2 > 0$ היון חוזר; הסכום אפס, ולכן לפחות כיוון אחד נותן ערך שלילי או אפס, ושם הוא לא חוזר. (בסידור הזה הנגזרות השניות בשלושת הצירים שוות זו לזו מהסימטריה, ולכן כל אחת אפס; מה שקובע הוא איברים מסדר גבוה יותר, והם מוציאים את היון בכיוון כלשהו שבין הצירים.)
+      - kind: limit
+        text: >-
+          כש-$a \to \infty$ אין כוח בשום כיוון, ושיווי המשקל "אדיש": גם זה לא יציב. בשום מקרה גבולי לא מתקבלת יציבות.
+      - kind: reasoning
+        text: >-
+          ג. ההוכחה השתמשה בכך ש-$V$ של שדה קבוע מקיים את משוואת לפלס ושהכוח הוא $-q\nabla V$. בשדה שמשתנה בזמן הכיוון היציב והבורח מתחלפים מהר, והיון ממוצע מוחזר; בשדה מגנטי יש כוח לורנץ, שאינו גרדיאנט של פוטנציאל חשמלי.
+      - kind: result
+        text: >-
+          א. אפס מהסימטריה. ב. לא יציב: משפט ארנשו. ג. המשפט חל רק על כוחות אלקטרוסטטיים.
+
+  - id: W-6.9-05
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.9-1]
+    prompt: >-
+      שכבה עבה מאוד של חומר טעון באחידות, בצפיפות $\rho = 1\cdot10^{-6}\,\text{C/m}^3$, ממלאת את האזור $-a < x < a$, עם $a = 1\,\text{cm}$. הפוטנציאל תלוי רק ב-$x$, והסימטריה אומרת ש-$E = 0$ במישור האמצע, $x = 0$.
+
+      א. פתרו את משוואת פואסון בתוך השכבה ומצאו את $V(x) - V(0)$.
+
+      ב. מה הפרש הפוטנציאלים בין פני השכבה לאמצע שלה, ומה השדה על פני השכבה?
+    answer: >-
+      א. $V(x) - V(0) = -\dfrac{\rho x^2}{2\varepsilon_0}$.
+
+      ב. $V(a) - V(0) \approx -5.65\,\text{V}$; $E(a) = \rho a/\varepsilon_0 \approx 1.13\cdot10^{3}\,\text{V/m}$, החוצה מהשכבה.
+    solution:
+      - kind: given
+        text: >-
+          $\rho = 10^{-6}\,\text{C/m}^3$, $a = 0.01\,\text{m}$, $E(0) = 0$.
+      - kind: law
+        text: >-
+          משוואת פואסון בממד אחד: $\dfrac{d^2 V}{dx^2} = -\dfrac{\rho}{\varepsilon_0}$.
+      - kind: manipulation
+        text: >-
+          אינטגרל אחד: $\dfrac{dV}{dx} = -\dfrac{\rho}{\varepsilon_0}x + C$. במישור האמצע $E = -dV/dx = 0$, ולכן $C = 0$. אינטגרל שני: $V(x) = V(0) - \dfrac{\rho x^2}{2\varepsilon_0}$. השדה: $E = -dV/dx = \dfrac{\rho x}{\varepsilon_0}$.
+      - kind: limit
+        text: >-
+          כש-$\rho \to 0$ הפוטנציאל קבוע ואין שדה. השדה על פני השכבה, $\rho a/\varepsilon_0$, הוא בדיוק מה שחוק גאוס נותן לשכבה (שיעור 1.8): כמו לוח עם $\sigma = 2\rho a$, ששדהו $\sigma/(2\varepsilon_0)$.
+      - kind: units
+        text: >-
+          $\rho a^2/\varepsilon_0$: $\text{C/m}^3\cdot\text{m}^2\cdot\text{N}\cdot\text{m}^2/\text{C}^2 = \text{N}\cdot\text{m/C} = \text{V}$.
+      - kind: substitution
+        text: >-
+          $V(a) - V(0) = -\dfrac{10^{-6}\cdot0.01^2}{2\cdot8.85\cdot10^{-12}} \approx -5.65\,\text{V}$; $E(a) = \dfrac{10^{-6}\cdot0.01}{8.85\cdot10^{-12}} \approx 1.13\cdot10^{3}\,\text{V/m}$.
+      - kind: result
+        text: >-
+          א. $-\rho x^2/(2\varepsilon_0)$. ב. $-5.65\,\text{V}$; $1.13\cdot10^{3}\,\text{V/m}$, החוצה.
+
+  - id: W-6.9-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.9-3]
+    prompt: >-
+      במרכז קליפה כדורית מוליכה ברדיוס $R = 20\,\text{cm}$ נמצא מטען $q = 2\,\text{nC}$. הקליפה מחוברת למקור של $300\,\text{V}$.
+
+      א. נחשו פוטנציאל בצורה $V(r) = \dfrac{kq}{r} + C$ בתוך הקליפה, ומצאו את $C$ מתנאי השפה.
+
+      ב. נמקו: למה זה הפתרון היחיד בתוך הקליפה?
+
+      ג. מה הפוטנציאל במרחק $10\,\text{cm}$ מהמרכז?
+    answer: >-
+      א. $C = 300\,\text{V} - kq/R = 210\,\text{V}$.
+
+      ב. הניחוש מקיים את משוואת פואסון (המטען היחיד הוא $q$ במרכז) ואת תנאי השפה; לפי משפט היחידות זה הפתרון.
+
+      ג. $390\,\text{V}$.
+    solution:
+      - kind: law
+        text: >-
+          משפט היחידות: בתוך הקליפה המטען נתון ($q$ במרכז) והפוטנציאל על השפה נתון ($300\,\text{V}$), ולכן יש פתרון אחד.
+      - kind: reasoning
+        text: >-
+          $kq/r$ מקיים את משוואת פואסון עם המטען הנקודתי במרכז, וקבוע לא משנה את הלפלסיאן, ולכן $kq/r + C$ מקיים את המשוואה לכל $C$. תנאי השפה בוחר את $C$: $kq/R + C = 300\,\text{V}$.
+      - kind: substitution
+        text: >-
+          $kq/R = 9\cdot10^{9}\cdot2\cdot10^{-9}/0.2 = 90\,\text{V}$, ולכן $C = 210\,\text{V}$. ב-$r = 0.1\,\text{m}$: $V = 9\cdot10^{9}\cdot2\cdot10^{-9}/0.1 + 210 = 180 + 210 = 390\,\text{V}$.
+      - kind: limit
+        text: >-
+          כש-$q \to 0$ הפוטנציאל בפנים קבוע, $300\,\text{V}$, כמו בדוגמה על החלל במוליך. וב-$r = R$ התוצאה נותנת $300\,\text{V}$, כמו שצריך.
+      - kind: result
+        text: >-
+          א. $C = 210\,\text{V}$. ב. משפט היחידות. ג. $390\,\text{V}$.
+
+  - id: W-6.9-07
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.9-4]
+    prompt: >-
+      מטען $q = 5\,\text{nC}$ נמצא במרחק $d = 10\,\text{cm}$ מעל משטח מתכת גדול ומוארק.
+
+      א. מה השדה החשמלי על פני המשטח, בנקודה שמתחת למטען, ומה כיוונו? השוו לשדה של המטען לבדו באותה נקודה.
+
+      ב. מה צפיפות המטען המושרה שם?
+    answer: >-
+      א. $9\cdot10^{3}\,\text{N/C}$, בניצב למשטח, לתוכו; פי 2 מהשדה של המטען לבדו.
+
+      ב. $\sigma \approx -7.96\cdot10^{-8}\,\text{C/m}^2$.
+    solution:
+      - kind: law
+        text: >-
+          מעל המשטח: $q$ ודמות $-q$ במרחק $d$ מתחת למשטח. ליד פני מוליך: $\sigma = \varepsilon_0 E_\perp$.
+      - kind: manipulation
+        text: >-
+          בנקודה שמתחת למטען, $q$ (במרחק $d$ מעליה) דוחה מטען בוחן חיובי כלפי מטה, והדמות (במרחק $d$ מתחתיה) מושכת אותו כלפי מטה: $E = \dfrac{kq}{d^2} + \dfrac{kq}{d^2} = \dfrac{2kq}{d^2}$, לתוך המשטח. לכן $\sigma = -\varepsilon_0\cdot\dfrac{2kq}{d^2} = -\dfrac{q}{2\pi d^2}$.
+      - kind: limit
+        text: >-
+          כש-$d \to \infty$ השדה והצפיפות שואפים לאפס. והצפיפות מתאימה לנוסחה הכללית $\sigma(s)$ בשיעור עם $s = 0$.
+      - kind: units
+        text: >-
+          $kq/d^2$ ב-$\text{N/C}$; $\varepsilon_0 E$: $\text{C}^2/(\text{N}\cdot\text{m}^2)\cdot\text{N/C} = \text{C/m}^2$.
+      - kind: substitution
+        text: >-
+          $E = \dfrac{2\cdot9\cdot10^{9}\cdot5\cdot10^{-9}}{0.1^2} = 9\cdot10^{3}\,\text{N/C}$ (המטען לבדו: $4.5\cdot10^{3}\,\text{N/C}$). $\sigma = -8.85\cdot10^{-12}\cdot9\cdot10^{3} \approx -7.96\cdot10^{-8}\,\text{C/m}^2$.
+      - kind: result
+        text: >-
+          א. $9\cdot10^{3}\,\text{N/C}$ לתוך המשטח, פי 2 מהמטען לבדו. ב. $-7.96\cdot10^{-8}\,\text{C/m}^2$.
+
+  - id: W-6.9-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.9-4]
+    prompt: >-
+      מטען $q = 4\,\text{nC}$ נמצא במרחק $d = 5\,\text{cm}$ מעל מישור מוליך מוארק. $s$ הוא המרחק על המישור מהנקודה שמתחת למטען.
+
+      א. באיזה מרחק $s$ הצפיפות המושרה היא חצי מהצפיפות שמתחת למטען? תנו תשובה כללית ובמספרים.
+
+      ב. כמה מטען מושרה יש בעיגול ברדיוס הזה? איזה חלק זה מכל המטען המושרה?
+    answer: >-
+      א. $s = d\sqrt{2^{2/3} - 1} \approx 0.766d \approx 3.83\,\text{cm}$.
+
+      ב. כ-$-0.825\,\text{nC}$: כ-$21\%$ מהמטען המושרה.
+    solution:
+      - kind: given
+        text: >-
+          $q = 4\cdot10^{-9}\,\text{C}$, $d = 0.05\,\text{m}$; $\sigma(s) = -\dfrac{qd}{2\pi(s^2+d^2)^{3/2}}$.
+      - kind: manipulation
+        text: >-
+          א. $\dfrac{\sigma(s)}{\sigma(0)} = \left(\dfrac{d^2}{s^2 + d^2}\right)^{3/2} = \dfrac12$, ולכן $\dfrac{s^2 + d^2}{d^2} = 2^{2/3}$, ו-$s = d\sqrt{2^{2/3} - 1}$.
+
+          ב. המטען בעיגול ברדיוס $s$ (מהאינטגרל של השיעור): $Q(s) = -q\left(1 - \dfrac{d}{\sqrt{s^2+d^2}}\right) = -q\left(1 - 2^{-1/3}\right)$.
+      - kind: limit
+        text: >-
+          החלק $1 - 2^{-1/3}$ לא תלוי ב-$d$ ולא ב-$q$: מטען רחוק יותר פורס את המטען המושרה על עיגול גדול יותר, באותה צורה. וכש-$s \to \infty$ אותה נוסחה נותנת $Q \to -q$.
+      - kind: units
+        text: >-
+          $s$ במטרים, כמו $d$; $Q$ בקולון, כמו $q$.
+      - kind: substitution
+        text: >-
+          $\sqrt{2^{2/3} - 1} \approx 0.766$, ו-$s \approx 0.766\cdot5 \approx 3.83\,\text{cm}$. $1 - 2^{-1/3} \approx 0.206$, ו-$Q \approx -0.206\cdot4 \approx -0.825\,\text{nC}$.
+      - kind: result
+        text: >-
+          א. $3.83\,\text{cm}$. ב. $-0.825\,\text{nC}$, כ-$21\%$ מהמטען המושרה.
+
+  - id: W-6.9-09
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.9-4]
+    prompt: >-
+      תיל ארוך עם צפיפות מטען קווית $\lambda = 2\,\text{nC/m}$ מתוח במקביל למשטח מתכת גדול ומוארק, במרחק $d = 5\,\text{cm}$ ממנו.
+
+      א. מה השדה על פני המשטח בנקודה שמתחת לתיל? מה צפיפות המטען המושרה שם?
+
+      ב. מה השדה החשמלי בנקודה שבאמצע בין התיל למשטח, ומה כיוונו?
+
+      ג. מה הכוח על כל מטר של התיל? כמה צריך להרחיק את התיל כדי שהכוח יקטן פי 4?
+    answer: >-
+      א. $1.44\cdot10^{3}\,\text{N/C}$, לתוך המשטח; $\sigma \approx -1.27\cdot10^{-8}\,\text{C/m}^2$.
+
+      ב. $1.92\cdot10^{3}\,\text{N/C}$, לכיוון המשטח.
+
+      ג. $7.2\cdot10^{-7}\,\text{N/m}$, לכיוון המשטח; פי 4 במרחק, $20\,\text{cm}$ (לתיל הכוח יורד כמו $1/d$).
+    solution:
+      - kind: law
+        text: >-
+          מעל המשטח: התיל ודמות $-\lambda$ במרחק $d$ מתחת למשטח (משפט היחידות). השדה של תיל ארוך $2k\lambda/r$ (שיעור 6.4); ליד פני מוליך $\sigma = \varepsilon_0 E_\perp$.
+      - kind: manipulation
+        text: >-
+          א. בנקודה שמתחת לתיל שני השדות, כל אחד $2k\lambda/d$, מצביעים לתוך המשטח: $E = 4k\lambda/d$, ו-$\sigma = -\varepsilon_0 E = -\lambda/(\pi d)$.
+
+          ב. באמצע התיל במרחק $d/2$ והדמות במרחק $3d/2$, ושני השדות מצביעים לכיוון המשטח: $E = \dfrac{2k\lambda}{d/2} + \dfrac{2k\lambda}{3d/2} = \dfrac{4k\lambda}{d}\left(1 + \dfrac13\right) = \dfrac{16k\lambda}{3d}$.
+
+          ג. $F/L = \lambda\cdot\dfrac{2k\lambda}{2d} = \dfrac{k\lambda^2}{d}$.
+      - kind: limit
+        text: >-
+          כש-$d \to \infty$ כל השדות והכוח שואפים לאפס. והכוח יורד כמו $1/d$ ולא כמו $1/d^2$, כי השדה של תיל יורד כמו $1/r$: כדי להקטין את הכוח פי 4 צריך להרחיק פי 4, לא פי 2 כמו למטען נקודתי.
+      - kind: units
+        text: >-
+          $k\lambda/d$: $\text{N}\cdot\text{m}^2/\text{C}^2\cdot\text{C/m}/\text{m} = \text{N/C}$; $\lambda/d$: $\text{C/m}^2$; $k\lambda^2/d$: $\text{N/m}$.
+      - kind: substitution
+        text: >-
+          א. $E = \dfrac{4\cdot9\cdot10^{9}\cdot2\cdot10^{-9}}{0.05} = 1.44\cdot10^{3}\,\text{N/C}$; $\sigma = -\dfrac{2\cdot10^{-9}}{\pi\cdot0.05} \approx -1.27\cdot10^{-8}\,\text{C/m}^2$.
+
+          ב. $E = \dfrac{16\cdot9\cdot10^{9}\cdot2\cdot10^{-9}}{3\cdot0.05} = 1.92\cdot10^{3}\,\text{N/C}$.
+
+          ג. $F/L = \dfrac{9\cdot10^{9}\cdot(2\cdot10^{-9})^2}{0.05} = 7.2\cdot10^{-7}\,\text{N/m}$; במרחק $4d = 20\,\text{cm}$ הוא $1.8\cdot10^{-7}\,\text{N/m}$.
+      - kind: result
+        text: >-
+          א. $1.44\cdot10^{3}\,\text{N/C}$; $-1.27\cdot10^{-8}\,\text{C/m}^2$. ב. $1.92\cdot10^{3}\,\text{N/C}$ לכיוון המשטח. ג. $7.2\cdot10^{-7}\,\text{N/m}$; $20\,\text{cm}$.
+
+  - id: W-6.9-10
+    level: bagrut
+    qualitative: true
+    objectives: [OBJ-6.9-3, OBJ-6.9-4]
+    prompt: >-
+      הפעם המשטח המתכתי לא מוארק: הוא מחובר למקור של $200\,\text{V}$. מטען $q = 1\,\text{nC}$ נמצא במרחק $d = 5\,\text{cm}$ מעליו.
+
+      א. נמקו בעזרת משפט היחידות: הפוטנציאל מעל המשטח הוא פתרון הדמות ועוד $200\,\text{V}$.
+
+      ב. מה הפוטנציאל באמצע בין המטען למשטח?
+
+      ג. האם הכוח על המטען שונה מהכוח כשהמשטח מוארק? מה הכוח?
+    answer: >-
+      א. $V = kq/r_1 - kq/r_2 + 200\,\text{V}$ מקיים את המשוואה (קבוע לא משנה את הלפלסיאן) ונותן $200\,\text{V}$ על המשטח.
+
+      ב. $440\,\text{V}$.
+
+      ג. לא שונה: $9\cdot10^{-7}\,\text{N}$ כלפי המשטח.
+    solution:
+      - kind: law
+        text: >-
+          משפט היחידות: מעל המשטח המטען נתון ($q$) והפוטנציאל על השפה נתון ($200\,\text{V}$ על המשטח). פוטנציאל שמקיים את שניהם הוא הפתרון.
+      - kind: reasoning
+        text: >-
+          א. פתרון הדמות מקיים את משוואת פואסון מעל המשטח ונותן אפס על המשטח; תוספת קבוע לא משנה אף נגזרת, ולכן הסכום עדיין מקיים את המשוואה, ועל המשטח הוא $200\,\text{V}$. (המשטח "רחוק מאוד" הוא חלק מהשפה, ולכן הפוטנציאל שם $200\,\text{V}$ ולא אפס.)
+      - kind: substitution
+        text: >-
+          ב. באמצע $r_1 = 0.025\,\text{m}$ ו-$r_2 = 0.075\,\text{m}$: $V = 9\cdot10^{9}\cdot10^{-9}\left(\dfrac{1}{0.025} - \dfrac{1}{0.075}\right) + 200 = 9\cdot26.7 + 200 \approx 440\,\text{V}$.
+
+          ג. $F = \dfrac{kq^2}{(2d)^2} = \dfrac{9\cdot10^{9}\cdot10^{-18}}{0.1^2} = 9\cdot10^{-7}\,\text{N}$.
+      - kind: reasoning
+        text: >-
+          ג. הכוח נקבע על ידי השדה, $\vec E = -\nabla V$, והקבוע $200\,\text{V}$ לא משנה את הגרדיאנט. לכן הכוח זהה לכוח שהמשטח המוארק מפעיל.
+      - kind: limit
+        text: >-
+          כש-$q \to 0$ נשאר $V = 200\,\text{V}$ בכל מקום: משטח בודד בפוטנציאל קבוע, בלי שדה. כש-$200\,\text{V} \to 0$ חוזרים למשטח המוארק.
+      - kind: result
+        text: >-
+          א. דמות ועוד קבוע. ב. $440\,\text{V}$. ג. אותו כוח, $9\cdot10^{-7}\,\text{N}$ כלפי המשטח.
+
+challenge:
+  - id: W-6.9-c1
+    stars: 1
+    objectives: [OBJ-6.9-4]
+    prompt: >-
+      מטען נקודתי $q$ נמצא במרחק $d$ (בניצב) מנקודה O על משטח מתכת שטוח, אינסופי ומוארק.
+
+      א. הראו בשיטת הדמויות שגודל השדה בנקודה P על המשטח, במרחק $r$ מ-O, הוא $E(r) = \dfrac{qd}{2\pi\varepsilon_0\left(r^2 + d^2\right)^{3/2}}$.
+
+      ב. כמה עבודה צריך לעשות כדי להרחיק את המטען מהמשטח עד אינסוף? (רמז: כשהמטען זז, גם הדמות זזה.)
+
+      ג. אלקטרון שיוצא ממתכת מתחיל, בערך, במרחק של קוטר אטום, $0.1\,\text{nm}$, מפני השטח. מה האנרגיה המינימלית שהוא צריך כדי להשתחרר, באלקטרון-וולט, לפי המודל הזה?
+    answer: >-
+      א. $E = 2kqd/(r^2+d^2)^{3/2}$, בניצב למשטח.
+
+      ב. $W = \dfrac{kq^2}{4d}$, חצי ממה שהיה נדרש מול דמות קבועה במקומה.
+
+      ג. כ-$3.6\,\text{eV}$.
+    solution:
+      - kind: law
+        text: >-
+          מעל המשטח השדה הוא של $q$ ושל דמות $-q$ במרחק $d$ מאחורי המשטח (משפט היחידות). הכוח על המטען במרחק $x$ מהמשטח הוא $F(x) = \dfrac{kq^2}{(2x)^2}$, משיכה לעבר המשטח.
+      - kind: manipulation
+        text: >-
+          א. כל מטען תורם ב-P שדה בגודל $kq/(r^2 + d^2)$. הרכיבים המקבילים למשטח מתבטלים, והניצבים מתחברים; הרכיב הניצב של כל אחד הוא $\dfrac{kq}{r^2+d^2}\cdot\dfrac{d}{\sqrt{r^2+d^2}}$. לכן $E = \dfrac{2kqd}{(r^2+d^2)^{3/2}} = \dfrac{qd}{2\pi\varepsilon_0(r^2+d^2)^{3/2}}$.
+
+          ב. העבודה נגד המשיכה, כשהמטען זז מ-$d$ לאינסוף והדמות זזה איתו: $W = \displaystyle\int_d^\infty \frac{kq^2}{4x^2}\,dx = \frac{kq^2}{4}\left[-\frac1x\right]_d^\infty = \frac{kq^2}{4d}$.
+      - kind: reasoning
+        text: >-
+          ב. אילו הדמות הייתה נשארת במקומה, $2d$ מהמטען, האנרגיה $-kq^2/(2d)$ הייתה דורשת עבודה $kq^2/(2d)$. אבל הדמות מתרחקת יחד עם המטען, הכוח נחלש מהר יותר, והעבודה רק חצי מזה.
+      - kind: limit
+        text: >-
+          כש-$d \to \infty$ העבודה שואפת לאפס: מטען רחוק כמעט לא מרגיש את המשטח. כש-$r \to \infty$, $E \propto 1/r^3$, כמו שדה של דיפול.
+      - kind: units
+        text: >-
+          $kq^2/d$: $\text{N}\cdot\text{m}^2/\text{C}^2\cdot\text{C}^2/\text{m} = \text{N}\cdot\text{m} = \text{J}$.
+      - kind: substitution
+        text: >-
+          ג. $W = \dfrac{9\cdot10^{9}\cdot(1.6\cdot10^{-19})^2}{4\cdot10^{-10}} \approx 5.76\cdot10^{-19}\,\text{J}$, וחלקי $1.6\cdot10^{-19}\,\text{J/eV}$: $3.6\,\text{eV}$.
+      - kind: result
+        text: >-
+          א. כנדרש. ב. $kq^2/(4d)$. ג. כ-$3.6\,\text{eV}$: מאותו סדר גודל כמו האנרגיה שנדרשת באמת כדי לשחרר אלקטרון ממתכות.
+    source:
+      name: University of Oxford, First-Year Electromagnetism, Problem Set 2 (Prof. N. Harnew)
+      year: 2022
+      problem: 'B.1, charge monopole near a flat metal surface, parts (a), (c), (d)'
+      url: https://users.physics.ox.ac.uk/~harnew/lectures/EM_ProblemSet2.pdf
+      verified: '2026-11-02'
+      adapted: true
+
+  - id: W-6.9-c2
+    stars: 2
+    objectives: [OBJ-6.9-3, OBJ-6.9-4]
+    prompt: >-
+      מטען נקודתי $q$ נמצא במרחק $d$ ממרכז כדור מתכת מוארק ברדיוס $R < d$. את השדה של המטען המושרה על הכדור אפשר להחליף, **מחוץ לכדור**, בשדה של מטען דמות אחד $q'$, שיושב בתוך הכדור על הקו שבין המרכז ל-$q$, במרחק $d'$ מהמרכז.
+
+      א. מה הפוטנציאל של הכדור? דרשו שהפוטנציאל של $q$ ושל $q'$ יתאפס בנקודה הקרובה ביותר ל-$q$ על הכדור ובנקודה הרחוקה ביותר, ומצאו את $q'$ ואת $d'$. בדקו שהתוצאה מתאימה לשיעור 2.5.
+
+      ב. מה גודל הכוח על $q$? האם הוא דוחה או מושך? חשבו אותו עבור $q = 3\,\text{nC}$, $d = 30\,\text{cm}$ ו-$R = 10\,\text{cm}$.
+
+      ג. הנקודה A נמצאת על הקו שעובר דרך $q$ ודרך מרכז הכדור, מעבר לכדור, במרחק $r$ מ-$q$. מצאו את השדה ב-A. הראו שרחוק מאוד ($r \gg d$) השדה הוא בקירוב השדה של מטען $q(1 - R/d)$, והסיקו: באיזה גבול הכדור מסתיר את $q$ לגמרי?
+    answer: >-
+      א. $V = 0$; $q' = -\dfrac{qR}{d}$, $d' = \dfrac{R^2}{d}$.
+
+      ב. $F = \dfrac{kq^2Rd}{(d^2 - R^2)^2}$, משיכה; $3.80\cdot10^{-7}\,\text{N}$.
+
+      ג. $E_A = \dfrac{kq}{r^2} - \dfrac{kqR/d}{\left(r - d + R^2/d\right)^2}$ (ערך חיובי: הרחק מ-$q$); רחוק מאוד $E_A \approx \dfrac{kq(1 - R/d)}{r^2}$; הסתרה מלאה רק בגבול $d \to R$.
+    solution:
+      - kind: law
+        text: >-
+          הכדור מוארק, ולכן $V = 0$ על כל פני הכדור. לפי משפט היחידות, אם $q$ ו-$q'$ נותנים יחד $V = 0$ על כל הכדור (ו-$V \to 0$ באינסוף), זה הפוטנציאל המדויק מחוץ לכדור.
+      - kind: manipulation
+        text: >-
+          א. בנקודה הקרובה (מרחק $d - R$ מ-$q$, ו-$R - d'$ מ-$q'$): $\dfrac{q}{d - R} + \dfrac{q'}{R - d'} = 0$. בנקודה הרחוקה: $\dfrac{q}{d + R} + \dfrac{q'}{R + d'} = 0$. מחלקים את שתי המשוואות זו בזו: $\dfrac{d + R}{d - R} = \dfrac{R + d'}{R - d'}$, ומכאן $d' = R^2/d$. מציבים: $q' = -q\dfrac{R - d'}{d - R} = -q\dfrac{R(d - R)/d}{d - R} = -\dfrac{qR}{d}$, בדיוק המטען $Q = -qR/D$ של הכדור המוארק בשיעור 2.5. (מעבר לשתי הנקודות האלה, אפשר לבדוק שהפוטנציאל מתאפס בכל נקודה על הכדור.)
+
+          ב. המרחק בין $q$ ל-$q'$ הוא $d - R^2/d = (d^2 - R^2)/d$, ולכן $F = \dfrac{k\,q\,(qR/d)}{\left((d^2 - R^2)/d\right)^2} = \dfrac{kq^2Rd}{(d^2 - R^2)^2}$. המטענים בסימנים הפוכים: משיכה.
+
+          ג. A במרחק $r$ מ-$q$ ובמרחק $r - (d - d')$ מ-$q'$: $E_A = \dfrac{kq}{r^2} + \dfrac{kq'}{(r - d + R^2/d)^2}$. כש-$r \gg d$, בקירוב $(1 + a)^{-2} \approx 1 - 2a$, האיבר השני הוא בערך $kq'/r^2$, ולכן $E_A \approx \dfrac{k(q + q')}{r^2} = \dfrac{kq(1 - R/d)}{r^2}$.
+      - kind: limit
+        text: >-
+          כש-$R \to 0$ אין כדור: $q' \to 0$ והכוח אפס. כש-$d \gg R$ הכוח הוא בערך $kq^2R/d^3$, חלש מאוד. כש-$d \to R$ (המטען כמעט נוגע בכדור), $q' \to -q$ ו-$d' \to R$, והכדור נראה מקרוב כמו מישור: הכוח שואף ל-$kq^2/(2s)^2$ עם $s = d - R$, ושדה A הרחוק שואף לאפס: זה הגבול היחיד שבו הכדור מסתיר את $q$ לגמרי.
+      - kind: units
+        text: >-
+          $\dfrac{kq^2Rd}{(d^2-R^2)^2}$: $\text{N}\cdot\text{m}^2/\text{C}^2\cdot\text{C}^2\cdot\text{m}^2/\text{m}^4 = \text{N}$.
+      - kind: substitution
+        text: >-
+          ב. $F = \dfrac{9\cdot10^{9}\cdot(3\cdot10^{-9})^2\cdot0.1\cdot0.3}{(0.09 - 0.01)^2} = \dfrac{2.43\cdot10^{-9}}{6.4\cdot10^{-3}} \approx 3.80\cdot10^{-7}\,\text{N}$. (הדמות: $-1\,\text{nC}$, במרחק $3.33\,\text{cm}$ מהמרכז.)
+      - kind: result
+        text: >-
+          א. $V = 0$, $q' = -qR/d$, $d' = R^2/d$. ב. משיכה, $kq^2Rd/(d^2 - R^2)^2 \approx 3.80\cdot10^{-7}\,\text{N}$. ג. רחוק מאוד כמו מטען $q(1 - R/d)$; הסתרה מלאה רק כש-$d \to R$.
+    source:
+      name: International Physics Olympiad (IPhO)
+      year: 2010
+      problem: 'Theoretical Problem 1, Image of a charge in a metallic object: Tasks 1 and 2'
+      url: https://noic.com.br/wp-content/uploads/2023/05/IPhO-2010-Ingles.pdf
+      verified: '2026-11-02'
+      adapted: true
