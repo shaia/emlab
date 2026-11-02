@@ -558,7 +558,9 @@ challenge:
         text: >-
           א. $I(1 - s^2/a^2)$, כלפי חוץ. ב. בכל המשטחים $0.08\,\text{A}$, אבל מחולק אחרת בין הולכה להעתקה. ג. $B = 4\cdot10^{-7}\,\text{T}$, משיק למעגל סביב הציר.
     source:
-      name: MIT 8.02 ESG Independent Study, Unit 15 (Maxwell's Equations)
+      # The unit PDF prints no year. The ESG page that links it, .../8.02IS/units/ (opened 2026-11-02), is headed
+      # "Physics at ESG - Fall 2004", and its list item "Unit 15 - Maxwell's Equations" links unit15.pdf.
+      name: MIT 8.02 ESG Independent Study (Fall 2004), Unit 15 (Maxwell's Equations)
       year: 2004
       problem: 'Supplementary Problem 2: four surfaces bounded by one circle in a charging capacitor'
       url: https://stuff.mit.edu/afs/athena/course/8/8.02-esg/8.02IS/units/unit15.pdf
