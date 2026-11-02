@@ -1,0 +1,515 @@
+# Workbook, lesson 6.6 (line integral, potential and gradient). Format and rules: see .claude/CLAUDE.md,
+# "Worked examples, workbook" and the chapter 6 solution format (law → derivation → symbolic result →
+# limit check → unit check → numbers). Every number was recomputed with src/physics (lineintegral.ts,
+# continuous.ts, constants.ts K, EPS0, E_CHARGE, M_ELECTRON); scripts recompute-6-6*.ts in the session
+# scratchpad. In a >- block, consecutive lines fold into one paragraph: every part (א, ב, …) starts after
+# a blank line.
+
+lesson: '6.6'
+practice:
+  - id: W-6.6-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.6-1]
+    prompt: >-
+      בין שני לוחות אופקיים גדולים יש שדה אחיד שמצביע **למטה**, $\vec E = (0,\,-800)\,\text{N/C}$ (x ימינה, y למעלה). מטען בוחן עובר מהנקודה $A = (0,\,0.05)\,\text{m}$ לנקודה $B = (0.12,\,0.2)\,\text{m}$.
+
+      א. חשבו את $\int_A^B \vec E\cdot d\vec l$.
+
+      ב. מה $V(B) - V(A)$? האם B בפוטנציאל גבוה או נמוך מ-A?
+    answer: >-
+      א. $-120\,\text{V}$.
+
+      ב. $V(B) - V(A) = +120\,\text{V}$: B בפוטנציאל גבוה יותר.
+    solution:
+      - kind: given
+        text: >-
+          $E_x = 0$, $E_y = -800\,\text{N/C}$; $\Delta x = 0.12\,\text{m}$, $\Delta y = 0.15\,\text{m}$.
+      - kind: law
+        text: >-
+          $V(B) - V(A) = -\int_A^B \vec E\cdot d\vec l$, ובכל צעד $\vec E\cdot d\vec l = E_x\,dx + E_y\,dy$.
+      - kind: manipulation
+        text: >-
+          $E_x = 0$, ולכן רק הצעדים בכיוון y תורמים. $E_y$ קבוע, ולכן $\int_A^B \vec E\cdot d\vec l = E_y\,\Delta y$, בכל מסלול.
+      - kind: limit
+        text: >-
+          אם B באותו גובה כמו A ($\Delta y = 0$), ההפרש אפס: קו אופקי הוא קו שווה פוטנציאל בשדה אנכי.
+      - kind: units
+        text: >-
+          $\text{N/C}\cdot\text{m} = \text{V}$.
+      - kind: substitution
+        text: >-
+          $\int_A^B \vec E\cdot d\vec l = -800\cdot0.15 = -120\,\text{V}$, ולכן $V(B) - V(A) = +120\,\text{V}$.
+      - kind: result
+        text: >-
+          א. $-120\,\text{V}$. ב. $+120\,\text{V}$: עולים נגד השדה, והפוטנציאל עולה.
+
+  - id: W-6.6-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-6.6-3]
+    prompt: >-
+      במפת פוטנציאל הקווים שווי הפוטנציאל משורטטים כל $10\,\text{V}$, והפוטנציאל עולה ככל שהולכים צפונה. ליד הנקודה A המרחק בין שני קווים סמוכים הוא $0.5\,\text{cm}$, וליד הנקודה B הוא $2\,\text{cm}$. הקווים ליד שתי הנקודות הולכים ממזרח למערב.
+
+      א. מה כיוון השדה ב-A וב-B?
+
+      ב. העריכו את עוצמת השדה בכל נקודה. פי כמה השדה ב-A חזק מהשדה ב-B?
+
+      ג. האם יכולה להיות נקודה שבה השדה מקביל לקו שווה הפוטנציאל שעובר בה? נמקו.
+    answer: >-
+      א. דרומה בשתי הנקודות.
+
+      ב. ב-A כ-$2000\,\text{V/m}$, ב-B כ-$500\,\text{V/m}$: פי 4.
+
+      ג. לא: לאורך הקו V לא משתנה, ולכן רכיב השדה לאורכו אפס.
+    solution:
+      - kind: law
+        text: >-
+          $\vec E = -\nabla V$: השדה ניצב לקווים שווי הפוטנציאל, מצביע לכיוון שבו V יורד, וגודלו הוא קצב הירידה, בערך $\Delta V/\Delta s$ בניצב לקווים.
+      - kind: reasoning
+        text: >-
+          א. הקווים מזרח-מערב, ולכן הגרדיאנט צפונה-דרומה. V עולה צפונה, ולכן $\nabla V$ צפונה והשדה דרומה.
+      - kind: substitution
+        text: >-
+          ב. ב-A: $E \approx 10/0.005 = 2000\,\text{V/m}$. ב-B: $E \approx 10/0.02 = 500\,\text{V/m}$. היחס $4$.
+      - kind: reasoning
+        text: >-
+          ג. בצעד לאורך הקו $dV = 0$, ומצד שני $dV = -\vec E\cdot d\vec l$. לכן רכיב השדה לאורך הקו אפס, והשדה (אם אינו אפס) ניצב לקו.
+      - kind: result
+        text: >-
+          א. דרומה. ב. $2000\,\text{V/m}$ ו-$500\,\text{V/m}$, פי 4: קווים צפופים, שדה חזק. ג. לא.
+
+  - id: W-6.6-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.6-3]
+    prompt: >-
+      באזור מסוים הפוטנציאל הוא $V(x, y) = 50\,x^2 + 20\,y$ (V כש-x ו-y במטרים). מצאו את השדה החשמלי בנקודה $(0.2,\,0.5)\,\text{m}$: רכיבים, עוצמה וכיוון.
+    answer: >-
+      $\vec E = (-20,\,-20)\,\text{V/m}$, $|E| \approx 28.3\,\text{V/m}$, שמאלה ולמטה (ב-45° מתחת לכיוון השלילי של ציר x).
+    solution:
+      - kind: law
+        text: >-
+          $\vec E = -\nabla V = -\left(\partial V/\partial x,\,\partial V/\partial y\right)$.
+      - kind: manipulation
+        text: >-
+          $\partial V/\partial x = 100\,x$ (y קבוע), $\partial V/\partial y = 20$ (x קבוע). לכן $\vec E = (-100x,\,-20)$.
+      - kind: limit
+        text: >-
+          על הקו $x = 0$ נשאר רק הרכיב $E_y = -20\,\text{V/m}$: שם V משתנה רק בכיוון y.
+      - kind: units
+        text: >-
+          המקדם 50 ביחידות $\text{V/m}^2$, ולכן $100x$ ביחידות $\text{V/m}$; גם 20 ביחידות $\text{V/m}$.
+      - kind: substitution
+        text: >-
+          $E_x = -100\cdot0.2 = -20\,\text{V/m}$, $E_y = -20\,\text{V/m}$, $|E| = \sqrt{20^2 + 20^2} \approx 28.3\,\text{V/m}$.
+      - kind: result
+        text: >-
+          $\vec E = (-20,\,-20)\,\text{V/m}$, בעוצמה $28.3\,\text{V/m}$, שמאלה ולמטה.
+
+  - id: W-6.6-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.6-1, OBJ-6.6-2]
+    prompt: >-
+      מטען נקודתי $Q = +3\,\text{nC}$ בראשית. מטען בוחן עובר מ-$A = (0.1,\,0)\,\text{m}$ ל-$B = (0,\,0.4)\,\text{m}$ במסלול בשני חלקים: קודם לאורך רבע מעגל ברדיוס $0.1\,\text{m}$ עד $(0,\,0.1)$, ואחר כך בקו ישר רדיאלי עד B.
+
+      א. מה התרומה של רבע המעגל ל-$\int \vec E\cdot d\vec l$? נמקו.
+
+      ב. חשבו את $\int_A^B \vec E\cdot d\vec l$ ואת $V(B) - V(A)$.
+
+      ג. האם התשובה הייתה משתנה במסלול ישר מ-A ל-B? נמקו.
+    answer: >-
+      א. אפס: על המעגל השדה רדיאלי והצעד משיק.
+
+      ב. $\int \vec E\cdot d\vec l = 202.5\,\text{V}$, ו-$V(B) - V(A) = -202.5\,\text{V}$.
+
+      ג. לא: השדה משמר, והתוצאה תלויה רק ב-A וב-B.
+    solution:
+      - kind: given
+        text: >-
+          $Q = 3\cdot10^{-9}\,\text{C}$, $r_A = 0.1\,\text{m}$, $r_B = 0.4\,\text{m}$; $kQ = 27\,\text{N}\cdot\text{m}^2/\text{C}$.
+      - kind: law
+        text: >-
+          $V(B) - V(A) = -\int_A^B \vec E\cdot d\vec l$, עם $\vec E = (kQ/r^2)\,\hat r$.
+      - kind: reasoning
+        text: >-
+          א. על רבע המעגל השדה רדיאלי והצעד משיק למעגל, ניצב לשדה: $\vec E\cdot d\vec l = 0$ בכל חתיכה.
+      - kind: manipulation
+        text: >-
+          ב. בקטע הרדיאלי $\vec E\cdot d\vec l = (kQ/r^2)\,dr$, ולכן $\int_{0.1}^{0.4} \dfrac{kQ}{r^2}\,dr = kQ\left(\dfrac{1}{r_A} - \dfrac{1}{r_B}\right)$.
+      - kind: limit
+        text: >-
+          אם $r_B \to \infty$, האינטגרל שואף ל-$kQ/r_A = V(A)$, כמו שצריך כש-$V(\infty) = 0$. אם $r_B = r_A$, הוא אפס.
+      - kind: units
+        text: >-
+          $\text{N}\cdot\text{m}^2/\text{C}\cdot\text{m}^{-1} = \text{N}\cdot\text{m/C} = \text{V}$.
+      - kind: substitution
+        text: >-
+          $27\cdot(10 - 2.5) = 202.5\,\text{V}$, ולכן $V(B) - V(A) = -202.5\,\text{V}$.
+      - kind: reasoning
+        text: >-
+          ג. השדה של מטען במנוחה משמר: כל מסלול מ-A ל-B נותן את אותו אינטגרל. המסלול שבשאלה נבחר רק כי קל לחשב לאורכו.
+      - kind: result
+        text: >-
+          א. $0$. ב. $202.5\,\text{V}$; $V(B) - V(A) = -202.5\,\text{V}$. ג. לא משתנה.
+
+  - id: W-6.6-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.6-2]
+    prompt: >-
+      נתונים שני שדות, עם $b = 500\,\text{V/m}^2$: $\vec E_1 = b\,(x,\,y)$ ו-$\vec E_2 = b\,(-y,\,x)$.
+
+      א. חשבו את $\oint \vec E\cdot d\vec l$ סביב ריבוע שצלעו $0.2\,\text{m}$ ומרכזו בראשית, נגד כיוון השעון, לכל אחד מהשדות.
+
+      ב. איזה מהשדות יכול להיות שדה אלקטרוסטטי? לשדה הזה מצאו פוטנציאל $V(x, y)$, ובדקו שמינוס הגרדיאנט שלו נותן את השדה.
+    answer: >-
+      א. ל-$\vec E_1$: אפס. ל-$\vec E_2$: $40\,\text{V}$.
+
+      ב. רק $\vec E_1$, עם $V = -\tfrac12 b\,(x^2 + y^2)$ (ועוד קבוע כלשהו).
+    solution:
+      - kind: law
+        text: >-
+          שדה אלקטרוסטטי משמר: $\oint \vec E\cdot d\vec l = 0$ סביב כל מסלול סגור, ויש $V$ כך ש-$\vec E = -\nabla V$.
+      - kind: manipulation
+        text: >-
+          א. נסמן $s = 0.1\,\text{m}$, חצי צלע. ל-$\vec E_1$: בצלע הימנית ($x = s$, למעלה) נספר $E_y = by$, שחיובי בחצי העליון ושלילי בחצי התחתון, והסכום אפס; כך בכל צלע. ל-$\vec E_2$: בצלע הימנית $E_y = bx = bs$ קבוע ובכיוון ההליכה, תרומה $bs\cdot2s$; בצלע העליונה ($y = s$, שמאלה) $E_x = -bs$ ובכיוון ההליכה, אותה תרומה; כך בכל ארבע הצלעות: $4\cdot2bs^2 = 2b\cdot(2s)^2$, פעמיים b כפול השטח.
+      - kind: reasoning
+        text: >-
+          ב. ל-$\vec E_2$ יש מסלול סגור עם סירקולציה שונה מאפס, ולכן אין לו פוטנציאל, והוא לא יכול להיות אלקטרוסטטי. ל-$\vec E_1$ ננחש $V = -\tfrac12 b\,(x^2 + y^2)$: אז $-\partial V/\partial x = bx$ ו-$-\partial V/\partial y = by$, בדיוק $\vec E_1$.
+      - kind: limit
+        text: >-
+          ריבוע שמתכווץ לאפס נותן סירקולציה אפס גם ל-$\vec E_2$: היא גדלה כמו השטח.
+      - kind: units
+        text: >-
+          $\text{V/m}^2\cdot\text{m}^2 = \text{V}$.
+      - kind: substitution
+        text: >-
+          $\oint \vec E_2\cdot d\vec l = 2\cdot500\cdot0.2^2 = 40\,\text{V}$.
+      - kind: result
+        text: >-
+          א. $0$ ו-$40\,\text{V}$. ב. רק $\vec E_1$, עם $V = -\tfrac12 b\,(x^2 + y^2)$.
+
+  - id: W-6.6-06
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.6-1, OBJ-6.6-3]
+    prompt: >-
+      בנקודה P השדה החשמלי הוא $2000\,\text{V/m}$, מזרחה. צועדים מ-P צעד קטן של $3\,\text{mm}$.
+
+      א. בכמה משתנה הפוטנציאל אם הצעד מזרחה?
+
+      ב. ואם הצעד בזווית $60°$ צפונית למזרח?
+
+      ג. לאיזה כיוון צריך לצעוד כדי שהפוטנציאל לא ישתנה? ולאיזה כדי שיעלה הכי מהר, ובכמה?
+    answer: >-
+      א. יורד ב-$6\,\text{V}$.
+
+      ב. יורד ב-$3\,\text{V}$.
+
+      ג. צפונה או דרומה; מערבה, עלייה של $6\,\text{V}$.
+    solution:
+      - kind: law
+        text: >-
+          לצעד קטן $dV = -\vec E\cdot d\vec l = -E\,ds\cos\theta$, כאשר $\theta$ הזווית בין הצעד לשדה. במילים אחרות, קצב השינוי בכיוון $\hat u$ הוא $\nabla V\cdot\hat u$, עם $\nabla V = -\vec E$.
+      - kind: manipulation
+        text: >-
+          א. $\theta = 0$: $dV = -E\,ds$. ב. $\theta = 60°$: $dV = -E\,ds\cdot\tfrac12$. ג. $dV = 0$ כש-$\theta = 90°$; העלייה הגדולה ביותר כש-$\theta = 180°$, נגד השדה, ואז $dV = +E\,ds$.
+      - kind: limit
+        text: >-
+          כש-$\theta$ עובר מ-$0°$ ל-$90°$, הירידה קטנה בהדרגה מ-$E\,ds$ לאפס, כמו $\cos\theta$.
+      - kind: units
+        text: >-
+          $\text{V/m}\cdot\text{m} = \text{V}$.
+      - kind: substitution
+        text: >-
+          $E\,ds = 2000\cdot0.003 = 6\,\text{V}$. א. $-6\,\text{V}$. ב. $-6\cdot0.5 = -3\,\text{V}$. ג. $+6\,\text{V}$ מערבה.
+      - kind: result
+        text: >-
+          א. $-6\,\text{V}$. ב. $-3\,\text{V}$. ג. צפונה או דרומה (לאורך הקו שווה הפוטנציאל); מערבה, $+6\,\text{V}$.
+
+  - id: W-6.6-07
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.6-4]
+    prompt: >-
+      טבעת ברדיוס $R = 0.2\,\text{m}$ טעונה במטען **שלילי** $Q = -6\,\text{nC}$, מפוזר באחידות.
+
+      א. מה הפוטנציאל במרכז הטבעת, ומה הוא על הציר בגובה $z = 0.15\,\text{m}$?
+
+      ב. מצאו מהפוטנציאל את השדה על הציר באותו גובה: גודל וכיוון.
+    answer: >-
+      א. $-270\,\text{V}$ במרכז, $-216\,\text{V}$ ב-$z = 0.15\,\text{m}$.
+
+      ב. $518\,\text{N/C}$, לאורך הציר אל הטבעת.
+    solution:
+      - kind: given
+        text: >-
+          $kQ = 9\cdot10^{9}\cdot(-6\cdot10^{-9}) = -54\,\text{N}\cdot\text{m}^2/\text{C}$, $R = 0.2\,\text{m}$, $z = 0.15\,\text{m}$.
+      - kind: law
+        text: >-
+          $V = \int k\,dq/r$, ואחר כך $E_z = -dV/dz$.
+      - kind: manipulation
+        text: >-
+          כל החתיכות באותו מרחק $\sqrt{z^2 + R^2}$, ולכן $V = kQ/\sqrt{z^2 + R^2}$, ובכלל השרשרת $E_z = kQz/(z^2 + R^2)^{3/2}$.
+      - kind: limit
+        text: >-
+          כש-$z \gg R$: $E_z \to kQ/z^2$, מטען נקודתי שלילי, השדה מצביע אליו. ב-$z = 0$: $E_z = 0$.
+      - kind: units
+        text: >-
+          $\text{N}\cdot\text{m}^2/\text{C}\cdot\text{m}/\text{m}^3 = \text{N/C}$.
+      - kind: substitution
+        text: >-
+          $\sqrt{0.15^2 + 0.2^2} = 0.25\,\text{m}$. $V(0) = -54/0.2 = -270\,\text{V}$, $V(0.15) = -54/0.25 = -216\,\text{V}$, $E_z = -54\cdot0.15/0.25^3 \approx -518\,\text{N/C}$.
+      - kind: result
+        text: >-
+          א. $-270\,\text{V}$ ו-$-216\,\text{V}$. ב. $518\,\text{N/C}$; הסימן השלילי אומר שהשדה מצביע אל הטבעת (לכיוון z יורד), כמו שמצפים ממטען שלילי. V עולה כשמתרחקים, ולכן השדה פונה פנימה.
+
+  - id: W-6.6-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.6-4, OBJ-6.6-1]
+    prompt: >-
+      טבעת ברדיוס $R = 0.3\,\text{m}$ טעונה במטען $Q = +4\,\text{nC}$. אלקטרון משוחרר ממנוחה על הציר, בגובה $z = 0.4\,\text{m}$ מהמרכז. הזניחו כוחות אחרים.
+
+      א. מה הכוח על האלקטרון ברגע השחרור (גודל וכיוון)? השתמשו ב-$E_z = -dV/dz$.
+
+      ב. מה מהירות האלקטרון כשהוא עובר במרכז הטבעת?
+
+      ג. מה הייתה המהירות במרכז אילו האלקטרון היה משוחרר ממנוחה רחוק מאוד על הציר?
+    answer: >-
+      א. $1.84\cdot10^{-17}\,\text{N}$, לאורך הציר אל הטבעת.
+
+      ב. $4.1\cdot10^{6}\,\text{m/s}$.
+
+      ג. $6.5\cdot10^{6}\,\text{m/s}$.
+    solution:
+      - kind: given
+        text: >-
+          $kQ = 36\,\text{N}\cdot\text{m}^2/\text{C}$, $R = 0.3\,\text{m}$, $z_0 = 0.4\,\text{m}$, $e = 1.6\cdot10^{-19}\,\text{C}$, $m_e = 9.1\cdot10^{-31}\,\text{kg}$.
+      - kind: law
+        text: >-
+          $V(z) = kQ/\sqrt{z^2 + R^2}$ ו-$E_z = -dV/dz = kQz/(z^2 + R^2)^{3/2}$. שימור אנרגיה: $\tfrac12 mv^2 = -q\,\Delta V$, עם $q = -e$.
+      - kind: manipulation
+        text: >-
+          א. $F = eE_z$, והכוח על האלקטרון הפוך לשדה: השדה מצביע הרחק מהטבעת, והכוח אליה. ב. $\tfrac12 m_e v^2 = e\,[V(0) - V(z_0)]$, ולכן $v = \sqrt{2e\,[V(0) - V(z_0)]/m_e}$.
+      - kind: limit
+        text: >-
+          ג. כש-$z_0 \to \infty$, $V(z_0) \to 0$ ו-$v \to \sqrt{2ekQ/(Rm_e)}$. ואם $z_0 \to 0$, האלקטרון מתחיל במרכז, ו-$v \to 0$.
+      - kind: units
+        text: >-
+          $\sqrt{\text{C}\cdot\text{V}/\text{kg}} = \sqrt{\text{J/kg}} = \text{m/s}$.
+      - kind: substitution
+        text: >-
+          $\sqrt{0.4^2 + 0.3^2} = 0.5\,\text{m}$. א. $E_z = 36\cdot0.4/0.125 = 115.2\,\text{N/C}$, $F = 1.6\cdot10^{-19}\cdot115.2 \approx 1.84\cdot10^{-17}\,\text{N}$. ב. $V(0) = 36/0.3 = 120\,\text{V}$, $V(z_0) = 36/0.5 = 72\,\text{V}$, הפרש $48\,\text{V}$; $v = \sqrt{2\cdot1.6\cdot10^{-19}\cdot48/9.1\cdot10^{-31}} \approx 4.1\cdot10^{6}\,\text{m/s}$. ג. $\sqrt{2\cdot1.6\cdot10^{-19}\cdot120/9.1\cdot10^{-31}} \approx 6.5\cdot10^{6}\,\text{m/s}$.
+      - kind: result
+        text: >-
+          א. $1.84\cdot10^{-17}\,\text{N}$ אל הטבעת. ב. $4.1\cdot10^{6}\,\text{m/s}$. ג. $6.5\cdot10^{6}\,\text{m/s}$. לחלק ב לא צריך את השדה בכלל: הפוטנציאל לבדו קובע את המהירות.
+
+  - id: W-6.6-09
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.6-1, OBJ-6.6-3]
+    prompt: >-
+      שתי קליפות כדוריות דקות, משותפות מרכז: הפנימית ברדיוס $R_1 = 0.05\,\text{m}$ טעונה ב-$Q_1 = +2\,\text{nC}$, והחיצונית ברדיוס $R_2 = 0.15\,\text{m}$ טעונה ב-$Q_2 = -1\,\text{nC}$. מחוק גאוס: בתוך הפנימית $E = 0$; בין הקליפות $E = kQ_1/r^2$; מחוץ לחיצונית $E = k(Q_1 + Q_2)/r^2$ (רדיאלי, חיובי החוצה).
+
+      א. חשבו את הפוטנציאל במרכז בעזרת אינטגרל קווי מאינסוף, כש-$V(\infty) = 0$.
+
+      ב. השוו לסכום הפשוט $kQ_1/R_1 + kQ_2/R_2$, והסבירו למה הם שווים.
+
+      ג. כתבו את $V(r)$ בין הקליפות, ובדקו שמינוס הנגזרת שלו הוא השדה שם.
+    answer: >-
+      א. $300\,\text{V}$.
+
+      ב. אותו דבר: $360 - 60 = 300\,\text{V}$.
+
+      ג. $V(r) = kQ_1/r + kQ_2/R_2$, ו-$-dV/dr = kQ_1/r^2$.
+    solution:
+      - kind: given
+        text: >-
+          $kQ_1 = 18\,\text{N}\cdot\text{m}^2/\text{C}$, $kQ_2 = -9\,\text{N}\cdot\text{m}^2/\text{C}$, $R_1 = 0.05\,\text{m}$, $R_2 = 0.15\,\text{m}$.
+      - kind: law
+        text: >-
+          $V(0) = -\int_\infty^0 E\,dr = \int_0^\infty E\,dr$, לאורך קו רדיאלי.
+      - kind: manipulation
+        text: >-
+          א. מחלקים לשלושה קטעים: $\int_0^{R_1} 0\,dr + \int_{R_1}^{R_2} \dfrac{kQ_1}{r^2}\,dr + \int_{R_2}^{\infty} \dfrac{k(Q_1 + Q_2)}{r^2}\,dr = kQ_1\left(\dfrac{1}{R_1} - \dfrac{1}{R_2}\right) + \dfrac{k(Q_1 + Q_2)}{R_2}$.
+      - kind: manipulation
+        text: >-
+          ב. פותחים סוגריים: $\dfrac{kQ_1}{R_1} - \dfrac{kQ_1}{R_2} + \dfrac{kQ_1}{R_2} + \dfrac{kQ_2}{R_2} = \dfrac{kQ_1}{R_1} + \dfrac{kQ_2}{R_2}$. זה הסכום הסקלרי: כל המטען של קליפה נמצא באותו מרחק מהמרכז.
+      - kind: manipulation
+        text: >-
+          ג. בין הקליפות: $V(r) = \int_r^\infty E\,dr' = kQ_1\left(\dfrac{1}{r} - \dfrac{1}{R_2}\right) + \dfrac{k(Q_1 + Q_2)}{R_2} = \dfrac{kQ_1}{r} + \dfrac{kQ_2}{R_2}$, ו-$-dV/dr = kQ_1/r^2$.
+      - kind: limit
+        text: >-
+          אם $Q_2 = 0$, מקבלים $V(0) = kQ_1/R_1$, קליפה אחת. ב-$r = R_1$ הנוסחה של ג נותנת את $V(0)$: בתוך הפנימית אין שדה, ולכן V קבוע שם.
+      - kind: units
+        text: >-
+          $\text{N}\cdot\text{m}^2/\text{C}\cdot\text{m}^{-1} = \text{V}$.
+      - kind: substitution
+        text: >-
+          $18\cdot(20 - 6.67) + 9/0.15 = 240 + 60 = 300\,\text{V}$; ובסכום הפשוט $18/0.05 - 9/0.15 = 360 - 60 = 300\,\text{V}$.
+      - kind: result
+        text: >-
+          א. $300\,\text{V}$. ב. שווה לסכום הסקלרי. ג. $V(r) = kQ_1/r + kQ_2/R_2$, ומינוס הנגזרת הוא $kQ_1/r^2$.
+
+  - id: W-6.6-10
+    level: bagrut
+    qualitative: true
+    objectives: [OBJ-6.6-4, OBJ-6.6-2]
+    prompt: >-
+      דיסקה עם חור: טבעת רחבה ברדיוס פנימי $a = 0.1\,\text{m}$ ורדיוס חיצוני $b = 0.3\,\text{m}$, עם צפיפות מטען משטחית אחידה $\sigma = 4\cdot10^{-9}\,\text{C/m}^2$.
+
+      א. מצאו את $V(z)$ על הציר, בחיבור של טבעות דקות (כמו בדיסקה, אבל מ-$a$ עד $b$).
+
+      ב. מה הפוטנציאל במרכז? מה השדה במרכז? הסבירו למה, בניגוד לדיסקה מלאה, השדה לא קופץ ב-$z = 0$.
+
+      ג. מצאו את השדה על הציר בגובה $z = 0.1\,\text{m}$. לאיזה כיוון הוא מצביע?
+
+      ד. מה מקבלים כש-$a \to 0$?
+    answer: >-
+      א. $V(z) = \dfrac{\sigma}{2\varepsilon_0}\left(\sqrt{z^2 + b^2} - \sqrt{z^2 + a^2}\right)$.
+
+      ב. $V(0) \approx 45.2\,\text{V}$, $E = 0$; בחור אין מטען, ולכן לגרף V אין פינה.
+
+      ג. כ-$88\,\text{N/C}$, הרחק מהטבעת הרחבה.
+
+      ד. את הדיסקה המלאה.
+    solution:
+      - kind: law
+        text: >-
+          $V = \int k\,dq/r$, ואחר כך $E_z = -dV/dz$.
+      - kind: manipulation
+        text: >-
+          א. טבעת ברדיוס $r$ וברוחב $dr$: $dq = \sigma\,2\pi r\,dr$, במרחק $\sqrt{z^2 + r^2}$. $V = 2\pi k\sigma\left[\sqrt{z^2 + r^2}\right]_a^b = \dfrac{\sigma}{2\varepsilon_0}\left(\sqrt{z^2 + b^2} - \sqrt{z^2 + a^2}\right)$.
+      - kind: manipulation
+        text: >-
+          ב. $V(0) = \dfrac{\sigma}{2\varepsilon_0}(b - a)$. גזירה: $E_z = \dfrac{\sigma}{2\varepsilon_0}\left(\dfrac{z}{\sqrt{z^2 + a^2}} - \dfrac{z}{\sqrt{z^2 + b^2}}\right)$, שמתאפס ב-$z = 0$. בדיסקה מלאה יש ב-V האיבר $|z|$, עם פינה ב-$z = 0$, כי שם יש מטען על הציר עצמו. בטבעת הרחבה הנקודה הקרובה ביותר רחוקה $a$ מהציר, ו-V חלק.
+      - kind: reasoning
+        text: >-
+          ג. עבור $z > 0$, $z/\sqrt{z^2 + a^2} > z/\sqrt{z^2 + b^2}$, ולכן $E_z > 0$: הרחק מהטבעת הרחבה. במרכז V מקסימלי על הציר, והוא יורד כשמתרחקים.
+      - kind: limit
+        text: >-
+          ד. כש-$a \to 0$, $\sqrt{z^2 + a^2} \to |z|$, ומקבלים $V = \dfrac{\sigma}{2\varepsilon_0}\left(\sqrt{z^2 + b^2} - |z|\right)$: הדיסקה המלאה. וכש-$a \to b$ אין מטען, ו-$V \to 0$.
+      - kind: units
+        text: >-
+          $\sigma/\varepsilon_0$ ביחידות $\text{N/C}$, כפול מטר: וולט.
+      - kind: substitution
+        text: >-
+          $\sigma/(2\varepsilon_0) = 2\pi k\sigma \approx 226\,\text{N/C}$. ב. $V(0) \approx 226\cdot0.2 \approx 45.2\,\text{V}$. ג. $E_z \approx 226\cdot(0.1/0.1414 - 0.1/0.3162) = 226\cdot(0.707 - 0.316) \approx 88.4\,\text{N/C}$.
+      - kind: result
+        text: >-
+          א. $V(z) = \frac{\sigma}{2\varepsilon_0}(\sqrt{z^2 + b^2} - \sqrt{z^2 + a^2})$. ב. $45.2\,\text{V}$, $E = 0$, בלי קפיצה. ג. $88\,\text{N/C}$, הרחק מהטבעת הרחבה. ד. דיסקה מלאה.
+
+challenge:
+  - id: W-6.6-c1
+    stars: 1
+    objectives: [OBJ-6.6-2, OBJ-6.6-3, OBJ-6.6-1]
+    prompt: >-
+      באזור מסוים השדה החשמלי הוא $\vec E = (2x,\;3y^2,\;4)\,\text{N/C}$, כאשר x, y ו-z במטרים (למקדמים יש היחידות שנותנות N/C). מטען $q = 3\,\mu\text{C}$ עובר מהנקודה $A = (0,\,-2,\,-5)\,\text{m}$ לנקודה $B = (5,\,1,\,2)\,\text{m}$.
+
+      א. מצאו פונקציה $V(x, y, z)$ כך ש-$\vec E = -\nabla V$. מה זה אומר על השדה?
+
+      ב. חשבו את העבודה של השדה על המטען בדרך מ-A ל-B. האם היא תלויה במסלול?
+
+      ג. בדקו את התוצאה בדרך שנייה: אינטגרל לאורך מסלול של שלושה קטעים ישרים, כל אחד מקביל לאחד הצירים.
+    answer: >-
+      א. $V = -(x^2 + y^3 + 4z)$ ועוד קבוע: השדה משמר.
+
+      ב. $W = 1.86\cdot10^{-4}\,\text{J}$, בכל מסלול.
+
+      ג. $25 + 9 + 28 = 62\,\text{V}$, כפול $q$: אותה עבודה.
+    solution:
+      - kind: law
+        text: >-
+          $W = q\int_A^B \vec E\cdot d\vec l = q\,[V(A) - V(B)]$, אם קיים $V$ עם $\vec E = -\nabla V$.
+      - kind: manipulation
+        text: >-
+          א. מחפשים V ש-$-\partial V/\partial x = 2x$, $-\partial V/\partial y = 3y^2$, $-\partial V/\partial z = 4$. הפונקציות הקדומות: $x^2$, $y^3$, $4z$. לכן $V = -(x^2 + y^3 + 4z)$. כיוון שיש פוטנציאל, השדה משמר.
+      - kind: manipulation
+        text: >-
+          ב. $V(A) = -(0 + (-8) + (-20)) = 28\,\text{V}$, $V(B) = -(25 + 1 + 8) = -34\,\text{V}$, ולכן $V(A) - V(B) = 62\,\text{V}$, בלי קשר למסלול.
+      - kind: manipulation
+        text: >-
+          ג. קטע לאורך x (y ו-z קבועים): $\int_0^5 2x\,dx = 25$. קטע לאורך y: $\int_{-2}^{1} 3y^2\,dy = 1 - (-8) = 9$. קטע לאורך z: $\int_{-5}^{2} 4\,dz = 28$. סך הכול $62\,\text{V}$.
+      - kind: limit
+        text: >-
+          אם B = A, העבודה אפס, כמו שצריך בשדה משמר. ואם המטען כפול, העבודה כפולה.
+      - kind: units
+        text: >-
+          $\text{C}\cdot\text{V} = \text{J}$.
+      - kind: substitution
+        text: >-
+          $W = 3\cdot10^{-6}\cdot62 = 1.86\cdot10^{-4}\,\text{J}$.
+      - kind: result
+        text: >-
+          א. $V = -(x^2 + y^3 + 4z)$: השדה משמר. ב. $1.86\cdot10^{-4}\,\text{J}$, בכל מסלול. ג. אותה תוצאה.
+    source:
+      name: JEE Main (NTA)
+      year: 2026
+      problem: '6 April 2026, Shift 1, Physics, Question 24: work on a charge moving from (0, −2, −5) to (5, 1, 2) in E = 2x î + 3y² ĵ + 4 k̂ N/C (3 C in the original; 3 μC here, with parts א and ג added)'
+      url: https://cracku.in/24-a-three-coulomb-charge-moves-from-the-point-0-2-5--x-nta-jee-mains-6-april-2026-shift-1-physics
+      verified: '2026-11-02'
+      adapted: true
+
+  - id: W-6.6-c2
+    stars: 2
+    objectives: [OBJ-6.6-4, OBJ-6.6-1]
+    prompt: >-
+      דיסקה ברדיוס $R$ עם צפיפות מטען חיובית אחידה $\sigma$ מונחת במישור xy, ומרכזה בראשית. על ציר z, עבור $z > 0$, הפוטנציאל שלה הוא $V(z) = \dfrac{\sigma}{2\varepsilon_0}\left(\sqrt{R^2 + z^2} - z\right)$. חלקיק עם מטען חיובי $q$ משוחרר ממנוחה על הציר בגובה $z_0 > 0$. מלבד הכוח החשמלי פועל עליו כוח קבוע $\vec F = -c\,\hat z$ (כלפי הדיסקה), עם $c > 0$. נגדיר $\beta = \dfrac{2c\varepsilon_0}{q\sigma}$.
+
+      א. כתבו את האנרגיה הפוטנציאלית הכוללת $U(z)$ של החלקיק, ואת הכוח השקול עליו על הציר.
+
+      ב. עבור $\beta = 1/4$: מצאו את נקודת שיווי המשקל על הציר. האם היא יציבה?
+
+      ג. עבור $\beta = 1/4$ ו-$z_0 = 25R/7$: האם החלקיק מגיע לראשית?
+
+      ד. עבור $\beta = 1/4$ ו-$z_0 = R/\sqrt3$: מה עושה החלקיק?
+
+      ה. הראו שעבור $\beta > 1$ החלקיק מגיע לראשית מכל $z_0 > 0$.
+    answer: >-
+      א. $U(z) = \dfrac{q\sigma}{2\varepsilon_0}\left(\sqrt{R^2 + z^2} - z + \beta z\right)$; $F_z = \dfrac{q\sigma}{2\varepsilon_0}\left(1 - \dfrac{z}{\sqrt{R^2 + z^2}} - \beta\right)$.
+
+      ב. $z^* = 3R/\sqrt7 \approx 1.13R$, יציבה.
+
+      ג. כן.
+
+      ד. נע כלפי מעלה, עד נקודת עצירה (כ-$1.9R$), וחוזר: מתנודד ולא מגיע לראשית.
+
+      ה. הכוח השקול כלפי מטה בכל גובה.
+    solution:
+      - kind: law
+        text: >-
+          לכוח החשמלי $U_e = qV$, ולכוח הקבוע $U_c = cz$ (כי $F_z = -dU_c/dz = -c$). הכוח השקול $F_z = -dU/dz$. החלקיק נע רק לאזורים שבהם $U(z) \le U(z_0)$.
+      - kind: manipulation
+        text: >-
+          א. נסמן $U_0 = q\sigma/(2\varepsilon_0)$, כך ש-$c = \beta U_0$. אז $U(z) = U_0\left(\sqrt{R^2 + z^2} - z + \beta z\right)$, וגזירה בכלל השרשרת: $F_z = U_0\left(1 - \dfrac{z}{\sqrt{R^2 + z^2}} - \beta\right)$.
+      - kind: manipulation
+        text: >-
+          ב. $F_z = 0$ כש-$\dfrac{z}{\sqrt{R^2 + z^2}} = 1 - \beta = \dfrac34$. מעלים בריבוע: $16z^2 = 9(R^2 + z^2)$, כלומר $z^* = 3R/\sqrt7$. מתחתיה $F_z > 0$ (החלקיק נדחף למעלה) ומעליה $F_z < 0$: יציבה. ב-$U$ זו נקודת מינימום, $U(z^*)/U_0 = \sqrt7\,R/4 \approx 0.661R$.
+      - kind: manipulation
+        text: >-
+          ג. $U$ יורד מ-0 עד $z^*$ ועולה אחריה, ולכן בקטע $[0, z_0]$ הערך הגבוה ביותר שלו בקצוות. $U(0)/U_0 = R$ ו-$U(25R/7)/U_0 = \left(\sqrt{674}/7 - 75/28\right)R \approx 1.030R$. כיוון ש-$U(z_0) > U(0)$, החלקיק עובר את הבור ומגיע לראשית עם אנרגיה קינטית של כ-$0.030\,U_0 R$.
+      - kind: manipulation
+        text: >-
+          ד. $z_0 = R/\sqrt3 \approx 0.577R < z^*$, ושם $F_z > 0$: החלקיק עולה. $U(z_0)/U_0 = (2/\sqrt3 - \sqrt3/4)R \approx 0.722R < U(0)/U_0$, ולכן הוא לא יכול להגיע לראשית. הוא נע עד הנקודה שמעל $z^*$ שבה $U = U(z_0)$ (כ-$1.90R$), נעצר וחוזר ל-$z_0$: תנודה סביב $z^*$.
+      - kind: manipulation
+        text: >-
+          ה. $\dfrac{z}{\sqrt{R^2 + z^2}} < 1$ לכל z, ולכן כש-$\beta > 1$: $F_z < U_0(1 - \beta) < 0$ בכל גובה. הכוח תמיד כלפי הדיסקה, והחלקיק מגיע לראשית.
+      - kind: limit
+        text: >-
+          כש-$\beta = 0$ (בלי הכוח הקבוע) $F_z > 0$ בכל מקום: מטען חיובי נדחה מהדיסקה תמיד. כש-$z \gg R$ הכוח החשמלי $U_0 R^2/(2z^2) = kQq/z^2$, מטען נקודתי, והכוח הקבוע מנצח.
+      - kind: units
+        text: >-
+          $\beta$ חסר יחידות: $\dfrac{\text{N}\cdot\text{C}^2/(\text{N}\cdot\text{m}^2)}{\text{C}\cdot\text{C/m}^2} = 1$. ו-$U_0 R$ ביחידות $\text{C}\cdot\text{N/C}\cdot\text{m} = \text{J}$.
+      - kind: result
+        text: >-
+          ב. $z^* = 3R/\sqrt7$, יציבה. ג. מגיע לראשית. ד. מתנודד ולא מגיע. ה. כש-$\beta > 1$ הכוח השקול תמיד כלפי מטה, והחלקיק מגיע לראשית.
+    source:
+      name: JEE Advanced
+      year: 2022
+      problem: 'Paper 2, Physics (multiple-correct; question number not shown on the page): charged disc, potential V(z) on its axis, extra constant force −c k̂, β = 2cε₀/(qσ); the options turned into open parts'
+      url: https://competishun.com/a-disk-of-radius-r-with-uniform-positive-charge-density-sigma-is-placed-on-the-x-y-plane-with-its-center-at-the-origin-the-coulomb-potential-along-the-z-axis-is-vzfracsigma2-epsilon_0leftsqrtr2z2-zrig/
+      verified: '2026-11-02'
+      adapted: true

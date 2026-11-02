@@ -1,0 +1,334 @@
+# Lesson 6.6 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics (lineintegral.ts, continuous.ts, electrostatics.ts,
+# vectorcalc.ts, constants.ts K and EPS0); the scripts are recompute-6-6*.ts in the session scratchpad.
+# The data differ on purpose from the figures and the worked examples.
+
+chapter: 6
+questions:
+  # ------------------------------------------------ OBJ-6.6-1: V as a line integral
+  - id: Q-6.6-uniform-dv
+    type: numeric
+    objectives: [OBJ-6.6-1]
+    prompt: >-
+      בשדה אחיד $\vec E = (5\cdot10^{3},\,0)\,\text{N/C}$ (ימינה) זזים מהנקודה $A = (0.1,\,0)\,\text{m}$ לנקודה $B = (0.5,\,0.3)\,\text{m}$. מה $V(B) - V(A)$? ענו בוולט.
+    answer: -2000
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. $E\cdot dl = E_x\,dx + E_y\,dy = E\,dx$, ולכן $\int_A^B \vec E\cdot d\vec l = E\,\Delta x = 5\cdot10^{3}\cdot0.4 = 2000\,\text{V}$, ו-$V(B) - V(A) = -2000\,\text{V}$: הולכים עם השדה, והפוטנציאל יורד.'
+    wrongFeedback: 'כתבו את המכפלה הסקלרית ברכיבים, $E_x\,dx + E_y\,dy$. איזה רכיב של התזוזה נספר?'
+    commonWrong:
+      - value: 2000
+        feedback: 'שכחתם את המינוס: $V(B) - V(A) = -\int_A^B \vec E\cdot d\vec l$. בהליכה עם השדה הפוטנציאל יורד.'
+        misconception: MC-field-points-to-higher-v
+      - value: -2500
+        feedback: 'כפלתם את השדה באורך המסלול הישר, $0.5\,\text{m}$. אבל נספר רק רכיב התזוזה לאורך השדה, $\Delta x = 0.4\,\text{m}$; ה-$0.3\,\text{m}$ שבכיוון y ניצבים לשדה ולא תורמים.'
+        misconception: MC-lineint-length-times-field
+      - value: -1500
+        feedback: 'השתמשתם ב-$\Delta y$. השדה בכיוון x, ולכן נספר $\Delta x = 0.4\,\text{m}$.'
+
+  - id: Q-6.6-point-integral
+    type: numeric
+    objectives: [OBJ-6.6-1]
+    level: mid
+    prompt: >-
+      מטען נקודתי $Q = +2\,\text{nC}$. חשבו בעזרת אינטגרל קווי לאורך קו רדיאלי את $V(r_1) - V(r_2)$, כאשר $r_1 = 0.1\,\text{m}$ ו-$r_2 = 0.3\,\text{m}$. ענו בוולט.
+    answer: 120
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. $V(r_1) - V(r_2) = \int_{r_1}^{r_2} \frac{kQ}{r^2}\,dr = kQ\left(\frac{1}{r_1} - \frac{1}{r_2}\right) = 18\cdot(10 - 3.33) = 120\,\text{V}$.'
+    wrongFeedback: 'השדה משתנה לאורך הדרך. כתבו $\int_{r_1}^{r_2} kQ/r^2\,dr$ והשתמשו בפונקציה הקדומה של $1/r^2$, שהיא $(-1/r)$.'
+    commonWrong:
+      - value: 360
+        feedback: 'כפלתם את השדה בנקודה הקרובה, $1800\,\text{N/C}$, באורך הדרך, $0.2\,\text{m}$. השדה נחלש בדרך, ולכן צריך אינטגרל ולא מכפלה.'
+        misconception: MC-lineint-length-times-field
+      - value: 40
+        feedback: 'כפלתם את השדה בנקודה הרחוקה, $200\,\text{N/C}$, באורך הדרך. השדה לא קבוע לאורך הדרך: צריך אינטגרל.'
+        misconception: MC-lineint-length-times-field
+      - value: -120
+        feedback: 'הסימן הפוך. הולכים מ-$r_1$ ל-$r_2$ עם השדה (החוצה ממטען חיובי), ולכן הפוטנציאל ב-$r_1$ גבוה יותר.'
+
+  - id: Q-6.6-sign
+    type: mc
+    objectives: [OBJ-6.6-1]
+    qualitative: true
+    prompt: >-
+      בנקודה כלשהי יש שדה חשמלי $\vec E$. זזים ממנה צעד קטן $d\vec l$ **בכיוון השדה**. מה קורה לפוטנציאל?
+    choices:
+      - text: 'יורד: $dV = -\vec E\cdot d\vec l$, והמכפלה חיובית.'
+        correct: true
+        feedback: 'נכון. צעד בכיוון השדה נותן $\vec E\cdot d\vec l = E\,dl > 0$, ולכן $dV < 0$.'
+      - text: 'עולה, כי השדה מצביע לכיוון הפוטנציאל הגבוה.'
+        feedback: 'הפוך: השדה מצביע לכיוון שבו הפוטנציאל **יורד**. זה המינוס ב-$V(B) - V(A) = -\int \vec E\cdot d\vec l$.'
+        misconception: MC-field-points-to-higher-v
+      - text: 'לא משתנה, כי הצעד קטן.'
+        feedback: 'צעד קטן נותן שינוי קטן, $dV = -E\,dl$, אבל לא אפס. אפס מתקבל רק בצעד שניצב לשדה.'
+      - text: 'תלוי בסימן של המטען שזז.'
+        feedback: 'הפוטנציאל הוא תכונה של המקום, לא של מטען שזז בו. סימן המטען קובע את סימן העבודה, $W = q\,(V_A - V_B)$, לא את השינוי ב-V.'
+
+  - id: Q-6.6-perp-path
+    type: mc
+    objectives: [OBJ-6.6-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מסלול באורך $L = 0.5\,\text{m}$ בנוי כך שבכל נקודה שלו השדה החשמלי ניצב לכיוון ההתקדמות. עוצמת השדה לאורכו בערך $10^{3}\,\text{N/C}$. מה $\int \vec E\cdot d\vec l$ לאורכו?
+    choices:
+      - text: 'אפס, והמסלול הולך לאורך קו שווה פוטנציאל.'
+        correct: true
+        feedback: 'נכון. בכל חתיכה $\vec E\cdot d\vec l = E\,dl\cos 90° = 0$, ולכן $V$ לא משתנה לאורך המסלול: זה קו שווה פוטנציאל.'
+      - text: '$500\,\text{V}$, השדה כפול האורך.'
+        feedback: 'במכפלה הסקלרית נספר רק רכיב השדה לאורך הצעד. כאן הוא אפס בכל נקודה.'
+        misconception: MC-lineint-length-times-field
+      - text: 'אי אפשר לדעת בלי לדעת את צורת המסלול.'
+        feedback: 'אין צורך: אם בכל חתיכה $\vec E\cdot d\vec l = 0$, גם הסכום אפס, יהיה המסלול מפותל ככל שיהיה.'
+      - text: 'מינוס $500\,\text{V}$, כי הולכים נגד השדה.'
+        feedback: 'המסלול לא הולך עם השדה וגם לא נגדו: הוא ניצב לו בכל נקודה.'
+
+  # ------------------------------------------------ OBJ-6.6-2: conservative ⇔ path independence
+  - id: Q-6.6-two-paths
+    type: twotier
+    objectives: [OBJ-6.6-2]
+    qualitative: true
+    prompt: >-
+      ליד מטען נקודתי חיובי מחשבים את $\int_A^B \vec E\cdot d\vec l$ לאורך שני מסלולים: מסלול 1 ישר, ומסלול 2 ארוך פי 3 ועובר מהצד השני של המטען, כך שהמטען נמצא בין שני המסלולים. מה נכון?
+    choices:
+      - text: 'שני האינטגרלים שווים.'
+        correct: true
+        feedback: נכון.
+      - text: 'במסלול 2 האינטגרל גדול פי 3, כי הוא ארוך פי 3.'
+        feedback: 'האורך לא קובע. בקטעים שבהם הולכים נגד השדה התרומה שלילית, והיא מקזזת את הקטעים החיוביים.'
+        misconception: MC-work-depends-on-path
+      - text: 'האינטגרלים שונים, כי המטען כלוא בין המסלולים.'
+        feedback: 'מטען כלוא קובע את השטף דרך משטח סגור (חוק גאוס), לא את האינטגרל הקווי. השדה האלקטרוסטטי משמר בכל המרחב.'
+        misconception: MC-lineint-enclosed-charge-counts
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'השדה האלקטרוסטטי משמר: $\oint \vec E\cdot d\vec l = 0$ סביב כל מסלול סגור, ושני המסלולים יחד יוצרים מסלול סגור.'
+        correct: true
+        feedback: 'נכון. הלוך במסלול 1 וחזור במסלול 2 הוא מסלול סגור: $I_1 - I_2 = \oint \vec E\cdot d\vec l = 0$. באיור 6.6א רואים את זה במספרים.'
+      - text: 'סביב מסלול סגור שמקיף מטען, $\oint \vec E\cdot d\vec l = Q/\varepsilon_0$.'
+        feedback: '$Q/\varepsilon_0$ הוא **השטף** דרך משטח סגור. האינטגרל הקווי סביב מסלול סגור בשדה אלקטרוסטטי הוא אפס תמיד.'
+        misconception: MC-lineint-enclosed-charge-counts
+      - text: 'האינטגרל הקווי הוא השדה כפול אורך המסלול.'
+        feedback: 'בכל חתיכה נספר רק רכיב השדה לאורך הצעד, והוא יכול להיות שלילי.'
+        misconception: MC-lineint-length-times-field
+
+  - id: Q-6.6-loop
+    type: mc
+    objectives: [OBJ-6.6-2]
+    qualitative: true
+    prompt: >-
+      סביב מטען נקודתי $Q$ משרטטים ריבוע שהמטען במרכזו, ומחשבים את $\oint \vec E\cdot d\vec l$ סביב הריבוע. מה מקבלים?
+    choices:
+      - text: 'אפס.'
+        correct: true
+        feedback: 'נכון. בכל צלע הולכים חלק מהדרך הרחק מהמטען וחלק אליו, והתרומות מתקזזות. סביב כל מסלול סגור בשדה אלקטרוסטטי האינטגרל אפס, גם אם המסלול מקיף מטען.'
+      - text: '$Q/\varepsilon_0$, כמו בחוק גאוס.'
+        feedback: 'חוק גאוס עוסק בשטף דרך **משטח** סגור. כאן מדובר באינטגרל לאורך **מסלול** סגור, ובשדה אלקטרוסטטי הוא אפס.'
+        misconception: MC-lineint-enclosed-charge-counts
+      - text: 'מספר חיובי, כי השדה מצביע החוצה מהמטען בכל מקום.'
+        feedback: 'השדה מצביע החוצה, אבל הצעדים לאורך הריבוע לא: חצי מכל צלע מתקרבת למטען (תרומה שלילית) וחצי מתרחקת (תרומה חיובית).'
+      - text: 'תלוי בגודל הריבוע.'
+        feedback: 'סביב כל מסלול סגור בשדה אלקטרוסטטי מקבלים אפס, בכל גודל ובכל צורה.'
+
+  - id: Q-6.6-swirl-circ
+    type: numeric
+    objectives: [OBJ-6.6-2]
+    level: mid
+    prompt: >-
+      שדה מערבולת $\vec E = \omega\,(-y,\,x)$ עם $\omega = 1000\,\text{V/m}^2$. חשבו את $\oint \vec E\cdot d\vec l$ סביב מעגל ברדיוס $0.1\,\text{m}$ שמרכזו בראשית, כשהולכים נגד כיוון השעון. ענו בוולט.
+    answer: 62.8
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. על המעגל השדה משיק, בכיוון ההליכה, ובגודל קבוע $\omega r = 100\,\text{V/m}$. לכן $\oint \vec E\cdot d\vec l = \omega r\cdot2\pi r = 2\pi\omega r^2 \approx 62.8\,\text{V}$. זה לא אפס, ולכן השדה הזה לא משמר.'
+    wrongFeedback: 'מה הכיוון של השדה על המעגל, ומה הגודל שלו? אז הסכום הוא השדה כפול ההיקף.'
+    commonWrong:
+      - value: 0
+        feedback: 'אפס מתקבל רק בשדה משמר. כאן השדה בכיוון ההליכה בכל נקודה, ולכן כל התרומות חיוביות.'
+        misconception: MC-every-field-conservative
+      - value: 31.4
+        feedback: 'חישבתם $\omega\pi r^2$, כלומר השדה כפול השטח. אורך המסלול הוא ההיקף, $2\pi r$, והשדה עליו $\omega r$.'
+      - value: 628
+        feedback: 'כפלתם את $\omega$ בהיקף. השדה על המעגל הוא $\omega r$, לא $\omega$.'
+
+  - id: Q-6.6-has-potential
+    type: mc
+    objectives: [OBJ-6.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בשדה וקטורי מסוים מצאו מסלול סגור אחד שסביבו $\oint \vec E\cdot d\vec l \ne 0$. האם אפשר להגדיר לשדה הזה פוטנציאל $V$, כך ש-$V(B) - V(A) = -\int_A^B \vec E\cdot d\vec l$?
+    choices:
+      - text: 'לא: האינטגרל בין שתי נקודות תלוי במסלול, ולכן אין ל-$V(B)$ ערך אחד.'
+        correct: true
+        feedback: 'נכון. אילו היה פוטנציאל, הליכה סביב מסלול סגור הייתה מחזירה לאותו ערך של V, והאינטגרל היה אפס.'
+      - text: 'כן, לכל שדה יש פוטנציאל.'
+        feedback: 'רק לשדה משמר. אם יש מסלול סגור אחד עם אינטגרל שונה מאפס, שני חצאיו נותנים שני ערכים שונים להפרש $V(B) - V(A)$.'
+        misconception: MC-every-field-conservative
+      - text: 'כן, אם בוחרים נקודת ייחוס מתאימה.'
+        feedback: 'נקודת הייחוס קובעת רק את הקבוע שמוסיפים לכל הערכים. היא לא פותרת את הבעיה שההפרש תלוי במסלול.'
+        misconception: MC-every-field-conservative
+      - text: 'כן, אבל רק בתוך המסלול הסגור.'
+        feedback: 'בתוך המסלול אפשר לבחור שני מסלולים מנקודה לנקודה שיחד מקיפים את אותו אזור, והם ייתנו הפרשים שונים.'
+
+  # ------------------------------------------------ OBJ-6.6-3: E = −∇V, perpendicular to equipotentials
+  - id: Q-6.6-grad-numeric
+    type: numeric
+    objectives: [OBJ-6.6-3]
+    level: mid
+    prompt: >-
+      באזור מסוים הפוטנציאל הוא $V(x, y) = 4000\,xy$ (בוולט, כש-x ו-y במטרים). מה עוצמת השדה החשמלי בנקודה $(0.1,\,0.3)\,\text{m}$? ענו ב-V/m.
+    answer: 1265
+    unit: V/m
+    tolerance: 0.03
+    correctFeedback: 'נכון. $E_x = -\partial V/\partial x = -4000y = -1200\,\text{V/m}$, $E_y = -\partial V/\partial y = -4000x = -400\,\text{V/m}$, ו-$|E| = \sqrt{1200^2 + 400^2} \approx 1.26\cdot10^{3}\,\text{V/m}$.'
+    wrongFeedback: 'גזרו חלקית: לפי x כש-y קבוע, ולפי y כש-x קבוע. אחר כך חברו את שני הרכיבים כווקטורים.'
+    commonWrong:
+      - value: 1600
+        feedback: 'חיברתם את שני הרכיבים כמספרים. הם ניצבים זה לזה, ולכן העוצמה היא $\sqrt{E_x^2 + E_y^2}$.'
+      - value: 120
+        feedback: 'זה הפוטנציאל בנקודה, $4000\cdot0.1\cdot0.3 = 120\,\text{V}$. השדה תלוי בקצב שבו V משתנה, לא בערך שלו.'
+        misconception: MC-high-potential-strong-field
+
+  - id: Q-6.6-grad-vector
+    type: vector
+    objectives: [OBJ-6.6-3]
+    qualitative: true
+    prompt: >-
+      באזור מסוים $V(x, y) = 200\,(x - y)$ (בוולט, כש-x ו-y במטרים; x ימינה ו-y למעלה). מה כיוון השדה החשמלי?
+    answer: nw
+    correctFeedback: 'נכון. $\vec E = -\nabla V = (-200,\,+200)\,\text{V/m}$: שמאלה ולמעלה. על כל קו שווה פוטנציאל $x - y$ קבוע: הקווים עולים באלכסון ימינה-למעלה, והשדה ניצב להם.'
+    wrong:
+      - dir: se
+        feedback: 'זה כיוון $\nabla V$, שבו הפוטנציאל **עולה**. השדה הוא **מינוס** הגרדיאנט.'
+        misconception: MC-field-points-to-higher-v
+      - dir: ne
+        feedback: 'בכיוון הזה $x - y$ לא משתנה: זה כיוון הקו שווה הפוטנציאל. השדה ניצב לו.'
+        misconception: MC-equipotentials-along-field
+      - dir: sw
+        feedback: 'בכיוון הזה $x - y$ לא משתנה: זה כיוון הקו שווה הפוטנציאל. השדה ניצב לו.'
+        misconception: MC-equipotentials-along-field
+      - dir: e
+        feedback: 'יש לשדה גם רכיב y: $E_y = -\partial V/\partial y = +200\,\text{V/m}$.'
+    wrongFeedback: 'חשבו את שתי הנגזרות החלקיות, $\partial V/\partial x$ ו-$\partial V/\partial y$, והפכו את הסימן.'
+
+  - id: Q-6.6-steepest
+    type: mc
+    objectives: [OBJ-6.6-3]
+    qualitative: true
+    prompt: >-
+      בנקודה P על מפת פוטנציאל עובר קו שווה פוטנציאל. לאיזה כיוון כדאי לצעוד מ-P כדי שהפוטנציאל יעלה הכי מהר?
+    choices:
+      - text: 'בניצב לקו שווה הפוטנציאל, לצד של הפוטנציאל הגבוה: בכיוון ההפוך לשדה.'
+        correct: true
+        feedback: 'נכון. קצב השינוי בכיוון $\hat u$ הוא $\nabla V\cdot\hat u = |\nabla V|\cos\alpha$, הגדול ביותר כש-$\hat u$ בכיוון $\nabla V = -\vec E$, וזה ניצב לקו שווה הפוטנציאל.'
+      - text: 'בכיוון השדה החשמלי.'
+        feedback: 'בכיוון השדה הפוטנציאל **יורד** הכי מהר. השדה הוא מינוס הגרדיאנט, $\vec E = -\nabla V$.'
+        misconception: MC-field-points-to-higher-v
+      - text: 'לאורך הקו שווה הפוטנציאל.'
+        feedback: 'לאורך הקו V לא משתנה בכלל: $\alpha = 90°$ ו-$\cos\alpha = 0$.'
+        misconception: MC-equipotentials-along-field
+      - text: 'באלכסון, ב-45° לקו שווה הפוטנציאל.'
+        feedback: 'ב-45° קצב העלייה הוא $|\nabla V|\cos45° \approx 0.71\,|\nabla V|$. בניצב לקו הוא $|\nabla V|$, יותר.'
+
+  - id: Q-6.6-directional
+    type: numeric
+    objectives: [OBJ-6.6-3]
+    level: mid
+    prompt: >-
+      בנקודה P הגרדיאנט של הפוטנציאל הוא $|\nabla V| = 500\,\text{V/m}$. צועדים מ-P בכיוון שיוצר זווית של $60°$ עם $\nabla V$. מה קצב השינוי של V לכל מטר של צעד בכיוון הזה? ענו ב-V/m.
+    answer: 250
+    unit: V/m
+    tolerance: 0.03
+    correctFeedback: 'נכון. $dV/ds = \nabla V\cdot\hat u = |\nabla V|\cos60° = 500\cdot0.5 = 250\,\text{V/m}$.'
+    wrongFeedback: 'במכפלה סקלרית נספר רק הרכיב של $\nabla V$ בכיוון הצעד.'
+    commonWrong:
+      - value: 433
+        feedback: 'השתמשתם ב-$\sin60°$. הרכיב **בכיוון** הצעד הוא $|\nabla V|\cos\alpha$.'
+      - value: 500
+        feedback: 'זה הקצב בכיוון של $\nabla V$ עצמו. בכיוון אחר הקצב קטן יותר, $|\nabla V|\cos\alpha$.'
+
+  # ------------------------------------------------ OBJ-6.6-4: ring and disc, scalar first
+  - id: Q-6.6-ring-centre
+    type: twotier
+    objectives: [OBJ-6.6-4]
+    qualitative: true
+    prompt: >-
+      טבעת דקה ברדיוס $R$ טעונה במטען חיובי $Q$, מפוזר באחידות. מה נכון במרכז הטבעת?
+    choices:
+      - text: '$V = kQ/R$, ו-$E = 0$.'
+        correct: true
+        feedback: נכון.
+      - text: '$V = 0$, ו-$E = 0$.'
+        feedback: 'הפוטנציאל הוא סכום של מספרים, וכולם חיוביים: $k\,dq/R$ מכל חתיכה. אין ביניהם קיזוז.'
+        misconception: MC-potential-is-vector
+      - text: '$V = kQ/R$, ו-$E = kQ/R^2$.'
+        feedback: 'השדות של חתיכות מנוגדות על הטבעת מבטלים זה את זה. וגם בגרף V(z) המרכז הוא נקודת מקסימום, שם השיפוע אפס.'
+        misconception: MC-high-potential-strong-field
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'V הוא סכום סקלרי של תרומות חיוביות; ולאורך הציר V מקסימלי במרכז, ולכן $E_z = -dV/dz = 0$ שם.'
+        correct: true
+        feedback: 'נכון. באיור 6.6ג המשיק לגרף V במרכז אופקי, והשדה שם אפס.'
+      - text: 'התרומות מצדדים מנוגדים של הטבעת מבטלות זו את זו, גם בשדה וגם בפוטנציאל.'
+        feedback: 'בשדה כן, כי הוא וקטור. בפוטנציאל לא: הוא מספר בלי כיוון, וכל החתיכות תורמות אותו מספר חיובי.'
+        misconception: MC-potential-is-vector
+      - text: 'היכן שהפוטנציאל הכי גבוה, השדה הכי חזק.'
+        feedback: 'השדה תלוי בשיפוע של V, לא בגובה שלו. בשיא של V השיפוע אפס.'
+        misconception: MC-high-potential-strong-field
+
+  - id: Q-6.6-ring-numeric
+    type: numeric
+    objectives: [OBJ-6.6-4]
+    level: mid
+    prompt: >-
+      טבעת ברדיוס $R = 0.1\,\text{m}$ טעונה ב-$Q = 6\,\text{nC}$. הפוטנציאל על הציר שלה הוא $V(z) = kQ/\sqrt{z^2 + R^2}$. גזרו כדי למצוא את עוצמת השדה על הציר בגובה $z = 0.1\,\text{m}$. ענו ב-N/C.
+    answer: 1909
+    unit: N/C
+    tolerance: 0.03
+    correctFeedback: 'נכון. בכלל השרשרת $E_z = -\dfrac{dV}{dz} = \dfrac{kQz}{(z^2 + R^2)^{3/2}} = \dfrac{54\cdot0.1}{0.02^{3/2}} \approx 1.91\cdot10^{3}\,\text{N/C}$.'
+    wrongFeedback: 'כתבו $V = kQ\,(z^2 + R^2)^{-1/2}$ וגזרו בכלל השרשרת.'
+    commonWrong:
+      - value: 2700
+        feedback: 'חישבתם $kQ/(z^2 + R^2)$, כאילו כל המטען בנקודה אחת במרחק $\sqrt{z^2 + R^2}$ והשדה שלו כולו לאורך הציר. הגזירה נותנת גם את הגורם $z/\sqrt{z^2 + R^2}$.'
+      - value: 5400
+        feedback: 'חישבתם $kQ/z^2$, כאילו הטבעת מטען נקודתי. זה נכון רק כש-$z \gg R$, וכאן $z = R$.'
+
+  - id: Q-6.6-axis-only
+    type: mc
+    objectives: [OBJ-6.6-4]
+    qualitative: true
+    level: mid
+    prompt: >-
+      חישבתם את הפוטנציאל של טבעת **רק על הציר שלה**, $V(z)$. מה אפשר לקבל ממנו בגזירה?
+    choices:
+      - text: 'רק את רכיב השדה לאורך הציר, ורק על הציר: $E_z = -dV/dz$.'
+        correct: true
+        feedback: 'נכון. כדי לקבל את $E_x$ צריך לדעת איך V משתנה כשזזים בכיוון x, כלומר את V מחוץ לציר. על הציר $E_x = E_y = 0$ בגלל הסימטריה, לא בגלל הגזירה.'
+      - text: 'את כל וקטור השדה בכל המרחב.'
+        feedback: 'גזירה לפי z נותנת רק את הרכיב בכיוון z, ורק במקומות שבהם V ידוע.'
+        misconception: MC-axis-potential-gives-full-field
+      - text: 'גם את $E_x$ מחוץ לציר: גוזרים את $V(z)$ לפי x, ומקבלים $E_x = 0$ בכל מקום.'
+        feedback: 'הנוסחה $V(z)$ נכונה רק על הציר, ולכן אין בה x. הנגזרת שלה לפי x היא אפס, אבל זה לא אומר כלום על איך V משתנה כשזזים הצידה. מחוץ לציר יש לשדה רכיב הצידה.'
+        misconception: MC-axis-potential-gives-full-field
+      - text: 'שום דבר: את השדה מקבלים רק מסכום וקטורי.'
+        feedback: 'אפשר: $E_z = -dV/dz$ נותן בדיוק את מה שהסכום הווקטורי נתן בשיעור 6.4, בפחות עבודה.'
+
+  - id: Q-6.6-disc-limit
+    type: mc
+    objectives: [OBJ-6.6-4]
+    qualitative: true
+    level: bagrut
+    prompt: >-
+      על הציר של דיסקה ברדיוס $R$ עם צפיפות מטען $\sigma$: $V = \dfrac{\sigma}{2\varepsilon_0}\left(\sqrt{z^2 + R^2} - z\right)$ ו-$E_z = \dfrac{\sigma}{2\varepsilon_0}\left(1 - \dfrac{z}{\sqrt{z^2 + R^2}}\right)$ (עבור $z > 0$). מגדילים את $R$ בלי גבול, ו-$z$ קבוע. מה קורה?
+    choices:
+      - text: 'השדה שואף ל-$\sigma/(2\varepsilon_0)$, והפוטנציאל גדל בלי גבול.'
+        correct: true
+        feedback: 'נכון. $z/\sqrt{z^2 + R^2} \to 0$, ולכן השדה שואף לשדה של לוח אינסופי. אבל $\sqrt{z^2 + R^2} \approx R$ גדל בלי גבול: ללוח אינסופי אי אפשר לבחור $V = 0$ באינסוף.'
+      - text: 'גם השדה וגם הפוטנציאל שואפים לערכים סופיים.'
+        feedback: 'השדה כן. הפוטנציאל מתנהג כמו $\sigma R/(2\varepsilon_0)$ וגדל בלי גבול: יותר ויותר מטען תורם $k\,dq/r$ חיובי.'
+      - text: 'גם השדה וגם הפוטנציאל גדלים בלי גבול, כי יש יותר מטען.'
+        feedback: 'למטען הרחוק תרומה קטנה לשדה (הוא גם רחוק וגם כמעט ניצב לציר), והסכום מתכנס ל-$\sigma/(2\varepsilon_0)$.'
+      - text: 'השדה שואף לאפס, כי המטען מתפזר על שטח אינסופי.'
+        feedback: '$\sigma$ קבוע: המטען לא מתפזר, נוסף עוד מטען. השדה שואף ל-$\sigma/(2\varepsilon_0)$, כמו בשיעור 1.8.'
