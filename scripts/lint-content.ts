@@ -324,15 +324,14 @@ for (const { file, data } of workbooks) {
     }
     if (item.source) {
       // two agents writing lessons in parallel once picked the same olympiad problem
-      // "Q27" and "Question 27" in the same paper are one problem
-      const number = item.source.problem.toLowerCase().replace(/\b(question|problem|q)\.?\s*/g, '').replace(/[^a-z0-9()]/g, '');
-      const key = `${item.source.url} ${number}`;
+      // In one paper, "Q27", "Question 27" and "Section 2, Q.9 and Q.10" are compared by their question numbers
+      const numbers = [...item.source.problem.matchAll(/\b(?:question|problem|q)\.?\s*(\d+[a-z]?(?:\([a-z0-9]+\))*)/gi)].map((m) => m[1].toLowerCase());
+      const keys = (numbers.length ? numbers : [item.source.problem.toLowerCase().replace(/[^a-z0-9()]/g, '')]).map((n) => `${item.source!.url} ${n}`);
       // a web page usually holds one problem, so a shared page URL is the same problem; a PDF holds a whole paper
-      const page = /\.pdf$/i.test(item.source.url) ? null : `@${item.source.url}`;
-      const other = seenSource.get(key) ?? (page ? seenSource.get(page) : undefined);
+      if (!/\.pdf$/i.test(item.source.url)) keys.push(`@${item.source.url}`);
+      const other = keys.map((k) => seenSource.get(k)).find(Boolean);
       if (other) fail(w, `the same source problem as ${other}; a challenge problem is used once in the course`);
-      seenSource.set(key, item.id);
-      if (page) seenSource.set(page, item.id);
+      for (const k of keys) seenSource.set(k, item.id);
     }
     if (item.diagram && !item.diagramAlt?.trim()) fail(w, 'a diagram needs diagramAlt (its accessible description)');
     if (item.diagram && /<script|on\w+=/i.test(item.diagram)) fail(w, 'the diagram SVG must not contain scripts or event handlers');
