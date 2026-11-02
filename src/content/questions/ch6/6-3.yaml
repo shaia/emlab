@@ -1,0 +1,349 @@
+# Lesson 6.3 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/coordinates.ts and vec.ts (partial, toCylindrical,
+# toSpherical, cross3, dot3, coulombField); the script is recompute-6-3.mts in the session scratchpad.
+# The data differ on purpose from the figures and the worked examples.
+
+chapter: 6
+questions:
+  # ------------------------------------------------ OBJ-6.3-1: scalar and vector fields, the partial derivative
+  - id: Q-6.3-which-vector
+    type: multi
+    objectives: [OBJ-6.3-1]
+    qualitative: true
+    prompt: >-
+      סמנו את **כל** השדות הווקטוריים, כלומר הגדלים שבכל נקודה במרחב יש להם גם גודל וגם כיוון.
+    choices:
+      - text: 'מהירות הרוח בכל נקודה מעל עיר.'
+        correct: true
+        feedback: 'נכון. בכל נקודה יש לרוח מהירות וכיוון: חץ לכל נקודה.'
+      - text: 'השדה החשמלי סביב מטען.'
+        correct: true
+        feedback: 'נכון. $\vec E(x, y, z)$ הוא חץ בכל נקודה, עם שלושה רכיבים.'
+      - text: 'הפוטנציאל החשמלי סביב מטען.'
+        feedback: 'הפוטנציאל הוא מספר אחד בכל נקודה (בוולט), בלי כיוון: שדה סקלרי. הכיוון מופיע רק כשבודקים לאן הוא יורד, וזה כבר השדה $\vec E$.'
+      - text: 'הטמפרטורה בכל נקודה בחדר.'
+        feedback: 'לטמפרטורה אין כיוון. זה מספר אחד לכל נקודה, כמו המספרים באיור 6.3א: שדה סקלרי.'
+      - text: 'השדה המגנטי סביב תיל.'
+        correct: true
+        feedback: 'נכון. לשדה המגנטי יש גודל וכיוון בכל נקודה (שיעור 4.2).'
+
+  - id: Q-6.3-partial-number
+    type: numeric
+    objectives: [OBJ-6.3-1]
+    level: basic
+    prompt: >-
+      באזור מסוים הפוטנציאל הוא $V(x, y) = 50\,x^2 y$, כש-$V$ בוולט ו-$x$, $y$ במטרים. מה הערך של $\partial V/\partial x$ בנקודה $(0.4, 2)\,\text{m}$? ענו ב-$\text{V/m}$.
+    answer: 80
+    unit: V/m
+    tolerance: 0.02
+    correctFeedback: 'נכון. גוזרים לפי $x$ ומתייחסים ל-$y$ כאל מספר קבוע: $\partial V/\partial x = 100\,x y = 100\cdot0.4\cdot2 = 80\,\text{V/m}$.'
+    wrongFeedback: 'השאירו את $y$ קבוע וגזרו את $x^2$ כמו בשיעור 6.1. רק אחרי הגזירה הציבו את הנקודה.'
+    commonWrong:
+      - value: 16
+        feedback: 'זה הפוטנציאל עצמו, $V = 50\cdot0.16\cdot2 = 16\,\text{V}$. קודם גוזרים, ורק אחר כך מציבים.'
+      - value: 8
+        feedback: 'זו הנגזרת לפי $y$: $\partial V/\partial y = 50x^2 = 8$. השאלה שואלת על השינוי בכיוון $x$.'
+      - value: 40
+        feedback: 'הנגזרת של $x^2$ היא $2x$, לא $x$. חסר לכם הגורם 2.'
+
+  - id: Q-6.3-zero-partial
+    type: twotier
+    objectives: [OBJ-6.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בנקודה P מודדים: $\partial V/\partial x = 0$, $\partial V/\partial z = 0$ ו-$\partial V/\partial y = 300\,\text{V/m}$. מה השדה החשמלי ב-P?
+    choices:
+      - text: '$300\,\text{N/C}$, בכיוון $-y$.'
+        correct: true
+        feedback: 'נכון. $E_x = -\partial V/\partial x = 0$, $E_z = 0$ ו-$E_y = -\partial V/\partial y = -300\,\text{N/C}$.'
+      - text: 'אפס, כי הנגזרת לפי $x$ אפס.'
+        feedback: 'נגזרת חלקית אפס מאפסת רק את הרכיב בכיוון שלה. בכיוון $y$ הפוטנציאל משתנה, ולכן יש שדה.'
+        misconception: MC-partial-zero-field-zero
+      - text: '$300\,\text{N/C}$, בכיוון $+y$.'
+        feedback: 'הגודל נכון, אבל השדה מצביע לכיוון שבו הפוטנציאל **יורד**: $E_y = -\partial V/\partial y$. הפוטנציאל עולה בכיוון $+y$, ולכן השדה בכיוון $-y$.'
+      - text: 'אי אפשר לדעת בלי לדעת את $V$ בנקודה.'
+        feedback: 'השדה תלוי בקצב השינוי של $V$, לא בערך שלו. שלוש הנגזרות החלקיות נותנות את שלושת הרכיבים.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'כל רכיב של השדה הוא מינוס הנגזרת החלקית של $V$ בכיוון שלו.'
+        correct: true
+        feedback: 'נכון. זו ההכללה של $E = -\Delta V/\Delta x$ משיעור 2.3 לשלושה כיוונים.'
+      - text: 'אם הפוטנציאל לא משתנה בכיוון אחד, אין שדה בכלל.'
+        feedback: 'כל כיוון נבדק לחוד. אין שינוי ב-$x$, יש שינוי ב-$y$, ולכן יש שדה, בכיוון $y$.'
+        misconception: MC-partial-zero-field-zero
+      - text: 'השדה מצביע לכיוון שבו הפוטנציאל עולה.'
+        feedback: 'הפוך: שדה חשמלי מצביע מפוטנציאל גבוה לנמוך, כמו מהלוח החיובי לשלילי בקבל.'
+
+  - id: Q-6.3-right-of-charge
+    type: mc
+    objectives: [OBJ-6.3-1]
+    qualitative: true
+    prompt: >-
+      מטען נקודתי חיובי נמצא בראשית. הנקודה P נמצאת על ציר $x$, ימינה מהמטען. איזו נגזרת חלקית של הפוטנציאל היא אפס ב-P?
+    choices:
+      - text: '$\partial V/\partial y$.'
+        correct: true
+        feedback: 'נכון. צעד קטן מ-P למעלה או למטה כמעט לא משנה את המרחק מהמטען, ובגלל הסימטריה שני הצדדים זהים. לכן $\partial V/\partial y = 0$, ו-$E_y = 0$: השדה ב-P לאורך ציר $x$.'
+      - text: '$\partial V/\partial x$.'
+        feedback: 'בכיוון $x$ מתרחקים מהמטען, והפוטנציאל יורד. לכן $\partial V/\partial x < 0$ ו-$E_x > 0$: השדה מצביע ימינה, הרחק מהמטען.'
+      - text: 'אף אחת מהן, כי השדה ב-P אינו אפס.'
+        feedback: 'שדה שאינו אפס לא מחייב שינוי בכל כיוון. בכיוון שניצב לשדה הפוטנציאל לא משתנה.'
+        misconception: MC-field-nonzero-all-partials
+      - text: 'שתיהן.'
+        feedback: 'אם שתיהן היו אפס, גם השדה היה אפס. אבל ליד מטען יש שדה, ו-$\partial V/\partial x \ne 0$.'
+        misconception: MC-partial-zero-field-zero
+
+  # ------------------------------------------------ OBJ-6.3-2: coordinates
+  - id: Q-6.3-cyl-s
+    type: numeric
+    objectives: [OBJ-6.3-2]
+    level: basic
+    prompt: >-
+      נקודה נמצאת ב-$(x, y, z) = (-6, 8, 5)\,\text{cm}$. מה הקואורדינטה הגלילית $s$ שלה? ענו בסנטימטרים.
+    answer: 10
+    unit: cm
+    tolerance: 0.02
+    correctFeedback: 'נכון. $s$ הוא המרחק מציר $z$, ולכן $z$ לא משתתף: $s = \sqrt{x^2 + y^2} = \sqrt{36 + 64} = 10\,\text{cm}$.'
+    wrongFeedback: '$s$ הוא המרחק מציר $z$: חשבו $\sqrt{x^2 + y^2}$, בלי $z$.'
+    commonWrong:
+      - value: 11.18
+        feedback: 'זה $r = \sqrt{x^2 + y^2 + z^2}$, המרחק מהראשית. $s$ הוא המרחק מציר $z$, ולכן $z$ לא נכנס לחישוב.'
+        misconception: MC-cyl-s-is-distance-from-origin
+      - value: 14
+        feedback: 'חיברתם את הרכיבים, $6 + 8$. מרחק מחשבים לפי משפט פיתגורס, $\sqrt{6^2 + 8^2}$.'
+      - value: 2
+        feedback: 'חיברתם $x + y = -6 + 8$. מרחק לא יכול להיות סכום של רכיבים עם סימנים: הוא $\sqrt{x^2 + y^2}$.'
+
+  - id: Q-6.3-theta
+    type: numeric
+    objectives: [OBJ-6.3-2]
+    level: mid
+    prompt: >-
+      נקודה נמצאת ב-$(x, y, z) = (0, 3, -3)\,\text{m}$. מה הזווית הכדורית $\theta$ שלה? ענו במעלות.
+    answer: 135
+    unit: °
+    tolerance: 0.01
+    correctFeedback: 'נכון. $r = \sqrt{0 + 9 + 9} = 3\sqrt2\,\text{m}$, ו-$\cos\theta = z/r = -3/(3\sqrt2) = -1/\sqrt2$, ולכן $\theta = 135^\circ$. הנקודה מתחת למישור $xy$, ולכן $\theta > 90^\circ$.'
+    wrongFeedback: '$\theta$ נמדדת מהחלק החיובי של ציר $z$: $\cos\theta = z/r$, עם הסימן של $z$.'
+    commonWrong:
+      - value: 45
+        feedback: 'השמטתם את הסימן של $z$. הנקודה **מתחת** למישור $xy$, ולכן הזווית מציר $+z$ גדולה מ-$90^\circ$.'
+      - value: 90
+        feedback: '$\theta = 90^\circ$ רק במישור $z = 0$. כאן $z = -3\,\text{m}$.'
+
+  - id: Q-6.3-wire-coordinate
+    type: mc
+    objectives: [OBJ-6.3-2]
+    qualitative: true
+    prompt: >-
+      תיל ישר ארוך מאוד, טעון באחידות, מונח לאורך ציר $z$. בקואורדינטות גליליות $(s, \varphi, z)$, באיזו קואורדינטה תלוי גודל השדה החשמלי שלו?
+    choices:
+      - text: 'רק ב-$s$.'
+        correct: true
+        feedback: 'נכון. סיבוב סביב התיל (שינוי של $\varphi$) והזזה לאורכו (שינוי של $z$) לא משנים כלום, ולכן השדה תלוי רק במרחק מהתיל, $s$.'
+      - text: 'במרחק מהראשית, $r = \sqrt{x^2 + y^2 + z^2}$.'
+        feedback: 'לתיל אין נקודה מיוחדת שתשמש כראשית: כל הנקודות שלו שוות. מה שקובע הוא המרחק מהתיל, $s = \sqrt{x^2 + y^2}$, לא המרחק מנקודה.'
+        misconception: MC-cyl-s-is-distance-from-origin
+      - text: 'רק ב-$\varphi$.'
+        feedback: 'סביב התיל הכול סימטרי: סיבוב ב-$\varphi$ לא משנה את השדה. השדה תלוי במרחק מהתיל.'
+      - text: 'רק ב-$z$.'
+        feedback: 'התיל ארוך מאוד, ולכן הזזה לאורכו לא משנה כלום. השדה לא תלוי ב-$z$.'
+
+  - id: Q-6.3-theta-90
+    type: mc
+    objectives: [OBJ-6.3-2]
+    qualitative: true
+    prompt: >-
+      איזו צורה יוצרות כל הנקודות שבהן הזווית הכדורית $\theta$ היא $90^\circ$?
+    choices:
+      - text: 'המישור $xy$, כלומר $z = 0$.'
+        correct: true
+        feedback: 'נכון. $\cos\theta = z/r = 0$ פירושו $z = 0$: כל המישור שניצב לציר $z$ בגובה הראשית. שם גם $r = s$.'
+      - text: 'ציר $z$.'
+        feedback: 'על ציר $z$ הזווית מציר $z$ היא $0^\circ$ (מעל הראשית) או $180^\circ$ (מתחת). $90^\circ$ פירושו ניצב לציר.'
+      - text: 'כדור ברדיוס קבוע.'
+        feedback: 'כדור הוא $r$ קבוע. $\theta$ קבועה ושונה מ-$90^\circ$ נותנת חרוט, ו-$\theta = 90^\circ$ נותנת חרוט שנפתח עד הסוף: מישור.'
+      - text: 'גליל סביב ציר $z$.'
+        feedback: 'גליל הוא $s$ קבוע. $\theta = 90^\circ$ אומר משהו אחר: הנקודה בגובה $z = 0$.'
+        misconception: MC-cyl-s-is-distance-from-origin
+
+  # ------------------------------------------------ OBJ-6.3-3: dot and cross products in components
+  - id: Q-6.3-work-dot
+    type: numeric
+    objectives: [OBJ-6.3-3]
+    level: basic
+    prompt: >-
+      כוח קבוע $\vec F = (3, -2, 1)\,\text{N}$ פועל על גוף שזז בהעתק $\vec d = (2, 4, 5)\,\text{m}$. כמה עבודה עושה הכוח? ענו בג׳אול.
+    answer: 3
+    unit: J
+    tolerance: 0.02
+    correctFeedback: 'נכון. $W = \vec F\cdot\vec d = 3\cdot2 + (-2)\cdot4 + 1\cdot5 = 6 - 8 + 5 = 3\,\text{J}$.'
+    wrongFeedback: 'עבודה היא המכפלה הסקלרית: כפלו רכיב ברכיב, $F_x d_x + F_y d_y + F_z d_z$, וחברו עם הסימנים.'
+    commonWrong:
+      - value: 19
+        feedback: 'השמטתם את סימן המינוס של $F_y$: המכפלה $(-2)\cdot4 = -8$ מקטינה את העבודה.'
+      - value: 25.1
+        feedback: 'זה $|\vec F||\vec d|$, כאילו הכוח וההעתק באותו כיוון. המכפלה הסקלרית כוללת את $\cos\alpha$, והזווית כאן קרובה ל-$83^\circ$.'
+
+  - id: Q-6.3-cross-direction
+    type: vector
+    objectives: [OBJ-6.3-3]
+    qualitative: true
+    allowOutIn: true
+    prompt: >-
+      $\vec A$ מצביע ימינה ($+x$) ו-$\vec B$ מצביע למעלה ($+y$), שניהם במישור הדף. מה כיוון $\vec A\times\vec B$?
+    answer: out
+    correctFeedback: 'נכון. $\hat x\times\hat y = \hat z$, החוצה מהדף. בכלל יד ימין: האצבעות מ-$\vec A$ אל $\vec B$, נגד כיוון השעון, והאגודל יוצא מהדף.'
+    wrong:
+      - dir: in
+        feedback: 'זה כיוון $\vec B\times\vec A$. הסדר חשוב: כופפו את האצבעות מהגורם הראשון ($\vec A$) אל השני ($\vec B$).'
+        misconception: MC-cross-product-commutes
+      - dir: ne
+        feedback: 'זה הכיוון של הסכום $\vec A + \vec B$. המכפלה הווקטורית ניצבת לשני הווקטורים, ולכן יוצאת מהמישור שלהם.'
+        misconception: MC-cross-product-in-plane
+      - dir: zero
+        feedback: 'המכפלה הווקטורית מתאפסת כשהווקטורים מקבילים. כאן הם ניצבים, וגודלה הוא $|\vec A||\vec B|$, הגדול ביותר האפשרי.'
+    wrongFeedback: 'המכפלה הווקטורית ניצבת לשני הווקטורים. כששניהם בדף, היא יוצאת מהדף או נכנסת אליו.'
+
+  - id: Q-6.3-cross-order
+    type: twotier
+    objectives: [OBJ-6.3-3]
+    qualitative: true
+    prompt: >-
+      ידוע ש-$\vec A\times\vec B = (0, 0, 6)$. מה $\vec B\times\vec A$?
+    choices:
+      - text: '$(0, 0, -6)$'
+        correct: true
+        feedback: 'נכון. החלפת הסדר הופכת את הכיוון ושומרת על הגודל.'
+      - text: '$(0, 0, 6)$'
+        feedback: 'במכפלה וקטורית הסדר חשוב. בנוסחת הרכיבים, למשל $A_x B_y - A_y B_x$, החלפת $\vec A$ ו-$\vec B$ הופכת את הסימן.'
+        misconception: MC-cross-product-commutes
+      - text: '$(6, 0, 0)$'
+        feedback: 'החלפת הסדר לא מסובבת את הווקטור לציר אחר. הוא נשאר ניצב לאותם שני וקטורים, ורק מתהפך.'
+      - text: '$0$'
+        feedback: 'גודל המכפלה תלוי רק בגדלים ובזווית, והם לא השתנו. לכן הגודל נשאר $6$.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'בכלל יד ימין מכופפים את האצבעות מהגורם הראשון אל השני, וכשמחליפים את הסדר האגודל מתהפך.'
+        correct: true
+        feedback: 'נכון. וגם ברכיבים: $B_x A_y - B_y A_x = -(A_x B_y - A_y B_x)$.'
+      - text: 'בכפל הסדר אף פעם לא משנה.'
+        feedback: 'זה נכון לכפל מספרים ולמכפלה סקלרית, אבל לא למכפלה וקטורית: שם $\vec B\times\vec A = -\vec A\times\vec B$.'
+        misconception: MC-cross-product-commutes
+      - text: 'המכפלה הווקטורית נמצאת במישור של $\vec A$ ו-$\vec B$, וההחלפה מזיזה אותה בתוכו.'
+        feedback: 'המכפלה הווקטורית ניצבת למישור של שני הווקטורים, לא נמצאת בתוכו.'
+        misconception: MC-cross-product-in-plane
+
+  - id: Q-6.3-torque
+    type: numeric
+    objectives: [OBJ-6.3-3]
+    level: mid
+    prompt: >-
+      כוח $\vec F = (3, 0, 4)\,\text{N}$ פועל בנקודה שוקטור המקום שלה מציר הסיבוב הוא $\vec r = (0.5, 0, 0)\,\text{m}$. מה גודל מומנט הכוח $\vec\tau = \vec r\times\vec F$? ענו ב-$\text{N}\cdot\text{m}$.
+    answer: 2
+    unit: N·m
+    tolerance: 0.02
+    correctFeedback: 'נכון. $\vec r\times\vec F = (0\cdot4 - 0\cdot0,\ 0\cdot3 - 0.5\cdot4,\ 0.5\cdot0 - 0\cdot3) = (0, -2, 0)\,\text{N}\cdot\text{m}$, וגודלו $2\,\text{N}\cdot\text{m}$. רק הרכיב של $\vec F$ שניצב ל-$\vec r$, $F_z = 4\,\text{N}$, תורם.'
+    wrongFeedback: 'חשבו את המכפלה הווקטורית רכיב-רכיב, $(r_y F_z - r_z F_y,\ r_z F_x - r_x F_z,\ r_x F_y - r_y F_x)$, ואז את הגודל.'
+    commonWrong:
+      - value: 2.5
+        feedback: 'זה $|\vec r||\vec F| = 0.5\cdot5$, כאילו הכוח ניצב ל-$\vec r$. הרכיב $F_x = 3\,\text{N}$ מקביל ל-$\vec r$ ואינו יוצר מומנט.'
+      - value: 1.5
+        feedback: 'זו המכפלה הסקלרית $\vec r\cdot\vec F = 0.5\cdot3$. מומנט הוא מכפלה וקטורית, והוא נותן את הרכיב הניצב.'
+
+  # ------------------------------------------------ OBJ-6.3-4: Coulomb's law with the separation vector
+  - id: Q-6.3-coulomb-ex
+    type: numeric
+    objectives: [OBJ-6.3-4]
+    level: mid
+    prompt: >-
+      מטען $q = 4\,\text{nC}$ נמצא בנקודה $\vec r^{\,\prime} = (0.1, 0.2, 0)\,\text{m}$. מה רכיב ה-$x$ של השדה החשמלי שלו בנקודה $\vec r = (0.4, 0.6, 0)\,\text{m}$? ענו ב-$\text{N/C}$.
+    answer: 86.4
+    unit: N/C
+    tolerance: 0.02
+    correctFeedback: 'נכון. $\vec R = \vec r - \vec r^{\,\prime} = (0.3, 0.4, 0)\,\text{m}$, $R = 0.5\,\text{m}$, $\hat R = (0.6, 0.8, 0)$. $E = kq/R^2 = 9\cdot10^9\cdot4\cdot10^{-9}/0.25 = 144\,\text{N/C}$, ו-$E_x = 144\cdot0.6 = 86.4\,\text{N/C}$.'
+    wrongFeedback: 'מצאו קודם את $\vec R = \vec r - \vec r^{\,\prime}$, את אורכו ואת וקטור היחידה שלו. אחר כך $E_x = \dfrac{kq}{R^2}\,\hat R_x$.'
+    commonWrong:
+      - value: 144
+        feedback: 'זה גודל השדה, $|\vec E|$. השאלה שואלת על הרכיב בכיוון $x$: כפלו ב-$\hat R_x = 0.6$.'
+      - value: -86.4
+        feedback: 'הסימן הפוך: השתמשתם ב-$\vec r^{\,\prime} - \vec r$. וקטור ההפרדה יוצא מהמטען אל נקודת השדה, $\vec r - \vec r^{\,\prime}$, והשדה של מטען חיובי מצביע לאורכו.'
+        misconception: MC-separation-reversed
+      - value: 115.2
+        feedback: 'זה רכיב ה-$y$, $144\cdot0.8$. רכיב ה-$x$ משתמש ב-$\hat R_x = 0.3/0.5 = 0.6$.'
+      - value: 38.4
+        feedback: 'חישבתם כאילו המטען בראשית, עם $|\vec r| = 0.72\,\text{m}$ והכיוון של $\vec r$. השדה תלוי במיקום ביחס למטען: $\vec r - \vec r^{\,\prime}$.'
+        misconception: MC-coulomb-distance-from-origin
+
+  - id: Q-6.3-which-arrow
+    type: mc
+    objectives: [OBJ-6.3-4]
+    qualitative: true
+    prompt: >-
+      מטען נמצא בנקודת המקור $\vec r^{\,\prime}$, ומודדים את השדה שלו בנקודת השדה $\vec r$. איזה וקטור מתחיל במטען ונגמר בנקודת השדה?
+    choices:
+      - text: '$\vec r - \vec r^{\,\prime}$'
+        correct: true
+        feedback: 'נכון. $\vec r^{\,\prime} + (\vec r - \vec r^{\,\prime}) = \vec r$: מהראשית אל המטען, ומשם אל נקודת השדה.'
+      - text: '$\vec r^{\,\prime} - \vec r$'
+        feedback: 'זה הווקטור ההפוך, מנקודת השדה אל המטען. עם הסימן הזה השדה של מטען חיובי היה מצביע אל המטען.'
+        misconception: MC-separation-reversed
+      - text: '$\vec r$'
+        feedback: '$\vec r$ מתחיל בראשית, לא במטען. רק כשהמטען בראשית ($\vec r^{\,\prime} = 0$) שני הווקטורים זהים.'
+        misconception: MC-coulomb-distance-from-origin
+      - text: '$\vec r + \vec r^{\,\prime}$'
+        feedback: 'חיבור הווקטורים לא מתאר שום חץ בין שתי הנקודות. החץ מנקודה לנקודה הוא ההפרש: הסוף פחות ההתחלה.'
+
+  - id: Q-6.3-distance
+    type: twotier
+    objectives: [OBJ-6.3-4]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מטען נמצא ב-$\vec r^{\,\prime} = (3, 0, 0)\,\text{m}$, ונקודת השדה ב-$\vec r = (0, 4, 0)\,\text{m}$. מה המרחק שמציבים בחוק קולון?
+    choices:
+      - text: '$5\,\text{m}$'
+        correct: true
+        feedback: 'נכון. $\vec r - \vec r^{\,\prime} = (-3, 4, 0)\,\text{m}$, וגודלו $\sqrt{9 + 16} = 5\,\text{m}$.'
+      - text: '$1\,\text{m}$'
+        feedback: 'זה $|\vec r| - |\vec r^{\,\prime}| = 4 - 3$. אבל שתי הנקודות לא על אותה קרן מהראשית: מחסירים את הווקטורים ורק אחר כך לוקחים גודל.'
+        misconception: MC-separation-magnitude-difference
+      - text: '$4\,\text{m}$'
+        feedback: 'זה המרחק של נקודת השדה מהראשית. המטען לא בראשית, והשדה תלוי במרחק מהמטען.'
+        misconception: MC-coulomb-distance-from-origin
+      - text: '$7\,\text{m}$'
+        feedback: 'זה $|\vec r| + |\vec r^{\,\prime}|$, האורך של מסלול שעובר דרך הראשית. המרחק הישר קצר יותר.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'המרחק בין שתי נקודות הוא הגודל של הפרש וקטורי המקום שלהן.'
+        correct: true
+        feedback: 'נכון. $|\vec r - \vec r^{\,\prime}|$, מחושב מהרכיבים.'
+      - text: 'המרחק בין שתי נקודות הוא הפרש המרחקים שלהן מהראשית.'
+        feedback: 'זה נכון רק כששתיהן על אותה קרן מהראשית. כאן אחת על ציר $x$ והשנייה על ציר $y$.'
+        misconception: MC-separation-magnitude-difference
+      - text: 'בחוק קולון $r$ הוא תמיד המרחק מהראשית.'
+        feedback: 'הנוסחה $E = kq/r^2$ מניחה שהמטען בראשית. באופן כללי מודדים מהמטען: $|\vec r - \vec r^{\,\prime}|$.'
+        misconception: MC-coulomb-distance-from-origin
+
+  - id: Q-6.3-move-origin
+    type: multi
+    objectives: [OBJ-6.3-4]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מטען נקודתי ונקודת שדה P נשארים במקומם, ומזיזים רק את הראשית של מערכת הצירים, מטר אחד שמאלה. סמנו את **כל** הגדלים שמשתנים.
+    choices:
+      - text: 'וקטור המקום $\vec r$ של P.'
+        correct: true
+        feedback: 'נכון. $\vec r$ נמדד מהראשית, וכשהראשית זזה הוא משתנה.'
+      - text: 'וקטור המקום $\vec r^{\,\prime}$ של המטען.'
+        correct: true
+        feedback: 'נכון. גם הוא נמדד מהראשית.'
+      - text: 'וקטור ההפרדה $\vec r - \vec r^{\,\prime}$.'
+        feedback: 'שני וקטורי המקום משתנים באותו וקטור, וההפרש לא משתנה: זה החץ מהמטען אל P, ושתי הנקודות לא זזו.'
+        misconception: MC-coulomb-distance-from-origin
+      - text: 'השדה החשמלי ב-P.'
+        feedback: 'השדה הוא עובדה פיזיקלית, והוא לא יכול להיות תלוי בבחירה שלנו איפה לשים ראשית. הוא תלוי רק ב-$\vec r - \vec r^{\,\prime}$, שלא השתנה.'
+        misconception: MC-coulomb-distance-from-origin

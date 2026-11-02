@@ -1,0 +1,23 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support; the
+# length comes from the watch page (lengthSeconds).
+
+- id: v-6-3-partial
+  youtubeId: AXqhWeUEtQU
+  title: 'Partial derivatives, introduction'
+  channel: Khan Academy
+  lang: en
+  captions: []
+  minutes: 11
+  why: 'הקדמה באנגלית לנגזרות חלקיות. לפי תיאור הסרטון, נגזרת חלקית מראה איך פונקציה של כמה משתנים משתנה כשמזיזים רק אחד מהם. השוו לאיור 6.3א: שם ה"פונקציה" היא הפוטנציאל V(x, y), וה"משתנה האחד" הוא הכיוון של הקו המקווקו.'
+  verified: '2026-11-02'
+
+- id: v-6-3-cross
+  youtubeId: eu6i7WJeinw
+  title: 'Cross products | Chapter 10, Essence of linear algebra'
+  channel: 3Blue1Brown
+  lang: en
+  captions: []
+  minutes: 9
+  why: 'פרק באנגלית מסדרת "Essence of linear algebra". לפי תיאור הסרטון, הוא עוסק באינטואיציה הגאומטרית של המכפלה הווקטורית בדו-ממד ובתלת-ממד. חפשו את הקשר לשטח המקבילית שבאיור 6.3ג. שימו לב: בסרטון הרכיבים כתובים כעמודות של מטריצה, והתוצאה זהה לנוסחת הרכיבים שבשיעור.'
+  verified: '2026-11-02'
