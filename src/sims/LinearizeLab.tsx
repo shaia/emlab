@@ -35,13 +35,19 @@ const SETS: Record<DatasetId, { title: string; x: Axis; y: Axis }> = {
   'capacitor-qv': { title: 'קבל: מטען מול מתח', x: { sym: 'V', unit: 'V' }, y: { sym: 'Q', unit: 'C' } },
   'capacitor-gap': { title: 'קבל: קיבול מול המרחק בין הלוחות', x: { sym: 'd', unit: 'm' }, y: { sym: 'C', unit: 'F' } },
   'battery-vi': { title: 'סוללה: מתח ההדקים מול הזרם', x: { sym: 'I', unit: 'A' }, y: { sym: 'V', unit: 'V' } },
+  // tanθ has no unit: its axis label drops the brackets, and the slope is in 1/A
+  'earth-field': { title: 'מצפן מתחת לתיל: הטנגנס של זווית הסטייה מול הזרם', x: { sym: 'I', unit: 'A' }, y: { sym: 'tanθ', unit: '' } },
 };
 
 const xSym = (a: Axis, t: Transform) => ({ x: a.sym, x2: `${a.sym}²`, sqrt: `√${a.sym}`, inv: `1/${a.sym}`, inv2: `1/${a.sym}²` })[t];
 const xUnit = (a: Axis, t: Transform) => ({ x: a.unit, x2: `${a.unit}²`, sqrt: `√${a.unit}`, inv: `1/${a.unit}`, inv2: `1/${a.unit}²` })[t];
 /** units of Δy/Δx */
-const slopeUnit = (y: Axis, a: Axis, t: Transform) =>
-  ({ x: `${y.unit}/${a.unit}`, x2: `${y.unit}/${a.unit}²`, sqrt: `${y.unit}/√${a.unit}`, inv: `${y.unit}·${a.unit}`, inv2: `${y.unit}·${a.unit}²` })[t];
+const slopeUnit = (y: Axis, a: Axis, t: Transform) => {
+  const u = y.unit || '1';
+  return ({ x: `${u}/${a.unit}`, x2: `${u}/${a.unit}²`, sqrt: `${u}/√${a.unit}`, inv: y.unit ? `${u}·${a.unit}` : a.unit, inv2: y.unit ? `${u}·${a.unit}²` : `${a.unit}²` })[t];
+};
+/** an axis title, "V (V)", or just the symbol for a quantity without a unit */
+const axisTitle = (sym: string, unit: string) => (unit ? `${sym} (${unit})` : sym);
 
 const TASK_LABEL: Record<string, string> = {
   'ruler-slope': 'הניחו את הסרגל (הקו הכחול) כך שיעבור קרוב ככל האפשר לכל הנקודות: גררו את שתי הנקודות שעליו.',
@@ -452,10 +458,10 @@ function axes(
   ctx.fillStyle = p.ink;
   ctx.textAlign = 'right';
   ctx.textBaseline = 'bottom';
-  ctx.fillText(`${xs} (${xu})`, f.left + f.pw, f.top + f.ph + (f.narrow ? 36 : 40));
+  ctx.fillText(axisTitle(xs, xu), f.left + f.pw, f.top + f.ph + (f.narrow ? 36 : 40));
   ctx.textAlign = 'left';
   ctx.textBaseline = 'bottom';
-  ctx.fillText(`${y.sym} (${y.unit})`, f.left + 6, f.top - 10);
+  ctx.fillText(axisTitle(y.sym, y.unit), f.left + 6, f.top - 10);
   ctx.restore();
 }
 

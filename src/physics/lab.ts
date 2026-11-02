@@ -3,7 +3,8 @@
  *
  * MODEL SPECIFICATION
  * - System: n measurements of a law. The controlled variable is set exactly; the measured one is
- *   read with a small random relative scatter, the same on every load (a seeded generator).
+ *   read with a small random relative scatter, the same on every load (a seeded generator). A
+ *   compass angle is read with an absolute scatter in degrees, then rounded to the whole degree.
  * - Dynamics: none.
  * - Boundary: none.
  * - Ignored: uncertainty in the controlled variable; systematic errors (a zero offset, a
@@ -17,6 +18,7 @@ import { plateCapacitance } from './capacitors';
 import { G } from './constants';
 import { terminalVoltage } from './circuits';
 import { coulombForce } from './electrostatics';
+import { compassDeflection, EARTH_B_HORIZONTAL, straightWireField } from './magnetism';
 
 /** A reproducible uniform generator on [0, 1) (mulberry32): the same seed, the same table. */
 export function seededRandom(seed: number): () => number {
@@ -167,7 +169,34 @@ function batteryVI(): Dataset {
   return { x: I, y: V, linear: 'x', law: { slope: -BATTERY_R, intercept: BATTERY_EMF } };
 }
 
-export type DatasetId = 'spring' | 'fall' | 'coulomb' | 'capacitor-qv' | 'capacitor-gap' | 'battery-vi';
+/** The compass of lesson 4.10: a north–south wire 3 cm above the needle, in the Earth's horizontal field. */
+export const COMPASS_R = 0.03;
+export const COMPASS_CURRENTS = [1, 2, 3, 4, 5, 6];
+
+/**
+ * Compass readings under a north–south wire at height r: the needle's deflection from north, read
+ * on the dial to the whole degree, each off by a uniform error of at most `scatterDeg` before the
+ * rounding [degrees].
+ */
+export function compassReadings(currents: readonly number[], r: number, BE: number, scatterDeg: number, seed: number): number[] {
+  const rnd = seededRandom(seed);
+  return currents.map((I) => Math.round((compassDeflection(straightWireField(I, r), BE) * 180) / Math.PI + scatterDeg * (2 * rnd() - 1)));
+}
+
+/** tan of an angle given in degrees, to 3 significant figures (as a student's table writes it). */
+export const tanDeg = (deg: number) => sig3(Math.tan((deg * Math.PI) / 180));
+
+/**
+ * Earth's field: a power supply sets the current in a north–south wire above a compass, and the
+ * deflection is read to the degree. tanθ = μ₀I/(2πr·B_E), a line through the origin in I.
+ */
+function earthField(): Dataset {
+  const I = [...COMPASS_CURRENTS];
+  const y = compassReadings(I, COMPASS_R, EARTH_B_HORIZONTAL, 1, 8).map(tanDeg);
+  return { x: I, y, linear: 'x', law: { slope: straightWireField(1, COMPASS_R) / EARTH_B_HORIZONTAL, intercept: 0 } };
+}
+
+export type DatasetId = 'spring' | 'fall' | 'coulomb' | 'capacitor-qv' | 'capacitor-gap' | 'battery-vi' | 'earth-field';
 export const DATASETS: Record<DatasetId, Dataset> = {
   spring: spring(),
   fall: fall(),
@@ -175,4 +204,5 @@ export const DATASETS: Record<DatasetId, Dataset> = {
   'capacitor-qv': capacitorQV(),
   'capacitor-gap': capacitorGap(),
   'battery-vi': batteryVI(),
+  'earth-field': earthField(),
 };

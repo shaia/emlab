@@ -1,0 +1,28 @@
+/* The measurement table under the compass figure. Colours from tokens only. */
+.cw-table-wrap {
+  flex-basis: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+.cw-table {
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+.cw-table caption {
+  text-align: start;
+  color: var(--ink-2);
+  padding-bottom: 4px;
+}
+.cw-table th,
+.cw-table td {
+  padding: 3px 10px;
+  border-bottom: 1px solid var(--rule);
+  text-align: center;
+  white-space: nowrap;
+}
+.cw-table th {
+  font-weight: 600;
+  color: var(--ink-2);
+  background: var(--paper-2);
+}
