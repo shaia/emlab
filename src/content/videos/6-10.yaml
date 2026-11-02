@@ -1,0 +1,23 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below) on the
+# `verified` date. `why` claims only what the title and the upload description support; the length comes
+# from the watch page (lengthSeconds). Captions are not confirmed, so none are listed.
+
+- id: v-6-10-axis-field
+  youtubeId: j2lHyYQ2PJo
+  title: 'Electric field due to dipole on the axis | Electric charges & fields | Physics | Khan Academy'
+  channel: Khan Academy India - English
+  lang: en
+  captions: []
+  minutes: 13
+  why: 'סרטון באנגלית: לפי התיאור שלו, הוא גוזר את השדה של דיפול על הציר ומראה שרחוק מהדיפול השדה ביחס ישר למומנט הדיפול וביחס הפוך לחזקה השלישית של המרחק. השוו לפיתוח שבשיעור: שם הגענו לאותה תוצאה דרך הפוטנציאל והגרדיאנט.'
+  verified: '2026-11-02'
+
+- id: v-6-10-torque
+  youtubeId: F7GKrCTeNpw
+  title: 'Intro to torque on a dipole in uniform electric field | Electric charges & fields | Khan Academy'
+  channel: Khan Academy India - English
+  lang: en
+  captions: []
+  minutes: 10
+  why: 'סרטון באנגלית: לפי התיאור שלו, הוא מראה שעל דיפול בשדה אחיד פועל מומנט כוח שמנסה לסובב אותו לכיוון השדה. בזמן הצפייה בדקו: האם יש כוח שקול על הדיפול? השוו לאיור 6.10ב.'
+  verified: '2026-11-02'
