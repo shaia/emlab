@@ -1,0 +1,368 @@
+# Chapter 4 Bagrut-style questions: a scenario with lettered parts (א, ב, ג…), 33 points each, as in
+# paper 036371. Format and rules: see questions/ch1/bagrut.yaml.
+#
+# Every number was computed with src/physics (magnetism.ts: selectorSpeed, orbitRadius, wireFieldAt,
+# straightWireField, parallelWiresForce, solenoidField, wireForce, loopTorque), not by hand.
+
+chapter: 4
+questions:
+  # ------------------------------------------------------------ 1: a velocity selector feeding a spectrometer
+  - id: Q-4-bagrut-1
+    type: bagrut
+    title: בורר מהירויות וספקטרומטר מסות
+    prompt: >-
+      יוני ניאון חד-ערכיים (מטען $+e$) משני איזוטופים, $^{20}\text{Ne}$ ו-$^{22}\text{Ne}$, נכנסים בתנועה ימינה לבורר
+      מהירויות. בבורר שני לוחות מקבילים אופקיים, במרחק $d = 1.0\,\text{cm}$ זה מזה, עם מתח $V = 400\,\text{V}$ ביניהם,
+      ושדה מגנטי אחיד $B = 0.20\,\text{T}$ לתוך הדף (⊗). היונים שעוברים את הבורר בקו ישר יוצאים דרך סדק אל אזור שני,
+      שבו יש רק שדה מגנטי אחיד $B' = 0.20\,\text{T}$, גם הוא לתוך הדף. שם הם נעים בחצי מעגל ופוגעים בלוח צילום שעובר
+      דרך הסדק. המסה של יון היא מספר המסה כפול $m_p$. הזניחו את הכבידה.
+    diagramAlt: >-
+      משמאל לימין: חץ של יונים שנעים ימינה, בורר מהירויות עם לוח עליון ולוח תחתון ושדה ⊗ ביניהם, סדק, ואחריו אזור גדול
+      של שדה ⊗ שבו שני חצאי מעגל, קטן וגדול, מתעקלים כלפי מעלה וחוזרים אל לוח הצילום האנכי שעובר דרך הסדק.
+    diagram: |
+      <svg viewBox="0 0 520 230" width="520" height="230" font-size="14" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="1.5" fill="none">
+          <rect x="70" y="150" width="130" height="8"/>
+          <rect x="70" y="202" width="130" height="8"/>
+          <line x1="215" y1="20" x2="215" y2="172"/>
+          <line x1="215" y1="188" x2="215" y2="225"/>
+          <rect x="215" y="20" width="290" height="205" stroke-dasharray="4 3" stroke-width="1"/>
+          <path d="M215,180 A75,75 0 0 0 215,30" stroke-dasharray="5 3"/>
+          <path d="M215,180 A68,68 0 0 0 215,44"/>
+          <line x1="10" y1="180" x2="60" y2="180"/>
+          <polygon points="60,175 70,180 60,185" fill="currentColor"/>
+        </g>
+        <g font-size="16" fill="currentColor">
+          <text x="85" y="185">⊗</text><text x="125" y="185">⊗</text><text x="165" y="185">⊗</text>
+          <text x="300" y="80">⊗</text><text x="380" y="80">⊗</text><text x="460" y="80">⊗</text>
+          <text x="300" y="160">⊗</text><text x="380" y="160">⊗</text><text x="460" y="160">⊗</text>
+        </g>
+        <text x="110" y="145" fill="currentColor">B, E</text>
+        <text x="420" y="210" fill="currentColor">B′</text>
+        <text x="12" y="172" fill="currentColor">יונים</text>
+      </svg>
+    parts:
+      - label: א
+        type: vector
+        points: 5
+        level: basic
+        qualitative: true
+        allowOutIn: true
+        objectives: [OBJ-4.4-2, OBJ-4.6-1]
+        prompt: מה כיוון הכוח המגנטי על יון שנע ימינה בתוך הבורר?
+        answer: n
+        correctFeedback: 'נכון. בכלל כף יד ימין: האצבעות לתוך הדף (בכיוון השדה), האגודל ימינה (המהירות של מטען חיובי), והכוח יוצא מכף היד כלפי מעלה.'
+        wrong:
+          - dir: s
+            feedback: 'זה הכיוון על מטען **שלילי**. היון חיובי, ולכן הכוח בכיוון שכלל כף יד ימין נותן: כלפי מעלה.'
+            misconception: MC-magnetic-force-sign-blind
+          - dir: in
+            feedback: 'הכוח המגנטי ניצב לשדה, לא בכיוונו. הוא ניצב גם למהירות, ולכן הוא במישור הדף, למעלה או למטה.'
+            misconception: MC-magnetic-force-along-field
+          - dir: e
+            feedback: 'הכוח המגנטי ניצב למהירות, ולכן הוא לא יכול להיות ימינה, בכיוון התנועה.'
+        wrongFeedback: 'השתמשו בכלל כף יד ימין: אצבעות בכיוון השדה, אגודל בכיוון המהירות של מטען חיובי, והכוח יוצא מכף היד.'
+
+      - label: ב
+        type: mc
+        points: 5
+        level: basic
+        qualitative: true
+        objectives: [OBJ-4.6-1]
+        prompt: איזה לוח בבורר צריך להיות חיובי, כדי שהכוח החשמלי יאזן את הכוח המגנטי?
+        choices:
+          - text: הלוח העליון.
+            correct: true
+            feedback: 'נכון. הכוח המגנטי כלפי מעלה, ולכן הכוח החשמלי צריך להיות כלפי מטה. על יון חיובי הכוח בכיוון השדה, ולכן השדה החשמלי כלפי מטה: מהלוח העליון, החיובי, אל התחתון.'
+          - text: הלוח התחתון.
+            feedback: 'אז השדה החשמלי כלפי מעלה, והכוח החשמלי על היון החיובי כלפי מעלה, בדיוק כמו הכוח המגנטי. הכוחות היו מתחברים, לא מתאזנים.'
+            misconception: MC-selector-sign-matters
+          - text: זה לא משנה, כי הכוח החשמלי והכוח המגנטי תמיד מנוגדים.
+            feedback: 'שני הכוחות תלויים בכיוון השדות. רק בחירה נכונה של הקוטביות, הלוח העליון חיובי, הופכת אותם למנוגדים.'
+
+      - label: ג
+        type: numeric
+        points: 6
+        level: mid
+        objectives: [OBJ-4.6-2]
+        prompt: באיזו מהירות יוצאים היונים מהבורר?
+        answer: 2.0e5
+        unit: m/s
+        correctFeedback: 'נכון: $E = \dfrac{V}{d} = \dfrac{400}{0.010} = 4.0\cdot10^{4}\,\text{V/m}$, ומהשוויון $qE = qvB$ מקבלים $v = \dfrac{E}{B} = \dfrac{4.0\cdot10^{4}}{0.20} = 2.0\cdot10^{5}\,\text{m/s}$, לשני האיזוטופים.'
+        wrongFeedback: 'חשבו קודם את השדה החשמלי בין הלוחות, $E = V/d$, ואז השוו את הכוח החשמלי לכוח המגנטי.'
+        commonWrong:
+          - value: 2000
+            feedback: 'חילקתם את המתח בשדה המגנטי, $400/0.20$ (או הצבתם $d = 1$, בסנטימטרים). מה שנכנס לתנאי הוא השדה החשמלי, $E = V/d$ עם $d = 0.010\,\text{m}$.'
+          - value: 2.0e6
+            feedback: 'הצבתם $d = 1\,\text{mm}$. $d = 1.0\,\text{cm} = 0.010\,\text{m}$, ולכן $E = 4.0\cdot10^{4}\,\text{V/m}$.'
+          - value: 8000
+            feedback: 'כפלתם $E\cdot B$ במקום לחלק. מ-$qE = qvB$ מבודדים $v = E/B$.'
+
+      - label: ד
+        type: numeric
+        points: 7
+        level: mid
+        objectives: [OBJ-4.5-1]
+        prompt: מה רדיוס חצי המעגל של יוני $^{20}\text{Ne}$ באזור השני?
+        answer: 0.209
+        unit: m
+        correctFeedback: 'נכון: $r = \dfrac{mv}{qB''} = \dfrac{20\cdot1.67\cdot10^{-27}\cdot2.0\cdot10^{5}}{1.6\cdot10^{-19}\cdot0.20} \approx 0.209\,\text{m}$.'
+        wrongFeedback: 'הכוח המגנטי הוא הכוח המרכזי: $qvB'' = mv^2/r$, ולכן $r = mv/(qB'')$. המסה היא $20m_p$.'
+        commonWrong:
+          - value: 0.0104
+            feedback: 'שכחתם את מספר המסה: השתמשתם ב-$m_p$ במקום $20m_p$.'
+          - value: 0.418
+            feedback: 'זה הקוטר, המרחק מהסדק לנקודת הפגיעה. הרדיוס הוא חצי ממנו.'
+
+      - label: ה
+        type: open
+        points: 10
+        level: bagrut
+        objectives: [OBJ-4.5-4, OBJ-4.6-2, OBJ-4.6-3]
+        prompt: >-
+          (1) חשבו את המרחק בין נקודות הפגיעה של שני האיזוטופים בלוח הצילום, וקבעו איזה איזוטופ פוגע רחוק יותר מהסדק.
+
+          (2) מה ישתנה אם במקום יוני $^{20}\text{Ne}$ חד-ערכיים ייכנסו יוני $^{20}\text{Ne}$ דו-ערכיים (מטען $+2e$),
+          באותה מהירות? קבעו ונמקו: האם הם יעברו את הבורר בקו ישר, ומה יהיה הרדיוס שלהם באזור השני?
+        hints:
+          - 'שני האיזוטופים יוצאים מהבורר באותה מהירות. מה משתנה ביניהם ב-$r = mv/(qB'')$?'
+        solution:
+          - { kind: formula, text: '$r = \dfrac{mv}{qB''}$, ונקודת הפגיעה במרחק $2r$ מהסדק.' }
+          - { kind: substitution, text: '$r_{22} = \dfrac{22\cdot1.67\cdot10^{-27}\cdot2.0\cdot10^{5}}{1.6\cdot10^{-19}\cdot0.20} \approx 0.230\,\text{m}$, ו-$r_{20} \approx 0.209\,\text{m}$.' }
+          - { kind: manipulation, text: 'המרחק בין נקודות הפגיעה: $2(r_{22} - r_{20}) = 2(0.2296 - 0.2088) \approx 0.042\,\text{m}$.' }
+          - { kind: manipulation, text: 'יון דו-ערכי: בבורר שני הכוחות גדלים פי 2, $2eE$ ו-$2evB$, ולכן הם עדיין שווים כש-$v = E/B$, והיון עובר בקו ישר. באזור השני $r = \dfrac{mv}{2eB''}$, חצי מהרדיוס של היון החד-ערכי.' }
+          - { kind: result, text: '(1) כ-$4.2\,\text{cm}$; $^{22}\text{Ne}$, הכבד יותר, פוגע רחוק יותר. (2) היון הדו-ערכי עובר את הבורר בקו ישר, ובאזור השני הרדיוס שלו כ-$0.104\,\text{m}$, חצי מ-$0.209\,\text{m}$.' }
+        rubric:
+          - text: השתמשתי באותה מהירות לשני האיזוטופים, כי שניהם עברו את הבורר.
+          - text: חישבתי את שני הרדיוסים, וקיבלתי מרחק של כ-$4.2\,\text{cm}$ בין נקודות הפגיעה (פעמיים הפרש הרדיוסים).
+          - text: קבעתי שהאיזוטופ הכבד פוגע רחוק יותר, כי $r \propto m$ באותה מהירות.
+          - text: נימקתי שתנאי הבורר $v = E/B$ לא תלוי במטען, ולכן היון הדו-ערכי עובר בקו ישר.
+          - text: קבעתי שהרדיוס שלו באזור השני חצי, כ-$0.104\,\text{m}$.
+
+  # ------------------------------------------------------------ 2: two parallel wires
+  - id: Q-4-bagrut-2
+    type: bagrut
+    title: שני תילים מקבילים
+    prompt: >-
+      שני תילים ישרים, ארוכים ומקבילים ניצבים לדף, במרחק $d = 10\,\text{cm}$ זה מזה. בתיל A זורם זרם $I_A = 6.0\,\text{A}$
+      ובתיל B זרם $I_B = 2.0\,\text{A}$, שניהם החוצה מהדף (⊙). תיל A משמאל ותיל B מימין, על קו אופקי. הנקודה P נמצאת
+      באמצע הדרך ביניהם. הזניחו את השדה המגנטי של כדור הארץ.
+    diagramAlt: >-
+      שני עיגולים על קו אופקי, A משמאל ו-B מימין, בכל אחד נקודה במרכז (⊙, זרם החוצה מהדף). ביניהם, באמצע, הנקודה P.
+      המרחק בין התילים מסומן d.
+    diagram: |
+      <svg viewBox="0 0 360 110" width="360" height="110" font-size="15" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="1.5" fill="none">
+          <circle cx="70" cy="55" r="13"/>
+          <circle cx="290" cy="55" r="13"/>
+          <line x1="70" y1="90" x2="290" y2="90" stroke-dasharray="4 3"/>
+        </g>
+        <circle cx="70" cy="55" r="4" fill="currentColor"/>
+        <circle cx="290" cy="55" r="4" fill="currentColor"/>
+        <circle cx="180" cy="55" r="3" fill="currentColor"/>
+        <text x="62" y="30" fill="currentColor">A</text>
+        <text x="283" y="30" fill="currentColor">B</text>
+        <text x="174" y="45" fill="currentColor">P</text>
+        <text x="175" y="106" fill="currentColor">d</text>
+      </svg>
+    parts:
+      - label: א
+        type: vector
+        points: 5
+        level: basic
+        qualitative: true
+        objectives: [OBJ-4.2-1, OBJ-4.2-3]
+        prompt: מה כיוון השדה המגנטי השקול בנקודה P?
+        answer: n
+        correctFeedback: 'נכון. בכלל יד ימין, זרם החוצה מהדף יוצר שדה נגד כיוון השעון. מימין לתיל A השדה שלו כלפי מעלה, ומשמאל לתיל B השדה שלו כלפי מטה. השדה של A גדול יותר (זרם גדול יותר באותו מרחק), ולכן השקול כלפי מעלה.'
+        wrong:
+          - dir: s
+            feedback: 'זה הכיוון של השדה של B לבד. אבל ב-P השדה של A גדול פי 3, כי הזרם בו גדול פי 3 באותו מרחק.'
+          - dir: e
+            feedback: 'השדה של תיל אינו מכוון מהתיל החוצה: הוא מקיף את התיל במעגלים, ולכן ב-P הוא אנכי.'
+            misconception: MC-wire-field-radial
+          - dir: zero
+            feedback: 'השדות מתאפסים רק אם הם שווים בגודל. ב-P המרחקים שווים, אבל הזרמים לא, ולכן השדות לא מתבטלים.'
+        wrongFeedback: 'מצאו בכלל יד ימין את כיוון השדה של כל תיל ב-P, השוו את הגדלים, וחברו.'
+
+      - label: ב
+        type: numeric
+        points: 5
+        level: mid
+        objectives: [OBJ-4.2-2, OBJ-4.2-3]
+        prompt: מה גודל השדה המגנטי השקול בנקודה P?
+        answer: 1.6e-5
+        unit: T
+        correctFeedback: 'נכון: $B_A = \dfrac{\mu_0 I_A}{2\pi r} = \dfrac{4\pi\cdot10^{-7}\cdot6.0}{2\pi\cdot0.050} = 2.4\cdot10^{-5}\,\text{T}$ כלפי מעלה, $B_B = 0.8\cdot10^{-5}\,\text{T}$ כלפי מטה, והשקול $1.6\cdot10^{-5}\,\text{T}$ כלפי מעלה.'
+        wrongFeedback: 'המרחק מכל תיל ל-P הוא $5.0\,\text{cm}$. חשבו את שני השדות, וזכרו שהם בכיוונים מנוגדים.'
+        commonWrong:
+          - value: 3.2e-5
+            feedback: 'חיברתם את הגדלים. ב-P שני השדות בכיוונים מנוגדים, ולכן מחסרים.'
+            misconception: MC-fields-add-as-numbers
+          - value: 8.0e-6
+            feedback: 'השתמשתם במרחק $d = 10\,\text{cm}$ במקום $5.0\,\text{cm}$. P באמצע, ולכן כל תיל רחוק ממנה $d/2$.'
+          - value: 3.2e-4
+            feedback: 'השתמשתם בקשר של $1/r^2$. השדה של תיל ישר יורד כמו $1/r$: $B = \mu_0I/(2\pi r)$.'
+            misconception: MC-wire-field-inverse-square
+
+      - label: ג
+        type: numeric
+        points: 6
+        level: mid
+        objectives: [OBJ-4.2-3]
+        prompt: באיזה מרחק מתיל A, על הקו שבין התילים, השדה המגנטי השקול מתאפס? ענו בסנטימטרים.
+        answer: 7.5
+        unit: cm
+        correctFeedback: 'נכון: בין התילים השדות מנוגדים. הם שווים כש-$\dfrac{6.0}{x} = \dfrac{2.0}{0.10 - x}$, כלומר $6.0(0.10 - x) = 2.0x$, ומכאן $x = 0.075\,\text{m} = 7.5\,\text{cm}$: קרוב יותר לתיל החלש.'
+        wrongFeedback: 'השוו את השדות של שני התילים בנקודה שנמצאת במרחק $x$ מ-A ובמרחק $10 - x$ מ-B.'
+        commonWrong:
+          - value: 2.5
+            feedback: 'זה המרחק מתיל B. נקודת האפס קרובה לתיל שהזרם בו קטן, B, כי שם השדה שלו חזק מספיק כדי לאזן את השדה של A.'
+          - value: 5
+            feedback: 'באמצע השדות לא שווים, כי הזרמים לא שווים (חלק ב).'
+
+      - label: ד
+        type: mc
+        points: 7
+        level: bagrut
+        qualitative: true
+        objectives: [OBJ-4.8-1, OBJ-4.8-3]
+        prompt: מה נכון לגבי הכוחות שהתילים מפעילים זה על זה?
+        choices:
+          - text: הם מושכים זה את זה, והכוח על תיל A שווה בגודלו לכוח על תיל B.
+            correct: true
+            feedback: 'נכון. זרמים באותו כיוון מושכים. הכוח על כל תיל הוא הזרם שלו כפול השדה של התיל השני, $I_B\cdot\dfrac{\mu_0I_A}{2\pi d}$ או $I_A\cdot\dfrac{\mu_0I_B}{2\pi d}$: אותה מכפלה, ולכן אותו גודל, כמו שהחוק השלישי של ניוטון דורש.'
+          - text: הם דוחים זה את זה, כי הזרמים באותו כיוון, כמו מטענים זהים.
+            feedback: 'בתילים זה הפוך ממטענים: זרמים באותו כיוון מושכים. בדקו בכלל כף יד ימין: השדה של A בתיל B כלפי מעלה, הזרם ב-B החוצה מהדף, והכוח על B שמאלה, לכיוון A.'
+            misconception: MC-like-currents-repel
+          - text: הם מושכים זה את זה, והכוח על תיל B גדול פי 3, כי הזרם ב-A גדול פי 3.
+            feedback: 'הכוח על B הוא $I_B$ כפול השדה של A, והכוח על A הוא $I_A$ כפול השדה של B. שתי המכפלות שוות ל-$\mu_0I_AI_B/(2\pi d)$. אלה כוחות של זוג פעולה ותגובה.'
+            misconception: MC-larger-current-larger-force
+          - text: אין ביניהם כוח, כי התילים ניטרליים.
+            feedback: 'נכון שהתילים ניטרליים, ולכן אין כוח חשמלי. אבל כל תיל נמצא בשדה המגנטי של השני וזורם בו זרם, ולכן פועל עליו כוח מגנטי.'
+            misconception: MC-wires-attract-charged
+
+      - label: ה
+        type: open
+        points: 10
+        level: bagrut
+        objectives: [OBJ-4.7-3, OBJ-4.8-2, OBJ-4.8-1]
+        prompt: >-
+          (1) חשבו את גודל הכוח שתיל A מפעיל על קטע באורך $0.50\,\text{m}$ של תיל B, בשתי דרכים: דרך השדה של A במקום של
+          B והכוח על תיל, ודרך הנוסחה לכוח בין תילים מקבילים.
+
+          (2) הופכים את כיוון הזרם בתיל B (עכשיו ⊗), בלי לשנות את גודלו. מה קורה לגודל הכוח ולכיוונו?
+        solution:
+          - { kind: formula, text: 'השדה של A במקום של B: $B_A = \dfrac{\mu_0 I_A}{2\pi d}$. הכוח על קטע של B: $F = B_A I_B L$. או ישירות: $\dfrac{F}{L} = \dfrac{\mu_0 I_A I_B}{2\pi d}$.' }
+          - { kind: substitution, text: '$B_A = \dfrac{4\pi\cdot10^{-7}\cdot6.0}{2\pi\cdot0.10} = 1.2\cdot10^{-5}\,\text{T}$, ו-$F = 1.2\cdot10^{-5}\cdot2.0\cdot0.50 = 1.2\cdot10^{-5}\,\text{N}$.' }
+          - { kind: manipulation, text: 'בדרך השנייה: $\dfrac{F}{L} = \dfrac{4\pi\cdot10^{-7}\cdot6.0\cdot2.0}{2\pi\cdot0.10} = 2.4\cdot10^{-5}\,\text{N/m}$, ועל $0.50\,\text{m}$: $1.2\cdot10^{-5}\,\text{N}$.' }
+          - { kind: result, text: '(1) $1.2\cdot10^{-5}\,\text{N}$, משיכה. (2) הגודל לא משתנה, $1.2\cdot10^{-5}\,\text{N}$; הכיוון מתהפך: זרמים מנוגדים דוחים, והכוח על B ימינה, הרחק מ-A.' }
+        rubric:
+          - text: חישבתי את השדה של A במרחק $d = 0.10\,\text{m}$, $1.2\cdot10^{-5}\,\text{T}$.
+          - text: הכפלתי בזרם של B ובאורך הקטע, וקיבלתי $1.2\cdot10^{-5}\,\text{N}$.
+          - text: קיבלתי את אותה תוצאה מהנוסחה לכוח ליחידת אורך בין תילים מקבילים.
+          - text: קבעתי שכשהזרם ב-B מתהפך הכוח נשאר באותו גודל והופך לדחייה.
+
+  # ------------------------------------------------------------ 3: a solenoid as a field source: balance and coil
+  - id: Q-4-bagrut-3
+    type: bagrut
+    title: סליל, מאזני זרם וכריכה מסתובבת
+    prompt: >-
+      סליל ארוך באורך $L = 25\,\text{cm}$, עם $N = 500$ כריכות, מחובר לספק שנותן זרם $I_s = 2.0\,\text{A}$. ציר הסליל
+      אופקי. בתוך הסליל, רחוק מהקצוות, מכניסים קטע תיל אופקי באורך $\ell = 4.0\,\text{cm}$, ניצב לציר. הקטע הוא חלק
+      ממסגרת של מאזני זרם, ובו זורם זרם $I = 5.0\,\text{A}$. שתי הצלעות של המסגרת שמובילות אל הקטע מקבילות לציר הסליל.
+    parts:
+      - label: א
+        type: numeric
+        points: 5
+        level: basic
+        objectives: [OBJ-4.3-3]
+        prompt: מה עוצמת השדה המגנטי בתוך הסליל? ענו במיליטסלה.
+        answer: 5.03
+        unit: mT
+        correctFeedback: 'נכון: $B = \dfrac{\mu_0 N I_s}{L} = \dfrac{4\pi\cdot10^{-7}\cdot500\cdot2.0}{0.25} \approx 5.03\cdot10^{-3}\,\text{T}$.'
+        wrongFeedback: 'בתוך סליל ארוך $B = \mu_0NI/L$. שימו לב ליחידות: $L$ במטרים, והתשובה במיליטסלה.'
+        commonWrong:
+          - value: 1.26
+            feedback: 'זה $\mu_0NI_s$ בלי לחלק באורך, $1.26\cdot10^{-3}$. השדה תלוי בכריכות **לכל מטר**, $N/L$.'
+          - value: 2.51
+            feedback: 'השתמשתם בנוסחה לשדה במרכז כריכה, $\mu_0NI/(2R)$, עם $R$ במקום האורך. בסליל ארוך $B = \mu_0NI/L$.'
+
+      - label: ב
+        type: mc
+        points: 5
+        level: mid
+        qualitative: true
+        objectives: [OBJ-4.3-3]
+        prompt: מותחים את הסליל כך שאורכו מוכפל, באותו מספר כריכות ובאותו זרם. מה קורה לשדה בתוכו?
+        choices:
+          - text: הוא קטן פי 2.
+            correct: true
+            feedback: 'נכון. השדה תלוי במספר הכריכות לכל מטר, $n = N/L$. כשהאורך מוכפל, $n$ קטן פי 2, וגם השדה.'
+          - text: הוא לא משתנה, כי מספר הכריכות והזרם לא השתנו.
+            feedback: 'השדה תלוי ב-$N/L$, לא ב-$N$ לבד. אותן כריכות על אורך כפול הן חצי צפופות.'
+            misconception: MC-solenoid-length-irrelevant
+          - text: הוא גדל פי 2, כי יש יותר סליל.
+            feedback: 'סליל ארוך יותר עם אותן כריכות אינו "יותר סליל": הכריכות פשוט רחוקות יותר זו מזו, והשדה קטן.'
+
+      - label: ג
+        type: numeric
+        points: 6
+        level: mid
+        objectives: [OBJ-4.7-3]
+        prompt: מה גודל הכוח המגנטי על קטע התיל שבתוך הסליל?
+        answer: 1.01e-3
+        unit: N
+        correctFeedback: 'נכון: הקטע ניצב לשדה, ולכן $F = BI\ell = 5.03\cdot10^{-3}\cdot5.0\cdot0.040 \approx 1.0\cdot10^{-3}\,\text{N}$.'
+        wrongFeedback: 'הקטע ניצב לציר, ולכן גם לשדה שבתוך הסליל: $F = BI\ell\sin90^\circ$.'
+        commonWrong:
+          - value: 4.02e-4
+            feedback: 'השתמשתם בזרם של הסליל, $2.0\,\text{A}$. הזרם של הסליל קובע את השדה; הכוח על הקטע תלוי בזרם **שבקטע**, $5.0\,\text{A}$.'
+          - value: 6.28e-3
+            feedback: 'השתמשתם באורך הסליל, $0.25\,\text{m}$, במקום באורך הקטע. רק החלק של התיל שנמצא בשדה וניצב לו נכנס לחישוב.'
+            misconception: MC-wire-whole-length
+
+      - label: ד
+        type: numeric
+        points: 7
+        level: mid
+        objectives: [OBJ-4.7-4, OBJ-4.7-2]
+        prompt: >-
+          הכוח על הקטע מופנה כלפי מטה. איזו מסה צריך להניח בצד השני של המאזניים, בזרוע שווה, כדי שהמאזניים יחזרו לאיזון?
+          ענו בגרמים. (על הצלעות המקבילות לציר אין כוח, למה?)
+        answer: 0.10
+        unit: g
+        tolerance: 0.05
+        correctFeedback: 'נכון: $mg = F$, ולכן $m = \dfrac{F}{g} = \dfrac{1.0\cdot10^{-3}}{10} = 1.0\cdot10^{-4}\,\text{kg} = 0.10\,\text{g}$. על הצלעות שמקבילות לציר אין כוח, כי הן מקבילות לשדה: $\sin0^\circ = 0$.'
+        wrongFeedback: 'במאזניים עם זרועות שוות, משקל המסה צריך להיות שווה לכוח המגנטי: $mg = F$.'
+        commonWrong:
+          - value: 100
+            feedback: 'זו המסה במיליגרם: $1.0\cdot10^{-4}\,\text{kg} = 100\,\text{mg} = 0.10\,\text{g}$.'
+          - value: 1.0
+            feedback: 'שכחתם לחלק ב-$g$: $1.0\cdot10^{-3}\,\text{N}$ זה כוח, לא מסה. $m = F/g$.'
+
+      - label: ה
+        type: open
+        points: 10
+        level: bagrut
+        objectives: [OBJ-4.9-2, OBJ-4.9-3]
+        prompt: >-
+          מוציאים את המסגרת, ובמקומה תולים בתוך הסליל, על ציר אנכי, סליל שטוח מלבני של $20$ כריכות במידות
+          $2.0\,\text{cm} \times 4.0\,\text{cm}$, שזורם בו זרם של $0.50\,\text{A}$.
+
+          (1) מה המומנט המרבי על הסליל השטוח, ובאיזה מצב שלו הוא מתקבל?
+
+          (2) מה המומנט כשמישור הסליל השטוח יוצר זווית של $60^\circ$ עם ציר הסליל הגדול? ובאיזה מצב הסליל השטוח
+          יכול לנוח בשיווי משקל יציב?
+        hints:
+          - 'ב-$\tau = NBIA\sin\theta$, הזווית $\theta$ היא בין **האנך** לסליל השטוח לבין השדה, לא בין מישור הסליל לשדה.'
+        solution:
+          - { kind: formula, text: '$\tau = NBIA\sin\theta$, כאשר $\theta$ הזווית בין האנך למישור הסליל השטוח לבין השדה, שמקביל לציר הסליל הגדול.' }
+          - { kind: substitution, text: '$A = 0.020\cdot0.040 = 8.0\cdot10^{-4}\,\text{m}^2$. המומנט המרבי, ב-$\theta = 90^\circ$: $\tau = 20\cdot5.03\cdot10^{-3}\cdot0.50\cdot8.0\cdot10^{-4} \approx 4.0\cdot10^{-5}\,\text{N·m}$.' }
+          - { kind: manipulation, text: 'מישור בזווית $60^\circ$ עם השדה פירושו אנך בזווית $\theta = 30^\circ$ עם השדה: $\tau = 4.0\cdot10^{-5}\cdot\sin30^\circ = 2.0\cdot10^{-5}\,\text{N·m}$.' }
+          - { kind: result, text: '(1) $4.0\cdot10^{-5}\,\text{N·m}$, כשמישור הסליל השטוח מקביל לשדה (לציר הסליל הגדול). (2) $2.0\cdot10^{-5}\,\text{N·m}$. שיווי משקל יציב: מישור הסליל השטוח ניצב לשדה, והשדה שהוא עצמו יוצר במרכזו בכיוון השדה של הסליל הגדול.' }
+        rubric:
+          - text: חישבתי את שטח הסליל השטוח במטרים רבועים, $8.0\cdot10^{-4}\,\text{m}^2$.
+          - text: חישבתי מומנט מרבי של כ-$4.0\cdot10^{-5}\,\text{N·m}$, וקבעתי שהוא מתקבל כשמישור הסליל השטוח מקביל לשדה.
+          - text: המרתי את הזווית בין המישור לשדה, $60^\circ$, לזווית בין האנך לשדה, $30^\circ$, וקיבלתי $2.0\cdot10^{-5}\,\text{N·m}$.
+          - text: 'זיהיתי את שיווי המשקל היציב: מישור ניצב לשדה, עם השדה של הסליל השטוח בכיוון השדה החיצוני.'
