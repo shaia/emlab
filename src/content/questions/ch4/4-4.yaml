@@ -1,0 +1,257 @@
+# Lesson 4.4 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/coils.ts and magnetism.ts (thickWireField,
+# straightWireField, MU0); the script is recompute-4-4.ts in the session scratchpad. The data differ on
+# purpose from figure 4.4א and the worked examples.
+
+chapter: 4
+questions:
+  # ------------------------------------------------ OBJ-4.4-1: the meaning of the law, signs, outside currents
+  - id: Q-4.4-ampere-zero
+    type: twotier
+    objectives: [OBJ-4.4-1]
+    qualitative: true
+    prompt: >-
+      בין שני תילים ארוכים ומקבילים, ניצבים לדף, משרטטים מסלול סגור שלא מקיף אף אחד מהם. מה אפשר לומר על השדה המגנטי בנקודות שעל המסלול?
+    choices:
+      - text: 'יש שדה בנקודות המסלול, אבל הסכום של $B_\parallel\,\Delta\ell$ סביב המסלול הוא אפס.'
+        correct: true
+        feedback: נכון.
+      - text: 'השדה בכל נקודה על המסלול הוא אפס.'
+        feedback: 'שני התילים יוצרים שדה בכל המרחב, גם על המסלול. אפס הוא רק **הסכום** סביב המסלול.'
+        misconception: MC-ampere-zero-enclosed-zero-field
+      - text: 'אי אפשר לדעת שום דבר, כי חוק אמפר עוסק רק בזרמים שבתוך המסלול.'
+        feedback: 'חוק אמפר כן אומר משהו: הסכום סביב מסלול שלא מקיף זרם הוא אפס. השדה עצמו קיים ונקבע על ידי כל הזרמים.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'בחלק מהמסלול השדה בכיוון ההליכה, ובחלק נגדו, והתרומות מתקזזות.'
+        correct: true
+        feedback: 'נכון. באיור 4.4א רואים את החיצים לאורך המסלול: בצד אחד הם בכיוון ההליכה ובצד השני נגדה.'
+      - text: 'חוק אמפר אומר שכשהזרם הכלוא אפס, השדה אפס.'
+        feedback: 'החוק מדבר על הסכום, לא על השדה בכל נקודה. סכום אפס יכול להתקבל מתרומות חיוביות ושליליות.'
+        misconception: MC-ampere-zero-enclosed-zero-field
+      - text: 'זרמים שמחוץ למסלול לא יוצרים שדה על המסלול.'
+        feedback: 'כל זרם יוצר שדה בכל מקום. זרם חיצוני רק לא משנה את **הסכום**.'
+        misconception: MC-ampere-outside-currents-count
+
+  - id: Q-4.4-ampere-sum
+    type: numeric
+    objectives: [OBJ-4.4-1]
+    level: mid
+    prompt: >-
+      שלושה תילים ארוכים ניצבים לדף. מסלול סגור, שהולכים לאורכו נגד כיוון השעון, מקיף תיל של $5\,\text{A}$ שיוצא מהדף (⊙) ותיל של $3\,\text{A}$ שנכנס לדף (⊗). תיל שלישי, של $10\,\text{A}$ שיוצא מהדף, נמצא מחוץ למסלול. מה הסכום של $B_\parallel\,\Delta\ell$ סביב המסלול? ענו ב-$\mu\text{T}\cdot\text{m}$.
+    answer: 2.51
+    unit: μT·m
+    tolerance: 0.03
+    correctFeedback: 'נכון. הזרם הכלוא $5 - 3 = 2\,\text{A}$ (כשהולכים נגד כיוון השעון, זרם שיוצא מהדף חיובי), והסכום $\mu_0\cdot2 = 4\pi\cdot10^{-7}\cdot2 \approx 2.51\cdot10^{-6}\,\text{T}\cdot\text{m}$.'
+    wrongFeedback: 'סכמו רק את הזרמים שבתוך המסלול, עם סימנים, וכפלו ב-$\mu_0$.'
+    commonWrong:
+      - value: 15.08
+        feedback: 'הוספתם את התיל של $10\,\text{A}$, שנמצא מחוץ למסלול. הוא משנה את השדה על המסלול, אבל לא את הסכום.'
+        misconception: MC-ampere-outside-currents-count
+      - value: 10.05
+        feedback: 'חיברתם $5 + 3$. הזרם שנכנס לדף הפוך לזה שיוצא ממנו, ולכן הוא נספר בסימן מינוס.'
+      - value: 22.6
+        feedback: 'חיברתם את כל הזרמים, בלי סימנים, גם את זה שבחוץ. רק הזרם הכלוא נספר, עם סימן.'
+        misconception: MC-ampere-outside-currents-count
+
+  - id: Q-4.4-ampere-radius
+    type: mc
+    objectives: [OBJ-4.4-1]
+    qualitative: true
+    prompt: >-
+      סביב תיל ישר ארוך משרטטים מעגל שמרכזו על התיל, ומחשבים את הסכום של $B_\parallel\,\Delta\ell$ סביבו. מחליפים אותו במעגל ברדיוס כפול. מה יקרה לסכום?
+    choices:
+      - text: 'לא ישתנה.'
+        correct: true
+        feedback: 'נכון. השדה על המעגל הגדול חלש פי 2 ($B \propto 1/r$), אבל ההיקף גדול פי 2. המכפלה $B\cdot2\pi r = \mu_0 I$ לא תלויה ב-$r$.'
+      - text: 'יקטן לחצי, כי השדה חלש פי 2.'
+        feedback: 'השדה אכן חלש פי 2, אבל המסלול ארוך פי 2, והסכום נשאר $\mu_0 I$.'
+        misconception: MC-ampere-bigger-path-bigger-sum
+      - text: 'יגדל פי 2, כי המסלול ארוך פי 2.'
+        feedback: 'המסלול ארוך פי 2, אבל השדה עליו חלש פי 2. המכפלה לא משתנה.'
+        misconception: MC-ampere-bigger-path-bigger-sum
+      - text: 'יקטן לרבע, כי השדה יורד כמו $1/r^2$.'
+        feedback: 'השדה של תיל ישר יורד כמו $1/r$, לא $1/r^2$ (שיעור 4.2). והסכום בכל מקרה $\mu_0 I$.'
+
+  - id: Q-4.4-walk-direction
+    type: mc
+    objectives: [OBJ-4.4-1]
+    qualitative: true
+    prompt: >-
+      בתיל ישר ארוך זורם $4\,\text{A}$ החוצה מהדף (⊙). מסלול סגור מקיף אותו, והפעם הולכים לאורכו **עם כיוון השעון**. מה הסכום של $B_\parallel\,\Delta\ell$ סביב המסלול?
+    choices:
+      - text: '$-5.03\cdot10^{-6}\,\text{T}\cdot\text{m}$: השדה מקיף את התיל נגד כיוון ההליכה.'
+        correct: true
+        feedback: 'נכון. השדה של זרם ⊙ מקיף את התיל נגד כיוון השעון (כלל יד ימין), וההליכה עם כיוון השעון, ולכן כל המכפלות שליליות: $-\mu_0\cdot4 \approx -5.03\cdot10^{-6}\,\text{T}\cdot\text{m}$. בלשון של החוק: כשהאצבעות מכופפות עם כיוון ההליכה, האגודל פונה לתוך הדף, והזרם ⊙ נספר שלילי.'
+      - text: '$+5.03\cdot10^{-6}\,\text{T}\cdot\text{m}$, כמו בכל מסלול סביב התיל.'
+        feedback: 'הגודל נכון, אבל הסימן תלוי בכיוון ההליכה. עם כיוון השעון השדה, שמקיף את התיל נגד כיוון השעון, תמיד נגד ההליכה.'
+      - text: 'אפס, כי הולכים עם כיוון השעון והשדה נגדו, והם מבטלים זה את זה.'
+        feedback: 'כיוון ההליכה לא מבטל את השדה. הוא קובע רק את הסימן של כל מכפלה, וכאן כולן שליליות.'
+      - text: 'תלוי בגודל המסלול.'
+        feedback: 'הסכום תלוי רק בזרם הכלוא ובכיוון ההליכה, לא בגודל המסלול או בצורתו.'
+        misconception: MC-ampere-bigger-path-bigger-sum
+
+
+  # ------------------------------------------------ OBJ-4.4-2: the field from the law, with symmetry
+  - id: Q-4.4-solenoid-edges
+    type: mc
+    objectives: [OBJ-4.4-2]
+    qualitative: true
+    level: bagrut
+    prompt: >-
+      כדי למצוא את השדה בתוך סליל ארוך, משרטטים מלבן: צלע אחת שלו, באורך $\ell$, בתוך הסליל ומקבילה לציר, הצלע שמולה מחוץ לסליל, ושתי הצלעות האחרות ניצבות לציר וחוצות את הכריכות. מאיזו צלע מגיע כמעט כל הסכום של $B_\parallel\,\Delta\ell$?
+    choices:
+      - text: 'מהצלע שבתוך הסליל: שם השדה חזק ולאורך הצלע.'
+        correct: true
+        feedback: 'נכון. בחוץ השדה כמעט אפס, ובצלעות הניצבות השדה שבפנים ניצב לצלע ($B_\parallel = 0$). לכן $B\ell = \mu_0 n\ell I$, ו-$B = \mu_0 n I$.'
+      - text: 'מהצלעות הניצבות, כי הן חוצות את הכריכות.'
+        feedback: 'בתוך הסליל השדה מקביל לציר, כלומר ניצב לצלעות האלה: $B_\parallel = 0$ שם. מה שהן חוצות קובע את הזרם הכלוא, לא את הסכום שלהן.'
+      - text: 'מהצלע שבחוץ, כי שם הקווים חוזרים.'
+        feedback: 'בחוץ הקווים מתפזרים על שטח עצום, ולכן השדה שם חלש מאוד, כמעט אפס.'
+      - text: 'משתי הצלעות המקבילות לציר בשווה.'
+        feedback: 'השדה בחוץ חלש פי עשרות ויותר מהשדה בפנים. כמעט כל הסכום בא מהצלע הפנימית.'
+
+  - id: Q-4.4-wire-B
+    type: numeric
+    objectives: [OBJ-4.4-2]
+    level: mid
+    prompt: >-
+      בתיל ישר ארוך זורם זרם של $10\,\text{A}$. השתמשו בחוק אמפר עם מעגל שמרכזו על התיל כדי למצוא את השדה במרחק $4\,\text{cm}$ מהתיל. ענו במיקרוטסלה (μT).
+    answer: 50
+    unit: μT
+    tolerance: 0.03
+    correctFeedback: 'נכון. על המעגל השדה משיק ובגודל קבוע, ולכן הסכום הוא $B\cdot2\pi r = \mu_0 I$, ו-$B = \dfrac{\mu_0 I}{2\pi r} = \dfrac{4\pi\cdot10^{-7}\cdot10}{2\pi\cdot0.04} = 5\cdot10^{-5}\,\text{T}$.'
+    wrongFeedback: 'הסכום סביב המעגל הוא השדה כפול ההיקף, $B\cdot2\pi r$. השוו אותו ל-$\mu_0 I$.'
+    commonWrong:
+      - value: 0.5
+        feedback: 'הצבתם את המרחק בסנטימטרים, $4$ במקום $0.04\,\text{m}$.'
+      - value: 157
+        feedback: 'השתמשתם בנוסחה של מרכז כריכה, $\mu_0 I/(2r)$. כאן המסלול הוא מעגל סביב תיל ישר, באורך $2\pi r$, ולכן $B = \mu_0 I/(2\pi r)$.'
+      - value: 2500
+        feedback: 'חילקתם בשטח העיגול, $\pi r^2$. בחוק אמפר כופלים את השדה באורך המסלול, ההיקף $2\pi r$.'
+      - value: 314
+        feedback: 'שכחתם את $2\pi$: אורך המסלול הוא $2\pi r$, לא $r$.'
+
+  - id: Q-4.4-symmetry
+    type: twotier
+    objectives: [OBJ-4.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      שני תילים ארוכים ומקבילים, $3\,\text{cm}$ זה מזה, ובכל אחד $5\,\text{A}$ החוצה מהדף. משרטטים מעגל ברדיוס $1\,\text{cm}$ סביב התיל השמאלי בלבד. הסכום סביבו הוא $\mu_0\cdot5$. האם השדה על המעגל הוא $\mu_0\cdot5/(2\pi\cdot0.01)$ בכל נקודה?
+    choices:
+      - text: 'לא. הסכום נכון, אבל השדה על המעגל לא שווה בכל נקודה.'
+        correct: true
+        feedback: נכון.
+      - text: 'כן, כי חוק אמפר נותן את השדה על כל מסלול.'
+        feedback: 'חוק אמפר נותן את **הסכום** על כל מסלול. את השדה עצמו אפשר להוציא ממנו רק כשהוא ידוע מראש כשווה בגודלו בכל נקודה על המסלול.'
+        misconception: MC-ampere-always-gives-field
+      - text: 'לא, כי הסכום סביב המעגל הוא בכלל $\mu_0\cdot10$.'
+        feedback: 'המעגל מקיף רק את התיל השמאלי. התיל הימני משנה את השדה על המעגל, אבל לא את הסכום.'
+        misconception: MC-ampere-outside-currents-count
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'התיל הימני מוסיף שדה שחזק יותר בצד הקרוב אליו, ולכן אין סימטריה: חלוקה באורך המעגל נותנת רק את הממוצע של $B_\parallel$.'
+        correct: true
+        feedback: 'נכון. בלי סימטריה אי אפשר "להוציא" את $B$ מהסכום. את השדה במקרה כזה מחשבים בחיבור וקטורי של שדות התילים (שיעור 4.2).'
+      - text: 'השדה של התיל הימני לא מגיע אל המעגל, כי הוא מחוץ לו.'
+        feedback: 'השדה של כל תיל קיים בכל מקום. הוא לא משנה את הסכום, אבל הוא משנה את השדה בכל נקודה על המעגל.'
+        misconception: MC-ampere-outside-currents-count
+      - text: 'מחלקים באורך המסלול תמיד, ולכן השדה שווה בכל נקודה.'
+        feedback: 'החלוקה הזאת נכונה רק כשהשדה ממילא שווה בכל נקודה. היא לא גורמת לו להיות שווה.'
+        misconception: MC-ampere-always-gives-field
+
+  - id: Q-4.4-toroid
+    type: numeric
+    objectives: [OBJ-4.4-2]
+    level: bagrut
+    prompt: >-
+      טורואיד הוא סליל שמכופף לטבעת: 400 כריכות לפופות סביב טבעת, וזורם בהן $1.5\,\text{A}$. השתמשו בחוק אמפר עם מעגל שמרכזו במרכז הטבעת וברדיוס $6\,\text{cm}$, שעובר בתוך הכריכות, כדי למצוא את השדה עליו. ענו במיליטסלה (mT).
+    answer: 2
+    unit: mT
+    tolerance: 0.03
+    correctFeedback: 'נכון. המעגל מקיף את הצד הפנימי של כל 400 הכריכות, ולכן הזרם הכלוא $400\cdot1.5 = 600\,\text{A}$. מהסימטריה השדה משיק למעגל ושווה עליו, ולכן $B\cdot2\pi r = \mu_0 N I$ ו-$B = \dfrac{4\pi\cdot10^{-7}\cdot600}{2\pi\cdot0.06} = 2\cdot10^{-3}\,\text{T}$.'
+    wrongFeedback: 'מצאו את הזרם הכלוא (כל כריכה עוברת דרך המעגל פעם אחת), ואז $B\cdot2\pi r = \mu_0 N I$.'
+    commonWrong:
+      - value: 6.28
+        feedback: 'השתמשתם בנוסחה של מרכז כריכה, $\mu_0 N I/(2r)$. כאן המסלול הוא מעגל באורך $2\pi r$, וחוק אמפר נותן $\mu_0 N I/(2\pi r)$.'
+      - value: 12.57
+        feedback: 'שכחתם את $2\pi$: אורך המסלול הוא היקף המעגל, $2\pi r$, לא $r$.'
+      - value: 0.005
+        feedback: 'שכחתם את מספר הכריכות. כל אחת מ-400 הכריכות עוברת דרך המעגל, ולכן הזרם הכלוא הוא $NI$.'
+
+  # ------------------------------------------------ OBJ-4.4-3: a thick wire and a coaxial cable
+  - id: Q-4.4-thick-inside
+    type: numeric
+    objectives: [OBJ-4.4-3]
+    level: mid
+    prompt: >-
+      בתיל עבה ברדיוס $4\,\text{mm}$ זורם $8\,\text{A}$, מפוזר באחידות על החתך. מה השדה בתוך התיל, במרחק $1\,\text{mm}$ מהציר? ענו במיקרוטסלה (μT).
+    answer: 100
+    unit: μT
+    tolerance: 0.03
+    correctFeedback: 'נכון. מעגל ברדיוס $1\,\text{mm}$ מקיף $(1/4)^2 = 1/16$ משטח החתך, כלומר $0.5\,\text{A}$. $B\cdot2\pi r = \mu_0\cdot0.5$, ו-$B = \dfrac{4\pi\cdot10^{-7}\cdot0.5}{2\pi\cdot0.001} = 1\cdot10^{-4}\,\text{T}$.'
+    wrongFeedback: 'המעגל מקיף רק את החלק של הזרם שעובר בתוכו: $I\cdot r^2/R^2$. אחר כך $B\cdot2\pi r$ שווה ל-$\mu_0$ כפול החלק הזה.'
+    commonWrong:
+      - value: 1600
+        feedback: 'השתמשתם בכל הזרם, $\mu_0 I/(2\pi r)$, כאילו התיל דק. המעגל ברדיוס $1\,\text{mm}$ מקיף רק $1/16$ מהזרם.'
+        misconception: MC-thick-wire-max-at-axis
+      - value: 400
+        feedback: 'זה השדה על פני התיל. או שחישבתם את החלק של הזרם לפי $r/R$: החלק הוא לפי **השטח**, $(r/R)^2$, ולכן $1/16$ ולא $1/4$.'
+
+  - id: Q-4.4-thick-rank
+    type: rank
+    objectives: [OBJ-4.4-3]
+    level: mid
+    prompt: >-
+      בתיל עבה ברדיוס $R$ זורם זרם מפוזר באחידות. דרגו את עוצמת השדה בארבע נקודות, מהגדול לקטן.
+    items:
+      - id: a
+        label: 'במרחק $R/2$ מהציר'
+      - id: b
+        label: 'על פני התיל, במרחק $R$'
+      - id: c
+        label: 'במרחק $1.5R$'
+      - id: d
+        label: 'במרחק $3R$'
+    order: [b, c, a, d]
+    correctFeedback: 'נכון. בפנים $B \propto r$, ובחוץ $B \propto 1/r$. ביחידות של השדה על פני התיל: $R/2$ נותן $0.5$, $R$ נותן $1$, $1.5R$ נותן $1/1.5 \approx 0.67$, ו-$3R$ נותן $1/3$.'
+    wrongFeedback: 'בפנים השדה גדל כמו $r$ (המעגל מקיף יותר זרם), ובחוץ יורד כמו $1/r$. השדה הגדול ביותר על פני התיל.'
+
+  - id: Q-4.4-thick-axis
+    type: mc
+    objectives: [OBJ-4.4-3]
+    qualitative: true
+    prompt: >-
+      בתיל עבה זורם זרם מפוזר באחידות על החתך. איפה השדה המגנטי חזק ביותר?
+    choices:
+      - text: 'על פני התיל.'
+        correct: true
+        feedback: 'נכון. בפנים, מעגל גדול יותר מקיף יותר זרם, והשדה גדל כמו $r$. בחוץ כל הזרם כבר כלוא, והשדה יורד כמו $1/r$. השיא בגבול שביניהם.'
+      - text: 'על הציר, במרכז התיל.'
+        feedback: 'על הציר השדה אפס: מעגל ברדיוס אפס לא מקיף זרם. ובסימטריה: מכל כיוון סביב הציר יש אותו זרם, ואין כיוון מועדף לשדה.'
+        misconception: MC-thick-wire-max-at-axis
+      - text: 'השדה שווה בכל התיל, כי הזרם מפוזר באחידות.'
+        feedback: 'הזרם אחיד, אבל השדה במרחק $r$ נקבע רק על ידי הזרם שבתוך המעגל ברדיוס $r$, וזה גדל עם $r$.'
+      - text: 'רחוק מהתיל, כי שם כל הזרם כבר כלוא.'
+        feedback: 'בחוץ כל הזרם כלוא, אבל הוא מתחלק על היקף גדל, $B = \mu_0 I/(2\pi r)$, ולכן השדה יורד.'
+        misconception: MC-ampere-bigger-path-bigger-sum
+
+  - id: Q-4.4-coax-outside
+    type: vector
+    objectives: [OBJ-4.4-3]
+    qualitative: true
+    allowOutIn: true
+    prompt: >-
+      חתך של כבל קואקסיאלי, ניצב לדף: בתיל המרכזי זורם $2\,\text{A}$ החוצה מהדף (⊙), ובצינור שסביבו חוזר אותו זרם לתוך הדף (⊗). מה כיוון השדה המגנטי בנקודה P, מעל הכבל ומחוץ לצינור?
+    answer: zero
+    correctFeedback: 'נכון: אין שדה. מעגל שמרכזו על הציר ועובר דרך P מקיף זרם כלוא $2 - 2 = 0$. בגלל הסימטריה השדה על המעגל שווה בכל נקודה, ולכן $B\cdot2\pi r = 0$, ו-$B = 0$.'
+    wrong:
+      - dir: w
+        feedback: 'זה היה הכיוון בלי הצינור: השדה של התיל המרכזי לבדו. אבל המעגל דרך P מקיף גם את הצינור, והזרם שלו, בכיוון ההפוך, מבטל בדיוק את התרומה של התיל.'
+      - dir: e
+        feedback: 'זה הכיוון של השדה של הצינור לבדו. התיל המרכזי יוצר שדה הפוך באותו גודל, והם מתבטלים מחוץ לכבל.'
+      - dir: out
+        feedback: 'השדה של זרמים ⊙ ו-⊗ מקיף אותם במישור הדף: הוא לא יכול להצביע החוצה מהדף. וכאן הוא בכלל אפס.'
+    wrongFeedback: 'מצאו את הזרם הכלוא במעגל שעובר דרך P, ושימו לב לסימטריה.'

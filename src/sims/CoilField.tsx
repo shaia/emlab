@@ -19,13 +19,17 @@ import {
   circlePath,
   coaxialTurns,
   combinedFieldAt,
+  discFractionInside,
   distanceToPath,
   edgeSums,
   enclosedCurrent,
   flatCoil,
   rectPath,
   solenoidTurns,
+  thickWireField,
+  thickWireFieldAt,
   turnCuts,
+  type ThickWire,
   type Turn,
 } from '~/physics/coils';
 import { loopCenterField, solenoidField, straightWireField, traceLine, type Wire } from '~/physics/magnetism';
@@ -51,7 +55,7 @@ const PIECE = 0.001;
 const WIRE2_I = 2;
 const WIRE_X = 0.2;
 
-export type Scene = 'loop' | 'loops' | 'solenoid' | 'wire' | 'wires';
+export type Scene = 'loop' | 'loops' | 'solenoid' | 'wire' | 'wires' | 'thick';
 export type PathShape = 'rect' | 'circle';
 type Sel = 'probe' | 'path' | 'c0' | 'c1' | 'c2' | 'c3' | 'rim';
 
@@ -61,6 +65,7 @@ const SCENE_LABEL: Record<Scene, string> = {
   solenoid: 'סליל',
   wire: 'תיל',
   wires: 'שני תילים',
+  thick: 'תיל עבה',
 };
 
 const TASK_LABEL: Record<string, string> = {
@@ -70,6 +75,7 @@ const TASK_LABEL: Record<string, string> = {
   'half-length': 'בסליל, קצרו את L לחצי בלי לשנות את N. פי כמה גדל השדה בפנים?',
   'ampere-circle': 'הגדילו או הקטינו את המעגל סביב התיל. מה קורה לסכום?',
   'ampere-zero': 'הזיזו את המסלול כך שלא יקיף אף זרם. כמה הסכום? האם השדה על המסלול אפס?',
+  'thick-inside': 'בתיל העבה, הקטינו את המעגל עד שיהיה כולו בתוך התיל. איזה חלק מהזרם הוא מקיף, ומה הסכום?',
   'ampere-solenoid': 'בסליל, הציבו מלבן שצלע אחת שלו בתוך הסליל והצלע שמולה מחוצה לו. מאיזו צלע בא רוב הסכום?',
 };
 
@@ -101,6 +107,7 @@ const SCENE_DEFAULTS: Record<Scene, SceneValues> = {
   loops: { I: 5, N: 1, R: 0.12, L: 0.8, spacing: 0.15, probe: [0, 0], rect: [-0.12, 0.05, 0.12, 0.25], circle: [0, 0.12, 0.06], shape: 'rect' },
   solenoid: { I: 2, N: 400, R: 0.07, L: 0.8, spacing: 0.15, probe: [0, 0], rect: [-0.2, -0.03, 0.2, 0.2], circle: [0, 0.07, 0.05], shape: 'rect' },
   wire: { I: 5, N: 1, R: 0.15, L: 0.8, spacing: 0.15, probe: [0.12, 0], rect: [-0.16, -0.12, 0.16, 0.12], circle: [0, 0, 0.12], shape: 'circle' },
+  thick: { I: 10, N: 1, R: 0.12, L: 0.8, spacing: 0.15, probe: [0.06, 0], rect: [-0.06, -0.06, 0.06, 0.06], circle: [0, 0, 0.06], shape: 'circle' },
   wires: { I: 6, N: 1, R: 0.15, L: 0.8, spacing: 0.15, probe: [0, 0.12], rect: [-0.36, -0.16, -0.06, 0.16], circle: [-WIRE_X, 0, 0.12], shape: 'circle' },
 };
 
@@ -158,6 +165,20 @@ function wiresOf(s: Pick<State, 'scene' | 'I' | 'dir'>): Wire[] {
   return [];
 }
 
+/** the thick wire of the "thick" scene: radius R, its current spread evenly over the cross-section */
+function thickOf(s: Pick<State, 'scene' | 'I' | 'dir' | 'R'>): ThickWire | null {
+  return s.scene === 'thick' ? { x: 0, y: 0, R: s.R, I: s.I * s.dir } : null;
+}
+
+function fieldFn(turns: Turn[], wires: Wire[], thick: ThickWire | null) {
+  return (x: number, y: number): Vec2 => {
+    const a = combinedFieldAt(turns, wires, x, y);
+    if (!thick) return a;
+    const b = thickWireFieldAt(thick, x, y);
+    return [a[0] + b[0], a[1] + b[1]];
+  };
+}
+
 const pathOf = (s: Pick<State, 'shape' | 'rect' | 'circle'>): Vec2[] =>
   s.shape === 'rect' ? rectPath(...s.rect) : circlePath(s.circle[0], s.circle[1], s.circle[2]);
 
@@ -170,7 +191,7 @@ function seedsOf(s: State, turns: Turn[]): Vec2[] {
     return [...mid, ...own];
   }
   if (s.scene === 'solenoid') return [-0.7, -0.47, -0.23, 0, 0.23, 0.47, 0.7].map((k) => [0, k * s.R] as Vec2);
-  if (s.scene === 'wire') return [0.03, 0.06, 0.1, 0.15, 0.22, 0.31].map((r) => [r, 0] as Vec2);
+  if (s.scene === 'wire' || s.scene === 'thick') return [0.03, 0.06, 0.1, 0.15, 0.22, 0.31].map((r) => [r, 0] as Vec2);
   return [
     ...[0.03, 0.07, 0.13, 0.22, 0.32].map((r) => [-WIRE_X - r, 0] as Vec2),
     ...[0.03, 0.07, 0.12].map((r) => [WIRE_X + r, 0] as Vec2),
@@ -229,7 +250,8 @@ export default function CoilField(props: CoilFieldProps) {
   const turns = useMemo(() => turnsOf(s), [s.scene, s.I, s.dir, s.N, s.R, s.L, s.spacing]);
   const wires = useMemo(() => wiresOf(s), [s.scene, s.I, s.dir]);
   const cuts = useMemo(() => [...turnCuts(turns), ...wires], [turns, wires]);
-  const field = (x: number, y: number) => combinedFieldAt(turns, wires, x, y);
+  const thick = useMemo(() => thickOf(s), [s.scene, s.I, s.dir, s.R]);
+  const field = fieldFn(turns, wires, thick);
 
   // field lines depend on the geometry only: trace them for a unit positive current
   const geomKey = `${s.scene}|${s.R}|${s.L}|${s.spacing}|${s.scene === 'wires' ? s.I : 0}`;
@@ -237,7 +259,7 @@ export default function CoilField(props: CoilFieldProps) {
     const unit = { ...s, dir: 1 as const, I: s.scene === 'wires' ? s.I : 1, N: s.scene === 'solenoid' ? LOOPS : 1 };
     const t = turnsOf(unit);
     const w = wiresOf(unit);
-    const f = (x: number, y: number) => combinedFieldAt(t, w, x, y);
+    const f = fieldFn(t, w, thickOf(unit));
     const avoid = [...turnCuts(t), ...w].map((c) => ({ x: c.x, y: c.y, r: 0.006 }));
     const bounds = { xmin: -WORLD_W / 2 - 0.02, xmax: WORLD_W / 2 + 0.02, ymin: -WORLD_H / 2 - 0.02, ymax: WORLD_H / 2 + 0.02 };
     const step = s.scene === 'solenoid' ? 0.005 : 0.004;
@@ -256,7 +278,8 @@ export default function CoilField(props: CoilFieldProps) {
     if (!s.ampere || blocked) return null;
     const edges = edgeSums(field, path, PIECE);
     const total = edges.reduce((a, b) => a + b, 0);
-    const Ienc = enclosedCurrent(cuts, path);
+    // a thick wire counts with the part of its cross-section inside the path (paths run counterclockwise)
+    const Ienc = enclosedCurrent(cuts, path) + (thick ? thick.I * discFractionInside(path, thick.x, thick.y, thick.R) : 0);
     let maxB = 0;
     for (let i = 0; i < path.length; i++) {
       const [x, y] = path[i];
@@ -266,7 +289,7 @@ export default function CoilField(props: CoilFieldProps) {
     // a sum that cancels to rounding noise is shown as zero
     const scale = edges.reduce((a, b) => a + Math.abs(b), 0);
     return { edges, total: Ienc === 0 && Math.abs(total) < 1e-3 * scale ? 0 : total, Ienc, maxB };
-  }, [s.ampere, blocked, path, turns, wires]);
+  }, [s.ampere, blocked, path, turns, wires, thick]);
 
   const Bp = field(s.probe[0], s.probe[1]);
   const Bmag = Math.hypot(Bp[0], Bp[1]);
@@ -288,6 +311,8 @@ export default function CoilField(props: CoilFieldProps) {
       if (has('ampere-circle') && (s.scene === 'wire' || s.scene === 'wires') && s.shape === 'circle' && amp.Ienc !== 0 && Math.abs(s.circle[2] / base.current.r - 1) > 0.3)
         done('ampere-circle');
       if (has('ampere-zero') && amp.Ienc === 0 && amp.maxB > 1e-6) done('ampere-zero');
+      if (has('thick-inside') && s.scene === 'thick' && s.shape === 'circle' && Math.hypot(s.circle[0], s.circle[1]) + s.circle[2] < s.R && amp.Ienc !== 0)
+        done('thick-inside');
       if (has('ampere-solenoid') && s.scene === 'solenoid' && s.shape === 'rect') {
         const [l, b, r, t] = s.rect;
         const crossesTop = b < s.R && t > s.R;
@@ -339,6 +364,31 @@ export default function CoilField(props: CoilFieldProps) {
             next += 70;
           }
           acc += seg;
+        }
+      }
+    }
+
+    // the thick wire: a disc in the current colour, with small ⊙/⊗ marks for the current spread through it
+    if (thick) {
+      const [cx, cy] = toScreen(view, thick.x, thick.y);
+      const rr = thick.R * view.ppm;
+      ctx.save();
+      ctx.fillStyle = withAlpha(p.current, 0.14);
+      ctx.strokeStyle = p.current;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, rr, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+      const step = 0.04;
+      for (let gx = -thick.R; gx <= thick.R; gx += step) {
+        for (let gy = -thick.R; gy <= thick.R; gy += step) {
+          const ox = Math.round(gx / step) * step;
+          const oy = Math.round(gy / step) * step;
+          if (Math.hypot(ox, oy) > thick.R - 0.012) continue;
+          const [x, y] = toScreen(view, thick.x + ox, thick.y + oy);
+          depthGlyph(ctx, x, y, 3.5, thick.I > 0 ? 'out' : 'in', p.current, { width: 1.1, alpha: 0.8 });
         }
       }
     }
@@ -543,7 +593,7 @@ export default function CoilField(props: CoilFieldProps) {
   };
 
   const describe = (st: State) => {
-    const B = combinedFieldAt(turnsOf(st), wiresOf(st), st.probe[0], st.probe[1]);
+    const B = fieldFn(turnsOf(st), wiresOf(st), thickOf(st))(st.probe[0], st.probe[1]);
     const m = Math.hypot(B[0], B[1]);
     return `בגשש B = ${sci(m)} T, ${m > 0 ? directionHe(Math.atan2(B[1], B[0])) : ''}.`;
   };
@@ -675,6 +725,17 @@ export default function CoilField(props: CoilFieldProps) {
           </span>
         </>
       );
+    if (s.scene === 'thick') {
+      const r = Math.hypot(s.probe[0], s.probe[1]);
+      return (
+        <span>
+          במרחק <b class="q">r = {fmtCm(r)}</b> מהציר, {r < s.R ? 'בתוך התיל' : 'מחוץ לתיל'}:{' '}
+          <b class="q">
+            {r < s.R ? 'μ₀Ir/(2πR²)' : 'μ₀I/(2πr)'} = {sci(thickWireField(s.I, s.R, r))} T
+          </b>
+        </span>
+      );
+    }
     if (s.scene === 'wire') {
       const r = Math.hypot(s.probe[0], s.probe[1]);
       return (
@@ -757,7 +818,7 @@ export default function CoilField(props: CoilFieldProps) {
             label={s.scene === 'wires' ? 'הזרם בתיל השמאלי' : 'הזרם I'}
             value={s.I}
             min={0.5}
-            max={s.scene === 'solenoid' ? 5 : 10}
+            max={s.scene === 'solenoid' ? 5 : s.scene === 'thick' ? 20 : 10}
             step={0.5}
             format={fmtA}
             onChange={(v) => slide({ I: v })}
@@ -767,6 +828,9 @@ export default function CoilField(props: CoilFieldProps) {
               <Slider label="מספר הכריכות N" value={s.N} min={1} max={50} step={1} format={(v) => String(v)} onChange={(v) => slide({ N: v })} />
               <Slider label="הרדיוס R" value={s.R} min={0.05} max={0.25} step={0.01} format={fmtCm} onChange={(v) => slide({ R: Math.round(v * 100) / 100 })} />
             </>
+          )}
+          {s.scene === 'thick' && (
+            <Slider label="רדיוס התיל" value={s.R} min={0.05} max={0.2} step={0.01} format={fmtCm} onChange={(v) => slide({ R: Math.round(v * 100) / 100 })} />
           )}
           {s.scene === 'loops' && (
             <Slider label="המרחק בין הכריכות" value={s.spacing} min={0.03} max={0.2} step={0.01} format={fmtCm} onChange={(v) => slide({ spacing: Math.round(v * 100) / 100 })} />
