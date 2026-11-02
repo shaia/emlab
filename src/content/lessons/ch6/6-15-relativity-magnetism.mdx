@@ -4,7 +4,7 @@ chapter: 6
 order: 15
 title: יחסות ומגנטיות
 subtitle: אותה דחיפה, פעם מגנטית ופעם חשמלית, לפי מי שמודד
-minutes: 60
+minutes: 70
 objectives:
   - id: OBJ-6.15-1
     text: להסביר למה במערכת הייחוס שבה מטען נע נמצא במנוחה, הכוח שהתיל מפעיל עליו חייב להיות חשמלי, ולהבחין בין מה שתלוי במערכת הייחוס (סוג הכוח, צפיפות המטען של התיל) לבין מה שלא תלוי בה (אם המטען נמשך או נדחה, המטען של כל חלקיק, מהירות האור).
@@ -127,7 +127,67 @@ import TwoFrames from '~/sims/TwoFrames.astro';
 
 **היונים.** במעבדה הם במנוחה, ולכן $\lambda_0$ היא הצפיפות שלהם במערכת המנוחה. במערכת של $q$ הם נעים במהירות $v$, ולפי כלל 3 הצפיפות שלהם גדולה פי $\gamma$: $\gamma\lambda_0$.
 
-**האלקטרונים.** כאן הצעד העדין. במעבדה האלקטרונים **נעים**, ולכן $-\lambda_0$ היא הצפיפות של שורה נעה. לפי הכיוון השני של כלל 3, הצפיפות שלהם במערכת המנוחה שלהם היא $-\lambda_0/\gamma$: כשהם במנוחה, המרווחים ביניהם גדולים פי $\gamma$ ממה שבמעבדה. במערכת של $q$ הם באמת במנוחה, כי $v = u$, ולכן זו הצפיפות שלהם שם.
+**האלקטרונים.** כאן הצעד העדין. מה הצפיפות שלהם במערכת של $q$, שבה הם במנוחה? נסו לענות לפני שתפתחו את הנימוק.
+
+<Solution label="הצפיפות של האלקטרונים במנוחה: פתחו את הנימוק">
+
+1. במעבדה צפיפות האלקטרונים היא $-\lambda_0$, ו**בזמן הזה הם נעים** במהירות $u$.
+2. שורה שנעה מכווצת: המרווחים שמודדים בה קטנים פי $\gamma$ מהמרווחים שיש לה במנוחה. לכן $-\lambda_0$ היא צפיפות של שורה מכווצת.
+3. כשהאלקטרונים במנוחה, המרווחים ביניהם גדולים פי $\gamma$ ממה שבמעבדה, והצפיפות קטנה פי $\gamma$: $-\lambda_0/\gamma$. זה הכיוון השני של כלל 3, $\lambda_{\text{rest}} = \lambda/\gamma$.
+
+<svg viewBox="0 0 320 84" role="img" aria-label="שתי שורות של אותם אלקטרונים. למעלה, במעבדה, הם נעים ימינה, והמרווחים ביניהם 24 יחידות. למטה, במנוחה, המרווחים 30 יחידות, גדולים פי 1.25." style={{ display: 'block', width: '100%', maxWidth: '340px', margin: '0.6em auto', direction: 'ltr' }}>
+  <circle cx="16" cy="22" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="13" y1="22" x2="19" y2="22" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="40" cy="22" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="37" y1="22" x2="43" y2="22" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="64" cy="22" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="61" y1="22" x2="67" y2="22" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="88" cy="22" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="85" y1="22" x2="91" y2="22" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="112" cy="22" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="109" y1="22" x2="115" y2="22" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="136" cy="22" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="133" y1="22" x2="139" y2="22" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="160" cy="22" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="157" y1="22" x2="163" y2="22" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="184" cy="22" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="181" y1="22" x2="187" y2="22" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="208" cy="22" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="205" y1="22" x2="211" y2="22" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="232" cy="22" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="229" y1="22" x2="235" y2="22" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="256" cy="22" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="253" y1="22" x2="259" y2="22" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="280" cy="22" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="277" y1="22" x2="283" y2="22" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <line x1="250" y1="6" x2="300" y2="6" style={{ stroke: 'var(--ink-2)', strokeWidth: 1.6 }} />
+  <path d="M300 6 L293 2 L293 10 Z" style={{ fill: 'var(--ink-2)' }} />
+  <text x="244" y="10" textAnchor="end" style={{ fill: 'var(--ink-2)', fontSize: '12px', fontStyle: 'italic' }}>u</text>
+  <circle cx="16" cy="66" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="13" y1="66" x2="19" y2="66" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="46" cy="66" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="43" y1="66" x2="49" y2="66" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="76" cy="66" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="73" y1="66" x2="79" y2="66" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="106" cy="66" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="103" y1="66" x2="109" y2="66" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="136" cy="66" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="133" y1="66" x2="139" y2="66" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="166" cy="66" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="163" y1="66" x2="169" y2="66" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="196" cy="66" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="193" y1="66" x2="199" y2="66" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="226" cy="66" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="223" y1="66" x2="229" y2="66" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="256" cy="66" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="253" y1="66" x2="259" y2="66" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+  <circle cx="286" cy="66" r="6" style={{ fill: 'var(--neg)' }} />
+  <line x1="283" y1="66" x2="289" y2="66" style={{ stroke: '#ffffff', strokeWidth: 1.6 }} />
+</svg>
+
+בציור, למעלה: האלקטרונים במעבדה, נעים. למטה: אותם אלקטרונים במנוחה, עם מרווחים גדולים פי $\gamma = 1.25$. במערכת של $q$ האלקטרונים באמת במנוחה, כי $v = u$, ולכן $-\lambda_0/\gamma$ היא הצפיפות שלהם שם.
+
+</Solution>
 
 **נטו.** מחברים את שתי השורות:
 
@@ -144,7 +204,7 @@ $$
 </Step>
 
 <Note kind="warn">
-הטעות הנפוצה כאן: להשאיר לאלקטרונים את הצפיפות $-\lambda_0$ גם במערכת שבה הם במנוחה, ולקבל $\lambda_0(\gamma - 1)$. הצפיפות $\lambda_0$ נמדדה במעבדה, שבה הם נעים. ובמהירויות קטנות הטעות הזו נותנת חצי מהתשובה הנכונה: $\gamma - 1 \approx v^2/(2c^2)$, במקום $v^2/c^2$.
+הטעות הנפוצה כאן: להשאיר לאלקטרונים את הצפיפות $-\lambda_0$ גם במנוחה, ולקבל $\lambda_0(\gamma - 1)$. במהירויות קטנות היא נותנת חצי מהתשובה הנכונה: $\gamma - 1 \approx v^2/(2c^2)$, במקום $v^2/c^2$.
 </Note>
 
 ואם אין זרם, $u = 0$? אז היונים והאלקטרונים נעים יחד בכל מערכת, מתכווצים באותו שיעור, והתיל ניטרלי בכל מערכת. בלי זרם אין כוח, כמו שמצאתם באיור.
