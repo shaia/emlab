@@ -1,0 +1,16 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below) on the
+# `verified` date. `why`, `start`/`end` and the Hebrew captions rest on the upload description: its
+# timestamp list (0:00 vector fields, 2:15 what is divergence, 4:31 what is curl) and its credit for a
+# Hebrew translation. The length (942 s) comes from the watch page.
+
+- id: v-6-7-3b1b
+  youtubeId: rB83DpBJQsE
+  title: "Divergence and curl:  The language of Maxwell's equations, fluid flow, and more"
+  channel: 3Blue1Brown
+  lang: en
+  captions: [he]
+  start: 0
+  end: 271
+  minutes: 4.5
+  why: 'שני הקטעים הראשונים של הסרטון (עד 4:31), באנגלית עם תרגום לעברית לפי התיאור: לפי רשימת הפרקים, הם מציגים שדות וקטוריים ומה זה דיברגנץ, בתמונה של זרימת נוזל. חפשו את הנקודות שמהן הזרימה "נובעת" ואת אלה שאליהן היא "נבלעת", והשוו לתיבה שבאיור 6.7א.'
+  verified: '2026-11-02'
