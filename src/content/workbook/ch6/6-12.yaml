@@ -1,0 +1,568 @@
+# Workbook, lesson 6.12 (the displacement current). Format and rules: see .claude/CLAUDE.md, "Worked examples,
+# workbook" and "Chapter 6". Solutions follow the chapter 6 shape: given → law → manipulation → limit → units →
+# substitution → result. Every number was recomputed with src/physics/displacement.ts (gapField, gapState,
+# acDisplacement, leakyCurrents, leakyTimeConstant), circuits.ts (rcCharge), magnetism.ts (EARTH_B_HORIZONTAL)
+# and constants.ts (EPS0_DISPLAY, MU0). In a >- block, consecutive lines fold into one paragraph: every part
+# (א, ב, …) starts after a blank line.
+
+lesson: '6.12'
+practice:
+  - id: W-6.12-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.12-2]
+    prompt: >-
+      המתח על קבל לוחות שקיבולו $2\,\text{nF}$ גדל בקצב קבוע של $5\cdot10^{5}\,\text{V/s}$.
+
+      א. הראו שזרם ההעתקה בין הלוחות הוא $I_d = C\,\dfrac{dV}{dt}$.
+
+      ב. מה ערכו?
+    answer: >-
+      א. $\Phi_E = EA = VA/d$, ולכן $\varepsilon_0\,d\Phi_E/dt = (\varepsilon_0 A/d)\,dV/dt = C\,dV/dt$.
+
+      ב. $1\cdot10^{-3}\,\text{A}$.
+    solution:
+      - kind: given
+        text: >-
+          $C = 2\cdot10^{-9}\,\text{F}$, $\dfrac{dV}{dt} = 5\cdot10^{5}\,\text{V/s}$.
+      - kind: law
+        text: >-
+          $I_d = \varepsilon_0\,\dfrac{d\Phi_E}{dt}$; בין הלוחות השדה אחיד, $E = V/d$, ו-$C = \varepsilon_0 A/d$.
+      - kind: manipulation
+        text: >-
+          $\Phi_E = EA = \dfrac{A}{d}\,V$. השטח והמרחק לא משתנים, ולכן $\varepsilon_0\,\dfrac{d\Phi_E}{dt} = \dfrac{\varepsilon_0 A}{d}\,\dfrac{dV}{dt} = C\,\dfrac{dV}{dt}$.
+      - kind: limit
+        text: >-
+          מתח קבוע, $dV/dt = 0$, נותן $I_d = 0$: קבל מלא לא מעביר זרם העתקה. והתוצאה היא בדיוק $dq/dt$ של הקבל, $q = CV$, כלומר הזרם בתיל.
+      - kind: units
+        text: >-
+          $\text{F}\cdot\text{V/s} = \text{C/s} = \text{A}$.
+      - kind: substitution
+        text: >-
+          $I_d = 2\cdot10^{-9}\cdot5\cdot10^{5} = 1\cdot10^{-3}\,\text{A}$.
+      - kind: result
+        text: >-
+          $I_d = C\,dV/dt = 1\cdot10^{-3}\,\text{A} = 1\,\text{mA}$.
+
+  - id: W-6.12-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-6.12-1, OBJ-6.12-4]
+    prompt: >-
+      תיל מוביל זרם $I$ אל קבל שנטען, ותיל אחר יוצא מהלוח השני. סביב התיל הנכנס יש מסלול אמפר. על המסלול נפרשים ארבעה משטחים:
+
+      1. דיסקה שטוחה, שהתיל חוצה.
+
+      2. חצי כדור שבולט הרחק מהקבל, והתיל חוצה אותו.
+
+      3. שקית שעוברת בין הלוחות, בלי לגעת בתיל.
+
+      4. שקית ארוכה שעוטפת את כל הקבל ונסגרת מעבר ללוח השני, שם התיל היוצא חוצה אותה.
+
+      לכל משטח: מה זרם ההולכה ומה זרם ההעתקה דרכו? מה הסכום?
+    answer: >-
+      1, 2 ו-4: הולכה $I$, העתקה אפס. 3: הולכה אפס, העתקה $I$. בכולם הסכום $I$.
+    solution:
+      - kind: law
+        text: >-
+          חוק אמפר-מקסוול: הסירקולציה שווה ל-$\mu_0(I_c + \varepsilon_0\,d\Phi_E/dt)$ דרך משטח כלשהו על המסלול. שדה חשמלי יש רק בין הלוחות.
+      - kind: reasoning
+        text: >-
+          1 ו-2: התיל חוצה אותם, ואין עליהם שדה חשמלי: הולכה $I$, העתקה אפס.
+
+          3: שום תיל לא חוצה את השקית, אבל הקצה שלה בתוך הרווח, וכל השטף שבין הלוחות עובר דרכה. השטף הוא $q/\varepsilon_0$, ולכן $\varepsilon_0\,d\Phi_E/dt = dq/dt = I$.
+
+          4: התיל היוצא חוצה את השקית: הולכה $I$. השדה החשמלי כולו בתוך השקית, בין הלוחות, ולא חוצה אותה: העתקה אפס.
+      - kind: limit
+        text: >-
+          כשהקבל מלא, $I = 0$ וגם $d\Phi_E/dt = 0$: בכל ארבעת המשטחים שני הזרמים אפס, ואין שדה מגנטי סביב התיל.
+      - kind: units
+        text: >-
+          שני הזרמים נמדדים באמפר, ולכן אפשר לחבר אותם.
+      - kind: result
+        text: >-
+          1, 2, 4: הולכה $I$, העתקה $0$. 3: הולכה $0$, העתקה $I$. הסכום $I$ דרך כל משטח. בשקית 3 אין שום מטען שעובר: זרם ההעתקה הוא שטף שגדל.
+
+  - id: W-6.12-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.12-3]
+    prompt: >-
+      קבל עם לוחות עגולים ברדיוס $3\,\text{cm}$ נטען ברגע מסוים בזרם של $0.3\,\text{A}$. מה השדה המגנטי במישור שבאמצע הרווח:
+
+      א. בשפת הלוחות?
+
+      ב. במרחק $1.5\,\text{cm}$ מהציר?
+
+      ג. במרחק $6\,\text{cm}$ מהציר?
+    answer: >-
+      א. $2\cdot10^{-6}\,\text{T}$.
+
+      ב. $1\cdot10^{-6}\,\text{T}$.
+
+      ג. $1\cdot10^{-6}\,\text{T}$.
+    solution:
+      - kind: given
+        text: >-
+          $a = 0.03\,\text{m}$, $I = 0.3\,\text{A}$.
+      - kind: law
+        text: >-
+          חוק אמפר-מקסוול על מעגל ברדיוס $r$ שמרכזו על הציר. בין הלוחות אין זרם הולכה; זרם ההעתקה דרך הדיסקה הוא $I\,\min(r, a)^2/a^2$.
+      - kind: manipulation
+        text: >-
+          מהסימטריה $B\cdot2\pi r = \mu_0 I_d(r)$. בפנים $B = \dfrac{\mu_0 I r}{2\pi a^2}$, בחוץ $B = \dfrac{\mu_0 I}{2\pi r}$.
+      - kind: limit
+        text: >-
+          בשפה, $r = a$, שני הביטויים נותנים $\mu_0 I/(2\pi a)$. ב-$r = a/2$ וב-$r = 2a$ השדה חצי מהשדה בשפה.
+      - kind: units
+        text: >-
+          $\text{T}\cdot\text{m/A}\cdot\text{A}/\text{m} = \text{T}$.
+      - kind: substitution
+        text: >-
+          א. $B = \dfrac{4\pi\cdot10^{-7}\cdot0.3}{2\pi\cdot0.03} = 2\cdot10^{-6}\,\text{T}$.
+
+          ב. $B = 2\cdot10^{-6}\cdot\dfrac{1.5}{3} = 1\cdot10^{-6}\,\text{T}$.
+
+          ג. $B = \dfrac{4\pi\cdot10^{-7}\cdot0.3}{2\pi\cdot0.06} = 1\cdot10^{-6}\,\text{T}$.
+      - kind: result
+        text: >-
+          א. $2\cdot10^{-6}\,\text{T}$. ב. $1\cdot10^{-6}\,\text{T}$. ג. $1\cdot10^{-6}\,\text{T}$: אותו שדה ב-$a/2$ וב-$2a$.
+
+  - id: W-6.12-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.12-2, OBJ-6.12-3]
+    prompt: >-
+      קבל עם לוחות עגולים ברדיוס $6\,\text{cm}$ ומרחק $0.5\,\text{mm}$ ביניהם נטען דרך נגד של $50\,\text{k}\Omega$ מסוללה של $24\,\text{V}$.
+
+      א. מה הקיבול ומה קבוע הזמן?
+
+      ב. מה זרם ההעתקה בין הלוחות $10\,\mu\text{s}$ אחרי סגירת המתג?
+
+      ג. מה השדה המגנטי באותו רגע, במרחק $3\,\text{cm}$ מהציר, בין הלוחות?
+    answer: >-
+      א. $C \approx 2.00\cdot10^{-10}\,\text{F}$, $\tau \approx 1.00\cdot10^{-5}\,\text{s}$.
+
+      ב. כ-$1.77\cdot10^{-4}\,\text{A}$.
+
+      ג. כ-$2.95\cdot10^{-10}\,\text{T}$.
+    solution:
+      - kind: given
+        text: >-
+          $a = 0.06\,\text{m}$, $d = 5\cdot10^{-4}\,\text{m}$, $R = 5\cdot10^{4}\,\Omega$, $\varepsilon = 24\,\text{V}$, $t = 10^{-5}\,\text{s}$, $r = 0.03\,\text{m}$.
+      - kind: law
+        text: >-
+          $C = \varepsilon_0\pi a^2/d$; $I(t) = \dfrac{\varepsilon}{R}\,e^{-t/RC}$; בין הלוחות $I_d = I$; בפנים $B = \dfrac{\mu_0 I r}{2\pi a^2}$.
+      - kind: manipulation
+        text: >-
+          $\Phi_E = q/\varepsilon_0$, ולכן $I_d = dq/dt = I(t)$: אין צורך לחשב את השדה החשמלי עצמו.
+      - kind: limit
+        text: >-
+          כאן $t \approx \tau$, ולכן הזרם ירד לכ-37% מ-$\varepsilon/R$. ב-$t = 0$ הוא היה $\varepsilon/R$, וכש-$t \to \infty$ הוא אפס.
+      - kind: units
+        text: >-
+          $\Omega\cdot\text{F} = \text{s}$; $\text{V}/\Omega = \text{A}$; $\text{T}\cdot\text{m/A}\cdot\text{A}\cdot\text{m}/\text{m}^2 = \text{T}$.
+      - kind: substitution
+        text: >-
+          א. $C = \dfrac{8.85\cdot10^{-12}\cdot\pi\cdot0.06^2}{5\cdot10^{-4}} \approx 2.00\cdot10^{-10}\,\text{F}$, $\tau = 5\cdot10^{4}\cdot2.00\cdot10^{-10} \approx 1.00\cdot10^{-5}\,\text{s}$.
+
+          ב. $I_d = \dfrac{24}{5\cdot10^{4}}\,e^{-1} = 4.8\cdot10^{-4}\cdot0.368 \approx 1.77\cdot10^{-4}\,\text{A}$.
+
+          ג. $B = \dfrac{4\pi\cdot10^{-7}\cdot1.77\cdot10^{-4}\cdot0.03}{2\pi\cdot0.06^2} \approx 2.95\cdot10^{-10}\,\text{T}$.
+      - kind: result
+        text: >-
+          א. $2.00\cdot10^{-10}\,\text{F}$ ו-$10\,\mu\text{s}$. ב. $1.77\cdot10^{-4}\,\text{A}$. ג. $2.95\cdot10^{-10}\,\text{T}$.
+
+  - id: W-6.12-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.12-1, OBJ-6.12-3]
+    prompt: >-
+      קבל טעון מתחיל להיפרק דרך נגד. סביב התיל שמחובר ללוח החיובי יש מסלול אמפר, ועליו משטח שטוח (שהתיל חוצה) ושקית שעוברת בין הלוחות.
+
+      א. בכל אחד משני המשטחים: איזה זרם עובר, ובאיזה כיוון, לעומת הטעינה?
+
+      ב. האם הסכום זהה בשני המשטחים?
+
+      ג. מה כיוון השדה המגנטי בין הלוחות, לעומת הטעינה?
+    answer: >-
+      א. במשטח השטוח זרם הולכה הפוך לטעינה; בשקית זרם העתקה, גם הוא הפוך, כי השטף קטן.
+
+      ב. כן.
+
+      ג. הפוך לכיוונו בטעינה.
+    solution:
+      - kind: law
+        text: >-
+          חוק אמפר-מקסוול, ושימור המטען עם חוק גאוס: $\varepsilon_0\,d\Phi_E/dt = dq/dt$ דרך השקית.
+      - kind: reasoning
+        text: >-
+          א. בפריקה המטען על הלוח החיובי קטן, $dq/dt < 0$: הזרם בתיל יוצא מהלוח, הפוך לטעינה. בשקית השטף קטן, ולכן $\varepsilon_0\,d\Phi_E/dt = dq/dt$ שלילי באותה מידה.
+
+          ב. בשני המשטחים אותו מספר, $dq/dt$, עם אותו סימן: הטיעון של המשטח הסגור לא תלוי בכך שהמטען גדל.
+
+          ג. השדה המגנטי בין הלוחות נקבע לפי כיוון $d\vec E/dt$ בכלל יד ימין. השדה החשמלי עצמו לא התהפך, אבל עכשיו הוא קטן, ולכן $d\vec E/dt$ הפוך, וגם השדה המגנטי.
+      - kind: limit
+        text: >-
+          בסוף הפריקה $q \to 0$, הזרם וקצב השינוי של השטף מתאפסים, ואיתם השדה המגנטי.
+      - kind: units
+        text: >-
+          $\varepsilon_0\,d\Phi_E/dt$ ו-$dq/dt$ נמדדים שניהם ב-$\text{C/s} = \text{A}$.
+      - kind: result
+        text: >-
+          א. הולכה במשטח השטוח והעתקה בשקית, שניהם בכיוון ההפוך לטעינה. ב. כן, הסכום זהה. ג. השדה המגנטי בין הלוחות מתהפך, כי הוא תלוי ב-$d\vec E/dt$ ולא ב-$\vec E$.
+
+  - id: W-6.12-06
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.12-2, OBJ-6.12-3]
+    prompt: >-
+      מקור זרם (מכשיר שמשנה את המתח שלו כך שהזרם לא משתנה) טוען קבל עם לוחות עגולים ברדיוס $10\,\text{cm}$ בזרם קבוע של $0.2\,\text{A}$.
+
+      א. באיזה קצב גדל השדה החשמלי בין הלוחות?
+
+      ב. מה זרם ההעתקה דרך דיסקה ברדיוס $5\,\text{cm}$, באמצע הרווח ושמרכזה על הציר?
+
+      ג. מה השדה המגנטי במרחק $5\,\text{cm}$ ובמרחק $20\,\text{cm}$ מהציר?
+    answer: >-
+      א. כ-$7.19\cdot10^{11}\,\text{V/(m}\cdot\text{s)}$.
+
+      ב. $0.05\,\text{A}$.
+
+      ג. בשני המרחקים $2\cdot10^{-7}\,\text{T}$.
+    solution:
+      - kind: given
+        text: >-
+          $a = 0.1\,\text{m}$, $I = 0.2\,\text{A}$ קבוע.
+      - kind: law
+        text: >-
+          $I_d = \varepsilon_0\,\dfrac{d\Phi_E}{dt}$, ושווה ל-$I$ כשהמשטח תופס את כל הרווח; חוק אמפר-מקסוול על מעגל שמרכזו על הציר.
+      - kind: manipulation
+        text: >-
+          $I = \varepsilon_0\pi a^2\,\dfrac{dE}{dt}$, ולכן $\dfrac{dE}{dt} = \dfrac{I}{\varepsilon_0\pi a^2}$. דרך הדיסקה $I_d = I\,r^2/a^2$. בפנים $B = \dfrac{\mu_0 I r}{2\pi a^2}$, בחוץ $B = \dfrac{\mu_0 I}{2\pi r}$.
+      - kind: limit
+        text: >-
+          הזרם קבוע, ולכן $dE/dt$ קבוע והשדה החשמלי גדל בקו ישר, בלי סוף (עד פריצה). ב-$r = a/2$ ו-$r = 2a$ השדה המגנטי חצי מהשדה בשפה.
+      - kind: units
+        text: >-
+          $\text{A}/(\text{C}^2/(\text{N}\cdot\text{m}^2)\cdot\text{m}^2) = \text{N}/(\text{C}\cdot\text{s}) = \text{V/(m}\cdot\text{s)}$.
+      - kind: substitution
+        text: >-
+          א. $\dfrac{dE}{dt} = \dfrac{0.2}{8.85\cdot10^{-12}\cdot\pi\cdot0.1^2} \approx 7.19\cdot10^{11}\,\text{V/(m}\cdot\text{s)}$.
+
+          ב. $I_d = 0.2\cdot\left(\dfrac{5}{10}\right)^2 = 0.05\,\text{A}$.
+
+          ג. $B(5\,\text{cm}) = \dfrac{4\pi\cdot10^{-7}\cdot0.2\cdot0.05}{2\pi\cdot0.1^2} = 2\cdot10^{-7}\,\text{T}$; $B(20\,\text{cm}) = \dfrac{4\pi\cdot10^{-7}\cdot0.2}{2\pi\cdot0.2} = 2\cdot10^{-7}\,\text{T}$.
+      - kind: result
+        text: >-
+          א. $7.19\cdot10^{11}\,\text{V/(m}\cdot\text{s)}$. ב. $0.05\,\text{A}$. ג. $2\cdot10^{-7}\,\text{T}$ בשני המרחקים.
+
+  - id: W-6.12-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.12-4, OBJ-6.12-3]
+    prompt: >-
+      זרם של $1\,\text{A}$ מגיע בתיל ברדיוס $1\,\text{mm}$ אל קבל עם לוחות עגולים ברדיוס $10\,\text{cm}$.
+
+      א. מה צפיפות הזרם בתיל (זרם ליחידת שטח, שיעור 4.4)? מה "צפיפות זרם ההעתקה" בין הלוחות, $\varepsilon_0\,dE/dt$?
+
+      ב. השוו את השדה המגנטי במרחק $0.5\,\text{mm}$ מהציר בתוך התיל לשדה באותו מרחק מהציר בין הלוחות. הסבירו במילים מה ההבדל, ולמה בשני המקומות השדה גדל מהציר החוצה.
+
+      ג. מישהו טוען: "צפיפות זרם ההעתקה קטנה, כי רק מעט מטענים עוברים בין הלוחות." מה שגוי בטענה?
+    answer: >-
+      א. בתיל כ-$3.18\cdot10^{5}\,\text{A/m}^2$; בין הלוחות כ-$31.8\,\text{A/m}^2$.
+
+      ב. בתיל $1\cdot10^{-4}\,\text{T}$, בין הלוחות $1\cdot10^{-8}\,\text{T}$: פי $10^4$, כי אותו זרם מפוזר בתיל על שטח קטן פי $10^4$.
+
+      ג. בין הלוחות לא עובר שום מטען; זרם ההעתקה הוא שדה שמשתנה.
+    solution:
+      - kind: given
+        text: >-
+          $I = 1\,\text{A}$, רדיוס התיל $r_w = 10^{-3}\,\text{m}$, רדיוס הלוחות $a = 0.1\,\text{m}$, $r = 5\cdot10^{-4}\,\text{m}$.
+      - kind: law
+        text: >-
+          חוק אמפר-מקסוול על מעגל ברדיוס $r$: בתיל עם צפיפות זרם אחידה הוא מקיף $I r^2/r_w^2$ (שיעור 4.4), ובין הלוחות $I r^2/a^2$ של זרם העתקה.
+      - kind: manipulation
+        text: >-
+          צפיפות הזרם בתיל $J = I/(\pi r_w^2)$. בין הלוחות $\varepsilon_0\,\dfrac{dE}{dt} = \dfrac{I_d}{\pi a^2} = \dfrac{I}{\pi a^2}$. השדות: $B_{\text{wire}} = \dfrac{\mu_0 I r}{2\pi r_w^2}$, $B_{\text{gap}} = \dfrac{\mu_0 I r}{2\pi a^2}$, והיחס ביניהם $(a/r_w)^2$.
+      - kind: limit
+        text: >-
+          אילו הלוחות היו ברדיוס התיל, $a = r_w$, שני השדות היו זהים: הקבל היה "ממשיך" את התיל. בשני המקומות, על הציר $r = 0$ השדה אפס, כי מעגל ברדיוס אפס לא מקיף זרם.
+      - kind: units
+        text: >-
+          $\varepsilon_0\,dE/dt$: $\text{C}^2/(\text{N}\cdot\text{m}^2)\cdot\text{N}/(\text{C}\cdot\text{s}) = \text{C}/(\text{m}^2\cdot\text{s}) = \text{A/m}^2$, כמו צפיפות זרם.
+      - kind: substitution
+        text: >-
+          א. $J = \dfrac{1}{\pi\cdot10^{-6}} \approx 3.18\cdot10^{5}\,\text{A/m}^2$; $\varepsilon_0\,dE/dt = \dfrac{1}{\pi\cdot0.01} \approx 31.8\,\text{A/m}^2$.
+
+          ב. $B_{\text{wire}} = \dfrac{4\pi\cdot10^{-7}\cdot1\cdot5\cdot10^{-4}}{2\pi\cdot10^{-6}} = 1\cdot10^{-4}\,\text{T}$; $B_{\text{gap}} = \dfrac{4\pi\cdot10^{-7}\cdot1\cdot5\cdot10^{-4}}{2\pi\cdot0.01} = 1\cdot10^{-8}\,\text{T}$; היחס $(0.1/0.001)^2 = 10^4$.
+      - kind: reasoning
+        text: >-
+          ג. בין הלוחות אין שום מטען שעובר, לא מעט ולא הרבה. $\varepsilon_0\,dE/dt$ נמדד ב-$\text{A/m}^2$, כמו צפיפות זרם, אבל הוא שדה חשמלי שמשתנה. הוא קטן כאן כי אותו זרם כולל, $1\,\text{A}$, מפוזר על שטח גדול.
+      - kind: result
+        text: >-
+          א. $3.18\cdot10^{5}$ ו-$31.8\,\text{A/m}^2$. ב. בתיל השדה גדול פי $10^4$; בשני המקומות הוא גדל כמו $r$, כי המעגל מקיף חלק גדל מהזרם. ג. אין מטענים שעוברים; זרם ההעתקה הוא שדה שמשתנה.
+
+  - id: W-6.12-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.12-2, OBJ-6.12-3, OBJ-6.12-4]
+    prompt: >-
+      על קבל עם לוחות עגולים ברדיוס $4\,\text{cm}$ ומרחק $2\,\text{mm}$ ביניהם מפעילים מתח $V(t) = V_0\sin(\omega t)$, עם $V_0 = 50\,\text{V}$ ותדירות של $500\,\text{kHz}$.
+
+      א. מצאו את הקיבול ואת זרם ההעתקה הגדול ביותר.
+
+      ב. מה השדה המגנטי הגדול ביותר במרחק $2\,\text{cm}$ מהציר, בין הלוחות?
+
+      ג. ברגע מסוים המתח על הקבל הוא $50\,\text{V}$, הגדול ביותר. מה זרם ההעתקה ומה השדה המגנטי באותו רגע? הסבירו.
+    answer: >-
+      א. $C \approx 2.22\cdot10^{-11}\,\text{F}$, $I_{d,\max} \approx 3.49\cdot10^{-3}\,\text{A}$.
+
+      ב. כ-$8.73\cdot10^{-9}\,\text{T}$.
+
+      ג. שניהם אפס: המתח מרבי ולכן לא משתנה באותו רגע.
+    solution:
+      - kind: given
+        text: >-
+          $a = 0.04\,\text{m}$, $d = 0.002\,\text{m}$, $V_0 = 50\,\text{V}$, $\omega = 2\pi\cdot5\cdot10^{5}\,\text{s}^{-1}$, $r = 0.02\,\text{m}$.
+      - kind: law
+        text: >-
+          $I_d = \varepsilon_0\,\dfrac{d\Phi_E}{dt} = C\,\dfrac{dV}{dt}$; בפנים $B = \dfrac{\mu_0 I_d r}{2\pi a^2}$.
+      - kind: manipulation
+        text: >-
+          $\dfrac{dV}{dt} = V_0\,\omega\cos(\omega t)$ (כלל השרשרת, שיעור 6.1), ולכן $I_d = CV_0\omega\cos(\omega t)$, והגדול ביותר $CV_0\omega$.
+      - kind: limit
+        text: >-
+          $\omega \to 0$ (מתח קבוע) נותן $I_d = 0$. כש-$V = V_0$, $\cos(\omega t) = 0$ ולכן $I_d = 0$: מה שקובע הוא קצב השינוי של המתח, לא גודלו.
+      - kind: units
+        text: >-
+          $\text{F}\cdot\text{V}\cdot\text{s}^{-1} = \text{A}$; $\text{T}\cdot\text{m/A}\cdot\text{A}\cdot\text{m}/\text{m}^2 = \text{T}$.
+      - kind: substitution
+        text: >-
+          א. $C = \dfrac{8.85\cdot10^{-12}\cdot\pi\cdot0.04^2}{0.002} \approx 2.22\cdot10^{-11}\,\text{F}$; $I_{d,\max} = 2.22\cdot10^{-11}\cdot50\cdot2\pi\cdot5\cdot10^{5} \approx 3.49\cdot10^{-3}\,\text{A}$.
+
+          ב. $B_{\max} = \dfrac{4\pi\cdot10^{-7}\cdot3.49\cdot10^{-3}\cdot0.02}{2\pi\cdot0.04^2} \approx 8.73\cdot10^{-9}\,\text{T}$.
+      - kind: result
+        text: >-
+          א. $2.22\cdot10^{-11}\,\text{F}$, $3.49\cdot10^{-3}\,\text{A}$. ב. $8.73\cdot10^{-9}\,\text{T}$. ג. כשהמתח מרבי, זרם ההעתקה והשדה המגנטי אפס, כי באותו רגע השדה החשמלי לא משתנה.
+
+  - id: W-6.12-09
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.12-1, OBJ-6.12-3]
+    prompt: >-
+      קבל עם לוחות **ריבועיים**, באורך צלע $20\,\text{cm}$, נטען בזרם של $1\,\text{A}$. במישור שבאמצע הרווח משרטטים מסלול אמפר ריבועי באורך צלע $10\,\text{cm}$, שמרכזו במרכז הלוחות וצלעותיו מקבילות לשפות הלוחות.
+
+      א. מה הסירקולציה של השדה המגנטי סביב המסלול?
+
+      ב. האם אפשר להוציא מזה את השדה המגנטי על המסלול, כמו שעשינו בלוחות עגולים? נמקו.
+
+      ג. מה הסירקולציה סביב ריבוע באורך צלע $30\,\text{cm}$, באותו מישור ובאותו מרכז?
+    answer: >-
+      א. כ-$3.14\cdot10^{-7}\,\text{T}\cdot\text{m}$.
+
+      ב. לא: על ריבוע השדה לא שווה בכל נקודה ולא משיק בכל מקום.
+
+      ג. כ-$1.26\cdot10^{-6}\,\text{T}\cdot\text{m}$.
+    solution:
+      - kind: given
+        text: >-
+          צלע הלוח $L = 0.2\,\text{m}$, $I = 1\,\text{A}$, צלע המסלול $s = 0.1\,\text{m}$ ואחר כך $0.3\,\text{m}$.
+      - kind: law
+        text: >-
+          חוק אמפר-מקסוול: $\oint \vec B\cdot d\vec l = \mu_0\left(I_c + \varepsilon_0\,d\Phi_E/dt\right)$ דרך המשטח השטוח שבתוך המסלול; בין הלוחות $I_c = 0$.
+      - kind: manipulation
+        text: >-
+          השדה החשמלי אחיד, ולכן המשטח שבתוך המסלול תופס את החלק $s^2/L^2$ מהשטף, וזרם ההעתקה דרכו $I\,s^2/L^2$. ריבוע רחב מהלוחות תופס את כל השטף: $I$.
+      - kind: limit
+        text: >-
+          כש-$s \to 0$ הסירקולציה שואפת לאפס; כש-$s \ge L$ היא $\mu_0 I$, כמו סביב התיל. החוק לא דורש שום סימטריה: הוא נכון לכל מסלול.
+      - kind: units
+        text: >-
+          $\text{T}\cdot\text{m/A}\cdot\text{A} = \text{T}\cdot\text{m}$.
+      - kind: substitution
+        text: >-
+          א. $\oint \vec B\cdot d\vec l = 4\pi\cdot10^{-7}\cdot1\cdot\left(\dfrac{0.1}{0.2}\right)^2 \approx 3.14\cdot10^{-7}\,\text{T}\cdot\text{m}$.
+
+          ג. $4\pi\cdot10^{-7}\cdot1 \approx 1.26\cdot10^{-6}\,\text{T}\cdot\text{m}$.
+      - kind: reasoning
+        text: >-
+          ב. בלוחות עגולים הסימטריה סביב הציר אמרה שהשדה על מעגל משיק ושווה בכל נקודה, ולכן אפשר היה לחלק בהיקף. בלוחות ריבועיים אין סימטריה כזאת: על המסלול הריבועי השדה משתנה מנקודה לנקודה, ובחלוקה בהיקף מקבלים רק ממוצע של הרכיב המשיק, כמו בשיעור 4.4.
+      - kind: result
+        text: >-
+          א. $3.14\cdot10^{-7}\,\text{T}\cdot\text{m}$. ב. לא, אין סימטריה; מקבלים רק ממוצע. ג. $1.26\cdot10^{-6}\,\text{T}\cdot\text{m}$.
+
+  - id: W-6.12-10
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.12-3, OBJ-6.12-4]
+    prompt: >-
+      קבל עם לוחות עגולים ברדיוס $10\,\text{cm}$ ומרחק $1\,\text{mm}$ ביניהם נטען דרך נגד מסוללה של $12\,\text{V}$. הרכיב האופקי של השדה המגנטי של כדור הארץ הוא כ-$3.2\cdot10^{-5}\,\text{T}$.
+
+      א. עם נגד של $10\,\text{k}\Omega$: מה השדה המגנטי הגדול ביותר בשפת הלוחות? כמה הוא ביחס לשדה של כדור הארץ?
+
+      ב. איזו התנגדות צריך כדי שהשדה בשפה, ברגע סגירת המתג, יהיה $1\%$ מהשדה של כדור הארץ? מה יהיה אז קבוע הזמן?
+
+      ג. מה לומדים מכך על הקושי למדוד את השדה של זרם ההעתקה?
+    answer: >-
+      א. $2.4\cdot10^{-9}\,\text{T}$, כ-$7.5\cdot10^{-5}$ מהשדה של כדור הארץ.
+
+      ב. $75\,\Omega$; $\tau \approx 2.1\cdot10^{-8}\,\text{s}$.
+
+      ג. שדה מגנטי ניכר מזרם העתקה דורש שדה חשמלי שמשתנה מהר מאוד, ולכן הוא נמשך זמן קצר מאוד.
+    solution:
+      - kind: given
+        text: >-
+          $a = 0.1\,\text{m}$, $d = 10^{-3}\,\text{m}$, $\varepsilon = 12\,\text{V}$, $B_{\text{Earth}} = 3.2\cdot10^{-5}\,\text{T}$.
+      - kind: law
+        text: >-
+          בשפת הלוחות $B = \dfrac{\mu_0 I}{2\pi a}$, עם $I = I_d$; במעגל RC הזרם הגדול ביותר הוא $\varepsilon/R$, ברגע סגירת המתג; $C = \varepsilon_0\pi a^2/d$.
+      - kind: manipulation
+        text: >-
+          $B_{\max} = \dfrac{\mu_0\varepsilon}{2\pi a R}$, ולכן $R = \dfrac{\mu_0\varepsilon}{2\pi a B}$ לשדה נתון. קבוע הזמן $\tau = RC$.
+      - kind: limit
+        text: >-
+          ככל ש-$R$ קטן, השדה גדל, אבל $\tau$ קטן באותו יחס: המכפלה $B_{\max}\cdot\tau = \dfrac{\mu_0\varepsilon C}{2\pi a}$ לא תלויה ב-$R$. שדה חזק יותר נמשך זמן קצר יותר.
+      - kind: units
+        text: >-
+          $\text{T}\cdot\text{m/A}\cdot\text{V}/(\text{m}\cdot\text{T}) = \text{V/A} = \Omega$.
+      - kind: substitution
+        text: >-
+          א. $B_{\max} = \dfrac{4\pi\cdot10^{-7}\cdot1.2\cdot10^{-3}}{2\pi\cdot0.1} = 2.4\cdot10^{-9}\,\text{T}$, ו-$\dfrac{2.4\cdot10^{-9}}{3.2\cdot10^{-5}} = 7.5\cdot10^{-5}$.
+
+          ב. $B = 3.2\cdot10^{-7}\,\text{T}$ דורש $I = \dfrac{2\pi a B}{\mu_0} = 0.16\,\text{A}$, כלומר $R = 12/0.16 = 75\,\Omega$. $C = \dfrac{8.85\cdot10^{-12}\cdot\pi\cdot0.1^2}{10^{-3}} \approx 2.78\cdot10^{-10}\,\text{F}$, ו-$\tau = 75\cdot2.78\cdot10^{-10} \approx 2.1\cdot10^{-8}\,\text{s}$.
+      - kind: result
+        text: >-
+          א. $2.4\cdot10^{-9}\,\text{T}$, פי $7.5\cdot10^{-5}$ מהשדה של כדור הארץ. ב. $75\,\Omega$, ו-$\tau \approx 21\,\text{ns}$. ג. כדי שזרם העתקה ייצור שדה מגנטי ניכר, השדה החשמלי צריך להשתנות מהר מאוד; בקבל כזה השדה נמשך עשרות ננו-שניות בלבד. לכן מקסוול הסיק את האיבר מתוך שימור המטען, ולא מניסוי.
+
+challenge:
+  - id: W-6.12-c1
+    stars: 1
+    objectives: [OBJ-6.12-1, OBJ-6.12-3, OBJ-6.12-4]
+    prompt: >-
+      קבל עשוי משני לוחות עגולים ומקבילים ברדיוס $a = 5\,\text{cm}$, במרחק $d = 2\,\text{mm}$ זה מזה, והלוח התחתון טעון במטען $Q_0 = 20\,\text{nC}$ והעליון ב-$-Q_0$. ברגע $t = 0$ ממלאים את כל הרווח בגליל של חומר מוליך חלש (נגד), ברדיוס $a$ ובגובה $d$, שנוגע היטב בשני הלוחות. ההתנגדות הסגולית של החומר $\rho = 1\cdot10^{9}\,\Omega\cdot\text{m}$, והחומר לא משנה את השדה החשמלי: בתוכו הקבוע הוא $\varepsilon_0$, כמו בריק. הקבל מתחיל להיפרק דרך החומר. הזניחו את השפעות השוליים, וספרו זרם כלפי מעלה כחיובי.
+
+      א. מה השדה החשמלי בין הלוחות כשהמטען על הלוח התחתון הוא $Q(t)$? מה כיוונו?
+
+      ב. מה זרם ההולכה דרך דיסקה דמיונית ברדיוס $r < a$ בין הלוחות, שמרכזה על הציר, כשהזרם הכולל בנגד הוא $I(t)$?
+
+      ג. מה $\varepsilon_0\,d\Phi_E/dt$ דרך אותה דיסקה?
+
+      ד. מה הסירקולציה של השדה המגנטי סביב שפת הדיסקה, ומה השדה המגנטי בין הלוחות?
+
+      ה. מצאו את קבוע הזמן של הפריקה ואת הזרם ההתחלתי, וחשבו את שני הזרמים של ב ו-ג ברגע $t = 0$ דרך דיסקה ברדיוס $a/2$. הראו שקבוע הזמן לא תלוי במידות הקבל.
+    answer: >-
+      א. $E = Q/(\varepsilon_0\pi a^2)$, כלפי מעלה.
+
+      ב. $+I\,r^2/a^2$.
+
+      ג. $-I\,r^2/a^2$.
+
+      ד. אפס; $B = 0$ בכל הרווח.
+
+      ה. $\tau = \rho\varepsilon_0 \approx 8.85\cdot10^{-3}\,\text{s}$, $I_0 \approx 2.26\cdot10^{-6}\,\text{A}$; דרך הדיסקה $\pm5.65\cdot10^{-7}\,\text{A}$.
+    solution:
+      - kind: given
+        text: >-
+          $a = 0.05\,\text{m}$, $d = 0.002\,\text{m}$, $Q_0 = 2\cdot10^{-8}\,\text{C}$, $\rho = 10^{9}\,\Omega\cdot\text{m}$; הלוח התחתון חיובי.
+      - kind: law
+        text: >-
+          חוק גאוס, $E = \sigma/\varepsilon_0$; חוק אמפר-מקסוול על מעגל ברדיוס $r$ שמרכזו על הציר; שימור המטען, $dQ/dt = -I$ (הזרם בנגד יוצא מהלוח החיובי).
+      - kind: manipulation
+        text: >-
+          א. $E = \dfrac{Q}{\varepsilon_0\pi a^2}$, מהלוח החיובי (למטה) אל השלילי: כלפי מעלה.
+
+          ב. הזרם בנגד מפוזר באחידות על החתך, כלפי מעלה, ולכן דרך הדיסקה עובר החלק $r^2/a^2$: $I_c = +I\,\dfrac{r^2}{a^2}$.
+
+          ג. $\Phi_E = E\pi r^2 = \dfrac{Q\,r^2}{\varepsilon_0 a^2}$, ולכן $\varepsilon_0\,\dfrac{d\Phi_E}{dt} = \dfrac{r^2}{a^2}\,\dfrac{dQ}{dt} = -I\,\dfrac{r^2}{a^2}$: השדה כלפי מעלה, אבל הוא קטן.
+
+          ד. $\oint \vec B\cdot d\vec l = \mu_0\left(I\,\dfrac{r^2}{a^2} - I\,\dfrac{r^2}{a^2}\right) = 0$. מהסימטריה השדה על המעגל משיק ושווה, ולכן $B\cdot2\pi r = 0$, ו-$B = 0$ בכל $r$.
+      - kind: limit
+        text: >-
+          אילו החומר היה מבודד ($\rho \to \infty$) לא היה זרם ולא שינוי בשטף, והשדה אפס. אילו הנגד היה מחוץ לקבל, בתיל, דרך הדיסקה היה עובר רק זרם העתקה, והשדה בין הלוחות לא היה אפס. כאן זרם ההולכה וזרם ההעתקה זורמים באותו מקום בכיוונים הפוכים ומבטלים זה את זה.
+      - kind: units
+        text: >-
+          $\rho\varepsilon_0$: $\Omega\cdot\text{m}\cdot\text{C}^2/(\text{N}\cdot\text{m}^2) = \Omega\cdot\text{C}^2/(\text{N}\cdot\text{m}) = \Omega\cdot\text{C}/\text{V} = \Omega\cdot\text{F} = \text{s}$.
+      - kind: manipulation
+        text: >-
+          ה. $R = \dfrac{\rho d}{\pi a^2}$ ו-$C = \dfrac{\varepsilon_0\pi a^2}{d}$, ולכן $\tau = RC = \rho\varepsilon_0$: השטח והמרחק מצטמצמים. הזרם ההתחלתי $I_0 = \dfrac{V_0}{R} = \dfrac{Q_0}{RC} = \dfrac{Q_0}{\tau}$.
+      - kind: substitution
+        text: >-
+          $\tau = 10^{9}\cdot8.85\cdot10^{-12} = 8.85\cdot10^{-3}\,\text{s}$; $I_0 = \dfrac{2\cdot10^{-8}}{8.85\cdot10^{-3}} \approx 2.26\cdot10^{-6}\,\text{A}$. דרך דיסקה ברדיוס $a/2$: $\dfrac{1}{4}\cdot2.26\cdot10^{-6} \approx 5.65\cdot10^{-7}\,\text{A}$ הולכה כלפי מעלה, ואותו גודל של זרם העתקה כלפי מטה.
+      - kind: result
+        text: >-
+          א. $E = Q/(\varepsilon_0\pi a^2)$ כלפי מעלה. ב. $+I r^2/a^2$. ג. $-I r^2/a^2$. ד. הסירקולציה אפס, ו-$B = 0$ בכל הרווח, למרות שזורם בו זרם. ה. $\tau = \rho\varepsilon_0 \approx 8.85\,\text{ms}$, $I_0 \approx 2.26\,\mu\text{A}$, ודרך הדיסקה $\pm0.565\,\mu\text{A}$.
+    source:
+      name: MIT 8.02 Physics II, Spring 2007 (OpenCourseWare), Problem Solving 10
+      year: 2007
+      problem: 'Sample Exam Question: a capacitor discharging through a cylindrical resistor that fills the gap'
+      url: https://www.ocw.mit.edu/courses/8-02-physics-ii-electricity-and-magnetism-spring-2007/7be3a856117cd029124cab269b13e5cf_solving10.pdf
+      verified: '2026-11-02'
+      adapted: true
+
+  - id: W-6.12-c2
+    stars: 2
+    objectives: [OBJ-6.12-1, OBJ-6.12-3]
+    prompt: >-
+      קבל עם לוחות עגולים ברדיוס $a = 10\,\text{cm}$ נטען, וברגע מסוים זורם בתילים $I = 0.5\,\text{A}$. התילים מחוברים למרכזי הלוחות, והמטען מתפזר על כל לוח באחידות. השדה החשמלי אחיד בין הלוחות ואפס מחוץ להם. רוצים את השדה המגנטי בנקודה P בין הלוחות, במרחק $r = 4\,\text{cm}$ מהציר. המסלול: מעגל ברדיוס $r$ שמרכזו על הציר, במישור שבאמצע הרווח. בודקים ארבעה משטחים שהמסלול הוא השפה שלהם:
+
+      $S_a$: הדיסקה השטוחה שבתוך המסלול.
+
+      $S_b$: "כוס" גלילית ברדיוס $r$: דופן שיוצאת מהמסלול, עוברת דרך הלוח החיובי, ונסגרת מאחוריו בתחתית שטוחה, שהתיל חוצה.
+
+      $S_c$: טבעת שטוחה במישור המסלול, מרדיוס $r$ עד $r_0 = 7\,\text{cm}$, ואחריה כוס גלילית ברדיוס $r_0$ שעוברת דרך הלוח החיובי ונסגרת מאחוריו.
+
+      $S_d$: כמו $S_c$, אבל עם $r_0 = 15\,\text{cm}$, רחב מהלוחות.
+
+      א. מה הזרם הרדיאלי בלוח החיובי שחוצה מעגל ברדיוס $s < a$ סביב מרכזו? (רמז: הוא מזין את המטען שיושב מחוץ לרדיוס $s$.)
+
+      ב. חשבו לכל אחד מארבעת המשטחים את זרם ההולכה ואת זרם ההעתקה דרכו, ואת הסכום. היזהרו בסימנים: האנך של כל משטח חייב להתאים לכיוון ההליכה על אותה שפה.
+
+      ג. מה השדה המגנטי ב-P?
+    answer: >-
+      א. $I\,(1 - s^2/a^2)$, כלפי חוץ.
+
+      ב. בכל ארבעת המשטחים הסכום $I r^2/a^2 = 0.08\,\text{A}$.
+
+      ג. $B = \mu_0 I r/(2\pi a^2) = 4\cdot10^{-7}\,\text{T}$.
+    solution:
+      - kind: given
+        text: >-
+          $a = 0.1\,\text{m}$, $I = 0.5\,\text{A}$, $r = 0.04\,\text{m}$, $r_0 = 0.07\,\text{m}$ או $0.15\,\text{m}$. הזרם מגיע לאורך הציר אל מרכז הלוח החיובי.
+      - kind: law
+        text: >-
+          חוק אמפר-מקסוול דרך כל משטח על המסלול; שימור המטען; חוק גאוס: שטף השדה בין הלוחות דרך שטח $\pi s^2$ (עם $s \le a$) הוא $\dfrac{q}{\varepsilon_0}\,\dfrac{s^2}{a^2}$, ולכן $\varepsilon_0\,\dfrac{d\Phi_E}{dt} = I\,\dfrac{s^2}{a^2}$.
+      - kind: manipulation
+        text: >-
+          א. המטען מתפזר באחידות, ולכן מחוץ לרדיוס $s$ יושב החלק $1 - s^2/a^2$ שלו, והוא גדל בקצב $I(1 - s^2/a^2)$. כל המטען הזה הגיע דרך מעגל הרדיוס $s$, ולכן זה הזרם הרדיאלי, כלפי חוץ.
+
+          ב. נבחר את האנך של $S_a$ בכיוון הזרם. שני משטחים על אותה שפה סוגרים יחד נפח, ולכן בכל כוס האנך פונה **פנימה** אל הנפח שהיא סוגרת עם $S_a$: בתחתית בכיוון הזרם, בדופן אל הציר, ובטבעת נגד כיוון הזרם.
+
+          $S_a$: הולכה $0$; העתקה $I r^2/a^2$.
+
+          $S_b$: התחתית: התיל מכניס $+I$. הדופן חוצה את הלוח ברדיוס $r$, והזרם הרדיאלי $I(1 - r^2/a^2)$ יוצא דרכה: $-I(1 - r^2/a^2)$. השדה מקביל לדופן, ומאחורי הלוח אין שדה: העתקה $0$. הסכום $I r^2/a^2$.
+
+          $S_c$: התחתית $+I$; הדופן ברדיוס $r_0$: $-I(1 - r_0^2/a^2)$; הטבעת, עם אנך נגד הזרם: $-I(r_0^2 - r^2)/a^2$. הסכום $I - I + I r_0^2/a^2 - I r_0^2/a^2 + I r^2/a^2 = I r^2/a^2$.
+
+          $S_d$: הדופן ברדיוס $r_0 > a$ לא חוצה את הלוח: $0$. הטבעת תופסת שטף רק עד $a$: $-I(1 - r^2/a^2)$. עם התחתית, $+I$: הסכום $I r^2/a^2$.
+      - kind: limit
+        text: >-
+          ב-$S_c$, כש-$r_0 \to r$ הטבעת נעלמת ומקבלים את $S_b$; כש-$r_0 \to a$ הזרם בדופן מתאפס ומקבלים את $S_d$. כש-$r \to a$, הסכום שואף ל-$I$, כמו מחוץ ללוחות.
+      - kind: units
+        text: >-
+          כל האיברים בזרם, באמפר; $\mu_0 I r/a^2$ נמדד ב-$\text{T}\cdot\text{m}$ חלקי $\text{m}$, כלומר $\text{T}$.
+      - kind: substitution
+        text: >-
+          $I r^2/a^2 = 0.5\cdot0.16 = 0.08\,\text{A}$. $S_b$: $0.5 - 0.42 = 0.08\,\text{A}$. $S_c$: $0.5 - 0.255 - 0.165 = 0.08\,\text{A}$. $S_d$: $0.5 - 0.42 = 0.08\,\text{A}$. מהסימטריה $B\cdot2\pi r = \mu_0\cdot0.08$: $B = \dfrac{4\pi\cdot10^{-7}\cdot0.08}{2\pi\cdot0.04} = 4\cdot10^{-7}\,\text{T}$.
+      - kind: result
+        text: >-
+          א. $I(1 - s^2/a^2)$, כלפי חוץ. ב. בכל המשטחים $0.08\,\text{A}$, אבל מחולק אחרת בין הולכה להעתקה. ג. $B = 4\cdot10^{-7}\,\text{T}$, משיק למעגל סביב הציר.
+    source:
+      # The unit PDF prints no year. The ESG page that links it, .../8.02IS/units/ (opened 2026-11-02), is headed
+      # "Physics at ESG - Fall 2004", and its list item "Unit 15 - Maxwell's Equations" links unit15.pdf.
+      name: MIT 8.02 ESG Independent Study (Fall 2004), Unit 15 (Maxwell's Equations)
+      year: 2004
+      problem: 'Supplementary Problem 2: four surfaces bounded by one circle in a charging capacitor'
+      url: https://stuff.mit.edu/afs/athena/course/8/8.02-esg/8.02IS/units/unit15.pdf
+      verified: '2026-11-02'
+      adapted: true

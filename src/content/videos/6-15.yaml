@@ -1,0 +1,13 @@
+# Lesson 6.15 videos. The id was checked against YouTube oEmbed on the `verified` date (exists, embeddable;
+# title and channel as below). The video could not be watched, so `why` claims only what the title and the
+# published summaries of the video support, and `minutes` is an estimate.
+
+- id: v-6-15-veritasium-relativity-magnets
+  youtubeId: 1TKSfAkWWN0
+  title: 'How Special Relativity Makes Magnets Work'
+  channel: Veritasium
+  lang: en
+  captions: []
+  minutes: 5
+  why: 'סרטון באנגלית על הקשר בין תורת היחסות הפרטית למגנטיות (לפי כותרת הסרטון): תיל שזורם בו זרם, ומטען שנע לידו, במערכת שבה המטען במנוחה, וההתכווצות שהופכת את התיל לטעון. השוו לאיור 6.15א.'
+  verified: '2026-11-02'
