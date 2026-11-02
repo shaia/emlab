@@ -1,0 +1,477 @@
+# Workbook, lesson 6.15 (relativity and magnetism, enrichment). Format and rules: see .claude/CLAUDE.md,
+# "Worked examples, workbook" and the chapter 6 rules (law … limit, units, result).
+# Every number was recomputed with src/physics/relativity.ts (lorentzGamma, gammaSmallSpeed, contractedLength,
+# wireSeenFrom, chargeFrameElectricForce, labMagneticForce, netLineDensity), continuous.ts (lineField) and
+# magnetism.ts (straightWireField).
+# In a >- block, consecutive lines fold into one paragraph: every part (א, ב, …) starts after a blank line.
+
+lesson: '6.15'
+practice:
+  - id: W-6.15-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.15-2]
+    prompt: >-
+      מוט שאורכו $2\,\text{m}$ במערכת המנוחה שלו נע לאורכו.
+
+      א. מהו גורם לורנץ, ומהו אורך המוט, כשהוא נע במהירות $0.5c$?
+
+      ב. אותן שאלות במהירות $0.9c$.
+
+      ג. פי כמה גדלה ההתכווצות (ההפרש בין האורך במנוחה לאורך בתנועה) כשהמהירות גדלה פי $1.8$?
+    answer: >-
+      א. $\gamma = 1.155$, האורך $1.73\,\text{m}$.
+
+      ב. $\gamma = 2.29$, האורך $0.87\,\text{m}$.
+
+      ג. ההתכווצות גדלה מ-$0.27\,\text{m}$ ל-$1.13\,\text{m}$, פי $4.2$ בערך: הרבה יותר מפי $1.8$.
+    solution:
+      - kind: given
+        text: '$L_0 = 2\,\text{m}$; $v = 0.5c$ ואחר כך $v = 0.9c$.'
+      - kind: law
+        text: '$\gamma = \dfrac{1}{\sqrt{1 - v^2/c^2}}$, ואורך של גוף נע $L = L_0/\gamma$.'
+      - kind: substitution
+        text: >-
+          א. $\gamma = \dfrac{1}{\sqrt{1 - 0.25}} = \dfrac{1}{\sqrt{0.75}} = 1.155$, ו-$L = \dfrac{2}{1.155} = 1.73\,\text{m}$.
+
+          ב. $\gamma = \dfrac{1}{\sqrt{1 - 0.81}} = \dfrac{1}{\sqrt{0.19}} = 2.29$, ו-$L = \dfrac{2}{2.29} = 0.87\,\text{m}$.
+      - kind: manipulation
+        text: 'ג. ההתכווצות היא $L_0 - L$: ב-$0.5c$ היא $2 - 1.73 = 0.27\,\text{m}$, וב-$0.9c$ היא $2 - 0.87 = 1.13\,\text{m}$. היחס $1.13/0.27 \approx 4.2$. ליד מהירות האור $\gamma$ גדל מהר מאוד.'
+      - kind: limit
+        text: 'כש-$v \to 0$, $\gamma \to 1$ ו-$L \to L_0$. כש-$v \to c$, $L \to 0$.'
+      - kind: units
+        text: '$v/c$ ו-$\gamma$ בלי יחידות, ולכן $L$ במטרים, כמו $L_0$.'
+      - kind: result
+        text: >-
+          א. $\gamma = 1.155$, $L = 1.73\,\text{m}$.
+
+          ב. $\gamma = 2.29$, $L = 0.87\,\text{m}$.
+
+          ג. פי $4.2$ בערך.
+
+  - id: W-6.15-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-6.15-1]
+    prompt: >-
+      מטען חיובי נע במקביל לתיל שזורם בו זרם, והתיל דוחה אותו. לכל אחד מהדברים הבאים, קבעו אם הוא זהה במערכת המעבדה ובמערכת המנוחה של המטען, ונמקו בקצרה:
+
+      א. המהירות של המטען.
+
+      ב. המטען של כל אלקטרון בתיל.
+
+      ג. צפיפות המטען הקווית נטו של התיל.
+
+      ד. האם המטען מתרחק מהתיל.
+
+      ה. האם הכוח על המטען מגנטי או חשמלי.
+    answer: >-
+      זהים: ב (מטען לא תלוי במהירות) ו-ד (תוצאה של ניסוי). שונים: א ($v$ לעומת אפס), ג (אפס לעומת חיובית), ה (מגנטי לעומת חשמלי).
+    solution:
+      - kind: law
+        text: 'מהירות נמדדת ביחס למערכת ייחוס. המטען של חלקיק זהה בכל מערכת. צפיפות קווית תלויה במרווחים, והמרווחים מתכווצים לפי המהירות. מה שקורה בניסוי, למשל לאן המטען זז, זהה בכל מערכת.'
+      - kind: reasoning
+        text: 'א. שונה: במעבדה המטען נע ב-$v$, ובמערכת המנוחה שלו מהירותו אפס. ב. זהה. ג. שונה: במעבדה אפס, ובמערכת של המטען היונים והאלקטרונים נעים במהירויות שונות, ולכן התיל טעון. ד. זהה: אם המטען מתרחק במעבדה, הוא מתרחק בכל מערכת.'
+      - kind: reasoning
+        text: 'ה. שונה: במעבדה המטען נע, והכוח מגנטי. במערכת שלו הוא במנוחה, ועל מטען במנוחה פועל רק כוח חשמלי. התיל דוחה מטען חיובי, ולכן במערכת של המטען התיל טעון בחיוב.'
+      - kind: limit
+        text: 'אם המטען במנוחה במעבדה, שתי המערכות הן אותה מערכת, וכל חמשת הדברים זהים: התיל ניטרלי ואין כוח.'
+      - kind: result
+        text: 'זהים: ב, ד. שונים: א, ג, ה.'
+
+  - id: W-6.15-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.15-2]
+    prompt: >-
+      א. כדור הארץ נע סביב השמש במהירות $3\cdot10^{4}\,\text{m/s}$. חשבו את $\gamma - 1$ בעזרת הקירוב $\gamma \approx 1 + v^2/(2c^2)$.
+
+      ב. חשבו את $\gamma$ במדויק ובקירוב במהירות $0.1c$ ובמהירות $0.5c$. באיזו מהן הקירוב טוב?
+    answer: >-
+      א. $\gamma - 1 \approx 5\cdot10^{-9}$.
+
+      ב. ב-$0.1c$: מדויק $1.00504$, קירוב $1.005$ (טוב מאוד). ב-$0.5c$: מדויק $1.155$, קירוב $1.125$ (שגיאה של כ-3%).
+    solution:
+      - kind: given
+        text: '$v = 3\cdot10^{4}\,\text{m/s}$, $c = 3\cdot10^{8}\,\text{m/s}$; ואחר כך $v/c = 0.1$ ו-$v/c = 0.5$.'
+      - kind: law
+        text: '$\gamma = \dfrac{1}{\sqrt{1 - v^2/c^2}}$, ובמהירות קטנה $\gamma \approx 1 + \dfrac{v^2}{2c^2}$.'
+      - kind: substitution
+        text: 'א. $\dfrac{v}{c} = 10^{-4}$, ולכן $\gamma - 1 \approx \dfrac{(10^{-4})^2}{2} = 5\cdot10^{-9}$.'
+      - kind: substitution
+        text: 'ב. ב-$0.1c$: $\gamma = 1/\sqrt{0.99} = 1.00504$, והקירוב $1 + 0.01/2 = 1.005$. ב-$0.5c$: $\gamma = 1/\sqrt{0.75} = 1.155$, והקירוב $1 + 0.25/2 = 1.125$.'
+      - kind: limit
+        text: 'השגיאה של הקירוב קטנה כמו $(v/c)^4$: ב-$0.1c$ היא כ-$4\cdot10^{-5}$, וב-$0.5c$ כ-$0.03$. ככל ש-$v/c \to 0$, הקירוב והערך המדויק מתלכדים.'
+      - kind: units
+        text: '$v^2/c^2$ ו-$\gamma$ בלי יחידות.'
+      - kind: result
+        text: >-
+          א. $\gamma - 1 \approx 5\cdot10^{-9}$.
+
+          ב. ב-$0.1c$ הקירוב טוב מאוד; ב-$0.5c$ הוא שוגה בכ-3%.
+
+  - id: W-6.15-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.15-2]
+    prompt: >-
+      בתיל של ניסוי מחשבתי, במעבדה: היונים במנוחה בצפיפות $\lambda_0 = 4\,\mu\text{C/m}$, והאלקטרונים נעים במהירות $0.5c$ בצפיפות $-\lambda_0$. חוקר נע לאורך התיל יחד עם האלקטרונים.
+
+      א. מהי צפיפות היונים במערכת של החוקר?
+
+      ב. מהי צפיפות האלקטרונים במערכת של החוקר?
+
+      ג. מהי צפיפות המטען הנטו, ובאיזה סימן? בדקו מול הנוסחה $\lambda^\prime = \gamma\lambda_0 v^2/c^2$.
+
+      ד. תלמיד קיבל $0.62\,\mu\text{C/m}$. מה הייתה הטעות שלו?
+    answer: >-
+      א. $4.62\,\mu\text{C/m}$.
+
+      ב. $-3.46\,\mu\text{C/m}$.
+
+      ג. $+1.15\,\mu\text{C/m}$.
+
+      ד. הוא השאיר לאלקטרונים את הצפיפות $-\lambda_0$ גם במערכת שבה הם במנוחה, וקיבל $\lambda_0(\gamma - 1)$.
+    solution:
+      - kind: given
+        text: '$\lambda_0 = 4\,\mu\text{C/m}$, $u = v = 0.5c$, ולכן $\gamma = 1/\sqrt{0.75} = 1.155$.'
+      - kind: law
+        text: 'שורה שנעה צפופה פי $\gamma$ מבמערכת המנוחה שלה: $\lambda = \gamma\lambda_{\text{rest}}$.'
+      - kind: manipulation
+        text: 'היונים במנוחה במעבדה, ולכן $\lambda_0$ היא הצפיפות שלהם במנוחה. אצל החוקר הם נעים: $\gamma\lambda_0$. האלקטרונים נעים במעבדה, ולכן הצפיפות שלהם במנוחה היא $-\lambda_0/\gamma$, ואצל החוקר הם במנוחה.'
+      - kind: substitution
+        text: 'א. $1.155\cdot4 = 4.62\,\mu\text{C/m}$. ב. $-4/1.155 = -3.46\,\mu\text{C/m}$. ג. $4.62 - 3.46 = 1.15\,\mu\text{C/m}$, ובנוסחה: $1.155\cdot0.25\cdot4 = 1.15\,\mu\text{C/m}$.'
+      - kind: reasoning
+        text: 'ד. $\lambda_0(\gamma - 1) = 4\cdot0.155 = 0.62\,\mu\text{C/m}$: זו התוצאה כשמניחים שהאלקטרונים לא משתנים. אבל במעבדה הם נעים, ולכן במנוחה המרווחים שלהם גדולים יותר.'
+      - kind: limit
+        text: 'כש-$v \to 0$, שתי הצפיפויות חוזרות ל-$\pm\lambda_0$ והנטו לאפס: החוקר עומד במעבדה.'
+      - kind: units
+        text: 'כל הצפיפויות ב-$\mu\text{C/m}$, כי $\gamma$ ו-$v^2/c^2$ בלי יחידות.'
+      - kind: result
+        text: >-
+          א. $4.62\,\mu\text{C/m}$. ב. $-3.46\,\mu\text{C/m}$. ג. $+1.15\,\mu\text{C/m}$, התיל חיובי.
+
+          ד. הטעות: $\lambda_0(\gamma - 1)$, בלי לתקן את צפיפות האלקטרונים.
+
+  - id: W-6.15-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.15-1, OBJ-6.15-3]
+    prompt: >-
+      מטען חיובי $q$ נמצא במנוחה במעבדה, ליד תיל ניטרלי שזורם בו זרם. רצה נעה לאורך התיל יחד עם האלקטרונים שבו, באותה מהירות.
+
+      א. במעבדה: האם פועל כוח על $q$?
+
+      ב. במערכת של הרצה: האם התיל טעון, ובאיזה סימן? איזה כוח חשמלי פועל על $q$, ולאן?
+
+      ג. במערכת של הרצה $q$ נע. איזה כוח נוסף פועל עליו, ולאן? מה צריך להיות הכוח השקול, ולמה?
+    answer: >-
+      א. לא: התיל ניטרלי, ו-$q$ במנוחה.
+
+      ב. התיל טעון בחיוב, ודוחה את $q$.
+
+      ג. כוח מגנטי שמושך את $q$ אל התיל. השקול אפס, כי במעבדה $q$ נשאר במקומו, וזה נכון בכל מערכת.
+    solution:
+      - kind: law
+        text: 'על מטען במנוחה פועל רק כוח חשמלי; על מטען נע פועל גם כוח מגנטי. שורה נעה צפופה יותר. מה שקורה בניסוי זהה בכל מערכת.'
+      - kind: reasoning
+        text: 'א. במעבדה התיל ניטרלי, ולכן אין כוח חשמלי; $q$ במנוחה, ולכן אין כוח מגנטי.'
+      - kind: reasoning
+        text: 'ב. אצל הרצה האלקטרונים במנוחה ומתרווחים, והיונים נעים ומתכווצים. יש יותר מטען חיובי בכל מטר: התיל חיובי, והוא דוחה את $q$.'
+      - kind: reasoning
+        text: 'ג. אצל הרצה $q$ נע בכיוון ההפוך לתנועה שלה, כלומר באותו כיוון כמו היונים. גם הזרם אצלה הוא זרם של היונים, כי האלקטרונים עומדים. $q$ החיובי נע במקביל לזרם הזה, וזרמים מקבילים נמשכים: כוח מגנטי אל התיל.'
+      - kind: limit
+        text: 'במעבדה $q$ לא זז ביחס לתיל, ולכן גם אצל הרצה הוא לא מתקרב ולא מתרחק: הכוח החשמלי והכוח המגנטי מבטלים זה את זה. וכשהזרם אפס, אין לא זה ולא זה.'
+      - kind: result
+        text: >-
+          א. אין כוח. ב. התיל חיובי, כוח חשמלי של דחייה.
+
+          ג. כוח מגנטי של משיכה, שמבטל את החשמלי: השקול אפס.
+
+  - id: W-6.15-06
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.15-3]
+    prompt: >-
+      במרחק $3\,\text{cm}$ מתיל ארוך, השדה המגנטי במעבדה הוא $B = 5\cdot10^{-4}\,\text{T}$. מטען נע לאורך התיל במהירות $4\cdot10^{5}\,\text{m/s}$.
+
+      א. הראו במספרים ש-$\mu_0/(2\pi) = 2k/c^2$.
+
+      ב. מהו השדה החשמלי $E^\prime$ במערכת של המטען, במרחק הזה?
+
+      ג. מהי צפיפות המטען הנטו $\lambda^\prime$ של התיל במערכת של המטען? מהו הזרם בתיל? בדקו ש-$\lambda^\prime = Iv/c^2$.
+    answer: >-
+      א. שני הצדדים $2\cdot10^{-7}$.
+
+      ב. $E^\prime = vB = 200\,\text{N/C}$.
+
+      ג. $\lambda^\prime = 3.33\cdot10^{-10}\,\text{C/m}$, $I = 75\,\text{A}$, ו-$Iv/c^2 = 3.33\cdot10^{-10}\,\text{C/m}$.
+    solution:
+      - kind: given
+        text: '$r = 0.03\,\text{m}$, $B = 5\cdot10^{-4}\,\text{T}$, $v = 4\cdot10^{5}\,\text{m/s}$.'
+      - kind: law
+        text: '$\mu_0\varepsilon_0 = 1/c^2$ ו-$k = 1/(4\pi\varepsilon_0)$; במערכת של המטען $E^\prime = vB$, ו-$E^\prime = 2k\lambda^\prime/r$; $B = \mu_0I/(2\pi r)$.'
+      - kind: substitution
+        text: 'א. $\mu_0/(2\pi) = 4\pi\cdot10^{-7}/(2\pi) = 2\cdot10^{-7}$, ו-$2k/c^2 = 2\cdot9\cdot10^{9}/(9\cdot10^{16}) = 2\cdot10^{-7}$.'
+      - kind: substitution
+        text: 'ב. $E^\prime = 4\cdot10^{5}\cdot5\cdot10^{-4} = 200\,\text{N/C}$.'
+      - kind: manipulation
+        text: 'ג. מבודדים את $\lambda^\prime$ מ-$E^\prime = 2k\lambda^\prime/r$: כופלים ב-$r$ ומחלקים ב-$2k$, $\lambda^\prime = \dfrac{E^\prime r}{2k}$. ומ-$B = \mu_0I/(2\pi r)$: $I = \dfrac{2\pi rB}{\mu_0} = \dfrac{rB}{2\cdot10^{-7}}$.'
+      - kind: substitution
+        text: '$\lambda^\prime = \dfrac{200\cdot0.03}{1.8\cdot10^{10}} = 3.33\cdot10^{-10}\,\text{C/m}$; $I = \dfrac{0.03\cdot5\cdot10^{-4}}{2\cdot10^{-7}} = 75\,\text{A}$; $\dfrac{Iv}{c^2} = \dfrac{75\cdot4\cdot10^{5}}{9\cdot10^{16}} = 3.33\cdot10^{-10}\,\text{C/m}$.'
+      - kind: limit
+        text: 'כש-$v \to 0$, $E^\prime \to 0$ ו-$\lambda^\prime \to 0$: מערכת המטען היא המעבדה, והתיל ניטרלי.'
+      - kind: units
+        text: '$\text{m/s}\cdot\text{T} = \text{m/s}\cdot\dfrac{\text{N}}{\text{A}\cdot\text{m}} = \text{N/C}$; ו-$\dfrac{\text{A}\cdot\text{m/s}}{\text{m}^2/\text{s}^2} = \text{C/m}$.'
+      - kind: result
+        text: >-
+          ב. $E^\prime = 200\,\text{N/C}$.
+
+          ג. $\lambda^\prime = 3.33\cdot10^{-10}\,\text{C/m}$ ו-$I = 75\,\text{A}$.
+
+  - id: W-6.15-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.15-3, OBJ-6.15-2]
+    prompt: >-
+      תיל אופקי, והזרם בו זורם ימינה. אלקטרון נמצא מתחת לתיל ונע ימינה, במקביל לו.
+
+      א. קבעו את כיוון הכוח על האלקטרון במעבדה.
+
+      ב. במערכת המנוחה של האלקטרון: לאיזה כיוון נעים היונים, לאיזה כיוון נעים האלקטרונים שבתיל, ואיזו שורה צפופה יותר?
+
+      ג. האם התשובות ל-א ול-ב מתיישבות?
+    answer: >-
+      א. למטה, הרחק מהתיל (דחייה).
+
+      ב. שתי השורות נעות שמאלה; האלקטרונים שבתיל מהר יותר, ולכן צפופים יותר: התיל שלילי.
+
+      ג. כן: תיל שלילי דוחה אלקטרון, למטה.
+    solution:
+      - kind: law
+        text: 'מטען שלילי שנע הוא כמו זרם בכיוון ההפוך לתנועתו; זרמים מקבילים נמשכים ומנוגדים נדחים. שורה מהירה יותר מתכווצת יותר.'
+      - kind: reasoning
+        text: 'א. האלקטרון נע ימינה, ולכן ה"זרם" שלו שמאלה, הפוך לזרם בתיל. זרמים מנוגדים נדחים: הכוח למטה, הרחק מהתיל.'
+      - kind: reasoning
+        text: 'ב. הזרם בתיל ימינה, ולכן האלקטרונים שבו נעים במעבדה שמאלה. במערכת של האלקטרון, שנע ימינה, היונים נעים שמאלה במהירותו, והאלקטרונים שבתיל נעים שמאלה מהר יותר. השורה המהירה מתכווצת יותר, והתיל שלילי.'
+      - kind: reasoning
+        text: 'ג. תיל שלילי דוחה את האלקטרון השלילי, כלומר למטה. שתי המערכות מסכימות.'
+      - kind: limit
+        text: 'אם האלקטרון במנוחה במעבדה, אין כוח מגנטי, ובמערכת שלו, שהיא המעבדה, התיל ניטרלי: אין כוח בשתיהן.'
+      - kind: result
+        text: >-
+          א. למטה (דחייה). ב. האלקטרונים שבתיל צפופים יותר, והתיל שלילי. ג. כן, שתי המערכות נותנות דחייה.
+
+  - id: W-6.15-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.15-4, OBJ-6.15-3]
+    prompt: >-
+      בכבל נחושת בשטח חתך של $2.5\,\text{mm}^2$, עם $8.5\cdot10^{28}$ אלקטרונים חופשיים בכל מטר מעוקב, זורם $16\,\text{A}$. פרוטון נע במקביל לכבל, במהירות $5\cdot10^{6}\,\text{m/s}$, במרחק $2\,\text{cm}$ ממנו.
+
+      א. מהי צפיפות המטען $\lambda_0$ של האלקטרונים החופשיים, ומהי מהירות הסחיפה?
+
+      ב. מהי צפיפות המטען הנטו של הכבל במערכת של הפרוטון, ומהו היחס $\lambda^\prime/\lambda_0$?
+
+      ג. חשבו את הכוח על הפרוטון בשתי המערכות.
+    answer: >-
+      א. $\lambda_0 = 3.4\cdot10^{4}\,\text{C/m}$, $u = 4.7\cdot10^{-4}\,\text{m/s}$.
+
+      ב. $\lambda^\prime = 8.9\cdot10^{-10}\,\text{C/m}$, $\lambda^\prime/\lambda_0 = 2.6\cdot10^{-14}$.
+
+      ג. $1.28\cdot10^{-16}\,\text{N}$ בשתי המערכות ($E^\prime = vB = 800\,\text{N/C}$).
+    solution:
+      - kind: given
+        text: '$n = 8.5\cdot10^{28}\,\text{m}^{-3}$, $A = 2.5\cdot10^{-6}\,\text{m}^2$, $I = 16\,\text{A}$, $v = 5\cdot10^{6}\,\text{m/s}$, $r = 0.02\,\text{m}$.'
+      - kind: law
+        text: '$\lambda_0 = neA$; $I = \lambda_0u$; במהירויות קטנות $\lambda^\prime \approx Iv/c^2$; $E = 2k\lambda/r$; $F = qvB$ עם $B = \mu_0I/(2\pi r)$.'
+      - kind: substitution
+        text: 'א. $\lambda_0 = 8.5\cdot10^{28}\cdot1.6\cdot10^{-19}\cdot2.5\cdot10^{-6} = 3.4\cdot10^{4}\,\text{C/m}$; $u = \dfrac{16}{3.4\cdot10^{4}} = 4.7\cdot10^{-4}\,\text{m/s}$.'
+      - kind: substitution
+        text: 'ב. $\lambda^\prime = \dfrac{16\cdot5\cdot10^{6}}{9\cdot10^{16}} = 8.9\cdot10^{-10}\,\text{C/m}$, ו-$\dfrac{\lambda^\prime}{\lambda_0} = \dfrac{8.9\cdot10^{-10}}{3.4\cdot10^{4}} = 2.6\cdot10^{-14}$.'
+      - kind: substitution
+        text: 'ג. במערכת של הפרוטון: $E^\prime = \dfrac{2\cdot9\cdot10^{9}\cdot8.9\cdot10^{-10}}{0.02} = 800\,\text{N/C}$, ו-$F^\prime = 1.6\cdot10^{-19}\cdot800 = 1.28\cdot10^{-16}\,\text{N}$. במעבדה: $B = 2\cdot10^{-7}\cdot\dfrac{16}{0.02} = 1.6\cdot10^{-4}\,\text{T}$, ו-$F = 1.6\cdot10^{-19}\cdot5\cdot10^{6}\cdot1.6\cdot10^{-4} = 1.28\cdot10^{-16}\,\text{N}$.'
+      - kind: limit
+        text: '$v/c = 0.017$, ולכן $\gamma - 1 \approx 1.4\cdot10^{-4}$: שני הכוחות שווים בדיוק של ארבע ספרות. כש-$I \to 0$, $\lambda^\prime \to 0$ ושני הכוחות מתאפסים.'
+      - kind: units
+        text: '$neA$ ביחידות $\text{m}^{-3}\cdot\text{C}\cdot\text{m}^2 = \text{C/m}$; $Iv/c^2$ ביחידות $\text{C/m}$; $qE$ ו-$qvB$ בניוטון.'
+      - kind: result
+        text: >-
+          א. $3.4\cdot10^{4}\,\text{C/m}$, $4.7\cdot10^{-4}\,\text{m/s}$. ב. $8.9\cdot10^{-10}\,\text{C/m}$, יחס $2.6\cdot10^{-14}$.
+
+          ג. $1.28\cdot10^{-16}\,\text{N}$ בשתי המערכות.
+
+  - id: W-6.15-09
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.15-2, OBJ-6.15-3]
+    prompt: >-
+      בתיל של ניסוי מחשבתי $\lambda_0 = 0.5\,\mu\text{C/m}$. מטען $q = 4\,\text{nC}$ נע יחד עם האלקטרונים, באותה מהירות $v$, במרחק $1\,\text{cm}$ מהתיל.
+
+      א. באיזו מהירות $v$ צפיפות המטען הנטו במערכת של $q$ שווה ל-$\lambda_0$ עצמה? רמז: סמנו $x = v^2/c^2$ וקבלו משוואה ריבועית ב-$x$.
+
+      ב. מהו $\gamma$ במהירות הזו?
+
+      ג. חשבו את הכוח החשמלי במערכת של $q$ ואת הכוח המגנטי במעבדה.
+    answer: >-
+      א. $v^2/c^2 = (\sqrt5 - 1)/2 = 0.618$, כלומר $v = 0.786c = 2.36\cdot10^{8}\,\text{m/s}$.
+
+      ב. $\gamma = 1.618$.
+
+      ג. $F^\prime = 3.6\cdot10^{-3}\,\text{N}$, $F = F^\prime/\gamma = 2.22\cdot10^{-3}\,\text{N}$.
+    solution:
+      - kind: given
+        text: '$\lambda_0 = 5\cdot10^{-7}\,\text{C/m}$, $q = 4\cdot10^{-9}\,\text{C}$, $r = 0.01\,\text{m}$, $u = v$, והדרישה $\lambda^\prime = \lambda_0$.'
+      - kind: law
+        text: '$\lambda^\prime = \gamma\lambda_0\dfrac{v^2}{c^2}$; $E = 2k\lambda/r$; $F^\prime = \gamma F$.'
+      - kind: manipulation
+        text: 'א. $\gamma x = 1$, ולכן $x = 1/\gamma = \sqrt{1 - x}$. מעלים בריבוע: $x^2 = 1 - x$, כלומר $x^2 + x - 1 = 0$. הפתרון החיובי: $x = \dfrac{-1 + \sqrt5}{2} = 0.618$, ו-$v = c\sqrt{0.618} = 0.786c$.'
+      - kind: substitution
+        text: 'ב. $\gamma = 1/x = 1/0.618 = 1.618$ (בדיקה: $1/\sqrt{1 - 0.618} = 1.618$).'
+      - kind: substitution
+        text: 'ג. $\lambda^\prime = \lambda_0$, ולכן $F^\prime = \dfrac{2kq\lambda_0}{r} = \dfrac{2\cdot9\cdot10^{9}\cdot4\cdot10^{-9}\cdot5\cdot10^{-7}}{0.01} = 3.6\cdot10^{-3}\,\text{N}$. במעבדה $I = \lambda_0v = 5\cdot10^{-7}\cdot2.36\cdot10^{8} = 118\,\text{A}$, $B = 2\cdot10^{-7}\cdot118/0.01 = 2.36\cdot10^{-3}\,\text{T}$, ו-$F = qvB = 4\cdot10^{-9}\cdot2.36\cdot10^{8}\cdot2.36\cdot10^{-3} = 2.22\cdot10^{-3}\,\text{N}$. היחס $3.6/2.22 = 1.62 = \gamma$.'
+      - kind: limit
+        text: 'הפתרון השני, $x = (-1 - \sqrt5)/2$, שלילי, ו-$v^2$ לא יכול להיות שלילי. ו-$x = 0.618 < 1$: המהירות קטנה מ-$c$, כמו שצריך.'
+      - kind: units
+        text: '$x$ ו-$\gamma$ בלי יחידות; $kq\lambda/r$ בניוטון.'
+      - kind: result
+        text: >-
+          א. $v = 0.786c = 2.36\cdot10^{8}\,\text{m/s}$. ב. $\gamma = 1.618$.
+
+          ג. $F^\prime = 3.6\cdot10^{-3}\,\text{N}$, $F = 2.22\cdot10^{-3}\,\text{N}$, דחייה בשתיהן.
+
+  - id: W-6.15-10
+    level: bagrut
+    qualitative: true
+    objectives: [OBJ-6.15-4, OBJ-6.15-1]
+    prompt: >-
+      תלמיד טוען: "חוסר האיזון בתיל אמיתי הוא חלק אחד מ-$10^{16}$. כוח שנובע ממנו לא יכול להיות הכוח המגנטי שמזיז מנועים; המגנטיות היא כוח נפרד."
+
+      בתיל נחושת $\lambda_0 = 1.36\cdot10^{4}\,\text{C/m}$ זורם $1\,\text{A}$. מטען נע לאורכו במהירות $10^{5}\,\text{m/s}$, במרחק $1\,\text{m}$.
+
+      א. מה היה השדה החשמלי במרחק הזה, אילו רק שורת היונים הייתה קיימת?
+
+      ב. מהו השדה החשמלי שהמטען מרגיש במערכת שלו? פי כמה הוא קטן מהשדה בסעיף א?
+
+      ג. הראו שהיחס בין השניים הוא $c^2/(uv)$, והשיבו לטענה.
+    answer: >-
+      א. $2.4\cdot10^{14}\,\text{N/C}$.
+
+      ב. $E^\prime = vB = 0.02\,\text{N/C}$, קטן פי $1.2\cdot10^{16}$.
+
+      ג. היחס $c^2/(uv) = 1.2\cdot10^{16}$. הטענה שגויה: חלק זעיר מכוח חשמלי עצום הוא בדיוק הכוח המגנטי שנמדד.
+    solution:
+      - kind: given
+        text: '$\lambda_0 = 1.36\cdot10^{4}\,\text{C/m}$, $I = 1\,\text{A}$, $v = 10^{5}\,\text{m/s}$, $r = 1\,\text{m}$.'
+      - kind: law
+        text: '$E = 2k\lambda/r$; $\lambda^\prime \approx \lambda_0uv/c^2$, ולכן $E^\prime = vB$ עם $B = \mu_0I/(2\pi r)$; $I = \lambda_0u$.'
+      - kind: substitution
+        text: 'א. $E_0 = \dfrac{2\cdot9\cdot10^{9}\cdot1.36\cdot10^{4}}{1} = 2.4\cdot10^{14}\,\text{N/C}$.'
+      - kind: substitution
+        text: 'ב. $B = 2\cdot10^{-7}\cdot\dfrac{1}{1} = 2\cdot10^{-7}\,\text{T}$, ו-$E^\prime = 10^{5}\cdot2\cdot10^{-7} = 0.02\,\text{N/C}$. היחס $\dfrac{2.4\cdot10^{14}}{0.02} = 1.2\cdot10^{16}$.'
+      - kind: manipulation
+        text: 'ג. $\dfrac{E_0}{E^\prime} = \dfrac{2k\lambda_0/r}{2k\lambda^\prime/r} = \dfrac{\lambda_0}{\lambda^\prime} = \dfrac{c^2}{uv}$. עם $u = I/\lambda_0 = 7.35\cdot10^{-5}\,\text{m/s}$: $\dfrac{9\cdot10^{16}}{7.35\cdot10^{-5}\cdot10^{5}} = 1.2\cdot10^{16}$.'
+      - kind: reasoning
+        text: 'החלק אכן זעיר, אבל הוא חלק מכוח חשמלי עצום, שמתבטל כמעט לגמרי כי בתיל יש כמות שווה של מטען חיובי ושלילי. מה שנשאר הוא בדיוק $qvB$, הכוח שמודדים, ולכן אין צורך בכוח נפרד: במעבדה קוראים לו מגנטי, ובמערכת של המטען חשמלי.'
+      - kind: limit
+        text: 'כש-$v \to 0$ או $u \to 0$, $\lambda^\prime \to 0$, והיחס שואף לאינסוף: אין כוח מגנטי בלי זרם ובלי תנועה.'
+      - kind: units
+        text: '$E_0/E^\prime$ ו-$c^2/(uv)$ בלי יחידות: $(\text{m/s})^2/(\text{m/s})^2$.'
+      - kind: result
+        text: >-
+          א. $2.4\cdot10^{14}\,\text{N/C}$. ב. $0.02\,\text{N/C}$, קטן פי $1.2\cdot10^{16}$.
+
+          ג. היחס $c^2/(uv)$. הכוח המגנטי הוא שארית זעירה של כוח חשמלי עצום, לא כוח נפרד.
+
+challenge:
+  - id: W-6.15-c1
+    stars: 1
+    objectives: [OBJ-6.15-2]
+    prompt: >-
+      לפני תורת היחסות חשבו שאורכים זהים בכל מערכת ייחוס. תורת היחסות מתקנת את זה בגורם $\gamma$, שבמהירות קטנה $\gamma \approx 1 + \dfrac{1}{2}\dfrac{v^2}{c^2} + \dfrac{3}{8}\dfrac{v^4}{c^4}$.
+
+      א. באיזו מהירות האיבר הראשון של התיקון, $\dfrac{v^2}{2c^2}$, מגיע ל-1%? ענו במטרים לשנייה ובשבר של $c$.
+
+      ב. מה גודל האיבר הבא, $\dfrac{3}{8}\dfrac{v^4}{c^4}$, במהירות הזו? האם הוא משנה את התשובה?
+
+      ג. מצאו במדויק את המהירות שבה $\gamma = 1.01$, והשוו.
+    answer: >-
+      א. $v = 0.141c = 4.24\cdot10^{7}\,\text{m/s}$.
+
+      ב. $1.5\cdot10^{-4}$, פחות משתי מאיות האחוז: זניח.
+
+      ג. $v = 0.1404c = 4.21\cdot10^{7}\,\text{m/s}$, קרוב מאוד.
+    solution:
+      - kind: given
+        text: 'הדרישה: $\dfrac{v^2}{2c^2} = 0.01$; ובסעיף ג $\gamma = 1.01$.'
+      - kind: law
+        text: '$\gamma = \dfrac{1}{\sqrt{1 - v^2/c^2}} = 1 + \dfrac{1}{2}\dfrac{v^2}{c^2} + \dfrac{3}{8}\dfrac{v^4}{c^4} + \dots$'
+      - kind: substitution
+        text: 'א. $\dfrac{v^2}{c^2} = 0.02$, ולכן $\dfrac{v}{c} = \sqrt{0.02} = 0.141$, ו-$v = 0.141\cdot3\cdot10^{8} = 4.24\cdot10^{7}\,\text{m/s}$.'
+      - kind: substitution
+        text: 'ב. $\dfrac{3}{8}\cdot0.02^2 = \dfrac{3}{8}\cdot4\cdot10^{-4} = 1.5\cdot10^{-4}$. זה פחות מ-2% מהאיבר הראשון, $0.01$, ולכן כמעט לא משנה.'
+      - kind: manipulation
+        text: 'ג. $\dfrac{1}{\sqrt{1 - v^2/c^2}} = 1.01$: הופכים ומעלים בריבוע, $1 - \dfrac{v^2}{c^2} = \dfrac{1}{1.01^2}$, ולכן $\dfrac{v}{c} = \sqrt{1 - \dfrac{1}{1.0201}} = 0.1404$, ו-$v = 4.21\cdot10^{7}\,\text{m/s}$.'
+      - kind: limit
+        text: 'כש-$v/c \to 0$ כל איברי התיקון נעלמים, ו-$\gamma \to 1$: חוזרים לאורכים זהים בכל מערכת, כמו לפני תורת היחסות. כל איבר קטן בגורם $v^2/c^2$ מקודמו, ולכן במהירויות קטנות האיבר הראשון מספיק.'
+      - kind: units
+        text: '$v/c$, $\gamma$ וכל איברי הטור בלי יחידות; $v$ במטרים לשנייה.'
+      - kind: result
+        text: >-
+          א. $0.141c = 4.24\cdot10^{7}\,\text{m/s}$. ב. $1.5\cdot10^{-4}$, זניח.
+
+          ג. במדויק $0.1404c = 4.21\cdot10^{7}\,\text{m/s}$.
+    source:
+      name: MIT 8.022 (Physics II, Electricity and Magnetism), Assignment 5
+      year: 2004
+      problem: Problem 3 (Galilean transformations)
+      url: https://ocw.mit.edu/courses/8-022-physics-ii-electricity-and-magnetism-fall-2004/fb3ec745135b290c7963f99cf4f04964_pset5.pdf
+      verified: '2026-11-02'
+      adapted: true
+
+  - id: W-6.15-c2
+    stars: 2
+    objectives: [OBJ-6.15-3, OBJ-6.15-2]
+    prompt: >-
+      שני קווי מטען ארוכים ומקבילים, במרחק $d = 10\,\text{cm}$ זה מזה. במערכת המנוחה שלהם, לכל אחד צפיפות $\lambda_0 = 1\,\mu\text{C/m}$. במעבדה שני הקווים נעים יחד, לאורכם, במהירות $0.6c$.
+
+      א. במערכת המנוחה: מה הכוח החשמלי על כל מטר של הקו העליון, ולאן?
+
+      ב. במעבדה: מה הכוח החשמלי על כל מטר של הקו העליון?
+
+      ג. במעבדה: מה הכוח המגנטי על כל מטר של הקו העליון, ולאן?
+
+      ד. מה הכוח הכולל על כל מטר במעבדה? השוו לסעיף א, והסבירו.
+    answer: >-
+      א. $0.18\,\text{N/m}$, דחייה.
+
+      ב. $0.281\,\text{N/m}$, דחייה.
+
+      ג. $0.101\,\text{N/m}$, משיכה.
+
+      ד. $0.18\,\text{N/m}$, דחייה: בדיוק כמו בסעיף א, כי $\gamma^2(1 - v^2/c^2) = 1$.
+    solution:
+      - kind: given
+        text: '$\lambda_0 = 10^{-6}\,\text{C/m}$, $d = 0.1\,\text{m}$, $v = 0.6c$, ולכן $\gamma = 1.25$.'
+      - kind: law
+        text: 'השדה של קו טעון $E = 2k\lambda/d$; קו נע צפוף פי $\gamma$, $\lambda = \gamma\lambda_0$, והוא זרם $I = \lambda v$; הכוח בין זרמים מקבילים $F/L = \dfrac{\mu_0 I^2}{2\pi d}$, ו-$\mu_0/(2\pi) = 2k/c^2$.'
+      - kind: manipulation
+        text: 'א. $\dfrac{F_0}{L} = \lambda_0\cdot\dfrac{2k\lambda_0}{d} = \dfrac{2k\lambda_0^2}{d}$. ב. $\dfrac{F_E}{L} = \dfrac{2k\gamma^2\lambda_0^2}{d}$. ג. $\dfrac{F_B}{L} = \dfrac{2k}{c^2}\cdot\dfrac{(\gamma\lambda_0 v)^2}{d} = \dfrac{2k\gamma^2\lambda_0^2}{d}\cdot\dfrac{v^2}{c^2}$, משיכה (זרמים מקבילים). ד. $\dfrac{F_E - F_B}{L} = \dfrac{2k\lambda_0^2}{d}\,\gamma^2\left(1 - \dfrac{v^2}{c^2}\right) = \dfrac{2k\lambda_0^2}{d}$.'
+      - kind: substitution
+        text: 'א. $\dfrac{2\cdot9\cdot10^{9}\cdot10^{-12}}{0.1} = 0.18\,\text{N/m}$. ב. $1.25^2\cdot0.18 = 0.281\,\text{N/m}$. ג. $0.281\cdot0.36 = 0.101\,\text{N/m}$ (או: $I = 1.25\cdot10^{-6}\cdot1.8\cdot10^{8} = 225\,\text{A}$, ו-$2\cdot10^{-7}\cdot225^2/0.1 = 0.101\,\text{N/m}$). ד. $0.281 - 0.101 = 0.18\,\text{N/m}$.'
+      - kind: limit
+        text: 'כש-$v \to 0$ הכוח המגנטי נעלם, וב-ב מקבלים את א. כש-$v \to c$ הכוח המגנטי כמעט מבטל את החשמלי, אבל כל אחד מהם גדל כמו $\gamma^2$, והשקול על כל מטר נשאר $0.18\,\text{N/m}$. ההסבר: על קטע של קו, הכוח במעבדה קטן פי $\gamma$ מבמערכת המנוחה (כוח שניצב לתנועה), אבל גם הקטע קצר שם פי $\gamma$, ולכן הכוח לכל מטר זהה.'
+      - kind: units
+        text: '$k\lambda^2/d$ ביחידות $\dfrac{\text{N}\cdot\text{m}^2}{\text{C}^2}\cdot\dfrac{\text{C}^2}{\text{m}^2}\cdot\dfrac{1}{\text{m}} = \text{N/m}$, כוח ליחידת אורך.'
+      - kind: result
+        text: >-
+          א. $0.18\,\text{N/m}$, דחייה. ב. $0.281\,\text{N/m}$, דחייה. ג. $0.101\,\text{N/m}$, משיכה.
+
+          ד. $0.18\,\text{N/m}$, דחייה, כמו במערכת המנוחה.
+    source:
+      name: MIT 8.022 (Physics II, Electricity and Magnetism), Assignment 6
+      year: 2004
+      problem: Problem 8 (Electric and magnetic forces)
+      url: https://ocw.mit.edu/courses/8-022-physics-ii-electricity-and-magnetism-fall-2004/5db3a1c1688d82a8e18c360ae4fabe99_pset6.pdf
+      verified: '2026-11-02'
+      adapted: true
