@@ -105,7 +105,10 @@ test.describe('predict, then reveal', () => {
     const predict = page.locator('[data-predict-id="pred-4-7"]');
     await predict.scrollIntoViewIfNeeded();
     await expect(predict).not.toHaveClass(/is-open/);
-    await predict.locator('label.q-choice', { hasText: 'הכוח לא משתנה' }).click();
+    // a choice clicked before the island hydrates lands in the static HTML and is lost
+    const choice = predict.locator('label.q-choice', { hasText: 'הכוח לא משתנה' });
+    await hydrated(choice);
+    await choice.click();
     await predict.getByRole('button', { name: 'זה החיזוי שלי' }).click();
     await expect(predict).toHaveClass(/is-open/);
   });
