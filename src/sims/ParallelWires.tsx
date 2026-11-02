@@ -50,9 +50,9 @@ const PRESETS: Record<Preset, Wire[]> = {
     { x: 0.05, y: 0, I: 10 },
   ],
   line3: [
-    { x: -0.08, y: 0, I: 10 },
+    { x: -0.1, y: 0, I: 10 },
     { x: 0, y: 0, I: 10 },
-    { x: 0.08, y: 0, I: -10 },
+    { x: 0.1, y: 0, I: -10 },
   ],
   triangle: [
     { x: -0.05, y: -H, I: 10 },
@@ -477,18 +477,25 @@ export default function ParallelWires(props: ParallelWiresProps) {
         ctx.stroke();
         ctx.restore();
       } else depthGlyph(ctx, x, y, WIRE_PX, wi.I > 0 ? 'out' : 'in', p.current, { fill: p.paper, width: 2.4 });
+      // the number and the current go in the two diagonal corners farthest from this wire's arrows
+      const dirs: number[] = [];
+      for (const v of [fieldAtWire(w, i), netForcePerLength(w, i), ...w.map((_, j) => pairForcePerLength(w, i, j))]) {
+        if (mag(v) > 0) dirs.push(Math.atan2(-v[1], v[0]));
+      }
+      const gap = (a: number) => Math.min(Math.PI, ...dirs.map((d) => Math.abs(((a - d + 3 * Math.PI) % (2 * Math.PI)) - Math.PI)));
+      const corners = [Math.PI / 4, (3 * Math.PI) / 4, (-3 * Math.PI) / 4, -Math.PI / 4].sort((a, b) => gap(b) - gap(a));
+      const put = (text: string, a: number, font: string, color: string) => {
+        const r = WIRE_PX + 9;
+        ctx.font = font;
+        ctx.fillStyle = color;
+        ctx.textAlign = Math.cos(a) > 0 ? 'left' : 'right';
+        ctx.textBaseline = Math.sin(a) > 0 ? 'top' : 'bottom';
+        ctx.fillText(text, x + Math.cos(a) * r * 0.75, y + Math.sin(a) * r * 0.75);
+      };
       ctx.save();
       ctx.direction = 'ltr';
-      ctx.font = `700 13px ${p.fontUi}`;
-      ctx.fillStyle = p.ink;
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'bottom';
-      ctx.fillText(String(i + 1), x - WIRE_PX - 2, y - WIRE_PX + 2);
-      ctx.font = `600 12px ${p.fontUi}`;
-      ctx.fillStyle = p.ink2;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'top';
-      ctx.fillText(`${Math.abs(wi.I)} A`, x, y + WIRE_PX + 5);
+      put(String(i + 1), corners[1], `700 13px ${p.fontUi}`, p.ink);
+      put(`${Math.abs(wi.I)} A`, corners[0], `600 12px ${p.fontUi}`, p.ink2);
       ctx.restore();
     });
 

@@ -79,12 +79,12 @@ test.describe('live figures', () => {
     expect((await progress(page)).tasks['fig-4-8a:double-d']).toBeTruthy();
   });
 
-  test('three in a row: the middle wire feels 5·10⁻⁴ N/m, and it cancels when the third current turns round', async ({ page }) => {
+  test('three in a row: the middle wire feels 4·10⁻⁴ N/m, and it cancels when the third current turns round', async ({ page }) => {
     const fig = await openFigure(page, 'fig-4-8b');
     const readout = fig.locator('.sim-readout');
-    await expect(readout).toContainText('F₂/L = 5·10⁻⁴ N/m (שמאלה)');
-    await expect(readout).toContainText('F₁/L = 1.25·10⁻⁴ N/m (ימינה)');
-    await expect(readout).toContainText('F₃/L = 3.75·10⁻⁴ N/m (ימינה)');
+    await expect(readout).toContainText('F₂/L = 4·10⁻⁴ N/m (שמאלה)');
+    await expect(readout).toContainText('F₁/L = 1·10⁻⁴ N/m (ימינה)');
+    await expect(readout).toContainText('F₃/L = 3·10⁻⁴ N/m (ימינה)');
     await setSlider(fig.locator('input[type=range]').nth(2), 10);
     await expect(readout).toContainText('F₂/L = 0 N/m');
     expect((await progress(page)).tasks['fig-4-8b:balance']).toBeTruthy();

@@ -111,7 +111,7 @@ questions:
         feedback: 'חילקתם בריבוע המרחק, כמו בחוק קולון. הכוח בין תילים יורד כמו $1/d$, כי השדה של תיל ארוך יורד כמו $1/r$.'
         misconception: MC-parallel-wires-inverse-square
       - value: 4.0e-5
-        feedback: 'זה השדה של התיל של $6\,\text{A}$ כפול מטר אחד בלבד, בלי הזרם השני. הכוח על כל מטר הוא $B_1I_2$.'
+        feedback: 'חישבתם רק את השדה של התיל הראשון במקום השני, $B_1$. את השדה צריך לכפול בזרם של התיל השני: $\dfrac{F}{L} = B_1I_2$.'
 
   - id: Q-4.8-segment-force
     type: numeric
@@ -197,7 +197,7 @@ questions:
     objectives: [OBJ-4.8-3]
     qualitative: true
     prompt: >-
-      בתיל 1 זורם זרם גדול פי 3 מבתיל 2. התילים ארוכים ומקבילים. איזה מהמשפטים נכון?
+      הזרם בתיל 1 גדול פי 3 מהזרם בתיל 2. התילים ארוכים ומקבילים. איזה מהמשפטים נכון?
     choices:
       - text: 'הכוח שתיל 1 מפעיל על תיל 2 שווה בגודלו לכוח שתיל 2 מפעיל על תיל 1.'
         correct: true
@@ -206,7 +206,7 @@ questions:
         feedback: 'תיל 1 אכן יוצר שדה חזק פי 3, אבל השדה הזה פועל על זרם קטן פי 3. הכוחות שווים.'
         misconception: MC-larger-current-larger-force
       - text: 'הכוח שתיל 1 מפעיל על תיל 2 גדול פי 9.'
-        feedback: 'אין כאן ריבוע. וגם לא יחס: הכוחות על שני התילים שווים.'
+        feedback: 'אין כאן ריבוע, ובעצם אין כאן הבדל בכלל: הכוחות על שני התילים שווים.'
         misconception: MC-larger-current-larger-force
     reasonPrompt: מה הנימוק?
     reasons:
@@ -217,7 +217,7 @@ questions:
         feedback: 'השדה של תיל 1 לא פועל על תיל 1 עצמו. על כל תיל פועל השדה של התיל **השני**, כפול הזרם של התיל עצמו.'
         misconception: MC-larger-current-larger-force
       - text: 'על כל תיל פועל השדה הכולל במקומו, כולל השדה של עצמו.'
-        feedback: 'תיל לא נדחף בשדה של עצמו. על תיל 2 פועל רק השדה של תיל 1.'
+        feedback: 'תיל לא נדחף בשדה של עצמו: הכוחות שהשדה הזה מפעיל על חלקי התיל מבטלים זה את זה. על תיל 2 פועל רק השדה של תיל 1.'
         misconception: MC-wire-own-field-force
 
   - id: Q-4.8-unequal-numeric
