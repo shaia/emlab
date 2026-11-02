@@ -1,0 +1,7 @@
+---
+/** Charge distribution figure for lesson MDX: <Spread figure={ChargeDistribution} figureProps={{…}}>. */
+import ChargeDistribution, { type ChargeDistributionProps } from './ChargeDistribution';
+type Props = ChargeDistributionProps;
+---
+
+<ChargeDistribution client:visible {...Astro.props} />
