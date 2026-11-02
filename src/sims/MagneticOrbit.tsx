@@ -1,5 +1,5 @@
 /**
- * A charge in a uniform magnetic field perpendicular to the page, built for lesson 4.5.
+ * A charge in a uniform magnetic field perpendicular to the page, built for lesson 4.6.
  *
  * Preset `orbit`: an electron, a proton or an alpha particle is injected with a chosen speed into a
  * ⊙ or ⊗ field. With the field everywhere (`region: 'full'`) it goes round a full circle; with the

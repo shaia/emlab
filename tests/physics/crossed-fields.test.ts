@@ -13,7 +13,7 @@ import {
 import { orbitRadius, selectorSpeed } from '~/physics/magnetism';
 import { relativeError } from '~/physics/vec';
 
-// the geometry of figure 4.6
+// the geometry of figure 4.7
 const GEO: SelectorGeometry = {
   plateLength: 0.1,
   halfGap: 0.015,

@@ -1,5 +1,5 @@
 /**
- * The force on a current-carrying wire in a uniform magnetic field, F = I L×B. Built for lesson 4.7.
+ * The force on a current-carrying wire in a uniform magnetic field, F = I L×B. Built for lesson 4.8.
  *
  * Three views, chosen by `mode` (and the mode buttons when `modes` lists more than one):
  * - `perp`: seen from above, a long straight wire crosses a field region of ⊗ (or ⊙) between the

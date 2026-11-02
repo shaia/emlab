@@ -20,9 +20,6 @@ async function openFigure(page: Page, id: string) {
   return fig;
 }
 
-const noSideScroll = (page: Page) =>
-  expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
-
 test.describe('live figures', () => {
   test('scrolling through the text never completes a task', async ({ page }) => {
     await page.goto(LESSON);
@@ -36,7 +33,7 @@ test.describe('live figures', () => {
     await expect(page.locator('.sim-tasks li.done')).toHaveCount(0);
   });
 
-  test('every figure draws, in LTR physics space', async ({ page }) => {
+  test('both figures draw, in LTR physics space', async ({ page }) => {
     await page.goto(LESSON);
     const canvases = page.locator('.sim-stage canvas');
     expect(await canvases.count()).toBe(2);
@@ -48,57 +45,57 @@ test.describe('live figures', () => {
     }
   });
 
-  test('10 A and 10 A at 10 cm attract with 2·10⁻⁴ N/m; flipping one current makes them repel', async ({ page }) => {
+  test('F = BIL: 0.04 N up; doubling the length in the field doubles it; reversing I flips it; electrons change nothing', async ({ page }) => {
     const fig = await openFigure(page, 'fig-4-8a');
     const readout = fig.locator('.sim-readout');
-    await expect(readout).toContainText('B₁ = 2·10⁻⁵ T');
-    await expect(readout).toContainText('F₂/L = 2·10⁻⁴ N/m');
-    await expect(readout).toContainText('נמשכים');
-    await setSlider(fig.locator('input[type=range]').nth(1), -10);
-    await expect(readout).toContainText('נדחים');
-    await expect(readout).toContainText('F₁/L = 2·10⁻⁴ N/m (שמאלה)');
-    expect((await progress(page)).tasks['fig-4-8a:flip']).toBeTruthy();
-    await noSideScroll(page);
+    await expect(readout).toContainText('F = BIL = 0.04 N');
+    await expect(readout).toContainText('למעלה');
+    const length = fig.locator('input[type=range]').nth(2);
+    // a real drag passes every value on the way
+    for (const v of [0.12, 0.14, 0.16, 0.18, 0.2]) await setSlider(length, v);
+    await expect(readout).toContainText('F = BIL = 0.08 N');
+    await fig.getByRole('button', { name: /כיוון הזרם/ }).click();
+    await expect(readout).toContainText('למטה');
+    await fig.getByRole('button', { name: /השדה:/ }).click();
+    await expect(readout).toContainText('למעלה');
+    await fig.getByRole('button', { name: 'אלקטרונים' }).click();
+    await expect(readout).toContainText('למעלה');
+    await setSlider(fig.locator('input[type=range]').first(), 0);
+    await expect(readout).toContainText('אין כוח');
+    const tasks = (await progress(page)).tasks;
+    for (const t of ['double-length', 'reverse-current', 'reverse-field', 'electrons']) expect(tasks[`fig-4-8a:${t}`]).toBeTruthy();
   });
 
-  test('unequal currents: both wires feel the same force (Newton’s third law)', async ({ page }) => {
+  test('F = BIL·sinα: zero along B, half at 30°, out of or into the page', async ({ page }) => {
     const fig = await openFigure(page, 'fig-4-8a');
+    await fig.getByRole('button', { name: 'תיל בזווית לשדה' }).click();
     const readout = fig.locator('.sim-readout');
-    await setSlider(fig.locator('input[type=range]').nth(1), 20);
-    await expect(readout).toContainText('F₂/L = 4·10⁻⁴ N/m');
-    await expect(readout).toContainText('F₁/L = 4·10⁻⁴ N/m');
-    expect((await progress(page)).tasks['fig-4-8a:unequal']).toBeTruthy();
+    await expect(readout).toContainText('= 0.04 N');
+    await expect(readout).toContainText('לתוך הדף');
+    const angle = fig.locator('input[type=range]').first();
+    await setSlider(angle, 30);
+    await expect(readout).toContainText('= 0.02 N');
+    await setSlider(angle, 0);
+    await expect(readout).toContainText('אין כוח');
+    const tasks = (await progress(page)).tasks;
+    for (const t of ['half', 'parallel']) expect(tasks[`fig-4-8a:${t}`]).toBeTruthy();
   });
 
-  test('doubling the distance halves the force (1/d, not 1/d²)', async ({ page }) => {
-    const fig = await openFigure(page, 'fig-4-8a');
-    const readout = fig.locator('.sim-readout');
-    await setSlider(fig.locator('input[type=range]').nth(2), 20);
-    await expect(readout).toContainText('d = 20 cm');
-    await expect(readout).toContainText('F₂/L = 1·10⁻⁴ N/m');
-    expect((await progress(page)).tasks['fig-4-8a:double-d']).toBeTruthy();
-  });
-
-  test('three in a row: the middle wire feels 4·10⁻⁴ N/m, and it cancels when the third current turns round', async ({ page }) => {
+  test('the current balance levels with 1 g at 2.5 A and reads B = 0.08 T', async ({ page }) => {
     const fig = await openFigure(page, 'fig-4-8b');
     const readout = fig.locator('.sim-readout');
-    await expect(readout).toContainText('F₂/L = 4·10⁻⁴ N/m (שמאלה)');
-    await expect(readout).toContainText('F₁/L = 1·10⁻⁴ N/m (ימינה)');
-    await expect(readout).toContainText('F₃/L = 3·10⁻⁴ N/m (ימינה)');
-    await setSlider(fig.locator('input[type=range]').nth(2), 10);
-    await expect(readout).toContainText('F₂/L = 0 N/m');
+    await setSlider(fig.locator('input[type=range]').first(), 2.5);
+    await expect(readout).toContainText('הוסיפו משקולות');
+    await fig.getByRole('button', { name: 'הוסיפו 0.5 גרם' }).click();
+    await expect(readout).not.toContainText('B = mg/(IL)');
+    await fig.getByRole('button', { name: 'הוסיפו 0.5 גרם' }).click();
+    await expect(readout).toContainText('B = mg/(IL) = 0.08 T');
     expect((await progress(page)).tasks['fig-4-8b:balance']).toBeTruthy();
-  });
-
-  test('the triangle pulls every wire to the centre; turning one current pushes that wire out', async ({ page }) => {
-    const fig = await openFigure(page, 'fig-4-8b');
-    const readout = fig.locator('.sim-readout');
-    await fig.getByRole('button', { name: 'משולש' }).click();
-    await expect(readout).toContainText('F₃/L = 3.46·10⁻⁴ N/m (למטה)');
-    await setSlider(fig.locator('input[type=range]').nth(2), -10);
-    await expect(readout).toContainText('F₃/L = 3.46·10⁻⁴ N/m (למעלה)');
-    expect((await progress(page)).tasks['fig-4-8b:triangle-flip']).toBeTruthy();
-    await noSideScroll(page);
+    // reversing the current pushes the frame up: masses on the pan cannot balance it
+    await fig.getByRole('button', { name: 'הפכו את הזרם' }).click();
+    await expect(readout).toContainText('דוחף אותה למעלה');
+    const sw = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(sw).toBeLessThanOrEqual(0);
   });
 });
 
@@ -107,42 +104,41 @@ test.describe('predict, then reveal', () => {
     await page.goto(LESSON);
     const predict = page.locator('[data-predict-id="pred-4-8"]');
     await predict.scrollIntoViewIfNeeded();
-    // a click before the island hydrates lands in the static HTML (seen under load)
-    await hydrated(predict);
     await expect(predict).not.toHaveClass(/is-open/);
-    await predict.locator('label.q-choice', { hasText: 'כמו שני מטענים חיוביים' }).click();
+    // a choice clicked before the island hydrates lands in the static HTML and is lost
+    const choice = predict.locator('label.q-choice', { hasText: 'הכוח לא משתנה' });
+    await hydrated(choice);
+    await choice.click();
     await predict.getByRole('button', { name: 'זה החיזוי שלי' }).click();
     await expect(predict).toHaveClass(/is-open/);
   });
 });
 
 test.describe('questions', () => {
-  test('numeric: dividing by d² is caught as that misconception, then the right value passes', async ({ page }) => {
+  test('numeric: the whole cable length is told apart, then the right value passes', async ({ page }) => {
     await page.goto(LESSON);
-    const q = page.locator('[data-qid="Q-4.8-force-per-length"]');
+    const q = page.locator('[data-qid="Q-4.8-only-inside"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(q);
     const input = q.locator('input[type=text]');
-    await input.fill('0.02');
+    await input.fill('1.2');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
-    const a = (await progress(page)).attempts.at(-1);
-    expect(a).toMatchObject({ qid: 'Q-4.8-force-per-length', correct: false, misconception: 'MC-parallel-wires-inverse-square', lesson: '4.8' });
+    await expect(q.locator('.q-feedback')).toContainText('כל הכבל');
     await q.getByRole('button', { name: 'נסו שוב' }).click();
-    await input.fill('6e-4');
+    await input.fill('0.05');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-right/);
   });
 
-  test('a confident "like currents repel" is recorded as that misconception', async ({ page }) => {
+  test('a confident "the magnet attracts the copper" is recorded as that misconception', async ({ page }) => {
     await page.goto(LESSON);
-    const q = page.locator('[data-qid="Q-4.8-same-direction"]');
+    const q = page.locator('[data-qid="Q-4.8-carriers-sum"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(q);
-    await q.locator('.q-choices').first().locator('label', { hasText: 'הם יתרחקו זה מזה' }).click();
-    await q.locator('.reasons label', { hasText: 'זרמים זהים הם כמו מטענים זהים' }).click();
+    await q.locator('label', { hasText: 'המגנט מושך את הנחושת' }).click();
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-wrong/);
     const a = (await progress(page)).attempts.at(-1);
-    expect(a).toMatchObject({ qid: 'Q-4.8-same-direction', correct: false, confident: true, misconception: 'MC-like-currents-repel', lesson: '4.8' });
+    expect(a).toMatchObject({ qid: 'Q-4.8-carriers-sum', correct: false, confident: true, misconception: 'MC-wire-force-without-current' });
   });
 });

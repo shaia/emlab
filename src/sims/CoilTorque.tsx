@@ -1,5 +1,5 @@
 /**
- * A rectangular coil on an axle between the poles of a magnet. Built for lesson 4.9.
+ * A rectangular coil on an axle between the poles of a magnet. Built for lesson 4.10.
  *
  * Left: the view along the axle. The two sides parallel to the axle cross the page as gold rings
  * (⊙ current out of the page, ⊗ into it), the coil itself is seen edge-on as the line between them,

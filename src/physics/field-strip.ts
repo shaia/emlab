@@ -1,5 +1,5 @@
 /**
- * A charge crossing a strip of uniform field: lesson 4.4's figure 4.4ב, where the same particle
+ * A charge crossing a strip of uniform field: lesson 4.5's figure 4.6ב, where the same particle
  * meets either a magnetic field perpendicular to the page or an electric field across its path,
  * so the two forces can be compared side by side.
  *

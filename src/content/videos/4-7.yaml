@@ -1,23 +1,22 @@
 # Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
-# on the `verified` date. Durations come from the watch page. `why` claims only what the title and
-# the upload description support.
+# on the `verified` date. `why` claims only what the title and the upload description support.
 
-- id: v-4-7-experiment
-  youtubeId: Ig3KZULDpnM
-  title: 'ניסוי "כח על תיל נושא זרם"'
-  channel: מרכז שוורץ/רייסמן הדרכות למורי פיזיקה
+- id: v-4-7-selector-explained
+  youtubeId: LvY-x3P9faw
+  title: 'סרטון 10  בורר מהירויות'
+  channel: פיזיקה אונליין אלירן יהב -Eliran Yahav
   lang: he
   captions: []
-  minutes: 10
-  why: 'תיאור בעברית של מערכת הניסוי ומהלך ניסוי התלמידים "כוח על תיל נושא זרם", מתוך רצף סרטונים להדרכת מורי פיזיקה (לפי תיאור הסרטון). השוו את המערכת האמיתית לאיור 4.7א: איפה השדה, איפה התיל, ומה האורך שבתוך השדה.'
+  minutes: 15
+  why: 'הסבר בעברית של בורר המהירויות: התקן שבו שדה מגנטי ושדה חשמלי ממיינים חלקיקים טעונים לפי המהירות שלהם (לפי תיאור הסרטון). השוו לאיור 4.7א.'
   verified: '2026-11-02'
 
-- id: v-4-7-bagrut-balance
-  youtubeId: Y4mx-tD2KF8
-  title: 'בגרות פיזיקה חשמל 2022 שאלה 5 - השדה המגנטי: מאזני זרם'
+- id: v-4-7-bagrut-2014
+  youtubeId: pfUDbxb1dyg
+  title: 'בגרות פיזיקה חשמל 2014 שאלה 5 - השדה המגנטי: מטען שנע בשדה מגנטי, בורר מהירויות וספקטרומטר מסות'
   channel: אריאל ליבזון - Ariel Libson
   lang: he
   captions: []
-  minutes: 19
-  why: 'פתרון בעברית של שאלה 5 מבגרות 2022 בחשמל, על מאזני זרם (לפי כותרת הסרטון). נסו לפתור בעצמכם לפני הצפייה, והשוו את הדרך לדוגמה על מאזני הזרם בשיעור.'
+  minutes: 12
+  why: 'פתרון בעברית של שאלה 5 מבגרות 2014 בחשמל, על מטען שנע בשדה מגנטי, בורר מהירויות וספקטרומטר מסות (לפי כותרת הסרטון). נסו לפתור בעצמכם לפני הצפייה, והשוו את הדרך.'
   verified: '2026-11-02'

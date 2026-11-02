@@ -1,13 +1,23 @@
 # Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
-# on the `verified` date. `why` claims only what the title supports; duration and captions were
-# not confirmed (the watch page did not expose them), so `minutes` is a conservative estimate.
+# on the `verified` date. Neither the description nor the length could be read, so `why` claims
+# only what the title says, and `minutes` is an estimate.
 
-- id: v-4-9-dc-motor
-  youtubeId: CWulQ1ZSE3c
-  title: 'How does an Electric Motor work?  (DC Motor)'
-  channel: Jared Owen
-  lang: en
+- id: v-4-9-parallel-currents
+  youtubeId: 6lg4qKjQ3b0
+  title: 'כוח מגנטי בין שני זרמים מקבילים'
+  channel: Eli Gor
+  lang: he
   captions: []
   minutes: 6
-  why: 'הנפשה באנגלית שמסבירה איך עובד מנוע זרם ישר (לפי כותרת הסרטון). חפשו את הסליל בין המגנטים, את הטבעת המפוצלת ואת המברשות, והשוו למצב "מנוע" באיור 4.9א.'
+  why: 'הסבר בעברית על הכוח המגנטי בין שני זרמים מקבילים (לפי כותרת הסרטון). בזמן הצפייה, שימו לב איך נקבע הכיוון של הכוח, והשוו לחיצים באיור 4.9א.'
+  verified: '2026-11-02'
+
+- id: v-4-9-a-level-wires
+  youtubeId: I_fTVnGeQy8
+  title: '20.2c Two Parallel Wires Carrying Current | A2 Magnetic Fields | Cambridge A Level Physics'
+  channel: ETphysics
+  lang: en
+  captions: []
+  minutes: 8
+  why: 'שיעור באנגלית מתוך סדרה לבחינות הבגרות הבריטיות (Cambridge A Level) על שני תילים מקבילים שזורם בהם זרם (לפי כותרת הסרטון). השוו את הדרך שלו לגזירה של הכוח ליחידת אורך בשיעור.'
   verified: '2026-11-02'

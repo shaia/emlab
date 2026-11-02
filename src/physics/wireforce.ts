@@ -1,13 +1,13 @@
 /**
  * The force on a current-carrying wire, built up from the Lorentz force on its carriers, and the
- * devices of lesson 4.7: the current balance and a wire bent out of straight pieces.
+ * devices of lesson 4.8: the current balance and a wire bent out of straight pieces.
  *
  * MODEL SPECIFICATION
  * - System: a thin straight wire (or a chain of straight pieces) carrying a steady current I in a
  *   uniform magnetic field B over a bounded region. The wire holds n carriers per m³ of charge q,
  *   drifting at v = I/(n|q|A) (lesson 3.2). Coordinates as in magnetism.ts: x right, y up, z out
  *   of the page.
- * - Dynamics: each carrier feels F = qv×B (lesson 4.4). The N = nAL carriers inside a length L of
+ * - Dynamics: each carrier feels F = qv×B (lesson 4.5). The N = nAL carriers inside a length L of
  *   wire together feel N·|q|vB·sinα = BIL·sinα, along I L×B. A bent wire is the vector sum over its
  *   pieces, which equals the force on the straight chord from its first point to its last.
  *   The current balance is static: the frame is level when the weight mg of the added mass equals

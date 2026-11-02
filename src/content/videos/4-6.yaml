@@ -1,22 +1,22 @@
 # Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
 # on the `verified` date. `why` claims only what the title and the upload description support.
 
-- id: v-4-6-selector-explained
-  youtubeId: LvY-x3P9faw
-  title: 'סרטון 10  בורר מהירויות'
-  channel: פיזיקה אונליין אלירן יהב -Eliran Yahav
-  lang: he
+- id: v-4-6-beam-tube
+  youtubeId: m7Ex0SHcKyA
+  title: 'Deflection of charged particles in a magnetic field'
+  channel: A Level Physics HQ
+  lang: en
   captions: []
-  minutes: 15
-  why: 'הסבר בעברית של בורר המהירויות: התקן שבו שדה מגנטי ושדה חשמלי ממיינים חלקיקים טעונים לפי המהירות שלהם (לפי תיאור הסרטון). השוו לאיור 4.6א.'
+  minutes: 3.5
+  why: 'הדגמה אמיתית באנגלית: קרן אלקטרונים בשפופרת מלאה בגז זוהר, בשדה אחיד של זוג סלילים, מתכופפת למסלול מעגלי (לפי תיאור הסרטון). שימו לב שהמסלול נסגר למעגל, כמו באיור 4.6א.'
   verified: '2026-11-02'
 
-- id: v-4-6-bagrut-2014
-  youtubeId: pfUDbxb1dyg
-  title: 'בגרות פיזיקה חשמל 2014 שאלה 5 - השדה המגנטי: מטען שנע בשדה מגנטי, בורר מהירויות וספקטרומטר מסות'
-  channel: אריאל ליבזון - Ariel Libson
+- id: v-4-6-spectrometer
+  youtubeId: 86F10Lv43SQ
+  title: 'ספקטרומטר מסות'
+  channel: Physics-Rulezz
   lang: he
   captions: []
-  minutes: 12
-  why: 'פתרון בעברית של שאלה 5 מבגרות 2014 בחשמל, על מטען שנע בשדה מגנטי, בורר מהירויות וספקטרומטר מסות (לפי כותרת הסרטון). נסו לפתור בעצמכם לפני הצפייה, והשוו את הדרך.'
+  minutes: 25
+  why: 'שיעור בעברית על ספקטרומטר המסות לבגרות 5 יחידות, עם פתרון של שאלה 4 מבגרות 2017 (לפי תיאור הסרטון). נסו לפתור את השאלה בעצמכם לפני שאתם צופים בפתרון.'
   verified: '2026-11-02'

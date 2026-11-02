@@ -1,6 +1,6 @@
 /**
  * A compass needle near a long straight horizontal wire, in the Earth's field: the measuring
- * method of lesson 4.10 (the tangent method), for a wire laid in any horizontal direction.
+ * method of lesson 4.11 (the tangent method), for a wire laid in any horizontal direction.
  *
  * MODEL SPECIFICATION
  * - System: a long straight horizontal wire carrying a steady current I, a horizontal distance of

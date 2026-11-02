@@ -2,7 +2,7 @@
  * Velocity selector (and the Bainbridge spectrometer): ions fired to the right between two charged
  * plates, with an electric field E between them and a magnetic field B ⊗ over the same region. Only
  * the speed v = E/B goes straight through the exit slit. With `stage2`, the ions that pass enter a
- * second field B′ ⊗, turn a half circle and land on a detector beside the slit. Built for lesson 4.6.
+ * second field B′ ⊗, turn a half circle and land on a detector beside the slit. Built for lesson 4.7.
  *
  * Every path is integrated by traceSelector (src/physics/crossed-fields.ts, Boris push); the readouts
  * come from selectorSpeed, bainbridgeRadius and the force functions, never from the drawing.

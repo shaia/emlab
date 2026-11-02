@@ -1,22 +1,23 @@
 # Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
-# on the `verified` date. `why` claims only what the title and the upload description support.
+# on the `verified` date. Lengths come from the watch page. `why` claims only what the title and
+# the upload description support.
 
-- id: v-4-5-beam-tube
-  youtubeId: m7Ex0SHcKyA
-  title: 'Deflection of charged particles in a magnetic field'
-  channel: A Level Physics HQ
-  lang: en
-  captions: []
-  minutes: 3.5
-  why: 'הדגמה אמיתית באנגלית: קרן אלקטרונים בשפופרת מלאה בגז זוהר, בשדה אחיד של זוג סלילים, מתכופפת למסלול מעגלי (לפי תיאור הסרטון). שימו לב שהמסלול נסגר למעגל, כמו באיור 4.5א.'
-  verified: '2026-11-02'
-
-- id: v-4-5-spectrometer
-  youtubeId: 86F10Lv43SQ
-  title: 'ספקטרומטר מסות'
-  channel: Physics-Rulezz
+- id: v-4-5-palm-rule
+  youtubeId: uHC2nZ_sNwo
+  title: 'סרטון 7  כוח לורנץ- כלל יד ימין השני'
+  channel: 'פיזיקה אונליין אלירן יהב -Eliran Yahav'
   lang: he
   captions: []
-  minutes: 25
-  why: 'שיעור בעברית על ספקטרומטר המסות לבגרות 5 יחידות, עם פתרון של שאלה 4 מבגרות 2017 (לפי תיאור הסרטון). נסו לפתור את השאלה בעצמכם לפני שאתם צופים בפתרון.'
+  minutes: 7
+  why: 'הסבר בעברית על כוח לורנץ ועל כלל היד לקביעת כיוון הכוח, שבסרטון נקרא "כלל יד ימין השני" (לפי הכותרת והתיאור). אצלנו הוא נקרא כלל כף יד ימין: בדקו שהכלל בסרטון נותן את אותו כיוון כמו באיור 4.5א.'
+  verified: '2026-11-02'
+
+- id: v-4-5-moving-charge
+  youtubeId: 7MBawzone30
+  title: 'Magnetic Force on a Moving Charge In a Magnetic Field'
+  channel: The Organic Chemistry Tutor
+  lang: en
+  captions: []
+  minutes: 12
+  why: 'סרטון באנגלית שמראה איך מחשבים את הכוח המגנטי על מטען נע ואיך קובעים את כיוון הכוח על פרוטון בכלל יד ימין, עם דוגמאות ותרגילים (לפי תיאור הסרטון). נסו לפתור כל דוגמה לפני שהיא נפתרת.'
   verified: '2026-11-02'

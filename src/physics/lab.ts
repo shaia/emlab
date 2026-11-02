@@ -169,7 +169,7 @@ function batteryVI(): Dataset {
   return { x: I, y: V, linear: 'x', law: { slope: -BATTERY_R, intercept: BATTERY_EMF } };
 }
 
-/** The compass of lesson 4.10: a north–south wire 3 cm above the needle, in the Earth's horizontal field. */
+/** The compass of lesson 4.11: a north–south wire 3 cm above the needle, in the Earth's horizontal field. */
 export const COMPASS_R = 0.03;
 export const COMPASS_CURRENTS = [1, 2, 3, 4, 5, 6];
 

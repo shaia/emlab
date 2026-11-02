@@ -129,7 +129,7 @@ describe('conservation: Newton’s third law (total momentum of the wires does n
     const b = pairForcePerLength(w, 0, 2);
     expect(relativeError(net[0], a[0] + b[0])).toBeLessThan(1e-12);
     expect(relativeError(net[1], a[1] + b[1])).toBeLessThan(1e-12);
-    // worked example 4.8-5: 10⁻³ N/m toward B and 10⁻³ N/m away from C
+    // worked example 4.9-5: 10⁻³ N/m toward B and 10⁻³ N/m away from C
     expect(relativeError(net[0], 1e-3)).toBeLessThan(1e-12);
     expect(relativeError(net[1], -1e-3)).toBeLessThan(1e-12);
   });

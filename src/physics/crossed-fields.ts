@@ -1,5 +1,5 @@
 /**
- * Crossed fields: the velocity selector and the Bainbridge mass spectrometer (lesson 4.6).
+ * Crossed fields: the velocity selector and the Bainbridge mass spectrometer (lesson 4.7).
  *
  * MODEL SPECIFICATION
  * - System: one point ion (mass m, charge q) fired along +x into a selector: two parallel plates

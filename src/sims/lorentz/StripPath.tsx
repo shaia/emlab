@@ -1,9 +1,9 @@
 /**
- * Figure 4.4ב: a charge crosses a strip of uniform field. With a magnetic field (⊗ or ⊙) the force
+ * Figure 4.5ב: a charge crosses a strip of uniform field. With a magnetic field (⊗ or ⊙) the force
  * stays perpendicular to the velocity, so the path bends while the speed never changes: a strong
  * field turns the charge back, a weak one lets it through, turned. Switch to an electric field
  * across the path and the same charge follows lesson 1.10's parabola and leaves faster. Circles
- * and their radius are lesson 4.5: this figure shows no radius on purpose.
+ * and their radius are lesson 4.6: this figure shows no radius on purpose.
  *
  * All positions, velocities and forces come from src/physics/field-strip.ts.
  */

@@ -5,7 +5,7 @@
  * with three wires, optionally the force from each neighbour as well as the resultant. A "source"
  * mode draws one wire's field circle through the other wires, the picture behind F = B₁I₂L.
  * Field lines are contours of the flux function (wireFlux, lesson 4.2), so their density shows |B|.
- * Built for lesson 4.8.
+ * Built for lesson 4.9.
  *
  * Arrow scales are fixed: 2·10⁻⁴ N/m draws 3 cm of the stage, and 2·10⁻⁵ T draws 3 cm, so doubling
  * a current visibly doubles an arrow. An arrow that would reach another wire or leave the stage is

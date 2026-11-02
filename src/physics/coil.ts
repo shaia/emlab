@@ -1,7 +1,7 @@
 /**
  * A flat rectangular coil on an axle in a uniform magnetic field: the forces on its four sides, the
  * torque, the rotation it causes, the DC motor's commutator and the moving-coil meter. Built for
- * lesson 4.9 (figure CoilTorque).
+ * lesson 4.10 (figure CoilTorque).
  *
  * MODEL SPECIFICATION
  * - System: a rigid rectangular coil of N turns, sides a (parallel to the axle) and b (perpendicular

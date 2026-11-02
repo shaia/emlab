@@ -1,5 +1,5 @@
 /**
- * Forces between long straight parallel wires, for lesson 4.8 (figure ParallelWires): the force
+ * Forces between long straight parallel wires, for lesson 4.9 (figure ParallelWires): the force
  * per unit length that one wire exerts on another, and the net force on each wire of a set
  * (superposition).
  *

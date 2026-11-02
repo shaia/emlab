@@ -1,23 +1,13 @@
-# Every id was checked against YouTube oEmbed (200: exists, embeddable; title and channel as below)
-# on the `verified` date. Length from the watch page. `why` claims only what the title and the upload
-# description support.
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title supports; duration and captions were
+# not confirmed (the watch page did not expose them), so `minutes` is a conservative estimate.
 
-- id: v-4-10-bagrut-compass
-  youtubeId: I3Svt33pEzI
-  title: 'בגרות פיזיקה חשמל 2013 שאלה 4 - מגנטיות: ניסוי מציאת השדה המגנטי של כדור הארץ, בעזרת מצפן'
-  channel: אריאל ליבזון - Ariel Libson
-  lang: he
+- id: v-4-10-dc-motor
+  youtubeId: CWulQ1ZSE3c
+  title: 'How does an Electric Motor work?  (DC Motor)'
+  channel: Jared Owen
+  lang: en
   captions: []
-  minutes: 12
-  why: 'פתרון בעברית של שאלה 4 מבגרות 2013 בחשמל: ניסוי שבו מוצאים את השדה המגנטי של כדור הארץ בעזרת מצפן (לפי כותרת הסרטון). נסו לפתור בעצמכם לפני הצפייה, ואחר כך השוו את השלבים לשלבים של השיעור.'
-  verified: '2026-11-02'
-
-- id: v-4-10-tangent-lab
-  youtubeId: HE-W6wuPbUE
-  title: 'מעבדת חובה בפיזיקה - גלוונומטר טנגנטי - שדה של סליל דק'
-  channel: Assaf Shulman
-  lang: he
-  captions: []
-  minutes: 29
-  why: 'סרטון מסדרה של הכנה לבגרות במעבדה, על הגלוונומטר הטנגנטי עם כריכה דקה במקום תיל (לפי הכותרת והתיאור). שימו לב איך מכוונים את הכריכה ביחס לצפון, ואיך עוברים מהמדידות לגרף.'
+  minutes: 6
+  why: 'הנפשה באנגלית שמסבירה איך עובד מנוע זרם ישר (לפי כותרת הסרטון). חפשו את הסליל בין המגנטים, את הטבעת המפוצלת ואת המברשות, והשוו למצב "מנוע" באיור 4.10א.'
   verified: '2026-11-02'

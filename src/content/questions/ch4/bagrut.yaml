@@ -48,7 +48,7 @@ questions:
         level: basic
         qualitative: true
         allowOutIn: true
-        objectives: [OBJ-4.4-2, OBJ-4.6-1]
+        objectives: [OBJ-4.5-2, OBJ-4.7-1]
         prompt: מה כיוון הכוח המגנטי על יון שנע ימינה בתוך הבורר?
         answer: n
         correctFeedback: 'נכון. בכלל כף יד ימין: האצבעות לתוך הדף (בכיוון השדה), האגודל ימינה (המהירות של מטען חיובי), והכוח יוצא מכף היד כלפי מעלה.'
@@ -68,7 +68,7 @@ questions:
         points: 5
         level: basic
         qualitative: true
-        objectives: [OBJ-4.6-1]
+        objectives: [OBJ-4.7-1]
         prompt: איזה לוח בבורר צריך להיות חיובי, כדי שהכוח החשמלי יאזן את הכוח המגנטי?
         choices:
           - text: הלוח העליון.
@@ -84,7 +84,7 @@ questions:
         type: numeric
         points: 6
         level: mid
-        objectives: [OBJ-4.6-2]
+        objectives: [OBJ-4.7-2]
         prompt: באיזו מהירות יוצאים היונים מהבורר?
         answer: 2.0e5
         unit: m/s
@@ -102,7 +102,7 @@ questions:
         type: numeric
         points: 7
         level: mid
-        objectives: [OBJ-4.5-1]
+        objectives: [OBJ-4.6-1]
         prompt: מה רדיוס חצי המעגל של יוני $^{20}\text{Ne}$ באזור השני?
         answer: 0.209
         unit: m
@@ -118,7 +118,7 @@ questions:
         type: open
         points: 10
         level: bagrut
-        objectives: [OBJ-4.5-4, OBJ-4.6-2, OBJ-4.6-3]
+        objectives: [OBJ-4.6-4, OBJ-4.7-2, OBJ-4.7-3]
         prompt: >-
           (1) חשבו את המרחק בין נקודות הפגיעה של שני האיזוטופים בלוח הצילום, וקבעו איזה איזוטופ פוגע רחוק יותר מהסדק.
 
@@ -226,7 +226,7 @@ questions:
         points: 7
         level: bagrut
         qualitative: true
-        objectives: [OBJ-4.8-1, OBJ-4.8-3]
+        objectives: [OBJ-4.9-1, OBJ-4.9-3]
         prompt: מה נכון לגבי הכוחות שהתילים מפעילים זה על זה?
         choices:
           - text: הם מושכים זה את זה, והכוח על תיל A שווה בגודלו לכוח על תיל B.
@@ -246,7 +246,7 @@ questions:
         type: open
         points: 10
         level: bagrut
-        objectives: [OBJ-4.7-3, OBJ-4.8-2, OBJ-4.8-1]
+        objectives: [OBJ-4.8-3, OBJ-4.9-2, OBJ-4.9-1]
         prompt: >-
           (1) חשבו את גודל הכוח שתיל A מפעיל על קטע באורך $0.50\,\text{m}$ של תיל B, בשתי דרכים: דרך השדה של A במקום של
           B והכוח על תיל, ודרך הנוסחה לכוח בין תילים מקבילים.
@@ -309,7 +309,7 @@ questions:
         type: numeric
         points: 6
         level: mid
-        objectives: [OBJ-4.7-3]
+        objectives: [OBJ-4.8-3]
         prompt: מה גודל הכוח המגנטי על קטע התיל שבתוך הסליל?
         answer: 1.01e-3
         unit: N
@@ -326,7 +326,7 @@ questions:
         type: numeric
         points: 7
         level: mid
-        objectives: [OBJ-4.7-4, OBJ-4.7-2]
+        objectives: [OBJ-4.8-4, OBJ-4.8-2]
         prompt: >-
           הכוח על הקטע מופנה כלפי מטה. איזו מסה צריך להניח בצד השני של המאזניים, בזרוע שווה, כדי שהמאזניים יחזרו לאיזון?
           ענו בגרמים. (על הצלעות המקבילות לציר אין כוח, למה?)
@@ -345,7 +345,7 @@ questions:
         type: open
         points: 10
         level: bagrut
-        objectives: [OBJ-4.9-2, OBJ-4.9-3]
+        objectives: [OBJ-4.10-2, OBJ-4.10-3]
         prompt: >-
           מוציאים את המסגרת, ובמקומה תולים בתוך הסליל, על ציר אנכי, סליל שטוח מלבני של $20$ כריכות במידות
           $2.0\,\text{cm} \times 4.0\,\text{cm}$, שזורם בו זרם של $0.50\,\text{A}$.

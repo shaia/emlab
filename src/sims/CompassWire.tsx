@@ -1,5 +1,5 @@
 /**
- * Compass under a wire, seen from above: the tangent method of lesson 4.10 for measuring the
+ * Compass under a wire, seen from above: the tangent method of lesson 4.11 for measuring the
  * horizontal component of the Earth's magnetic field. A long straight wire runs over a compass at
  * a height r; the learner sets the current, the height and the direction of the wire, reads the
  * needle's deflection on the dial and records a table of current, angle and tanθ.

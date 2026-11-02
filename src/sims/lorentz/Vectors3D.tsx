@@ -1,5 +1,5 @@
 /**
- * Figure 4.4א: the magnetic force on a moving charge, F = qv×B, drawn in 3D on a flat canvas.
+ * Figure 4.5א: the magnetic force on a moving charge, F = qv×B, drawn in 3D on a flat canvas.
  * A charge sits at the origin of a tilted sheet of paper (the page); the student picks the field's
  * direction, the direction the velocity leans toward, the angle α between v and B, the speed, the
  * field strength and the particle, and swings the view from "straight at the page" (the Bagrut

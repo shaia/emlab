@@ -1,6 +1,6 @@
 /**
  * Circular orbits in a bounded uniform magnetic field, and ions in a mass spectrometer. Built for
- * lesson 4.5 (the figure MagneticOrbit); the circle itself comes from magnetism.ts.
+ * lesson 4.6 (the figure MagneticOrbit); the circle itself comes from magnetism.ts.
  *
  * MODEL SPECIFICATION
  * - System: one point charge (mass m, charge q) moving in the page plane. A uniform field B_z

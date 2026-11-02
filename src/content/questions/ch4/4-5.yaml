@@ -1,329 +1,357 @@
 # Lesson 4.5 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
 # rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
-# Every number below was recomputed with src/physics/magnetism.ts (orbitRadius, orbitPeriod,
-# speedFromVoltage, spectrometerRadius) and src/physics/orbits.ts (edgeCrossing, ionMass,
-# landingDistance, isotopeSeparation). Data differ on purpose from the figures and the worked examples.
-# Direction convention: x right, y up, ⊙ out of the page, ⊗ into it.
+# Every number and every direction below was recomputed with src/physics (magnetism.ts:
+# lorentzForce, lorentzMagnitude); the script is recompute-4-4-b.ts in the session scratchpad.
+# Directions: x right, y up, z out of the page; the rose's 'out' is ⊙ and 'in' is ⊗.
 
 chapter: 4
 questions:
-  # ------------------------------------------------ OBJ-4.5-1: why a circle, r = mv/(qB)
-  - id: Q-4.5-why-circle
+  # ------------------------------------------------ OBJ-4.5-1: the size of the force; when it is zero or largest
+  - id: Q-4.5-at-rest
+    type: twotier
+    objectives: [OBJ-4.5-1]
+    qualitative: true
+    prompt: >-
+      פרוטון מונח במנוחה בין הקטבים של מגנט חזק, שם השדה המגנטי אחיד ועוצמתו $0.5\,\text{T}$.
+      איזה כוח מגנטי פועל על הפרוטון?
+    choices:
+      - text: אין כוח מגנטי.
+        correct: true
+        feedback: 'נכון. $F = qvB\sin\alpha$, ועם $v = 0$ הכוח אפס, יהיה השדה חזק ככל שיהיה.'
+      - text: כוח שמושך אותו אל הקוטב הדרומי.
+        feedback: 'מגנט מושך ברזל, לא מטען. על מטען השדה המגנטי פועל רק כשהמטען נע: עם $v = 0$ הכוח $qvB\sin\alpha$ אפס.'
+        misconception: MC-magnetic-force-at-rest
+      - text: כוח בכיוון השדה, $qB$.
+        feedback: '$qB$ אינו כוח בכלל: היחידה שלו $\text{C}\cdot\text{T}$, לא ניוטון. הכוח המגנטי הוא $qvB\sin\alpha$, והוא תלוי במהירות.'
+        misconception: MC-magnetic-force-along-field
+      - text: כוח קטן מאוד, כי הפרוטון קל.
+        feedback: 'המסה לא מופיעה בנוסחת הכוח, $F = qvB\sin\alpha$. הכוח אפס בדיוק, כי המהירות אפס.'
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: הכוח המגנטי פרופורציוני למהירות, והמהירות אפס.
+        correct: true
+        feedback: נכון. זה ההבדל הגדול מהכוח החשמלי, שפועל גם על מטען במנוחה.
+      - text: שדה מגנטי מפעיל כוח על כל מטען שנמצא בו, כמו שדה חשמלי.
+        feedback: 'רק שדה **חשמלי** מפעיל כוח על מטען במנוחה. השדה המגנטי צריך תנועה.'
+        misconception: MC-magnetic-force-at-rest
+      - text: הפרוטון אינו עשוי מברזל, ולכן המגנט לא משפיע עליו.
+        feedback: 'גם פרוטון שאינו מברזל מרגיש כוח מגנטי, כשהוא נע. כאן אין כוח כי הוא במנוחה.'
+
+  - id: Q-4.5-magnitude
+    type: numeric
+    objectives: [OBJ-4.5-1]
+    prompt: >-
+      פרוטון נע במהירות $5\cdot10^{5}\,\text{m/s}$ בשדה מגנטי אחיד של $0.2\,\text{T}$.
+      הזווית בין המהירות לשדה היא $60^\circ$. מה גודל הכוח המגנטי על הפרוטון, בניוטון?
+    answer: 1.386e-14
+    unit: N
+    tolerance: 0.03
+    correctFeedback: 'נכון: $F = qvB\sin\alpha = 1.6\cdot10^{-19}\cdot5\cdot10^{5}\cdot0.2\cdot\sin60^\circ \approx 1.39\cdot10^{-14}\,\text{N}$.'
+    wrongFeedback: 'השתמשו ב-$F = qvB\sin\alpha$, עם $\alpha$ הזווית בין המהירות לשדה.'
+    commonWrong:
+      - value: 1.6e-14
+        feedback: 'זה $qvB$, הכוח כשהמהירות ניצבת לשדה. כאן הזווית $60^\circ$, ולכן צריך לכפול ב-$\sin60^\circ \approx 0.87$.'
+      - value: 8.0e-15
+        feedback: 'כפלתם ב-$\cos60^\circ$ במקום ב-$\sin60^\circ$. בדקו במקרה הקיצון: כשהמטען נע לאורך השדה, $\alpha = 0^\circ$, הכוח חייב להיות אפס.'
+        misconception: MC-magnetic-force-max-parallel
+    hints:
+      - 'גודל המטען של פרוטון: $e = 1.6\cdot10^{-19}\,\text{C}$.'
+
+  - id: Q-4.5-max-angle
     type: mc
     objectives: [OBJ-4.5-1]
     qualitative: true
     prompt: >-
-      פרוטון נכנס בניצב לשדה מגנטי אחיד, ובשדה המסלול שלו הוא מעגל. מה הסיבה לכך?
+      אלקטרון נע בגודל מהירות קבוע בשדה מגנטי אחיד, ומשנים את כיוון התנועה שלו. באיזו זווית בין המהירות לשדה
+      הכוח המגנטי עליו הגדול ביותר?
     choices:
-      - text: 'הכוח המגנטי ניצב תמיד למהירות, וגודלו קבוע, ולכן הוא משנה רק את כיוון התנועה, באותה מידה בכל רגע.'
+      - text: $90^\circ$, כשהמהירות ניצבת לשדה.
         correct: true
-        feedback: 'נכון. כוח ניצב לא עושה עבודה, ולכן גודל המהירות קבוע, וגם $F = qvB$ קבוע. כוח קבוע שמכוון תמיד בניצב למהירות הוא בדיוק הכוח של תנועה מעגלית קצובה.'
-      - text: 'הכוח המגנטי מכוון לאורך קווי השדה, והפרוטון נע סביבם.'
-        feedback: 'הכוח המגנטי ניצב לשדה, לא לאורכו (שיעור 4.4). הוא ניצב גם למהירות, ולכן מסובב את כיוון התנועה במישור שניצב לשדה.'
-      - text: 'הכוח המגנטי מאט את הפרוטון בהדרגה, והמסלול מתעקל.'
-        feedback: 'הכוח המגנטי ניצב למהירות ולא עושה עבודה, ולכן הוא לא מאט את הפרוטון. אילו הפרוטון היה מאט, הרדיוס $mv/(qB)$ היה קטן, והמסלול היה ספירלה ולא מעגל.'
-        misconception: MC-magnetic-orbit-spirals
-      - text: 'יש על הפרוטון כוח החוצה מהמרכז, והכוח המגנטי מאזן אותו.'
-        feedback: 'בתנועה מעגלית אין כוח שמכוון החוצה. הכוח השקול מכוון אל המרכז, $mv^2/r$, וכאן הכוח המגנטי הוא הכוח השקול כולו.'
-        misconception: MC-orbit-force-outward
+        feedback: 'נכון. $F = qvB\sin\alpha$, ו-$\sin\alpha$ הגדול ביותר, $1$, ב-$\alpha = 90^\circ$.'
+      - text: $0^\circ$, כשהאלקטרון נע בכיוון השדה.
+        feedback: 'זה המקרה שבו **אין** כוח בכלל: $\sin0^\circ = 0$. בשדה חשמלי תנועה לאורך השדה לא משנה את הכוח, אבל בשדה מגנטי היא מבטלת אותו.'
+        misconception: MC-magnetic-force-max-parallel
+      - text: $45^\circ$, באמצע.
+        feedback: '$\sin45^\circ \approx 0.71$, פחות מ-$\sin90^\circ = 1$. הכוח גדל עד $90^\circ$.'
+      - text: הכוח שווה בכל הזוויות, כי גודל המהירות לא השתנה.
+        feedback: 'גודל המהירות זהה, אבל הכוח תלוי גם בזווית דרך $\sin\alpha$. רק רכיב המהירות שניצב לשדה תורם.'
 
-  - id: Q-4.5-radius
-    type: numeric
+  - id: Q-4.5-rank-force
+    type: rank
     objectives: [OBJ-4.5-1]
+    qualitative: true
+    level: mid
     prompt: >-
-      פרוטון נע במהירות $5\cdot10^{5}\,\text{m/s}$ בניצב לשדה מגנטי אחיד של $0.25\,\text{T}$. מה רדיוס המסלול שלו? ענו בסנטימטרים.
-    answer: 2.09
-    unit: cm
-    tolerance: 0.03
-    correctFeedback: 'נכון. $r = \dfrac{mv}{qB} = \dfrac{1.67\cdot10^{-27}\cdot5\cdot10^{5}}{1.6\cdot10^{-19}\cdot0.25} = 0.0209\,\text{m}$.'
-    wrongFeedback: 'מ-$qvB = mv^2/r$ מקבלים $r = mv/(qB)$. הציבו את מסת הפרוטון, $1.67\cdot10^{-27}\,\text{kg}$, והמירו מטרים לסנטימטרים.'
-    commonWrong:
-      - value: 0.13
-        feedback: 'כפלתם ב-$B$ במקום לחלק בו: $mvB/q$. בשדה חזק יותר המעגל **קטן** יותר, ולכן $B$ במכנה.'
-      - value: 4.18
-        feedback: 'זה הקוטר, $2r$. השאלה שואלת על הרדיוס.'
-      - value: 0.0209
-        feedback: 'זה הרדיוס במטרים. השאלה מבקשת סנטימטרים: כפלו ב-100.'
-      - value: 0.00114
-        feedback: 'הצבתם את מסת האלקטרון. לפרוטון מסה של $1.67\cdot10^{-27}\,\text{kg}$, גדולה פי 1835.'
+      ארבעה פרוטונים נעים באותו שדה מגנטי אחיד. דרגו את גודל הכוח המגנטי עליהם, מהגדול לקטן (כוחות שווים באותה דרגה):
+    items:
+      - { id: a, label: 'פרוטון א: מהירות $v$, בניצב לשדה' }
+      - { id: b, label: 'פרוטון ב: מהירות $2v$, בזווית $30^\circ$ לשדה' }
+      - { id: c, label: 'פרוטון ג: מהירות $v$, בכיוון השדה' }
+      - { id: d, label: 'פרוטון ד: מהירות $3v$, בניצב לשדה' }
+    order: [d, [a, b], c]
+    correctFeedback: 'נכון. $F \propto v\sin\alpha$: ד $3v$, א $v$, ב $2v\cdot0.5 = v$, ג $v\cdot\sin0^\circ = 0$.'
+    wrongFeedback: 'חשבו לכל פרוטון את $v\sin\alpha$: רק רכיב המהירות שניצב לשדה תורם לכוח. שימו לב שב-$2v$ בזווית $30^\circ$ הרכיב הניצב הוא $v$.'
 
-  - id: Q-4.5-force-direction
+  # ------------------------------------------------ OBJ-4.5-2: the direction, by the palm rule
+  - id: Q-4.5-dir-proton
     type: vector
-    objectives: [OBJ-4.5-1]
+    objectives: [OBJ-4.5-2]
     qualitative: true
     allowOutIn: true
     prompt: >-
-      פרוטון נע במעגל בשדה מגנטי אחיד, ⊗ לתוך הדף. ברגע מסוים הוא נמצא בנקודה הנמוכה ביותר של המעגל, ונע ימינה. מה כיוון הכוח המגנטי עליו ברגע הזה?
-    answer: n
-    correctFeedback: 'נכון. לפי כלל כף יד ימין: האצבעות לתוך הדף, האגודל ימינה, והכוח יוצא מכף היד כלפי מעלה, אל מרכז המעגל, שנמצא מעל הנקודה הנמוכה ביותר.'
+      פרוטון נע **שמאלה** בשדה מגנטי אחיד שמצביע **למעלה** (במישור הדף). מה כיוון הכוח המגנטי על הפרוטון?
+    answer: in
+    correctFeedback: 'נכון. כלל כף יד ימין: האצבעות למעלה (השדה), האגודל שמאלה (המהירות), וכף היד פונה לתוך הדף. הפרוטון חיובי, ולכן הכוח ⊗.'
     wrong:
-      - dir: s
-        feedback: 'כלפי מטה זה החוצה מהמרכז. בתנועה מעגלית הכוח השקול מכוון **אל** המרכז, והכוח המגנטי הוא הכוח השקול כאן.'
-        misconception: MC-orbit-force-outward
-      - dir: in
-        feedback: 'זה כיוון השדה. הכוח המגנטי ניצב לשדה, ולכן הוא במישור הדף.'
+      - dir: out
+        feedback: 'זה הכיוון ההפוך. אולי השתמשתם ביד שמאל, או הפכתם את האצבעות והאגודל. האצבעות בכיוון השדה, האגודל בכיוון המהירות, והכוח על מטען חיובי יוצא מכף היד.'
+      - dir: 'n'
+        feedback: 'למעלה הוא כיוון השדה. הכוח המגנטי ניצב לשדה, לא לאורכו.'
+        misconception: MC-magnetic-force-along-field
+      - dir: w
+        feedback: 'שמאלה הוא כיוון התנועה. כוח בכיוון התנועה היה מאיץ את הפרוטון, אבל הכוח המגנטי ניצב למהירות.'
+        misconception: MC-magnetic-force-does-work
+      - dir: zero
+        feedback: 'המהירות ניצבת לשדה, $\alpha = 90^\circ$, ולכן יש כוח, והוא הגדול ביותר האפשרי.'
+    wrongFeedback: 'הכוח ניצב גם למהירות וגם לשדה. שניהם בדף, ולכן הכוח יוצא מהדף או נכנס אליו. השתמשו בכלל כף יד ימין.'
+
+  - id: Q-4.5-dir-electron
+    type: vector
+    objectives: [OBJ-4.5-2]
+    qualitative: true
+    allowOutIn: true
+    prompt: >-
+      **אלקטרון** נע **שמאלה** בשדה מגנטי אחיד שיוצא מהדף (⊙). מה כיוון הכוח המגנטי על האלקטרון?
+    answer: s
+    correctFeedback: 'נכון. האצבעות החוצה מהדף (השדה), האגודל שמאלה (המהירות): כף היד פונה למעלה. זה הכוח על מטען חיובי. האלקטרון שלילי, ולכן הכוח עליו למטה.'
+    wrong:
+      - dir: 'n'
+        feedback: 'למעלה הוא הכוח על מטען **חיובי** שנע שמאלה. על אלקטרון, שהוא שלילי, הכוח הפוך.'
+        misconception: MC-magnetic-force-sign-blind
+      - dir: out
+        feedback: '⊙ הוא כיוון השדה. הכוח המגנטי ניצב לשדה, ולכן כאן הוא במישור הדף.'
+        misconception: MC-magnetic-force-along-field
+      - dir: w
+        feedback: 'שמאלה הוא כיוון התנועה. הכוח המגנטי ניצב למהירות.'
+        misconception: MC-magnetic-force-does-work
       - dir: e
-        feedback: 'זה כיוון המהירות. הכוח המגנטי ניצב למהירות, ולכן הוא לא משנה את גודלה.'
-    wrongFeedback: 'השתמשו בכלל כף יד ימין: האצבעות בכיוון השדה, האגודל בכיוון המהירות של מטען חיובי.'
+        feedback: 'ימינה, נגד התנועה, היה כוח שבולם את האלקטרון. אבל הכוח המגנטי ניצב למהירות: הוא לא בולם ולא מאיץ, רק מסובב את כיוון התנועה.'
+        misconception: MC-magnetic-force-does-work
+    wrongFeedback: 'מצאו קודם את הכוח על מטען חיובי בכלל כף יד ימין, ואחר כך הפכו אותו, כי המטען שלילי.'
+
+  - id: Q-4.5-dir-down
+    type: vector
+    objectives: [OBJ-4.5-2]
+    qualitative: true
+    allowOutIn: true
+    prompt: >-
+      פרוטון נע **למטה** בשדה מגנטי אחיד שנכנס לדף (⊗). מה כיוון הכוח המגנטי על הפרוטון?
+    answer: e
+    correctFeedback: 'נכון. האצבעות לתוך הדף, האגודל למטה, וכף היד פונה ימינה.'
+    wrong:
+      - dir: w
+        feedback: 'זה הכיוון ההפוך. בדקו שוב: האצבעות לתוך הדף (השדה), האגודל למטה (המהירות). אם כף היד פונה שמאלה, אולי זו יד שמאל.'
+      - dir: in
+        feedback: '⊗ הוא כיוון השדה. הכוח המגנטי ניצב לשדה.'
+        misconception: MC-magnetic-force-along-field
+      - dir: s
+        feedback: 'למטה הוא כיוון התנועה. הכוח המגנטי לא דוחף את המטען קדימה: הוא ניצב למהירות.'
+        misconception: MC-magnetic-force-does-work
+    wrongFeedback: 'השדה נכנס לדף והמהירות במישור הדף, ולכן הכוח במישור הדף, בניצב למהירות. השתמשו בכלל כף יד ימין.'
+
+  - id: Q-4.5-find-B
+    type: vector
+    objectives: [OBJ-4.5-2]
+    qualitative: true
+    allowOutIn: true
+    level: mid
+    prompt: >-
+      פרוטון נע **ימינה** בשדה מגנטי אחיד שניצב למהירות שלו, והכוח המגנטי עליו **יוצא מהדף** (⊙).
+      מה כיוון השדה המגנטי?
+    answer: 'n'
+    correctFeedback: 'נכון. האגודל ימינה (המהירות), וכף היד צריכה לפנות החוצה מהדף (הכוח). זה קורה כשהאצבעות מצביעות למעלה: השדה למעלה.'
+    wrong:
+      - dir: out
+        feedback: 'הכוח המגנטי ניצב לשדה, ולכן השדה לא יכול להיות בכיוון הכוח.'
+        misconception: MC-magnetic-force-along-field
+      - dir: s
+        feedback: 'עם שדה כלפי מטה הכוח על הפרוטון היה נכנס לדף (⊗). נסו עם כף יד ימין: האגודל ימינה, האצבעות למטה.'
+      - dir: e
+        feedback: 'אם השדה היה ימינה, הפרוטון היה נע לאורכו ולא היה מרגיש כוח בכלל. וחוץ מזה, נתון שהשדה ניצב למהירות.'
+    wrongFeedback: 'השדה ניצב גם למהירות וגם לכוח, ולכן הוא למעלה או למטה. בחרו ביניהם בכלל כף יד ימין.'
+
+  # ------------------------------------------------ OBJ-4.5-3: no work, constant speed, curved paths
+  - id: Q-4.5-no-work
+    type: twotier
+    objectives: [OBJ-4.5-3]
+    qualitative: true
+    prompt: >-
+      פרוטון נכנס לאזור של שדה מגנטי אחיד, בניצב לשדה, ונע בו זמן מה. מה קורה לגודל המהירות שלו בזמן הזה?
+    choices:
+      - text: הוא לא משתנה.
+        correct: true
+        feedback: נכון. הכיוון של המהירות משתנה, אבל לא הגודל שלה.
+      - text: הוא גדל, כי פועל עליו כוח.
+        feedback: 'כוח מגדיל את גודל המהירות רק כשיש לו רכיב בכיוון התנועה. הכוח המגנטי ניצב לתנועה בכל רגע.'
+        misconception: MC-magnetic-force-does-work
+      - text: הוא קטן, כי השדה בולם את הפרוטון.
+        feedback: 'כדי לבלום, הכוח צריך רכיב נגד התנועה. הכוח המגנטי ניצב לתנועה, ולכן לא בולם.'
+        misconception: MC-magnetic-force-does-work
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: הכוח המגנטי ניצב למהירות בכל רגע, ולכן העבודה שלו אפס והאנרגיה הקינטית לא משתנה.
+        correct: true
+        feedback: נכון. בלי עבודה אין שינוי באנרגיה הקינטית, ולכן גם לא בגודל המהירות.
+      - text: הכוח המגנטי עושה עבודה חיובית, כמו הכוח החשמלי.
+        feedback: 'הכוח החשמלי יכול לעשות עבודה, כי יש לו רכיב לאורך התנועה. הכוח המגנטי ניצב לתנועה ולכן לא עושה עבודה.'
+        misconception: MC-magnetic-force-does-work
+      - text: על פרוטון שנע בניצב לשדה לא פועל כוח מגנטי.
+        feedback: 'להפך: בתנועה ניצבת לשדה הכוח הגדול ביותר, $qvB$. הוא רק לא משנה את גודל המהירות.'
 
   - id: Q-4.5-speed-after
-    type: twotier
-    objectives: [OBJ-4.5-1]
-    qualitative: true
-    prompt: >-
-      אלקטרון נכנס במהירות $v$ בניצב לשדה מגנטי אחיד בריק, ומשלים בו שלושה סיבובים. מה גודל המהירות שלו אחרי שלושת הסיבובים?
-    choices:
-      - text: 'בדיוק $v$.'
-        correct: true
-        feedback: נכון.
-      - text: 'קטן מ-$v$: האלקטרון מאט, והמסלול שלו מסתחרר פנימה.'
-        feedback: 'בריק אין מה שיאט את האלקטרון. הכוח המגנטי לא משנה את גודל המהירות.'
-        misconception: MC-magnetic-orbit-spirals
-      - text: 'גדול מ-$v$: השדה מאיץ אותו כל הזמן.'
-        feedback: 'יש תאוצה, אבל היא ניצבת למהירות: היא משנה את הכיוון ולא את הגודל.'
-    reasonPrompt: מה הנימוק?
-    reasons:
-      - text: 'הכוח המגנטי ניצב תמיד למהירות, ולכן הוא לא עושה עבודה, והאנרגיה הקינטית לא משתנה.'
-        correct: true
-        feedback: 'נכון. $W = 0$, ולכן $\tfrac12 mv^2$ קבוע.'
-      - text: 'הכוח המגנטי מכוון נגד המהירות, כמו חיכוך.'
-        feedback: 'הכוח המגנטי ניצב למהירות, לא מנוגד לה. כוח שמנוגד למהירות היה עושה עבודה שלילית ומאט.'
-        misconception: MC-magnetic-orbit-spirals
-      - text: 'השדה המגנטי נותן לאלקטרון אנרגיה בכל סיבוב.'
-        feedback: 'כוח שניצב למהירות לא נותן אנרגיה. כדי להאיץ חלקיק בכל סיבוב צריך שדה חשמלי, כמו בציקלוטרון.'
-
-  # ------------------------------------------------ OBJ-4.5-2: T = 2πm/(qB), what changes if
-  - id: Q-4.5-period
     type: numeric
-    objectives: [OBJ-4.5-2]
-    prompt: >-
-      אלקטרון נע במעגל בשדה מגנטי אחיד של $2\,\text{mT}$. מה זמן המחזור שלו? ענו בננו-שניות ($1\,\text{ns} = 10^{-9}\,\text{s}$).
-    answer: 17.9
-    unit: ns
-    tolerance: 0.03
-    correctFeedback: 'נכון. $T = \dfrac{2\pi m}{qB} = \dfrac{2\pi\cdot9.1\cdot10^{-31}}{1.6\cdot10^{-19}\cdot2\cdot10^{-3}} = 1.79\cdot10^{-8}\,\text{s}$. לא צריך לדעת את המהירות.'
-    wrongFeedback: 'זמן המחזור הוא היקף המעגל חלקי המהירות, $2\pi r/v$, וכשמציבים $r = mv/(qB)$ מקבלים $T = 2\pi m/(qB)$.'
-    commonWrong:
-      - value: 2.84
-        feedback: 'שכחתם את $2\pi$: חישבתם $m/(qB)$. סיבוב שלם הוא דרך של $2\pi r$.'
-      - value: 8.93
-        feedback: 'זה חצי זמן מחזור, $\pi m/(qB)$. סיבוב שלם הוא $2\pi r$, לא $\pi r$.'
-      - value: 32800
-        feedback: 'הצבתם את מסת הפרוטון. מסת האלקטרון $9.1\cdot10^{-31}\,\text{kg}$.'
-
-  - id: Q-4.5-double-speed
-    type: twotier
-    objectives: [OBJ-4.5-2]
-    qualitative: true
-    prompt: >-
-      שני פרוטונים זהים יוצאים יחד מאותה נקודה בשדה מגנטי אחיד, בניצב לשדה. מהירות הפרוטון השני כפולה ממהירות הראשון. מה נכון?
-    choices:
-      - text: 'שניהם חוזרים לנקודת היציאה באותו רגע.'
-        correct: true
-        feedback: נכון.
-      - text: 'השני חוזר ראשון, אחרי חצי מהזמן של הראשון.'
-        feedback: 'השני אכן מהיר פי 2, אבל הוא עובר מעגל גדול פי 2.'
-        misconception: MC-orbit-period-depends-on-speed
-      - text: 'הראשון חוזר ראשון, כי המעגל שלו קטן.'
-        feedback: 'המעגל שלו קטן פי 2, אבל גם המהירות שלו קטנה פי 2.'
-    reasonPrompt: מה הנימוק?
-    reasons:
-      - text: 'הרדיוס פרופורציוני למהירות, ולכן הדרך והמהירות גדלות באותו יחס, וזמן המחזור $2\pi m/(qB)$ לא תלוי במהירות.'
-        correct: true
-        feedback: 'נכון. $T = \dfrac{2\pi r}{v}$, ו-$r \propto v$, ולכן $v$ מצטמצם.'
-      - text: 'הכוח על המהיר כפול, ולכן הוא מסתובב מהר פי 2.'
-        feedback: 'הכוח אכן כפול, אבל הוא צריך לסובב גוף מהיר פי 2 במעגל גדול פי 2. התוצאה: אותו זמן מחזור.'
-        misconception: MC-orbit-period-depends-on-speed
-      - text: 'המהירות לא משפיעה על שום דבר בשדה מגנטי, גם לא על הרדיוס.'
-        feedback: 'המהירות משפיעה על הרדיוס, $r = mv/(qB)$: המעגל של המהיר גדול פי 2. היא לא משפיעה רק על זמן המחזור.'
-
-  - id: Q-4.5-rank-period
-    type: rank
-    objectives: [OBJ-4.5-2]
-    qualitative: true
-    prompt: >-
-      ארבעה חלקיקים נעים במעגלים באותו שדה מגנטי אחיד, בניצב לשדה. דרגו אותם לפי זמן המחזור, מהארוך לקצר. חלקיק אלפא: מטען $2e$, מסה $4m_p$ בקירוב.
-    items:
-      - { id: alpha, label: 'חלקיק אלפא' }
-      - { id: proton, label: 'פרוטון' }
-      - { id: proton-fast, label: 'פרוטון במהירות כפולה' }
-      - { id: electron, label: 'אלקטרון' }
-    order: [alpha, [proton, proton-fast], electron]
-    correctFeedback: 'נכון. $T = 2\pi m/(qB)$ תלוי רק ביחס $m/q$: לחלקיק האלפא $2m_p/e$, לשני הפרוטונים $m_p/e$, ולאלקטרון $m_e/e$, קטן פי 1835. המהירות לא משנה.'
-    wrongFeedback: 'השוו את היחס $m/q$ של כל חלקיק: הוא לבדו קובע את זמן המחזור באותו שדה. ושני הפרוטונים? המהירות לא משנה את $T$.'
-
-  - id: Q-4.5-what-changes
-    type: mc
-    objectives: [OBJ-4.5-2]
+    objectives: [OBJ-4.5-3]
     level: mid
     prompt: >-
-      חלקיק טעון נע במעגל ברדיוס $r$ ובזמן מחזור $T$ בשדה מגנטי אחיד. מכפילים את השדה, והמהירות לא משתנה. מה יהיו הרדיוס וזמן המחזור?
-    choices:
-      - text: 'רדיוס $r/2$, זמן מחזור $T/2$.'
-        correct: true
-        feedback: 'נכון. $B$ במכנה של $r = mv/(qB)$ ושל $T = 2\pi m/(qB)$.'
-      - text: 'רדיוס $r/2$, זמן מחזור $T$.'
-        feedback: 'הרדיוס נכון, אבל זמן המחזור תלוי בשדה: $T = 2\pi m/(qB)$. הוא לא תלוי רק במהירות.'
-      - text: 'רדיוס $2r$, זמן מחזור $2T$.'
-        feedback: 'שדה חזק יותר מפעיל כוח גדול יותר, ומכופף את המסלול יותר: המעגל קטן, לא גדל.'
-      - text: 'רדיוס $r/4$, זמן מחזור $T/4$.'
-        feedback: 'גם $r$ וגם $T$ הפוכים ל-$B$ בחזקה הראשונה, לא בריבוע.'
+      אלקטרון נכנס לשדה מגנטי אחיד במהירות $4\cdot10^{6}\,\text{m/s}$. בזמן שהוא בשדה פועל עליו כוח מגנטי שגודלו
+      $3\cdot10^{-15}\,\text{N}$, והוא עובר בשדה מסלול באורך $2\,\text{cm}$. מה גודל המהירות שלו כשהוא יוצא מהשדה, ב-$\text{m/s}$?
+    answer: 4e6
+    unit: m/s
+    tolerance: 0.03
+    correctFeedback: 'נכון. הכוח המגנטי ניצב למהירות לאורך כל המסלול, ולכן העבודה שלו אפס, והאלקטרון יוצא באותו גודל מהירות, $4\cdot10^{6}\,\text{m/s}$. הנתונים על הכוח והמסלול מיותרים.'
+    wrongFeedback: 'חשבו כמה עבודה עושה כוח שניצב לתנועה בכל רגע.'
+    commonWrong:
+      - value: 1.216e7
+        feedback: 'חישבתם עבודה $W = Fs = 3\cdot10^{-15}\cdot0.02 = 6\cdot10^{-17}\,\text{J}$ והוספתם אותה לאנרגיה הקינטית. אבל הכוח המגנטי ניצב לתנועה בכל רגע, ולכן העבודה שלו אפס.'
+        misconception: MC-magnetic-force-does-work
+    hints:
+      - 'עבודה של כוח תלויה ברכיב שלו בכיוון התנועה. מה הרכיב הזה כאן?'
 
-  # ------------------------------------------------ OBJ-4.5-3: sense of rotation, bounded region
-  - id: Q-4.5-sense
+  - id: Q-4.5-path-shape
     type: mc
     objectives: [OBJ-4.5-3]
     qualitative: true
     prompt: >-
-      בשדה מגנטי אחיד, ⊙ החוצה מהדף, פרוטון מסתובב עם כיוון השעון. מכניסים לאותו שדה אלקטרון. לאיזה כיוון הוא מסתובב?
+      פרוטון נע ימינה ונכנס לאזור גדול של שדה מגנטי אחיד שנכנס לדף (⊗). מה נכון לגבי המסלול שלו בתוך האזור?
     choices:
-      - text: 'נגד כיוון השעון.'
+      - text: המסלול מתעקם למעלה, וממשיך להתעקם כל זמן שהפרוטון בשדה, בגודל מהירות קבוע.
         correct: true
-        feedback: 'נכון. על מטען שלילי הכוח הפוך לכוח על מטען חיובי שנע באותה מהירות, ולכן גם כיוון הסיבוב הפוך.'
-      - text: 'עם כיוון השעון, כמו הפרוטון.'
-        feedback: 'השדה לבדו לא קובע את הכיוון. גם סימן המטען משנה: לפי כלל כף יד ימין הכוח על אלקטרון הפוך.'
-        misconception: MC-electron-proton-same-sense
-      - text: 'תלוי במהירות שלו.'
-        feedback: 'המהירות משנה את הרדיוס, לא את כיוון הסיבוב. את הכיוון קובעים סימן המטען וכיוון השדה.'
-      - text: 'הוא לא מסתובב, כי הוא קל מדי.'
-        feedback: 'גם אלקטרון מרגיש כוח מגנטי, $qvB$. המסה הקטנה רק מקטינה את הרדיוס, $mv/(qB)$.'
+        feedback: 'נכון. ברגע הכניסה הכוח למעלה (כלל כף יד ימין). הכוח נשאר ניצב למהירות, ולכן ממשיך לסובב את כיוון התנועה בלי לשנות את גודלה.'
+      - text: המסלול מתעקם לתוך הדף, בכיוון השדה.
+        feedback: 'הכוח המגנטי ניצב לשדה. השדה נכנס לדף, ולכן הכוח, וגם העיקום, במישור הדף.'
+        misconception: MC-magnetic-force-along-field
+      - text: הפרוטון ממשיך ישר ימינה ומואץ.
+        feedback: 'הכוח המגנטי ניצב למהירות: הוא לא מאיץ קדימה, אלא מסובב את כיוון התנועה.'
+        misconception: MC-magnetic-force-does-work
+      - text: המסלול מתעקם למטה, כמו של אלקטרון.
+        feedback: 'אלקטרון באותו מצב אכן מתעקם למטה. הפרוטון חיובי, והכוח עליו הפוך: למעלה.'
+        misconception: MC-magnetic-force-sign-blind
 
-  - id: Q-4.5-edge-side
-    type: vector
-    objectives: [OBJ-4.5-3]
-    qualitative: true
-    allowOutIn: true
-    prompt: >-
-      שדה מגנטי אחיד, ⊗ לתוך הדף, נמצא רק מימין לגבול אנכי. אלקטרון נע ימינה ונכנס לשדה בניצב לגבול. מה כיוון הכוח המגנטי עליו ברגע הכניסה? (הכיוון הזה קובע לאיזה צד הוא יתכופף.)
-    answer: s
-    correctFeedback: 'נכון. לפרוטון: האצבעות לתוך הדף, האגודל ימינה, והכוח כלפי מעלה. על אלקטרון הכוח הפוך: כלפי מטה. הוא יעשה חצי מעגל ויצא מתחת לנקודת הכניסה.'
-    wrong:
-      - dir: n
-        feedback: 'זה הכוח על מטען **חיובי**. על אלקטרון, שהמטען שלו שלילי, הכוח בכיוון ההפוך.'
-        misconception: MC-electron-proton-same-sense
-      - dir: in
-        feedback: 'זה כיוון השדה. הכוח המגנטי ניצב גם לשדה וגם למהירות, ולכן הוא במישור הדף.'
-      - dir: w
-        feedback: 'כוח נגד המהירות היה מאט את האלקטרון. הכוח המגנטי ניצב למהירות.'
-    wrongFeedback: 'השתמשו בכלל כף יד ימין לפרוטון, והפכו את הכיוון למטען שלילי.'
-
-  - id: Q-4.5-edge-exit
-    type: numeric
-    objectives: [OBJ-4.5-3, OBJ-4.5-1]
-    level: mid
-    prompt: >-
-      פרוטון נכנס במהירות $3\cdot10^{5}\,\text{m/s}$, בניצב לגבול, לאזור שבו יש שדה מגנטי אחיד של $0.12\,\text{T}$ (השדה ניצב לדף). באיזה מרחק מנקודת הכניסה הוא יוצא מהשדה? ענו בסנטימטרים.
-    answer: 5.22
-    unit: cm
-    tolerance: 0.03
-    correctFeedback: 'נכון. הפרוטון עושה חצי מעגל, ולכן יוצא קוטר אחד מנקודת הכניסה: $d = 2r = \dfrac{2mv}{qB} = \dfrac{2\cdot1.67\cdot10^{-27}\cdot3\cdot10^{5}}{1.6\cdot10^{-19}\cdot0.12} = 0.0522\,\text{m}$.'
-    wrongFeedback: 'בכניסה בניצב לגבול המסלול בשדה הוא חצי מעגל. המרחק בין הכניסה ליציאה הוא הקוטר.'
-    commonWrong:
-      - value: 2.61
-        feedback: 'זה הרדיוס. הפרוטון יוצא בצד השני של חצי המעגל, במרחק של קוטר, $2r$.'
-      - value: 8.2
-        feedback: 'זה חצי היקף המעגל, $\pi r$: הדרך שהפרוטון עובר בשדה. השאלה שואלת על המרחק בקו ישר בין שתי הנקודות.'
-
-  - id: Q-4.5-identify-sign
-    type: twotier
+  - id: Q-4.5-what-stays
+    type: multi
     objectives: [OBJ-4.5-3]
     qualitative: true
     prompt: >-
-      שני חלקיקים נעים ימינה ונכנסים יחד לאזור שבו יש שדה מגנטי אחיד, ⊙ החוצה מהדף. חלקיק א מתכופף כלפי מעלה, וחלקיק ב כלפי מטה. מה אפשר לקבוע?
+      אלקטרון נע בשדה מגנטי אחיד, בניצב לשדה, ואין עליו כוחות אחרים. אילו מהגדלים הבאים **לא משתנים** בזמן התנועה? סמנו את כל התשובות הנכונות.
     choices:
-      - text: 'חלקיק א שלילי וחלקיק ב חיובי.'
+      - text: גודל המהירות
         correct: true
-        feedback: נכון.
-      - text: 'חלקיק א חיובי וחלקיק ב שלילי.'
-        feedback: 'בדקו בכלל כף יד ימין: עם האצבעות החוצה מהדף והאגודל ימינה, הכוח על מטען חיובי מכוון כלפי מטה.'
-      - text: 'אי אפשר לקבוע, כי הצד תלוי במסה.'
-        feedback: 'המסה משנה את הרדיוס, לא את הצד. הצד נקבע לפי כיוון הכוח ברגע הכניסה, ולכן לפי סימן המטען.'
-        misconception: MC-electron-proton-same-sense
-    reasonPrompt: מה הנימוק?
-    reasons:
-      - text: 'לפי כלל כף יד ימין, על מטען חיובי שנע ימינה בשדה ⊙ הכוח כלפי מטה, ועל מטען שלילי הכוח הפוך.'
+        feedback: נכון. הכוח ניצב למהירות ולא עושה עבודה.
+      - text: האנרגיה הקינטית
         correct: true
-        feedback: 'נכון. כך מזהים בתאי בועות חלקיקים חיוביים ושליליים לפי כיוון העיקול.'
-      - text: 'מטען חיובי נמשך אל הקוטב הצפוני של השדה, ומטען שלילי אל הדרומי.'
-        feedback: 'שדה מגנטי לא מושך מטענים כמו שדה חשמלי. הכוח המגנטי פועל רק על מטען נע, וניצב גם לשדה וגם למהירות.'
-      - text: 'החלקיק הכבד מתכופף כלפי מטה, כמו בכבידה.'
-        feedback: 'הכבידה זניחה כאן לגמרי, והמסה לא קובעת את הצד. הצד נקבע לפי סימן המטען.'
+        feedback: 'נכון. האנרגיה הקינטית תלויה רק בגודל המהירות, והוא קבוע.'
+      - text: גודל הכוח המגנטי
+        correct: true
+        feedback: 'נכון. $F = qvB$, ו-$q$, $v$ ו-$B$ קבועים, והמהירות נשארת ניצבת לשדה.'
+      - text: כיוון המהירות
+        feedback: 'הכיוון משתנה כל הזמן: זה בדיוק מה שהכוח המגנטי עושה. לכן המסלול עקום.'
+      - text: כיוון הכוח
+        feedback: 'הכוח ניצב למהירות, וכיוון המהירות משתנה, ולכן גם כיוון הכוח מסתובב איתה.'
+      - text: וקטור המהירות כולו, כי הכוח לא עושה עבודה
+        feedback: 'אפס עבודה אומר שהאנרגיה הקינטית, כלומר **גודל** המהירות, קבוע. הכיוון בכל זאת משתנה.'
+        misconception: MC-magnetic-force-does-work
 
-  # ------------------------------------------------ OBJ-4.5-4: mass spectrometer
-  - id: Q-4.5-heavier
-    type: twotier
-    objectives: [OBJ-4.5-4]
-    qualitative: true
-    prompt: >-
-      בספקטרומטר מסות מאיצים ממנוחה, באותו מתח, יונים חד-מטעניים של שני איזוטופים של כלור, ³⁵Cl ו-³⁷Cl, ושולחים אותם דרך אותו סדק לאותו שדה מגנטי. איזה מהם נוחת רחוק יותר מהסדק?
-    choices:
-      - text: '³⁷Cl⁺, הכבד.'
-        correct: true
-        feedback: נכון.
-      - text: '³⁵Cl⁺, הקל.'
-        feedback: 'הקל אכן מהיר יותר, אבל קל יותר לסובב אותו, והמעגל שלו קטן יותר.'
-        misconception: MC-spectrometer-heavier-closer
-      - text: 'שניהם נוחתים באותה נקודה, כי יש להם אותו מטען.'
-        feedback: 'אותו מטען אומר שהם מקבלים אותה אנרגיה, אבל הרדיוס תלוי גם במסה.'
-    reasonPrompt: מה הנימוק?
-    reasons:
-      - text: 'לשניהם אותה אנרגיה קינטית $qU$, והרדיוס $r = \frac{1}{B}\sqrt{2mU/q}$ גדל עם המסה.'
-        correct: true
-        feedback: 'נכון. הכבד איטי פי $\sqrt{37/35}$, אבל $r = mv/(qB)$, והמסה גדלה יותר מכפי שהמהירות קטנה.'
-      - text: 'היון הכבד מתכופף יותר, כמו שגוף כבד נופל מהר יותר.'
-        feedback: 'שני התיאורים שגויים: גוף כבד לא נופל מהר יותר (בלי התנגדות אוויר), ויון כבד מתכופף **פחות**: באותה אנרגיה, מסה גדולה פירושה רדיוס גדול.'
-        misconception: MC-spectrometer-heavier-closer
-      - text: 'היון הכבד מהיר יותר, ולכן מגיע רחוק יותר.'
-        feedback: 'באותה אנרגיה $\tfrac12 mv^2 = qU$, היון הכבד דווקא איטי יותר.'
-
-  - id: Q-4.5-spec-radius
-    type: numeric
-    objectives: [OBJ-4.5-4]
-    level: mid
-    prompt: >-
-      יוני אשלגן חד-מטעניים, ³⁹K⁺ (מסה $39m_p$ בקירוב), מואצים ממנוחה במתח של $1500\,\text{V}$, ונכנסים בניצב לשדה מגנטי אחיד של $0.3\,\text{T}$. מה רדיוס המסלול שלהם? ענו בסנטימטרים.
-    answer: 11.6
-    unit: cm
-    tolerance: 0.03
-    correctFeedback: 'נכון. $v = \sqrt{2qU/m} = 8.58\cdot10^{4}\,\text{m/s}$, ו-$r = \dfrac{mv}{qB} = \dfrac{1}{B}\sqrt{\dfrac{2mU}{q}} = 0.116\,\text{m}$.'
-    wrongFeedback: 'שני שלבים: מהמתח, $\tfrac12 mv^2 = qU$; ואחר כך $r = mv/(qB)$. יחד: $r = \frac{1}{B}\sqrt{2mU/q}$, עם $m = 39\cdot1.67\cdot10^{-27}\,\text{kg}$.'
-    commonWrong:
-      - value: 23.3
-        feedback: 'זה המרחק מהסדק לנקודת הנחיתה, $2r$. השאלה שואלת על הרדיוס.'
-      - value: 8.24
-        feedback: 'שכחתם את ה-2 באנרגיה: $\tfrac12 mv^2 = qU$ נותן $v = \sqrt{2qU/m}$, לא $\sqrt{qU/m}$.'
-      - value: 0.41
-        feedback: 'שכחתם להוציא שורש: $\frac{1}{B}\cdot\frac{2mU}{q}$. הרדיוס הוא $\frac{1}{B}\sqrt{2mU/q}$.'
-
-  - id: Q-4.5-spec-voltage
+  # ------------------------------------------------ OBJ-4.5-4: defining B and the tesla; magnetic versus electric
+  - id: Q-4.5-tesla-units
     type: mc
     objectives: [OBJ-4.5-4]
+    prompt: >-
+      לפי ההגדרה $B = \dfrac{F}{qv}$ (בתנועה ניצבת לשדה), למה שווה טסלה אחת ביחידות יסוד?
+    choices:
+      - text: '$1\,\text{N}\cdot\text{s}/(\text{C}\cdot\text{m})$'
+        correct: true
+        feedback: 'נכון: ניוטון לחלק לקולון כפול מטר לשנייה. ומכיוון ש-$\text{C/s} = \text{A}$, זה גם $1\,\text{N}/(\text{A}\cdot\text{m})$.'
+      - text: '$1\,\text{N/C}$'
+        feedback: 'זו היחידה של השדה **החשמלי**, $E = F/q$. בשדה המגנטי מחלקים גם במהירות.'
+      - text: '$1\,\text{N}\cdot\text{m}/(\text{C}\cdot\text{s})$'
+        feedback: 'זה $F\cdot v/q$: כפלתם במהירות במקום לחלק בה. כש-$\text{m/s}$ נמצא במכנה, $\text{s}$ עולה למונה ו-$\text{m}$ נשאר במכנה.'
+      - text: '$1\,\text{N}\cdot\text{A}\cdot\text{m}$'
+        feedback: 'כפלתם במקום לחלק. $B = F/(qv)$, ו-$qv$ ביחידות $\text{C}\cdot\text{m/s} = \text{A}\cdot\text{m}$, ולכן $\text{T} = \text{N}/(\text{A}\cdot\text{m})$.'
+
+  - id: Q-4.5-measure-B
+    type: numeric
+    objectives: [OBJ-4.5-4]
+    level: mid
+    prompt: >-
+      כדי למדוד שדה מגנטי, יורים פרוטון במהירות $2\cdot10^{5}\,\text{m/s}$ בזווית $30^\circ$ לכיוון השדה,
+      ומודדים עליו כוח מגנטי של $8\cdot10^{-15}\,\text{N}$. מה עוצמת השדה, בטסלה?
+    answer: 0.5
+    unit: T
+    tolerance: 0.03
+    correctFeedback: 'נכון: $B = \dfrac{F}{qv\sin\alpha} = \dfrac{8\cdot10^{-15}}{1.6\cdot10^{-19}\cdot2\cdot10^{5}\cdot0.5} = 0.5\,\text{T}$.'
+    wrongFeedback: 'מתחילים מ-$F = qvB\sin\alpha$ ומבודדים את $B$: מחלקים את שני האגפים ב-$qv\sin\alpha$.'
+    commonWrong:
+      - value: 0.25
+        feedback: 'זה $F/(qv)$, כאילו המהירות ניצבת לשדה. כאן רק רכיב המהירות הניצב, $v\sin30^\circ$, תורם, ולכן צריך לחלק גם ב-$\sin30^\circ = 0.5$.'
+      - value: 0.2887
+        feedback: 'חילקתם ב-$\cos30^\circ$ במקום ב-$\sin30^\circ$. הכוח תלוי בסינוס הזווית בין המהירות לשדה.'
+        misconception: MC-magnetic-force-max-parallel
+    hints:
+      - 'הגדרת השדה: $F = qvB\sin\alpha$. מה הנעלם כאן?'
+
+  - id: Q-4.5-compare-electric
+    type: twotier
+    objectives: [OBJ-4.5-4]
+    qualitative: true
+    prompt: >-
+      באזור מסוים יש שדה אחיד אחד בלבד: חשמלי או מגנטי. מניחים בו אלקטרון במנוחה, והוא מתחיל לנוע. איזה שדה יש באזור?
+    choices:
+      - text: שדה חשמלי.
+        correct: true
+        feedback: נכון.
+      - text: שדה מגנטי.
+        feedback: 'שדה מגנטי לא מפעיל כוח על מטען במנוחה, ולכן לא יכול להתחיל להזיז אותו.'
+        misconception: MC-magnetic-force-at-rest
+      - text: 'אי אפשר לדעת: שני השדות מזיזים מטען במנוחה.'
+        feedback: 'רק השדה החשמלי מזיז מטען במנוחה. לכן הניסוי הזה מבחין בין השדות.'
+        misconception: MC-magnetic-force-at-rest
+    reasonPrompt: ומה הנימוק?
+    reasons:
+      - text: הכוח החשמלי, $qE$, לא תלוי במהירות; הכוח המגנטי, $qvB\sin\alpha$, אפס כשהמהירות אפס.
+        correct: true
+        feedback: נכון. זה הניסוי הפשוט ביותר להבחנה בין שני השדות.
+      - text: אלקטרון הוא מגנט קטן, ולכן נמשך לשדה המגנטי.
+        feedback: 'בשיעור הזה האלקטרון הוא מטען. על מטען במנוחה שדה מגנטי לא פועל.'
+        misconception: MC-magnetic-force-at-rest
+      - text: השדה המגנטי חלש מדי בשביל להזיז אלקטרון.
+        feedback: 'זה לא עניין של עוצמה: גם שדה מגנטי עצום לא מפעיל כוח על מטען שאינו נע.'
+
+  - id: Q-4.5-speed-change
+    type: mc
+    objectives: [OBJ-4.5-4, OBJ-4.5-3]
     qualitative: true
     level: mid
     prompt: >-
-      בספקטרומטר מסות, יון נוחת במרחק $x$ מהסדק. מגדילים את המתח המאיץ פי 4, והשדה לא משתנה. איפה ינחת אותו יון?
+      פרוטון עובר דרך אזור שבו יש שדה אחיד אחד, ויוצא ממנו בגודל מהירות **גדול** יותר משנכנס. איזה שדה יכול להיות באזור?
     choices:
-      - text: 'במרחק $2x$.'
+      - text: רק שדה חשמלי.
         correct: true
-        feedback: 'נכון. $x = 2r = \dfrac{2}{B}\sqrt{\dfrac{2mU}{q}}$: מתח גדול פי 4 נותן מהירות גדולה פי 2, ולכן רדיוס גדול פי 2.'
-      - text: 'במרחק $4x$.'
-        feedback: 'המתח קובע את האנרגיה, $\tfrac12 mv^2 = qU$. אנרגיה גדולה פי 4 היא מהירות גדולה פי 2 בלבד, והרדיוס גדל כמו המהירות.'
-      - text: 'במרחק $x/2$.'
-        feedback: 'מתח גדול יותר נותן מהירות גדולה יותר, וחלקיק מהיר יותר נע במעגל **גדול** יותר.'
-      - text: 'באותו מרחק $x$, כי המתח לא משפיע על השדה המגנטי.'
-        feedback: 'נכון שהשדה לא משתנה, אבל היון נכנס אליו מהר יותר, והרדיוס $mv/(qB)$ גדל.'
-
-  - id: Q-4.5-spec-separation
-    type: numeric
-    objectives: [OBJ-4.5-4]
-    level: bagrut
-    prompt: >-
-      בספקטרומטר מסות מאיצים ממנוחה יוני ³⁵Cl⁺ ו-³⁷Cl⁺ במתח של $2000\,\text{V}$, והם נכנסים בניצב לשדה מגנטי אחיד של $0.2\,\text{T}$. הניחו שמסת יון היא $A\cdot m_p$. מה המרחק בין שתי נקודות הנחיתה על הגלאי? ענו בסנטימטרים.
-    answer: 1.08
-    unit: cm
-    tolerance: 0.03
-    correctFeedback: 'נכון. $x = \dfrac{2}{B}\sqrt{\dfrac{2mU}{q}}$ נותן $38.23\,\text{cm}$ ל-³⁵Cl⁺ ו-$39.30\,\text{cm}$ ל-³⁷Cl⁺. ההפרש $1.08\,\text{cm}$.'
-    wrongFeedback: 'חשבו לכל יון את נקודת הנחיתה, $x = 2r$ עם $r = \frac{1}{B}\sqrt{2mU/q}$, והחסירו.'
-    commonWrong:
-      - value: 0.539
-        feedback: 'זה ההפרש בין הרדיוסים. נקודת הנחיתה רחוקה מהסדק קוטר אחד, ולכן המרחק בין הנקודות הוא פי 2.'
+        feedback: 'נכון. השדה החשמלי יכול לעשות עבודה על הפרוטון ולהגדיל את האנרגיה הקינטית שלו. השדה המגנטי לא עושה עבודה.'
+      - text: רק שדה מגנטי.
+        feedback: 'שדה מגנטי משנה רק את כיוון התנועה. הכוח שלו ניצב למהירות, ולכן גודל המהירות לא משתנה.'
+        misconception: MC-magnetic-force-does-work
+      - text: כל אחד משני השדות.
+        feedback: 'השדה המגנטי לא יכול לשנות את גודל המהירות, כי הוא לא עושה עבודה. רק השדה החשמלי יכול.'
+        misconception: MC-magnetic-force-does-work
+      - text: אף אחד מהם; גודל המהירות לא יכול לגדול בשדה.
+        feedback: 'שדה חשמלי מאיץ מטענים, כמו בתותח האלקטרונים של שיעור 2.4.'

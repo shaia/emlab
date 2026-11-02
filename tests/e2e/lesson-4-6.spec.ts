@@ -20,10 +20,6 @@ async function openFigure(page: Page, id: string) {
   return fig;
 }
 
-// slider stops (see VelocitySelector.tsx): E = 3…10·10⁴ V/m, B = 0.05/0.08/0.1 T, v = 2…10·10⁵ in steps of 0.5·10⁵, B′ = 0.2…0.5 T
-const E_INDEX = (E: number) => E / 1e4 - 3;
-const V_INDEX = (v: number) => (v / 1e5 - 2) * 2;
-
 test.describe('live figures', () => {
   test('scrolling through the text never completes a task', async ({ page }) => {
     await page.goto(LESSON);
@@ -37,11 +33,11 @@ test.describe('live figures', () => {
     await expect(page.locator('.sim-tasks li.done')).toHaveCount(0);
   });
 
-  test('both figures draw, in LTR physics space', async ({ page }) => {
+  test('every figure draws, in LTR physics space', async ({ page }) => {
     await page.goto(LESSON);
     const canvases = page.locator('.sim-stage canvas');
-    expect(await canvases.count()).toBe(2);
-    for (let i = 0; i < 2; i++) {
+    expect(await canvases.count()).toBe(3);
+    for (let i = 0; i < 3; i++) {
       const c = canvases.nth(i);
       await c.scrollIntoViewIfNeeded();
       await expect(c).toHaveCSS('direction', 'ltr');
@@ -49,59 +45,75 @@ test.describe('live figures', () => {
     }
   });
 
-  test('only v = E/B goes straight: faster bends to the magnetic side, any ion passes at E/B', async ({ page }) => {
+  test('doubling the speed doubles the radius but not the period, and the race ticks', async ({ page }) => {
     const fig = await openFigure(page, 'fig-4-6a');
     const readout = fig.locator('.sim-readout');
-    const [E, , v] = [0, 1, 2].map((i) => fig.locator('input[type=range]').nth(i));
-    // E = 5·10⁴ V/m, B = 0.1 T, v = 5·10⁵ m/s: the proton passes
-    await expect(readout).toContainText('v = E/B = 5·10⁵ m/s');
-    await expect(readout).toContainText('עובר ישר בסדק');
-    await expect(readout).toContainText('F = qE = 8·10⁻¹⁵ N');
-    // faster than E/B: the magnetic force (up, palm rule) wins
-    await setSlider(v, V_INDEX(6e5));
-    await expect(readout).toContainText('F = qvB = 9.6·10⁻¹⁵ N');
-    await expect(readout).toContainText(/העליון|מעל הסדק/);
-    // slower: the electric force (down) wins
-    await setSlider(v, V_INDEX(4e5));
-    await expect(readout).toContainText(/התחתון|מתחת לסדק/);
-    // a new selector setting: E = 8·10⁴ V/m selects 8·10⁵ m/s
-    await setSlider(E, E_INDEX(8e4));
-    await setSlider(v, V_INDEX(8e5));
-    await expect(readout).toContainText('v = E/B = 8·10⁵ m/s');
-    await expect(readout).toContainText('עובר ישר בסדק');
-    // an alpha particle and a negative ion pass at the same speed
-    await fig.getByRole('button', { name: /חלקיק אלפא/ }).click();
-    await expect(readout).toContainText('עובר ישר בסדק');
-    await fig.getByRole('button', { name: /יון מימן שלילי/ }).click();
-    await expect(readout).toContainText('עובר ישר בסדק');
+    // proton, 3·10⁵ m/s, 0.05 T
+    await expect(readout).toContainText('r = mv/(|q|B) = 6.26 cm');
+    await expect(readout).toContainText('T = 2πm/(|q|B) = 1.31·10⁻⁶ s');
+    await expect(readout).toContainText('נגד כיוון השעון');
+    // speeds are [1, 2, 3, 4, 5, 6, 8, 10]·10⁵ m/s: index 5 is 6·10⁵
+    await setSlider(fig.locator('input[type=range]').nth(0), 5);
+    await expect(readout).toContainText('r = mv/(|q|B) = 12.5 cm');
+    await expect(readout).toContainText('T = 2πm/(|q|B) = 1.31·10⁻⁶ s');
+    await setSlider(fig.locator('input[type=range]').nth(0), 2);
+    await fig.getByRole('button', { name: 'חלקיק שני במהירות כפולה' }).click();
+    await expect(readout).toContainText('החלקיק השני: r = 12.5 cm, T = 1.31·10⁻⁶ s');
+    expect((await progress(page)).tasks['fig-4-6a:race']).toBeTruthy();
+  });
+
+  test('a doubled field halves the period; an electron turns the other way', async ({ page }) => {
+    const fig = await openFigure(page, 'fig-4-6a');
+    const readout = fig.locator('.sim-readout');
+    // fields are [2, 3, 4, 5, 6, 8, 10, 15, 20] units: index 6 is 0.1 T for a proton
+    await setSlider(fig.locator('input[type=range]').nth(1), 6);
+    await expect(readout).toContainText('T = 2πm/(|q|B) = 6.56·10⁻⁷ s');
+    await expect(readout).toContainText('r = mv/(|q|B) = 3.13 cm');
+    await fig.getByRole('button', { name: 'אלקטרון', exact: true }).click();
+    await expect(readout).toContainText('עם כיוון השעון');
+    await fig.getByRole('button', { name: '⊙ השדה החוצה מהדף' }).click();
+    await expect(readout).toContainText('נגד כיוון השעון');
     const tasks = (await progress(page)).tasks;
-    for (const t of ['balance-new', 'other-ion', 'too-fast']) expect(tasks[`fig-4-6a:${t}`]).toBeTruthy();
+    expect(tasks['fig-4-6a:half-T']).toBeTruthy();
+    expect(tasks['fig-4-6a:flip-sign']).toBeTruthy();
   });
 
-  test('flipping the plates makes both forces point the same way: nothing passes', async ({ page }) => {
-    const fig = await openFigure(page, 'fig-4-6a');
-    const readout = fig.locator('.sim-readout');
-    await fig.getByRole('button', { name: /הפכו את הלוחות/ }).click();
-    await expect(readout).toContainText('פוגע בלוח העליון');
-    await fig.getByRole('button', { name: 'קרן עם מהירויות שונות' }).click();
-    await expect(readout).toContainText('אף מהירות בקרן לא עוברת בסדק');
-  });
-
-  test('Bainbridge: deuterons land twice as far as protons, alpha particles with the deuterons', async ({ page }) => {
+  test('a proton entering the field edge leaves one diameter away, after the same time at any speed', async ({ page }) => {
     const fig = await openFigure(page, 'fig-4-6b');
     const readout = fig.locator('.sim-readout');
-    // v = 5·10⁵ m/s, B′ = 0.2 T: 2r = 5.22 cm (p) and 10.4 cm (d)
-    await expect(readout).toContainText('עוברים בסדק: v = 5·10⁵ m/s');
-    await expect(readout).toContainText('פוגע 5.22 ס"מ מעל הסדק');
-    await expect(readout).toContainText('פוגע 10.4 ס"מ מעל הסדק');
-    await fig.getByRole('button', { name: /חלקיק אלפא/ }).click();
-    await expect(readout.locator('span', { hasText: 'חלקיק אלפא' })).toContainText('פוגע 10.4 ס"מ');
-    // B′ = 0.4 T halves every distance
-    await setSlider(fig.locator('input[type=range]').nth(2), 2);
-    await expect(readout).toContainText('פוגע 2.61 ס"מ מעל הסדק');
-    await expect(readout).toContainText('פוגע 5.22 ס"מ מעל הסדק');
-    const tasks = (await progress(page)).tasks;
-    for (const t of ['two-spots', 'alpha-d', 'change-b2']) expect(tasks[`fig-4-6b:${t}`]).toBeTruthy();
+    // proton, 3·10⁵ m/s, 0.06 T: r = 5.22 cm, d = 10.4 cm, T/2 = 5.47·10⁻⁷ s
+    await expect(readout).toContainText('d = 10.4 cm');
+    await expect(readout).toContainText('5.47·10⁻⁷ s');
+    await setSlider(fig.locator('input[type=range]').nth(0), 5); // 6·10⁵ m/s
+    await expect(readout).toContainText('d = 20.9 cm');
+    await expect(readout).toContainText('5.47·10⁻⁷ s');
+    expect((await progress(page)).tasks['fig-4-6b:edge-double']).toBeTruthy();
+    // entry at 30° to the normal: d = 2r·cos30°
+    await setSlider(fig.locator('input[type=range]').nth(0), 2);
+    await setSlider(fig.locator('input[type=range]').nth(2), 6);
+    await expect(readout).toContainText('d = 9.04 cm');
+    expect((await progress(page)).tasks['fig-4-6b:edge-angle']).toBeTruthy();
+  });
+
+  test('the spectrometer lands the heavier isotope farther, and both tasks can be met', async ({ page }) => {
+    const fig = await openFigure(page, 'fig-4-6c');
+    const readout = fig.locator('.sim-readout');
+    // neon at 1000 V, 0.2 T
+    await expect(readout).toContainText('20.4 cm');
+    await expect(readout).toContainText('21.4 cm');
+    const [U, B] = [fig.locator('input[type=range]').nth(0), fig.locator('input[type=range]').nth(1)];
+    // voltages are 500 + 250·i: index 4 is 1500 V, which puts ²⁰Ne⁺ on the 25 cm mark
+    await setSlider(U, 4);
+    await expect(readout).toContainText('25 cm');
+    expect((await progress(page)).tasks['fig-4-6c:hit-mark']).toBeTruthy();
+    await fig.getByRole('button', { name: 'כלור', exact: true }).click();
+    await setSlider(U, 6); // 2000 V: Cl-35 at 38.2 cm, Cl-37 at 39.3 cm
+    await expect(readout).toContainText('Δx = 1.08 cm');
+    expect((await progress(page)).tasks['fig-4-6c:separate']).toBeTruthy();
+    await setSlider(B, 0); // 0.1 T: both land beyond the detector
+    await expect(readout).toContainText('מחטיא את הגלאי');
+    const w = await page.evaluate(() => [document.documentElement.scrollWidth, document.documentElement.clientWidth]);
+    expect(w[0]).toBeLessThanOrEqual(w[1]);
   });
 });
 
@@ -111,40 +123,40 @@ test.describe('predict, then reveal', () => {
     const predict = page.locator('[data-predict-id="pred-4-6"]');
     await predict.scrollIntoViewIfNeeded();
     await expect(predict).not.toHaveClass(/is-open/);
-    // a choice clicked before the island hydrates lands in the static HTML and is lost
-    const choice = predict.locator('label.q-choice', { hasText: 'כי הוא כבד יותר' });
-    await hydrated(choice);
-    await choice.click();
+    // a choice clicked before hydration lands in the static HTML and never enables the button
+    await hydrated(predict.locator('label.q-choice').first());
+    await predict.locator('label.q-choice', { hasText: 'הזמן לא משתנה' }).click();
     await predict.getByRole('button', { name: 'זה החיזוי שלי' }).click();
     await expect(predict).toHaveClass(/is-open/);
   });
 });
 
 test.describe('questions', () => {
-  test('numeric: a distance left in centimetres gets targeted feedback, then 6·10⁵ m/s passes', async ({ page }) => {
+  test('numeric: the diameter gets targeted feedback, then the radius passes', async ({ page }) => {
     await page.goto(LESSON);
-    const q = page.locator('[data-qid="Q-4.6-speed"]');
+    const q = page.locator('[data-qid="Q-4.6-radius"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(q);
     const input = q.locator('input[type=text]');
-    await input.fill('6000');
+    await input.fill('4.18');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
-    await expect(q.locator('.q-feedback')).toContainText('בסנטימטרים');
+    await expect(q.locator('.q-feedback')).toContainText('הקוטר');
     await q.getByRole('button', { name: 'נסו שוב' }).click();
-    await input.fill('600000');
+    await input.fill('2.09');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-right/);
   });
 
-  test('a confident "the alpha particle needs another speed" is recorded as that misconception', async ({ page }) => {
+  test('a confident "faster goes round sooner" is recorded as that misconception', async ({ page }) => {
     await page.goto(LESSON);
-    const q = page.locator('[data-qid="Q-4.6-alpha-same"]');
+    const q = page.locator('[data-qid="Q-4.6-double-speed"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(q);
-    await q.locator('label', { hasText: 'כי המטען שלו כפול' }).click();
+    await q.locator('.q-choices').first().locator('label', { hasText: 'השני חוזר ראשון' }).click();
+    await q.locator('.reasons label', { hasText: 'הכוח על המהיר כפול' }).click();
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-wrong/);
     const a = (await progress(page)).attempts.at(-1);
-    expect(a).toMatchObject({ qid: 'Q-4.6-alpha-same', correct: false, confident: true, misconception: 'MC-selector-depends-on-mass', lesson: '4.6' });
+    expect(a).toMatchObject({ qid: 'Q-4.6-double-speed', correct: false, confident: true, misconception: 'MC-orbit-period-depends-on-speed', lesson: '4.6' });
   });
 });

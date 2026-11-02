@@ -1,28 +1,63 @@
 # Lesson 4.6 terms. Format and rules: see glossary/1-5.yaml.
-# `ion`, `isotope`, `deuteron` and `mass-spectrometer` come from lesson 4.5. `charge-to-mass-ratio` is defined here.
+# The mechanics terms (uniform circular motion, centripetal acceleration, period) are first defined here:
+# no earlier lesson needed them as glossary entries.
 
-- id: crossed-fields
-  term: שדות מוצלבים
-  en: crossed (perpendicular) electric and magnetic fields
-  definition: 'שדה חשמלי ושדה מגנטי באותו אזור, ניצבים זה לזה. מטען שנע בניצב לשניהם מקבל כוח חשמלי qE וכוח מגנטי qvB לאורך אותו קו, ואפשר לכוון את השדות כך שהכוחות יהיו מנוגדים.'
+- id: uniform-circular-motion
+  term: תנועה מעגלית קצובה
+  en: uniform circular motion
+  definition: 'תנועה במסלול מעגלי במהירות שגודלה קבוע. כיוון המהירות משתנה כל הזמן, ולכן יש תאוצה, והכוח השקול מכוון כל הזמן אל מרכז המעגל. מוכרת מהמכניקה.'
   lesson: '4.6'
 
-- id: velocity-selector
-  term: בורר מהירויות
-  en: velocity selector
-  definition: 'התקן של שדות מוצלבים: לוחות טעונים ושדה מגנטי ניצב לשדה שביניהם, וסדק ביציאה. רק חלקיקים במהירות v = E/B, שבה הכוח החשמלי והכוח המגנטי מאזנים זה את זה, עוברים ישר ויוצאים בסדק, בלי תלות במטען, במסה ובסימן שלהם.'
+- id: centripetal-acceleration
+  term: תאוצה צנטריפטלית
+  en: centripetal acceleration
+  symbol: a
+  unit: m/s²
+  definition: 'התאוצה של גוף בתנועה מעגלית קצובה. היא מכוונת אל מרכז המעגל, וגודלה a = v²/r. לפי החוק השני של ניוטון, הכוח השקול על הגוף מכוון אל המרכז וגודלו mv²/r. נקראת גם תאוצה רדיאלית.'
   lesson: '4.6'
 
-- id: bainbridge-spectrometer
-  term: ספקטרומטר של ביינברידג׳
-  en: Bainbridge mass spectrometer
-  definition: 'ספקטרומטר מסות שבו היונים עוברים קודם בבורר מהירויות, ולכן לכולם אותה מהירות v = E/B, ואחר כך נכנסים לשדה מגנטי שני B′, עושים חצי מעגל ופוגעים בגלאי. הרדיוס r = mE/(qBB′) יחסי ליחס בין המסה למטען, וכך מפרידים איזוטופים.'
+- id: period
+  term: זמן מחזור
+  en: period
+  symbol: T
+  unit: s
+  definition: 'הזמן שלוקח לגוף בתנועה מעגלית להשלים סיבוב אחד. בתנועה מעגלית קצובה T = 2πr/v: היקף המעגל חלקי גודל המהירות.'
   lesson: '4.6'
 
-- id: charge-to-mass-ratio
-  term: היחס בין המטען למסה
-  en: charge-to-mass ratio
-  symbol: q/m
-  unit: C/kg
-  definition: 'המטען של חלקיק מחולק במסה שלו. בשדה מגנטי ובשדה חשמלי התאוצה של חלקיק תלויה רק ביחס הזה, ולכן שני חלקיקים עם אותו q/m, כמו דויטרון וחלקיק אלפא, נעים באותו מסלול.'
+- id: ion
+  term: יון
+  en: ion
+  definition: 'אטום (או מולקולה) שאיבד אלקטרונים או קיבל אלקטרונים, ולכן הוא טעון. אטום שאיבד אלקטרון אחד הוא יון חיובי שהמטען שלו +e.'
+  lesson: '4.6'
+
+- id: mass-number
+  term: מספר מסה
+  en: mass number
+  symbol: A
+  definition: 'מספר הפרוטונים והנייטרונים יחד בגרעין של אטום. מסת הנייטרון קרובה מאוד למסת הפרוטון, והאלקטרונים קלים מאוד, ולכן מסת האטום בקירוב A·m_p. כותבים אותו משמאל למעלה: ²⁰Ne הוא נאון עם מספר מסה 20.'
+  lesson: '4.6'
+
+- id: isotope
+  term: איזוטופ
+  en: isotope
+  definition: 'אטומים של אותו יסוד, כלומר עם אותו מספר פרוטונים ואותן תכונות כימיות, שנבדלים במספר הנייטרונים, ולכן במסה. לדוגמה, ²⁰Ne ו-²²Ne הם שני איזוטופים של נאון.'
+  lesson: '4.6'
+
+- id: deuteron
+  term: דויטרון
+  en: deuteron
+  definition: 'הגרעין של מימן כבד (²H): פרוטון ונייטרון. המטען שלו +e, והמסה שלו בערך פי 2 ממסת הפרוטון.'
+  lesson: '4.6'
+
+- id: mass-spectrometer
+  term: ספקטרומטר מסות
+  en: mass spectrometer
+  definition: 'מכשיר ששוקל יונים: מאיץ אותם במתח U, שולח אותם לשדה מגנטי אחיד, ומודד את רדיוס המעגל שלהם, r = √(2mU/q)/B. יונים כבדים יותר נעים במעגל גדול יותר, ולכן נוחתים רחוק יותר מהסדק.'
+  reject: [ספקטרומטר מסה, ספקטרוגרף מסות]
+  lesson: '4.6'
+
+- id: cyclotron
+  term: ציקלוטרון
+  en: cyclotron
+  definition: 'מאיץ חלקיקים: שני חצאי קופסה בשדה מגנטי אחיד, ומתח מתחלף ביניהם. החלקיק מקבל דחיפה בכל חציית רווח, נע בחצאי מעגלים שהולכים וגדלים, וזמן המחזור שלו לא משתנה, ולכן המתח יכול להתחלף בקצב קבוע. נושא העשרה.'
   lesson: '4.6'
