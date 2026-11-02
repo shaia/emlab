@@ -363,9 +363,13 @@ const texts = [
   ...workbooks.map(({ file, data }) => ({ where: file, text: JSON.stringify(data) })),
   ...summaries.map((sm) => ({ where: sm.file, text: sm.body })),
 ];
+/** A rejected phrase also matches in the definite form, where every word may take ה ("המטען האלמנטרי"). */
+const rejectPattern = (bad: string) =>
+  new RegExp(bad.trim().split(/\s+/).map((w) => `ה?${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`).join('\\s+'));
 for (const g of glossary) {
   for (const bad of g.reject ?? []) {
-    for (const t of texts) if (t.text.includes(bad)) fail(t.where, `"${bad}": the course spells this "${g.term}"`);
+    const re = rejectPattern(bad);
+    for (const t of texts) if (re.test(t.text)) fail(t.where, `"${bad}": the course spells this "${g.term}"`);
   }
 }
 
