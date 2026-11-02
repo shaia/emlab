@@ -1,0 +1,471 @@
+# Workbook, lesson 4.5 (circular motion in a magnetic field, mass spectrometer). Format and rules: see
+# .claude/CLAUDE.md, "Worked examples, workbook".
+# Every number was recomputed with src/physics/magnetism.ts (orbitRadius, orbitPeriod, lorentzMagnitude,
+# speedFromVoltage, spectrometerRadius) and src/physics/orbits.ts (edgeCrossing, ionMass, landingDistance);
+# script wb.ts in the session scratchpad. Ion masses are A·m_p, as the lesson states.
+# In a >- block, consecutive lines fold into one paragraph: every part (א, ב, …) starts after a blank line.
+
+lesson: '4.5'
+practice:
+  - id: W-4.5-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-4.5-1]
+    prompt: >-
+      אלקטרון נע במהירות $4\cdot10^{6}\,\text{m/s}$ בניצב לשדה מגנטי אחיד של $1\,\text{mT}$.
+
+      א. מה גודל הכוח המגנטי על האלקטרון?
+
+      ב. מה רדיוס המסלול שלו?
+
+      ג. בדקו שהכוח המגנטי שווה ל-$mv^2/r$.
+    answer: >-
+      א. $6.4\cdot10^{-16}\,\text{N}$.
+
+      ב. $2.3\,\text{cm}$ ($0.0228\,\text{m}$).
+
+      ג. $mv^2/r = 6.4\cdot10^{-16}\,\text{N}$, כמו הכוח המגנטי.
+    solution:
+      - kind: given
+        text: >-
+          $q = 1.6\cdot10^{-19}\,\text{C}$, $m_e = 9.1\cdot10^{-31}\,\text{kg}$, $v = 4\cdot10^{6}\,\text{m/s}$, $B = 1\,\text{mT} = 10^{-3}\,\text{T}$, $\alpha = 90^\circ$.
+      - kind: formula
+        text: >-
+          $F = qvB\sin\alpha$, ו-$r = \dfrac{mv}{qB}$ (מ-$qvB = \dfrac{mv^2}{r}$).
+      - kind: substitution
+        text: >-
+          א. $F = 1.6\cdot10^{-19}\cdot4\cdot10^{6}\cdot10^{-3} = 6.4\cdot10^{-16}\,\text{N}$.
+
+          ב. $r = \dfrac{9.1\cdot10^{-31}\cdot4\cdot10^{6}}{1.6\cdot10^{-19}\cdot10^{-3}} = 0.02275\,\text{m}$.
+
+          ג. $\dfrac{mv^2}{r} = \dfrac{9.1\cdot10^{-31}\cdot(4\cdot10^{6})^2}{0.02275} = 6.4\cdot10^{-16}\,\text{N}$.
+      - kind: result
+        text: >-
+          א. $6.4\cdot10^{-16}\,\text{N}$. ב. $r \approx 2.3\,\text{cm}$. ג. השוויון מתקיים: הכוח המגנטי הוא הכוח השקול כלפי המרכז.
+
+  - id: W-4.5-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-4.5-3, OBJ-4.5-1]
+    prompt: >-
+      חלקיק טעון נע במעגל במישור הדף, בשדה מגנטי אחיד ⊗ לתוך הדף. כשהוא בנקודה הימנית ביותר של המעגל, הוא נע כלפי מעלה.
+
+      א. לאיזה כיוון פועל עליו הכוח המגנטי ברגע הזה?
+
+      ב. האם החלקיק מסתובב עם כיוון השעון או נגדו?
+
+      ג. מה סימן המטען שלו? נמקו בעזרת כלל כף יד ימין.
+    answer: >-
+      א. שמאלה, אל מרכז המעגל.
+
+      ב. נגד כיוון השעון.
+
+      ג. חיובי.
+    solution:
+      - kind: given
+        text: >-
+          השדה ⊗, והחלקיק בנקודה הימנית ביותר של המעגל, נע כלפי מעלה.
+      - kind: reasoning
+        text: >-
+          א. בתנועה מעגלית קצובה הכוח השקול מכוון אל מרכז המעגל. מהנקודה הימנית ביותר, המרכז נמצא משמאל. הכוח המגנטי הוא הכוח היחיד, ולכן הוא שמאלה.
+      - kind: reasoning
+        text: >-
+          ב. בנקודה הימנית ביותר החלקיק נע כלפי מעלה, כלומר הוא עובר מהחלק התחתון של המעגל לחלק העליון בצד ימין: זה סיבוב נגד כיוון השעון.
+      - kind: reasoning
+        text: >-
+          ג. נבדוק מה הכוח היה על מטען חיובי: לפי כלל כף יד ימין, האצבעות לתוך הדף (השדה), האגודל כלפי מעלה (המהירות), והכוח יוצא מכף היד שמאלה. זה בדיוק הכוח שמצאנו בסעיף א, ולכן המטען חיובי. על מטען שלילי הכוח היה ימינה, והמעגל היה נמצא מימין.
+      - kind: result
+        text: >-
+          א. שמאלה. ב. נגד כיוון השעון. ג. חיובי.
+
+  - id: W-4.5-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-4.5-2]
+    prompt: >-
+      פרוטונים נעים במעגלים בשדה מגנטי אחיד של $0.4\,\text{T}$, במהירויות שונות.
+
+      א. מה זמן המחזור של פרוטון שמהירותו $10^{5}\,\text{m/s}$? ושל פרוטון שמהירותו $10^{6}\,\text{m/s}$?
+
+      ב. כמה סיבובים משלים פרוטון כזה במילי-שנייה אחת?
+    answer: >-
+      א. לשניהם $1.64\cdot10^{-7}\,\text{s}$.
+
+      ב. בערך $6.1\cdot10^{3}$ סיבובים.
+    solution:
+      - kind: given
+        text: >-
+          $m_p = 1.67\cdot10^{-27}\,\text{kg}$, $q = 1.6\cdot10^{-19}\,\text{C}$, $B = 0.4\,\text{T}$, $t = 1\,\text{ms} = 10^{-3}\,\text{s}$.
+      - kind: formula
+        text: >-
+          $T = \dfrac{2\pi m}{qB}$. המהירות לא מופיעה בנוסחה: היא קובעת את הרדיוס, לא את זמן המחזור. מספר הסיבובים בזמן $t$ הוא $N = \dfrac{t}{T}$.
+      - kind: substitution
+        text: >-
+          א. $T = \dfrac{2\pi\cdot1.67\cdot10^{-27}}{1.6\cdot10^{-19}\cdot0.4} = 1.64\cdot10^{-7}\,\text{s}$, לשתי המהירויות. (הפרוטון המהיר נע במעגל גדול פי 10.)
+
+          ב. $N = \dfrac{10^{-3}}{1.64\cdot10^{-7}} \approx 6.1\cdot10^{3}$.
+      - kind: result
+        text: >-
+          א. $T = 1.64\cdot10^{-7}\,\text{s}$ לשניהם. ב. כ-$6100$ סיבובים.
+
+  - id: W-4.5-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-4.5-1, OBJ-4.5-2]
+    prompt: >-
+      פרוטון נע במעגל ברדיוס $10\,\text{cm}$ בשדה מגנטי אחיד של $0.2\,\text{T}$.
+
+      א. מה מהירות הפרוטון?
+
+      ב. מה האנרגיה הקינטית שלו, בג'אול ובאלקטרון-וולט?
+
+      ג. מה זמן המחזור שלו?
+    answer: >-
+      א. $1.92\cdot10^{6}\,\text{m/s}$.
+
+      ב. $3.07\cdot10^{-15}\,\text{J}$, כלומר כ-$1.9\cdot10^{4}\,\text{eV}$.
+
+      ג. $3.28\cdot10^{-7}\,\text{s}$.
+    solution:
+      - kind: given
+        text: >-
+          $r = 0.1\,\text{m}$, $B = 0.2\,\text{T}$, $q = 1.6\cdot10^{-19}\,\text{C}$, $m_p = 1.67\cdot10^{-27}\,\text{kg}$.
+      - kind: formula
+        text: >-
+          $r = \dfrac{mv}{qB}$, $K = \tfrac12 mv^2$, $1\,\text{eV} = 1.6\cdot10^{-19}\,\text{J}$, $T = \dfrac{2\pi m}{qB}$.
+      - kind: manipulation
+        text: >-
+          כופלים את $r = \dfrac{mv}{qB}$ ב-$qB$ ומחלקים ב-$m$, כדי לבודד את המהירות: $v = \dfrac{qBr}{m}$.
+      - kind: substitution
+        text: >-
+          א. $v = \dfrac{1.6\cdot10^{-19}\cdot0.2\cdot0.1}{1.67\cdot10^{-27}} = 1.92\cdot10^{6}\,\text{m/s}$.
+
+          ב. $K = \tfrac12\cdot1.67\cdot10^{-27}\cdot(1.916\cdot10^{6})^2 = 3.07\cdot10^{-15}\,\text{J}$, ובאלקטרון-וולט $\dfrac{3.07\cdot10^{-15}}{1.6\cdot10^{-19}} \approx 1.92\cdot10^{4}\,\text{eV}$.
+
+          ג. $T = \dfrac{2\pi\cdot1.67\cdot10^{-27}}{1.6\cdot10^{-19}\cdot0.2} = 3.28\cdot10^{-7}\,\text{s}$. (בדיקה: $2\pi r/v = 2\pi\cdot0.1/1.916\cdot10^{6}$, אותו מספר.)
+      - kind: result
+        text: >-
+          א. $v \approx 1.9\cdot10^{6}\,\text{m/s}$. ב. $K \approx 3.1\cdot10^{-15}\,\text{J} \approx 19\,\text{keV}$. ג. $T \approx 3.3\cdot10^{-7}\,\text{s}$.
+
+  - id: W-4.5-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-4.5-2, OBJ-4.5-4]
+    prompt: >-
+      פרוטון ו**דויטרון** (גרעין של מימן כבד: פרוטון ונייטרון, מטען $+e$, מסה $2m_p$ בקירוב) מואצים ממנוחה באותו מתח, ונכנסים בניצב לאותו שדה מגנטי אחיד. קבעו ונמקו, בלי להציב מספרים:
+
+      א. למי מהם מהירות גדולה יותר בכניסה לשדה, ופי כמה?
+
+      ב. למי מהם רדיוס גדול יותר, ופי כמה?
+
+      ג. למי מהם זמן מחזור ארוך יותר, ופי כמה?
+    answer: >-
+      א. לפרוטון, פי $\sqrt2 \approx 1.41$.
+
+      ב. לדויטרון, פי $\sqrt2$.
+
+      ג. לדויטרון, פי 2.
+    solution:
+      - kind: given
+        text: >-
+          אותו מטען $e$, אותו מתח $U$, אותו שדה $B$; $m_d = 2m_p$.
+      - kind: formula
+        text: >-
+          $v = \sqrt{\dfrac{2qU}{m}}$, $r = \dfrac{1}{B}\sqrt{\dfrac{2mU}{q}}$, $T = \dfrac{2\pi m}{qB}$.
+      - kind: reasoning
+        text: >-
+          א. שניהם מקבלים אותה אנרגיה קינטית, $eU$. באותה אנרגיה $v \propto 1/\sqrt{m}$, ולכן הפרוטון מהיר פי $\sqrt{2}$.
+      - kind: reasoning
+        text: >-
+          ב. $r \propto \sqrt{m}$ כש-$q$, $U$ ו-$B$ זהים: הדויטרון איטי פי $\sqrt2$, אבל כבד פי 2, ו-$r = mv/(qB)$ גדל פי $2/\sqrt2 = \sqrt2$.
+      - kind: reasoning
+        text: >-
+          ג. $T \propto m/q$, והמהירות לא משנה אותו: לדויטרון יחס $m/q$ כפול, ולכן זמן מחזור כפול.
+      - kind: result
+        text: >-
+          א. הפרוטון, פי $\sqrt2$. ב. הדויטרון, פי $\sqrt2$. ג. הדויטרון, פי 2.
+
+  - id: W-4.5-06
+    level: mid
+    qualitative: false
+    objectives: [OBJ-4.5-3]
+    prompt: >-
+      שדה מגנטי אחיד של $0.2\,\text{T}$, ⊗ לתוך הדף, נמצא רק מימין לגבול אנכי. פרוטון במהירות $6\cdot10^{5}\,\text{m/s}$ נכנס לשדה כשהמהירות שלו מכוונת ימינה ולמעלה, בזווית של $30^\circ$ לאנך לגבול.
+
+      א. מה רדיוס המסלול בשדה?
+
+      ב. מעל או מתחת לנקודת הכניסה יוצא הפרוטון, ובאיזה מרחק ממנה?
+
+      ג. באיזו זווית לאנך הוא יוצא, ולאיזה כיוון הוא נע?
+
+      ד. כמה זמן הוא בשדה? רמז: בכמה מעלות מסתובבת המהירות שלו?
+    answer: >-
+      א. $3.13\,\text{cm}$.
+
+      ב. מעל נקודת הכניסה, במרחק $5.42\,\text{cm}$.
+
+      ג. $30^\circ$ לאנך, שמאלה ולמעלה.
+
+      ד. $1.09\cdot10^{-7}\,\text{s}$ (שליש זמן מחזור).
+    solution:
+      - kind: given
+        text: >-
+          $B = 0.2\,\text{T}$, $v = 6\cdot10^{5}\,\text{m/s}$, $\varphi = 30^\circ$ לאנך, $q = 1.6\cdot10^{-19}\,\text{C}$, $m_p = 1.67\cdot10^{-27}\,\text{kg}$.
+      - kind: formula
+        text: >-
+          $r = \dfrac{mv}{qB}$, $T = \dfrac{2\pi m}{qB}$. המסלול בשדה סימטרי ביחס לישר שעובר דרך מרכז המעגל בניצב לגבול, ולכן המרחק בין הכניסה ליציאה הוא $d = 2r\cos\varphi$, והפרוטון יוצא באותה זווית לאנך.
+      - kind: substitution
+        text: >-
+          א. $r = \dfrac{1.67\cdot10^{-27}\cdot6\cdot10^{5}}{1.6\cdot10^{-19}\cdot0.2} = 0.0313\,\text{m}$.
+
+          ב. לפי כלל כף יד ימין, פרוטון בשדה ⊗ שנע ימינה מרגיש כוח כלפי מעלה: הוא מסתובב נגד כיוון השעון ויוצא מעל נקודת הכניסה. $d = 2\cdot3.13\cdot\cos30^\circ = 5.42\,\text{cm}$.
+      - kind: reasoning
+        text: >-
+          ג–ד. המהירות בכניסה מכוונת $30^\circ$ מעל הכיוון ימינה, וביציאה $30^\circ$ מעל הכיוון שמאלה: היא הסתובבה נגד כיוון השעון ב-$180^\circ - 2\cdot30^\circ = 120^\circ$, שליש סיבוב. לכן הזמן בשדה הוא $\dfrac{T}{3}$, עם $T = \dfrac{2\pi\cdot1.67\cdot10^{-27}}{1.6\cdot10^{-19}\cdot0.2} = 3.28\cdot10^{-7}\,\text{s}$: $t = 1.09\cdot10^{-7}\,\text{s}$. (בכניסה מתחת לאנך, באותה זווית, הקשת הייתה $240^\circ$ והזמן כפול.)
+      - kind: result
+        text: >-
+          א. $3.13\,\text{cm}$. ב. מעל נקודת הכניסה, $5.42\,\text{cm}$. ג. $30^\circ$ לאנך, שמאלה ולמעלה. ד. $1.09\cdot10^{-7}\,\text{s}$.
+
+  - id: W-4.5-07
+    level: mid
+    qualitative: false
+    objectives: [OBJ-4.5-4]
+    prompt: >-
+      בספקטרומטר מסות השדה המגנטי הוא $0.3\,\text{T}$. איזה מתח מאיץ צריך כדי שיוני ²⁴Mg⁺ (מגנזיום, מסה $24m_p$ בקירוב, מטען $+e$) ינחתו $20\,\text{cm}$ מהסדק?
+    answer: 'כ-$1800\,\text{V}$ ($1.80\cdot10^{3}\,\text{V}$).'
+    solution:
+      - kind: given
+        text: >-
+          $B = 0.3\,\text{T}$, $x = 2r = 0.2\,\text{m}$, ולכן $r = 0.1\,\text{m}$; $m = 24\cdot1.67\cdot10^{-27} = 4.008\cdot10^{-26}\,\text{kg}$, $q = 1.6\cdot10^{-19}\,\text{C}$.
+      - kind: formula
+        text: >-
+          $r = \dfrac{1}{B}\sqrt{\dfrac{2mU}{q}}$.
+      - kind: manipulation
+        text: >-
+          כופלים ב-$B$ ומעלים בריבוע: $r^2B^2 = \dfrac{2mU}{q}$. כופלים ב-$q$ ומחלקים ב-$2m$: $U = \dfrac{qB^2r^2}{2m}$.
+      - kind: substitution
+        text: >-
+          $U = \dfrac{1.6\cdot10^{-19}\cdot0.3^2\cdot0.1^2}{2\cdot4.008\cdot10^{-26}} = 1.80\cdot10^{3}\,\text{V}$.
+      - kind: result
+        text: >-
+          $U \approx 1800\,\text{V}$.
+
+  - id: W-4.5-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-4.5-1, OBJ-4.5-3, OBJ-4.5-2]
+    prompt: >-
+      אלקטרונים יוצאים כמעט ממנוחה מתותח אלקטרונים, ומואצים במתח של $200\,\text{V}$. הם נעים ימינה ונכנסים, בניצב לגבול אנכי, לאזור שבו יש שדה מגנטי אחיד של $1.5\,\text{mT}$, ⊙ החוצה מהדף.
+
+      א. מה מהירות האלקטרונים בכניסה לשדה?
+
+      ב. מעל או מתחת לנקודת הכניסה הם יוצאים מהשדה, ובאיזה מרחק ממנה?
+
+      ג. כמה זמן הם נמצאים בשדה?
+
+      ד. מגדילים את המתח המאיץ פי 4. מה משתנה בתשובות לסעיפים ב ו-ג?
+    answer: >-
+      א. $8.39\cdot10^{6}\,\text{m/s}$.
+
+      ב. מעל נקודת הכניסה, במרחק $6.36\,\text{cm}$.
+
+      ג. $1.19\cdot10^{-8}\,\text{s}$.
+
+      ד. המרחק גדל פי 2, ל-$12.7\,\text{cm}$; הזמן בשדה לא משתנה.
+    solution:
+      - kind: given
+        text: >-
+          $U = 200\,\text{V}$, $B = 1.5\cdot10^{-3}\,\text{T}$, $q = 1.6\cdot10^{-19}\,\text{C}$, $m_e = 9.1\cdot10^{-31}\,\text{kg}$.
+      - kind: formula
+        text: >-
+          מהתותח (שיעור 2.4): $\tfrac12 mv^2 = qU$, כלומר $v = \sqrt{\dfrac{2qU}{m}}$. בשדה: $r = \dfrac{mv}{qB}$, $T = \dfrac{2\pi m}{qB}$. בכניסה בניצב לגבול המסלול בשדה הוא חצי מעגל.
+      - kind: substitution
+        text: >-
+          א. $v = \sqrt{\dfrac{2\cdot1.6\cdot10^{-19}\cdot200}{9.1\cdot10^{-31}}} = 8.39\cdot10^{6}\,\text{m/s}$.
+
+          ב. $r = \dfrac{9.1\cdot10^{-31}\cdot8.386\cdot10^{6}}{1.6\cdot10^{-19}\cdot1.5\cdot10^{-3}} = 0.0318\,\text{m}$, ו-$d = 2r = 6.36\,\text{cm}$.
+      - kind: reasoning
+        text: >-
+          ב (כיוון). לפי כלל כף יד ימין, על מטען חיובי שנע ימינה בשדה ⊙ הכוח כלפי מטה. על האלקטרון הכוח הפוך: כלפי מעלה. הוא מתכופף למעלה ויוצא מעל נקודת הכניסה, נע שמאלה.
+      - kind: substitution
+        text: >-
+          ג. $t = \dfrac{T}{2} = \dfrac{\pi\cdot9.1\cdot10^{-31}}{1.6\cdot10^{-19}\cdot1.5\cdot10^{-3}} = 1.19\cdot10^{-8}\,\text{s}$.
+      - kind: reasoning
+        text: >-
+          ד. מתח גדול פי 4 נותן אנרגיה גדולה פי 4, ולכן מהירות גדולה פי $\sqrt4 = 2$. הרדיוס $mv/(qB)$ גדל פי 2, ו-$d = 12.7\,\text{cm}$. הזמן בשדה הוא עדיין חצי זמן מחזור, ו-$T$ לא תלוי במהירות.
+      - kind: result
+        text: >-
+          א. $8.39\cdot10^{6}\,\text{m/s}$. ב. מעל נקודת הכניסה, $6.36\,\text{cm}$. ג. $1.19\cdot10^{-8}\,\text{s}$. ד. $d$ גדל פי 2; הזמן לא משתנה.
+
+  - id: W-4.5-09
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-4.5-4]
+    prompt: >-
+      לספקטרומטר מסות נכנסת תערובת של יונים חד-מטעניים (מטען $+e$). המתח המאיץ $1200\,\text{V}$, והשדה המגנטי $0.25\,\text{T}$. על הגלאי מופיעים שלושה כתמים, במרחקים $13.9\,\text{cm}$, $15.0\,\text{cm}$ ו-$16.0\,\text{cm}$ מהסדק.
+
+      א. מצאו את המסה ואת מספר המסה של היונים בכל כתם.
+
+      ב. הכתמים נוצרו מפחמן (מספר מסה 12), חנקן (14) וחמצן (16). התאימו כל כתם ליסוד.
+
+      ג. איזה מתח מאיץ היה מביא את יוני החמצן לנחות במקום שבו נחתו יוני הפחמן?
+    answer: >-
+      א. מספרי מסה 12, 14 ו-16 (מסות כ-$2.0\cdot10^{-26}$, $2.3\cdot10^{-26}$ ו-$2.7\cdot10^{-26}\,\text{kg}$).
+
+      ב. $13.9\,\text{cm}$ פחמן, $15.0\,\text{cm}$ חנקן, $16.0\,\text{cm}$ חמצן.
+
+      ג. $900\,\text{V}$.
+    solution:
+      - kind: given
+        text: >-
+          $q = 1.6\cdot10^{-19}\,\text{C}$, $U = 1200\,\text{V}$, $B = 0.25\,\text{T}$, $x_1 = 0.139\,\text{m}$, $x_2 = 0.150\,\text{m}$, $x_3 = 0.160\,\text{m}$.
+      - kind: formula
+        text: >-
+          $x = 2r = \dfrac{2}{B}\sqrt{\dfrac{2mU}{q}}$.
+      - kind: manipulation
+        text: >-
+          מעלים בריבוע: $x^2 = \dfrac{8mU}{qB^2}$. כופלים ב-$qB^2$ ומחלקים ב-$8U$: $m = \dfrac{qB^2x^2}{8U}$, ומספר המסה $A = \dfrac{m}{m_p}$.
+      - kind: substitution
+        text: >-
+          א. $m_1 = \dfrac{1.6\cdot10^{-19}\cdot0.25^2\cdot0.139^2}{8\cdot1200} = 2.01\cdot10^{-26}\,\text{kg}$, ו-$A_1 = \dfrac{2.01\cdot10^{-26}}{1.67\cdot10^{-27}} \approx 12.0$. באותה דרך $m_2 = 2.34\cdot10^{-26}\,\text{kg}$, $A_2 \approx 14.0$, ו-$m_3 = 2.67\cdot10^{-26}\,\text{kg}$, $A_3 \approx 16.0$.
+      - kind: reasoning
+        text: >-
+          ב. נקודת הנחיתה גדלה עם המסה, ולכן הכתם הקרוב לסדק הוא של היון הקל, פחמן, והרחוק של הכבד, חמצן.
+      - kind: reasoning
+        text: >-
+          ג. כדי שיוני החמצן ינחתו באותו $x$, צריך ש-$mU$ יהיה אותו דבר, כי $x^2 = \dfrac{8mU}{qB^2}$ ו-$q$ ו-$B$ לא משתנים. לכן $U_O = U\cdot\dfrac{m_C}{m_O} = 1200\cdot\dfrac{12}{16} = 900\,\text{V}$.
+      - kind: result
+        text: >-
+          א. $A = 12$, $14$, $16$. ב. פחמן, חנקן, חמצן, לפי הסדר מהסדק. ג. $900\,\text{V}$.
+
+  - id: W-4.5-10
+    level: bagrut
+    qualitative: true
+    objectives: [OBJ-4.5-4, OBJ-4.5-2]
+    prompt: >-
+      קרן שמכילה פרוטונים, דויטרונים (מטען $+e$, מסה $2m_p$) וחלקיקי אלפא (מטען $+2e$, מסה $4m_p$) מואצת ממנוחה באותו מתח, ונכנסת דרך סדק, בניצב, לאותו שדה מגנטי אחיד של ספקטרומטר מסות. קבעו ונמקו, בלי להציב מספרים:
+
+      א. סדרו את שלושת סוגי החלקיקים לפי מרחק הנחיתה מהסדק.
+
+      ב. סדרו אותם לפי הזמן שהם נמצאים בשדה.
+
+      ג. כמה כתמים יופיעו על הגלאי? מה אפשר ומה אי אפשר ללמוד מהם על הקרן?
+    answer: >-
+      א. הפרוטונים הכי קרוב; הדויטרונים וחלקיקי האלפא נוחתים יחד, רחוק פי $\sqrt2$.
+
+      ב. לפרוטונים הזמן הקצר ביותר; לדויטרונים ולחלקיקי האלפא זמן כפול, שווה.
+
+      ג. שני כתמים. אפשר לדעת שיש פרוטונים, אבל אי אפשר להבחין בין דויטרונים לחלקיקי אלפא, כי הספקטרומטר מודד רק את $m/q$.
+    solution:
+      - kind: formula
+        text: >-
+          $r = \dfrac{1}{B}\sqrt{\dfrac{2mU}{q}}$, כלומר $r \propto \sqrt{m/q}$ כש-$U$ ו-$B$ זהים. הזמן בשדה הוא חצי זמן מחזור, $\dfrac{T}{2} = \dfrac{\pi m}{qB}$, כלומר $\propto m/q$.
+      - kind: reasoning
+        text: >-
+          א. היחס $m/q$: לפרוטון $m_p/e$; לדויטרון $2m_p/e$; לחלקיק אלפא $4m_p/(2e) = 2m_p/e$. לכן $r_p : r_d : r_\alpha = 1 : \sqrt2 : \sqrt2$. הדויטרון וחלקיק האלפא נוחתים באותה נקודה.
+      - kind: reasoning
+        text: >-
+          ב. הזמן פרופורציוני ל-$m/q$: $1 : 2 : 2$. הדויטרון וחלקיק האלפא מגיעים לגלאי באותו רגע. (המהירויות שלהם בכניסה שונות מזו של הפרוטון, אבל זמן המחזור לא תלוי במהירות.)
+      - kind: reasoning
+        text: >-
+          ג. כתם אחד לפרוטונים, וכתם אחד משותף לדויטרונים ולחלקיקי האלפא. הספקטרומטר מבחין בין חלקיקים רק אם היחס $m/q$ שלהם שונה. שינוי המתח או השדה מזיז את הכתם המשותף, אבל לא מפריד אותו, כי שני החלקיקים תלויים באותו יחס.
+      - kind: result
+        text: >-
+          א. פרוטונים הכי קרוב; דויטרונים ואלפא יחד. ב. פרוטונים הכי קצר; דויטרונים ואלפא יחד, פי 2. ג. שני כתמים; דויטרונים ואלפא לא ניתנים להפרדה.
+
+challenge:
+  - id: W-4.5-c1
+    stars: 1
+    objectives: [OBJ-4.5-4, OBJ-4.5-2]
+    prompt: >-
+      קרן מעורבת של פרוטונים ודויטרונים (דויטרון: איזוטופ של מימן, מטען $+e$, מסה $2m_p$ בקירוב) מואצת ממנוחה במתח של $1.00\cdot10^{4}\,\text{V}$. הקרן נכנסת דרך סדק לשדה מגנטי אחיד של $0.500\,\text{T}$, בניצב לשדה, וכל חלקיק עובר בשדה חצי מעגל.
+
+      א. מה המהירות של כל סוג חלקיק בכניסה לשדה?
+
+      ב. מה המרחק בין קרן הפרוטונים לקרן הדויטרונים אחרי חצי המעגל?
+
+      ג. איזו קרן משלימה את חצי המעגל ראשונה, ובכמה זמן קודם?
+    answer: >-
+      א. $1.38\cdot10^{6}\,\text{m/s}$ לפרוטונים, $9.79\cdot10^{5}\,\text{m/s}$ לדויטרונים.
+
+      ב. $2.39\,\text{cm}$.
+
+      ג. הפרוטונים, אחרי $6.56\cdot10^{-8}\,\text{s}$; הדויטרונים אחרי $1.31\cdot10^{-7}\,\text{s}$, כלומר $6.56\cdot10^{-8}\,\text{s}$ אחריהם.
+    solution:
+      - kind: given
+        text: >-
+          $U = 10^{4}\,\text{V}$, $B = 0.5\,\text{T}$, $q = 1.6\cdot10^{-19}\,\text{C}$, $m_p = 1.67\cdot10^{-27}\,\text{kg}$, $m_d = 3.34\cdot10^{-27}\,\text{kg}$.
+      - kind: formula
+        text: >-
+          $v = \sqrt{\dfrac{2qU}{m}}$, $r = \dfrac{mv}{qB} = \dfrac{1}{B}\sqrt{\dfrac{2mU}{q}}$. אחרי חצי מעגל כל חלקיק רחוק מהסדק קוטר אחד, $2r$, ולכן המרחק בין הקרניים הוא $2(r_d - r_p)$. הזמן לחצי מעגל $\dfrac{\pi m}{qB}$.
+      - kind: substitution
+        text: >-
+          א. $v_p = \sqrt{\dfrac{2\cdot1.6\cdot10^{-19}\cdot10^{4}}{1.67\cdot10^{-27}}} = 1.38\cdot10^{6}\,\text{m/s}$, ו-$v_d = \dfrac{v_p}{\sqrt2} = 9.79\cdot10^{5}\,\text{m/s}$.
+
+          ב. $r_p = \dfrac{1.67\cdot10^{-27}\cdot1.384\cdot10^{6}}{1.6\cdot10^{-19}\cdot0.5} = 0.0289\,\text{m}$, ו-$r_d = \sqrt2\,r_p = 0.0409\,\text{m}$. המרחק: $2(0.0409 - 0.0289) = 0.0239\,\text{m}$.
+
+          ג. $t_p = \dfrac{\pi\cdot1.67\cdot10^{-27}}{1.6\cdot10^{-19}\cdot0.5} = 6.56\cdot10^{-8}\,\text{s}$, ו-$t_d = 2t_p = 1.31\cdot10^{-7}\,\text{s}$.
+      - kind: reasoning
+        text: >-
+          ג (הסבר). הדויטרון איטי פי $\sqrt2$ ועובר חצי מעגל גדול פי $\sqrt2$, ולכן לוקח לו זמן פי 2. התוצאה תלויה רק ביחס $m/q$, כמו בנוסחה $T = 2\pi m/(qB)$.
+      - kind: result
+        text: >-
+          א. $1.38\cdot10^{6}$ ו-$9.79\cdot10^{5}\,\text{m/s}$. ב. $2.39\,\text{cm}$. ג. הפרוטונים, $6.56\cdot10^{-8}\,\text{s}$ לפני הדויטרונים.
+    source:
+      name: British Physics Olympiad (BPhO), Round 1
+      year: 2013
+      problem: 'Round 1, November 2013, Section 1, Question 1(g)'
+      url: https://www.bpho.org.uk/Papers/R1/2013Nov_R1_S1.pdf
+      verified: '2026-11-02'
+      adapted: true
+
+  - id: W-4.5-c2
+    stars: 2
+    objectives: [OBJ-4.5-3, OBJ-4.5-1, OBJ-4.5-2]
+    prompt: >-
+      המרחב מחולק לשלושה אזורים בעזרת שני ישרים מקבילים אנכיים. באזור האמצעי, שרוחבו $\ell$, יש שדה מגנטי אחיד $B$ שניצב לדף; משמאלו (אזור I) ומימינו (אזור III) אין שדה. חלקיק שמסתו $m$ ומטענו $q$ נע באזור I במהירות $v$, ונכנס לאזור האמצעי בניצב לגבול.
+
+      א. מצאו את התנאי על $v$ כדי שהחלקיק יגיע לאזור III.
+
+      ב. נניח שהחלקיק חוזר לאזור I. הראו שהזמן שהוא נמצא באזור האמצעי לא תלוי ב-$v$, ומצאו אותו.
+
+      ג. לאיזו מהירות הדרך שהחלקיק עובר באזור האמצעי ארוכה ביותר, ומה אורכה? רמז: בדקו בנפרד חלקיק שחוזר וחלקיק שעובר.
+
+      ד. פרוטון, $B = 0.2\,\text{T}$, $\ell = 5\,\text{cm}$. מה המהירות הקריטית? פרוטון במהירות כפולה ממנה עובר לאזור III: בכמה מעלות הוא מוסט מהכיוון המקורי, וכמה זמן הוא נמצא באזור האמצעי?
+    answer: >-
+      א. $v > \dfrac{qB\ell}{m}$ (כלומר $r > \ell$).
+
+      ב. $t = \dfrac{\pi m}{qB}$, חצי זמן מחזור.
+
+      ג. כש-$v = \dfrac{qB\ell}{m}$: חצי מעגל ברדיוס $\ell$, דרך באורך $\pi\ell$.
+
+      ד. $9.58\cdot10^{5}\,\text{m/s}$; הסטה של $30^\circ$; $2.73\cdot10^{-8}\,\text{s}$.
+    solution:
+      - kind: given
+        text: >-
+          רוחב האזור $\ell$, השדה $B$ בניצב לדף, כניסה בניצב לגבול במהירות $v$. בסעיף ד: $q = 1.6\cdot10^{-19}\,\text{C}$, $m_p = 1.67\cdot10^{-27}\,\text{kg}$, $B = 0.2\,\text{T}$, $\ell = 0.05\,\text{m}$.
+      - kind: formula
+        text: >-
+          בשדה החלקיק נע במעגל, $r = \dfrac{mv}{qB}$, $T = \dfrac{2\pi m}{qB}$. הוא נכנס בניצב לגבול, ולכן מרכז המעגל נמצא על הגבול השמאלי, והמעגל מגיע עד מרחק $r$ ממנו.
+      - kind: reasoning
+        text: >-
+          א. אם $r < \ell$, המעגל לא מגיע לגבול הימני: החלקיק עושה חצי מעגל וחוזר לאזור I. אם $r > \ell$, הוא חוצה את הגבול הימני. לכן התנאי הוא $\dfrac{mv}{qB} > \ell$, כלומר $v > \dfrac{qB\ell}{m}$.
+      - kind: reasoning
+        text: >-
+          ב. חלקיק שחוזר עושה בדיוק חצי מעגל, ולכן הזמן הוא $\dfrac{T}{2} = \dfrac{\pi m}{qB}$, ש-$v$ לא מופיע בו. חלקיק מהיר יותר עובר חצי מעגל גדול יותר, באותו זמן.
+      - kind: reasoning
+        text: >-
+          ג. חלקיק שחוזר ($r \le \ell$) עובר חצי מעגל, $\pi r$, והדרך הארוכה ביותר מתקבלת כש-$r = \ell$: $\pi\ell$. חלקיק שעובר ($r > \ell$) מסתובב רק בזווית $\theta$ שבה $\sin\theta = \dfrac{\ell}{r}$, קטנה מ-$90^\circ$, ועובר קשת $r\theta$. כש-$r$ שואף ל-$\ell$ מלמעלה, $\theta$ שואפת ל-$90^\circ$ והקשת ל-$\dfrac{\pi\ell}{2}$ בלבד, חצי מ-$\pi\ell$. לכן הדרך הארוכה ביותר היא כש-$v = \dfrac{qB\ell}{m}$: החלקיק נוגע בגבול הימני וחוזר.
+      - kind: substitution
+        text: >-
+          ד. $v_c = \dfrac{qB\ell}{m} = \dfrac{1.6\cdot10^{-19}\cdot0.2\cdot0.05}{1.67\cdot10^{-27}} = 9.58\cdot10^{5}\,\text{m/s}$. במהירות $2v_c$ הרדיוס $r = 2\ell = 0.1\,\text{m}$, ולכן $\sin\theta = \dfrac{0.05}{0.1} = 0.5$ ו-$\theta = 30^\circ$: המהירות הסתובבה ב-$30^\circ$, וזו ההסטה. הזמן: $t = \dfrac{30^\circ}{360^\circ}\cdot T = \dfrac{1}{12}\cdot\dfrac{2\pi\cdot1.67\cdot10^{-27}}{1.6\cdot10^{-19}\cdot0.2} = \dfrac{3.28\cdot10^{-7}}{12} = 2.73\cdot10^{-8}\,\text{s}$.
+      - kind: result
+        text: >-
+          א. $v > qB\ell/m$. ב. $\pi m/(qB)$, בלי תלות ב-$v$. ג. $v = qB\ell/m$, דרך $\pi\ell$. ד. $9.58\cdot10^{5}\,\text{m/s}$; $30^\circ$; $2.73\cdot10^{-8}\,\text{s}$.
+    source:
+      name: JEE Advanced (IIT-JEE)
+      year: 2008
+      problem: 'Paper 1, Physics, Question 33 (multiple correct answers; options A, C, D)'
+      url: https://competishun.com/a-particle-of-mass-m-and-charge-q-moving-with-velocity-v-enters-region-ii-normal-to-the-boundary-as-shown-in-the-figure-region-ii-has-a-uniform-magnetic-field-b-perpendicular-to-the-plane-of-the-paper/
+      verified: '2026-11-02'
+      adapted: true
