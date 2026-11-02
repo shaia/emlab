@@ -39,3 +39,31 @@
   symbol: '(r, \theta, \varphi)'
   definition: 'תיאור של נקודה לפי המרחק r מהראשית, הזווית θ מציר z והזווית φ סביב ציר z. מתאימות לבעיות עם סימטריה של נקודה או כדור.'
   lesson: '6.3'
+
+- id: position-vector
+  term: וקטור מקום
+  en: position vector
+  symbol: '\vec r'
+  definition: 'החץ מהראשית אל נקודה במרחב. הרכיבים שלו הם הקואורדינטות של הנקודה, r = (x, y, z), וגודלו הוא המרחק של הנקודה מהראשית. אם מזיזים את הראשית, וקטור המקום של כל נקודה משתנה.'
+  lesson: '6.3'
+
+- id: unit-vector
+  term: וקטור יחידה
+  en: unit vector
+  symbol: '\hat n'
+  definition: 'וקטור שגודלו 1 (בלי יחידות), שמסמן רק כיוון. מקבלים אותו מכל וקטור שאינו אפס כשמחלקים אותו בגודלו: n̂ = A/|A|. מסמנים אותו בכובע: x̂, ŷ, ẑ לאורך הצירים, r̂ החוצה מהראשית.'
+  lesson: '6.3'
+
+- id: dot-product
+  term: מכפלה סקלרית
+  en: dot product (scalar product)
+  symbol: '\vec A\cdot\vec B'
+  definition: 'מספר שמתקבל משני וקטורים: A·B = AxBx + AyBy + AzBz = |A||B|cos α, כש-α הזווית ביניהם. היא אפס כשהווקטורים ניצבים, חיובית כשהזווית חדה ושלילית כשהיא קהה. A·B חלקי |B| הוא הרכיב של A בכיוון של B.'
+  lesson: '6.3'
+
+- id: cross-product
+  term: מכפלה וקטורית
+  en: cross product (vector product)
+  symbol: '\vec A\times\vec B'
+  definition: 'וקטור שמתקבל משני וקטורים, ניצב לשניהם, בכיוון שקובע כלל יד ימין (האצבעות מ-A אל B, האגודל בכיוון A×B). גודלו |A||B|sin α, שטח המקבילית שהם פורשים. ברכיבים: (AyBz − AzBy, AzBx − AxBz, AxBy − AyBx). הסדר חשוב: B×A = −A×B.'
+  lesson: '6.3'

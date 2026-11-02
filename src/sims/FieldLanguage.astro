@@ -1,0 +1,7 @@
+---
+/** Field-language figure for lesson MDX: <Spread figure={FieldLanguage} figureProps={{ scene: 'map' | 'coords' | 'products' | 'separation', … }}>. */
+import FieldLanguage, { type FieldLanguageProps } from './fieldlang/FieldLanguage';
+type Props = FieldLanguageProps;
+---
+
+<FieldLanguage client:visible {...Astro.props} />
