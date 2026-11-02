@@ -134,7 +134,9 @@ export function useFigureCanvas(
 
     const frame = (now: number) => {
       raf = requestAnimationFrame(frame);
-      const dt = Math.min(0.05, (now - last) / 1000);
+      // the first rAF timestamp is the frame's start, which can precede the performance.now() taken at
+      // setup: clamp at 0 so t never goes negative (figures index arrays with t)
+      const dt = Math.max(0, Math.min(0.05, (now - last) / 1000));
       last = now;
       const moving = optsRef.current.animate && visible && motionAllowed();
       if (moving) t += dt;
