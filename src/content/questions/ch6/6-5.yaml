@@ -1,0 +1,325 @@
+# Lesson 6.5 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/surfaceflux.ts, continuous.ts (ballField,
+# cylinderField), calculus.ts (riemann) and constants.ts; the script is recompute-6-5.ts in the session
+# scratchpad. The data differ on purpose from figures 6.5א–ב and the worked examples.
+
+chapter: 6
+questions:
+  # ------------------------------------------------ OBJ-6.5-1: the area vector, flux as a surface integral
+  - id: Q-6.5-area-vector
+    type: mc
+    objectives: [OBJ-6.5-1]
+    qualitative: true
+    prompt: >-
+      משטח גאוס כדורי נמצא בשדה חשמלי שמצביע אופקית ימינה בכל מקום. לאן מצביע וקטור השטח $d\vec A$ של חתיכה קטנה בנקודה **העליונה** של הכדור?
+    choices:
+      - text: 'למעלה: ניצב לכדור באותה נקודה, החוצה.'
+        correct: true
+        feedback: 'נכון. וקטור השטח נקבע לפי המשטח בלבד: ניצב לו, ובמשטח סגור החוצה. בנקודה העליונה זה למעלה. השדה ימינה ניצב לו, ולכן דרך החתיכה הזאת $\vec E\cdot d\vec A = 0$.'
+      - text: 'ימינה, בכיוון השדה.'
+        feedback: 'השדה לא קובע את וקטור השטח. וקטור השטח ניצב למשטח; השדה קובע רק את הזווית ביניהם, ולכן את גודל $\vec E\cdot d\vec A$.'
+        misconception: MC-area-vector-direction
+      - text: 'אופקית, לאורך המשטח, כי בנקודה העליונה המשטח אופקי.'
+        feedback: 'המשטח בנקודה העליונה אכן אופקי, אבל וקטור השטח **ניצב** לו, כלומר אנכי. וקטור שמונח לאורך המשטח לא אומר כמה שדה עובר דרכו.'
+        misconception: MC-area-vector-direction
+      - text: 'למטה, אל מרכז הכדור.'
+        feedback: 'הכיוון ניצב, אבל במשטח סגור בוחרים תמיד את הכיוון **החוצה**. כך שטף יוצא נספר חיובי, ושטף נכנס שלילי.'
+
+  - id: Q-6.5-strip-flux
+    type: numeric
+    objectives: [OBJ-6.5-1]
+    level: mid
+    prompt: >-
+      ריבוע שצלעו $a = 0.2\,\text{m}$ ניצב לציר x, והאנך שלו בכיוון $+x$. הצלע התחתונה שלו בגובה $y = 0$ והעליונה בגובה $y = a$. השדה מצביע בכיוון $+x$, וגודלו תלוי רק בגובה: $E = E_0\,(y/a)^2$, עם $E_0 = 600\,\text{N/C}$. מה השטף דרך הריבוע? ענו ב-$\text{N}\cdot\text{m}^2/\text{C}$.
+    answer: 8
+    unit: N·m²/C
+    tolerance: 0.03
+    correctFeedback: 'נכון. רצועה אופקית בגובה $y$, ברוחב $a$ ובעובי $dy$: $d\Phi = E_0 (y/a)^2\, a\,dy$. האינטגרל מ-$0$ עד $a$: $\Phi = \dfrac{E_0}{a}\cdot\dfrac{a^3}{3} = \dfrac{E_0 a^2}{3} = \dfrac{600\cdot0.04}{3} = 8\,\text{N}\cdot\text{m}^2/\text{C}$.'
+    wrongFeedback: 'השדה משתנה עם הגובה. חלקו את הריבוע לרצועות אופקיות, $dA = a\,dy$, וחברו $E\,dA$ מ-$y = 0$ עד $y = a$.'
+    commonWrong:
+      - value: 24
+        feedback: 'כפלתם את השדה בצלע העליונה, $E_0$, בכל השטח. השדה שם הכי חזק; ברוב הריבוע הוא חלש יותר, ולכן צריך אינטגרל.'
+        misconception: MC-flux-one-point
+      - value: 12
+        feedback: 'לקחתם ממוצע של $E_0/2$, כאילו השדה עולה בקו ישר. כאן הוא עולה כמו $y^2$, והממוצע של $(y/a)^2$ על הריבוע הוא $1/3$.'
+      - value: 6
+        feedback: 'לקחתם את השדה באמצע הגובה, $E_0/4$, כפול השטח. בשדה שאינו קו ישר, השדה באמצע אינו הממוצע.'
+        misconception: MC-flux-one-point
+
+  - id: Q-6.5-one-patch
+    type: twotier
+    objectives: [OBJ-6.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מטען נמצא במרכז קובייה. מחשבים את השטף בקירוב: בכל פאה לוקחים את השדה **באמצע הפאה**, כופלים בשטח הפאה, ומחברים על שש הפאות. איך יוצאת התוצאה ביחס ל-$Q/\varepsilon_0$?
+    choices:
+      - text: 'גדולה מ-$Q/\varepsilon_0$.'
+        correct: true
+        feedback: 'נכון. התוצאה יוצאת $24kQ$, בערך פי $1.9$ מ-$Q/\varepsilon_0 = 4\pi kQ$.'
+      - text: 'שווה בדיוק ל-$Q/\varepsilon_0$, כי המטען במרכז והקובייה סימטרית.'
+        feedback: 'הסימטריה מבטיחה שכל הפאות שוות, אבל לא שהשדה שווה על פאה אחת. לכן השדה באמצע אינו מייצג את כל הפאה.'
+        misconception: MC-flux-one-point
+      - text: 'קטנה מ-$Q/\varepsilon_0$.'
+        feedback: 'אמצע הפאה הוא הנקודה הקרובה ביותר למטען, ושם השדה ניצב לפאה. בכל נקודה אחרת הרכיב הניצב קטן יותר, ולכן הקירוב מגדיל, לא מקטין.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'באמצע הפאה הרכיב הניצב של השדה הוא הגדול ביותר על הפאה; בשאר הנקודות השדה חלש יותר ונוטה.'
+        correct: true
+        feedback: 'נכון. באיור 6.5א, עם $n = 1$, הסכום יוצא כמעט פי 2. ככל שמגדילים את $n$, הוא יורד אל $Q/\varepsilon_0$.'
+      - text: 'השטח של החתיכה נספר יותר מפעם אחת בפינות.'
+        feedback: 'השטח נספר בדיוק: שש פאות של $a^2$. מה שמוגזם הוא השדה שכופלים בו.'
+      - text: 'בקובייה חוק גאוס לא מתקיים בדיוק, רק בכדור.'
+        feedback: 'חוק גאוס מתקיים בכל משטח סגור. הבעיה היא בקירוב, שלוקח את השדה בנקודה אחת לכל הפאה.'
+        misconception: MC-flux-one-point
+
+  # ------------------------------------------------ OBJ-6.5-2: the infinite charged cylinder
+  - id: Q-6.5-caps
+    type: twotier
+    objectives: [OBJ-6.5-2]
+    qualitative: true
+    prompt: >-
+      כדי למצוא את השדה של גליל טעון אינסופי, בוחרים גליל גאוס ברדיוס $r$ ובאורך $L$, שצירו ציר הגליל הטעון. כמה שטף עובר דרך **שני הבסיסים** של גליל גאוס?
+    choices:
+      - text: 'אפס.'
+        correct: true
+        feedback: נכון.
+      - text: '$E\cdot\pi r^2$ דרך כל בסיס, כלומר $2E\pi r^2$.'
+        feedback: 'בבסיס השדה לא ניצב לבסיס, אלא מקביל לו. וקטור השטח של הבסיס מצביע לאורך הציר, והשדה ניצב לציר.'
+        misconception: MC-gauss-caps-carry-flux
+      - text: 'אי אפשר לדעת בלי לחשב את השדה על הבסיסים.'
+        feedback: 'אין צורך: הסימטריה קובעת את **כיוון** השדה, הרחק מהציר, וזה מספיק כדי לדעת ש-$\vec E\cdot d\vec A = 0$ בבסיסים.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'השדה מצביע הרחק מהציר, ווקטור השטח של הבסיס מצביע לאורך הציר: הם ניצבים בכל נקודה.'
+        correct: true
+        feedback: 'נכון. באיור 6.5ב, בגליל, רואים על הבסיסים חץ כהה לאורך הציר וחצים כתומים ניצבים לו.'
+      - text: 'הבסיסים רחוקים מהגליל הטעון, ולכן השדה בהם חלש מאוד.'
+        feedback: 'הבסיסים חוצים את הגליל הטעון עצמו, והשדה בהם לא חלש. הוא פשוט מקביל להם.'
+      - text: 'השטף דרך בסיס אחד חיובי ודרך השני שלילי, והם מתקזזים.'
+        feedback: 'אילו היה שטף דרך הבסיסים, בשניהם הוא היה יוצא החוצה, באותו סימן. הוא אפס בכל בסיס בנפרד, כי השדה ניצב לווקטור השטח.'
+        misconception: MC-gauss-caps-carry-flux
+
+  - id: Q-6.5-cyl-inside
+    type: numeric
+    objectives: [OBJ-6.5-2]
+    level: mid
+    prompt: >-
+      גליל ארוך מאוד ברדיוס $5\,\text{cm}$ טעון באחידות בצפיפות $\rho = 4\,\mu\text{C/m}^3$. מה גודל השדה במרחק $2\,\text{cm}$ מהציר? ענו ב-$\text{N/C}$.
+    answer: 4524
+    unit: N/C
+    tolerance: 0.03
+    correctFeedback: 'נכון. גליל גאוס ברדיוס $r$ ובאורך $L$ בתוך הגליל: $E\cdot2\pi rL = \rho\pi r^2L/\varepsilon_0$, ולכן $E = \dfrac{\rho r}{2\varepsilon_0} = \dfrac{4\cdot10^{-6}\cdot0.02}{2\cdot8.85\cdot10^{-12}} \approx 4.52\cdot10^{3}\,\text{N/C}$.'
+    wrongFeedback: 'השתמשו בגליל גאוס שכולא רק את המטען שבתוך רדיוס $2\,\text{cm}$: $\rho\pi r^2 L$. השטף עובר רק דרך הדופן, $E\cdot2\pi rL$.'
+    commonWrong:
+      - value: 3016
+        feedback: 'השתמשתם בנוסחה של כדור, $\rho r/(3\varepsilon_0)$. בגליל המטען הכלוא הוא $\rho\pi r^2L$ והשטח $2\pi rL$, ולכן המכנה $2\varepsilon_0$.'
+      - value: 28270
+        feedback: 'הכנסתם את כל המטען של הגליל, $\rho\pi R^2L$. גליל גאוס ברדיוס $2\,\text{cm}$ כולא רק את מה שבתוכו.'
+      - value: 452400
+        feedback: 'הצבתם את המרחק בסנטימטרים. $r = 0.02\,\text{m}$.'
+
+  - id: Q-6.5-cyl-rank
+    type: rank
+    objectives: [OBJ-6.5-2]
+    level: mid
+    prompt: >-
+      גליל ארוך מאוד ברדיוס $R$ טעון באחידות. דרגו את גודל השדה בארבע נקודות, מהגדול לקטן: במרחק $R/2$ מהציר, על פני הגליל ($R$), במרחק $2R$ ובמרחק $4R$. שימו לב: ייתכן ששתי נקודות שוות.
+    items:
+      - { id: half, label: 'R/2' }
+      - { id: surface, label: 'R' }
+      - { id: double, label: '2R' }
+      - { id: quad, label: '4R' }
+    order: [surface, [half, double], quad]
+    correctFeedback: 'נכון. בפנים $E \propto r$, ולכן ב-$R/2$ השדה חצי מהשדה על הפנים. בחוץ $E \propto 1/r$, ולכן ב-$2R$ הוא גם חצי, וב-$4R$ רבע.'
+    wrongFeedback: 'בפנים, בצפיפות אחידה, $E = \rho r/(2\varepsilon_0)$ גדל בקו ישר; בחוץ $E = 2k\lambda/r$ יורד. השוו כל נקודה לשדה על פני הגליל.'
+
+  - id: Q-6.5-cyl-vs-line
+    type: mc
+    objectives: [OBJ-6.5-2]
+    qualitative: true
+    prompt: >-
+      גליל עבה ארוך מאוד, ברדיוס $3\,\text{cm}$, טעון כך שבכל מטר לאורכו יש מטען $\lambda$, והצפיפות תלויה רק במרחק מהציר. לידו תיל דק וארוך עם אותו $\lambda$. משווים את השדות במרחק $10\,\text{cm}$ מהציר של כל אחד. מה נכון?
+    choices:
+      - text: 'השדות שווים: $2k\lambda/r$ בשני המקרים.'
+        correct: true
+        feedback: 'נכון. גליל גאוס ברדיוס $10\,\text{cm}$ כולא $\lambda L$ בשני המקרים, ומהסימטריה $E\cdot2\pi rL = \lambda L/\varepsilon_0$.'
+      - text: 'השדה של הגליל העבה חלש יותר, כי המטען שלו מפוזר ורחוק יותר מהנקודה.'
+        feedback: 'חלק מהמטען רחוק יותר, אבל חלק קרוב יותר. חוק גאוס עם הסימטריה מראה שהתוצאה זהה: רק המטען הכלוא קובע.'
+        misconception: MC-outside-depends-on-profile
+      - text: 'תלוי איך המטען מפוזר בתוך הגליל העבה.'
+        feedback: 'כל עוד הצפיפות תלויה רק במרחק מהציר, הפיזור בפנים לא משנה את השדה בחוץ. באיור 6.5ב שלושת הגרפים מתלכדים מחוץ לגוף.'
+        misconception: MC-outside-depends-on-profile
+      - text: 'השדה של הגליל העבה אפס, כי השדה בתוך גוף טעון מתבטל.'
+        feedback: 'הנקודה מחוץ לגליל, ושם השדה לא אפס. וגם בתוך גליל מבודד טעון השדה לא אפס, רק על הציר.'
+
+  # ------------------------------------------------ OBJ-6.5-3: enclosed charge as an integral, a ball with ρ(r)
+  - id: Q-6.5-enclosed-fraction
+    type: numeric
+    objectives: [OBJ-6.5-3]
+    level: mid
+    prompt: >-
+      בכדור ברדיוס $R$ הצפיפות גדלה בקו ישר עם המרחק מהמרכז, $\rho = \rho_0\, r/R$. איזה חלק מהמטען הכולל נמצא בתוך רדיוס $R/3$? ענו כשבר עשרוני.
+    answer: 0.01235
+    unit: ''
+    tolerance: 0.03
+    correctFeedback: 'נכון. $Q_{\text{in}}(r) = \int_0^r \rho_0\dfrac{s}{R}4\pi s^2\,ds = \dfrac{\pi\rho_0 r^4}{R}$, ולכן $Q_{\text{in}}/Q = (r/R)^4 = (1/3)^4 = 1/81 \approx 0.0123$.'
+    wrongFeedback: 'חברו את המטען של קליפות דקות, $\rho(s)\cdot4\pi s^2\,ds$, מ-$0$ עד $r$, וחלקו במטען הכולל (אותו אינטגרל עד $R$).'
+    commonWrong:
+      - value: 0.037
+        feedback: 'זה היחס בכדור אחיד, $(1/3)^3 = 1/27$. כאן הצפיפות בפנים קטנה יותר, ולכן בשליש הרדיוס כלוא פחות.'
+      - value: 0.01646
+        feedback: 'כפלתם את הצפיפות ב-$R/3$ בנפח הכדור הקטן, $\rho(R/3)\cdot\frac43\pi(R/3)^3$. הצפיפות בתוך הכדור הקטן קטנה מ-$\rho(R/3)$, ולכן צריך אינטגרל.'
+        misconception: MC-rho-times-volume
+      - value: 0.3333
+        feedback: 'שליש מהרדיוס אינו שליש מהמטען: רוב הנפח, וכאן גם רוב הצפיפות, נמצאים בחוץ.'
+
+  - id: Q-6.5-ball-max
+    type: mc
+    objectives: [OBJ-6.5-3]
+    qualitative: true
+    prompt: >-
+      בכדור מבודד ברדיוס $R$ הצפיפות גדלה עם המרחק מהמרכז, $\rho \propto r$. איפה גודל השדה החשמלי הגדול ביותר?
+    choices:
+      - text: 'על פני הכדור.'
+        correct: true
+        feedback: 'נכון. בפנים $E = kQ_{\text{in}}/r^2 \propto r^2$, גדל עד הפנים; בחוץ $E = kQ/r^2$ יורד.'
+      - text: 'במרכז הכדור, כי שם המטען מקיף את הנקודה מכל הצדדים.'
+        feedback: 'בגלל שהמטען מקיף את המרכז מכל הצדדים, התרומות שם מתקזזות, והשדה אפס. וגם: במשטח גאוס זעיר סביב המרכז כמעט אין מטען כלוא.'
+        misconception: MC-ball-field-max-at-centre
+      - text: 'השדה בתוך הכדור אפס בכל מקום, כמו בתוך קליפה טעונה.'
+        feedback: 'בקליפה כל המטען על הפנים, ומשטח גאוס בפנים לא כולא כלום. כאן המטען מפוזר בנפח, ומשטח גאוס בפנים כולא חלק ממנו.'
+        misconception: MC-shell-inside-field
+      - text: 'באמצע הדרך, ב-$R/2$.'
+        feedback: 'בפרופיל הזה המטען הכלוא גדל כמו $r^4$, מהר יותר מ-$r^2$, ולכן השדה ממשיך לגדול עד הפנים.'
+
+  - id: Q-6.5-ball-field
+    type: numeric
+    objectives: [OBJ-6.5-3]
+    level: bagrut
+    prompt: >-
+      כדור מבודד ברדיוס $R = 10\,\text{cm}$ טעון במטען כולל של $6\,\text{nC}$, בצפיפות שגדלה בקו ישר עם המרחק מהמרכז, $\rho \propto r$. מה גודל השדה במרחק $5\,\text{cm}$ מהמרכז? ענו ב-$\text{N/C}$.
+    answer: 1350
+    unit: N/C
+    tolerance: 0.03
+    correctFeedback: 'נכון. $Q_{\text{in}} = Q(r/R)^4 = 6\cdot10^{-9}/16$, ו-$E = \dfrac{kQ_{\text{in}}}{r^2} = \dfrac{kQ r^2}{R^4} = \dfrac{9\cdot10^9\cdot6\cdot10^{-9}\cdot0.05^2}{0.1^4} = 1350\,\text{N/C}$.'
+    wrongFeedback: 'מצאו את המטען הכלוא בתוך $5\,\text{cm}$ באינטגרל על קליפות (או מהיחס $Q_{\text{in}}/Q = (r/R)^4$), ורק אז $E = kQ_{\text{in}}/r^2$.'
+    commonWrong:
+      - value: 21600
+        feedback: 'הצבתם את כל המטען, $kQ/r^2$, כאילו הנקודה מחוץ לכדור. משטח גאוס ברדיוס $5\,\text{cm}$ כולא רק $1/16$ ממנו.'
+      - value: 2700
+        feedback: 'השתמשתם בנוסחה של כדור אחיד, $kQr/R^3$. כאן הצפיפות לא אחידה, והמטען הכלוא הוא $Q(r/R)^4$, לא $Q(r/R)^3$.'
+      - value: 1800
+        feedback: 'חישבתם את המטען הכלוא כ-$\rho(r)\cdot\frac43\pi r^3$, עם הצפיפות של השפה לכל הכדור הקטן. זה מגדיל אותו פי $4/3$.'
+        misconception: MC-rho-times-volume
+
+  - id: Q-6.5-same-outside
+    type: twotier
+    objectives: [OBJ-6.5-3]
+    qualitative: true
+    prompt: >-
+      לשני כדורים אותו רדיוס $R$ ואותו מטען כולל $Q$. בכדור A המטען מפוזר באחידות; בכדור B הצפיפות גדלה עם המרחק מהמרכז, כך שרוב המטען קרוב לפני הכדור. משווים את השדות במרחק $2R$ מהמרכז של כל אחד. מה נכון?
+    choices:
+      - text: 'השדות שווים.'
+        correct: true
+        feedback: נכון.
+      - text: 'השדה של B חזק יותר.'
+        feedback: 'אמנם רוב המטען של B קרוב יותר לפני הכדור, אבל הוא מפוזר מסביב: חלקו קרוב לנקודה וחלקו רחוק. התוצאה תלויה רק ב-$Q$.'
+        misconception: MC-outside-depends-on-profile
+      - text: 'השדה של A חזק יותר.'
+        feedback: 'ב-A יותר מטען קרוב למרכז, אבל מחוץ לכדור "קרוב למרכז" לא משנה: שניהם נראים כמו מטען $Q$ במרכז.'
+        misconception: MC-outside-depends-on-profile
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'בשניהם הצפיפות תלויה רק ב-$r$; כדור גאוס ברדיוס $2R$ כולא את כל $Q$, והשדה $kQ/(2R)^2$.'
+        correct: true
+        feedback: 'נכון. באיור 6.5ב, מחוץ לגוף שלושת הגרפים מתלכדים; בפנים הם שונים.'
+      - text: 'המטען של B קרוב יותר לנקודה, ולכן הוא תורם יותר.'
+        feedback: 'גם רחוק יותר: הצד השני של הכדור. חוק גאוס עם הסימטריה מראה שהכול מתקזז ל-$kQ/r^2$.'
+        misconception: MC-outside-depends-on-profile
+      - text: 'בשניהם השדה בתוך הכדור זהה, ולכן גם בחוץ.'
+        feedback: 'בפנים השדות דווקא שונים: ב-B המטען הכלוא קטן יותר בפנים. רק בחוץ, שם כל המטען כלוא, הם שווים.'
+
+  # ------------------------------------------------ OBJ-6.5-4: when Gauss gives E, and when only flux
+  - id: Q-6.5-cube-offcentre
+    type: mc
+    objectives: [OBJ-6.5-4]
+    qualitative: true
+    prompt: >-
+      מטען $Q$ נמצא בתוך קובייה, קרוב לפאה אחת ולא במרכז. מה אפשר למצוא **מחוק גאוס בלבד**, בלי לחשב את השדה מחוק קולון?
+    choices:
+      - text: 'רק את השטף הכולל דרך הקובייה, $Q/\varepsilon_0$.'
+        correct: true
+        feedback: 'נכון. בלי סימטריה, החוק נותן רק את הסכום על כל המשטח. את השטף דרך כל פאה, או את השדה בנקודה, מחשבים מהשדה עצמו.'
+      - text: 'גם את השטף דרך כל פאה: $Q/(6\varepsilon_0)$.'
+        feedback: 'שישית לכל פאה נכונה רק כשהמטען במרכז. כאן הפאה הקרובה מקבלת יותר, עד כמעט חצי כשהמטען צמוד אליה.'
+        misconception: MC-cube-equal-share-faces
+      - text: 'גם את השדה על הפאה הקרובה: השטף דרכה חלקי שטחה.'
+        feedback: 'גם אילו ידענו את השטף דרך הפאה, חלוקה בשטח נותנת רק את הממוצע של הרכיב הניצב. השדה על הפאה משתנה מנקודה לנקודה.'
+        misconception: MC-gauss-always-solves
+      - text: 'שום דבר, כי חוק גאוס נכון רק לכדורים.'
+        feedback: 'חוק גאוס נכון לכל משטח סגור. הוא נותן את השטף הכולל גם כאן; הוא לא נותן את השדה.'
+
+  - id: Q-6.5-which-symmetric
+    type: multi
+    objectives: [OBJ-6.5-4]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לאילו מההתפלגויות הבאות אפשר למצוא את השדה בכל מקום בעזרת חוק גאוס ומשטח גאוס אחד מתאים? סמנו את כל התשובות הנכונות.
+    choices:
+      - text: 'כדור שהצפיפות בו תלויה רק במרחק מהמרכז.'
+        correct: true
+        feedback: 'נכון: סימטריה כדורית, משטח גאוס כדורי.'
+      - text: 'גליל אינסופי שהצפיפות בו תלויה רק במרחק מהציר.'
+        correct: true
+        feedback: 'נכון: סימטריה גלילית, גליל גאוס שצירו ציר הגליל.'
+      - text: 'לוח אינסופי טעון באחידות.'
+        correct: true
+        feedback: 'נכון: סימטריה מישורית, גליל קצר שחוצה את הלוח (שיעור 1.8).'
+      - text: 'גליל טעון קצר, שאורכו שווה לקוטרו.'
+        feedback: 'בגליל קצר השדה ליד הקצוות נוטה, ויש שטף גם דרך הבסיסים. אין משטח שעליו השדה ידוע מראש.'
+        misconception: MC-gauss-always-solves
+      - text: 'קובייה טעונה באחידות.'
+        feedback: 'לקובייה אין סימטריה כדורית: השדה ליד פאה שונה מהשדה באותו מרחק ליד פינה.'
+        misconception: MC-gauss-always-solves
+      - text: 'דיפול: שני מטענים שווים ומנוגדים.'
+        feedback: 'לדיפול אין משטח שעליו השדה ניצב ושווה. משטח סביב שניהם נותן שטף אפס, אבל השדה עליו לא אפס.'
+        misconception: MC-gauss-zero-flux-zero-field
+
+  - id: Q-6.5-face-flux
+    type: numeric
+    objectives: [OBJ-6.5-4]
+    prompt: >-
+      מטען של $4\,\text{nC}$ נמצא בדיוק במרכז קובייה שצלעה $20\,\text{cm}$. מה השטף דרך פאה אחת? ענו ב-$\text{N}\cdot\text{m}^2/\text{C}$.
+    answer: 75.4
+    unit: N·m²/C
+    tolerance: 0.03
+    correctFeedback: 'נכון. המטען במרכז, ולכן שש הפאות שקולות: $\dfrac{Q}{6\varepsilon_0} = \dfrac{4\cdot10^{-9}}{6\cdot8.85\cdot10^{-12}} \approx 75.4\,\text{N}\cdot\text{m}^2/\text{C}$. אורך הצלע לא נכנס.'
+    wrongFeedback: 'השטף הכולל הוא $Q/\varepsilon_0$, והסימטריה מחלקת אותו שווה בשווה בין שש הפאות.'
+    commonWrong:
+      - value: 452.4
+        feedback: 'זה השטף דרך כל הקובייה, $Q/\varepsilon_0$. השאלה על פאה אחת מתוך שש.'
+      - value: 6
+        feedback: 'חילקתם את $kQ$ ב-6. השטף הכולל הוא $Q/\varepsilon_0 = 4\pi kQ$, לא $kQ$.'
+        misconception: MC-gauss-flux-equals-kq
+      - value: 144
+        feedback: 'חישבתם את השטף כשדה במרכז הפאה, $kQ/(a/2)^2$, כפול שטח הפאה. השדה על הפאה לא אחיד; זה מגדיל את השטף פי $1.9$ בערך.'
+        misconception: MC-flux-one-point
+
+  - id: Q-6.5-zero-flux-cube
+    type: mc
+    objectives: [OBJ-6.5-4]
+    qualitative: true
+    prompt: >-
+      בתוך קובייה נמצאים מטען $+Q$ ומטען $-Q$, במקומות שונים. השטף הכולל דרך הקובייה אפס. מה אפשר לומר על השדה על פני הקובייה?
+    choices:
+      - text: 'יש שדה על פני הקובייה; דרך חלק מהפאות הוא יוצא ודרך חלק נכנס, והסכום אפס.'
+        correct: true
+        feedback: 'נכון. שטף אפס הוא סכום של תרומות חיוביות ושליליות. בלי סימטריה, אי אפשר להוציא מזה את השדה בשום נקודה.'
+      - text: 'השדה אפס בכל נקודה על פני הקובייה.'
+        feedback: 'שני המטענים יוצרים שדה בכל המרחב. אפס הוא רק **האינטגרל** של $\vec E\cdot d\vec A$ על המשטח.'
+        misconception: MC-gauss-zero-flux-zero-field
+      - text: 'השדה ניצב לפאות בכל מקום, כי השטף אפס.'
+        feedback: 'שדה ניצב לפאות היה דווקא נותן שטף. השטף אפס כי היציאות והכניסות מתקזזות, לא בגלל כיוון מסוים של השדה.'

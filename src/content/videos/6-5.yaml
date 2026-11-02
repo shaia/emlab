@@ -1,0 +1,23 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title, the upload description and its chapter
+# list support; the length comes from the watch page (lengthSeconds).
+
+- id: v-6-5-zak-cylinder
+  youtubeId: JiA8yD4vF2k
+  title: "Uniformly charged cylinder using Gauss' Law to find electric field inside and outside the cylinder."
+  channel: "Zak's Lab"
+  lang: en
+  captions: []
+  minutes: 12
+  why: 'סרטון באנגלית. לפי רשימת הפרקים שבתיאור: השדה בתוך גליל טעון באחידות (מ-1:17), השדה מחוצה לו (מ-4:59), כתיבת התוצאה בעזרת הצפיפות הקווית (מ-7:00), וגרף של השדה כתלות במרחק מהציר (מ-9:03).'
+  verified: '2026-11-02'
+
+- id: v-6-5-biezen-sphere
+  youtubeId: H1_s0o-Ts90
+  title: "Physics 37   Gauss's Law (13 of 16) Variable Charge Distribution: Sphere"
+  channel: Michel van Biezen
+  lang: en
+  captions: []
+  minutes: 14
+  why: 'סרטון באנגלית. לפי התיאור שלו, הוא מוצא את השדה החשמלי בתוך כדור שהצפיפות בו משתנה, ומחוצה לו: אותה שיטה של סימטריה, מטען כלוא כאינטגרל וחוק גאוס.'
+  verified: '2026-11-02'

@@ -1,0 +1,478 @@
+# Workbook, lesson 6.5 (flux as a surface integral). Format and rules: see .claude/CLAUDE.md, "Worked examples,
+# workbook" and "Chapter 6 (bridge to university)". Every number was recomputed with src/physics/surfaceflux.ts,
+# continuous.ts (ballField, ballEnclosed, cylinderField, lineField), calculus.ts (riemann) and constants.ts;
+# script recompute-6-5.ts in the session scratchpad. In a >- block, consecutive lines fold into one paragraph:
+# every part (א, ב, …) starts after a blank line.
+
+lesson: '6.5'
+practice:
+  - id: W-6.5-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.5-1]
+    prompt: >-
+      מלבן שאורכו $b = 0.4\,\text{m}$ (לאורך ציר x, מ-$x = 0$ עד $x = b$) ורוחבו $c = 0.2\,\text{m}$ (לאורך ציר y) מונח במישור xy, והאנך שלו בכיוון $+z$. השדה מצביע בכיוון $+z$, וגודלו תלוי רק ב-x: $E = E_0\,(1 + x/b)$, עם $E_0 = 200\,\text{N/C}$. מה השטף דרך המלבן?
+    answer: >-
+      $\Phi = \tfrac32 E_0 bc = 24\,\text{N}\cdot\text{m}^2/\text{C}$.
+    solution:
+      - kind: given
+        text: >-
+          $b = 0.4\,\text{m}$, $c = 0.2\,\text{m}$, $E_0 = 200\,\text{N/C}$, $\vec E = E_0(1 + x/b)\,\hat z$, האנך $\hat z$.
+      - kind: law
+        text: >-
+          $\Phi = \int_S \vec E\cdot d\vec A$.
+      - kind: manipulation
+        text: >-
+          השדה משתנה רק עם x, ולכן מחלקים לרצועות ניצבות לציר x: רצועה ב-x, באורך $c$ ובעובי $dx$, $dA = c\,dx$. השדה ניצב לרצועה, ולכן $\vec E\cdot d\vec A = E\,c\,dx$:
+
+          $\Phi = \int_0^b E_0\left(1 + \dfrac{x}{b}\right)c\,dx = E_0 c\left(b + \dfrac{b^2}{2b}\right) = \dfrac32 E_0 bc$.
+      - kind: limit
+        text: >-
+          השדה עולה בקו ישר מ-$E_0$ ל-$2E_0$, והממוצע שלו $1.5E_0$: התוצאה היא הממוצע כפול השטח, כמו שצריך. אילו השדה היה קבוע, $E_0$, היינו מקבלים $E_0 bc$.
+      - kind: units
+        text: >-
+          $\text{N/C}\cdot\text{m}\cdot\text{m} = \text{N}\cdot\text{m}^2/\text{C}$.
+      - kind: substitution
+        text: >-
+          $\Phi = 1.5\cdot200\cdot0.4\cdot0.2 = 24\,\text{N}\cdot\text{m}^2/\text{C}$.
+      - kind: result
+        text: >-
+          $\Phi = 24\,\text{N}\cdot\text{m}^2/\text{C}$.
+
+  - id: W-6.5-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-6.5-1]
+    prompt: >-
+      קובייה שצלעה $a$ נמצאת בשדה אחיד $E$ שמצביע בכיוון $+x$. שתי פאות שלה ניצבות לציר x.
+
+      א. לאן מצביע וקטור השטח של כל אחת משש הפאות?
+
+      ב. מה השטף דרך כל פאה, עם סימן?
+
+      ג. מה השטף הכולל, והאם זה מתאים לחוק גאוס?
+    answer: >-
+      א. ניצב לכל פאה, החוצה: $\pm\hat x$, $\pm\hat y$, $\pm\hat z$.
+
+      ב. $+Ea^2$ דרך הפאה שבצד $+x$, $-Ea^2$ דרך הפאה שבצד $-x$, ואפס דרך ארבע האחרות.
+
+      ג. אפס; אין מטען בתוך הקובייה.
+    solution:
+      - kind: law
+        text: >-
+          $\Phi = \oint \vec E\cdot d\vec A$; בכל פאה השדה אחיד, ולכן $\Phi_1 = \vec E\cdot\vec A_1$ (השטף דרך הפאה ווקטור השטח שלה).
+      - kind: reasoning
+        text: >-
+          א. וקטור השטח ניצב לפאה ומצביע החוצה, בלי קשר לשדה: לפאה הימנית $+\hat x$, לשמאלית $-\hat x$, וכך הלאה.
+
+          ב. בפאה הימנית השדה בכיוון וקטור השטח: $+Ea^2$. בשמאלית הוא נגדו: $-Ea^2$ (השדה נכנס). בארבע האחרות השדה מקביל לפאה, ניצב לווקטור השטח: אפס.
+      - kind: limit
+        text: >-
+          אם מסובבים את הקובייה כך שהשדה כבר לא ניצב לשום פאה, השטפים דרך הפאות משתנים, אבל כל קו שדה שנכנס יוצא, והסכום נשאר אפס.
+      - kind: units
+        text: >-
+          $\text{N/C}\cdot\text{m}^2$ לכל פאה.
+      - kind: result
+        text: >-
+          א. ניצב לכל פאה, החוצה. ב. $+Ea^2$, $-Ea^2$ ו-$0$ (ארבע פעמים). ג. הסכום אפס, כמו שחוק גאוס דורש לקובייה בלי מטען.
+
+  - id: W-6.5-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.5-2]
+    prompt: >-
+      גליל ארוך מאוד ברדיוס $3\,\text{cm}$ טעון באחידות בצפיפות $\rho = 2\,\mu\text{C/m}^3$. מה גודל השדה במרחק $10\,\text{cm}$ מהציר?
+    answer: >-
+      כ-$1.02\cdot10^{3}\,\text{N/C}$, הרחק מהציר.
+    solution:
+      - kind: given
+        text: >-
+          $\rho = 2\cdot10^{-6}\,\text{C/m}^3$, $R = 0.03\,\text{m}$, $r = 0.1\,\text{m}$ (מחוץ לגליל).
+      - kind: law
+        text: >-
+          $\oint \vec E\cdot d\vec A = Q_{\text{in}}/\varepsilon_0$ עם גליל גאוס ברדיוס $r$ ובאורך $L$.
+      - kind: manipulation
+        text: >-
+          דרך הבסיסים אין שטף, דרך הדופן $E\cdot2\pi rL$. המטען הכלוא $\rho\pi R^2L$. לכן $E = \dfrac{\rho R^2}{2\varepsilon_0 r}$.
+      - kind: limit
+        text: >-
+          עם $\lambda = \rho\pi R^2$ זה $2k\lambda/r$, השדה של קו טעון; ב-$r = R$ זה $\rho R/(2\varepsilon_0)$, אותו ערך כמו בנוסחה שבפנים.
+      - kind: units
+        text: >-
+          $\dfrac{\text{C/m}^3\cdot\text{m}^2}{\text{C}^2/(\text{N}\cdot\text{m}^2)\cdot\text{m}} = \text{N/C}$.
+      - kind: substitution
+        text: >-
+          $E = \dfrac{2\cdot10^{-6}\cdot0.03^2}{2\cdot8.85\cdot10^{-12}\cdot0.1} \approx 1.02\cdot10^{3}\,\text{N/C}$.
+      - kind: result
+        text: >-
+          $E \approx 1.02\cdot10^{3}\,\text{N/C}$, הרחק מהציר.
+
+  - id: W-6.5-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.5-3]
+    prompt: >-
+      כדור מבודד ברדיוס $R = 5\,\text{cm}$ טעון באחידות במטען $Q = 4\,\text{nC}$.
+
+      א. כתבו את המטען הכלוא בכדור ברדיוס $r < R$ כאינטגרל על קליפות, וחשבו אותו.
+
+      ב. מה השדה ב-$r = 2\,\text{cm}$, ומה על פני הכדור?
+    answer: >-
+      א. $Q_{\text{in}} = Q\,(r/R)^3$.
+
+      ב. $5.76\cdot10^{3}\,\text{N/C}$ ו-$1.44\cdot10^{4}\,\text{N/C}$, החוצה.
+    solution:
+      - kind: given
+        text: >-
+          $R = 0.05\,\text{m}$, $Q = 4\cdot10^{-9}\,\text{C}$, $\rho = \dfrac{Q}{\frac43\pi R^3}$ קבועה.
+      - kind: law
+        text: >-
+          $Q_{\text{in}}(r) = \int_0^r \rho\,4\pi s^2\,ds$, ו-$E\cdot4\pi r^2 = Q_{\text{in}}/\varepsilon_0$.
+      - kind: manipulation
+        text: >-
+          א. $Q_{\text{in}} = 4\pi\rho\dfrac{r^3}{3} = Q\dfrac{r^3}{R^3}$.
+
+          ב. $E = \dfrac{kQ_{\text{in}}}{r^2} = \dfrac{kQr}{R^3}$ בפנים.
+      - kind: limit
+        text: >-
+          ב-$r = R$: $kQ/R^2$, השדה של מטען נקודתי, כמו מחוץ לכדור; ב-$r \to 0$: אפס.
+      - kind: units
+        text: >-
+          $\dfrac{\text{N}\cdot\text{m}^2/\text{C}^2\cdot\text{C}\cdot\text{m}}{\text{m}^3} = \text{N/C}$.
+      - kind: substitution
+        text: >-
+          $E(0.02) = \dfrac{9\cdot10^9\cdot4\cdot10^{-9}\cdot0.02}{0.05^3} = 5.76\cdot10^{3}\,\text{N/C}$; $E(R) = \dfrac{9\cdot10^9\cdot4\cdot10^{-9}}{0.05^2} = 1.44\cdot10^{4}\,\text{N/C}$.
+      - kind: result
+        text: >-
+          א. $Q(r/R)^3$. ב. $5.76\cdot10^{3}\,\text{N/C}$ ו-$1.44\cdot10^{4}\,\text{N/C}$, החוצה.
+
+  - id: W-6.5-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.5-2, OBJ-6.5-4]
+    prompt: >-
+      ארבעה תלמידים בוחרים משטח גאוס סביב קטע של גליל טעון אינסופי: (1) גליל שצירו ציר הגליל הטעון; (2) גליל כזה, אבל ארוך פי 3; (3) קובייה שמרכזה על הציר; (4) כדור שמרכזו על הציר.
+
+      א. דרך אילו משטחים השטף שווה ל-$\lambda\ell/\varepsilon_0$, כאשר $\ell$ הוא אורך הקטע של הגליל הטעון שבתוך המשטח?
+
+      ב. מאילו משטחים אפשר למצוא את השדה במרחק $r$ מהציר? נמקו.
+    answer: >-
+      א. דרך כולם, כל אחד עם האורך שהוא כולא.
+
+      ב. רק מ-(1) ומ-(2).
+    solution:
+      - kind: law
+        text: >-
+          $\oint \vec E\cdot d\vec A = Q_{\text{in}}/\varepsilon_0$, ו-$E$ יוצא מהאינטגרל רק אם $\vec E\cdot d\vec A$ שווה, או אפס, בכל חלק של המשטח.
+      - kind: reasoning
+        text: >-
+          א. חוק גאוס נכון לכל משטח סגור: בכל אחד השטף הוא המטען הכלוא חלקי $\varepsilon_0$, כלומר $\lambda$ כפול אורך הקטע שבתוכו, חלקי $\varepsilon_0$.
+
+          ב. בגליל שצירו ציר הגליל הטעון, בכל אורך, השדה ניצב לדופן ושווה עליה, ומקביל לבסיסים. בקובייה, נקודות על פאה נמצאות במרחקים שונים מהציר והשדה נוטה ביחס לפאה. בכדור, השדה (הרחק מהציר) נוטה ביחס לכדור בכל נקודה שאינה על "קו המשווה", ובמרחקים שונים.
+      - kind: limit
+        text: >-
+          ב-(2) האורך גדל פי 3 וגם המטען הכלוא, ו-$L$ מצטמצם: אותו שדה. כך צריך, כי אורך משטח גאוס הוא בחירה שלנו.
+      - kind: units
+        text: >-
+          בכל המקרים השטף ב-$\text{N}\cdot\text{m}^2/\text{C}$.
+      - kind: result
+        text: >-
+          א. כל הארבעה. ב. רק הגלילים (1) ו-(2) נותנים את השדה, $E = 2k\lambda/r$ מחוץ לגליל.
+
+  - id: W-6.5-06
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.5-2]
+    prompt: >-
+      צינור עבה וארוך מאוד, עם רדיוס פנימי $a = 1\,\text{cm}$ ורדיוס חיצוני $b = 3\,\text{cm}$, טעון באחידות בצפיפות $\rho = 4\,\mu\text{C/m}^3$ (בחומר שבין $a$ ל-$b$; החלל שבפנים ריק). מצאו את השדה במרחקים $0.5\,\text{cm}$, $2\,\text{cm}$ ו-$5\,\text{cm}$ מהציר.
+    answer: >-
+      $0$; כ-$3.39\cdot10^{3}\,\text{N/C}$; כ-$3.62\cdot10^{3}\,\text{N/C}$ (הרחק מהציר).
+    solution:
+      - kind: given
+        text: >-
+          $a = 0.01\,\text{m}$, $b = 0.03\,\text{m}$, $\rho = 4\cdot10^{-6}\,\text{C/m}^3$.
+      - kind: law
+        text: >-
+          גליל גאוס שצירו הציר: $E\cdot2\pi rL = Q_{\text{in}}/\varepsilon_0$.
+      - kind: manipulation
+        text: >-
+          $r < a$: $Q_{\text{in}} = 0$, ו-$E = 0$. $a < r < b$: $Q_{\text{in}} = \rho\pi(r^2 - a^2)L$, ו-$E = \dfrac{\rho(r^2 - a^2)}{2\varepsilon_0 r}$. $r > b$: $E = \dfrac{\rho(b^2 - a^2)}{2\varepsilon_0 r}$.
+      - kind: limit
+        text: >-
+          ב-$r = a$ הנוסחה האמצעית נותנת אפס, וב-$r = b$ היא שווה לנוסחה שבחוץ: השדה רציף. ואם $a \to 0$, חוזרים לגליל מלא, $\rho r/(2\varepsilon_0)$.
+      - kind: units
+        text: >-
+          $\dfrac{\text{C/m}^3\cdot\text{m}^2}{\text{C}^2/(\text{N}\cdot\text{m}^2)\cdot\text{m}} = \text{N/C}$.
+      - kind: substitution
+        text: >-
+          $E(0.02) = \dfrac{4\cdot10^{-6}(0.02^2 - 0.01^2)}{2\cdot8.85\cdot10^{-12}\cdot0.02} \approx 3.39\cdot10^{3}\,\text{N/C}$; $E(0.05) = \dfrac{4\cdot10^{-6}(0.03^2 - 0.01^2)}{2\cdot8.85\cdot10^{-12}\cdot0.05} \approx 3.62\cdot10^{3}\,\text{N/C}$.
+      - kind: result
+        text: >-
+          $0$, $3.39\cdot10^{3}\,\text{N/C}$ ו-$3.62\cdot10^{3}\,\text{N/C}$, הרחק מהציר.
+
+  - id: W-6.5-07
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.5-3]
+    prompt: >-
+      כדור ברדיוס $R = 0.1\,\text{m}$ טעון בצפיפות $\rho = \rho_0\,(r/R)^2$, עם $\rho_0 = 6\,\mu\text{C/m}^3$.
+
+      א. מה המטען הכולל?
+
+      ב. איזה חלק מהמטען נמצא בחצי החיצוני של הרדיוס, בין $R/2$ ל-$R$?
+
+      ג. מה השדה ב-$R/2$ ועל פני הכדור?
+    answer: >-
+      א. $Q = \tfrac45\pi\rho_0 R^3 \approx 1.51\cdot10^{-8}\,\text{C}$.
+
+      ב. $31/32$, כ-$97\%$.
+
+      ג. כ-$1.70\cdot10^{3}\,\text{N/C}$ וכ-$1.36\cdot10^{4}\,\text{N/C}$.
+    solution:
+      - kind: given
+        text: >-
+          $R = 0.1\,\text{m}$, $\rho_0 = 6\cdot10^{-6}\,\text{C/m}^3$, $\rho(s) = \rho_0 s^2/R^2$.
+      - kind: law
+        text: >-
+          $Q_{\text{in}}(r) = \int_0^r \rho(s)\,4\pi s^2\,ds$, ו-$E = kQ_{\text{in}}/r^2$.
+      - kind: manipulation
+        text: >-
+          $Q_{\text{in}}(r) = \dfrac{4\pi\rho_0}{R^2}\int_0^r s^4\,ds = \dfrac{4\pi\rho_0 r^5}{5R^2}$, ולכן $Q = \tfrac45\pi\rho_0R^3$ ו-$Q_{\text{in}}/Q = (r/R)^5$. בפנים $E = \dfrac{Q_{\text{in}}}{4\pi\varepsilon_0 r^2} = \dfrac{\rho_0 r^3}{5\varepsilon_0 R^2}$.
+      - kind: limit
+        text: >-
+          ב-$r = R$: $\rho_0R/(5\varepsilon_0) = kQ/R^2$, רציף עם השדה שבחוץ. וככל שהחזקה של $r$ בצפיפות גדלה, המטען זז לשפה: באחידה $1/8$ מהמטען בחצי הרדיוס, ב-$\rho \propto r$ כבר $1/16$, וכאן $1/32$.
+      - kind: units
+        text: >-
+          $\dfrac{\text{C/m}^3\cdot\text{m}^3}{\text{C}^2/(\text{N}\cdot\text{m}^2)\cdot\text{m}^2} = \text{N/C}$.
+      - kind: substitution
+        text: >-
+          א. $Q = 0.8\pi\cdot6\cdot10^{-6}\cdot10^{-3} \approx 1.51\cdot10^{-8}\,\text{C}$.
+
+          ב. בתוך $R/2$: $(1/2)^5 = 1/32$; בחוץ $31/32 \approx 0.97$.
+
+          ג. $E(R) = \dfrac{6\cdot10^{-6}\cdot0.1}{5\cdot8.85\cdot10^{-12}} \approx 1.36\cdot10^{4}\,\text{N/C}$, ו-$E(R/2) = E(R)/8 \approx 1.70\cdot10^{3}\,\text{N/C}$.
+      - kind: result
+        text: >-
+          א. $1.51\cdot10^{-8}\,\text{C}$. ב. $31/32$. ג. $1.70\cdot10^{3}\,\text{N/C}$ ו-$1.36\cdot10^{4}\,\text{N/C}$, החוצה.
+
+  - id: W-6.5-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.5-3]
+    prompt: >-
+      קליפה כדורית עבה, בין רדיוס $a = 5\,\text{cm}$ לרדיוס $b = 10\,\text{cm}$, טעונה בצפיפות $\rho = A/r$, עם $A = 3\cdot10^{-7}\,\text{C/m}^2$. החלל שבפנים ריק, ובמרכזו מניחים מטען נקודתי $q$.
+
+      א. מצאו את השדה בתוך החומר, $a < r < b$, כתלות ב-$q$ וב-$r$.
+
+      ב. מה צריך להיות $q$ כדי שהשדה בתוך החומר יהיה זהה בכל מקום? מה השדה אז?
+
+      ג. עם ה-$q$ הזה, מה השדה ב-$r = 15\,\text{cm}$?
+    answer: >-
+      א. $E = \dfrac{kq}{r^2} + \dfrac{A(r^2 - a^2)}{2\varepsilon_0 r^2}$.
+
+      ב. $q = 2\pi A a^2 \approx 4.71\cdot10^{-9}\,\text{C}$, ו-$E = A/(2\varepsilon_0) \approx 1.70\cdot10^{4}\,\text{N/C}$.
+
+      ג. כ-$7.54\cdot10^{3}\,\text{N/C}$.
+    solution:
+      - kind: given
+        text: >-
+          $a = 0.05\,\text{m}$, $b = 0.1\,\text{m}$, $A = 3\cdot10^{-7}\,\text{C/m}^2$, $\rho = A/r$ בין $a$ ל-$b$, ומטען $q$ במרכז.
+      - kind: law
+        text: >-
+          כדור גאוס ברדיוס $r$: $E\cdot4\pi r^2 = Q_{\text{in}}/\varepsilon_0$, עם $Q_{\text{in}} = q + \int_a^r \dfrac{A}{s}4\pi s^2\,ds$.
+      - kind: manipulation
+        text: >-
+          א. $\int_a^r 4\pi A s\,ds = 2\pi A(r^2 - a^2)$, ולכן $E = \dfrac{q + 2\pi A(r^2 - a^2)}{4\pi\varepsilon_0 r^2} = \dfrac{kq}{r^2} + \dfrac{A}{2\varepsilon_0} - \dfrac{Aa^2}{2\varepsilon_0 r^2}$.
+
+          ב. השדה לא תלוי ב-$r$ אם שני האיברים עם $1/r^2$ מתבטלים: $kq = \dfrac{Aa^2}{2\varepsilon_0}$, כלומר $q = 2\pi A a^2$. אז $E = \dfrac{A}{2\varepsilon_0}$.
+      - kind: limit
+        text: >-
+          ב-$r = a$, ממש בתחילת החומר, $E = kq/a^2$: רק המטען הנקודתי כלוא, כמו שצריך. ואם $a \to 0$ אין צורך במטען נקודתי, $q \to 0$, וחוזרים לכדור המלא של דוגמה 6.5-6, שבו השדה בפנים קבוע מעצמו.
+      - kind: units
+        text: >-
+          $A a^2$: $\text{C/m}^2\cdot\text{m}^2 = \text{C}$ ✓; $A/\varepsilon_0$: $\text{N/C}$ ✓.
+      - kind: substitution
+        text: >-
+          ב. $q = 2\pi\cdot3\cdot10^{-7}\cdot0.05^2 \approx 4.71\cdot10^{-9}\,\text{C}$; $E = \dfrac{3\cdot10^{-7}}{2\cdot8.85\cdot10^{-12}} \approx 1.70\cdot10^{4}\,\text{N/C}$.
+
+          ג. המטען הכולל $q + 2\pi A(b^2 - a^2) \approx 4.71\cdot10^{-9} + 1.41\cdot10^{-8} \approx 1.88\cdot10^{-8}\,\text{C}$, ו-$E = \dfrac{9\cdot10^9\cdot1.88\cdot10^{-8}}{0.15^2} \approx 7.54\cdot10^{3}\,\text{N/C}$.
+      - kind: result
+        text: >-
+          א. $kq/r^2 + A(r^2 - a^2)/(2\varepsilon_0 r^2)$. ב. $q \approx 4.71\cdot10^{-9}\,\text{C}$, $E \approx 1.70\cdot10^{4}\,\text{N/C}$. ג. $7.54\cdot10^{3}\,\text{N/C}$, החוצה.
+
+  - id: W-6.5-09
+    level: bagrut
+    qualitative: true
+    objectives: [OBJ-6.5-1, OBJ-6.5-4]
+    prompt: >-
+      קובייה שצלעה $a$, ומטען $+Q$ במרכזה.
+
+      א. מה השטף דרך כל פאה? איזה עיקרון קובע את זה?
+
+      ב. מזיזים את המטען לאורך ציר x, אל מרכז הפאה הימנית, בלי להוציא אותו. מה קורה לשטף הכולל, לשטף דרך הפאה הימנית ולשטף דרך הפאה השמאלית? מה הערך שהשטף דרך הפאה הימנית מתקרב אליו?
+
+      ג. מחזירים את $+Q$ למרכז, ומוסיפים בתוך הקובייה מטען $-Q$ ליד פינה. השטף הכולל אפס. האם השדה על פני הקובייה אפס? האם אפשר למצוא אותו מחוק גאוס?
+    answer: >-
+      א. $Q/(6\varepsilon_0)$, מהסימטריה.
+
+      ב. הכולל נשאר $Q/\varepsilon_0$; דרך הימנית גדל ומתקרב ל-$Q/(2\varepsilon_0)$; דרך השמאלית קטן.
+
+      ג. לא, השדה לא אפס; ולא, החוק נותן רק את השטף הכולל.
+    solution:
+      - kind: law
+        text: >-
+          $\oint \vec E\cdot d\vec A = Q_{\text{in}}/\varepsilon_0$, ולכל פאה השטף הוא $\int \vec E\cdot d\vec A$ על הפאה בלבד.
+      - kind: reasoning
+        text: >-
+          א. כשהמטען במרכז, סיבוב של הקובייה שמחליף בין פאות לא משנה דבר, ולכן השטפים דרך שש הפאות שווים, והסכום $Q/\varepsilon_0$.
+
+          ב. השטף הכולל תלוי רק במטען הכלוא, ולכן לא משתנה. הפאה הימנית מתקרבת, השדה עליה מתחזק וניצב לה בשטח גדול יותר: השטף דרכה גדל. דרך השמאלית, שמתרחקת, הוא קטן. כשהמטען כמעט נוגע בפאה, היא נראית ממנו כמו מישור אינסופי, שדרכו עובר חצי מהשדה.
+
+          ג. כל מטען יוצר שדה בכל המרחב, ולכן על פני הקובייה יש שדה; דרך חלק מהפאות הוא יוצא ודרך חלק נכנס. אין סימטריה, ולכן החוק נותן רק את הסכום, אפס.
+      - kind: limit
+        text: >-
+          בגבול שהמטען צמוד לפאה, השטף דרכה הוא $Q/(2\varepsilon_0)$, וחמש האחרות חולקות את החצי השני. בגבול ההפוך, מטען במרכז, כל פאה מקבלת שישית. התשובה של (ב) עוברת ברציפות בין השניים.
+      - kind: units
+        text: >-
+          כל התשובות ב-$\text{N}\cdot\text{m}^2/\text{C}$.
+      - kind: result
+        text: >-
+          א. $Q/(6\varepsilon_0)$ דרך כל פאה, מהסימטריה. ב. הכולל קבוע; דרך הימנית גדל עד כמעט $Q/(2\varepsilon_0)$; דרך השמאלית קטן. ג. השדה לא אפס, וחוק גאוס לא נותן אותו.
+
+  - id: W-6.5-10
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.5-2]
+    prompt: >-
+      כבל ארוך מאוד בנוי מגליל מבודד מלא ברדיוס $a = 1\,\text{cm}$, טעון באחידות בצפיפות $\rho = 6\,\mu\text{C/m}^3$, ומצינור מתכת דק ברדיוס $b = 4\,\text{cm}$ שעוטף אותו. הצינור טעון כך שהכבל כולו ניטרלי.
+
+      א. מה צפיפות המטען המשטחית $\sigma$ של הצינור?
+
+      ב. מצאו את השדה במרחקים $0.5\,\text{cm}$, $3\,\text{cm}$ ו-$6\,\text{cm}$ מהציר.
+    answer: >-
+      א. $\sigma = -\rho a^2/(2b) = -7.5\cdot10^{-9}\,\text{C/m}^2$.
+
+      ב. כ-$1.70\cdot10^{3}\,\text{N/C}$, כ-$1.13\cdot10^{3}\,\text{N/C}$ (הרחק מהציר), ו-$0$.
+    solution:
+      - kind: given
+        text: >-
+          $a = 0.01\,\text{m}$, $b = 0.04\,\text{m}$, $\rho = 6\cdot10^{-6}\,\text{C/m}^3$.
+      - kind: law
+        text: >-
+          גליל גאוס שצירו הציר: $E\cdot2\pi rL = Q_{\text{in}}/\varepsilon_0$.
+      - kind: manipulation
+        text: >-
+          א. במטר אחד של הגליל יש $\lambda = \rho\pi a^2$. כדי שהכבל יהיה ניטרלי, במטר של הצינור יש $-\lambda$, מפוזר על שטח $2\pi b\cdot1\,\text{m}$: $\sigma = -\dfrac{\rho\pi a^2}{2\pi b} = -\dfrac{\rho a^2}{2b}$.
+
+          ב. $r < a$: $E = \dfrac{\rho r}{2\varepsilon_0}$. $a < r < b$: $E = \dfrac{\lambda}{2\pi\varepsilon_0 r} = \dfrac{2k\lambda}{r}$. $r > b$: $Q_{\text{in}} = 0$, והסימטריה נותנת $E = 0$.
+      - kind: limit
+        text: >-
+          ב-$r = a$ שני הביטויים הראשונים שווים, $\rho a/(2\varepsilon_0)$. ב-$r = b$ השדה קופץ מ-$2k\lambda/b$ לאפס: קפיצה של $|\sigma|/\varepsilon_0$, כמו שצריך במעבר דרך משטח טעון.
+      - kind: units
+        text: >-
+          $\rho a^2/b$: $\text{C/m}^3\cdot\text{m} = \text{C/m}^2$ ✓.
+      - kind: substitution
+        text: >-
+          א. $\sigma = -\dfrac{6\cdot10^{-6}\cdot0.01^2}{2\cdot0.04} = -7.5\cdot10^{-9}\,\text{C/m}^2$.
+
+          ב. $E(0.005) = \dfrac{6\cdot10^{-6}\cdot0.005}{2\cdot8.85\cdot10^{-12}} \approx 1.70\cdot10^{3}\,\text{N/C}$; $\lambda = 6\cdot10^{-6}\cdot\pi\cdot10^{-4} \approx 1.885\cdot10^{-9}\,\text{C/m}$, ו-$E(0.03) = \dfrac{2\cdot9\cdot10^9\cdot1.885\cdot10^{-9}}{0.03} \approx 1.13\cdot10^{3}\,\text{N/C}$; $E(0.06) = 0$.
+      - kind: result
+        text: >-
+          א. $-7.5\cdot10^{-9}\,\text{C/m}^2$. ב. $1.70\cdot10^{3}\,\text{N/C}$, $1.13\cdot10^{3}\,\text{N/C}$ ו-$0$.
+
+challenge:
+  - id: W-6.5-c1
+    stars: 1
+    objectives: [OBJ-6.5-3]
+    prompt: >-
+      כדור ברדיוס $R = 0.1\,\text{m}$ טעון בצפיפות שקטנה עם המרחק מהמרכז: $\rho(r) = \rho_0\left(\tfrac54 - \tfrac{r}{R}\right)$ עבור $r \le R$, ואפס בחוץ, עם $\rho_0 = 4\,\mu\text{C/m}^3$.
+
+      א. מצאו את השדה בתוך הכדור כתלות ב-$r$.
+
+      ב. מה המטען הכולל, ומה השדה על פני הכדור?
+
+      ג. הראו שהשדה הגדול ביותר **אינו** על פני הכדור. איפה הוא, ומה ערכו? (רמז: נגזרת, שיעור 6.1.)
+    answer: >-
+      א. $E = \dfrac{\rho_0 r}{4\varepsilon_0}\left(\dfrac53 - \dfrac{r}{R}\right)$.
+
+      ב. $Q = \tfrac23\pi\rho_0R^3 \approx 8.38\cdot10^{-9}\,\text{C}$; $E(R) = \rho_0R/(6\varepsilon_0) \approx 7.54\cdot10^{3}\,\text{N/C}$.
+
+      ג. ב-$r = 5R/6 \approx 8.3\,\text{cm}$, $E_{\max} = 25\rho_0R/(144\varepsilon_0) \approx 7.85\cdot10^{3}\,\text{N/C}$.
+    solution:
+      - kind: law
+        text: >-
+          $E\cdot4\pi r^2 = Q_{\text{in}}/\varepsilon_0$, עם $Q_{\text{in}}(r) = \int_0^r \rho(s)\,4\pi s^2\,ds$.
+      - kind: manipulation
+        text: >-
+          א. $Q_{\text{in}} = 4\pi\rho_0\int_0^r\left(\tfrac54 s^2 - \tfrac{s^3}{R}\right)ds = 4\pi\rho_0\left(\tfrac{5r^3}{12} - \tfrac{r^4}{4R}\right)$. מחלקים ב-$4\pi\varepsilon_0 r^2$: $E = \dfrac{\rho_0}{\varepsilon_0}\left(\dfrac{5r}{12} - \dfrac{r^2}{4R}\right) = \dfrac{\rho_0 r}{4\varepsilon_0}\left(\dfrac53 - \dfrac{r}{R}\right)$.
+
+          ב. ב-$r = R$: $Q = 4\pi\rho_0R^3\left(\tfrac{5}{12} - \tfrac14\right) = \tfrac23\pi\rho_0R^3$, ו-$E(R) = \dfrac{\rho_0R}{4\varepsilon_0}\cdot\dfrac23 = \dfrac{\rho_0R}{6\varepsilon_0}$.
+
+          ג. $\dfrac{dE}{dr} = \dfrac{\rho_0}{\varepsilon_0}\left(\dfrac{5}{12} - \dfrac{r}{2R}\right) = 0$ ב-$r = \tfrac56 R$, שנמצא בתוך הכדור. שם $E = \dfrac{\rho_0}{4\varepsilon_0}\cdot\dfrac{5R}{6}\cdot\left(\dfrac53 - \dfrac56\right) = \dfrac{25\rho_0R}{144\varepsilon_0}$. הנגזרת חיובית לפני הנקודה ושלילית אחריה, ולכן זה מקסימום; מחוץ לכדור השדה רק יורד.
+      - kind: limit
+        text: >-
+          ב-$r \to 0$, $E \approx \dfrac{5\rho_0 r}{12\varepsilon_0} = \dfrac{\rho(0)\,r}{3\varepsilon_0}$, בדיוק השדה של כדור אחיד עם הצפיפות שבמרכז, $\tfrac54\rho_0$. ב-$r = R$, $kQ/R^2 = \dfrac{\tfrac23\pi\rho_0R^3}{4\pi\varepsilon_0R^2} = \dfrac{\rho_0R}{6\varepsilon_0}$: רציף עם השדה שבחוץ.
+      - kind: units
+        text: >-
+          $\rho_0 r/\varepsilon_0$: $\dfrac{\text{C/m}^3\cdot\text{m}}{\text{C}^2/(\text{N}\cdot\text{m}^2)} = \text{N/C}$.
+      - kind: substitution
+        text: >-
+          $Q = \tfrac23\pi\cdot4\cdot10^{-6}\cdot10^{-3} \approx 8.38\cdot10^{-9}\,\text{C}$. $E(R) = \dfrac{4\cdot10^{-6}\cdot0.1}{6\cdot8.85\cdot10^{-12}} \approx 7.54\cdot10^{3}\,\text{N/C}$. $E_{\max} = \dfrac{25\cdot4\cdot10^{-6}\cdot0.1}{144\cdot8.85\cdot10^{-12}} \approx 7.85\cdot10^{3}\,\text{N/C}$, כ-$4\%$ יותר מעל הפנים.
+      - kind: result
+        text: >-
+          א. $E = \dfrac{\rho_0 r}{4\varepsilon_0}\left(\dfrac53 - \dfrac{r}{R}\right)$. ב. $8.38\cdot10^{-9}\,\text{C}$, $7.54\cdot10^{3}\,\text{N/C}$. ג. ב-$5R/6$, כ-$7.85\cdot10^{3}\,\text{N/C}$.
+    source:
+      name: JEE Main (AIEEE)
+      year: 2010
+      problem: 'Question 15: spherically symmetric charge density ρ0(5/4 − r/R) inside r ≤ R, the field at r < R'
+      url: https://cracku.in/15-let-there-be-a-spherically-symmetric-charge-distri-x-nta-jee-main-2010
+      verified: '2026-11-02'
+      adapted: true
+
+  - id: W-6.5-c2
+    stars: 2
+    objectives: [OBJ-6.5-3, OBJ-6.5-4]
+    prompt: >-
+      כדור מבודד ברדיוס $R_1 = 10\,\text{cm}$, שמרכזו O, טעון באחידות בצפיפות $\rho = 5\,\mu\text{C/m}^3$. קודחים בו חלל כדורי ריק ברדיוס $R_2 = 4\,\text{cm}$, שמרכזו P, כך ש-$\vec a = \overrightarrow{OP}$ וגודלו $a = R_1 - R_2 = 6\,\text{cm}$ (החלל נוגע בפני הכדור).
+
+      א. לגוף הזה אין סימטריה כדורית, ולכן חוק גאוס לבדו לא נותן את השדה. רמז: הגוף שקול לכדור מלא ברדיוס $R_1$ עם צפיפות $\rho$, ועוד כדור ברדיוס $R_2$ במקום החלל עם צפיפות $-\rho$. לכל אחד מהשניים יש סימטריה כדורית. הראו שבכל נקודה בתוך החלל השדה **אחיד**, ומצאו אותו (גודל וכיוון).
+
+      ב. האם השדה בחלל תלוי ב-$R_2$? ובכיוון של $\vec a$?
+
+      ג. מה השדה בנקודה O?
+    answer: >-
+      א. $\vec E = \dfrac{\rho\,\vec a}{3\varepsilon_0}$, כ-$1.13\cdot10^{4}\,\text{N/C}$ בכיוון מ-O אל P.
+
+      ב. לא תלוי ב-$R_2$; כיוונו כיוון $\vec a$.
+
+      ג. כ-$3.35\cdot10^{3}\,\text{N/C}$, מ-O אל P.
+    solution:
+      - kind: law
+        text: >-
+          חוק גאוס לכדור אחיד בתוכו, כווקטור: $\vec E = \dfrac{\rho}{3\varepsilon_0}\,\vec r$, כאשר $\vec r$ הוא הווקטור ממרכז הכדור לנקודה (מ-$E\cdot4\pi r^2 = \rho\tfrac43\pi r^3/\varepsilon_0$). מחוץ לכדור: $kQ/r^2$. וסופרפוזיציה.
+      - kind: manipulation
+        text: >-
+          א. נקודה X בתוך החלל, עם $\vec r = \overrightarrow{OX}$ ו-$\vec r\,' = \overrightarrow{PX} = \vec r - \vec a$. X נמצאת בתוך שני הכדורים, ולכן $\vec E = \dfrac{\rho}{3\varepsilon_0}\vec r + \dfrac{-\rho}{3\varepsilon_0}(\vec r - \vec a) = \dfrac{\rho\,\vec a}{3\varepsilon_0}$. $\vec r$ התבטל: השדה זהה בכל נקודה בחלל.
+
+          ב. בביטוי אין $R_2$ ואין $\vec r$; יש רק $\vec a$.
+
+          ג. O נמצאת בחומר, מחוץ לחלל (המרחק שלה מ-P הוא $6\,\text{cm} > R_2$). הכדור הגדול לא תורם במרכזו. הכדור השלילי, שמטענו $-\rho\tfrac43\pi R_2^3$, נמצא במרחק $a$, ולכן $E = \dfrac{\rho R_2^3}{3\varepsilon_0 a^2}$, בכיוון אל P (מטען שלילי מושך מטען בוחן חיובי).
+      - kind: limit
+        text: >-
+          אם $a \to 0$ (חלל במרכז), השדה בחלל אפס, כמו בתוך קליפה עבה סימטרית. אם $R_2 \to 0$ (אין חלל), בנקודה P עצמה מקבלים $\rho a/(3\varepsilon_0)$, השדה של הכדור המלא במרחק $a$ מהמרכז: נכון.
+      - kind: units
+        text: >-
+          $\rho a/\varepsilon_0$: $\dfrac{\text{C/m}^3\cdot\text{m}}{\text{C}^2/(\text{N}\cdot\text{m}^2)} = \text{N/C}$.
+      - kind: substitution
+        text: >-
+          א. $E = \dfrac{5\cdot10^{-6}\cdot0.06}{3\cdot8.85\cdot10^{-12}} \approx 1.13\cdot10^{4}\,\text{N/C}$. ג. $E = \dfrac{5\cdot10^{-6}\cdot0.04^3}{3\cdot8.85\cdot10^{-12}\cdot0.06^2} \approx 3.35\cdot10^{3}\,\text{N/C}$.
+      - kind: result
+        text: >-
+          א. שדה אחיד $\rho\vec a/(3\varepsilon_0) \approx 1.13\cdot10^{4}\,\text{N/C}$, מ-O אל P. ב. לא תלוי ב-$R_2$, כיוונו לאורך $\vec a$. ג. כ-$3.35\cdot10^{3}\,\text{N/C}$, מ-O אל P.
+    source:
+      name: JEE Advanced
+      year: 2015
+      problem: 'Paper 2, Physics (question number not shown on the page): uniform spherical charge distribution with an off-centre spherical cavity, OP = a = R1 − R2; the field inside the cavity'
+      url: https://competishun.com/consider-a-uniform-spenerical-charge-distribution-of-radius-mathrmr_1-centred-at-the-origin-o-in-this-distribution-a-spherical-cavity-of-radius-r_2-centred-at-p-with-distance-o-par_1-r_2-see-figure-is/
+      verified: '2026-11-02'
+      adapted: true
