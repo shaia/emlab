@@ -1,0 +1,28 @@
+# Lesson 4.6 terms. Format and rules: see glossary/1-5.yaml.
+# `ion`, `isotope`, `deuteron` and `mass-spectrometer` come from lesson 4.5. `charge-to-mass-ratio` is defined here.
+
+- id: crossed-fields
+  term: שדות מוצלבים
+  en: crossed (perpendicular) electric and magnetic fields
+  definition: 'שדה חשמלי ושדה מגנטי באותו אזור, ניצבים זה לזה. מטען שנע בניצב לשניהם מקבל כוח חשמלי qE וכוח מגנטי qvB לאורך אותו קו, ואפשר לכוון את השדות כך שהכוחות יהיו מנוגדים.'
+  lesson: '4.6'
+
+- id: velocity-selector
+  term: בורר מהירויות
+  en: velocity selector
+  definition: 'התקן של שדות מוצלבים: לוחות טעונים ושדה מגנטי ניצב לשדה שביניהם, וסדק ביציאה. רק חלקיקים במהירות v = E/B, שבה הכוח החשמלי והכוח המגנטי מאזנים זה את זה, עוברים ישר ויוצאים בסדק, בלי תלות במטען, במסה ובסימן שלהם.'
+  lesson: '4.6'
+
+- id: bainbridge-spectrometer
+  term: ספקטרומטר של ביינברידג׳
+  en: Bainbridge mass spectrometer
+  definition: 'ספקטרומטר מסות שבו היונים עוברים קודם בבורר מהירויות, ולכן לכולם אותה מהירות v = E/B, ואחר כך נכנסים לשדה מגנטי שני B′, עושים חצי מעגל ופוגעים בגלאי. הרדיוס r = mE/(qBB′) יחסי ליחס בין המסה למטען, וכך מפרידים איזוטופים.'
+  lesson: '4.6'
+
+- id: charge-to-mass-ratio
+  term: היחס בין המטען למסה
+  en: charge-to-mass ratio
+  symbol: q/m
+  unit: C/kg
+  definition: 'המטען של חלקיק מחולק במסה שלו. בשדה מגנטי ובשדה חשמלי התאוצה של חלקיק תלויה רק ביחס הזה, ולכן שני חלקיקים עם אותו q/m, כמו דויטרון וחלקיק אלפא, נעים באותו מסלול.'
+  lesson: '4.6'
