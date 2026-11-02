@@ -31,7 +31,7 @@ export type Panel = 'error' | 'accum' | 'none';
 const N_MAX = 200;
 const RULES: RiemannRule[] = ['left', 'right', 'mid', 'trapezoid'];
 const RULE_NAME: Record<RiemannRule, string> = { left: 'שמאלי', right: 'ימני', mid: 'נקודת אמצע', trapezoid: 'טרפז' };
-const PHYSICS: CaseId[] = ['coulomb', 'velocity', 'discharge', 'capacitor'];
+const PHYSICS: FigureCase[] = ['coulomb', 'velocity', 'discharge', 'capacitor'];
 
 interface Meta {
   /** display scale: shown value = SI value × scale */
@@ -50,7 +50,10 @@ interface Meta {
   said: string;
 }
 
-const META: Record<CaseId, Meta> = {
+/** the cases the figure offers (integrals.ts also has `sine`, which the lesson does not draw) */
+export type FigureCase = Exclude<CaseId, 'sine'>;
+
+const META: Record<FigureCase, Meta> = {
   accel: {
     xs: 1, ys: 1, xLabel: 'הזמן t (שניות)', yLabel: 'v (מטר לשנייה)', xUnit: 's',
     areaName: 'הדרך', areaUnit: 'm', chip: 'מהירות עולה', said: 'גרף מהירות שעולה באחידות, ⁦v = 2t⁩',
@@ -58,10 +61,6 @@ const META: Record<CaseId, Meta> = {
   parabola: {
     xs: 1, ys: 1, xLabel: 'x', yLabel: 'f(x) = x²', xUnit: '',
     areaName: 'השטח', areaUnit: '', chip: '⁦x²⁩', said: 'הגרף של ⁦x²⁩',
-  },
-  sine: {
-    xs: 1, ys: 1, xLabel: 'x (רדיאנים)', yLabel: 'sin x', xUnit: '',
-    areaName: 'השטח המסומן', areaUnit: '', unsignedName: 'השטח בלי סימנים', chip: '⁦sin x⁩', said: 'הגרף של ⁦sin x⁩',
   },
   velocity: {
     xs: 1, ys: 1, xLabel: 'הזמן t (שניות)', yLabel: 'v (מטר לשנייה)', xUnit: 's',
@@ -87,14 +86,14 @@ const TASK_LABEL: Record<string, string> = {
   'double-mid': 'בגרף של ⁦x²⁩ ובכלל נקודת האמצע, לחצו על "N כפול" וקראו פי כמה קטנה השגיאה.',
   'return-time': 'בגרף המהירות (הלוך וחזור), הזיזו את b עד שההעתק מתאפס: באיזה רגע המכונית חוזרת לנקודת המוצא?',
   'physics-units': 'עברו בין ארבעת הגרפים הפיזיקליים, וקראו בכל אחד מה מודד השטח ובאילו יחידות.',
-  peak: 'בגרף של ⁦sin x⁩, הזיזו את b לנקודה שבה ⁦A(b)⁩ הגדול ביותר. מה הערך של ⁦f(b)⁩ שם?',
+  peak: 'בגרף המהירות (הלוך וחזור), הזיזו את b לרגע שבו ⁦A(b)⁩ הגדול ביותר. מה הגובה ⁦f(b)⁩ שם?',
 };
 
 export interface RiemannSumProps {
   id: string;
-  preset?: CaseId;
+  preset?: FigureCase;
   /** cases offered as buttons; none or one: no chooser */
-  presets?: CaseId[];
+  presets?: FigureCase[];
   rule?: RiemannRule;
   n?: number;
   /** the upper end; default: the case's own */
@@ -106,12 +105,12 @@ export interface RiemannSumProps {
 }
 
 interface State {
-  preset: CaseId;
+  preset: FigureCase;
   rule: RiemannRule;
   n: number;
   b: number;
   seenRules: RiemannRule[];
-  seenPresets: CaseId[];
+  seenPresets: FigureCase[];
 }
 
 const fmt = (v: number, unit: string) => `${sci(Math.abs(v) < 1e-12 ? 0 : v, 3)}${unit ? ` ${unit}` : ''}`;
@@ -119,16 +118,11 @@ const pct = (r: number) => (r === 0 ? '0%' : r >= 0.001 ? `${sci(r * 100, 2)}%` 
 /** relative-error tick labels: 100%, 10%, 1%, 0.1%… */
 const pctTick = (v: number) => `${Number((v * 100).toPrecision(1))}%`;
 
-const bStep = (id: CaseId) => (CASES[id].bMax - CASES[id].a) / 200;
-const clampB = (id: CaseId, b: number) => {
+const bStep = (id: FigureCase) => (CASES[id].bMax - CASES[id].a) / 200;
+const clampB = (id: FigureCase, b: number) => {
   const c = CASES[id];
   return Math.min(c.bMax, Math.max(c.a + bStep(id), b));
 };
-
-/** x ticks in radians for the sine: π/2, π, 3π/2, 2π. */
-const PI_TICKS = [0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2, 2 * Math.PI];
-const PI_LABEL = ['0', 'π/2', 'π', '3π/2', '2π'];
-const piFormat = (v: number) => PI_LABEL[PI_TICKS.findIndex((t) => Math.abs(t - v) < 1e-9)] ?? sci(v, 2);
 
 export default function RiemannSum(props: RiemannSumProps) {
   const panel: Panel = props.panel ?? 'error';
@@ -151,8 +145,8 @@ export default function RiemannSum(props: RiemannSumProps) {
       subscribeSteps(props.id, (st) => {
         setS((prev) => {
           const next = { ...prev };
-          if (typeof st.preset === 'string' && st.preset in CASES) {
-            next.preset = st.preset as CaseId;
+          if (typeof st.preset === 'string' && st.preset in META) {
+            next.preset = st.preset as FigureCase;
             next.b = CASES[next.preset].b;
           }
           if (typeof st.rule === 'string' && (RULES as string[]).includes(st.rule)) next.rule = st.rule as RiemannRule;
@@ -206,12 +200,12 @@ export default function RiemannSum(props: RiemannSumProps) {
     const ex = exactIntegral(cc, cc.a, next.b);
     const sc = unsignedArea(cc, cc.a, next.b);
     const err = sc > 0 ? Math.abs(riemann(cc.f, cc.a, next.b, next.n, next.rule) - ex) / sc : 0;
-    if (has('left-1pct') && next.rule === 'left' && err < 0.01) done('left-1pct');
+    if (has('left-1pct') && next.rule === 'left' && err <= 0.01 + 1e-9) done('left-1pct');
     if (has('all-rules') && RULES.every((r) => next.seenRules.includes(r))) done('all-rules');
     if (has('double-mid') && how === 'double' && next.rule === 'mid' && next.preset === 'parabola') done('double-mid');
     if (has('return-time') && next.preset === 'velocity' && next.b > 2.5 && Math.abs(ex) < 0.15) done('return-time');
     if (has('physics-units') && PHYSICS.every((p) => next.seenPresets.includes(p))) done('physics-units');
-    if (has('peak') && next.preset === 'sine' && Math.abs(next.b - Math.PI) < 0.06) done('peak');
+    if (has('peak') && next.preset === 'velocity' && Math.abs(next.b - 2) < 0.03) done('peak');
     const nm = META[next.preset];
     setLive(
       panel === 'accum'
@@ -222,7 +216,7 @@ export default function RiemannSum(props: RiemannSumProps) {
 
   const pickRule = (rule: RiemannRule) =>
     act((p) => ({ ...p, rule, seenRules: p.seenRules.includes(rule) ? p.seenRules : [...p.seenRules, rule] }));
-  const pickPreset = (preset: CaseId) =>
+  const pickPreset = (preset: FigureCase) =>
     act((p) => ({
       ...p,
       preset,
@@ -256,7 +250,6 @@ export default function RiemannSum(props: RiemannSumProps) {
         min: cs.a * mt.xs,
         max: cs.bMax * mt.xs,
         label: mt.xLabel,
-        ...(st.preset === 'sine' ? { ticks: PI_TICKS, format: piFormat } : {}),
       },
       { min: (lo < 0 ? lo - pad : 0) * mt.ys, max: (hi + pad) * mt.ys, label: mt.yLabel },
     );
@@ -360,7 +353,7 @@ export default function RiemannSum(props: RiemannSumProps) {
     const yr = { min: (lo < 0 ? lo - pad : 0) * sc, max: (hi + pad) * sc };
     const plot = makePlot(
       box,
-      { min: cs.a * mt.xs, max: cs.bMax * mt.xs, label: mt.xLabel, ...(st.preset === 'sine' ? { ticks: PI_TICKS, format: piFormat } : {}) },
+      { min: cs.a * mt.xs, max: cs.bMax * mt.xs, label: mt.xLabel },
       { ...yr, label: 'A(b)', ticks: niceTicks(yr.min, yr.max, 4) },
     );
     drawAxes(ctx, plot, p, { grid: true });
@@ -498,7 +491,7 @@ export default function RiemannSum(props: RiemannSumProps) {
                 min={c.a + bStep(s.preset)}
                 max={c.bMax}
                 step={bStep(s.preset)}
-                format={(v) => (s.preset === 'sine' ? `${sci(v, 3)} (${sci(v / Math.PI, 3)}π)` : fmt(v * m.xs, m.xUnit))}
+                format={(v) => fmt(v * m.xs, m.xUnit)}
                 onChange={(v) => act((p) => ({ ...p, b: clampB(p.preset, v) }))}
               />
             </div>

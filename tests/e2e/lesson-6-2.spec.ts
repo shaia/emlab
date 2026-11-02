@@ -105,12 +105,12 @@ test.describe('live figures', () => {
     expect((await progress(page)).tasks['fig-6-2b:physics-units']).toBeTruthy();
   });
 
-  test('the area function of sin peaks at b = π, where its slope f(b) is 0', async ({ page }) => {
+  test('the area under v = 4 − 2t peaks at t = 2 s, where its slope v is 0', async ({ page }) => {
     const fig = await openFigure(page, 'fig-6-2c');
     const readout = fig.locator('.sim-readout');
     const b = fig.locator('input[type=range]').first();
-    await setSlider(b, Math.PI);
-    await expect(readout).toContainText('A(b) = 2');
+    await setSlider(b, 2);
+    await expect(readout).toContainText('A(b) = 4 m');
     await expect(readout).toContainText('f(b) = 0');
     expect((await progress(page)).tasks['fig-6-2c:peak']).toBeTruthy();
   });

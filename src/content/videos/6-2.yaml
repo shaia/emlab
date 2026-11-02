@@ -1,6 +1,8 @@
 # Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below) on the
-# `verified` date. `why` claims only what the title and the upload description (its timestamps and its
-# translation credits) support; the length comes from the watch page (lengthSeconds = 1246).
+# `verified` date. `why` claims only what the title and the upload description (its timestamps) support;
+# the length comes from the watch page (lengthSeconds = 1246). Captions: the watch page's captionTracks
+# list uploaded (not auto-generated) tracks with vssId ".iw" (Hebrew) and ".en" (English), checked the
+# same day.
 
 - id: v-6-2-3b1b-integration
   youtubeId: rfG8ce4nNh0
@@ -11,5 +13,5 @@
   start: 0
   end: 1135
   minutes: 19
-  why: 'פרק באנגלית, ולפי התיאור שלו יש לו תרגום לעברית. לפי רשימת הפרקים בתיאור: דוגמה של מכונית (0:00), שטח מתחת לגרף (8:20), המשפט היסודי (11:18) ושטח שלילי (17:45). חפשו את הרצועה הדקה שמוסיפה לשטח f(b)·Δb, כמו באיור 6.2ג.'
+  why: 'פרק באנגלית, עם כתוביות בעברית. לפי רשימת הפרקים בתיאור: דוגמה של מכונית (0:00), שטח מתחת לגרף (8:20), המשפט היסודי (11:18) ושטח שלילי (17:45). חפשו את הרצועה הדקה שמוסיפה לשטח f(b)·Δb, כמו באיור 6.2ג.'
   verified: '2026-11-02'
