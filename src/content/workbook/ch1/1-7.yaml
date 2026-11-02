@@ -335,6 +335,8 @@ practice:
       (א) $226\,\text{N}\cdot\text{m}^2/\text{C}$.
 
       (ב) ימנית $218$, שמאלית $-142$, וכל אחת מהאחרות $37.7$ (ביחידות $\text{N}\cdot\text{m}^2/\text{C}$).
+
+      (ג) הסכום שווה ל-$226\,\text{N}\cdot\text{m}^2/\text{C}$: השדה האחיד לא משנה את השטף הכולל.
     solution:
       - kind: given
         text: >-

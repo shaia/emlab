@@ -96,14 +96,15 @@ practice:
           $$|\sigma| = 2\varepsilon_0\,E$$
       - kind: substitution
         text: >-
-          $$|\sigma| = 2\cdot8.85\cdot10^{-12}\cdot6\cdot10^{4} = 1.06\cdot10^{-6}\ \text{C/m}^2$$
+          $$|\sigma| = 2\cdot8.85\cdot10^{-12}\cdot6\cdot10^{4} = 1.062\cdot10^{-6} \approx 1.06\cdot10^{-6}\ \text{C/m}^2$$
+          בשלב הבא מציבים את הערך הלא מעוגל, $1.062\cdot10^{-6}$, כדי שהעיגול לא יצטבר.
       - kind: reasoning
         text: >-
           השדה מצביע אל הלוח, ולכן הלוח שלילי: $\sigma = -1.06\cdot10^{-6}\,\text{C/m}^2$.
       - kind: substitution
         text: >-
           המטען הכולל הוא הצפיפות כפול השטח:
-          $$q = \sigma A = -1.06\cdot10^{-6}\cdot9 \approx -9.6\cdot10^{-6}\ \text{C}$$
+          $$q = \sigma A = -1.062\cdot10^{-6}\cdot9 \approx -9.6\cdot10^{-6}\ \text{C}$$
       - kind: result
         text: >-
           $\sigma \approx -1.06\cdot10^{-6}\,\text{C/m}^2$, והמטען הכולל על הלוח $q \approx -9.6\,\mu\text{C}$.
