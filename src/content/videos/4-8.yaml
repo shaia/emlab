@@ -1,0 +1,23 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. Neither the description nor the length could be read, so `why` claims
+# only what the title says, and `minutes` is an estimate.
+
+- id: v-4-8-parallel-currents
+  youtubeId: 6lg4qKjQ3b0
+  title: 'כוח מגנטי בין שני זרמים מקבילים'
+  channel: Eli Gor
+  lang: he
+  captions: []
+  minutes: 6
+  why: 'הסבר בעברית על הכוח המגנטי בין שני זרמים מקבילים (לפי כותרת הסרטון). בזמן הצפייה, שימו לב איך נקבע הכיוון של הכוח, והשוו לחיצים באיור 4.8א.'
+  verified: '2026-11-02'
+
+- id: v-4-8-a-level-wires
+  youtubeId: I_fTVnGeQy8
+  title: '20.2c Two Parallel Wires Carrying Current | A2 Magnetic Fields | Cambridge A Level Physics'
+  channel: ETphysics
+  lang: en
+  captions: []
+  minutes: 8
+  why: 'שיעור באנגלית מתוך סדרה לבחינות הבגרות הבריטיות (Cambridge A Level) על שני תילים מקבילים שזורם בהם זרם (לפי כותרת הסרטון). השוו את הדרך שלו לגזירה של הכוח ליחידת אורך בשיעור.'
+  verified: '2026-11-02'
