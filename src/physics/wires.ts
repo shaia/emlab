@@ -21,7 +21,6 @@
  *   (reported as zero), and callers keep the wires apart.
  */
 
-import { MU0 } from './constants';
 import { wireFieldAt, type Wire } from './magnetism';
 import type { Vec2 } from './vec';
 
@@ -52,17 +51,3 @@ export function fieldAtWire(wires: readonly Wire[], i: number): Vec2 {
   );
 }
 
-/**
- * The flux function of the wires, A(x, y) = −(μ₀/2π)·Σ I·ln(r/1 m) [T·m], the z component of the
- * vector potential. Its contour lines are the field lines (B = (∂A/∂y, −∂A/∂x) is tangent to
- * them), and contours drawn at equal steps of A carry equal flux per metre between neighbours,
- * so their density shows the field's strength. Singular on each wire.
- */
-export function wireFluxFunction(wires: readonly Wire[], x: number, y: number): number {
-  let a = 0;
-  for (const w of wires) {
-    const r2 = (x - w.x) ** 2 + (y - w.y) ** 2;
-    a -= ((MU0 * w.I) / (4 * Math.PI)) * Math.log(r2);
-  }
-  return a;
-}

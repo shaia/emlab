@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { MU0 } from '~/physics/constants';
-import { parallelWiresForce, straightWireField, wireFieldAt, type Wire } from '~/physics/magnetism';
-import { fieldAtWire, netForcePerLength, pairForcePerLength, wireFluxFunction } from '~/physics/wires';
+import { parallelWiresForce, straightWireField, type Wire } from '~/physics/magnetism';
+import { fieldAtWire, netForcePerLength, pairForcePerLength } from '~/physics/wires';
 import { dot, len, relativeError, sub, type Vec2 } from '~/physics/vec';
 
-// The forces are closed forms; the convergence category covers the flux function, whose
-// finite-difference derivatives must approach the field as h².
+// Closed forms only (no integrator or tracer), so there is no convergence category here. The figure's
+// field lines come from wireFlux (src/physics/wireflux.ts, lesson 4.2), which has its own convergence test.
 
 const unit = (a: Vec2): Vec2 => [a[0] / len(a), a[1] / len(a)];
 
@@ -159,42 +159,5 @@ describe('scaling: F/L ∝ I₁I₂/d', () => {
     const b = pairForcePerLength(base, 1, 0);
     expect(relativeError(a[0], b[0])).toBeLessThan(1e-12);
     expect(relativeError(a[1], b[1])).toBeLessThan(1e-12);
-  });
-});
-
-describe('convergence: the flux function’s contours are the field lines', () => {
-  const w: Wire[] = [
-    { x: -0.05, y: 0, I: 10 },
-    { x: 0.05, y: 0.01, I: -6 },
-    { x: 0, y: 0.07, I: 15 },
-  ];
-  const fdError = (h: number) => {
-    let worst = 0;
-    for (const [x, y] of [
-      [0.02, -0.03],
-      [-0.09, 0.05],
-      [0.11, 0.08],
-    ] as const) {
-      const bx = (wireFluxFunction(w, x, y + h) - wireFluxFunction(w, x, y - h)) / (2 * h);
-      const by = -(wireFluxFunction(w, x + h, y) - wireFluxFunction(w, x - h, y)) / (2 * h);
-      const B = wireFieldAt(w, x, y);
-      worst = Math.max(worst, len([bx - B[0], by - B[1]]) / len(B));
-    }
-    return worst;
-  };
-
-  it('(∂A/∂y, −∂A/∂x) approaches B, and the error falls as h² (central differences)', () => {
-    const e1 = fdError(4e-3);
-    const e2 = fdError(2e-3);
-    expect(e2).toBeLessThan(1e-3);
-    expect(e1 / e2).toBeGreaterThan(3.5);
-    expect(e1 / e2).toBeLessThan(4.5);
-  });
-
-  it('a single wire’s contours are circles: A depends on r only', () => {
-    const one: Wire[] = [{ x: 0.01, y: -0.02, I: 7 }];
-    const a = wireFluxFunction(one, 0.01 + 0.03, -0.02);
-    const b = wireFluxFunction(one, 0.01 - 0.03 * Math.SQRT1_2, -0.02 + 0.03 * Math.SQRT1_2);
-    expect(relativeError(a, b)).toBeLessThan(1e-12);
   });
 });

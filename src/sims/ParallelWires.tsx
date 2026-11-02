@@ -4,7 +4,7 @@
  * the OTHER wires make at its place (magnetic colour) and the force per metre on it (force colour);
  * with three wires, optionally the force from each neighbour as well as the resultant. A "source"
  * mode draws one wire's field circle through the other wires, the picture behind F = B₁I₂L.
- * Field lines are contours of the flux function (wireFluxFunction), so their density shows |B|.
+ * Field lines are contours of the flux function (wireFlux, lesson 4.2), so their density shows |B|.
  * Built for lesson 4.8.
  *
  * Arrow scales are fixed: 2·10⁻⁴ N/m draws 3 cm of the stage, and 2·10⁻⁵ T draws 3 cm, so doubling
@@ -16,7 +16,8 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import type { Wire } from '~/physics/magnetism';
 import { wireFieldAt } from '~/physics/magnetism';
-import { fieldAtWire, netForcePerLength, pairForcePerLength, wireFluxFunction } from '~/physics/wires';
+import { wireFlux } from '~/physics/wireflux';
+import { fieldAtWire, netForcePerLength, pairForcePerLength } from '~/physics/wires';
 import type { Vec2 } from '~/physics/vec';
 import { markTask } from '~/progress/store';
 import { subscribeSteps } from '~/ui/steps';
@@ -146,7 +147,7 @@ function traceContours(wires: Wire[], v: View): [number, number][][] {
   const dA = 2e-7 * 10 * Math.log(1.45);
   const A: number[] = new Array((nx + 1) * (ny + 1));
   for (let j = 0; j <= ny; j++)
-    for (let i = 0; i <= nx; i++) A[j * (nx + 1) + i] = wireFluxFunction(wires, xmin + i * step, ymin + j * step);
+    for (let i = 0; i <= nx; i++) A[j * (nx + 1) + i] = wireFlux(wires, xmin + i * step, ymin + j * step);
   const at = (i: number, j: number) => A[j * (nx + 1) + i];
   const near = (x: number, y: number) => wires.some((w) => Math.hypot(x - w.x, y - w.y) < core);
   // segments keyed by the edges they cross: edge id → list of [other edge id, point]
@@ -308,7 +309,9 @@ function drawVec(
     ctx.textBaseline = 'middle';
     ctx.direction = 'ltr';
     // beside the tip, off to the left of the arrow's direction
-    ctx.fillText(style.label, x2 + u[0] * 10 + u[1] * 12, y2 + u[1] * 10 - u[0] * 12);
+    const lx = Math.max(12, Math.min(v.w - 12, x2 + u[0] * 10 + u[1] * 12));
+    const ly = Math.max(12, Math.min(v.h - 12, y2 + u[1] * 10 - u[0] * 12));
+    ctx.fillText(style.label, lx, ly);
     ctx.restore();
   }
 }
