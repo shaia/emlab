@@ -17,6 +17,7 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { parse } from 'yaml';
+import { chapters } from '../src/course.ts';
 import { tex } from '../src/lib/tex.ts';
 
 const ROOT = join(import.meta.dirname, '..');
@@ -238,6 +239,7 @@ for (const m of misconceptions) {
 
 /* -------------------------------------------------------------- lessons */
 
+const BEYOND_BAGRUT = new Set(chapters.filter((c) => c.beyondBagrut).map((c) => c.n));
 const TEMPLATE = ['Hook', 'Predict', 'Explore', 'Explain', 'Example', 'Check', 'Watch', 'Summary'];
 /** A prose line of MDX: Markdown joins it with its neighbours into one paragraph. */
 const prose = (s: string) => s.trim() !== '' && !/^\s*(<|\$\$|\||-|\*|#)/.test(s) && !s.includes('="') && !s.includes('$$');
@@ -277,6 +279,12 @@ for (const l of lessons) {
     for (const id of m[1].match(/'([^']+)'/g) ?? []) {
       const qid = id.slice(1, -1);
       if (!seenQ.has(qid)) fail(l.file, `<Check> asks for unknown question ${qid}`, true);
+    }
+  }
+  // Chapter 6 (beyond the Bagrut) exists to build the limit-check habit, so every worked example must show one.
+  if (BEYOND_BAGRUT.has(Number(l.id.split('.')[0]))) {
+    for (const m of l.body.matchAll(/<Example\s+id="([^"]+)"[\s\S]*?<\/Example>/g)) {
+      if (!m[0].includes('בדיקת גבולות')) fail(l.file, `${m[1]}: a chapter beyond the Bagrut shows a **בדיקת גבולות** in every worked example`);
     }
   }
   for (const m of l.body.matchAll(/<Term\s+id="([^"]+)"/g)) {

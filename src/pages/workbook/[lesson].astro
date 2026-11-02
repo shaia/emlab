@@ -30,15 +30,19 @@ const hasSummary = chapter ? (await chaptersWithSummary()).has(chapter.n) : fals
 const STEP_LABEL = {
   given: 'נתונים',
   formula: 'נוסחה',
+  law: 'החוק הכללי',
   manipulation: 'פיתוח',
   substitution: 'הצבה',
   reasoning: 'נימוק',
+  limit: 'בדיקת גבולות',
+  units: 'בדיקת יחידות',
   result: 'תוצאה',
 } as const;
+// a chapter beyond the Bagrut keeps the `bagrut` level key but names it for what it is
 const LEVELS = [
   { key: 'basic', label: 'בסיס' },
   { key: 'mid', label: 'בינוני' },
-  { key: 'bagrut', label: 'בגרות' },
+  { key: 'bagrut', label: chapter?.beyondBagrut ? 'מתקדם' : 'בגרות' },
 ] as const;
 
 type Item = (typeof w.practice)[number] | (typeof w.challenge)[number];

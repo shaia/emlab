@@ -1,0 +1,15 @@
+# Lesson 6.7 terms (chapter 6 core). Format and rules: see glossary/1-5.yaml.
+
+- id: divergence
+  term: דיברגנץ
+  en: divergence
+  symbol: '\nabla\cdot\vec E'
+  definition: 'השטף נטו שיוצא מתיבה קטנה סביב נקודה, חלקי נפח התיבה, בגבול שהתיבה קטנה לאפס. ברכיבים ∇·E = ∂Ex/∂x + ∂Ey/∂y + ∂Ez/∂z. בשדה חשמלי ∇·E = ρ/ε₀: הדיברגנץ שונה מאפס רק במקום שיש בו מטען, ו-∇·E = 0 אינו אומר ש-E = 0.'
+  reject: [דיברגנס, דיוורגנץ]
+  lesson: '6.7'
+
+- id: divergence-theorem
+  term: משפט הדיברגנץ
+  en: divergence theorem
+  definition: 'השטף דרך משטח סגור שווה לאינטגרל של הדיברגנץ על הנפח שבתוכו: ∮E·dA = ∫(∇·E)dV. מחברים את השטפים של אינסוף תיבות קטנות, ודרך הדפנות המשותפות השטף מתבטל.'
+  lesson: '6.7'

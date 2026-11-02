@@ -1,0 +1,41 @@
+# Lesson 6.3 terms (chapter 6 core). Format and rules: see glossary/1-5.yaml.
+
+- id: scalar-field
+  term: שדה סקלרי
+  en: scalar field
+  definition: 'פונקציה שנותנת מספר אחד לכל נקודה במרחב, V(x, y, z). הפוטנציאל החשמלי והטמפרטורה בחדר הם שדות סקלריים.'
+  lesson: '6.3'
+
+- id: vector-field
+  term: שדה וקטורי
+  en: vector field
+  definition: 'פונקציה שנותנת וקטור לכל נקודה במרחב, עם שלושה רכיבים שכל אחד מהם תלוי במקום: E(x, y, z). השדה החשמלי והשדה המגנטי הם שדות וקטוריים.'
+  lesson: '6.3'
+
+- id: partial-derivative
+  term: נגזרת חלקית
+  en: partial derivative
+  symbol: '\partial f/\partial x'
+  definition: 'הנגזרת של פונקציה של כמה משתנים לפי משתנה אחד, כשכל השאר נשארים קבועים. ∂V/∂x הוא קצב השינוי של V כשזזים רק בכיוון x.'
+  lesson: '6.3'
+
+- id: separation-vector
+  term: וקטור ההפרדה
+  en: separation vector
+  symbol: '\vec r - \vec r^{\,\prime}'
+  definition: 'הווקטור מנקודת המקור r′ (שם נמצא המטען) אל נקודת השדה r (שם מודדים). גודלו הוא המרחק ביניהן, וכיוונו קובע את כיוון השדה של מטען חיובי.'
+  lesson: '6.3'
+
+- id: cylindrical-coordinates
+  term: קואורדינטות גליליות
+  en: cylindrical coordinates
+  symbol: '(s, \varphi, z)'
+  definition: 'תיאור של נקודה לפי המרחק s מציר z, הזווית φ סביב הציר והגובה z. מתאימות לבעיות עם סימטריה של תיל או גליל.'
+  lesson: '6.3'
+
+- id: spherical-coordinates
+  term: קואורדינטות כדוריות
+  en: spherical coordinates
+  symbol: '(r, \theta, \varphi)'
+  definition: 'תיאור של נקודה לפי המרחק r מהראשית, הזווית θ מציר z והזווית φ סביב ציר z. מתאימות לבעיות עם סימטריה של נקודה או כדור.'
+  lesson: '6.3'

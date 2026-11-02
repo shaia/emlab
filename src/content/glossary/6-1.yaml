@@ -1,0 +1,27 @@
+# Lesson 6.1 terms (chapter 6 core: later lessons use them). Format and rules: see glossary/1-5.yaml.
+
+- id: limit
+  term: גבול
+  en: limit
+  definition: 'הערך שאליו גודל מתקרב כשמשהו שהוא תלוי בו מתקרב לערך מסוים, בלי להגיע אליו. למשל, השיפוע של מיתר מתקרב לשיפוע המשיק כשרוחב המיתר Δx מתקרב לאפס. כותבים lim.'
+  lesson: '6.1'
+
+- id: derivative
+  term: נגזרת
+  en: derivative
+  symbol: 'f''(x),\ df/dx'
+  definition: 'קצב השינוי הרגעי של פונקציה: הגבול של Δf/Δx כש-Δx שואף לאפס. בגרף, הנגזרת בנקודה היא השיפוע של המשיק לגרף בנקודה הזאת. יחידותיה הן יחידות f חלקי יחידות x; למשל הנגזרת של המקום לפי הזמן היא המהירות.'
+  reject: [דריבטיבה]
+  lesson: '6.1'
+
+- id: tangent-line
+  term: משיק
+  en: tangent line
+  definition: 'הקו הישר שנוגע בגרף בנקודה והולך בכיוון שהגרף הולך בו שם. השיפוע שלו הוא הנגזרת בנקודה. מקבלים אותו מהמיתר בין שתי נקודות על הגרף, כשמקרבים את הנקודות זו לזו.'
+  lesson: '6.1'
+
+- id: chain-rule
+  term: כלל השרשרת
+  en: chain rule
+  definition: 'הכלל לגזירת פונקציה של פונקציה: אם y = f(u) ו-u = g(x), אז dy/dx = (df/du)·(du/dx). למשל, הנגזרת של sin(ωt) לפי t היא ω·cos(ωt).'
+  lesson: '6.1'

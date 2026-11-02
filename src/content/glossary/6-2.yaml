@@ -1,0 +1,28 @@
+# Lesson 6.2 terms (chapter 6 core). Format and rules: see glossary/1-5.yaml.
+
+- id: riemann-sum
+  term: סכום רימן
+  en: Riemann sum
+  definition: 'קירוב לשטח שמתחת לגרף: מחלקים את הקטע ל-N חתיכות ברוחב Δx, ובכל חתיכה כופלים את גובה הפונקציה ב-Δx. הסכום Σf(xᵢ)Δx מתקרב לאינטגרל כש-N גדל.'
+  lesson: '6.2'
+
+- id: integral
+  term: אינטגרל
+  en: integral
+  symbol: '\int f(x)\,dx'
+  definition: 'הגבול של סכום רימן כשמספר החתיכות שואף לאינסוף ורוחבן לאפס: סכום של אינסוף חתיכות קטנות. אינטגרל מסוים מ-a עד b הוא השטח המסומן שבין הגרף לציר x, כשהשטח מתחת לציר נספר בסימן מינוס. יחידותיו הן יחידות f כפול יחידות x; למשל, האינטגרל של הכוח לאורך הדרך הוא העבודה.'
+  reject: [אינטגראל]
+  lesson: '6.2'
+
+- id: antiderivative
+  term: פונקציה קדומה
+  en: antiderivative
+  symbol: F(x)
+  definition: 'פונקציה F שהנגזרת שלה היא f, כלומר F′ = f. לכל פונקציה יש אינסוף פונקציות קדומות, שנבדלות זו מזו בקבוע.'
+  lesson: '6.2'
+
+- id: fundamental-theorem
+  term: המשפט היסודי
+  en: fundamental theorem of calculus
+  definition: 'המשפט שמקשר בין נגזרת לאינטגרל: האינטגרל של f מ-a עד b שווה ל-F(b) − F(a), כאשר F היא פונקציה קדומה של f. כך מחשבים אינטגרל בלי לסכום חתיכות.'
+  lesson: '6.2'

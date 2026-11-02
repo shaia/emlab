@@ -1,0 +1,24 @@
+# Lesson 6.4 terms (chapter 6 core). Format and rules: see glossary/1-5.yaml.
+
+- id: linear-charge-density
+  term: צפיפות מטען קווית
+  en: linear charge density
+  symbol: '\lambda'
+  unit: C/m
+  definition: 'המטען ליחידת אורך של גוף דק כמו תיל או מוט, λ = dq/dl. במוט טעון באופן אחיד, λ = Q/L.'
+  lesson: '6.4'
+
+- id: volume-charge-density
+  term: צפיפות מטען נפחית
+  en: volume charge density
+  symbol: '\rho'
+  unit: C/m³
+  definition: 'המטען ליחידת נפח, ρ = dq/dV. היא יכולה להשתנות ממקום למקום, ρ(r).'
+  lesson: '6.4'
+
+- id: charge-element
+  term: אלמנט מטען
+  en: charge element
+  symbol: 'dq'
+  definition: 'חתיכה קטנה מאוד של התפלגות מטען, קטנה מספיק כדי לטפל בה כמו במטען נקודתי: dq = λ·dl, dq = σ·dA או dq = ρ·dV. השדה של ההתפלגות כולה הוא האינטגרל של השדות של כל האלמנטים.'
+  lesson: '6.4'
