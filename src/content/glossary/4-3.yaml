@@ -1,0 +1,13 @@
+# Lesson 4.3 terms. Format and rules: see glossary/1-5.yaml.
+
+- id: coil-turn
+  term: כריכה
+  en: (circular) loop, turn
+  definition: 'תיל שמכופף למעגל אחד סגור, או ליפוף אחד של סליל. השדה במרכז כריכה ברדיוס R שזורם בה זרם I הוא B = μ₀I/(2R), ניצב למישור הכריכה. N כריכות צמודות יוצרות שדה גדול פי N.'
+  lesson: '4.3'
+
+- id: solenoid
+  term: סליל
+  en: solenoid
+  definition: 'תיל שמלופף כריכות רבות צמודות זו לזו לאורך גליל. בתוך סליל ארוך השדה כמעט אחיד ומקביל לציר, B = μ₀NI/L, ומחוצה לו השדה חלש, ודומה לשדה של מגנט מוט.'
+  lesson: '4.3'

@@ -1,0 +1,15 @@
+# Lesson 4.2 terms. Format and rules: see glossary/1-5.yaml.
+
+- id: right-hand-rule
+  term: כלל יד ימין
+  en: right-hand (grip) rule
+  definition: 'קובע את כיוון השדה המגנטי סביב זרם. אוחזים את התיל ביד ימין, האגודל בכיוון הזרם, והאצבעות המכופפות מראות את כיוון השדה, במעגלים סביב התיל. בכריכה ובסליל: האצבעות המכופפות בכיוון הזרם, והאגודל מראה את כיוון השדה בתוכם.'
+  lesson: '4.2'
+
+- id: permeability
+  term: פרמאביליות הריק
+  en: vacuum permeability
+  symbol: μ₀
+  unit: T·m/A
+  definition: 'קבוע טבע שמופיע בכל נוסחה לשדה מגנטי של זרם, μ₀ = 4π·10⁻⁷ T·m/A. הוא מקביל לפרמיטיביות הריק ε₀ של השדה החשמלי.'
+  lesson: '4.2'

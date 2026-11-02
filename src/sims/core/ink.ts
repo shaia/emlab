@@ -247,3 +247,90 @@ export function mix(c1: string, c2: string, t: number): string {
   const m = (i: number) => Math.round(a[i] + (b[i] - a[i]) * t);
   return `rgb(${m(0)}, ${m(1)}, ${m(2)})`;
 }
+
+/**
+ * A direction perpendicular to the page: ⊙ (out, the point of an arrow coming at you) or ⊗ (in,
+ * its tail feathers). Drawn as a ring with a dot or a cross, so it never relies on colour alone.
+ * Used for wires seen end-on (current) and for field regions (B).
+ */
+export function depthGlyph(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  r: number,
+  dir: 'out' | 'in',
+  color: string,
+  opts: { fill?: string; width?: number; alpha?: number } = {},
+) {
+  ctx.save();
+  ctx.globalAlpha = opts.alpha ?? 1;
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineWidth = opts.width ?? Math.max(1.2, r * 0.16);
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  if (opts.fill) {
+    ctx.fillStyle = opts.fill;
+    ctx.fill();
+    ctx.fillStyle = color;
+  }
+  ctx.stroke();
+  if (dir === 'out') {
+    ctx.beginPath();
+    ctx.arc(x, y, Math.max(1.5, r * 0.28), 0, Math.PI * 2);
+    ctx.fill();
+  } else {
+    const d = r * 0.62;
+    ctx.beginPath();
+    ctx.moveTo(x - d, y - d);
+    ctx.lineTo(x + d, y + d);
+    ctx.moveTo(x - d, y + d);
+    ctx.lineTo(x + d, y - d);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+/**
+ * A uniform field perpendicular to the page over a screen rectangle: a lattice of small ⊙ or ⊗
+ * marks (no ring), in the magnetic colour by default. `spacing` in CSS px.
+ */
+export function depthField(
+  ctx: CanvasRenderingContext2D,
+  box: { x: number; y: number; w: number; h: number },
+  dir: 'out' | 'in',
+  color: string,
+  spacing = 28,
+  alpha = 0.55,
+) {
+  const nx = Math.max(1, Math.floor(box.w / spacing));
+  const ny = Math.max(1, Math.floor(box.h / spacing));
+  const sx = box.w / nx;
+  const sy = box.h / ny;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineWidth = 1.4;
+  ctx.lineCap = 'round';
+  const d = Math.min(sx, sy) * 0.14;
+  for (let i = 0; i < nx; i++) {
+    for (let j = 0; j < ny; j++) {
+      const cx = box.x + (i + 0.5) * sx;
+      const cy = box.y + (j + 0.5) * sy;
+      ctx.beginPath();
+      if (dir === 'out') {
+        ctx.arc(cx, cy, Math.max(1.4, d * 0.55), 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.moveTo(cx - d, cy - d);
+        ctx.lineTo(cx + d, cy + d);
+        ctx.moveTo(cx - d, cy + d);
+        ctx.lineTo(cx + d, cy - d);
+        ctx.stroke();
+      }
+    }
+  }
+  ctx.restore();
+}
