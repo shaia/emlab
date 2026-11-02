@@ -1,0 +1,23 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support; the
+# length comes from the watch page (lengthSeconds). No Hebrew video on the Biot–Savart law was found.
+
+- id: v-6-11-finite-wire
+  youtubeId: GYwZnYbdymY
+  title: 'Biot Savart law (Easy Calculus)- Field due to finite wire carrying current.'
+  channel: FloatHeadPhysics
+  lang: en
+  captions: []
+  minutes: 15
+  why: 'סרטון באנגלית: לפי התיאור שלו, הוא מחשב צעד אחר צעד בחוק ביו-סבר את השדה בנקודה ליד תיל סופי שזורם בו זרם. קודם השדה של אלמנט קטן, ואחר כך אינטגרל על כל התיל. השוו את התוצאה לנוסחה של הקטע הישר בשיעור.'
+  verified: '2026-11-02'
+
+- id: v-6-11-loop-axis
+  youtubeId: 5r-rxd3T2L4
+  title: 'Magnetic field on the axis of a circular loop | Moving charges & magnetism | Physics | Khan Academy'
+  channel: Khan Academy India - English
+  lang: en
+  captions: []
+  minutes: 17
+  why: 'סרטון באנגלית מאקדמיית חאן: לפי התיאור שלו, הוא מתחיל מהשדה של אלמנט זרם אחד של כריכה עגולה, ואחר כך מחשב את האינטגרל על הכריכה כולה, ומקבל את השדה על הציר.'
+  verified: '2026-11-02'

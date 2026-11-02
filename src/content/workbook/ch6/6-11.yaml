@@ -1,0 +1,586 @@
+# Workbook, lesson 6.11 (the Biot–Savart law). Format and rules: see .claude/CLAUDE.md, "Worked examples, workbook",
+# and the chapter 6 solution shape (law → derivation → symbolic result → limit check → unit check → numbers).
+# Every number was recomputed with src/physics/biotsavart.ts (elementField, segmentField, semiInfiniteWireField,
+# polylineFieldExact, polygonCenterField, loopMoment, dipoleAxisField, solenoidAxisFraction) and magnetism.ts
+# (loopAxisField, loopCenterField, finiteSolenoidAxisField, solenoidField, straightWireField); script
+# s611/recompute-wb.ts in the session scratchpad. In a >- block, consecutive lines fold into one paragraph:
+# every part (א, ב, …) starts after a blank line.
+
+lesson: '6.11'
+practice:
+  - id: W-6.11-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.11-1]
+    prompt: >-
+      חתיכה קצרה של תיל, באורך $5\,\text{mm}$, נמצאת בראשית, וזורם בה זרם של $4\,\text{A}$ כלפי מעלה בדף (בכיוון $+y$).
+
+      א. מה הגודל והכיוון של התרומה שלה לשדה בנקודה P, ב-$(3\,\text{cm},\ 0)$?
+
+      ב. ובנקודה Q, ב-$(3\,\text{cm},\ 4\,\text{cm})$?
+
+      ג. ובנקודה S, ב-$(0,\ -2\,\text{cm})$?
+    answer: >-
+      א. $2.22\cdot10^{-6}\,\text{T}$, לתוך הדף (⊗).
+
+      ב. $4.8\cdot10^{-7}\,\text{T}$, ⊗.
+
+      ג. אפס.
+    solution:
+      - kind: given
+        text: >-
+          $I = 4\,\text{A}$, $d\ell = 5\cdot10^{-3}\,\text{m}$ בכיוון $+y$.
+      - kind: law
+        text: >-
+          חוק ביו-סבר: $dB = \dfrac{\mu_0}{4\pi}\,\dfrac{I\,d\ell\,\sin\varphi}{r^2}$, בכיוון $d\vec\ell\times\hat r$.
+      - kind: reasoning
+        text: >-
+          א. $r = 3\,\text{cm}$ והקו אל P ניצב לחתיכה, $\varphi = 90^\circ$. האצבעות למעלה, מכופפות ימינה, והאגודל נכנס לדף.
+
+          ב. $r = \sqrt{3^2 + 4^2} = 5\,\text{cm}$. הרכיב של הקו אל Q שניצב לחתיכה הוא $3\,\text{cm}$, ולכן $\sin\varphi = 3/5$. Q מימין לקו של החתיכה, והכיוון כמו ב-א.
+
+          ג. S נמצאת על הקו של החתיכה, מתחתיה: $\varphi = 180^\circ$, $\sin\varphi = 0$.
+      - kind: limit
+        text: >-
+          כש-Q נעה על המעגל ברדיוס $5\,\text{cm}$ עד שהיא על הקו של החתיכה, $\sin\varphi$ יורד ל-0, והתרומה נעלמת ברציפות, כמו ב-ג.
+      - kind: units
+        text: >-
+          $\dfrac{\text{T}\cdot\text{m/A}\cdot\text{A}\cdot\text{m}}{\text{m}^2} = \text{T}$.
+      - kind: substitution
+        text: >-
+          א. $dB = 10^{-7}\cdot\dfrac{4\cdot5\cdot10^{-3}}{0.03^2} \approx 2.22\cdot10^{-6}\,\text{T}$.
+
+          ב. $dB = 10^{-7}\cdot\dfrac{4\cdot5\cdot10^{-3}\cdot0.6}{0.05^2} = 4.8\cdot10^{-7}\,\text{T}$.
+      - kind: result
+        text: >-
+          א. $2.22\cdot10^{-6}\,\text{T}$, ⊗.
+
+          ב. $4.8\cdot10^{-7}\,\text{T}$, ⊗.
+
+          ג. אפס: הזרם זורם לאורך הקו אל S.
+
+  - id: W-6.11-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-6.11-1]
+    prompt: >-
+      כריכה בצורת האות D שוכבת בדף: חצי מעגל ברדיוס $R$ מעל קוטר ישר. הזרם זורם בה נגד כיוון השעון: בחצי המעגל מימין לשמאל, ובקוטר משמאל לימין. הנקודה O היא אמצע הקוטר, מרכז חצי המעגל.
+
+      א. קבעו ונמקו: איזה חלק של הכריכה תורם לשדה ב-O, ובאיזה כיוון?
+
+      ב. בטאו את השדה ב-O בעזרת $\mu_0$, $I$ ו-$R$.
+    answer: >-
+      א. רק חצי המעגל, החוצה מהדף (⊙). הקוטר לא תורם: O על הקו שלו.
+
+      ב. $B = \dfrac{\mu_0 I}{4R}$, חצי מהשדה במרכז של כריכה שלמה.
+    solution:
+      - kind: law
+        text: >-
+          חוק ביו-סבר: כל אלמנט תורם $\dfrac{\mu_0}{4\pi}\,\dfrac{I\,d\ell\,\sin\varphi}{r^2}$, בכיוון $d\vec\ell\times\hat r$.
+      - kind: reasoning
+        text: >-
+          א. כל חתיכה של הקוטר נמצאת על אותו קו ישר עם O, והזרם בה זורם אל O או ממנה: $\sin\varphi = 0$, ואין תרומה. בחצי המעגל כל חתיכה במרחק $R$ מ-O, והזרם בה משיק למעגל, ניצב לקו אל O: $\sin\varphi = 1$. בהליכה נגד כיוון השעון O תמיד משמאל לזרם, וכל התרומות ⊙.
+      - kind: manipulation
+        text: >-
+          ב. כל התרומות באותו כיוון ובאותו מרחק, ולכן האינטגרל הוא רק סכום האורכים, חצי היקף: $B = \dfrac{\mu_0 I}{4\pi R^2}\cdot\pi R$.
+      - kind: limit
+        text: >-
+          כריכה שלמה היא שני חצאים כאלה, וכל אחד תורם את אותו הדבר במרכז, ולכן היא צריכה לתת $2\cdot\dfrac{\mu_0 I}{4R} = \dfrac{\mu_0 I}{2R}$: הנוסחה של שיעור 4.3.
+      - kind: units
+        text: >-
+          $\dfrac{\text{T}\cdot\text{m/A}\cdot\text{A}}{\text{m}} = \text{T}$.
+      - kind: result
+        text: >-
+          א. רק חצי המעגל, ⊙.
+
+          ב. $B = \dfrac{\mu_0 I}{4R}$.
+
+  - id: W-6.11-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.11-2]
+    prompt: >-
+      תיל ישר ארוך מאוד מגיע משמאל ונגמר בנקודה A (משם הזרם ממשיך הלאה בתיל אחר, רחוק). בתיל זורם זרם של $9\,\text{A}$.
+
+      א. מה השדה של התיל בנקודה P, $6\,\text{cm}$ מ-A, כשהקו AP ניצב לתיל?
+
+      ב. מה השדה של התיל בנקודה Q, על ההמשך של התיל, $6\,\text{cm}$ מימין ל-A?
+
+      ג. פי כמה השדה ב-P קטן מהשדה של תיל אינסופי באותו מרחק?
+    answer: >-
+      א. $1.5\cdot10^{-5}\,\text{T}$.
+
+      ב. אפס.
+
+      ג. פי 2.
+    solution:
+      - kind: given
+        text: >-
+          $I = 9\,\text{A}$, $s = 0.06\,\text{m}$; התיל משתרע מ-$-\infty$ עד A.
+      - kind: law
+        text: >-
+          קטע ישר: $B = \dfrac{\mu_0 I}{4\pi s}(\sin\theta_2 - \sin\theta_1)$.
+      - kind: manipulation
+        text: >-
+          א. מול A: הקצה A נמצא בנקודת הבסיס, $\theta_2 = 0$, והקצה השני באינסוף, $\theta_1 \to -90^\circ$. לכן $\sin\theta_2 - \sin\theta_1 = 1$, ו-$B = \dfrac{\mu_0 I}{4\pi s}$.
+
+          ב. Q על הקו של התיל: בכל חתיכה הזרם זורם ישר אל Q, $\sin\varphi = 0$.
+      - kind: limit
+        text: >-
+          תיל אינסופי לשני הצדדים הוא שני תילים כאלה, ובו $\sin\theta_2 - \sin\theta_1 = 2$: $\dfrac{\mu_0 I}{2\pi s}$, כפול.
+      - kind: units
+        text: >-
+          $\dfrac{\mu_0 I}{s}$ ביחידות T.
+      - kind: substitution
+        text: >-
+          $B = 10^{-7}\cdot\dfrac{9}{0.06} = 1.5\cdot10^{-5}\,\text{T}$, ותיל אינסופי: $3\cdot10^{-5}\,\text{T}$.
+      - kind: result
+        text: >-
+          א. $1.5\cdot10^{-5}\,\text{T}$.
+
+          ב. אפס.
+
+          ג. פי 2: מול הקצה של תיל ארוך השדה חצי.
+
+  - id: W-6.11-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.11-2]
+    prompt: >-
+      תיל מכופף כמו סיכת ראש: שני חלקים ישרים, ארוכים מאוד ומקבילים, $4\,\text{cm}$ זה מזה, שמחוברים בקצה הימני בחצי מעגל ברדיוס $R = 2\,\text{cm}$. הזרם, $5\,\text{A}$, נכנס בחלק העליון ימינה, מסתובב בחצי המעגל, ויוצא בחלק התחתון שמאלה. O הוא מרכז חצי המעגל.
+
+      א. מה הכיוון של התרומה של כל אחד משלושת החלקים ב-O?
+
+      ב. מה השדה ב-O?
+    answer: >-
+      א. שלושתם לתוך הדף (⊗).
+
+      ב. $B = \dfrac{\mu_0 I}{4R}\left(1 + \dfrac{2}{\pi}\right) \approx 1.29\cdot10^{-4}\,\text{T}$, ⊗.
+    solution:
+      - kind: given
+        text: >-
+          $I = 5\,\text{A}$, $R = 0.02\,\text{m}$. כל חלק ישר נגמר בדיוק מול O, במרחק $R$.
+      - kind: law
+        text: >-
+          חוק ביו-סבר וסופרפוזיציה: השדה ב-O הוא סכום התרומות של חצי המעגל ושל שני החלקים הישרים.
+      - kind: reasoning
+        text: >-
+          א. החלק העליון: הזרם ימינה ו-O מתחתיו, ⊗. חצי המעגל: הזרם עם כיוון השעון סביב O, ⊗. החלק התחתון: הזרם שמאלה ו-O מעליו: האצבעות שמאלה, מכופפות למעלה, האגודל לתוך הדף, ⊗.
+      - kind: manipulation
+        text: >-
+          חצי מעגל (כמו בבעיה 2): $\dfrac{\mu_0 I}{4R}$. כל חלק ישר הוא תיל ארוך שנגמר מול O: $\dfrac{\mu_0 I}{4\pi R}$. ביחד: $B = \dfrac{\mu_0 I}{4R} + 2\cdot\dfrac{\mu_0 I}{4\pi R} = \dfrac{\mu_0 I}{4R}\left(1 + \dfrac{2}{\pi}\right)$.
+      - kind: limit
+        text: >-
+          אם מחליפים את חצי המעגל בחצי מעגל נוסף שסוגר כריכה, החלקים הישרים נעלמים ומקבלים $\dfrac{\mu_0 I}{2R}$. ואם מרחיקים את O לאורך הסיכה שמאלה, רחוק מחצי המעגל, השדה שואף לשדה של שני תילים אינסופיים עם זרמים מנוגדים, $2\cdot\dfrac{\mu_0 I}{2\pi R}$, שגדול מהשדה ב-O: ב-O כל תיל רק "חצי".
+      - kind: units
+        text: >-
+          כל איבר הוא $\mu_0 I$ חלקי אורך: T.
+      - kind: substitution
+        text: >-
+          $\dfrac{\mu_0 I}{4R} = \dfrac{4\pi\cdot10^{-7}\cdot5}{0.08} \approx 7.85\cdot10^{-5}\,\text{T}$, ושני החלקים הישרים $2\cdot10^{-7}\cdot\dfrac{5}{0.02} = 5\cdot10^{-5}\,\text{T}$.
+      - kind: result
+        text: >-
+          א. כולם ⊗.
+
+          ב. $B \approx 1.29\cdot10^{-4}\,\text{T}$, לתוך הדף.
+
+  - id: W-6.11-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.11-2]
+    prompt: >-
+      תיל ארוך מאוד שוכב בדף ומכופף בזווית ישרה בנקודה O. הזרם, $10\,\text{A}$, מגיע מימין לאורך ציר $x$ אל O, ומשם ממשיך למעלה לאורך ציר $y$, בלי סוף.
+
+      א. קבעו ונמקו: מה הכיוון של התרומה של כל זרוע בנקודה P, ב-$(5\,\text{cm},\ 5\,\text{cm})$, בתוך הפינה?
+
+      ב. מה השדה ב-P?
+
+      ג. מה השדה בנקודה Q, ב-$(-5\,\text{cm},\ 0)$, על ההמשך של הזרוע האופקית?
+    answer: >-
+      א. שתי הזרועות ⊗.
+
+      ב. $B = \dfrac{\mu_0 I}{2\pi d}\left(1 + \dfrac{1}{\sqrt2}\right) \approx 6.83\cdot10^{-5}\,\text{T}$, ⊗.
+
+      ג. $2\cdot10^{-5}\,\text{T}$, רק מהזרוע האנכית.
+    solution:
+      - kind: given
+        text: >-
+          $I = 10\,\text{A}$, $d = 0.05\,\text{m}$. כל זרוע היא תיל שמתחיל באינסוף ונגמר ב-O, או מתחיל ב-O.
+      - kind: law
+        text: >-
+          קטע ישר: $B = \dfrac{\mu_0 I}{4\pi s}(\sin\theta_2 - \sin\theta_1)$, כשהזוויות נמדדות מנקודת הבסיס, חיוביות בכיוון הזרם.
+      - kind: reasoning
+        text: >-
+          א. הזרוע האופקית: הזרם שמאלה, ו-P מעליה: האצבעות שמאלה, מכופפות למעלה, ⊗. הזרוע האנכית: הזרם למעלה, ו-P מימינה: ⊗. שתי התרומות באותו כיוון, ומתחברות.
+      - kind: manipulation
+        text: >-
+          ב. לכל זרוע $s = d$, ונקודת הבסיס במרחק $d$ מ-O. בזרוע האופקית הזרם מגיע מאינסוף ($\sin\theta_1 = -1$) ונגמר ב-O, $d$ אחרי נקודת הבסיס ($\sin\theta_2 = d/\sqrt{2d^2} = 1/\sqrt2$). בזרוע האנכית הזרם מתחיל ב-O, $d$ לפני נקודת הבסיס ($\sin\theta_1 = -1/\sqrt2$), וממשיך לאינסוף ($\sin\theta_2 = 1$). בשתיהן $\sin\theta_2 - \sin\theta_1 = 1 + 1/\sqrt2$, ולכן $B = 2\cdot\dfrac{\mu_0 I}{4\pi d}\left(1 + \dfrac{1}{\sqrt2}\right)$.
+
+          ג. Q על הקו של הזרוע האופקית: היא לא תורמת. הזרוע האנכית מתחילה בנקודת הבסיס של Q: $\dfrac{\mu_0 I}{4\pi d}$.
+      - kind: limit
+        text: >-
+          אם P מתרחקת לאורך האלכסון, $d \to \infty$, השדה יורד כמו $1/d$, כמו של תיל. ואם במקום הפינה היה תיל ישר אינסופי, P במרחק $d$ ממנו הייתה מקבלת $\dfrac{\mu_0 I}{2\pi d}$: הפינה נותנת קצת יותר, $1.71$ פעמים זה, כי שתי הזרועות "עוטפות" את P.
+      - kind: units
+        text: >-
+          $\dfrac{\mu_0 I}{d}$ ביחידות T.
+      - kind: substitution
+        text: >-
+          $\dfrac{\mu_0 I}{2\pi d} = 2\cdot10^{-7}\cdot\dfrac{10}{0.05} = 4\cdot10^{-5}\,\text{T}$, ולכן $B_P = 4\cdot10^{-5}\cdot1.707 \approx 6.83\cdot10^{-5}\,\text{T}$, ו-$B_Q = 10^{-7}\cdot\dfrac{10}{0.05} = 2\cdot10^{-5}\,\text{T}$.
+      - kind: result
+        text: >-
+          א. שתיהן ⊗.
+
+          ב. $6.83\cdot10^{-5}\,\text{T}$, ⊗.
+
+          ג. $2\cdot10^{-5}\,\text{T}$.
+
+  - id: W-6.11-06
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.11-2]
+    prompt: >-
+      כריכה בצורת משולש שווה צלעות, בצלע $a = 12\,\text{cm}$, ובה זרם של $3\,\text{A}$.
+
+      א. מה המרחק ממרכז המשולש לכל צלע, ובאיזו זווית נראים הקצוות של צלע מהמרכז?
+
+      ב. מה השדה במרכז המשולש?
+
+      ג. האם הוא גדול או קטן מהשדה במרכז של כריכה עגולה באותו היקף? נמקו.
+    answer: >-
+      א. $s = \dfrac{a}{2\sqrt3} \approx 3.46\,\text{cm}$; הקצוות ב-$\pm60^\circ$.
+
+      ב. $B = \dfrac{9\mu_0 I}{2\pi a} = 4.5\cdot10^{-5}\,\text{T}$.
+
+      ג. גדול יותר: לעיגול באותו היקף $3.29\cdot10^{-5}\,\text{T}$.
+    solution:
+      - kind: given
+        text: >-
+          $a = 0.12\,\text{m}$, $I = 3\,\text{A}$.
+      - kind: law
+        text: >-
+          לכל צלע, קטע ישר: $B = \dfrac{\mu_0 I}{4\pi s}(\sin\theta_2 - \sin\theta_1)$; שלוש הצלעות תורמות באותו כיוון.
+      - kind: manipulation
+        text: >-
+          א. במשולש שווה צלעות המרכז נמצא על הגובה, בשליש שלו מהבסיס: $s = \dfrac{1}{3}\cdot\dfrac{\sqrt3}{2}a = \dfrac{a}{2\sqrt3}$. מהמרכז, חצי צלע $a/2$ נראית בזווית $\theta$ עם $\tan\theta = \dfrac{a/2}{s} = \sqrt3$, כלומר $\theta = 60^\circ$.
+
+          ב. כל צלע: $\dfrac{\mu_0 I}{4\pi s}\cdot2\sin60^\circ = \dfrac{\mu_0 I\sqrt3}{4\pi s}$. שלוש צלעות, עם $s = a/(2\sqrt3)$: $B = 3\cdot\dfrac{\mu_0 I\sqrt3\cdot2\sqrt3}{4\pi a} = \dfrac{9\mu_0 I}{2\pi a}$.
+      - kind: limit
+        text: >-
+          ג. בעיגול באותו היקף, $2\pi R = 3a$: $B = \dfrac{\mu_0 I}{2R} = \dfrac{\pi\mu_0 I}{3a}$. היחס $\dfrac{9/(2\pi)}{\pi/3} = \dfrac{27}{2\pi^2} \approx 1.37$. כשמגדילים את מספר הצלעות באותו היקף, המצולע מתקרב לעיגול, והיחס צריך לשאוף ל-1. במשולש היחס גדול במיוחד, כי האמצעים של הצלעות שלו קרובים למרכז ($3.46\,\text{cm}$) הרבה יותר מהעיגול ($5.73\,\text{cm}$), וחתיכה קרובה תורמת כמו $1/r^2$.
+      - kind: units
+        text: >-
+          $\dfrac{\mu_0 I}{a}$ ביחידות T.
+      - kind: substitution
+        text: >-
+          $s = \dfrac{0.12}{2\sqrt3} \approx 0.0346\,\text{m}$, $B = \dfrac{9\cdot4\pi\cdot10^{-7}\cdot3}{2\pi\cdot0.12} = 4.5\cdot10^{-5}\,\text{T}$; העיגול: $R = \dfrac{3\cdot0.12}{2\pi} \approx 0.0573\,\text{m}$ ו-$B \approx 3.29\cdot10^{-5}\,\text{T}$.
+      - kind: result
+        text: >-
+          א. $3.46\,\text{cm}$, $\pm60^\circ$.
+
+          ב. $4.5\cdot10^{-5}\,\text{T}$.
+
+          ג. גדול יותר, פי 1.37 בערך.
+
+  - id: W-6.11-07
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.11-3]
+    prompt: >-
+      בכריכה ברדיוס $6\,\text{cm}$ זורם זרם של $4\,\text{A}$.
+
+      א. באיזה מרחק מהמרכז, על הציר, השדה הוא חצי מהשדה שבמרכז?
+
+      ב. מה השדה שם?
+
+      ג. כמה אחוזים מהשדה שבמרכז נשארים במרחק $2R$?
+    answer: >-
+      א. $z = R\sqrt{2^{2/3} - 1} \approx 0.766R \approx 4.6\,\text{cm}$.
+
+      ב. $2.09\cdot10^{-5}\,\text{T}$.
+
+      ג. כ-8.9%.
+    solution:
+      - kind: given
+        text: >-
+          $R = 0.06\,\text{m}$, $I = 4\,\text{A}$.
+      - kind: law
+        text: >-
+          כריכה על הציר: $B(z) = \dfrac{\mu_0 I R^2}{2(R^2 + z^2)^{3/2}}$, ובמרכז $B(0) = \dfrac{\mu_0 I}{2R}$.
+      - kind: manipulation
+        text: >-
+          היחס לשדה שבמרכז: $\dfrac{B(z)}{B(0)} = \dfrac{R^3}{(R^2 + z^2)^{3/2}} = \left(1 + \dfrac{z^2}{R^2}\right)^{-3/2}$.
+
+          א. מבקשים $\left(1 + z^2/R^2\right)^{3/2} = 2$. מעלים בחזקת $2/3$: $1 + z^2/R^2 = 2^{2/3}$, ולכן $z = R\sqrt{2^{2/3} - 1}$.
+
+          ג. ב-$z = 2R$: $(1 + 4)^{-3/2} = 5^{-3/2}$.
+      - kind: limit
+        text: >-
+          היחס שווה ל-1 ב-$z = 0$, ויורד בהתמדה. רחוק הוא שואף ל-$(R/z)^3$, כמו דיפול: ב-$z = 2R$ זה $1/8 = 12.5\%$, והערך המדויק, $8.9\%$, נמוך מזה, כי נוסחת הדיפול מגזימה קרוב לכריכה.
+      - kind: units
+        text: >-
+          היחס בלי יחידות; $\dfrac{\mu_0 I}{R}$ ביחידות T.
+      - kind: substitution
+        text: >-
+          $2^{2/3} \approx 1.587$, ו-$z \approx 0.766\cdot6 \approx 4.6\,\text{cm}$. $B(0) = \dfrac{4\pi\cdot10^{-7}\cdot4}{2\cdot0.06} \approx 4.19\cdot10^{-5}\,\text{T}$, וחצי ממנו $2.09\cdot10^{-5}\,\text{T}$. $5^{-3/2} \approx 0.0894$.
+      - kind: result
+        text: >-
+          א. כ-$4.6\,\text{cm}$ מהמרכז.
+
+          ב. $2.09\cdot10^{-5}\,\text{T}$.
+
+          ג. כ-8.9%.
+
+  - id: W-6.11-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.11-3]
+    prompt: >-
+      שתי כריכות זהות, ברדיוס $R = 10\,\text{cm}$, עומדות זו מול זו על ציר משותף, במרחק $R$ זו מזו. בכל אחת זורם זרם של $2\,\text{A}$, באותו כיוון. (זה סידור שנקרא סלילי הלמהולץ.)
+
+      א. מה השדה על הציר, באמצע בין הכריכות?
+
+      ב. מה השדה על הציר במרכז של אחת הכריכות? השוו ל-א.
+
+      ג. מה השדה באמצע אם הזרמים בשתי הכריכות מנוגדים?
+    answer: >-
+      א. $B = \left(\dfrac{4}{5}\right)^{3/2}\dfrac{\mu_0 I}{R} \approx 1.80\cdot10^{-5}\,\text{T}$.
+
+      ב. $\approx 1.70\cdot10^{-5}\,\text{T}$, רק כ-5% פחות.
+
+      ג. אפס.
+    solution:
+      - kind: given
+        text: >-
+          $R = 0.1\,\text{m}$, $I = 2\,\text{A}$ בכל כריכה, המרחק בין הכריכות $R$.
+      - kind: law
+        text: >-
+          כריכה על הציר, $B = \dfrac{\mu_0 I R^2}{2(R^2 + z^2)^{3/2}}$, וסופרפוזיציה. בזרמים באותו כיוון, השדות של שתי הכריכות על הציר באותו כיוון.
+      - kind: manipulation
+        text: >-
+          א. באמצע, $z = R/2$ מכל כריכה: $R^2 + R^2/4 = \dfrac{5}{4}R^2$, ולכן כל כריכה תורמת $\dfrac{\mu_0 I R^2}{2\left(\frac54\right)^{3/2}R^3}$, ושתיהן יחד $\left(\dfrac{4}{5}\right)^{3/2}\dfrac{\mu_0 I}{R}$.
+
+          ב. במרכז של כריכה אחת: היא תורמת $\dfrac{\mu_0 I}{2R}$, והשנייה, במרחק $z = R$, תורמת $\dfrac{\mu_0 I}{2R}\cdot\dfrac{1}{2\sqrt2}$.
+
+          ג. בזרמים מנוגדים השדות על הציר מנוגדים, ובאמצע הם שווים בגודלם.
+      - kind: limit
+        text: >-
+          כשהמרחק בין הכריכות שואף לאפס, הן כריכה אחת עם זרם כפול, $\dfrac{\mu_0\cdot2I}{2R} = \dfrac{\mu_0 I}{R}$; ב-א המקדם $(4/5)^{3/2} \approx 0.72$ קטן מ-1, כמצופה כשהכריכות רחוקות זו מזו. כשהמרחק גדול מאוד, השדה באמצע שואף לאפס.
+      - kind: units
+        text: >-
+          $\dfrac{\mu_0 I}{R}$ ביחידות T.
+      - kind: substitution
+        text: >-
+          $\dfrac{\mu_0 I}{R} = \dfrac{4\pi\cdot10^{-7}\cdot2}{0.1} \approx 2.51\cdot10^{-5}\,\text{T}$. א. $0.716\cdot2.51\cdot10^{-5} \approx 1.80\cdot10^{-5}\,\text{T}$. ב. $1.26\cdot10^{-5}\cdot\left(1 + 0.354\right) \approx 1.70\cdot10^{-5}\,\text{T}$.
+      - kind: result
+        text: >-
+          א. $1.80\cdot10^{-5}\,\text{T}$, לאורך הציר.
+
+          ב. $1.70\cdot10^{-5}\,\text{T}$: כמעט אותו דבר. השדה בין הכריכות כמעט אחיד, ובשביל זה בונים את הסידור הזה.
+
+          ג. אפס.
+
+  - id: W-6.11-09
+    level: bagrut
+    qualitative: true
+    objectives: [OBJ-6.11-3]
+    prompt: >-
+      כריכה A ברדיוס $1\,\text{cm}$, ובה זרם של $8\,\text{A}$. כריכה B ברדיוס $2\,\text{cm}$, ובה זרם של $2\,\text{A}$.
+
+      א. השוו את מומנט הדיפול המגנטי של שתי הכריכות.
+
+      ב. קבעו ונמקו בלי לחשב: באיזו מהן השדה במרכז חזק יותר? ועל הציר, $30\,\text{cm}$ מהמרכז?
+
+      ג. חשבו את השדות של ב, ובדקו.
+    answer: >-
+      א. שווים: $m \approx 2.51\cdot10^{-3}\,\text{A}\cdot\text{m}^2$.
+
+      ב. במרכז: A, פי 8. ב-$30\,\text{cm}$: כמעט שווים.
+
+      ג. במרכז $5.03\cdot10^{-4}\,\text{T}$ (A) ו-$6.28\cdot10^{-5}\,\text{T}$ (B); ב-$30\,\text{cm}$: $1.86\cdot10^{-8}\,\text{T}$ ו-$1.85\cdot10^{-8}\,\text{T}$.
+    solution:
+      - kind: law
+        text: >-
+          כריכה על הציר: $B = \dfrac{\mu_0 I R^2}{2(R^2 + z^2)^{3/2}}$; במרכז $\dfrac{\mu_0 I}{2R}$, ורחוק $\dfrac{\mu_0 m}{2\pi z^3}$ עם $m = I\pi R^2$.
+      - kind: manipulation
+        text: >-
+          א. $m_A = 8\cdot\pi\cdot0.01^2$, $m_B = 2\cdot\pi\cdot0.02^2$: הזרם קטן פי 4 והשטח גדול פי 4.
+      - kind: reasoning
+        text: >-
+          ב. במרכז השדה $\dfrac{\mu_0 I}{2R}$: ל-A זרם גדול פי 4 ורדיוס קטן פי 2, כלומר שדה גדול פי 8. רחוק, פי 15 ופי 30 מהרדיוסים, שתי הכריכות נראות כדיפולים, והשדה תלוי רק ב-$m$, ששווה בשתיהן.
+      - kind: limit
+        text: >-
+          היחס בין הערך המדויק לנוסחת הדיפול הוא $\left(\dfrac{z^2}{z^2 + R^2}\right)^{3/2}$, ושואף ל-1 כש-$z/R \to \infty$. הכריכה הקטנה, A, קרובה יותר לגבול הזה, ולכן ב-$30\,\text{cm}$ השדה שלה קרוב יותר לנוסחת הדיפול, ומעט גבוה יותר מזה של B.
+      - kind: units
+        text: >-
+          $m$ ביחידות $\text{A}\cdot\text{m}^2$, ו-$\dfrac{\mu_0 m}{z^3}$ ביחידות T.
+      - kind: substitution
+        text: >-
+          $m = 8\pi\cdot10^{-4} \approx 2.51\cdot10^{-3}\,\text{A}\cdot\text{m}^2$. במרכז: $B_A = \dfrac{4\pi\cdot10^{-7}\cdot8}{0.02} \approx 5.03\cdot10^{-4}\,\text{T}$, $B_B = \dfrac{4\pi\cdot10^{-7}\cdot2}{0.04} \approx 6.28\cdot10^{-5}\,\text{T}$. נוסחת הדיפול ב-$0.3\,\text{m}$: $\dfrac{4\pi\cdot10^{-7}\cdot2.51\cdot10^{-3}}{2\pi\cdot0.027} \approx 1.86\cdot10^{-8}\,\text{T}$; המדויק: $1.859\cdot10^{-8}\,\text{T}$ ל-A ו-$1.849\cdot10^{-8}\,\text{T}$ ל-B.
+      - kind: result
+        text: >-
+          א. אותו $m$.
+
+          ב–ג. במרכז A חזקה פי 8; ב-$30\,\text{cm}$ שתיהן כ-$1.86\cdot10^{-8}\,\text{T}$, והן נבדלות בחצי אחוז בלבד.
+
+  - id: W-6.11-10
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.11-3]
+    prompt: >-
+      סליל באורך $L = 40\,\text{cm}$ וברדיוס $R = 5\,\text{cm}$ מלופף ב-800 כריכות, וזורם בו זרם של $0.5\,\text{A}$.
+
+      א. מה השדה במרכז הסליל, וכמה אחוזים הוא מ-$\mu_0 nI$?
+
+      ב. מה השדה על הציר בפתח של הסליל?
+
+      ג. מה השדה על הציר מחוץ לסליל, $10\,\text{cm}$ אחרי הפתח?
+
+      ד. סדרו את שלושת השדות, והסבירו במילים איך השדה על הציר משתנה כשיוצאים מהסליל.
+    answer: >-
+      א. $1.22\cdot10^{-3}\,\text{T}$, 97%.
+
+      ב. $6.23\cdot10^{-4}\,\text{T}$.
+
+      ג. $6.3\cdot10^{-5}\,\text{T}$.
+
+      ד. מרכז > פתח > מחוץ; השדה יורד לחצי בפתח, ואחריו דועך מהר.
+    solution:
+      - kind: given
+        text: >-
+          $N = 800$, $L = 0.4\,\text{m}$, $R = 0.05\,\text{m}$, $I = 0.5\,\text{A}$, ולכן $n = 2000\ \text{m}^{-1}$.
+      - kind: law
+        text: >-
+          הסליל הוא ערימה של כריכות, ומהאינטגרל על הכריכות: $B = \dfrac{\mu_0 n I}{2}(\cos\alpha_1 + \cos\alpha_2)$, הזוויות בין הציר לקווים מ-P אל השפות של שני הקצוות. כשקצה נמצא **מאחורי** P, הזווית שלו גדולה מ-$90^\circ$ והקוסינוס שלילי.
+      - kind: manipulation
+        text: >-
+          א. במרכז כל קצה במרחק $0.2\,\text{m}$: $\cos\alpha = \dfrac{0.2}{\sqrt{0.2^2 + 0.05^2}} \approx 0.970$.
+
+          ב. בפתח: $\cos\alpha_1 = 0$, ו-$\cos\alpha_2 = \dfrac{0.4}{\sqrt{0.4^2 + 0.05^2}} \approx 0.992$.
+
+          ג. $10\,\text{cm}$ אחרי הפתח: הקצה הקרוב $0.1\,\text{m}$ מאחורי P, $\cos\alpha_1 = -\dfrac{0.1}{\sqrt{0.1^2 + 0.05^2}} \approx -0.894$; הרחוק $0.5\,\text{m}$, $\cos\alpha_2 \approx 0.995$.
+      - kind: limit
+        text: >-
+          ב-ג, אם P מתרחקת עוד, שני הקוסינוסים שואפים ל-1 ול-(-1), והשדה לאפס, כמו שצריך. ובכיוון השני, כש-P נכנסת לסליל, $\cos\alpha_1$ עובר דרך 0 בפתח, ובפנים השדה מתקרב ל-$\mu_0 nI$.
+      - kind: units
+        text: >-
+          $\mu_0 n I$ ביחידות T.
+      - kind: substitution
+        text: >-
+          $\mu_0 n I = 4\pi\cdot10^{-7}\cdot2000\cdot0.5 \approx 1.26\cdot10^{-3}\,\text{T}$. א. $1.26\cdot10^{-3}\cdot0.970 \approx 1.22\cdot10^{-3}\,\text{T}$. ב. $\dfrac{1.26\cdot10^{-3}}{2}\cdot0.992 \approx 6.23\cdot10^{-4}\,\text{T}$. ג. $\dfrac{1.26\cdot10^{-3}}{2}\cdot(0.995 - 0.894) \approx 6.3\cdot10^{-5}\,\text{T}$.
+      - kind: result
+        text: >-
+          א. $1.22\cdot10^{-3}\,\text{T}$, כ-97% מ-$\mu_0 nI$.
+
+          ב. $6.23\cdot10^{-4}\,\text{T}$, כמעט חצי.
+
+          ג. $6.3\cdot10^{-5}\,\text{T}$.
+
+          ד. במרכז הכי חזק, בפתח חצי, ו-$10\,\text{cm}$ בחוץ, פי 2 מהרדיוס, כבר רק 5% מ-$\mu_0 nI$.
+
+challenge:
+  - id: W-6.11-c1
+    stars: 1
+    objectives: [OBJ-6.11-1, OBJ-6.11-3]
+    prompt: >-
+      כריכה סגורה בנויה משתי קשתות עם מרכז משותף P, ומשני קטעים ישרים שמחברים ביניהן. הקשת החיצונית, ברדיוס $R$, פרושה על זווית של $120^\circ$, והקשת הפנימית, ברדיוס $R/2$, פרושה על שאר המעגל, $240^\circ$. שני הקטעים הישרים מונחים לאורך רדיוסים, מ-P החוצה, ומחברים את קצות הקשתות. בכריכה זורם זרם $I$ עם כיוון השעון.
+
+      א. הסבירו למה הקטעים הישרים לא תורמים לשדה ב-P.
+
+      ב. מצאו את הגודל ואת הכיוון של השדה ב-P, בעזרת $\mu_0$, $I$ ו-$R$.
+
+      ג. חשבו אותו עבור $R = 10\,\text{cm}$ ו-$I = 3\,\text{A}$.
+    answer: >-
+      א. הם לאורך רדיוסים, והזרם בהם זורם אל P או ממנה.
+
+      ב. $B = \dfrac{5\mu_0 I}{6R}$, לתוך הדף.
+
+      ג. $\approx 3.14\cdot10^{-5}\,\text{T}$.
+    solution:
+      - kind: law
+        text: >-
+          חוק ביו-סבר: $dB = \dfrac{\mu_0}{4\pi}\,\dfrac{I\,d\ell\,\sin\varphi}{r^2}$, בכיוון $d\vec\ell\times\hat r$, וסופרפוזיציה של ארבעת החלקים.
+      - kind: reasoning
+        text: >-
+          א. בקטע שמונח לאורך רדיוס, $d\vec\ell$ מקביל לקו אל P: $\sin\varphi = 0$ בכל חתיכה.
+      - kind: manipulation
+        text: >-
+          ב. בקשת ברדיוס $r$ כל חתיכה במרחק $r$ מ-P, והזרם בה ניצב לקו אל P. קשת שפרושה על זווית $\beta$ (ברדיאנים) אורכה $r\beta$, ולכן היא תורמת $\dfrac{\mu_0 I}{4\pi r^2}\cdot r\beta = \dfrac{\mu_0 I\beta}{4\pi r}$. הקשת החיצונית: $\beta = 2\pi/3$, $r = R$: $\dfrac{\mu_0 I}{6R}$. הקשת הפנימית: $\beta = 4\pi/3$, $r = R/2$: $\dfrac{\mu_0 I\cdot4\pi/3}{4\pi R/2} = \dfrac{2\mu_0 I}{3R}$. בשתי הקשתות הזרם עם כיוון השעון סביב P, ולכן שתי התרומות לתוך הדף, ומתחברות: $\dfrac{\mu_0 I}{6R} + \dfrac{4\mu_0 I}{6R} = \dfrac{5\mu_0 I}{6R}$.
+      - kind: limit
+        text: >-
+          אם שתי הקשתות היו באותו רדיוס $R$, הקטעים הישרים היו מתכווצים לאפס, והכריכה הייתה מעגל שלם: $\dfrac{\mu_0 I}{4\pi R}\cdot2\pi = \dfrac{\mu_0 I}{2R}$, הנוסחה של שיעור 4.3. התוצאה שלנו גדולה מזה, כי שני שלישים מהכריכה קרובים פי 2 ל-P.
+      - kind: units
+        text: >-
+          $\dfrac{\mu_0 I}{R}$ ביחידות T, והזווית ברדיאנים בלי יחידות.
+      - kind: substitution
+        text: >-
+          $B = \dfrac{5\cdot4\pi\cdot10^{-7}\cdot3}{6\cdot0.1} \approx 3.14\cdot10^{-5}\,\text{T}$.
+      - kind: result
+        text: >-
+          א. אין להם תרומה.
+
+          ב. $\dfrac{5\mu_0 I}{6R}$, לתוך הדף.
+
+          ג. $3.14\cdot10^{-5}\,\text{T}$, לתוך הדף.
+    source:
+      name: MIT 8.02 Physics II (Electricity and Magnetism), Exam 3 Practice Problems Solutions
+      year: 2013
+      problem: 'Problem 1 (Biot Savart), part a'
+      url: 'https://stuff.mit.edu/afs/athena/course/other/viz/gravitas/Exam3_Practice_Problems_sol.pdf'
+      verified: '2026-11-02'
+      adapted: true
+
+  - id: W-6.11-c2
+    stars: 2
+    objectives: [OBJ-6.11-2, OBJ-6.11-3]
+    prompt: >-
+      כריכה בצורת מצולע משוכלל עם $n$ צלעות, וזורם בה זרם $I$. המרחק ממרכז המצולע לכל צלע הוא $R$.
+
+      א. מצאו את השדה במרכז של כריכה ריבועית ($n = 4$).
+
+      ב. מצאו את השדה במרכז של מצולע משוכלל עם $n$ צלעות.
+
+      ג. הראו שבגבול $n \to \infty$ מתקבל השדה במרכז של כריכה עגולה ברדיוס $R$.
+
+      ד. מאיזה $n$ השדה של המצולע במרחק של פחות מ-1% מהשדה של הכריכה העגולה?
+    answer: >-
+      א. $\dfrac{\sqrt2\,\mu_0 I}{\pi R}$.
+
+      ב. $\dfrac{n\,\mu_0 I}{2\pi R}\sin\dfrac{\pi}{n}$.
+
+      ג. $\dfrac{\mu_0 I}{2R}$.
+
+      ד. $n = 13$.
+    solution:
+      - kind: law
+        text: >-
+          לכל צלע, קטע ישר: $B = \dfrac{\mu_0 I}{4\pi s}(\sin\theta_2 - \sin\theta_1)$. כל הצלעות במרחק $s = R$ מהמרכז, והמרכז מול האמצע של כל אחת; כל התרומות באותו כיוון.
+      - kind: manipulation
+        text: >-
+          ב. צלע של מצולע משוכלל נראית מהמרכז בזווית $2\pi/n$, ולכן כל קצה בזווית $\pi/n$ מהאנך: $\sin\theta_2 = -\sin\theta_1 = \sin\dfrac{\pi}{n}$. כל צלע תורמת $\dfrac{\mu_0 I}{4\pi R}\cdot2\sin\dfrac{\pi}{n}$, ו-$n$ צלעות: $B_n = \dfrac{n\,\mu_0 I}{2\pi R}\sin\dfrac{\pi}{n}$.
+
+          א. עם $n = 4$: $\sin45^\circ = \dfrac{\sqrt2}{2}$, ו-$B_4 = \dfrac{4\mu_0 I}{2\pi R}\cdot\dfrac{\sqrt2}{2} = \dfrac{\sqrt2\,\mu_0 I}{\pi R}$.
+      - kind: limit
+        text: >-
+          ג. כש-$n \to \infty$, הזווית $x = \pi/n$ שואפת לאפס, ו-$\sin x \approx x$ (הגבול $\sin x/x \to 1$, שיעור 6.1). לכן $n\sin\dfrac{\pi}{n} \to \pi$, ו-$B_n \to \dfrac{\mu_0 I}{2R}$. המצולע חוסם את המעגל ברדיוס $R$, ולכן לכל $n$ סופי השדה שלו קטן יותר, ומתקרב אליו מלמטה.
+      - kind: manipulation
+        text: >-
+          ד. היחס הוא $\dfrac{B_n}{\mu_0 I/(2R)} = \dfrac{\sin(\pi/n)}{\pi/n}$. מחשבים: $n = 12$ נותן $0.9886$, ו-$n = 13$ נותן $0.9903$.
+      - kind: units
+        text: >-
+          $\dfrac{\mu_0 I}{R}$ ביחידות T, ו-$n\sin(\pi/n)$ בלי יחידות.
+      - kind: result
+        text: >-
+          א. $\dfrac{\sqrt2\,\mu_0 I}{\pi R}$, כ-90% מהכריכה העגולה.
+
+          ב. $\dfrac{n\,\mu_0 I}{2\pi R}\sin\dfrac{\pi}{n}$.
+
+          ג. $\dfrac{\mu_0 I}{2R}$.
+
+          ד. החל מ-13 צלעות.
+    source:
+      name: MIT 8.022 Physics II (Electricity and Magnetism), Assignment 6
+      year: 2004
+      problem: 'Problem 5 (Magnetic field), parts a–c'
+      url: 'https://ocw.mit.edu/courses/8-022-physics-ii-electricity-and-magnetism-fall-2004/5db3a1c1688d82a8e18c360ae4fabe99_pset6.pdf'
+      verified: '2026-11-02'
+      adapted: true

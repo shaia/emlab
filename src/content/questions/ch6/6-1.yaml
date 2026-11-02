@@ -1,0 +1,299 @@
+# Lesson 6.1 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are rendered at
+# build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/calculus.ts and rates.ts (secantSlope, derivative,
+# pointRadialField, oscillatorVelocity, dischargeCurrent); the script is recompute-6-1.ts in the session
+# scratchpad. The data differ on purpose from figure 6.1 and the worked examples.
+
+chapter: 6
+questions:
+  # ------------------------------------------------ OBJ-6.1-1: the derivative as the limit of the secant slope
+  - id: Q-6.1-secant-shrinks
+    type: mc
+    objectives: [OBJ-6.1-1]
+    qualitative: true
+    prompt: >-
+      על הגרף של פונקציה חָלָקה (בלי קפיצות ובלי פינות חדות) בוחרים נקודה P ונקודה Q, ומקרבים את Q אל P עוד ועוד. מה קורה לשיפוע של המיתר PQ?
+    choices:
+      - text: 'הוא מתקרב למספר מסוים: השיפוע של המשיק בנקודה P.'
+        correct: true
+        feedback: 'נכון. $\Delta y$ ו-$\Delta x$ קטנים יחד, והיחס ביניהם מתייצב על מספר: הנגזרת בנקודה P. באיור 6.1א, בנפילה החופשית, השיפוע עבר מ-15 ל-12.5, ל-10.5 ול-10.05, ומתקרב ל-10.'
+      - text: 'הוא מתקרב לאפס, כי גם $\Delta y$ מתקרב לאפס.'
+        feedback: '$\Delta y$ אכן מתקרב לאפס, אבל גם $\Delta x$, שמחלקים בו. היחס לא מתקרב לאפס (אלא אם המשיק אופקי). מקרוב, הגרף נראה כמו קו ישר עם שיפוע משלו.'
+        misconception: MC-derivative-zero-over-zero
+      - text: 'הוא הופך ל-$0/0$, ולכן אין לו ערך.'
+        feedback: 'לא מציבים $\Delta x = 0$. בכל שלב $\Delta x$ קטן אבל לא אפס, והשיפוע הוא מספר רגיל. שואלים לאן המספרים האלה מתקרבים, וזה הגבול.'
+        misconception: MC-derivative-zero-over-zero
+      - text: 'הוא לא משתנה, כי כל המיתרים של אותו גרף מקבילים.'
+        feedback: 'רק בקו ישר כל המיתרים מקבילים. בגרף מעוקל, כמו $x = 5t^2$, השיפוע משתנה כשמזיזים את Q: באיור 6.1א הוא יורד מ-15 ל-10.5.'
+
+  - id: Q-6.1-average-velocity
+    type: numeric
+    objectives: [OBJ-6.1-1]
+    level: mid
+    prompt: >-
+      כדור נופל ממנוחה, ומקומו $x = 5t^2$ (במטרים, כש-$t$ בשניות). מה המהירות **הממוצעת** שלו בין $t = 2\,\text{s}$ ל-$t = 2.1\,\text{s}$? ענו ב-$\text{m/s}$.
+    answer: 20.5
+    unit: m/s
+    tolerance: 0.01
+    correctFeedback: 'נכון. $x(2) = 20\,\text{m}$ ו-$x(2.1) = 5\cdot2.1^2 = 22.05\,\text{m}$, ולכן $\dfrac{\Delta x}{\Delta t} = \dfrac{2.05}{0.1} = 20.5\,\text{m/s}$. זה שיפוע המיתר. המהירות ברגע $t = 2\,\text{s}$ היא $20\,\text{m/s}$, קצת פחות, כי הכדור מאיץ בתוך הקטע.'
+    wrongFeedback: 'מהירות ממוצעת היא שיפוע המיתר: השינוי במקום חלקי השינוי בזמן בין שני הרגעים.'
+    commonWrong:
+      - value: 20
+        feedback: 'זו המהירות **ברגע** $t = 2\,\text{s}$, הנגזרת. הממוצע על פני הקטע גדול ממנה, כי במשך הקטע הכדור ממשיך להאיץ.'
+        misconception: MC-derivative-average-is-instant
+      - value: 10.5
+        feedback: 'חילקתם את המקום בזמן, $x/t = 22.05/2.1$. זו המהירות הממוצעת מתחילת הנפילה, לא בקטע שבין שני הרגעים. מחלקים את **השינוי** במקום בשינוי בזמן.'
+        misconception: MC-derivative-average-is-instant
+      - value: 21
+        feedback: 'זו המהירות ברגע $t = 2.1\,\text{s}$, בסוף הקטע. הממוצע על הקטע נמצא בין 20 ל-21.'
+        misconception: MC-derivative-average-is-instant
+
+  - id: Q-6.1-top-of-throw
+    type: twotier
+    objectives: [OBJ-6.1-1]
+    qualitative: true
+    prompt: >-
+      זורקים כדור אנכית למעלה. בגרף של הגובה שלו כתלות בזמן, $y(t)$, יש שיא ברגע שבו הכדור בנקודה הגבוהה ביותר. מה המהירות של הכדור ברגע הזה?
+    choices:
+      - text: 'אפס.'
+        correct: true
+        feedback: נכון.
+      - text: 'הכי גדולה במשך התנועה.'
+        feedback: 'הגובה הכי גדול, אבל המהירות היא השיפוע של גרף הגובה, לא הגובה עצמו. בשיא הגרף אופקי.'
+        misconception: MC-derivative-value-not-slope
+      - text: 'שווה לגובה המקסימלי חלקי הזמן שעבר מהזריקה.'
+        feedback: 'זו המהירות הממוצעת מהזריקה ועד השיא. המהירות ברגע עצמו היא הנגזרת, שיפוע המשיק באותו רגע.'
+        misconception: MC-derivative-average-is-instant
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'המהירות היא $dy/dt$, השיפוע של המשיק לגרף, ובשיא המשיק אופקי.'
+        correct: true
+        feedback: 'נכון. רגע לפני השיא הגרף עולה (שיפוע חיובי), ורגע אחריו יורד (שיפוע שלילי). בדיוק בשיא השיפוע אפס.'
+      - text: 'בנקודה הגבוהה ביותר הגרף הכי גבוה, ולכן גם הנגזרת שלו הכי גדולה.'
+        feedback: 'הנגזרת לא קשורה לגובה של הגרף אלא לשיפוע שלו. באיור 6.1ב, בגרף של sin, המשיק בשיא אופקי.'
+        misconception: MC-derivative-value-not-slope
+      - text: 'בשיא הכדור כמעט לא זז, ולכן אי אפשר לחשב שם $\Delta y/\Delta t$.'
+        feedback: 'אפשר: מיתר סביב השיא נותן שיפוע קטן, ומיתר קצר יותר נותן שיפוע קטן עוד יותר. הגבול הוא אפס, מספר רגיל.'
+        misconception: MC-derivative-zero-over-zero
+
+  - id: Q-6.1-units
+    type: mc
+    objectives: [OBJ-6.1-1]
+    level: basic
+    prompt: >-
+      הפוטנציאל $V$ נמדד בוולט, והמקום $x$ במטרים. באילו יחידות נמדדת הנגזרת $dV/dx$?
+    choices:
+      - text: '$\text{V/m}$, שהיא גם $\text{N/C}$: היחידה של השדה.'
+        correct: true
+        feedback: 'נכון. היחידות של נגזרת הן היחידות של הפונקציה חלקי היחידות של המשתנה, כמו בשיפוע (שיעור 0.4). ובשיעור 2.3 ראינו ש-$\text{V/m} = \text{N/C}$, ולכן $E_x = -dV/dx$ מתאים ביחידות.'
+      - text: '$\text{V}\cdot\text{m}$'
+        feedback: 'נגזרת היא גבול של **מנה**, $\Delta V/\Delta x$, ולכן מחלקים ביחידות של $x$, לא כופלים.'
+      - text: '$\text{V}$, כמו הפוטנציאל.'
+        feedback: 'לנגזרת יש יחידות משלה: וולט על כל מטר. רק כשהמשתנה בלי יחידות (כמו רדיאנים) היחידות לא משתנות.'
+      - text: '$\text{m/V}$'
+        feedback: 'זה הפוך: $dV/dx$ הוא השינוי ב-$V$ על כל מטר, ולכן וולט חלקי מטר.'
+
+  - id: Q-6.1-current
+    type: numeric
+    objectives: [OBJ-6.1-1, OBJ-6.1-2]
+    level: mid
+    prompt: >-
+      המטען שעבר דרך חתך של תיל מרגע $t = 0$ הוא $q = 4t^2$ (במיליקולון, כש-$t$ בשניות). מה הזרם בתיל ברגע $t = 1.5\,\text{s}$? ענו במיליאמפר.
+    answer: 12
+    unit: mA
+    tolerance: 0.01
+    correctFeedback: 'נכון. $I = \dfrac{dq}{dt} = 8t$ (במיליאמפר), וב-$t = 1.5\,\text{s}$ זה $12\,\text{mA}$. זו הגרסה הרגעית של $I = \Delta q/\Delta t$ משיעור 3.2.'
+    wrongFeedback: 'הזרם ברגע הוא הנגזרת של המטען לפי הזמן, $I = dq/dt$. גזרו את $4t^2$ לפי כלל החזקה.'
+    commonWrong:
+      - value: 9
+        feedback: 'זה המטען שעבר עד אותו רגע, $q(1.5) = 9\,\text{mC}$, ולא הזרם. הזרם הוא הקצב שבו המטען גדל, השיפוע של $q(t)$.'
+        misconception: MC-derivative-value-not-slope
+      - value: 6
+        feedback: 'חילקתם $q/t = 9/1.5$: זה הזרם הממוצע מאז $t = 0$. הזרם גדל עם הזמן, ולכן ברגע $t = 1.5\,\text{s}$ הוא גדול מהממוצע.'
+        misconception: MC-derivative-average-is-instant
+      - value: 4
+        feedback: 'גזרתם את $4t^2$ כ-$4$ בלבד. לפי כלל החזקה $(t^2)^{\prime} = 2t$, ולכן $(4t^2)^{\prime} = 8t$.'
+
+  # ------------------------------------------------ OBJ-6.1-2: powers, 1/r, sin and cos
+  - id: Q-6.1-power-value
+    type: numeric
+    objectives: [OBJ-6.1-2]
+    level: basic
+    prompt: >-
+      מה השיפוע של הגרף $y = 4x^3$ בנקודה $x = 2$?
+    answer: 48
+    unit: ''
+    tolerance: 0.01
+    correctFeedback: 'נכון. $y^{\prime} = 4\cdot3x^2 = 12x^2$, וב-$x = 2$: $12\cdot4 = 48$.'
+    wrongFeedback: 'לפי כלל החזקה, $(x^n)^{\prime} = n\,x^{n-1}$: מורידים את החזקה לפנים ומקטינים אותה באחד. הקבוע 4 נשאר כגורם.'
+    commonWrong:
+      - value: 32
+        feedback: 'זה הערך של הפונקציה, $4\cdot2^3 = 32$, לא השיפוע שלה. השיפוע הוא הנגזרת, $12x^2$.'
+        misconception: MC-derivative-value-not-slope
+      - value: 96
+        feedback: 'הורדתם את החזקה לפנים אבל לא הקטנתם אותה: $12x^3$ במקום $12x^2$.'
+      - value: 16
+        feedback: 'הקטנתם את החזקה אבל לא הורדתם אותה לפנים: $4x^2$ במקום $3\cdot4x^2$.'
+      - value: 12
+        feedback: 'גזרתם את $x^3$ נכון, $3x^2$, אבל השמטתם את הקבוע 4. קבוע שכופל פונקציה כופל גם את הנגזרת: $4\cdot3x^2 = 12x^2$.'
+
+  - id: Q-6.1-power-secant
+    type: mc
+    objectives: [OBJ-6.1-2]
+    level: mid
+    prompt: >-
+      מה השיפוע של המיתר של הגרף $y = x^2$ בין הנקודה $x$ לנקודה $x + \Delta x$?
+    choices:
+      - text: '$2x + \Delta x$'
+        correct: true
+        feedback: 'נכון. $(x + \Delta x)^2 - x^2 = 2x\,\Delta x + \Delta x^2$, ואחרי חלוקה ב-$\Delta x$ נשאר $2x + \Delta x$. כש-$\Delta x \to 0$ זה מתקרב לנגזרת, $2x$.'
+      - text: '$2x$'
+        feedback: 'זו הנגזרת: הגבול של שיפוע המיתר. שיפוע המיתר עצמו, בקטע באורך $\Delta x$, הוא $2x + \Delta x$. למשל, בין 1 ל-2 השיפוע הוא $(4 - 1)/1 = 3$, לא 2.'
+        misconception: MC-derivative-average-is-instant
+      - text: '$x + \Delta x$'
+        feedback: 'בפתיחת $(x + \Delta x)^2$ יש **שני** איברים של $x\,\Delta x$, ולכן $2x\,\Delta x$. בדקו: בין 1 ל-2 השיפוע הוא 3, ו-$x + \Delta x = 2$.'
+      - text: '$\dfrac{(x + \Delta x)^2}{\Delta x}$'
+        feedback: 'שיפוע המיתר הוא **השינוי** ב-$y$ חלקי $\Delta x$. צריך להחסיר את $x^2$ לפני החלוקה.'
+
+  - id: Q-6.1-sin-top
+    type: mc
+    objectives: [OBJ-6.1-2]
+    qualitative: true
+    prompt: >-
+      בגרף של $y = \sin x$ (עם $x$ ברדיאנים), מה השיפוע בנקודה $x = \pi/2$, שבה $\sin x$ מקבל את הערך הגדול ביותר שלו, 1?
+    choices:
+      - text: '0'
+        correct: true
+        feedback: 'נכון. $(\sin x)^{\prime} = \cos x$, ו-$\cos(\pi/2) = 0$. בשיא הגרף המשיק אופקי: נסו באיור 6.1ב.'
+      - text: '1, כי שם $\sin x$ הכי גדול.'
+        feedback: '1 הוא **הגובה** של הגרף שם, לא השיפוע. בשיא הגרף מפסיק לעלות ומתחיל לרדת, והשיפוע אפס.'
+        misconception: MC-derivative-value-not-slope
+      - text: '$\pi/2$'
+        feedback: 'זה המקום על ציר $x$, לא השיפוע. השיפוע הוא $\cos x$ בנקודה הזאת.'
+      - text: '$-1$'
+        feedback: 'שיפוע $-1$ יש ל-$\sin$ ב-$x = \pi$, שם הגרף חוצה את הציר בירידה. ב-$\pi/2$ השיפוע אפס.'
+
+  - id: Q-6.1-sin-rank
+    type: rank
+    objectives: [OBJ-6.1-2]
+    level: mid
+    prompt: >-
+      בגרף של $y = \sin x$ (עם $x$ ברדיאנים) דרגו את **השיפוע** בארבע נקודות, מהגדול לקטן (עם הסימן).
+    items:
+      - id: a
+        label: '$x = 0$'
+      - id: b
+        label: '$x = \pi/3$'
+      - id: c
+        label: '$x = \pi/2$'
+      - id: d
+        label: '$x = \pi$'
+    order: [a, b, c, d]
+    correctFeedback: 'נכון. השיפוע הוא $\cos x$: $\cos 0 = 1$, $\cos(\pi/3) = 0.5$, $\cos(\pi/2) = 0$, $\cos\pi = -1$. שימו לב שהסדר שונה מסדר הערכים של $\sin$: ב-$\pi/2$ הערך הכי גדול, אבל השיפוע אפס.'
+    wrongFeedback: 'השיפוע של $\sin x$ הוא $\cos x$, לא $\sin x$. חשבו את $\cos$ בכל נקודה, וזכרו שהגרף יורד אחרי $\pi/2$.'
+
+  - id: Q-6.1-field-from-V
+    type: numeric
+    objectives: [OBJ-6.1-2]
+    level: mid
+    prompt: >-
+      הפוטנציאל במרחק $r$ ממטען נקודתי $Q = 2\,\text{nC}$ הוא $V = kQ/r$. מצאו את השדה $E = -dV/dr$ במרחק $r = 0.3\,\text{m}$. ענו ב-$\text{N/C}$ (חיובי פירושו החוצה, הרחק מהמטען).
+    answer: 200
+    unit: N/C
+    tolerance: 0.02
+    correctFeedback: 'נכון. $V = kQ\,r^{-1}$, ולכן $\dfrac{dV}{dr} = -\dfrac{kQ}{r^2}$ ו-$E = \dfrac{kQ}{r^2} = \dfrac{9\cdot10^9\cdot2\cdot10^{-9}}{0.3^2} = 200\,\text{N/C}$, החוצה. זה השדה של מטען נקודתי משיעור 1.5.'
+    wrongFeedback: 'גזרו את $V = kQ\,r^{-1}$ לפי כלל החזקה עם $n = -1$, והוסיפו את סימן המינוס של $E = -dV/dr$.'
+    commonWrong:
+      - value: 60
+        feedback: 'זה הפוטנציאל, $kQ/r = 60\,\text{V}$, לא השדה. השדה הוא מינוס **השיפוע** של $V(r)$.'
+        misconception: MC-derivative-value-not-slope
+      - value: -200
+        feedback: 'שכחתם את המינוס ב-$E = -dV/dr$. $V$ יורד כשמתרחקים, ולכן $dV/dr$ שלילי ו-$E$ חיובי: החוצה, כמו שדה של מטען חיובי.'
+      - value: 666.7
+        feedback: 'הנגזרת של $r^{-1}$ היא $-r^{-2}$, לא $-r^{-3}$: מקטינים את החזקה באחד, מ-$-1$ ל-$-2$.'
+
+  # ------------------------------------------------ OBJ-6.1-3: the chain rule
+  - id: Q-6.1-chain-sin
+    type: mc
+    objectives: [OBJ-6.1-3]
+    qualitative: true
+    prompt: >-
+      מהי הנגזרת של $y = \sin(3t)$ לפי $t$?
+    choices:
+      - text: '$3\cos(3t)$'
+        correct: true
+        feedback: 'נכון. עם $u = 3t$: $\dfrac{dy}{du} = \cos u$ ו-$\dfrac{du}{dt} = 3$. הזווית $3t$ גדלה פי 3 מהר יותר מ-$t$, ולכן גם ה-$\sin$ משתנה פי 3 מהר יותר.'
+      - text: '$\cos(3t)$'
+        feedback: 'גזרתם רק את הפונקציה החיצונית. לפי כלל השרשרת כופלים גם בנגזרת של מה שבפנים, $(3t)^{\prime} = 3$. בדקו באיור 6.1ג: במתנד $0.5\sin(2t)$ השיפוע ב-$t = 0$ הוא $0.5\cdot2 = 1$, לא $0.5$.'
+        misconception: MC-chain-rule-forgotten
+      - text: '$3\cos t$'
+        feedback: 'הגורם 3 נכון, אבל בתוך ה-$\cos$ נשארת אותה זווית, $3t$: גוזרים את $\sin u$ לפי $u$ ומציבים חזרה $u = 3t$.'
+      - text: '$-3\cos(3t)$'
+        feedback: 'הנגזרת של $\sin$ היא $+\cos$. מינוס מופיע בנגזרת של $\cos$, שהיא $-\sin$.'
+
+  - id: Q-6.1-osc-vmax
+    type: numeric
+    objectives: [OBJ-6.1-3]
+    level: mid
+    prompt: >-
+      מסה על קפיץ נעה לפי $x = 0.1\sin(5t)$ (במטרים, כש-$t$ בשניות). מה המהירות המקסימלית שלה? ענו ב-$\text{m/s}$.
+    answer: 0.5
+    unit: m/s
+    tolerance: 0.02
+    correctFeedback: 'נכון. לפי כלל השרשרת $v = 0.1\cdot5\cos(5t) = 0.5\cos(5t)$, והערך הגדול ביותר של $\cos$ הוא 1. זה $A\omega$, המהירות של התנועה המעגלית שהמתנד הוא הצל שלה.'
+    wrongFeedback: 'גזרו את $x(t)$ בכלל השרשרת, עם $u = 5t$, ומצאו את הערך הגדול ביותר של המהירות.'
+    commonWrong:
+      - value: 0.1
+        feedback: 'גזרתם $0.1\sin(5t)$ כאילו הנגזרת היא $0.1\cos(5t)$. כלל השרשרת מוסיף את הגורם $5$, הנגזרת של $5t$.'
+        misconception: MC-chain-rule-forgotten
+      - value: 2.5
+        feedback: 'זו התאוצה המקסימלית, $A\omega^2$: גזרתם פעמיים. המהירות היא נגזרת אחת, $A\omega$.'
+      - value: 0.02
+        feedback: 'חילקתם ב-5 במקום לכפול. בכל שנייה הזווית $5t$ גדלה ב-5 רדיאנים, כלומר $du/dt = 5$, ולכן כופלים ב-5.'
+
+  - id: Q-6.1-rc-current
+    type: numeric
+    objectives: [OBJ-6.1-3]
+    level: bagrut
+    prompt: >-
+      קבל מתפרק דרך נגד, והמטען עליו $q = 2e^{-t/0.5}$ (במיליקולון, כש-$t$ בשניות). מה הזרם $I = -dq/dt$ ברגע הראשון של הפריקה? ענו במיליאמפר.
+    answer: 4
+    unit: mA
+    tolerance: 0.01
+    correctFeedback: 'נכון. עם $u = -t/0.5$: $\dfrac{dq}{dt} = 2e^{-t/0.5}\cdot\left(-\dfrac{1}{0.5}\right) = -4e^{-t/0.5}$, ולכן $I(0) = 4\,\text{mA}$. זה $Q_0/\tau$.'
+    wrongFeedback: 'גזרו את $e^{u}$ עם $u = -t/\tau$ בכלל השרשרת, $\dfrac{d}{dt}e^{-t/\tau} = -\dfrac{1}{\tau}e^{-t/\tau}$, והציבו $t = 0$.'
+    commonWrong:
+      - value: 2
+        feedback: 'גזרתם $e^{-t/\tau}$ כאילו הנגזרת היא $e^{-t/\tau}$ עצמה, ויצא $Q_0$. כלל השרשרת מוסיף את הגורם $-1/\tau$, ו-$1/0.5 = 2$.'
+        misconception: MC-chain-rule-forgotten
+      - value: 1
+        feedback: 'כפלתם ב-$\tau$ במקום לחלק בו. הנגזרת של $-t/\tau$ לפי $t$ היא $-1/\tau$, ולכן $I(0) = Q_0/\tau$.'
+      - value: -4
+        feedback: 'זה $dq/dt$, שהוא שלילי כי המטען על הקבל קטן. הזרם בנגד הוא $I = -dq/dt$, חיובי.'
+
+  - id: Q-6.1-double-omega
+    type: twotier
+    objectives: [OBJ-6.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מתנד נע לפי $x = A\sin(\omega t)$. מכפילים את $\omega$ (התנודה מהירה פי 2) ומשאירים את $A$. מה קורה למהירות המקסימלית?
+    choices:
+      - text: 'גדלה פי 2.'
+        correct: true
+        feedback: נכון.
+      - text: 'לא משתנה, כי הערך הגדול ביותר של $\cos$ הוא תמיד 1.'
+        feedback: 'הערך הגדול ביותר של $\cos$ הוא אכן 1, אבל הוא מוכפל ב-$A\omega$, לא ב-$A$ בלבד.'
+        misconception: MC-chain-rule-forgotten
+      - text: 'גדלה פי 4.'
+        feedback: 'פי 4 גדלה התאוצה המקסימלית, $A\omega^2$: בה $\omega$ מופיע פעמיים. במהירות הוא מופיע פעם אחת.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'לפי כלל השרשרת $v = A\omega\cos(\omega t)$: הגורם $\omega$ יוצא מהנגזרת של $\omega t$.'
+        correct: true
+        feedback: 'נכון. אותה דרך באותו זמן קצר פי 2: המסה עוברת את אותו מרחק, $2A$, בחצי מהזמן.'
+      - text: 'הנגזרת של $\sin(\omega t)$ היא $\cos(\omega t)$, ולכן $v = A\cos(\omega t)$.'
+        feedback: 'שכחתם את הנגזרת של הפונקציה הפנימית. באיור 6.1ג, בגרף של המתנד, השיפוע ב-$t = 0$ הוא $A\omega$, לא $A$.'
+        misconception: MC-chain-rule-forgotten
+      - text: 'כל נגזרת מוסיפה $\omega^2$, ולכן $v$ גדלה פי 4.'
+        feedback: 'כל נגזרת מוסיפה גורם $\omega$ אחד. במהירות (נגזרת אחת) הוא $\omega$, ובתאוצה (שתי נגזרות) $\omega^2$.'

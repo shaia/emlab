@@ -1,0 +1,387 @@
+# Workbook, lesson 6.4 (continuous charge distributions). Format and rules: see .claude/CLAUDE.md, "Worked
+# examples, workbook" and "Chapter 6". Every number was recomputed with src/physics/continuous.ts
+# (rodBisectorField, rodAxisField, lineField, ringAxisField, discAxisField), charge-pieces.ts (rodModels,
+# discModels) and constants.ts (K, EPS0); script recompute-6-4.ts in the session scratchpad. In a >- block,
+# consecutive lines fold into one paragraph: every part (א, ב, …) starts after a blank line.
+
+lesson: '6.4'
+practice:
+  - id: W-6.4-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.4-1]
+    prompt: >-
+      מטען של $3\,\text{nC}$ מפוזר באחידות על שלושה גופים שונים, כל אחד ברדיוס $5\,\text{cm}$. חשבו את הצפיפות של כל אחד:
+
+      א. טבעת דקה (צפיפות קווית $\lambda$).
+
+      ב. דיסקה (צפיפות משטחית $\sigma$).
+
+      ג. כדור מלא (צפיפות נפחית $\rho$).
+    answer: >-
+      א. $\lambda \approx 9.55\cdot10^{-9}\,\text{C/m}$.
+
+      ב. $\sigma \approx 3.82\cdot10^{-7}\,\text{C/m}^2$.
+
+      ג. $\rho \approx 5.73\cdot10^{-6}\,\text{C/m}^3$.
+    solution:
+      - kind: given
+        text: '$Q = 3\cdot10^{-9}\,\text{C}$, $R = 0.05\,\text{m}$.'
+      - kind: law
+        text: 'צפיפות אחידה היא המטען חלקי הגודל שעליו הוא פרוס: אורך, שטח או נפח.'
+      - kind: manipulation
+        text: >-
+          $\lambda = \dfrac{Q}{2\pi R}$, $\sigma = \dfrac{Q}{\pi R^2}$, $\rho = \dfrac{Q}{\tfrac43\pi R^3}$.
+      - kind: units
+        text: 'קולון חלקי מטר, מטר רבוע ומטר מעוקב: $\text{C/m}$, $\text{C/m}^2$, $\text{C/m}^3$.'
+      - kind: substitution
+        text: >-
+          $\lambda = \dfrac{3\cdot10^{-9}}{2\pi\cdot0.05} \approx 9.55\cdot10^{-9}$, $\sigma = \dfrac{3\cdot10^{-9}}{\pi\cdot0.05^2} \approx 3.82\cdot10^{-7}$, $\rho = \dfrac{3\cdot10^{-9}}{\tfrac43\pi\cdot0.05^3} \approx 5.73\cdot10^{-6}$.
+      - kind: limit
+        text: 'בדיקה: כופלים כל צפיפות בגודל שלה וחוזרים ל-$3\,\text{nC}$. גוף קטן יותר, אותו מטען: הצפיפות גדלה.'
+      - kind: result
+        text: 'א. $9.55\cdot10^{-9}\,\text{C/m}$. ב. $3.82\cdot10^{-7}\,\text{C/m}^2$. ג. $5.73\cdot10^{-6}\,\text{C/m}^3$.'
+
+  - id: W-6.4-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-6.4-2]
+    prompt: >-
+      מוט אופקי טעון באחידות במטען חיובי. הנקודה $A$ נמצאת מעל אמצע המוט, והנקודה $B$ נמצאת באותו גובה, אבל מעל הקצה השמאלי של המוט.
+
+      א. מה כיוון השדה ב-$A$? נמקו בעזרת סימטריה.
+
+      ב. האם השדה ב-$B$ ניצב למוט? אם לא, לאיזה צד הוא נוטה?
+    answer: >-
+      א. למעלה, ניצב למוט.
+
+      ב. לא. יש לו רכיב שמאלה, הרחק מרוב המוט, ולכן הוא נוטה למעלה ושמאלה.
+    solution:
+      - kind: law
+        text: '$\vec E = \int k\,dq\,\hat r/r^2$. כל אלמנט חיובי תורם שדה שמצביע הרחק ממנו.'
+      - kind: reasoning
+        text: 'א. מעל האמצע, לכל אלמנט בחצי השמאלי יש אלמנט סימטרי בחצי הימני, באותו מרחק. הרכיבים לאורך המוט מתבטלים, והרכיבים הניצבים, שניהם למעלה, מתחברים.'
+      - kind: reasoning
+        text: 'ב. מעל הקצה השמאלי כל המוט נמצא מימין ל-$B$ (או מתחתיה). התרומות שלו מצביעות הרחק ממנו: למעלה ושמאלה. אין אלמנטים משמאל ל-$B$ שיבטלו את הרכיב השמאלי.'
+      - kind: limit
+        text: 'בדיקה: אם המוט ארוך מאוד והנקודה מעל אמצעו, הנטייה נעלמת והשדה הוא של תיל אינסופי, ניצב. ליד קצה, "מוט אינסופי" הוא מודל גרוע.'
+      - kind: result
+        text: 'א. ניצב למוט, למעלה. ב. לא ניצב: נוטה שמאלה, הרחק מהמוט.'
+
+  - id: W-6.4-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.4-3]
+    prompt: >-
+      טבעת ברדיוס $6\,\text{cm}$ טעונה באחידות במטען $8\,\text{nC}$.
+
+      א. מה השדה על הציר שלה, $8\,\text{cm}$ מהמרכז?
+
+      ב. מה השדה במרכז הטבעת?
+    answer: >-
+      א. $5.76\cdot10^{3}\,\text{N/C}$, לאורך הציר, הרחק מהטבעת.
+
+      ב. אפס.
+    solution:
+      - kind: given
+        text: '$Q = 8\cdot10^{-9}\,\text{C}$, $R = 0.06\,\text{m}$, $z = 0.08\,\text{m}$.'
+      - kind: law
+        text: '$E = \dfrac{kQz}{(z^2+R^2)^{3/2}}$ על הציר.'
+      - kind: units
+        text: '$\dfrac{\text{N}\cdot\text{m}^2/\text{C}^2\cdot\text{C}\cdot\text{m}}{\text{m}^3} = \text{N/C}$.'
+      - kind: substitution
+        text: '$z^2+R^2 = 0.0064+0.0036 = 0.01\,\text{m}^2$, ו-$(0.01)^{3/2} = 0.001\,\text{m}^3$. $E = \dfrac{9\cdot10^9\cdot8\cdot10^{-9}\cdot0.08}{0.001} = 5760\,\text{N/C}$.'
+      - kind: limit
+        text: 'ב-$z = 0$ הנוסחה נותנת אפס: כל התרומות ניצבות לציר ומתבטלות בזוגות. ובדיקה נוספת: מטען נקודתי במרכז נותן $kQ/z^2 = 1.125\cdot10^4\,\text{N/C}$, יותר מהטבעת. כך צריך להיות: כל חתיכה של הטבעת רחוקה יותר מ-$z$ (במרחק $0.1\,\text{m}$), ותורמת רק את הרכיב $z/r = 0.8$ שלה.'
+      - kind: result
+        text: 'א. $5.76\cdot10^{3}\,\text{N/C}$. ב. $0$.'
+
+  - id: W-6.4-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.4-1]
+    prompt: >-
+      מוט באורך $L$, מ-$x = 0$ עד $x = L$, טעון בצפיפות שגדלה באחידות: $\lambda(x) = \lambda_0\,x/L$.
+
+      א. מה המטען הכולל?
+
+      ב. איזה חלק מהמטען נמצא בחצי השמאלי של המוט, ואיזה בחצי הימני?
+    answer: >-
+      א. $Q = \lambda_0 L/2$.
+
+      ב. רבע מהמטען בחצי השמאלי ושלושה רבעים בימני.
+    solution:
+      - kind: law
+        text: '$dq = \lambda(x)\,dx$, ו-$Q = \int \lambda(x)\,dx$ על החלק הרצוי.'
+      - kind: manipulation
+        text: >-
+          פונקציה קדומה של $x$ היא $x^2/2$. א. $Q = \dfrac{\lambda_0}{L}\left[\dfrac{x^2}{2}\right]_0^L = \dfrac{\lambda_0 L}{2}$.
+
+
+          ב. בחצי השמאלי $Q_1 = \dfrac{\lambda_0}{L}\cdot\dfrac{(L/2)^2}{2} = \dfrac{\lambda_0 L}{8} = \dfrac{Q}{4}$, ולכן בחצי הימני $\dfrac{3Q}{4}$.
+      - kind: limit
+        text: 'בדיקה: $Q/4 + 3Q/4 = Q$. ואם $\lambda$ הייתה אחידה, כל חצי היה מקבל חצי. כאן הצפיפות בחצי הימני גדולה יותר, ולכן הוא מקבל יותר.'
+      - kind: units
+        text: '$\lambda_0 L$: $\text{C/m}\cdot\text{m} = \text{C}$.'
+      - kind: result
+        text: 'א. $\lambda_0 L/2$. ב. $Q/4$ משמאל, $3Q/4$ מימין.'
+
+  - id: W-6.4-05
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.4-2, OBJ-6.4-4]
+    prompt: >-
+      מוט באורך $0.6\,\text{m}$ טעון באחידות בצפיפות $\lambda = 5\,\text{nC/m}$. הנקודה $P$ על ציר הסימטריה, $0.4\,\text{m}$ מהמוט.
+
+      א. חשבו את השדה ב-$P$.
+
+      ב. חשבו את השדה שנותן מודל התיל האינסופי, ואת השדה שנותן מודל המטען הנקודתי. איזה מודל קרוב יותר, ובכמה הוא טועה?
+    answer: >-
+      א. $135\,\text{N/C}$, ניצב למוט, הרחק ממנו.
+
+      ב. תיל: $225\,\text{N/C}$ (67% יותר). נקודה: $169\,\text{N/C}$ (25% יותר). המטען הנקודתי קרוב יותר, אבל שניהם רחוקים.
+    solution:
+      - kind: given
+        text: '$L = 0.6\,\text{m}$, $\lambda = 5\cdot10^{-9}\,\text{C/m}$, $Q = \lambda L = 3\cdot10^{-9}\,\text{C}$, $y = 0.4\,\text{m}$.'
+      - kind: law
+        text: '$E = \dfrac{kQ}{y\sqrt{y^2+L^2/4}}$ על ציר הסימטריה.'
+      - kind: substitution
+        text: '$\sqrt{0.16+0.09} = 0.5\,\text{m}$. $E = \dfrac{9\cdot10^9\cdot3\cdot10^{-9}}{0.4\cdot0.5} = 135\,\text{N/C}$.'
+      - kind: substitution
+        text: 'תיל: $\dfrac{2k\lambda}{y} = \dfrac{2\cdot9\cdot10^9\cdot5\cdot10^{-9}}{0.4} = 225\,\text{N/C}$. נקודה: $\dfrac{kQ}{y^2} = \dfrac{27}{0.16} \approx 169\,\text{N/C}$.'
+      - kind: limit
+        text: 'המרחק $0.4\,\text{m}$ הוא כ-$0.67\,L$: לא קטן בהרבה מ-$L$ (תנאי התיל) וגם לא גדול בהרבה ממנו (תנאי הנקודה). לכן שני המודלים טועים, ושניהם גבוהים מהשדה האמיתי.'
+      - kind: units
+        text: 'כל שלושת הביטויים ב-$\text{N/C}$.'
+      - kind: result
+        text: 'א. $135\,\text{N/C}$. ב. תיל $225\,\text{N/C}$, נקודה $169\,\text{N/C}$; הנקודה קרובה יותר, בטעות של 25%.'
+
+  - id: W-6.4-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.4-3]
+    prompt: >-
+      שתי טבעות זהות, ברדיוס $R = 10\,\text{cm}$ ובמטען $4\,\text{nC}$ כל אחת, עומדות זו מול זו על אותו ציר, במרחק $2R$ זו מזו.
+
+      א. מה השדה בנקודת האמצע שביניהן? נמקו בלי חישוב.
+
+      ב. מה השדה במרכז של אחת הטבעות?
+    answer: >-
+      א. אפס.
+
+      ב. $644\,\text{N/C}$, לאורך הציר, הרחק מהטבעת השנייה.
+    solution:
+      - kind: law
+        text: 'סופרפוזיציה: השדה הוא סכום השדות של שתי הטבעות. על הציר, לכל טבעת $E = kQz/(z^2+R^2)^{3/2}$, הרחק ממנה.'
+      - kind: reasoning
+        text: 'א. האמצע במרחק $R$ משתי הטבעות. השדות שלהן שווים בגודלם, וכל אחד מצביע הרחק מהטבעת שלו, כלומר בכיוונים הפוכים. הם מתבטלים.'
+      - kind: reasoning
+        text: 'ב. במרכז של טבעת, השדה שלה עצמה אפס. נשאר רק השדה של הטבעת השנייה, במרחק $z = 2R = 0.2\,\text{m}$.'
+      - kind: substitution
+        text: '$E = \dfrac{9\cdot10^9\cdot4\cdot10^{-9}\cdot0.2}{(0.04+0.01)^{3/2}} = \dfrac{7.2}{0.01118} \approx 644\,\text{N/C}$.'
+      - kind: limit
+        text: 'בדיקה: אם המרחק בין הטבעות גדל מאוד, $z \gg R$, השדה במרכז של אחת מהן שואף ל-$kQ/z^2$, של מטען נקודתי.'
+      - kind: result
+        text: 'א. $0$. ב. כ-$644\,\text{N/C}$, הרחק מהטבעת השנייה.'
+
+  - id: W-6.4-07
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.4-4]
+    prompt: >-
+      רוצים שבנקודה במרחק $2\,\text{cm}$ מול מרכז דיסקה טעונה השדה יהיה קרוב לשדה של לוח אינסופי, $\sigma/(2\varepsilon_0)$, בהפרש של פחות מ-1%. מה הרדיוס הקטן ביותר שהדיסקה צריכה?
+    answer: '$R \approx 2.0\,\text{m}$, פי 100 מהמרחק.'
+    solution:
+      - kind: law
+        text: '$E = \dfrac{\sigma}{2\varepsilon_0}\left(1 - \dfrac{z}{\sqrt{z^2+R^2}}\right)$.'
+      - kind: manipulation
+        text: 'ההפרש היחסי מהלוח הוא $\dfrac{z}{\sqrt{z^2+R^2}}$. דורשים $\dfrac{z}{\sqrt{z^2+R^2}} \le 0.01$. מעלים בריבוע והופכים: $\dfrac{z^2+R^2}{z^2} \ge 10^4$, כלומר $R^2 \ge z^2\,(10^4 - 1)$.'
+      - kind: substitution
+        text: '$R \ge 0.02\cdot\sqrt{9999} \approx 2.0\,\text{m}$.'
+      - kind: limit
+        text: 'התוצאה בקירוב $R \approx 100\,z$: הדרישה היא על היחס $z/R$ בלבד. קרוב פי 2 לדיסקה, מספיקה דיסקה קטנה פי 2.'
+      - kind: units
+        text: 'היחס $z/\sqrt{z^2+R^2}$ חסר יחידות, ו-$R$ יוצא במטרים.'
+      - kind: result
+        text: '$R \approx 2.0\,\text{m}$.'
+
+  - id: W-6.4-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.4-2, OBJ-6.4-4]
+    prompt: >-
+      מוט באורך $2\,\text{m}$ טעון באחידות בצפיפות $4\,\text{nC/m}$. חשבו את השדה על ציר הסימטריה שלו במרחקים $5\,\text{cm}$, $50\,\text{cm}$ ו-$5\,\text{m}$ מהמוט. בכל מרחק השוו לשני המודלים, תיל אינסופי ומטען נקודתי, ואמרו איזה מהם מתאים, אם בכלל.
+    answer: >-
+      $5\,\text{cm}$: $1.44\cdot10^{3}\,\text{N/C}$, תיל אינסופי (0.1%).
+
+      $50\,\text{cm}$: $129\,\text{N/C}$, אף מודל (תיל 12% יותר, נקודה פי 2.2).
+
+      $5\,\text{m}$: $2.82\,\text{N/C}$, מטען נקודתי (2%).
+    solution:
+      - kind: given
+        text: '$L = 2\,\text{m}$, $\lambda = 4\cdot10^{-9}\,\text{C/m}$, $Q = 8\cdot10^{-9}\,\text{C}$.'
+      - kind: law
+        text: '$E = \dfrac{kQ}{y\sqrt{y^2+L^2/4}}$; תיל: $2k\lambda/y$; נקודה: $kQ/y^2$.'
+      - kind: substitution
+        text: >-
+          $y = 0.05$: $E = \dfrac{72}{0.05\sqrt{1.0025}} \approx 1438\,\text{N/C}$; תיל $1440$; נקודה $2.88\cdot10^4$.
+
+
+          $y = 0.5$: $E = \dfrac{72}{0.5\sqrt{1.25}} \approx 128.8\,\text{N/C}$; תיל $144$; נקודה $288$.
+
+
+          $y = 5$: $E = \dfrac{72}{5\sqrt{26}} \approx 2.824\,\text{N/C}$; תיל $14.4$; נקודה $2.88$.
+      - kind: limit
+        text: 'ב-$y = 0.025\,L$ התיל מדויק; ב-$y = 2.5\,L$ הנקודה מדויקת ב-2%; ב-$y = 0.25\,L$ אף אחד מהם. כל מודל עובד רק בגבול שלו, ובאמצע צריך את הנוסחה המלאה.'
+      - kind: units
+        text: 'כל הערכים ב-$\text{N/C}$; $kQ$ חלקי מטר רבוע.'
+      - kind: result
+        text: '$1.44\cdot10^{3}$, $129$ ו-$2.82\,\text{N/C}$: תיל אינסופי, אף מודל, מטען נקודתי.'
+
+  - id: W-6.4-09
+    level: bagrut
+    qualitative: true
+    objectives: [OBJ-6.4-3]
+    prompt: >-
+      טבעת חיובית מקובעת במקומה. משחררים אלקטרון ממנוחה על הציר שלה, בגובה $z = 3R$ מעל המרכז.
+
+      א. תארו את התנועה של האלקטרון. איפה מהירותו הגדולה ביותר?
+
+      ב. האם התאוצה שלו גדלה כל הזמן עד שהוא מגיע למרכז? נמקו.
+
+      ג. פי כמה גדולה התאוצה המקסימלית מהתאוצה ברגע השחרור?
+    answer: >-
+      א. הוא נמשך אל הטבעת, עובר דרך המרכז, ממשיך עד $z = -3R$ וחוזר: תנודה. המהירות הגדולה ביותר במרכז.
+
+      ב. לא. התאוצה גדלה עד $z = R/\sqrt2$ ואז קטנה, עד אפס במרכז.
+
+      ג. פי כ-4.06.
+    solution:
+      - kind: law
+        text: '$E = \dfrac{kQz}{(z^2+R^2)^{3/2}}$ על הציר, ו-$a = eE/m$ עבור אלקטרון.'
+      - kind: reasoning
+        text: 'א. מעל המרכז השדה מצביע למעלה, הרחק מהטבעת, והכוח על האלקטרון השלילי למטה, אל המרכז. מתחת למרכז הכל הפוך, ושוב אל המרכז. לכל אורך הדרך אל המרכז הכוח בכיוון התנועה, ולכן המהירות גדלה עד המרכז. אחר כך הכוח נגד התנועה, והאלקטרון נעצר ב-$-3R$, מאותה סיבה סימטרית.'
+      - kind: reasoning
+        text: 'ב. התאוצה פרופורציונית לשדה, והשדה על הציר מגיע לשיא ב-$z = R/\sqrt2$ ויורד לאפס במרכז. לכן בדרך פנימה התאוצה גדלה, מגיעה לשיא ב-$R/\sqrt2$, ואז קטנה.'
+      - kind: manipulation
+        text: 'ג. ביחידות $kQ/R^2$: בשיא $E = \dfrac{2}{3\sqrt3} \approx 0.385$; ב-$z = 3R$: $E = \dfrac{3}{10^{3/2}} \approx 0.0949$. היחס $\approx 4.06$.'
+      - kind: limit
+        text: 'בדיקה: ב-$z = 3R$ הנוסחה צריכה להיות קרובה ל-$kQ/z^2 = kQ/(9R^2) \approx 0.111\,kQ/R^2$. קיבלנו $0.095$: קרוב, וקטן מעט, כמו שצריך בהתחלת המעבר לגבול הנקודתי.'
+      - kind: result
+        text: 'א. תנודה סביב המרכז, מהירות מקסימלית במרכז. ב. לא: שיא ב-$R/\sqrt2$, אפס במרכז. ג. פי כ-4.1.'
+
+  - id: W-6.4-10
+    level: bagrut
+    qualitative: true
+    objectives: [OBJ-6.4-1, OBJ-6.4-4]
+    prompt: >-
+      דיסקה ברדיוס $R$ טעונה באחידות. מחלקים אותה לשני חלקים: עיגול פנימי ברדיוס $R/2$, וטבעת רחבה סביבו, מ-$R/2$ עד $R$.
+
+      א. איזה חלק מהמטען נמצא בטבעת הרחבה?
+
+      ב. בנקודה על הציר, במרחק $z = R$, איזה חלק מהשדה בא מהעיגול הפנימי?
+
+      ג. מה משתנה אם הנקודה קרובה לדיסקה, ב-$z = R/10$? הסבירו את ההבדל.
+    answer: >-
+      א. שלושה רבעים.
+
+      ב. כ-36%.
+
+      ג. כ-89% מהשדה בא מהעיגול הפנימי: מקרוב, המטען הקרוב שולט.
+    solution:
+      - kind: law
+        text: 'השדה של אוסף טבעות מ-$s = a$ עד $s = b$ הוא אותו אינטגרל של הדיסקה, עם גבולות אחרים: $E = \dfrac{\sigma}{2\varepsilon_0}\left(\dfrac{z}{\sqrt{z^2+a^2}} - \dfrac{z}{\sqrt{z^2+b^2}}\right)$.'
+      - kind: manipulation
+        text: 'א. מטען ביחס לשטח: העיגול הפנימי $\pi(R/2)^2 = \tfrac14\pi R^2$, ולכן בטבעת הרחבה $\tfrac34$.'
+      - kind: substitution
+        text: >-
+          ב. $z = R$. העיגול הפנימי ($a = 0$, $b = R/2$): $1 - \dfrac{1}{\sqrt{1.25}} \approx 0.106$. כל הדיסקה: $1 - \dfrac{1}{\sqrt2} \approx 0.293$. היחס $\approx 0.36$.
+
+
+          ג. $z = R/10$. העיגול הפנימי: $1 - \dfrac{0.1}{\sqrt{0.26}} \approx 0.804$. כל הדיסקה: $1 - \dfrac{0.1}{\sqrt{1.01}} \approx 0.900$. היחס $\approx 0.89$.
+      - kind: limit
+        text: 'בדיקה: כש-$a \to 0$ הנוסחה נותנת את הדיסקה המלאה, וכש-$a = b$ היא נותנת אפס. ורחוק מאוד, $z \gg R$, כל חלק תורם לפי המטען שלו בלבד: 25% מהעיגול הפנימי.'
+      - kind: units
+        text: 'שני היחסים חסרי יחידות.'
+      - kind: reasoning
+        text: 'ג. מקרוב, הטבעות הפנימיות קרובות ו"רואות" את הנקודה כמעט לאורך הציר, והחיצוניות רחוקות ורואות אותה בזווית שטוחה. ככל שמתרחקים, ההבדל נעלם והשדה תלוי רק במטען: מ-89% ב-$R/10$, ל-36% ב-$R$, עד 25% רחוק מאוד.'
+      - kind: result
+        text: 'א. $\tfrac34$. ב. כ-36%. ג. כ-89%.'
+
+challenge:
+  - id: W-6.4-c1
+    stars: 1
+    objectives: [OBJ-6.4-1, OBJ-6.4-2]
+    prompt: >-
+      תיל דק מכופף לחצי מעגל ברדיוס $R = 10\,\text{cm}$, וטעון באחידות במטען $q = 5\,\text{nC}$. חשבו את השדה (גודל וכיוון) במרכז המעגל, והשוו אותו לשדה של מטען נקודתי $q$ במרחק $R$.
+    answer: '$E = \dfrac{2kq}{\pi R^2} \approx 2.86\cdot10^{3}\,\text{N/C}$, לאורך ציר הסימטריה, הרחק מהקשת. זה $2/\pi \approx 64\%$ מ-$kq/R^2$.'
+    solution:
+      - kind: given
+        text: '$R = 0.1\,\text{m}$, $q = 5\cdot10^{-9}\,\text{C}$; $\lambda = \dfrac{q}{\pi R}$. הקשת מעל ציר $x$, מרכזה בראשית.'
+      - kind: law
+        text: '$\vec E = \int k\,\dfrac{dq}{r^2}\,\hat r$. כאן כל אלמנט במרחק $R$, ו-$dq = \lambda\,R\,d\theta$ (אורך קשת = רדיוס כפול זווית).'
+      - kind: reasoning
+        text: 'סימטריה: אלמנט בזווית $\theta$ ואלמנט בזווית $\pi - \theta$ מבטלים זה את זה לאורך $x$. נשאר רק הרכיב לאורך $y$, ולכל אלמנט הוא $dE\sin\theta$, כלפי מטה (הרחק מהקשת).'
+      - kind: manipulation
+        text: '$E = \displaystyle\int_0^\pi \frac{k\lambda R\,d\theta}{R^2}\sin\theta = \frac{k\lambda}{R}\Big[-\cos\theta\Big]_0^\pi = \frac{2k\lambda}{R} = \frac{2kq}{\pi R^2}$.'
+      - kind: limit
+        text: 'בדיקה: אם כל המטען היה בנקודה אחת במרחק $R$, השדה היה $kq/R^2$. כאן התרומות לא מקבילות, ולכן הסכום הווקטורי קטן יותר: $2/\pi < 1$. ואילו השלמנו את הקשת למעגל שלם, החצי השני היה מבטל את הכל, כמו במרכז טבעת.'
+      - kind: units
+        text: '$k\lambda/R$: $\text{N}\cdot\text{m}^2/\text{C}^2\cdot\text{C/m}/\text{m} = \text{N/C}$.'
+      - kind: substitution
+        text: '$E = \dfrac{2\cdot9\cdot10^9\cdot5\cdot10^{-9}}{\pi\cdot0.01} \approx 2.86\cdot10^{3}\,\text{N/C}$; $kq/R^2 = 4.5\cdot10^{3}\,\text{N/C}$.'
+      - kind: result
+        text: '$2.86\cdot10^{3}\,\text{N/C}$, הרחק מהקשת, כ-64% מהשדה של מטען נקודתי.'
+    source:
+      name: AIEEE (today JEE Main)
+      year: 2010
+      problem: Question 14
+      url: https://cracku.in/14-a-thin-semi-circular-ring-of-radius-r-has-a-positi-x-nta-jee-main-2010
+      verified: '2026-11-02'
+      adapted: true
+
+  - id: W-6.4-c2
+    stars: 2
+    objectives: [OBJ-6.4-2, OBJ-6.4-4]
+    prompt: >-
+      שני מוטות דקים מונחים על ציר $x$, זה בהמשך זה. המוט השמאלי באורך $\ell_1$ ובצפיפות $\lambda_1$, הימני באורך $\ell_2$ ובצפיפות $\lambda_2$, והמרווח בין הקצוות הקרובים שלהם הוא $D$.
+
+      א. מצאו את הכוח בין המוטות. (מותר להשתמש בכך שהפונקציה הקדומה של $1/x$ היא $\ln x$, הלוגריתם הטבעי.)
+
+      ב. הראו שכש-$D$ גדול בהרבה משני האורכים, הכוח שואף לחוק קולון בין שני מטענים נקודתיים $q_1 = \lambda_1\ell_1$ ו-$q_2 = \lambda_2\ell_2$. (רמז: ל-$x$ קטן, $\ln(1+x) \approx x - x^2/2$.)
+
+      ג. חשבו את הכוח כש-$\ell_1 = \ell_2 = 20\,\text{cm}$, $D = 10\,\text{cm}$ ו-$\lambda_1 = \lambda_2 = 50\,\text{nC/m}$, והשוו לכוח בין מטענים נקודתיים במרכזי המוטות.
+    answer: >-
+      א. $F = k\lambda_1\lambda_2\ln\dfrac{(D+\ell_1)(D+\ell_2)}{D\,(D+\ell_1+\ell_2)}$, דחייה (לצפיפויות באותו סימן).
+
+      ב. ראו את הפתרון.
+
+      ג. $F \approx 1.32\cdot10^{-5}\,\text{N}$; מטענים נקודתיים במרכזים נותנים $1.0\cdot10^{-5}\,\text{N}$.
+    solution:
+      - kind: law
+        text: 'הכוח על המוט הימני הוא סכום הכוחות על האלמנטים שלו: $F = \int \lambda_2\,dx\;E_1(x)$, כאשר $E_1$ הוא השדה של המוט השמאלי על הציר שלו.'
+      - kind: manipulation
+        text: >-
+          מהשיעור, במרחק $x$ מהקצה הקרוב של המוט השמאלי, $E_1 = k\lambda_1\left(\dfrac1x - \dfrac1{x+\ell_1}\right)$. האלמנטים של המוט הימני רצים מ-$x = D$ עד $x = D + \ell_2$:
+
+
+          $F = k\lambda_1\lambda_2\displaystyle\int_D^{D+\ell_2}\left(\frac1x - \frac1{x+\ell_1}\right)dx = k\lambda_1\lambda_2\Big[\ln x - \ln(x+\ell_1)\Big]_D^{D+\ell_2}$
+
+
+          $= k\lambda_1\lambda_2\,\ln\dfrac{(D+\ell_1)(D+\ell_2)}{D\,(D+\ell_1+\ell_2)}$.
+      - kind: limit
+        text: >-
+          ב. נכתוב $a = \ell_1/D$, $b = \ell_2/D$. הארגומנט הוא $\dfrac{(1+a)(1+b)}{1+a+b}$, והלוגריתם $\ln(1+a)+\ln(1+b)-\ln(1+a+b)$. עם $\ln(1+x)\approx x - x^2/2$: האיברים הלינאריים מתבטלים, ונשאר $-\tfrac{a^2}{2}-\tfrac{b^2}{2}+\tfrac{(a+b)^2}{2} = ab$. לכן $F \approx k\lambda_1\lambda_2\dfrac{\ell_1\ell_2}{D^2} = \dfrac{kq_1q_2}{D^2}$: חוק קולון.
+      - kind: units
+        text: '$k\lambda_1\lambda_2$: $\text{N}\cdot\text{m}^2/\text{C}^2\cdot\text{C}^2/\text{m}^2 = \text{N}$, והלוגריתם חסר יחידות.'
+      - kind: substitution
+        text: 'ג. $k\lambda^2 = 9\cdot10^9\cdot(5\cdot10^{-8})^2 = 2.25\cdot10^{-5}\,\text{N}$, ו-$\ln\dfrac{0.3\cdot0.3}{0.1\cdot0.5} = \ln1.8 \approx 0.588$. $F \approx 1.32\cdot10^{-5}\,\text{N}$. במרכזים: $q = 10\,\text{nC}$ כל אחד, במרחק $0.3\,\text{m}$: $\dfrac{9\cdot10^9\cdot10^{-16}}{0.09} = 1.0\cdot10^{-5}\,\text{N}$.'
+      - kind: result
+        text: 'א. $k\lambda_1\lambda_2\ln\frac{(D+\ell_1)(D+\ell_2)}{D(D+\ell_1+\ell_2)}$. ב. $kq_1q_2/D^2$. ג. $1.32\cdot10^{-5}\,\text{N}$, כ-32% יותר מהמודל הנקודתי.'
+    source:
+      name: MIT 8.022 Physics II (OCW), Assignment 1
+      year: 2004
+      problem: Problem 7
+      url: https://ocw.mit.edu/courses/8-022-physics-ii-electricity-and-magnetism-fall-2004/ddbd87ccfda4c85b876171e4ec340c17_pset1.pdf
+      verified: '2026-11-02'
+      adapted: true

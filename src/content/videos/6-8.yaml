@@ -1,0 +1,16 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below) on the
+# `verified` date. `why`, `start`/`end` and the Hebrew captions rest on the upload description: its
+# timestamp list (4:31 what is curl, 5:47 Maxwell's equations, 7:36 dynamic systems), its correction note
+# for 4:55, and its credit for a Hebrew translation. The same video as v-6-7-3b1b, a later segment.
+
+- id: v-6-8-3b1b
+  youtubeId: rB83DpBJQsE
+  title: "Divergence and curl:  The language of Maxwell's equations, fluid flow, and more"
+  channel: 3Blue1Brown
+  lang: en
+  captions: [he]
+  start: 271
+  end: 456
+  minutes: 3
+  why: 'הקטע על הרוטור ועל משוואות מקסוול (4:31 עד 7:36), באנגלית עם תרגום לעברית לפי התיאור. לפי התיאור, ב-4:55 הקריין מחליף בטעות את הסימנים: סיבוב נגד כיוון השעון הוא רוטור חיובי, כמו בשיעור, והשרטוט נכון. חפשו את הגלגלים הקטנים שהזרימה מסובבת, והשוו לגלגל המשוטים באיור 6.8א.'
+  verified: '2026-11-02'

@@ -1,0 +1,220 @@
+# Lesson 6.11 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/biotsavart.ts and magnetism.ts (elementFieldMagnitude,
+# symmetricSegmentField, segmentFieldAt, semiInfiniteWireField, straightWireField, loopAxisField,
+# loopCenterField); the script is s611/recompute-lesson.ts in the session scratchpad. The data differ on
+# purpose from figures 6.11א–ב and the worked examples.
+
+chapter: 6
+questions:
+  # ------------------------------------------------ OBJ-6.11-1: one current element, size and direction
+  - id: Q-6.11-element-direction
+    type: vector
+    objectives: [OBJ-6.11-1]
+    qualitative: true
+    allowOutIn: true
+    prompt: >-
+      חתיכה קצרה של תיל שוכבת בדף, וזורם בה זרם ימינה. הנקודה P נמצאת בדף, ישר מתחת לחתיכה. מה כיוון התרומה $d\vec B$ של החתיכה לשדה ב-P?
+    answer: in
+    correctFeedback: 'נכון. $d\vec\ell$ ימינה, $\hat r$ מהחתיכה אל P למטה. האצבעות ימינה, מכופפות למטה, והאגודל נכנס לדף. זה גם מה שנותן כלל יד ימין של שיעור 4.2: מתחת לתיל שהזרם בו ימינה השדה ⊗.'
+    wrong:
+      - dir: s
+        feedback: 'זה הכיוון מהחתיכה אל P, כמו בשדה חשמלי של אלמנט מטען. בחוק ביו-סבר יש מכפלה וקטורית, ו-$d\vec B$ ניצב גם ל-$d\vec\ell$ וגם ל-$\hat r$.'
+        misconception: MC-biot-savart-along-r
+      - dir: e
+        feedback: 'זה כיוון הזרם. התרומה ניצבת לזרם, לא לאורכו.'
+        misconception: MC-biot-savart-along-r
+      - dir: out
+        feedback: 'הכיוון ניצב לדף, אבל הפוך. בדקו שוב את יד ימין: האצבעות בכיוון $d\vec\ell$ (ימינה) ומכופפות אל $\hat r$ (למטה). מעל החתיכה התשובה הייתה ⊙.'
+      - dir: n
+        feedback: 'שני הווקטורים, $d\vec\ell$ ו-$\hat r$, בדף, ולכן המכפלה הווקטורית שלהם ניצבת לדף. אין לה רכיב למעלה.'
+        misconception: MC-biot-savart-along-r
+    wrongFeedback: 'כשהתיל והנקודה בדף, כל תרומה יוצאת מהדף או נכנסת אליו. קבעו איזה מהשניים ביד ימין, מ-$d\vec\ell$ אל $\hat r$.'
+
+  - id: Q-6.11-element-zero
+    type: mc
+    objectives: [OBJ-6.11-1]
+    qualitative: true
+    prompt: >-
+      תיל מכופף בצורת האות L שוכב בדף: חלק אחד אופקי, והזרם בו זורם ימינה עד הפינה; משם החלק השני עולה למעלה. הנקודה P נמצאת בדף, על ההמשך של החלק האופקי, מימין לפינה. איזה חלק של התיל תורם לשדה ב-P?
+    choices:
+      - text: 'רק החלק האנכי.'
+        correct: true
+        feedback: 'נכון. בחלק האופקי הזרם זורם ישר אל P: $\varphi = 0$ ו-$\sin\varphi = 0$ לכל החתיכות שלו. החלק האנכי תורם, ומ-P, שנמצאת מימינו, התרומה שלו ⊗ (זרם למעלה, P מימין).'
+      - text: 'שני החלקים, והחלק האופקי יותר, כי הוא קרוב יותר ל-P.'
+        feedback: 'המרחק לבדו לא קובע. התרומה פרופורציונית ל-$\sin\varphi$, וכשהזרם זורם לאורך הקו אל P, $\varphi = 0$: החלק האופקי לא תורם כלל, גם מקרוב.'
+        misconception: MC-element-in-line-contributes
+      - text: 'רק החלק האופקי, כי P על הקו שלו.'
+        feedback: 'ההפך. כש-P על הקו של קטע, הזרם בו זורם אל P, וכל התרומות שלו אפס.'
+        misconception: MC-element-in-line-contributes
+      - text: 'אף חלק: P נמצאת מחוץ לתיל.'
+        feedback: 'כל אלמנט זרם יוצר שדה בכל המרחב, ולא רק על התיל. החלק האנכי יוצר שדה ב-P.'
+
+  - id: Q-6.11-element-calc
+    type: numeric
+    objectives: [OBJ-6.11-1]
+    level: mid
+    prompt: >-
+      בחתיכה קצרה של תיל, באורך $1\,\text{cm}$, זורם זרם של $8\,\text{A}$. הנקודה P נמצאת $4\,\text{cm}$ מהחתיכה, והקו מהחתיכה אל P יוצר זווית של $30^\circ$ עם כיוון הזרם. מה גודל התרומה של החתיכה לשדה ב-P? ענו במיקרוטסלה (μT).
+    answer: 2.5
+    unit: μT
+    tolerance: 0.03
+    correctFeedback: 'נכון. $dB = \dfrac{\mu_0}{4\pi}\,\dfrac{I\,d\ell\,\sin\varphi}{r^2} = 10^{-7}\cdot\dfrac{8\cdot0.01\cdot0.5}{0.04^2} = 2.5\cdot10^{-6}\,\text{T}$.'
+    wrongFeedback: 'הציבו בחוק ביו-סבר במטרים: $dB = 10^{-7}\cdot I\,d\ell\,\sin\varphi/r^2$, עם $\varphi$ הזווית בין הזרם לקו אל P.'
+    commonWrong:
+      - value: 5
+        feedback: 'שכחתם את $\sin\varphi$. רק הרכיב של החתיכה שניצב לקו אל P תורם, ו-$\sin30^\circ = 0.5$.'
+        misconception: MC-element-in-line-contributes
+      - value: 4.33
+        feedback: 'השתמשתם ב-$\cos\varphi$. בחוק יש מכפלה וקטורית, וגודלה כולל את הסינוס של הזווית בין $d\vec\ell$ ל-$\hat r$.'
+      - value: 0.1
+        feedback: 'חילקתם ב-$r$ ולא ב-$r^2$. התרומה של אלמנט יורדת כמו $1/r^2$, כמו של אלמנט מטען.'
+      - value: 0.025
+        feedback: 'הצבתם סנטימטרים במקום מטרים. $d\ell = 0.01\,\text{m}$, $r = 0.04\,\text{m}$.'
+
+  # ------------------------------------------------ OBJ-6.11-2: a finite segment, and its limits
+  - id: Q-6.11-short-wire
+    type: twotier
+    objectives: [OBJ-6.11-2]
+    qualitative: true
+    prompt: >-
+      חתיכה ישרה של תיל, באורך $6\,\text{cm}$, היא חלק ממעגל גדול. בנקודה P, $3\,\text{cm}$ מול האמצע שלה, רוצים לדעת מה תורמת החתיכה הזו. תלמידה הציבה ב-$\dfrac{\mu_0 I}{2\pi r}$ עם $r = 3\,\text{cm}$. האם התרומה של החתיכה שווה לתוצאה שלה?
+    choices:
+      - text: 'לא: התרומה של החתיכה קטנה יותר.'
+        correct: true
+        feedback: 'נכון. כאן $L = 2s$, ולכן $\sin\theta_2 = 1/\sqrt2$, והחתיכה נותנת רק כ-71% מ-$\mu_0 I/(2\pi s)$.'
+      - text: 'כן: זו הנוסחה של תיל ישר.'
+        feedback: '$\mu_0 I/(2\pi r)$ היא הנוסחה של תיל ישר **ארוך מאוד**. לחתיכה באורך פי 2 מהמרחק היא גבוהה בכ-40%.'
+        misconception: MC-short-wire-infinite-formula
+      - text: 'לא: התרומה של החתיכה גדולה יותר, כי הקצוות קרובים.'
+        feedback: 'הקצוות רחוקים מ-P יותר מהאמצע, ולא קרובים יותר. ובכל מקרה, חתיכה קצרה היא רק חלק מתיל ארוך, ולכן היא תורמת פחות ממנו.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'תיל אינסופי הוא החתיכה הזו ועוד חתיכות לשני הצדדים, וכל אחת מהן מוסיפה שדה באותו כיוון.'
+        correct: true
+        feedback: 'נכון. כל החתיכות של קו ישר תורמות ל-P באותו כיוון, ולכן חתיכה קצרה נותנת פחות מהתיל כולו.'
+      - text: 'הנוסחה של תיל נכונה לכל תיל ישר, באיזה אורך שהוא.'
+        feedback: 'הנוסחה היא הגבול של $\frac{\mu_0 I}{4\pi s}(\sin\theta_2 - \sin\theta_1)$ כשהזוויות שואפות ל-$\pm90^\circ$, כלומר כשהתיל ארוך מאוד. באיור 6.11א רואים את הסכום מגיע אליה רק כשמאריכים את התיל.'
+        misconception: MC-short-wire-infinite-formula
+      - text: 'בחתיכות שבקצוות הזרם זורם אל P, ולכן הן מוסיפות שדה.'
+        feedback: 'בחתיכות שבקצוות הזרם זורם בזווית קטנה יותר לקו אל P, ולכן הן תורמות **פחות** מהחתיכות שבאמצע, לא יותר.'
+
+  - id: Q-6.11-segment-calc
+    type: numeric
+    objectives: [OBJ-6.11-2]
+    level: mid
+    prompt: >-
+      בתיל ישר באורך $30\,\text{cm}$ זורם זרם של $10\,\text{A}$. מה השדה של התיל בנקודה שמול האמצע שלו, $10\,\text{cm}$ ממנו? ענו במיקרוטסלה (μT).
+    answer: 16.64
+    unit: μT
+    tolerance: 0.02
+    correctFeedback: 'נכון. $\sin\theta_2 = -\sin\theta_1 = \dfrac{0.15}{\sqrt{0.1^2 + 0.15^2}} \approx 0.832$, ו-$B = 10^{-7}\cdot\dfrac{10}{0.1}\cdot2\cdot0.832 \approx 1.66\cdot10^{-5}\,\text{T}$.'
+    wrongFeedback: 'השתמשו בנוסחה של קטע ישר, $B = \dfrac{\mu_0 I}{4\pi s}(\sin\theta_2 - \sin\theta_1)$, כשכל קצה במרחק $L/2$ לאורך הקו.'
+    commonWrong:
+      - value: 20
+        feedback: 'זה $\mu_0 I/(2\pi s)$, השדה של תיל אינסופי. התיל הזה ארוך רק פי 3 מהמרחק, והוא נותן 83% מזה.'
+        misconception: MC-short-wire-infinite-formula
+      - value: 8.32
+        feedback: 'חישבתם רק חצי מהתיל, מהאמצע עד קצה אחד. החצי השני תורם אותו דבר: $\sin\theta_2 - \sin\theta_1 = 2\cdot0.832$.'
+      - value: 18.97
+        feedback: 'הצבתם את כל האורך, $30\,\text{cm}$, במקום $L/2 = 15\,\text{cm}$, כמרחק מהאמצע לכל קצה.'
+      - value: 30
+        feedback: 'השתמשתם ב-$\tan\theta = (L/2)/s = 1.5$ במקום ב-$\sin\theta$. הסינוס הוא $(L/2)/\sqrt{s^2 + L^2/4}$, תמיד פחות מ-1.'
+
+  - id: Q-6.11-semi-infinite
+    type: numeric
+    objectives: [OBJ-6.11-2]
+    prompt: >-
+      תיל ישר ארוך מאוד מתחיל בנקודה A וממשיך משם ימינה בלי סוף; בתיל זורם זרם של $12\,\text{A}$. הנקודה P נמצאת $4\,\text{cm}$ מעל A, כך שהקו AP ניצב לתיל. מה השדה של התיל ב-P? ענו במיקרוטסלה (μT).
+    answer: 30
+    unit: μT
+    tolerance: 0.02
+    correctFeedback: 'נכון. $\theta_1 = 0$ ו-$\theta_2 \to 90^\circ$, ולכן $B = \dfrac{\mu_0 I}{4\pi s} = 10^{-7}\cdot\dfrac{12}{0.04} = 3\cdot10^{-5}\,\text{T}$: חצי מהשדה של תיל אינסופי.'
+    wrongFeedback: 'מול הקצה, החתיכות של התיל נמצאות רק בצד אחד. הציבו $\theta_1 = 0$ ו-$\theta_2 = 90^\circ$ בנוסחה של קטע ישר.'
+    commonWrong:
+      - value: 60
+        feedback: 'זה השדה של תיל אינסופי לשני הצדדים, $\mu_0 I/(2\pi s)$. כאן התיל מתחיל ב-A, ויש חתיכות רק בצד אחד: חצי.'
+        misconception: MC-short-wire-infinite-formula
+      - value: 0.3
+        feedback: 'הצבתם $4$ במקום $0.04\,\text{m}$.'
+
+  - id: Q-6.11-rank-segments
+    type: rank
+    objectives: [OBJ-6.11-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בכל המקרים זורם אותו זרם, והנקודה P נמצאת באותו מרחק $s$ מהקו של התיל. סדרו את השדה ב-P, מהגדול לקטן.
+    items:
+      - { id: half, label: 'תיל שמתחיל מול P וממשיך בלי סוף לצד אחד' }
+      - { id: inf, label: 'תיל אינסופי לשני הצדדים' }
+      - { id: endshort, label: 'קטע באורך $2s$, ו-P מול אחד הקצוות שלו' }
+      - { id: mid, label: 'קטע באורך $2s$, ו-P מול האמצע שלו' }
+    order: [inf, mid, half, endshort]
+    correctFeedback: 'נכון. היחסים לתיל האינסופי: $1$, $0.71$ ($\sin\theta = 1/\sqrt2$ לכל צד), $0.5$ (צד אחד, $\sin\theta = 1$), ו-$0.45$ (צד אחד, $\sin\theta = 2/\sqrt5 \approx 0.89$, חלקי 2).'
+    wrongFeedback: 'השוו את $\sin\theta_2 - \sin\theta_1$ בכל מקרה: לתיל אינסופי 2, וכל קצה שקרוב ל-P מקטין את הסכום.'
+
+  # ------------------------------------------------ OBJ-6.11-3: a loop on its axis, the dipole, the solenoid
+  - id: Q-6.11-loop-axis
+    type: numeric
+    objectives: [OBJ-6.11-3]
+    level: mid
+    prompt: >-
+      בכריכה ברדיוס $10\,\text{cm}$ זורם זרם של $10\,\text{A}$. מה השדה על הציר של הכריכה, $10\,\text{cm}$ ממרכזה? ענו במיקרוטסלה (μT).
+    answer: 22.21
+    unit: μT
+    tolerance: 0.02
+    correctFeedback: 'נכון. $B = \dfrac{\mu_0 I R^2}{2(R^2 + z^2)^{3/2}}$, וכש-$z = R$ זה $\dfrac{\mu_0 I}{2R}\cdot\dfrac{1}{2\sqrt2} \approx \dfrac{62.8\,\mu\text{T}}{2.83} \approx 22.2\,\mu\text{T}$.'
+    wrongFeedback: 'השתמשו בשדה על הציר, $\dfrac{\mu_0 I R^2}{2(R^2 + z^2)^{3/2}}$, ולא בשדה במרכז.'
+    commonWrong:
+      - value: 62.83
+        feedback: 'זה השדה במרכז הכריכה, $\mu_0 I/(2R)$ (או נוסחת הדיפול, שבמקרה נותנת את אותו מספר ב-$z = R$). ב-$z = R$ השדה קטן פי $2\sqrt2$ מהמרכז.'
+      - value: 31.42
+        feedback: 'חיברתם את הגדלים של כל ה-$dB$, $\dfrac{\mu_0 I\cdot2\pi R}{4\pi(R^2 + z^2)}$. אבל הם לא באותו כיוון: הרכיבים לרוחב הציר מתבטלים, ורק הרכיב לאורך הציר, החלק $R/\sqrt{R^2 + z^2}$ מכל אחד, מצטבר.'
+        misconception: MC-fields-add-as-numbers
+
+  - id: Q-6.11-far-loop
+    type: mc
+    objectives: [OBJ-6.11-3]
+    qualitative: true
+    prompt: >-
+      על הציר של כריכה קטנה, במרחק שגדול פי 20 מהרדיוס שלה, מודדים שדה $B$. מתרחקים לאורך הציר למרחק כפול. מה השדה עכשיו, בקירוב טוב?
+    choices:
+      - text: '$B/8$'
+        correct: true
+        feedback: 'נכון. רחוק מהכריכה השדה הוא של דיפול מגנטי, $\mu_0 m/(2\pi z^3)$, ויורד כמו $1/z^3$.'
+      - text: '$B/4$'
+        feedback: 'כל חתיכה של הכריכה אכן תורמת שדה שיורד כמו $1/z^2$, אבל רחוק מהכריכה התרומות של צדדים מנוגדים כמעט מבטלות זו את זו, ומה שנשאר יורד מהר יותר, כמו $1/z^3$.'
+        misconception: MC-loop-far-inverse-square
+      - text: '$B/2$'
+        feedback: 'כך יורד השדה של תיל ישר ארוך. כריכה רחוקה נראית כמו דיפול, לא כמו תיל.'
+      - text: '$B$, כי השדה לאורך הציר של כריכה אחיד.'
+        feedback: 'השדה כמעט אחיד בתוך סליל ארוך, לא על הציר של כריכה אחת. ב-$z = 0$ הוא $\mu_0 I/(2R)$, ומשם הוא רק יורד.'
+
+  - id: Q-6.11-solenoid-end
+    type: twotier
+    objectives: [OBJ-6.11-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בתוך סליל ארוך מאוד, רחוק מהקצוות, השדה על הציר הוא $B_0$. מה השדה על הציר בדיוק בפתח של הסליל?
+    choices:
+      - text: '$B_0/2$'
+        correct: true
+        feedback: 'נכון. מהנוסחה: בפתח $\alpha_1 = 90^\circ$ ו-$\alpha_2 \to 0$, ולכן $B = \frac{\mu_0 nI}{2}(0 + 1) = B_0/2$.'
+      - text: 'אפס: השדה של סליל נמצא רק בתוכו.'
+        feedback: 'גם מחוץ לסליל יש שדה, ובוודאי בפתח שלו. רק רחוק מהקצוות, בצד של הסליל, השדה בחוץ חלש מאוד.'
+        misconception: MC-solenoid-end-zero
+      - text: '$B_0$: השדה של סליל ארוך אחיד לכל אורכו.'
+        feedback: 'השדה אחיד רק רחוק מהקצוות. בפתח חסרות כל הכריכות שהיו ממשיכות את הסליל, והן היו תורמות בדיוק חצי.'
+        misconception: MC-solenoid-end-zero
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'שני סלילים ארוכים זה בהמשך של זה הם סליל אחד, ובנקודת המפגש כל אחד מהם תורם אותו דבר.'
+        correct: true
+        feedback: 'נכון. ביחד הם נותנים $B_0$, ולכן כל אחד נותן $B_0/2$ בפתח שלו. וגם מהנוסחה: $\frac{\mu_0 nI}{2}(\cos90^\circ + \cos0^\circ) = \frac{\mu_0 nI}{2}$.'
+      - text: 'קווי השדה לא יוצאים מהסליל, ולכן בפתח הם נעלמים.'
+        feedback: 'קווי שדה מגנטי סגורים: הם יוצאים מפתח אחד של הסליל וחוזרים אל הפתח השני מבחוץ. בפתח הם עוד לא נעלמו.'
+        misconception: MC-solenoid-end-zero
+      - text: 'בפתח כל הכריכות במרחק שווה מהנקודה, ולכן השדה כמו בפנים.'
+        feedback: 'הכריכות נמצאות רק מצד אחד של הפתח, ובמרחקים שונים ממנו. בפנים יש כריכות לשני הצדדים.'
