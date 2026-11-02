@@ -1,0 +1,23 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support;
+# the length comes from the watch page.
+
+- id: v-4-2-demo-he
+  youtubeId: eREawvOmEi4
+  title: 'הדגמות במגנטיות - תיל נושא זרם יוצר שדה מגנטי'
+  channel: מרכז שוורץ/רייסמן הדרכות למורי פיזיקה
+  lang: he
+  captions: []
+  minutes: 10
+  why: 'צילום של הדגמות אמיתיות בכיתה, בעברית: זרם בתיל יוצר שדה מגנטי (לפי תיאור הסרטון). בהמשך הסרטון מוצג גם הכוח בין שני תילים מקבילים, נושא של שיעור 4.8. השוו את מה שקורה למחטים למה שראיתם באיור 4.2א.'
+  verified: '2026-11-02'
+
+- id: v-4-2-compasses
+  youtubeId: FPoqvuWiHck
+  title: 'Magnetic field about a current-carrying wire - using compasses (NCPQ)'
+  channel: Dr Richard Walding
+  lang: en
+  captions: [en]
+  minutes: 1.5
+  why: 'סרטון קצר באנגלית שחוזר על הניסוי של אורסטד עם מצפנים סביב תיל, ומראה גם איך השדה נחלש כשמתרחקים מהתיל (לפי תיאור הסרטון). שימו לב לכיוון המחטים ולמה שקורה למצפן רחוק.'
+  verified: '2026-11-02'

@@ -1,0 +1,317 @@
+# Lesson 4.7 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/magnetism.ts (wireForce, wireForceVec),
+# src/physics/wireforce.ts (balanceField, carrierCount) and src/physics/circuits.ts (driftSpeed).
+# Directions: x right, y up the page, z out of the page; F = I L×B.
+
+chapter: 4
+questions:
+  # ------------------------------------------------ OBJ-4.7-1: the force from the carriers
+  - id: Q-4.7-carriers-sum
+    type: mc
+    objectives: [OBJ-4.7-1]
+    qualitative: true
+    prompt: >-
+      תיל נחושת שזורם בו זרם נמצא בין הקטבים של מגנט, בניצב לשדה, ועליו פועל כוח. מה הסיבה לכוח?
+    choices:
+      - text: 'כל אחד מנושאי המטען הנעים בתיל מקבל כוח לורנץ, והם מעבירים את הכוח לתיל.'
+        correct: true
+        feedback: 'נכון. $N = nAL$ נושאי מטען, כל אחד מקבל $qvB$, ויחד $F = (nqvA)BL = BIL$.'
+      - text: 'המגנט מושך את הנחושת, והזרם רק מחזק את המשיכה.'
+        feedback: 'נחושת אינה נמשכת למגנט: בלי זרם אין כוח בכלל. וכשהזרם מתהפך, גם הכוח מתהפך, וזו לא משיכה.'
+        misconception: MC-wire-force-without-current
+      - text: 'הזרם הופך את התיל לטעון חשמלית, והשדה המגנטי דוחף מטען.'
+        feedback: 'תיל שזורם בו זרם נשאר ניטרלי: כמה אלקטרונים שנכנסים, כך יוצאים. והשדה המגנטי לא מפעיל כוח על מטען במנוחה, רק על מטען נע.'
+      - text: 'השדה דוחף את נושאי המטען לאורך התיל, ואיתם את התיל.'
+        feedback: 'כוח לורנץ ניצב למהירות של נושא המטען, כלומר ניצב לתיל. הוא לא דוחף לאורך התיל.'
+        misconception: MC-wire-force-along-i
+
+  - id: Q-4.7-electrons
+    type: twotier
+    objectives: [OBJ-4.7-1, OBJ-4.7-2]
+    qualitative: true
+    prompt: >-
+      בתיל מתכת נושאי המטען הם אלקטרונים, שנעים נגד כיוון הזרם. תלמידה קובעת את כיוון הכוח על התיל בכלל כף יד ימין, עם האגודל בכיוון **הזרם**. האם הכיוון שתקבל נכון?
+    choices:
+      - text: 'כן, הכיוון נכון.'
+        correct: true
+        feedback: נכון.
+      - text: 'לא, הכוח האמיתי בכיוון ההפוך.'
+        feedback: 'האלקטרונים אכן נעים נגד הזרם, אבל זה רק חצי מהסיפור. בדקו את הסימן של המטען שלהם.'
+        misconception: MC-wire-force-electrons-opposite
+      - text: 'אי אפשר לדעת בלי לדעת מהם נושאי המטען.'
+        feedback: 'אפשר: כל נושאי המטען, חיוביים או שליליים, נותנים את אותו כיוון כוח לאותו זרם.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'לאלקטרון שני היפוכים: הוא נע נגד הזרם, והמטען שלו שלילי. שני ההיפוכים מבטלים זה את זה.'
+        correct: true
+        feedback: 'נכון. זה מה שרואים באיור 4.7א כשעוברים ממטענים חיוביים לאלקטרונים: חיצי הכוח לא משתנים.'
+      - text: 'האלקטרונים נעים נגד הזרם, ולכן הכוח עליהם הפוך.'
+        feedback: 'מהירות הפוכה לבדה אכן הייתה הופכת את הכוח, אבל לאלקטרון יש גם מטען שלילי, והוא הופך את הכוח שוב.'
+        misconception: MC-wire-force-electrons-opposite
+      - text: 'הכוח המגנטי לא תלוי בכיוון התנועה של המטען.'
+        feedback: 'הוא תלוי: $F = qvB\sin\alpha$, וכיוונו נקבע לפי כיוון המהירות. כאן הוא נשאר אותו כוח מסיבה אחרת.'
+
+  - id: Q-4.7-per-electron
+    type: numeric
+    objectives: [OBJ-4.7-1]
+    level: bagrut
+    prompt: >-
+      בתיל נחושת ששטח החתך שלו $1\,\text{mm}^2$ זורם זרם של $2\,\text{A}$. קטע של $10\,\text{cm}$ ממנו נמצא בשדה של $0.5\,\text{T}$, בניצב לשדה. בנחושת $n = 8.5\cdot10^{28}\,\text{m}^{-3}$. מה הכוח המגנטי על **אלקטרון אחד** בקטע? ענו בניוטון (למשל 3e-23).
+    answer: 1.18e-23
+    unit: N
+    tolerance: 0.03
+    correctFeedback: 'נכון. $v = \dfrac{I}{neA} \approx 1.47\cdot10^{-4}\,\text{m/s}$, ו-$f = evB \approx 1.18\cdot10^{-23}\,\text{N}$. בקטע יש $nAL = 8.5\cdot10^{21}$ אלקטרונים, ויחד: $8.5\cdot10^{21}\cdot1.18\cdot10^{-23} = 0.1\,\text{N} = BIL$.'
+    wrongFeedback: 'מצאו קודם את מהירות הסחיפה מ-$I = nevA$, ואז $f = evB$. או: חלקו את $BIL$ במספר האלקטרונים בקטע, $nAL$.'
+    commonWrong:
+      - value: 1.18e-29
+        feedback: 'שכחתם להמיר את שטח החתך: $1\,\text{mm}^2 = 10^{-6}\,\text{m}^2$, לא $1\,\text{m}^2$.'
+      - value: 2.35e-23
+        feedback: 'זו המכפלה $ev$, בלי השדה. הכוח הוא $evB$.'
+      - value: 0.1
+        feedback: 'זה הכוח על כל הקטע, $BIL$. השאלה על אלקטרון אחד: חלקו במספר האלקטרונים, $nAL$.'
+
+  # ------------------------------------------------ OBJ-4.7-2: direction
+  - id: Q-4.7-dir-basic
+    type: vector
+    objectives: [OBJ-4.7-2]
+    allowOutIn: true
+    prompt: >-
+      תיל אופקי בדף נושא זרם ימינה, ונמצא בשדה מגנטי אחיד לתוך הדף (⊗). מה כיוון הכוח על התיל?
+    answer: n
+    correctFeedback: 'נכון. כלל כף יד ימין: האצבעות לתוך הדף, האגודל ימינה, וכף היד פונה למעלה.'
+    wrong:
+      - dir: in
+        feedback: 'זה כיוון השדה. הכוח המגנטי ניצב לשדה, לא לאורכו.'
+        misconception: MC-wire-force-along-b
+      - dir: e
+        feedback: 'זה כיוון הזרם. הכוח ניצב לתיל.'
+        misconception: MC-wire-force-along-i
+      - dir: s
+        feedback: 'זה הכיוון ההפוך. אולי השתמשתם ביד שמאל, או החלפתם בין האגודל לאצבעות? האצבעות בכיוון השדה, לתוך הדף; האגודל בכיוון הזרם, ימינה.'
+      - dir: zero
+        feedback: 'התיל ניצב לשדה, $\alpha = 90^\circ$, ולכן הכוח הגדול ביותר האפשרי, לא אפס.'
+        misconception: MC-wire-parallel-force
+    wrongFeedback: 'פרשו את כף יד ימין: האצבעות בכיוון השדה, האגודל בכיוון הזרם. לאן פונה כף היד?'
+
+  - id: Q-4.7-dir-in-plane
+    type: vector
+    objectives: [OBJ-4.7-2]
+    allowOutIn: true
+    level: mid
+    prompt: >-
+      השדה המגנטי בדף, ימינה, מקוטב צפוני שמשמאל לקוטב דרומי שמימין. תיל ביניהם נושא זרם בדף, למעלה. מה כיוון הכוח על התיל?
+    answer: in
+    correctFeedback: 'נכון. האצבעות ימינה, האגודל למעלה, וכף היד פונה הרחק מכם: לתוך הדף. התיל והשדה בדף, ולכן הכוח חייב לצאת מהדף או להיכנס אליו.'
+    wrong:
+      - dir: out
+        feedback: 'זה ההפך. בדקו שוב עם יד ימין: אצבעות ימינה, אגודל למעלה.'
+      - dir: e
+        feedback: 'זה כיוון השדה. הכוח ניצב לשדה.'
+        misconception: MC-wire-force-along-b
+      - dir: n
+        feedback: 'זה כיוון הזרם. הכוח ניצב לתיל.'
+        misconception: MC-wire-force-along-i
+      - dir: w
+        feedback: 'שמאלה זה נגד השדה, בדף. הכוח ניצב גם לשדה וגם לתיל, ושניהם בדף.'
+    wrongFeedback: 'כשגם התיל וגם השדה בדף, הכוח ניצב לשניהם: החוצה מהדף או לתוכו.'
+
+  - id: Q-4.7-parallel
+    type: mc
+    objectives: [OBJ-4.7-2, OBJ-4.7-3]
+    qualitative: true
+    prompt: >-
+      תיל ישר נושא זרם של $5\,\text{A}$ בתוך שדה מגנטי חזק ואחיד, והוא מונח לאורך קווי השדה, בכיוון השדה. מה הכוח המגנטי עליו?
+    choices:
+      - text: 'אין כוח.'
+        correct: true
+        feedback: 'נכון. $\alpha = 0$, $\sin0 = 0$: כל נושא מטען נע לאורך השדה ולא מקבל כוח לורנץ.'
+      - text: 'הכוח הגדול ביותר האפשרי, כי התיל כולו לאורך השדה.'
+        feedback: 'הפוך: הכוח הגדול ביותר כשהתיל **ניצב** לשדה. כשהוא מקביל, $F = BIL\sin0 = 0$.'
+        misconception: MC-wire-parallel-force
+      - text: 'כוח בכיוון השדה, שמושך את התיל לאורכו.'
+        feedback: 'הכוח המגנטי אף פעם לא בכיוון השדה. וכאן אין כוח בכלל.'
+        misconception: MC-wire-force-along-b
+      - text: 'כוח שתלוי בכיוון הזרם: עם השדה יש כוח, ונגד השדה אין.'
+        feedback: 'גם נגד השדה, $\alpha = 180^\circ$ ו-$\sin180^\circ = 0$. בשני הכיוונים אין כוח.'
+        misconception: MC-wire-parallel-force
+
+  - id: Q-4.7-reverse-both
+    type: mc
+    objectives: [OBJ-4.7-2]
+    qualitative: true
+    prompt: >-
+      על תיל בשדה מגנטי פועל כוח למעלה. הופכים **גם** את כיוון הזרם **וגם** את כיוון השדה. מה כיוון הכוח עכשיו?
+    choices:
+      - text: 'למעלה, כמו קודם.'
+        correct: true
+        feedback: 'נכון. כל היפוך הופך את הכוח, ושני היפוכים מחזירים אותו לכיוונו.'
+      - text: 'למטה.'
+        feedback: 'היפוך אחד היה הופך את הכוח למטה. אבל כאן יש שני היפוכים, והם מבטלים זה את זה.'
+      - text: 'אין כוח.'
+        feedback: 'גודל הכוח, $BIL\sin\alpha$, לא תלוי בכיוונים, ולכן הוא לא משתנה. רק הכיוון יכול להשתנות.'
+      - text: 'בכיוון החדש של השדה.'
+        feedback: 'הכוח ניצב לשדה, בכל מקרה.'
+        misconception: MC-wire-force-along-b
+
+  - id: Q-4.7-find-field
+    type: vector
+    objectives: [OBJ-4.7-2]
+    allowOutIn: true
+    level: mid
+    prompt: >-
+      תיל אופקי בדף נושא זרם ימינה, ושדה מגנטי אחיד ניצב לדף. רואים שהתיל נדחף למעלה, במישור הדף. מה כיוון השדה?
+    answer: in
+    correctFeedback: 'נכון. כשהאצבעות לתוך הדף והאגודל ימינה, כף היד פונה למעלה.'
+    wrong:
+      - dir: out
+        feedback: 'עם שדה החוצה מהדף והאגודל ימינה, כף יד ימין פונה למטה. בדקו שוב.'
+      - dir: n
+        feedback: 'זה כיוון הכוח. השדה ניצב לכוח, ובשאלה נאמר שהוא ניצב לדף.'
+        misconception: MC-wire-force-along-b
+      - dir: e
+        feedback: 'שדה לאורך התיל לא היה נותן כוח בכלל.'
+        misconception: MC-wire-parallel-force
+    wrongFeedback: 'נסו את שתי האפשרויות, ⊙ ו-⊗, עם כף יד ימין: באיזו מהן כף היד פונה למעלה כשהאגודל ימינה?'
+
+  # ------------------------------------------------ OBJ-4.7-3: F = BIL sinα
+  - id: Q-4.7-calc-basic
+    type: numeric
+    objectives: [OBJ-4.7-3]
+    prompt: >-
+      קטע של $15\,\text{cm}$ מתיל נמצא בשדה מגנטי אחיד של $0.3\,\text{T}$, בניצב לשדה. בתיל זורם זרם של $4\,\text{A}$. מה גודל הכוח המגנטי על התיל? ענו בניוטון.
+    answer: 0.18
+    unit: N
+    tolerance: 0.03
+    correctFeedback: 'נכון. $F = BIL = 0.3\cdot4\cdot0.15 = 0.18\,\text{N}$.'
+    wrongFeedback: '$F = BIL\sin\alpha$, עם $L$ במטרים ו-$\alpha = 90^\circ$.'
+    commonWrong:
+      - value: 18
+        feedback: 'הצבתם את האורך בסנטימטרים. $15\,\text{cm} = 0.15\,\text{m}$.'
+      - value: 1.2
+        feedback: 'זו המכפלה $BI$, בלי האורך. הכוח פרופורציוני לאורך התיל שבתוך השדה.'
+
+  - id: Q-4.7-only-inside
+    type: numeric
+    objectives: [OBJ-4.7-3]
+    level: mid
+    prompt: >-
+      כבל ישר באורך $1.2\,\text{m}$ עובר בין הקטבים של מגנט, בניצב לשדה האחיד שביניהם, $0.4\,\text{T}$. רוחב האזור שבין הקטבים, לאורך הכבל, הוא $5\,\text{cm}$, ומחוץ לו אין שדה. בכבל זורם זרם של $2.5\,\text{A}$. מה הכוח המגנטי על הכבל? ענו בניוטון.
+    answer: 0.05
+    unit: N
+    tolerance: 0.03
+    correctFeedback: 'נכון. רק $5\,\text{cm}$ מהכבל בתוך השדה: $F = 0.4\cdot2.5\cdot0.05 = 0.05\,\text{N}$.'
+    wrongFeedback: 'ב-$F = BIL$, האורך $L$ הוא אורך הכבל שבתוך השדה בלבד.'
+    commonWrong:
+      - value: 1.2
+        feedback: 'הצבתם את האורך של כל הכבל. לנושאי המטען שמחוץ לשדה אין כוח מגנטי: $L = 0.05\,\text{m}$.'
+        misconception: MC-wire-whole-length
+      - value: 5
+        feedback: 'הצבתם $5$ במקום $0.05$: את האורך יש להציב במטרים.'
+
+  - id: Q-4.7-angle
+    type: numeric
+    objectives: [OBJ-4.7-3]
+    level: mid
+    prompt: >-
+      קטע תיל באורך $20\,\text{cm}$, כולו בתוך שדה מגנטי אחיד של $0.4\,\text{T}$, נושא זרם של $5\,\text{A}$. הזווית בין התיל לשדה $30^\circ$. מה הכוח על הקטע? ענו בניוטון.
+    answer: 0.2
+    unit: N
+    tolerance: 0.03
+    correctFeedback: 'נכון. $F = BIL\sin\alpha = 0.4\cdot5\cdot0.2\cdot\sin30^\circ = 0.2\,\text{N}$: חצי מהכוח בזווית ישרה.'
+    wrongFeedback: '$F = BIL\sin\alpha$, כש-$\alpha$ הזווית בין התיל לשדה.'
+    commonWrong:
+      - value: 0.346
+        feedback: 'השתמשתם ב-$\cos30^\circ$. הכוח תלוי בחלק של התיל **שניצב** לשדה, $L\sin\alpha$.'
+      - value: 0.4
+        feedback: 'זה הכוח כשהתיל ניצב לשדה. בזווית של $30^\circ$ רק החלק $L\sin\alpha$ של התיל ניצב לשדה.'
+
+  - id: Q-4.7-rank-angle
+    type: rank
+    objectives: [OBJ-4.7-3]
+    qualitative: true
+    prompt: >-
+      אותו קטע תיל, עם אותו זרם, באותו שדה אחיד, בארבע זוויות שונות בין התיל לשדה. דרגו את גודל הכוח על הקטע, מהגדול לקטן.
+    items:
+      - { id: a90, label: '$\alpha = 90^\circ$' }
+      - { id: a30, label: '$\alpha = 30^\circ$' }
+      - { id: a150, label: '$\alpha = 150^\circ$' }
+      - { id: a0, label: '$\alpha = 0$' }
+    order: [a90, [a30, a150], a0]
+    correctFeedback: 'נכון. $\sin90^\circ = 1$, $\sin30^\circ = \sin150^\circ = 0.5$, $\sin0 = 0$. ב-$30^\circ$ וב-$150^\circ$ החלק של התיל שניצב לשדה זהה.'
+    wrongFeedback: 'הכוח פרופורציוני ל-$\sin\alpha$. חשבו את $\sin\alpha$ בכל זווית, ושימו לב ש-$\sin150^\circ = \sin30^\circ$.'
+
+  # ------------------------------------------------ OBJ-4.7-4: applications
+  - id: Q-4.7-balance-B
+    type: numeric
+    objectives: [OBJ-4.7-4]
+    level: mid
+    prompt: >-
+      במאזני זרם, הצלע של המסגרת שבתוך השדה, בניצב לו, באורך $4\,\text{cm}$. כשזורם במסגרת זרם של $2.5\,\text{A}$, צריך להוסיף $0.5\,\text{g}$ לכף השנייה כדי שהמאזניים יחזרו לאיזון. מה עוצמת השדה? ענו בטסלה ($g = 10\,\text{m/s}^2$).
+    answer: 0.05
+    unit: T
+    tolerance: 0.03
+    correctFeedback: 'נכון. $mg = BIL$, ולכן $B = \dfrac{mg}{IL} = \dfrac{0.5\cdot10^{-3}\cdot10}{2.5\cdot0.04} = 0.05\,\text{T}$.'
+    wrongFeedback: 'במצב מאוזן משקל המשקולות שווה לכוח המגנטי: $mg = BIL$. המסה בקילוגרם, האורך במטרים.'
+    commonWrong:
+      - value: 0.005
+        feedback: 'שכחתם את $g$: מה שמאזן את הכוח המגנטי הוא **משקל** המשקולות, $mg$, לא המסה.'
+      - value: 50
+        feedback: 'הצבתם את המסה בגרם. $0.5\,\text{g} = 0.5\cdot10^{-3}\,\text{kg}$.'
+      - value: 0.0005
+        feedback: 'הצבתם את האורך בסנטימטרים. $4\,\text{cm} = 0.04\,\text{m}$.'
+
+  - id: Q-4.7-balance-reverse
+    type: mc
+    objectives: [OBJ-4.7-4, OBJ-4.7-2]
+    qualitative: true
+    prompt: >-
+      מאזני זרם מאוזנים: הזרם במסגרת מושך את הצלע שבשדה למטה, ומשקולות בכף השנייה מאזנות אותו. הופכים את כיוון הזרם, ומשאירים את המשקולות. מה קורה?
+    choices:
+      - text: 'צד המסגרת עולה: הכוח על הצלע פונה עכשיו למעלה, והמשקולות מושכות את הצד שלהן למטה.'
+        correct: true
+        feedback: 'נכון. הכוח מתהפך, ועכשיו גם הוא וגם המשקולות מטים את המאזניים לאותו צד. כדי לאזן צריך משקולות בצד המסגרת, כפולות מהקודמות.'
+      - text: 'המאזניים נשארים מאוזנים, כי גודל הכוח לא השתנה.'
+        feedback: 'הגודל אותו גודל, אבל הכיוון התהפך, למעלה. לכוח יש כיוון, והוא קובע לאן המאזניים נוטים.'
+      - text: 'צד המסגרת יורד עוד יותר, כי המגנט מושך את המסגרת.'
+        feedback: 'המגנט לא מושך את מסגרת הנחושת. הכוח נובע מהזרם, וכשהזרם מתהפך, גם הכוח מתהפך.'
+        misconception: MC-wire-force-without-current
+      - text: 'המסגרת נדחפת הצידה, בכיוון השדה.'
+        feedback: 'הכוח ניצב לשדה. הזרם בצלע התחתונה עדיין אופקי והשדה עדיין ניצב לדף, ולכן הכוח אנכי, רק הפוך.'
+        misconception: MC-wire-force-along-b
+
+  - id: Q-4.7-speaker
+    type: mc
+    objectives: [OBJ-4.7-4]
+    qualitative: true
+    prompt: >-
+      ברמקול, סליל קטן שמחובר לחרוט נמצא בשדה של מגנט קבוע, וכל קטע של הכריכות ניצב לשדה. בסליל זורם זרם שמחליף כיוון 440 פעמים בשנייה. מה עושה החרוט?
+    choices:
+      - text: 'רוטט קדימה ואחורה: בכל פעם שהזרם מתהפך, הכוח על הסליל מתהפך.'
+        correct: true
+        feedback: 'נכון. בכל קטע של הכריכה הזרם משיק לכריכה והשדה פונה מהציר החוצה, שניהם במישור הכריכה, ולכן הכוח, שניצב לשניהם, פועל לאורך ציר הסליל, בכל הקטעים לאותו צד. כשהזרם מתהפך, הכוח מתהפך: החרוט רוטט בקצב של הזרם ודוחף את האוויר.'
+      - text: 'נמשך כל הזמן אל המגנט, כי המגנט מושך את הסליל.'
+        feedback: 'הסליל עשוי נחושת, והמגנט לא מושך אותו. הכוח נובע מהזרם, ומתהפך כשהזרם מתהפך.'
+        misconception: MC-wire-force-without-current
+      - text: 'מסתובב במקום, כי הכוח פועל לאורך הכריכות, בכיוון הזרם.'
+        feedback: 'הכוח על תיל ניצב לתיל, לא לאורכו. כאן הוא פועל לאורך ציר הסליל.'
+        misconception: MC-wire-force-along-i
+      - text: 'לא זז, כי זרם שמחליף כיוון נותן בממוצע כוח אפס.'
+        feedback: 'הממוצע אכן קרוב לאפס, אבל בכל רגע יש כוח, והוא מזיז את החרוט הלוך ושוב. התנועה הזאת היא הקול.'
+
+  - id: Q-4.7-hanging-rod
+    type: numeric
+    objectives: [OBJ-4.7-4, OBJ-4.7-3]
+    level: bagrut
+    prompt: >-
+      מוט מתכת אופקי, שמסתו $20\,\text{g}$ ואורכו $50\,\text{cm}$, תלוי בשני חוטים גמישים ומוליכים בשדה מגנטי אופקי ואחיד של $0.4\,\text{T}$, ניצב למוט. מה הזרם במוט, בכיוון המתאים, שבו המתיחות בחוטים אפס? ענו באמפר ($g = 10\,\text{m/s}^2$).
+    answer: 1
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. המתיחות אפס כשהכוח המגנטי למעלה ושווה למשקל: $BIL = mg$, ולכן $I = \dfrac{mg}{BL} = \dfrac{0.02\cdot10}{0.4\cdot0.5} = 1\,\text{A}$.'
+    wrongFeedback: 'הכוח המגנטי צריך לשאת את כל המשקל: $BIL = mg$.'
+    commonWrong:
+      - value: 0.1
+        feedback: 'השתמשתם במסה במקום במשקל. הכוח המגנטי צריך להיות שווה ל-$mg = 0.2\,\text{N}$.'
+      - value: 1000
+        feedback: 'הצבתם את המסה בגרם. $20\,\text{g} = 0.02\,\text{kg}$.'

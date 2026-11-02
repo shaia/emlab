@@ -1,0 +1,298 @@
+# Lesson 4.2 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/magnetism.ts (straightWireField, wireFieldAt)
+# and src/physics/wireflux.ts (wireDistanceForField, totalFieldAt). The data differ on purpose from
+# figure 4.2א and the worked examples, so a learner cannot answer from memory.
+# Directions in `vector` questions: n = up the page, e = right, out = ⊙, in = ⊗.
+
+chapter: 4
+questions:
+  # ------------------------------------------------ OBJ-4.2-1: Oersted, the grip rule, ⊙/⊗
+  - id: Q-4.2-field-lines-shape
+    type: mc
+    objectives: [OBJ-4.2-1]
+    qualitative: true
+    prompt: >-
+      תיל ישר וארוך ניצב לדף, וזורם בו זרם. איך נראים קווי השדה המגנטי שלו בדף?
+    choices:
+      - text: מעגלים שמרכזם בתיל, והשדה משיק להם.
+        correct: true
+        feedback: 'נכון. השדה מקיף את התיל, במישור שניצב לו, וכיוונו נקבע בכלל יד ימין.'
+      - text: קווים ישרים שיוצאים מהתיל לכל הכיוונים, כמו קרניים.
+        feedback: 'כך נראים קווי השדה **החשמלי** של מטען. המצפנים באיור 4.2א לא מצביעים אל התיל או ממנו: הם משיקים למעגלים סביבו.'
+        misconception: MC-wire-field-radial
+      - text: קווים ישרים ומקבילים לתיל, בכיוון הזרם.
+        feedback: 'השדה ניצב לזרם, לא מקביל לו. אם הקווים היו לאורך התיל, הם לא היו נראים בדף שניצב לתיל בכלל.'
+        misconception: MC-wire-field-along-current
+      - text: קווים שיוצאים מקוטב צפוני של התיל ונכנסים לקוטב הדרומי שלו.
+        feedback: 'לתיל ישר אין קטבים. הקווים שלו סגורים סביבו, בלי התחלה ובלי סוף.'
+
+  - id: Q-4.2-end-on-right
+    type: vector
+    objectives: [OBJ-4.2-1]
+    allowOutIn: true
+    prompt: >-
+      תיל ישר וארוך ניצב לדף, וזורם בו זרם החוצה מהדף (⊙). הנקודה P נמצאת בדף, מימין לתיל. מה כיוון השדה המגנטי של התיל ב-P?
+    answer: n
+    correctFeedback: 'נכון. לפי כלל יד ימין, האגודל אליכם, והאצבעות מקיפות את התיל נגד כיוון השעון. בנקודה שמימין לתיל זה כלפי מעלה.'
+    wrong:
+      - dir: e
+        feedback: 'השדה של תיל לא מצביע ממנו החוצה. הוא משיק למעגל שסביב התיל, כלומר ניצב לקו שמחבר את P לתיל.'
+        misconception: MC-wire-field-radial
+      - dir: w
+        feedback: 'השדה של תיל לא מצביע אליו. הוא משיק למעגל שסביב התיל.'
+        misconception: MC-wire-field-radial
+      - dir: out
+        feedback: 'זה כיוון הזרם, לא כיוון השדה. השדה ניצב לזרם ומקיף את התיל.'
+        misconception: MC-wire-field-along-current
+      - dir: s
+        feedback: 'זה הכיוון של זרם לתוך הדף (⊗), עם כיוון השעון. בדקו שוב: האגודל של יד ימין מצביע אליכם.'
+    wrongFeedback: 'אחזו את התיל ביד ימין, האגודל אליכם, והסתכלו לאן מצביעות האצבעות בצד ימין של התיל.'
+
+  - id: Q-4.2-wire-in-page
+    type: vector
+    objectives: [OBJ-4.2-1]
+    allowOutIn: true
+    level: mid
+    prompt: >-
+      תיל ישר וארוך שוכב בדף, אופקי, וזורם בו זרם שמאלה. הנקודה P נמצאת בדף, מעל התיל. מה כיוון השדה המגנטי של התיל ב-P?
+    answer: in
+    correctFeedback: 'נכון. האגודל שמאלה; מעל התיל האצבעות המכופפות נכנסות לדף, ⊗. (מתחת לתיל הן יוצאות מהדף, ⊙.)'
+    wrong:
+      - dir: out
+        feedback: 'זה היה נכון אילו הזרם זרם ימינה. עם זרם שמאלה, מעל התיל האצבעות נכנסות לדף.'
+      - dir: w
+        feedback: 'זה כיוון הזרם. השדה ניצב לזרם.'
+        misconception: MC-wire-field-along-current
+      - dir: n
+        feedback: 'השדה לא מצביע מהתיל החוצה. הוא מקיף את התיל, ובנקודה שבדף מעל התיל המעגל עובר ניצב לדף.'
+        misconception: MC-wire-field-radial
+    wrongFeedback: 'השדה מקיף את התיל במישור שניצב לו. כשהתיל בדף, המעגלים חוצים את הדף, ולכן מעל התיל ומתחתיו השדה ⊙ או ⊗.'
+
+  - id: Q-4.2-compass-under
+    type: twotier
+    objectives: [OBJ-4.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      תיל אופקי מתוח בכיוון צפון-דרום, מעט מעל מצפן. מעבירים בתיל זרם חזק מאוד, כך שהשדה של התיל במקום של המצפן גדול בהרבה מהשדה של כדור הארץ. איך תעמוד המחט?
+    choices:
+      - text: כמעט ניצבת לתיל, בכיוון מזרח-מערב.
+        correct: true
+        feedback: נכון.
+      - text: מקבילה לתיל, בכיוון צפון-דרום.
+        feedback: 'זה הכיוון של המחט **בלי** זרם. השדה של התיל מתחתיו ניצב לתיל, ולכן הוא מסובב את המחט הרחק מהכיוון של התיל.'
+        misconception: MC-compass-along-wire
+      - text: היא תצביע ישר למעלה, אל התיל.
+        feedback: 'השדה של תיל לא מצביע אליו. הוא מקיף אותו, ומתחת לתיל הוא אופקי.'
+        misconception: MC-wire-field-radial
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'השדה של התיל מקיף אותו, ולכן מתחתיו הוא אופקי וניצב לתיל. כשהוא חזק בהרבה מזה של כדור הארץ, השדה השקול כמעט בכיוונו.'
+        correct: true
+        feedback: 'נכון. המחט מצביעה בכיוון השדה השקול, וזה כמעט כיוון השדה של התיל.'
+      - text: המחט נמשכת לאורך הזרם, כמו ברזל שנמשך למגנט.
+        feedback: 'השדה של תיל לא מצביע לאורך הזרם. הוא ניצב לזרם, ומקיף את התיל.'
+        misconception: MC-wire-field-along-current
+      - text: 'השדה של כדור הארץ תמיד חזק מהשדה של תיל, ולכן המחט כמעט לא זזה.'
+        feedback: 'תיל עם $10\,\text{A}$, במרחק $5\,\text{cm}$, כבר יוצר שדה כמו של כדור הארץ, ובזרם חזק יותר, או קרוב יותר, הוא חזק ממנו.'
+
+  - id: Q-4.2-oersted-reverse
+    type: mc
+    objectives: [OBJ-4.2-1]
+    qualitative: true
+    prompt: >-
+      בניסוי של אורסטד, המחט שמתחת לתיל הסתובבה מערבה. מה יקרה אם יעבירו את המצפן אל **מעל** התיל, ובנוסף יהפכו את כיוון הזרם?
+    choices:
+      - text: המחט תסתובב שוב מערבה.
+        correct: true
+        feedback: 'נכון. המעבר אל מעל התיל הופך את כיוון השדה של התיל, והפיכת הזרם הופכת אותו שוב. שני היפוכים מבטלים זה את זה.'
+      - text: המחט תסתובב מזרחה.
+        feedback: 'כל שינוי לבד היה מסובב אותה מזרחה, אבל כאן יש שניים, וכל אחד מהם הופך את השדה של התיל.'
+      - text: המחט לא תזוז, כי מעל התיל אין לו שדה.
+        feedback: 'השדה מקיף את התיל מכל הצדדים, גם מעליו. שם הוא רק הפוך בכיוונו לזה שמתחת לתיל.'
+      - text: המחט תסתובב עד שתהיה מקבילה לתיל.
+        feedback: 'השדה של התיל ניצב לתיל, גם מעליו וגם מתחתיו. הוא לא מסובב את המחט אל הכיוון של התיל.'
+        misconception: MC-compass-along-wire
+
+  # ------------------------------------------------ OBJ-4.2-2: B = μ₀I/(2πr)
+  - id: Q-4.2-B-calc
+    type: numeric
+    objectives: [OBJ-4.2-2]
+    prompt: >-
+      בתיל ישר וארוך זורם זרם של $15\,\text{A}$. מה גודל השדה המגנטי שלו במרחק $6\,\text{cm}$ מהתיל? ענו במיקרוטסלה ($\mu\text{T}$).
+    answer: 50
+    unit: μT
+    tolerance: 0.03
+    correctFeedback: 'נכון. $B = \dfrac{\mu_0 I}{2\pi r} = \dfrac{4\pi\cdot10^{-7}\cdot15}{2\pi\cdot0.06} = 5\cdot10^{-5}\,\text{T} = 50\,\mu\text{T}$.'
+    wrongFeedback: 'הציבו ב-$B = \dfrac{\mu_0 I}{2\pi r}$, עם המרחק במטרים, והמירו טסלה למיקרוטסלה (כפול $10^6$).'
+    commonWrong:
+      - value: 833
+        feedback: 'חילקתם ב-$r^2$. השדה של תיל ארוך הפוך למרחק עצמו, לא לריבוע שלו.'
+        misconception: MC-wire-field-inverse-square
+      - value: 0.5
+        feedback: 'הצבתם את המרחק בסנטימטרים. ב-SI המרחק במטרים: $0.06\,\text{m}$.'
+      - value: 314
+        feedback: 'שכחתם את $2\pi$ במכנה: $B = \mu_0 I/(2\pi r)$.'
+      - value: 157
+        feedback: 'שכחתם את $\pi$ במכנה: חישבתם $\mu_0 I/(2r)$. השדה של תיל ישר הוא $\mu_0 I/(2\pi r)$.'
+
+  - id: Q-4.2-double-distance
+    type: mc
+    objectives: [OBJ-4.2-2]
+    qualitative: true
+    prompt: >-
+      במרחק $r$ מתיל ישר וארוך השדה המגנטי הוא $40\,\mu\text{T}$. מה השדה במרחק $2r$ מאותו תיל?
+    choices:
+      - text: '$20\,\mu\text{T}$'
+        correct: true
+        feedback: 'נכון. $B = \mu_0 I/(2\pi r)$ הפוך למרחק: פי 2 במרחק, חצי בשדה.'
+      - text: '$10\,\mu\text{T}$'
+        feedback: 'זה היה נכון אילו השדה ירד כמו $1/r^2$, כמו השדה של מטען נקודתי. לתיל ארוך השדה יורד כמו $1/r$. בדקו באיור 4.2א.'
+        misconception: MC-wire-field-inverse-square
+      - text: '$40\,\mu\text{T}$'
+        feedback: 'השדה תלוי במרחק: ככל שמתרחקים, הוא נחלש. רואים את זה גם בקווים, שמתרחקים זה מזה.'
+      - text: '$80\,\mu\text{T}$'
+        feedback: 'השדה נחלש כשמתרחקים מהתיל, לא מתחזק.'
+
+  - id: Q-4.2-find-current
+    type: numeric
+    objectives: [OBJ-4.2-2]
+    level: mid
+    prompt: >-
+      חיישן שדה מגנטי, במרחק $10\,\text{cm}$ מתיל ישר וארוך, מודד שדה של $2\cdot10^{-5}\,\text{T}$ שנוצר על ידי התיל. מה הזרם בתיל? ענו באמפר.
+    answer: 10
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. $I = \dfrac{2\pi r B}{\mu_0} = \dfrac{2\pi\cdot0.1\cdot2\cdot10^{-5}}{4\pi\cdot10^{-7}} = 10\,\text{A}$.'
+    wrongFeedback: 'בודדו את הזרם מתוך $B = \mu_0 I/(2\pi r)$: $I = 2\pi r B/\mu_0$, עם $r$ במטרים.'
+    commonWrong:
+      - value: 1000
+        feedback: 'הצבתם $r = 10$, בסנטימטרים. ב-SI: $r = 0.1\,\text{m}$.'
+      - value: 1
+        feedback: 'השתמשתם ב-$r^2$, כאילו $B \propto 1/r^2$. לתיל ארוך $B = \mu_0 I/(2\pi r)$.'
+        misconception: MC-wire-field-inverse-square
+
+  - id: Q-4.2-rank-points
+    type: rank
+    objectives: [OBJ-4.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ארבעה מצבים: בכל אחד תיל ישר וארוך ונקודה במרחק מסוים ממנו. סדרו את המצבים לפי גודל השדה המגנטי בנקודה, מהגדול לקטן. מצבים עם שדה שווה מקבלים אותו מקום.
+    items:
+      - id: A
+        label: 'א: זרם $10\,\text{A}$, מרחק $2\,\text{cm}$'
+      - id: B
+        label: 'ב: זרם $20\,\text{A}$, מרחק $8\,\text{cm}$'
+      - id: C
+        label: 'ג: זרם $5\,\text{A}$, מרחק $1\,\text{cm}$'
+      - id: D
+        label: 'ד: זרם $10\,\text{A}$, מרחק $5\,\text{cm}$'
+    order: [[A, C], B, D]
+    correctFeedback: 'נכון. $B \propto I/r$: ב-א ו-ג היחס $5\,\text{A/cm}$ ($100\,\mu\text{T}$), ב-ב $2.5\,\text{A/cm}$ ($50\,\mu\text{T}$), וב-ד $2\,\text{A/cm}$ ($40\,\mu\text{T}$).'
+    wrongFeedback: 'השוו את היחס $I/r$ בכל מצב: השדה פרופורציוני לזרם והפוך למרחק (לא לריבוע שלו).'
+
+  # ------------------------------------------------ OBJ-4.2-3: superposition and the null point
+  - id: Q-4.2-parallel-mid
+    type: twotier
+    objectives: [OBJ-4.2-3]
+    qualitative: true
+    prompt: >-
+      שני תילים ישרים וארוכים ניצבים לדף, ובשניהם זורם אותו זרם, החוצה מהדף (⊙). מה השדה המגנטי בנקודה שבאמצע בין התילים?
+    choices:
+      - text: אפס.
+        correct: true
+        feedback: נכון.
+      - text: פי 2 מהשדה של תיל אחד באותו מרחק.
+        feedback: 'זה היה נכון אילו השדות היו באותו כיוון. כאן הם מנוגדים.'
+        misconception: MC-fields-add-as-numbers
+      - text: שווה לשדה של תיל אחד באותו מרחק.
+        feedback: 'שני התילים יוצרים שדה באמצע, ושניהם שווים בגודלם. השאלה היא לאן כל אחד מצביע.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'לפי כלל יד ימין, באמצע השדה של תיל אחד מצביע למעלה, ושל השני למטה. הגדלים שווים, כי המרחקים והזרמים שווים.'
+        correct: true
+        feedback: 'נכון. זו נקודת אפס. ראו באיור 4.2ב, בסידור של שני זרמים באותו כיוון.'
+      - text: 'יש שני זרמים, ולכן השדות שלהם מתחברים.'
+        feedback: 'שדות מתחברים כווקטורים. שני חצים שווים ומנוגדים נותנים אפס.'
+        misconception: MC-fields-add-as-numbers
+      - text: 'השדה של כל תיל מצביע אל התיל השני, ולכן הם נפגשים באמצע.'
+        feedback: 'השדה של תיל לא מצביע אל תילים אחרים. הוא משיק למעגלים סביב התיל.'
+        misconception: MC-wire-field-radial
+
+  - id: Q-4.2-midpoint-opposite
+    type: numeric
+    objectives: [OBJ-4.2-3]
+    level: mid
+    prompt: >-
+      שני תילים ישרים וארוכים ניצבים לדף, $20\,\text{cm}$ זה מזה. באחד זורם זרם של $10\,\text{A}$ החוצה מהדף, ובשני $6\,\text{A}$ לתוך הדף. מה גודל השדה המגנטי השקול בנקודה שבאמצע בין התילים? ענו במיקרוטסלה.
+    answer: 32
+    unit: μT
+    tolerance: 0.03
+    correctFeedback: 'נכון. כל תיל במרחק $0.1\,\text{m}$: $B_1 = 20\,\mu\text{T}$ ו-$B_2 = 12\,\mu\text{T}$. בזרמים מנוגדים, באמצע השדות באותו כיוון, ולכן $32\,\mu\text{T}$.'
+    wrongFeedback: 'חשבו את השדה של כל תיל במרחק $10\,\text{cm}$, וקבעו בכלל יד ימין אם הם באותו כיוון או מנוגדים.'
+    commonWrong:
+      - value: 8
+        feedback: 'חיסרתם את השדות. בזרמים מנוגדים, באמצע בין התילים שני השדות מצביעים לאותו כיוון ומתחברים.'
+        misconception: MC-fields-add-as-numbers
+      - value: 16
+        feedback: 'הצבתם $r = 20\,\text{cm}$, המרחק בין התילים. כל תיל נמצא $10\,\text{cm}$ מהאמצע.'
+      - value: 20
+        feedback: 'זה השדה של התיל של $10\,\text{A}$ לבדו. גם התיל השני תורם שדה באמצע.'
+
+  - id: Q-4.2-null-earth-side
+    type: mc
+    objectives: [OBJ-4.2-3]
+    qualitative: true
+    prompt: >-
+      תיל אנכי עובר דרך שולחן, וזורם בו זרם כלפי מעלה. הרכיב האופקי של השדה של כדור הארץ מצביע צפונה. היכן על השולחן יכולה להיות נקודה שבה השדה השקול מתאפס?
+    choices:
+      - text: מערבית לתיל.
+        correct: true
+        feedback: 'נכון. במבט מלמעלה הזרם ⊙, והשדה של התיל מקיף אותו נגד כיוון השעון: מערבית לתיל הוא מצביע דרומה, נגד השדה של כדור הארץ.'
+      - text: מזרחית לתיל.
+        feedback: 'מזרחית לתיל השדה של התיל מצביע צפונה, כמו השדה של כדור הארץ, ולכן השדות מתחברים. זה הצד הנכון לזרם כלפי מטה.'
+      - text: צפונית לתיל.
+        feedback: 'צפונית לתיל השדה של התיל ניצב לשדה של כדור הארץ. שני וקטורים ניצבים לא מתבטלים.'
+      - text: 'אין נקודה כזאת, כי ליד תיל עם זרם השדה תמיד חזק יותר מאשר בלעדיו.'
+        feedback: 'שדות מתחברים כווקטורים. במקום שבו השדה של התיל מנוגד לשדה של כדור הארץ ושווה לו בגודלו, השדה השקול אפס.'
+        misconception: MC-fields-add-as-numbers
+
+  - id: Q-4.2-null-earth-distance
+    type: numeric
+    objectives: [OBJ-4.2-3, OBJ-4.2-2]
+    level: mid
+    prompt: >-
+      תיל אנכי עובר דרך שולחן, וזורם בו זרם של $8\,\text{A}$ כלפי מעלה. הרכיב האופקי של השדה של כדור הארץ במקום הוא $4\cdot10^{-5}\,\text{T}$. באיזה מרחק מהתיל נמצאת הנקודה שבה השדה השקול על השולחן מתאפס? ענו בסנטימטרים.
+    answer: 4
+    unit: cm
+    tolerance: 0.03
+    correctFeedback: 'נכון. שם $\dfrac{\mu_0 I}{2\pi r} = B_E$, ולכן $r = \dfrac{\mu_0 I}{2\pi B_E} = \dfrac{4\pi\cdot10^{-7}\cdot8}{2\pi\cdot4\cdot10^{-5}} = 0.04\,\text{m}$.'
+    wrongFeedback: 'בנקודת האפס השדה של התיל שווה בגודלו לשדה של כדור הארץ: $\mu_0 I/(2\pi r) = B_E$. בודדו את $r$.'
+    commonWrong:
+      - value: 20
+        feedback: 'השתמשתם ב-$r^2$ ולקחתם שורש. השדה של תיל הפוך ל-$r$, לא ל-$r^2$.'
+        misconception: MC-wire-field-inverse-square
+      - value: 8
+        feedback: 'שכחתם את ה-2 במכנה: $r = \mu_0 I/(2\pi B_E)$.'
+
+  - id: Q-4.2-compass-north
+    type: vector
+    objectives: [OBJ-4.2-3]
+    level: mid
+    prompt: >-
+      תיל אנכי עובר דרך שולחן, וזורם בו זרם כלפי מעלה. במבט מלמעלה, צפון הוא למעלה בדף. מצפן נמצא צפונית לתיל, במרחק שבו השדה של התיל שווה בגודלו לרכיב האופקי של השדה של כדור הארץ. לאן יצביע הקוטב הצפוני של המחט?
+    answer: nw
+    correctFeedback: 'נכון. צפונית לתיל השדה של התיל (נגד כיוון השעון במבט מלמעלה) מצביע מערבה, והשדה של כדור הארץ צפונה. שני רכיבים שווים: צפון-מערבה, ב-$45^\circ$.'
+    wrong:
+      - dir: n
+        feedback: 'זה השדה של כדור הארץ לבדו. גם התיל יוצר שם שדה, שווה בגודלו.'
+      - dir: w
+        feedback: 'זה השדה של התיל לבדו. המחט מצביעה בכיוון השדה השקול.'
+      - dir: ne
+        feedback: 'בדקו את כלל יד ימין: זרם כלפי מעלה הוא ⊙ במבט מלמעלה, והשדה מקיף את התיל נגד כיוון השעון. צפונית לתיל זה מערבה.'
+      - dir: zero
+        feedback: 'השדות ניצבים זה לזה, ולכן אינם מבטלים זה את זה. השדה מתאפס רק מערבית לתיל, שם הם מנוגדים.'
+        misconception: MC-fields-add-as-numbers
+    wrongFeedback: 'קבעו את כיוון השדה של התיל צפונית לו, וחברו אותו עם השדה של כדור הארץ, צפונה.'
