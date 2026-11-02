@@ -1,0 +1,498 @@
+# Workbook, lesson 6.10 (the electric dipole). Format and rules: see .claude/CLAUDE.md, "Worked examples,
+# workbook" and "Chapter 6 (bridge to university)": general law → derivation → symbolic result → limit
+# check → unit check → numbers. Every number was recomputed with src/physics/dipole.ts and constants.ts;
+# script recompute-6-10-wb.ts in the session scratchpad. In a >- block, consecutive lines fold into one
+# paragraph: every part (א, ב, …) starts after a blank line.
+
+lesson: '6.10'
+practice:
+  - id: W-6.10-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.10-1]
+    prompt: >-
+      מומנט הדיפול של מולקולת מימן כלורי (HCl) הוא $3.6\cdot10^{-30}\,\text{C}\cdot\text{m}$, והמרחק בין שני האטומים שלה $0.127\,\text{nm}$. האטום של הכלור מושך אליו את האלקטרונים חזק יותר.
+
+      א. נניח שהמולקולה היא שני מטענים $\pm q$ במקומות של שני האטומים. מה $q$, ואיזה חלק הוא מהמטען היסודי $e$?
+
+      ב. לאן מצביע $\vec p$: מהכלור אל המימן, או להפך?
+    answer: >-
+      א. $q \approx 2.8\cdot10^{-20}\,\text{C}$, כ-$0.18\,e$.
+
+      ב. מהכלור (הקצה השלילי) אל המימן (הקצה החיובי).
+    solution:
+      - kind: given
+        text: >-
+          $p = 3.6\cdot10^{-30}\,\text{C}\cdot\text{m}$, $d = 1.27\cdot10^{-10}\,\text{m}$, $e = 1.6\cdot10^{-19}\,\text{C}$.
+      - kind: law
+        text: >-
+          $p = qd$, ו-$\vec p$ מצביע מהמטען השלילי אל החיובי.
+      - kind: manipulation
+        text: >-
+          מחלקים את שני האגפים ב-$d$: $q = \dfrac{p}{d}$.
+      - kind: limit
+        text: >-
+          אילו האלקטרון היה עובר כולו לכלור, $q$ היה $e$, ו-$p = ed \approx 2\cdot10^{-29}\,\text{C}\cdot\text{m}$. ה-$p$ הנמדד קטן מזה פי 5 בערך, ולכן נצפה ל-$q$ קטן מ-$e$: המטען רק נמשך חלקית לכלור.
+      - kind: units
+        text: >-
+          $\dfrac{\text{C}\cdot\text{m}}{\text{m}} = \text{C}$.
+      - kind: substitution
+        text: >-
+          $q = \dfrac{3.6\cdot10^{-30}}{1.27\cdot10^{-10}} \approx 2.8\cdot10^{-20}\,\text{C}$, ו-$\dfrac{q}{e} = \dfrac{2.8\cdot10^{-20}}{1.6\cdot10^{-19}} \approx 0.18$.
+      - kind: result
+        text: >-
+          א. $q \approx 2.8\cdot10^{-20}\,\text{C} \approx 0.18\,e$. ב. הכלור הוא הקצה השלילי, ולכן $\vec p$ מצביע מהכלור אל המימן.
+
+  - id: W-6.10-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-6.10-2]
+    prompt: >-
+      לדיפול A מטענים $\pm q$ במרחק $d$ זה מזה. לדיפול B מטענים $\pm 2q$ במרחק $d/2$. שניהם על אותו קו, באותו כיוון.
+
+      א. רחוק מאוד משניהם, על הציר, באותו מרחק: לאיזה מהם שדה חזק יותר? נמקו.
+
+      ב. ובנקודה שנמצאת על הציר, קרוב מאוד למטען החיובי של כל אחד מהם (באותו מרחק קטן ממנו, הרבה פחות מ-$d/2$)?
+    answer: >-
+      א. השדות שווים: ל-A ול-B אותו $p = qd$.
+
+      ב. ל-B שדה חזק פי 2 בערך: קרוב למטען רואים רק אותו, ומטענו כפול.
+    solution:
+      - kind: law
+        text: >-
+          רחוק מהדיפול, על הציר, $E = \dfrac{2kp}{r^3}$ עם $p = qd$. קרוב מאוד למטען אחד, השדה בערך השדה שלו לבדו, $\dfrac{kq}{s^2}$.
+      - kind: reasoning
+        text: >-
+          א. $p_A = qd$ ו-$p_B = 2q\cdot\dfrac d2 = qd$. רחוק, השדה תלוי רק ב-$p$, ולכן השדות שווים.
+      - kind: reasoning
+        text: >-
+          ב. במרחק $s$ קטן מאוד מהמטען החיובי, המטען השלילי רחוק פי הרבה, והשדה שלו זניח. השדה הוא בערך $kq/s^2$ ל-A ו-$2kq/s^2$ ל-B.
+      - kind: limit
+        text: >-
+          זה מה שראיתם באיור 6.10א: רחוק השיפוע $-3$, והשדה נקבע על ידי $p$ בלבד; קרוב השיפוע $-2$, והשדה נקבע על ידי המטען הקרוב בלבד. בין שני התחומים ההתנהגות עוברת מזו לזו.
+      - kind: units
+        text: >-
+          $p_A$ ו-$p_B$ שניהם ביחידות $\text{C}\cdot\text{m}$, ולכן אפשר להשוות אותם ישירות.
+      - kind: result
+        text: >-
+          א. שווים. ב. ל-B, פי 2 בערך.
+
+  - id: W-6.10-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.10-3]
+    prompt: >-
+      דיפול שמומנטו $8\cdot10^{-11}\,\text{C}\cdot\text{m}$ נמצא בשדה אחיד של $5\cdot10^{3}\,\text{N/C}$.
+
+      א. מה גודל המומנט עליו כשהזווית בין $\vec p$ לשדה היא $0^\circ$, $30^\circ$, $90^\circ$, $150^\circ$ ו-$180^\circ$?
+
+      ב. מה האנרגיה שלו בכל אחת מהזוויות האלה?
+    answer: >-
+      א. $0$, $2\cdot10^{-7}$, $4\cdot10^{-7}$, $2\cdot10^{-7}$ ו-$0\,\text{N}\cdot\text{m}$.
+
+      ב. $-4\cdot10^{-7}$, $-3.46\cdot10^{-7}$, $0$, $+3.46\cdot10^{-7}$ ו-$+4\cdot10^{-7}\,\text{J}$.
+    solution:
+      - kind: given
+        text: >-
+          $p = 8\cdot10^{-11}\,\text{C}\cdot\text{m}$, $E = 5\cdot10^{3}\,\text{N/C}$, ולכן $pE = 4\cdot10^{-7}\,\text{N}\cdot\text{m}$.
+      - kind: law
+        text: >-
+          $\vec\tau = \vec p\times\vec E$, $\tau = pE\sin\theta$; $U = -\vec p\cdot\vec E = -pE\cos\theta$.
+      - kind: limit
+        text: >-
+          ב-$0^\circ$ וב-$180^\circ$ $\sin\theta = 0$: אין מומנט. ב-$90^\circ$ המומנט מקסימלי, $pE$. ב-$30^\circ$ וב-$150^\circ$ אותו $\sin\theta$, ולכן אותו מומנט, אבל האנרגיות הפוכות בסימן, כי $\cos150^\circ = -\cos30^\circ$.
+      - kind: units
+        text: >-
+          $\text{C}\cdot\text{m}\cdot\dfrac{\text{N}}{\text{C}} = \text{N}\cdot\text{m}$; לאנרגיה אותה יחידה, ג׳אול.
+      - kind: substitution
+        text: >-
+          $\tau = 4\cdot10^{-7}\cdot\{0,\ 0.5,\ 1,\ 0.5,\ 0\}$ ו-$U = -4\cdot10^{-7}\cdot\{1,\ 0.866,\ 0,\ -0.866,\ -1\}$.
+      - kind: result
+        text: >-
+          א. $0$, $2\cdot10^{-7}$, $4\cdot10^{-7}$, $2\cdot10^{-7}$, $0\,\text{N}\cdot\text{m}$. ב. $-4\cdot10^{-7}$, $-3.46\cdot10^{-7}$, $0$, $3.46\cdot10^{-7}$, $4\cdot10^{-7}\,\text{J}$.
+
+  - id: W-6.10-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.10-1]
+    prompt: >-
+      לדיפול נקודתי מומנט $p = 2\cdot10^{-11}\,\text{C}\cdot\text{m}$. סביבו מעגל ברדיוס $10\,\text{cm}$.
+
+      א. מה הפוטנציאל על המעגל בזוויות $0^\circ$, $60^\circ$, $90^\circ$, $120^\circ$ ו-$180^\circ$ מכיוון $\vec p$?
+
+      ב. איזו עבודה צריך לעשות כדי להעביר לאט מטען של $2\,\text{nC}$ מהנקודה שב-$180^\circ$ לנקודה שב-$0^\circ$?
+    answer: >-
+      א. $18$, $9$, $0$, $-9$ ו-$-18\,\text{V}$.
+
+      ב. $7.2\cdot10^{-8}\,\text{J}$.
+    solution:
+      - kind: given
+        text: >-
+          $p = 2\cdot10^{-11}\,\text{C}\cdot\text{m}$, $r = 0.1\,\text{m}$, $q = 2\cdot10^{-9}\,\text{C}$.
+      - kind: law
+        text: >-
+          $V = \dfrac{kp\cos\theta}{r^2}$; עבודה חיצונית איטית מנקודה A לנקודה B: $W = q\,(V_B - V_A)$.
+      - kind: manipulation
+        text: >-
+          על המעגל $\dfrac{kp}{r^2} = \dfrac{9\cdot10^9\cdot2\cdot10^{-11}}{0.01} = 18\,\text{V}$, ולכן $V = 18\cos\theta$ וולט. $W = q\,(V_{0^\circ} - V_{180^\circ}) = q\cdot\dfrac{2kp}{r^2}$.
+      - kind: limit
+        text: >-
+          ב-$90^\circ$ (האנך האמצעי) $V = 0$, כי שם המרחקים משני המטענים שווים. ואם $p \to 0$, הפוטנציאל והעבודה מתאפסים.
+      - kind: units
+        text: >-
+          $\dfrac{\text{N}\cdot\text{m}^2}{\text{C}^2}\cdot\dfrac{\text{C}\cdot\text{m}}{\text{m}^2} = \dfrac{\text{N}\cdot\text{m}}{\text{C}} = \text{V}$, ו-$\text{C}\cdot\text{V} = \text{J}$.
+      - kind: substitution
+        text: >-
+          א. $18\cdot\{1,\ 0.5,\ 0,\ -0.5,\ -1\}$. ב. $W = 2\cdot10^{-9}\cdot\left(18 - (-18)\right) = 7.2\cdot10^{-8}\,\text{J}$.
+      - kind: result
+        text: >-
+          א. $18$, $9$, $0$, $-9$, $-18\,\text{V}$. ב. $7.2\cdot10^{-8}\,\text{J}$: מטען חיובי "מטפס" אל הצד החיובי של הדיפול.
+
+  - id: W-6.10-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.10-2]
+    prompt: >-
+      מודדים את עוצמת השדה של שלושה מקורות לא ידועים, במרחקים $0.1$, $0.2$ ו-$0.4\,\text{m}$ מכל אחד, בכיוון קבוע:
+
+      מקור X: $3600$, $900$, $225\,\text{N/C}$. מקור Y: $5000$, $625$, $78.1\,\text{N/C}$. מקור Z: $1800$, $900$, $450\,\text{N/C}$.
+
+      א. מה החזקה $n$ בקשר $E \propto r^n$ לכל מקור? מה השיפוע של כל אחד בגרף לוגריתמי?
+
+      ב. איזה מהם הוא דיפול? מה יכולים להיות האחרים?
+
+      ג. מה תהיה עוצמת השדה של Y במרחק $0.8\,\text{m}$?
+    answer: >-
+      א. X: $n = -2$; Y: $n = -3$; Z: $n = -1$. אלה גם השיפועים.
+
+      ב. Y הוא דיפול. X מטען נקודתי (או כדור טעון), Z תיל טעון ארוך.
+
+      ג. כ-$9.8\,\text{N/C}$.
+    solution:
+      - kind: law
+        text: >-
+          אם $E \propto r^n$, הכפלת המרחק פי 2 מכפילה את $E$ פי $2^n$. בגרף לוגריתמי הקשר הוא קו ישר שהשיפוע שלו $n$.
+      - kind: reasoning
+        text: >-
+          א. ב-X כל הכפלה של $r$ מקטינה את $E$ פי 4 $= 2^2$, ולכן $n = -2$. ב-Y פי 8 $= 2^3$: $n = -3$. ב-Z פי 2: $n = -1$.
+      - kind: reasoning
+        text: >-
+          ב. רק לדיפול (רחוק ממנו) $E \propto 1/r^3$. $1/r^2$ הוא השדה של מטען נקודתי או של כדור טעון, ו-$1/r$ הוא השדה של תיל טעון ארוך, $2k\lambda/r$ (שיעור 6.4).
+      - kind: limit
+        text: >-
+          שימו לב: ב-$0.1\,\text{m}$ שדה הדיפול Y חזק משל X, אבל הוא דועך מהר יותר, וכבר ב-$0.2\,\text{m}$ הוא חלש ממנו. ב-$0.8\,\text{m}$ הוא חלש פי 6 בערך משל X ($56\,\text{N/C}$), ורחוק יותר ההפרש רק גדל.
+      - kind: units
+        text: >-
+          יחסים של שדות הם מספרים בלי יחידות, ולכן $n$ בלי יחידות.
+      - kind: substitution
+        text: >-
+          ג. מ-$0.4$ ל-$0.8\,\text{m}$ המרחק כפול: $E_Y = \dfrac{78.1}{8} \approx 9.8\,\text{N/C}$.
+      - kind: result
+        text: >-
+          א. $-2$, $-3$, $-1$. ב. Y. ג. כ-$9.8\,\text{N/C}$.
+
+  - id: W-6.10-06
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.10-3]
+    prompt: >-
+      שני כדורים קטנים, כל אחד במסה $1\,\text{g}$, מחוברים במוט מבודד וקל באורך $4\,\text{cm}$. על אחד מטען $+20\,\text{nC}$ ועל השני $-20\,\text{nC}$. המוט מונח על שולחן אופקי חלק, ויכול להסתובב סביב מרכזו, בשדה אחיד ואופקי של $5\cdot10^{4}\,\text{N/C}$. משחררים אותו ממנוחה כש-$\vec p$ ניצב לשדה.
+
+      א. מה האנרגיה הקינטית של המוט כש-$\vec p$ עובר בכיוון השדה?
+
+      ב. מה המהירות הזוויתית שלו אז, ומה המהירות של כל כדור?
+    answer: >-
+      א. $4\cdot10^{-5}\,\text{J}$.
+
+      ב. $10\,\text{rad/s}$; כל כדור נע ב-$0.2\,\text{m/s}$.
+    solution:
+      - kind: given
+        text: >-
+          $m = 10^{-3}\,\text{kg}$, $d = 0.04\,\text{m}$, $q = 2\cdot10^{-8}\,\text{C}$, $E = 5\cdot10^4\,\text{N/C}$; מתחילים ב-$\theta = 90^\circ$, מנוחה.
+      - kind: law
+        text: >-
+          שימור אנרגיה: $U + E_k$ קבוע, עם $U = -pE\cos\theta$. האנרגיה הקינטית של שני הכדורים, שכל אחד נע במהירות $v = \omega\,\tfrac d2$: $E_k = 2\cdot\tfrac12 m v^2$.
+      - kind: manipulation
+        text: >-
+          $E_k = U(90^\circ) - U(0) = 0 - (-pE) = pE$. מ-$2\cdot\tfrac12 m\left(\omega\tfrac d2\right)^2 = pE$ מבודדים: $\omega = \dfrac{2}{d}\sqrt{\dfrac{pE}{m}}$, ו-$v = \sqrt{\dfrac{pE}{m}}$.
+      - kind: limit
+        text: >-
+          $E \to 0$: אין מומנט ואין תנועה, $\omega \to 0$. כדורים כבדים מאוד ($m \to \infty$) כמעט לא זזים. ואם $q$ ו-$d$ משתנים כך ש-$p$ קבוע, האנרגיה הקינטית לא משתנה.
+      - kind: units
+        text: >-
+          $\sqrt{\dfrac{\text{J}}{\text{kg}}} = \sqrt{\dfrac{\text{kg}\cdot\text{m}^2/\text{s}^2}{\text{kg}}} = \text{m/s}$, ו-$\dfrac{\text{m/s}}{\text{m}} = \text{1/s}$.
+      - kind: substitution
+        text: >-
+          $p = 2\cdot10^{-8}\cdot0.04 = 8\cdot10^{-10}\,\text{C}\cdot\text{m}$, $pE = 4\cdot10^{-5}\,\text{J}$. $v = \sqrt{\dfrac{4\cdot10^{-5}}{10^{-3}}} = 0.2\,\text{m/s}$, $\omega = \dfrac{0.2}{0.02} = 10\,\text{rad/s}$.
+      - kind: result
+        text: >-
+          א. $4\cdot10^{-5}\,\text{J}$. ב. $10\,\text{rad/s}$, ו-$0.2\,\text{m/s}$ לכל כדור. המוט ממשיך מעבר לכיוון השדה ומתנדנד סביבו.
+
+  - id: W-6.10-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.10-4, OBJ-6.10-3]
+    prompt: >-
+      בתנור מיקרוגל השדה החשמלי משנה כיוון כמה מיליארדי פעמים בשנייה.
+
+      א. מולקולת מים ניטרלית. למה השדה בכל זאת משפיע עליה? מה הוא עושה לה, ולמה זה מחמם?
+
+      ב. האם על מולקולת המים פועל כוח שקול גדול בתנור? הניחו שהשדה כמעט אחיד בגודל של מולקולה.
+
+      ג. בשמן, שהמולקולות שלו כמעט לא קוטביות, נוצרים בשדה רק דיפולים מושרים קטנים. אילו ניסוי פשוט הייתם עושים כדי לבדוק אם שמן מתחמם במיקרוגל לאט יותר ממים, ומה צריך להשאיר קבוע?
+    answer: >-
+      א. היא מולקולה קוטבית: השדה מפעיל עליה מומנט ומסובב אותה. השדה מתהפך, והיא מסתובבת הלוך וחזור ומתנגשת בשכנותיה; כך אנרגיית השדה הופכת לחום.
+
+      ב. לא: בשדה כמעט אחיד הכוחות על שני הקצוות כמעט מבטלים זה את זה. יש מומנט, כמעט בלי כוח.
+
+      ג. מחממים כמויות שוות (באותה מסה) של מים ושל שמן, באותו כלי ובאותו זמן, ומודדים את עליית הטמפרטורה; צריך להתחשב גם בחום הסגולי של כל נוזל.
+    solution:
+      - kind: law
+        text: >-
+          בשדה אחיד הכוח השקול על דיפול אפס, $\vec\tau = \vec p\times\vec E$ ו-$U = -\vec p\cdot\vec E$.
+      - kind: reasoning
+        text: >-
+          א. במולקולת המים המטען השלילי קרוב יותר לחמצן: יש לה $\vec p$ גם בלי שדה. המומנט מסובב את $\vec p$ אל כיוון השדה. כשהשדה מתהפך, גם כיוון המומנט מתהפך, והמולקולה מסתובבת חזרה. התנועה המהירה הזאת, עם ההתנגשויות בשכנות, היא חום.
+      - kind: reasoning
+        text: >-
+          ב. השדה משתנה במרחקים של סנטימטרים, והמולקולה קטנה מננומטר. לכן על שני הקצוות פועלים כוחות כמעט שווים ומנוגדים, והכוח השקול זניח.
+      - kind: limit
+        text: >-
+          מקרה גבולי: מולקולה בלי מומנט דיפול קבוע ($p = 0$ בלי שדה) לא מקבלת מומנט עד שהשדה משרה בה דיפול, ואז הוא ממילא בכיוון השדה. לכן אצלה אין סיבוב שמתהפך, וההשפעה קטנה בהרבה.
+      - kind: units
+        text: >-
+          המומנט $pE$ ביחידות $\text{N}\cdot\text{m}$ והאנרגיה $pE$ בג׳אול: שתיהן נקבעות על ידי אותו $p$, ולכן מולקולה עם $p$ גדול מקבלת יותר אנרגיה מהשדה.
+      - kind: result
+        text: >-
+          א. מומנט שמסובב אותה הלוך וחזור. ב. לא, כמעט רק מומנט. ג. כמויות שוות, אותו כלי, אותו זמן, ולהתחשב בחום הסגולי.
+
+  - id: W-6.10-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.10-2]
+    prompt: >-
+      דיפול בנוי ממטענים של $\pm5\,\text{nC}$ במרחק $4\,\text{cm}$ זה מזה.
+
+      א. מצאו את עוצמת השדה על האנך האמצעי, במרחק $10\,\text{cm}$ מהמרכז, בחיבור המדויק של שני השדות, ובקירוב $kp/r^3$.
+
+      ב. הראו שהטעות היחסית של הקירוב על האנך היא בערך $\dfrac{3d^2}{8r^2}$.
+
+      ג. מאיזה מרחק והלאה הקירוב על האנך טועה בפחות מאחוז? השוו למרחק המתאים על הציר ($7.1\,d$).
+    answer: >-
+      א. מדויק כ-$1.70\cdot10^{3}\,\text{N/C}$; קירוב $1.80\cdot10^{3}\,\text{N/C}$.
+
+      ב. $\left(1 + \dfrac{d^2}{4r^2}\right)^{-3/2} \approx 1 - \dfrac{3d^2}{8r^2}$.
+
+      ג. $r \approx 6.1\,d \approx 24\,\text{cm}$: קצת קרוב יותר מאשר על הציר.
+    solution:
+      - kind: given
+        text: >-
+          $q = 5\cdot10^{-9}\,\text{C}$, $d = 0.04\,\text{m}$, $r = 0.1\,\text{m}$, $p = qd = 2\cdot10^{-10}\,\text{C}\cdot\text{m}$.
+      - kind: law
+        text: >-
+          על האנך כל מטען במרחק $\sqrt{r^2 + d^2/4}$, והרכיבים לאורך הציר של שני השדות מתחברים: $E = 2\cdot\dfrac{kq}{r^2 + d^2/4}\cdot\dfrac{d/2}{\sqrt{r^2 + d^2/4}} = \dfrac{kqd}{\left(r^2 + d^2/4\right)^{3/2}}$.
+      - kind: manipulation
+        text: >-
+          מחלקים בקירוב $kqd/r^3$: $\dfrac{E}{E_{90^\circ}} = \left(1 + \dfrac{d^2}{4r^2}\right)^{-3/2}$. עבור $\varepsilon$ קטן, $(1 + \varepsilon)^{-3/2} \approx 1 - \tfrac32\varepsilon$, ולכן הטעות היחסית $\approx \tfrac32\cdot\dfrac{d^2}{4r^2} = \dfrac{3d^2}{8r^2}$. אחוז אחד: $\dfrac{3d^2}{8r^2} = 0.01$, כלומר $r = d\sqrt{37.5} \approx 6.1\,d$.
+      - kind: limit
+        text: >-
+          $r \to \infty$: הטעות שואפת לאפס. $r \to 0$: המדויק נותן $\dfrac{kqd}{(d/2)^3} = \dfrac{8kq}{d^2}$, השדה באמצע הדיפול (שני שדות של $kq/(d/2)^2$ שמתחברים), והקירוב שואף לאינסוף, כלומר שגוי לגמרי.
+      - kind: units
+        text: >-
+          $\dfrac{\text{N}\cdot\text{m}^2}{\text{C}^2}\cdot\dfrac{\text{C}\cdot\text{m}}{\text{m}^3} = \text{N/C}$; $d^2/r^2$ בלי יחידות.
+      - kind: substitution
+        text: >-
+          $E_{90^\circ} = \dfrac{9\cdot10^9\cdot2\cdot10^{-10}}{0.1^3} = 1.80\cdot10^{3}\,\text{N/C}$. $E = \dfrac{9\cdot10^9\cdot2\cdot10^{-10}}{\left(0.01 + 0.0004\right)^{3/2}} \approx 1.70\cdot10^{3}\,\text{N/C}$: טעות של $5.7\%$, וההערכה $\dfrac{3\cdot0.0016}{8\cdot0.01} = 6\%$.
+      - kind: result
+        text: >-
+          א. כ-$1.70\cdot10^{3}$ ו-$1.80\cdot10^{3}\,\text{N/C}$. ב. $3d^2/(8r^2)$. ג. מ-$6.1\,d \approx 24\,\text{cm}$, לעומת $7.1\,d$ על הציר.
+
+  - id: W-6.10-09
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.10-3, OBJ-6.10-2]
+    prompt: >-
+      מטען נקודתי $Q = 1\,\mu\text{C}$ נמצא בראשית. דיפול קטן, מטענים של $\pm4\,\text{nC}$ במרחק $1\,\text{cm}$ זה מזה, נמצא כך שמרכזו במרחק $20\,\text{cm}$ מ-$Q$, הציר שלו על הקו שעובר דרך $Q$, ו-$\vec p$ מצביע הרחק מ-$Q$.
+
+      א. מה הכוח על כל אחד ממטעני הדיפול, ומה הכוח השקול (גודל וכיוון)?
+
+      ב. הראו שכש-$d \ll r$ הכוח השקול הוא בערך $\dfrac{2kQp}{r^3}$, והשוו.
+
+      ג. מה המומנט על הדיפול במצב הזה? מה יקרה אם נסובב אותו מעט ונשחרר?
+    answer: >-
+      א. $9.47\cdot10^{-4}\,\text{N}$ על $-q$ (אל $Q$) ו-$8.57\cdot10^{-4}\,\text{N}$ על $+q$ (הרחק מ-$Q$); שקול $9.0\cdot10^{-5}\,\text{N}$ אל $Q$.
+
+      ב. $2kQp/r^3 = 9.0\cdot10^{-5}\,\text{N}$; ההפרש מהחישוב המדויק כעשירית האחוז.
+
+      ג. אפס; $\vec p$ בכיוון השדה של $Q$, ולכן זה שיווי משקל יציב: הדיפול יחזור ויתנדנד סביבו.
+    solution:
+      - kind: given
+        text: >-
+          $Q = 10^{-6}\,\text{C}$, $q = 4\cdot10^{-9}\,\text{C}$, $d = 0.01\,\text{m}$, $r = 0.2\,\text{m}$. $-q$ במרחק $0.195\,\text{m}$ מ-$Q$, ו-$+q$ במרחק $0.205\,\text{m}$.
+      - kind: law
+        text: >-
+          חוק קולון לכל מטען, $F = \dfrac{kQq}{x^2}$, וחיבור וקטורי.
+      - kind: manipulation
+        text: >-
+          הכוח השקול, אל $Q$: $F = kQq\left[\dfrac{1}{(r - d/2)^2} - \dfrac{1}{(r + d/2)^2}\right] = kQq\cdot\dfrac{2rd}{\left(r^2 - d^2/4\right)^2}$. כש-$d \ll r$: $F \approx \dfrac{2kQqd}{r^3} = \dfrac{2kQp}{r^3}$. זה $p$ כפול קצב השינוי של השדה של $Q$, $\left|\dfrac{d}{dr}\dfrac{kQ}{r^2}\right| = \dfrac{2kQ}{r^3}$.
+      - kind: limit
+        text: >-
+          בשדה אחיד קצב השינוי אפס, והכוח השקול אפס, כמו שמצאנו בשיעור. ו-$r \to \infty$: הכוח דועך כמו $1/r^3$, מהר יותר מכוח בין שני מטענים.
+      - kind: units
+        text: >-
+          $\dfrac{\text{N}\cdot\text{m}^2}{\text{C}^2}\cdot\text{C}\cdot\dfrac{\text{C}\cdot\text{m}}{\text{m}^3} = \text{N}$.
+      - kind: substitution
+        text: >-
+          $F_- = \dfrac{9\cdot10^9\cdot10^{-6}\cdot4\cdot10^{-9}}{0.195^2} \approx 9.47\cdot10^{-4}\,\text{N}$, $F_+ = \dfrac{3.6\cdot10^{-5}}{0.205^2} \approx 8.57\cdot10^{-4}\,\text{N}$, ההפרש $\approx 9.01\cdot10^{-5}\,\text{N}$. הקירוב: $\dfrac{2\cdot9\cdot10^9\cdot10^{-6}\cdot4\cdot10^{-11}}{0.2^3} = 9.0\cdot10^{-5}\,\text{N}$.
+      - kind: reasoning
+        text: >-
+          ג. שני הכוחות על אותו ישר, דרך מרכז הדיפול, ולכן אין מומנט. השדה של $Q$ מצביע הרחק ממנו, כמו $\vec p$: זה המצב היציב, עם $U = -pE$ מינימלי.
+      - kind: result
+        text: >-
+          א. שקול $9.0\cdot10^{-5}\,\text{N}$ אל $Q$. ב. $2kQp/r^3 = 9.0\cdot10^{-5}\,\text{N}$. ג. מומנט אפס, שיווי משקל יציב.
+
+  - id: W-6.10-10
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.10-4]
+    prompt: >-
+      לקבל לוחות בשטח $0.02\,\text{m}^2$, במרחק $2\,\text{mm}$ זה מזה. טוענים אותו ב-$5\,\text{nC}$ ומנתקים מהסוללה. אחר כך ממלאים את המרווח בחומר עם $\kappa = 4$, שיש בו $5\cdot10^{28}$ מולקולות במטר מעוקב. ($\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$.)
+
+      א. מה השדה והמתח בין הלוחות לפני ואחרי?
+
+      ב. מה צפיפות המטען הקשור על פני החומר, ומה מומנט הדיפול הממוצע של מולקולה?
+
+      ג. מה הקיבול לפני ואחרי? הסבירו בעזרת המטען הקשור למה הוא גדל.
+    answer: >-
+      א. לפני: $2.82\cdot10^{4}\,\text{N/C}$ ו-$56.5\,\text{V}$; אחרי: $7.06\cdot10^{3}\,\text{N/C}$ ו-$14.1\,\text{V}$.
+
+      ב. $\sigma_b = 1.875\cdot10^{-7}\,\text{C/m}^2$; $p \approx 3.75\cdot10^{-36}\,\text{C}\cdot\text{m}$.
+
+      ג. $8.85\cdot10^{-11}\,\text{F}$ ו-$3.54\cdot10^{-10}\,\text{F}$, פי 4.
+    solution:
+      - kind: given
+        text: >-
+          $A = 0.02\,\text{m}^2$, $L = 0.002\,\text{m}$, $Q = 5\cdot10^{-9}\,\text{C}$, $\kappa = 4$, $n = 5\cdot10^{28}\,\text{m}^{-3}$.
+      - kind: law
+        text: >-
+          $E_0 = \dfrac{\sigma}{\varepsilon_0}$ עם $\sigma = Q/A$ (שיעור 1.8); בחומר $E = E_0 - \dfrac{\sigma_b}{\varepsilon_0} = \dfrac{E_0}{\kappa}$; $\sigma_b = P = np$; $V = EL$; $C = Q/V$.
+      - kind: manipulation
+        text: >-
+          $\sigma_b = \varepsilon_0(E_0 - E) = \sigma\left(1 - \dfrac1\kappa\right)$, ו-$p = \dfrac{\sigma_b}{n}$. הקבל מנותק, ולכן $Q$ קבוע, $V$ קטן פי $\kappa$, ו-$C = Q/V$ גדל פי $\kappa$.
+      - kind: limit
+        text: >-
+          $\kappa = 1$: $\sigma_b = 0$ ושום דבר לא משתנה. $\kappa \to \infty$: $\sigma_b \to \sigma$, המטען הקשור מבטל את כל המטען שעל הלוחות, השדה והמתח שואפים לאפס, והקיבול לאינסוף.
+      - kind: units
+        text: >-
+          $\dfrac{\text{C/m}^2}{\text{C}^2/(\text{N}\cdot\text{m}^2)} = \text{N/C}$; $\text{N/C}\cdot\text{m} = \text{V}$; $\dfrac{\text{C/m}^2}{\text{m}^{-3}} = \text{C}\cdot\text{m}$.
+      - kind: substitution
+        text: >-
+          $\sigma = \dfrac{5\cdot10^{-9}}{0.02} = 2.5\cdot10^{-7}\,\text{C/m}^2$, $E_0 = \dfrac{2.5\cdot10^{-7}}{8.85\cdot10^{-12}} \approx 2.82\cdot10^{4}\,\text{N/C}$, $V_0 \approx 56.5\,\text{V}$. אחרי: $E \approx 7.06\cdot10^{3}\,\text{N/C}$, $V \approx 14.1\,\text{V}$. $\sigma_b = 2.5\cdot10^{-7}\cdot\tfrac34 = 1.875\cdot10^{-7}\,\text{C/m}^2$, $p = \dfrac{1.875\cdot10^{-7}}{5\cdot10^{28}} = 3.75\cdot10^{-36}\,\text{C}\cdot\text{m}$. $C_0 = \dfrac{5\cdot10^{-9}}{56.5} \approx 8.85\cdot10^{-11}\,\text{F}$, $C \approx 3.54\cdot10^{-10}\,\text{F}$.
+      - kind: result
+        text: >-
+          א. $2.82\cdot10^4\,\text{N/C}$, $56.5\,\text{V}$ → $7.06\cdot10^3\,\text{N/C}$, $14.1\,\text{V}$. ב. $1.875\cdot10^{-7}\,\text{C/m}^2$, $3.75\cdot10^{-36}\,\text{C}\cdot\text{m}$. ג. $8.85\cdot10^{-11}$ → $3.54\cdot10^{-10}\,\text{F}$: המטען הקשור מבטל חלק מהשדה של הלוחות, ולכן אותו מטען נותן מתח קטן יותר.
+
+challenge:
+  - id: W-6.10-c1
+    stars: 1
+    objectives: [OBJ-6.10-3]
+    prompt: >-
+      שני כדורים קטנים, כל אחד במסה $2\,\text{g}$, בקצות מוט מבודד וקל באורך $10\,\text{cm}$. על כדור אחד $+50\,\text{nC}$ ועל השני $-50\,\text{nC}$. המוט מונח על שולחן אופקי חלק, ונמצא בשדה אחיד ואופקי של $2\cdot10^{5}\,\text{N/C}$.
+
+      א. כתבו את מומנט הכוח על המוט כמכפלה וקטורית, ביחס למרכז המוט. הראו שאם מחשבים את המומנט ביחס לכל נקודה אחרת, מתקבל אותו מומנט.
+
+      ב. מטים את המוט בזווית קטנה, $10^\circ$, מכיוון השדה, ומשחררים. איזו תנועה יעשה המוט? הראו שבזוויות קטנות היא תנועה הרמונית, ומצאו את זמן המחזור.
+
+      ג. בדקו את התשובה לסעיף ב בשני גבולות: שדה חזק מאוד, וכדורים כבדים מאוד.
+    answer: >-
+      א. $\vec\tau = \vec p\times\vec E$, $\tau = pE\sin\theta$; לא תלוי בנקודה, כי הכוח השקול אפס.
+
+      ב. תנודות סביב כיוון השדה; $T = 2\pi\sqrt{I/(pE)} \approx 0.63\,\text{s}$.
+
+      ג. $E \to \infty$: $T \to 0$; $m \to \infty$: $T \to \infty$.
+    solution:
+      - kind: given
+        text: >-
+          $m = 2\cdot10^{-3}\,\text{kg}$, $d = 0.1\,\text{m}$, $q = 5\cdot10^{-8}\,\text{C}$, $E = 2\cdot10^{5}\,\text{N/C}$. $p = qd = 5\cdot10^{-9}\,\text{C}\cdot\text{m}$, $pE = 10^{-3}\,\text{N}\cdot\text{m}$.
+      - kind: law
+        text: >-
+          מומנט ביחס לנקודה O: $\vec\tau_O = \sum \vec r_i\times\vec F_i$. החוק השני לסיבוב: $I\,\alpha = \tau$, עם מומנט ההתמד $I = \sum m_i r_i^2 = 2m\left(\tfrac d2\right)^2$.
+      - kind: manipulation
+        text: >-
+          א. הכוחות $\pm q\vec E$ פועלים בנקודות $\vec r_\pm$: $\vec\tau_O = \vec r_+\times q\vec E + \vec r_-\times(-q\vec E) = q(\vec r_+ - \vec r_-)\times\vec E = q\vec d\times\vec E = \vec p\times\vec E$. התוצאה תלויה רק בהפרש $\vec r_+ - \vec r_-$, שלא משתנה כשמזיזים את O. (באופן כללי: כשהכוח השקול אפס, המומנט לא תלוי בנקודה.)
+      - kind: manipulation
+        text: >-
+          ב. המומנט מחזיר את המוט: $I\alpha = -pE\sin\theta$. בזוויות קטנות $\sin\theta \approx \theta$ (ברדיאנים), ולכן $\alpha = -\dfrac{pE}{I}\,\theta$: התאוצה הזוויתית ביחס ישר להטיה ומנוגדת לה, וזו תנועה הרמונית, כמו מטוטלת, עם $\omega_0 = \sqrt{\dfrac{pE}{I}}$ ו-$T = 2\pi\sqrt{\dfrac{I}{pE}}$. עם $I = \tfrac12 md^2$ ו-$p = qd$: $T = 2\pi\sqrt{\dfrac{md}{2qE}}$.
+      - kind: limit
+        text: >-
+          ג. $E \to \infty$: המומנט המחזיר עצום, והתנודות מהירות, $T \to 0$. $m \to \infty$: המוט כמעט לא מגיב, $T \to \infty$. ו-$\theta_0 = 10^\circ \approx 0.17\,\text{rad}$: $\sin\theta$ שונה מ-$\theta$ בכחצי אחוז בלבד, ולכן הקירוב טוב.
+      - kind: units
+        text: >-
+          $\sqrt{\dfrac{\text{kg}\cdot\text{m}^2}{\text{N}\cdot\text{m}}} = \sqrt{\dfrac{\text{kg}\cdot\text{m}}{\text{kg}\cdot\text{m}/\text{s}^2}} = \text{s}$.
+      - kind: substitution
+        text: >-
+          $I = 2\cdot2\cdot10^{-3}\cdot0.05^2 = 10^{-5}\,\text{kg}\cdot\text{m}^2$. $\omega_0 = \sqrt{\dfrac{10^{-3}}{10^{-5}}} = 10\,\text{rad/s}$, $T = \dfrac{2\pi}{10} \approx 0.63\,\text{s}$.
+      - kind: result
+        text: >-
+          א. $\vec\tau = \vec p\times\vec E$, בכל נקודה. ב. תנודות הרמוניות, $T \approx 0.63\,\text{s}$. ג. $T \to 0$ בשדה חזק, $T \to \infty$ במסה גדולה.
+    source:
+      name: MIT 8.02, Problem Solving Session 1 (Electric Dipoles and Torque)
+      year: 2012
+      problem: 'Problem 2: Electric Dipole in a Uniform Electric Field, Questions 2–3'
+      url: https://web.mit.edu/8.02t/www/test/materials/ProblemSolving/PS01%20Electric%20Dipole.pdf
+      verified: '2026-11-02'
+      adapted: true
+
+  - id: W-6.10-c2
+    stars: 2
+    objectives: [OBJ-6.10-2, OBJ-6.10-3]
+    prompt: >-
+      שני דיפולים נקודתיים: $\vec p_1$ בראשית O, ו-$\vec p_2$ בנקודה P, במרחק $r$ מ-O, כש-$r$ גדול בהרבה מגודל הדיפולים.
+
+      א. דיפול $\vec p_2$ (מטענים $\pm q$, $\vec p_2 = q\vec s$) נמצא בשדה שהפוטנציאל שלו $\varphi$. האנרגיה שלו היא $U = q\,\varphi\!\left(\vec r + \tfrac{\vec s}{2}\right) - q\,\varphi\!\left(\vec r - \tfrac{\vec s}{2}\right)$. הראו שבקירוב ראשון ב-$s$ היא $U = -\vec p_2\cdot\vec E$.
+
+      ב. כתבו את השדה $\vec E_1$ ש-$\vec p_1$ יוצר בנקודה P, בכתיב וקטורי, ומצאו את אנרגיית האינטראקציה $W_{12}$ בין שני הדיפולים.
+
+      ג. באיזה סידור של שני הדיפולים $W_{12}$ הקטנה ביותר (לגודל נתון של $p_1$, $p_2$ ו-$r$)? מה הכוח בין הדיפולים בסידור הזה, ולאיזה כיוון?
+
+      ד. שתי מולקולות מים, כל אחת עם $p = 6.2\cdot10^{-30}\,\text{C}\cdot\text{m}$, במרחק $0.5\,\text{nm}$, בסידור של סעיף ג. מה אנרגיית האינטראקציה ומה הכוח? השוו לסידור "זו לצד זו" עם $\vec p$ מנוגדים.
+    answer: >-
+      א. $U \approx q\,\vec s\cdot\nabla\varphi = -\vec p_2\cdot\vec E$.
+
+      ב. $\vec E_1 = \dfrac{k\left[3(\vec p_1\cdot\hat r)\hat r - \vec p_1\right]}{r^3}$, $W_{12} = \dfrac{k}{r^3}\left[\vec p_1\cdot\vec p_2 - 3(\vec p_1\cdot\hat r)(\vec p_2\cdot\hat r)\right]$.
+
+      ג. שניהם לאורך הקו OP, באותו כיוון ("ראש לזנב"): $W_{12} = -\dfrac{2kp_1p_2}{r^3}$; כוח משיכה $\dfrac{6kp_1p_2}{r^4}$.
+
+      ד. $W \approx -5.5\cdot10^{-21}\,\text{J}$, $F \approx 3.3\cdot10^{-11}\,\text{N}$; זו לצד זו: $-2.8\cdot10^{-21}\,\text{J}$, חצי.
+    solution:
+      - kind: law
+        text: >-
+          $\vec E = -\nabla\varphi$, ובקירוב ראשון $\varphi(\vec r + \vec a) \approx \varphi(\vec r) + \vec a\cdot\nabla\varphi$ (שיעור 6.6: הגרדיאנט נותן את השינוי בכל כיוון). השדה של דיפול רחוק: $E_r = \dfrac{2kp\cos\theta}{r^3}$, $E_\theta = \dfrac{kp\sin\theta}{r^3}$.
+      - kind: manipulation
+        text: >-
+          א. $U \approx q\left[\varphi + \tfrac{\vec s}{2}\cdot\nabla\varphi\right] - q\left[\varphi - \tfrac{\vec s}{2}\cdot\nabla\varphi\right] = q\,\vec s\cdot\nabla\varphi = -\vec p_2\cdot\vec E$.
+      - kind: manipulation
+        text: >-
+          ב. הרכיבים הקוטביים בכתיב וקטורי: $\vec p_1 = p_1\cos\theta\,\hat r - p_1\sin\theta\,\hat\theta$, ולכן $E_r\hat r + E_\theta\hat\theta = \dfrac{k}{r^3}\left[3p_1\cos\theta\,\hat r - \vec p_1\right] = \dfrac{k\left[3(\vec p_1\cdot\hat r)\hat r - \vec p_1\right]}{r^3}$. מסעיף א: $W_{12} = -\vec p_2\cdot\vec E_1 = \dfrac{k}{r^3}\left[\vec p_1\cdot\vec p_2 - 3(\vec p_1\cdot\hat r)(\vec p_2\cdot\hat r)\right]$.
+      - kind: manipulation
+        text: >-
+          ג. האיבר $-3(\vec p_1\cdot\hat r)(\vec p_2\cdot\hat r)$ הכי שלילי כששניהם לאורך $\hat r$ ובאותו כיוון: אז $W_{12} = \dfrac{k}{r^3}\left[p_1p_2 - 3p_1p_2\right] = -\dfrac{2kp_1p_2}{r^3}$. בכל סידור אחר $W_{12}$ גדולה יותר (למשל זו לצד זו ומנוגדים: $-kp_1p_2/r^3$). הכוח: $F = -\dfrac{dW_{12}}{dr} = -\dfrac{6kp_1p_2}{r^4}$; הסימן מינוס אומר שהכוח מקטין את $r$: משיכה.
+      - kind: limit
+        text: >-
+          $p_1 \to 0$ או $p_2 \to 0$: אין אינטראקציה. $r \to \infty$: $W_{12} \propto 1/r^3$ דועכת מהר יותר מאנרגיה בין שני מטענים ($1/r$), והכוח $\propto 1/r^4$. וזה גם מתאים לסעיף א: $p_2$ "רואה" את השדה של $p_1$ על הציר, $2kp_1/r^3$, בכיוון שלו, ו-$-p_2E = -2kp_1p_2/r^3$.
+      - kind: units
+        text: >-
+          $\dfrac{\text{N}\cdot\text{m}^2}{\text{C}^2}\cdot\dfrac{(\text{C}\cdot\text{m})^2}{\text{m}^3} = \text{N}\cdot\text{m} = \text{J}$, ו-$\text{J/m} = \text{N}$.
+      - kind: substitution
+        text: >-
+          ד. $W = -\dfrac{2\cdot9\cdot10^9\cdot\left(6.2\cdot10^{-30}\right)^2}{\left(5\cdot10^{-10}\right)^3} \approx -5.5\cdot10^{-21}\,\text{J}$, $F = \dfrac{3|W|}{r} \approx 3.3\cdot10^{-11}\,\text{N}$. זו לצד זו: $-\dfrac{kp^2}{r^3} \approx -2.8\cdot10^{-21}\,\text{J}$.
+      - kind: result
+        text: >-
+          א. $U = -\vec p_2\cdot\vec E$. ב. $W_{12} = k\left[\vec p_1\cdot\vec p_2 - 3(\vec p_1\cdot\hat r)(\vec p_2\cdot\hat r)\right]/r^3$. ג. ראש לזנב על הקו, $-2kp_1p_2/r^3$, משיכה של $6kp_1p_2/r^4$. ד. $-5.5\cdot10^{-21}\,\text{J}$ ו-$3.3\cdot10^{-11}\,\text{N}$; זו לצד זו חצי מזה.
+    source:
+      name: Osaka University, International Physics Course entrance examination
+      year: 2010
+      problem: 'Problem 1: the force between two electric dipoles'
+      url: https://www.rcnp.osaka-u.ac.jp/~ipc/admissions/img/IPCentrance2010.pdf
+      verified: '2026-11-02'
+      adapted: true
