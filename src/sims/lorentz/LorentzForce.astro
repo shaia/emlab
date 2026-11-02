@@ -1,0 +1,7 @@
+---
+/** Lorentz-force figure for lesson MDX: <Spread figure={LorentzForce} figureProps={{ mode: 'vectors' | 'strip', … }}>. */
+import LorentzForce, { type LorentzForceProps } from './LorentzForce';
+type Props = LorentzForceProps;
+---
+
+<LorentzForce client:visible {...Astro.props} />
