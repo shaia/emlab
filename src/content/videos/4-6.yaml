@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support.
+
+- id: v-4-6-selector-explained
+  youtubeId: LvY-x3P9faw
+  title: 'סרטון 10  בורר מהירויות'
+  channel: פיזיקה אונליין אלירן יהב -Eliran Yahav
+  lang: he
+  captions: []
+  minutes: 15
+  why: 'הסבר בעברית של בורר המהירויות: התקן שבו שדה מגנטי ושדה חשמלי ממיינים חלקיקים טעונים לפי המהירות שלהם (לפי תיאור הסרטון). השוו לאיור 4.6א.'
+  verified: '2026-11-02'
+
+- id: v-4-6-bagrut-2014
+  youtubeId: pfUDbxb1dyg
+  title: 'בגרות פיזיקה חשמל 2014 שאלה 5 - השדה המגנטי: מטען שנע בשדה מגנטי, בורר מהירויות וספקטרומטר מסות'
+  channel: אריאל ליבזון - Ariel Libson
+  lang: he
+  captions: []
+  minutes: 12
+  why: 'פתרון בעברית של שאלה 5 מבגרות 2014 בחשמל, על מטען שנע בשדה מגנטי, בורר מהירויות וספקטרומטר מסות (לפי כותרת הסרטון). נסו לפתור בעצמכם לפני הצפייה, והשוו את הדרך.'
+  verified: '2026-11-02'
