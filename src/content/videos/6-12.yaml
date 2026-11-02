@@ -1,0 +1,24 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support; the
+# length comes from the watch page (lengthSeconds). No Hebrew video of fitting length was found: the
+# Hebrew university recitations on the topic run about an hour and mix in other subjects.
+
+- id: v-6-12-zaks-lab
+  youtubeId: S102Wym6FOw
+  title: 'Displacement Current:  Completing the Ampere-Maxwell Law'
+  channel: "Zak's Lab"
+  lang: en
+  captions: []
+  minutes: 6
+  why: 'סרטון קצר באנגלית. לפי התיאור שלו, הוא מציג את הבעיה של הקבל הנטען: שני משטחים על אותו מסלול, אחד חוצה את התיל ואחד עובר בין הלוחות, שם שום מטען לא חוצה את הרווח. משם הוא גוזר את זרם ההעתקה ומגיע לחוק אמפר-מקסוול בצורה האינטגרלית.'
+  verified: '2026-11-02'
+
+- id: v-6-12-lewin
+  youtubeId: 8ZYFYUFRblM
+  title: '8.02x - Module 07.01 - Discplacement Current.'
+  channel: 'Lectures by Walter Lewin. They will make you ♥ Physics.'
+  lang: en
+  captions: []
+  minutes: 27
+  why: 'הרצאה באנגלית של וולטר לוין מ-MIT. לפי התיאור שלה, זרם ההעתקה נחוץ כדי להציל את חוק אמפר, והשם מטעה, כי זה לא זרם אמיתי.'
+  verified: '2026-11-02'
