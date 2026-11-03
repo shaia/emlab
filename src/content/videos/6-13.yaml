@@ -1,0 +1,16 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below) on the
+# `verified` date. `why`, `start`/`end` and the captions rest on the upload description: its timestamp
+# list (5:47 Maxwell's equations, 7:36 dynamic systems) and its credit for a Hebrew translation. The same
+# video as v-6-7-3b1b and v-6-8-3b1b, a later segment.
+
+- id: v-6-13-3b1b
+  youtubeId: rB83DpBJQsE
+  title: "Divergence and curl:  The language of Maxwell's equations, fluid flow, and more"
+  channel: 3Blue1Brown
+  lang: en
+  captions: [he]
+  start: 347
+  end: 456
+  minutes: 2
+  why: 'הקטע על משוואות מקסוול (5:47 עד 7:36), באנגלית עם תרגום לעברית לפי התיאור. לפי רשימת הפרקים שבתיאור, הוא מראה איך הדיברגנץ והרוטור מופיעים במשוואות מקסוול. חפשו בו את מה שמופיע בטבלה שבאיור 6.13א: איזה שדה "נובע" ממקורות ואיזה "מסתובב", וממה.'
+  verified: '2026-11-03'

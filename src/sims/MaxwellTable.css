@@ -1,0 +1,122 @@
+/* The live table of Maxwell's equations (MaxwellTable.astro renders the table, MaxwellTable.tsx marks it). */
+
+.mx {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  container-type: inline-size;
+  min-width: 0;
+}
+
+.mx-table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+}
+
+.mx-head,
+.mx-row {
+  display: grid;
+  grid-template-columns: 6.5em minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 4px 8px;
+  padding: 6px 10px;
+}
+.mx-head {
+  color: var(--ink-3);
+  font-size: 0.8rem;
+  border-bottom: 1px solid var(--rule);
+}
+.mx-row + .mx-row {
+  border-top: 1px dashed var(--rule);
+}
+.mx-name {
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.mx-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 4px;
+  min-width: 0;
+}
+.mx-form-label {
+  display: none;
+  direction: rtl;
+  color: var(--ink-3);
+  font-size: 0.75rem;
+}
+.mx-op {
+  color: var(--ink-2);
+  padding: 0 1px;
+}
+
+.mx-term {
+  position: relative;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 2px 4px;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  line-height: 1.2;
+}
+.mx-term:hover {
+  border-color: var(--rule);
+}
+.mx-term:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.mx-term.on {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  border-color: var(--accent);
+}
+.mx-term.gone {
+  opacity: 0.35;
+}
+.mx-term.gone::after {
+  content: '';
+  position: absolute;
+  inset-inline: 2px;
+  top: 50%;
+  border-top: 2px solid var(--ink-2);
+  transform: rotate(-14deg);
+}
+
+.mx-says,
+.mx-rest {
+  margin: 0;
+  padding: 4px 10px;
+  border-inline-start: 3px solid var(--accent);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--ink-2);
+}
+.mx-rest {
+  border-inline-start-color: var(--ink-3);
+}
+
+/* narrow figure (phones): the name above, each form on its own line with its label */
+@container (max-width: 480px) {
+  .mx-head {
+    display: none;
+  }
+  .mx-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* the form is LTR math; its Hebrew label goes to the right end, where an RTL reader starts */
+  .mx-form-label {
+    display: inline;
+    order: 99;
+    margin-inline-start: auto;
+  }
+}
