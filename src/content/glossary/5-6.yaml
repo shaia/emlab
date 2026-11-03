@@ -1,0 +1,7 @@
+# Lesson 5.6 terms. Added ahead of chapter 5, because lessons 6.13–6.14 use them. Format and rules: see glossary/1-5.yaml.
+
+- id: induced-electric-field
+  term: שדה חשמלי מושרה
+  en: induced electric field
+  definition: 'שדה חשמלי שנוצר משדה מגנטי משתנה, ולא ממטענים. קווי השדה שלו סגורים, והסירקולציה שלו סביב לולאה שווה לכא"מ המושרה, ∮E·dl = −dΦ/dt. לכן הוא אינו שדה משמר, ואין לו פוטנציאל.'
+  lesson: '5.6'

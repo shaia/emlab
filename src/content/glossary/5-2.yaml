@@ -1,0 +1,16 @@
+# Lesson 5.2 terms. Added ahead of chapter 5, because lessons 6.13–6.14 use them. Format and rules: see glossary/1-5.yaml.
+
+- id: faraday-law
+  term: חוק פאראדיי
+  en: Faraday's law of induction
+  definition: 'כששטף מגנטי דרך לולאה משתנה, נוצר בלולאה כא"מ מושרה ששווה לקצב השינוי של השטף, ε = −ΔΦ/Δt (ובגבול, −dΦ/dt). בכריכה של N ליפופים הכא"מ גדל פי N. המינוס הוא חוק לנץ.'
+  reject: [חוק פרדיי, חוק פראדיי]
+  lesson: '5.2'
+
+- id: induced-emf
+  term: כא"מ מושרה
+  en: induced emf
+  symbol: '\varepsilon'
+  unit: V
+  definition: 'כוח אלקטרו-מניע שנוצר בלולאה בגלל שינוי בשטף המגנטי דרכה, בלי סוללה. אם הלולאה סגורה, הוא מניע בה זרם מושרה.'
+  lesson: '5.2'

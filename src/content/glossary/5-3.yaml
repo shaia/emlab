@@ -1,0 +1,7 @@
+# Lesson 5.3 terms. Added ahead of chapter 5, because lessons 6.13–6.14 use them. Format and rules: see glossary/1-5.yaml.
+
+- id: lenz-law
+  term: חוק לנץ
+  en: Lenz's law
+  definition: 'הזרם המושרה זורם בכיוון שהשדה המגנטי שלו מתנגד לשינוי בשטף שיצר אותו. זה המינוס בחוק פאראדיי, והוא נובע משימור אנרגיה.'
+  lesson: '5.3'
