@@ -1,0 +1,293 @@
+# Lesson 6.13 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are rendered at
+# build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number was recomputed with src/physics/constants.ts (MU0, EPS0) and src/physics/maxwell.ts; the script
+# is q613.ts in the session scratchpad. The data differ on purpose from figure 6.13א and the worked examples.
+
+chapter: 6
+questions:
+  # ------------------------------------------------ OBJ-6.13-1: from the integral form to the differential form
+  - id: Q-6.13-from-integral
+    type: mc
+    objectives: [OBJ-6.13-1]
+    qualitative: true
+    prompt: >-
+      כדי לעבור מחוק פאראדיי בצורה האינטגרלית, $\oint_C \vec E\cdot d\vec l = -d\Phi_B/dt$, לצורה $\nabla\times\vec E = -\partial\vec B/\partial t$, באיזה משפט משתמשים בצד שמאל?
+    choices:
+      - text: 'במשפט סטוקס: הסירקולציה סביב $C$ שווה לשטף של $\nabla\times\vec E$ דרך משטח ש-$C$ הוא השפה שלו.'
+        correct: true
+        feedback: 'נכון. אחרי זה שני הצדדים הם אינטגרלים על אותו משטח, וזה נכון לכל משטח, ולכן גם הפונקציות שבתוכם שוות בכל נקודה.'
+      - text: 'במשפט הדיברגנץ: השטף דרך משטח סגור שווה לאינטגרל של הדיברגנץ על הנפח.'
+        feedback: 'משפט הדיברגנץ עוסק בשטף דרך משטח **סגור**, ומשמש לשני חוקי גאוס. בחוק פאראדיי צד שמאל הוא סירקולציה סביב מסלול, וזה מקומו של משפט סטוקס.'
+      - text: 'בשום משפט: הצורה הדיפרנציאלית היא חוק אחר, שמתקיים רק כשאין סימטריה.'
+        feedback: 'זה אותו חוק בדיוק. הצורה האינטגרלית מתקיימת לכל מסלול, לא רק לסימטרי, ובזכות זה משפט סטוקס מעביר ממנה לצורה המקומית.'
+        misconception: MC-integral-needs-symmetry
+      - text: 'בעקרון הסופרפוזיציה: מחברים את השדות של כל המטענים.'
+        feedback: 'סופרפוזיציה מחברת שדות של כמה מקורות. כאן צריך להפוך סירקולציה סביב מסלול לאינטגרל על משטח, וזה משפט סטוקס.'
+
+  - id: Q-6.13-integral-any
+    type: twotier
+    objectives: [OBJ-6.13-1]
+    qualitative: true
+    prompt: >-
+      בתוך מוט טעון באחידות מניחים קופסה קטנה כך שחלק ממנה בתוך המוט וחלק מחוצה לו. הקופסה לא סימטרית ביחס למוט. האם $\oint \vec E\cdot d\vec A = Q_{\text{in}}/\varepsilon_0$ מתקיים עבורה?
+    choices:
+      - text: 'כן.'
+        correct: true
+        feedback: נכון.
+      - text: 'לא, כי הקופסה לא סימטרית.'
+        feedback: 'חוק גאוס מתקיים לכל משטח סגור. בלי סימטריה קשה לחשב ממנו את השדה, אבל השוויון עצמו מתקיים.'
+        misconception: MC-integral-needs-symmetry
+      - text: 'רק אם מקטינים את הקופסה לנקודה.'
+        feedback: 'בגבול של קופסה זעירה מקבלים את הצורה הדיפרנציאלית, אבל הצורה האינטגרלית מתקיימת כבר לקופסה בכל גודל.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'חוק גאוס מתקיים לכל משטח סגור, ובגלל זה בדיוק אפשר לעבור ממנו לצורה הדיפרנציאלית.'
+        correct: true
+        feedback: 'נכון. באיור 6.13א, כשהתיבה חוצה את דופן המוט, השטף ו-$Q_{\text{in}}/\varepsilon_0$ שווים. רק השטף חלקי הנפח שונה מ-$\rho/\varepsilon_0$ שבמרכז, כי הוא ממוצע.'
+      - text: 'משתמשים בחוק גאוס רק עם משטחים שעליהם השדה קבוע.'
+        feedback: 'זה מה שעושים כדי **לחשב** שדה בבעיות סימטריות. החוק עצמו לא דורש את זה.'
+        misconception: MC-integral-needs-symmetry
+      - text: 'כי השדה בתוך המוט אחיד.'
+        feedback: 'השדה בתוך מוט טעון לא אחיד: הוא גדל עם המרחק מהציר. וחוק גאוס לא תלוי בזה.'
+
+  - id: Q-6.13-faraday-circle
+    type: numeric
+    objectives: [OBJ-6.13-1, OBJ-6.13-3]
+    level: mid
+    prompt: >-
+      בליבה של סליל ארוך, ברדיוס $5\,\text{cm}$, השדה המגנטי אחיד וגדל בקצב $0.8\,\text{T/s}$. מה גודל השדה החשמלי המושרה במרחק $2\,\text{cm}$ מהציר? ענו ב-$\text{mV/m}$.
+    answer: 8
+    unit: mV/m
+    tolerance: 0.02
+    correctFeedback: 'נכון. על מעגל ברדיוס $s$: $E\cdot2\pi s = \pi s^2\dot B$, ולכן $E = s\dot B/2 = 0.02\cdot0.8/2 = 8\cdot10^{-3}\,\text{V/m}$. ובצורה הדיפרנציאלית: הרוטור של השדה הזה הוא $-\dot B$ בכל נקודה בליבה.'
+    wrongFeedback: 'השתמשו בצורה האינטגרלית על מעגל ברדיוס $2\,\text{cm}$ סביב הציר: הסירקולציה היא $E\cdot2\pi s$, והשטף הכלוא $B\pi s^2$.'
+    commonWrong:
+      - value: 16
+        feedback: 'כתבתם את היקף המעגל $\pi s$ במקום $2\pi s$, וקיבלתם $E = s\dot B$. ההיקף הוא $2\pi s$, ולכן $E = s\dot B/2$.'
+      - value: 50
+        feedback: 'השתמשתם בשטף של כל הליבה, $B\pi R^2$, כאילו הנקודה מחוץ לה. במרחק $2\,\text{cm}$ המעגל מקיף רק את השטף שבתוך $s$: $B\pi s^2$.'
+      - value: 0.008
+        feedback: 'זו התשובה ב-$\text{V/m}$. השאלה מבקשת $\text{mV/m}$: $8\cdot10^{-3}\,\text{V/m} = 8\,\text{mV/m}$.'
+
+  # ------------------------------------------------ OBJ-6.13-2: what each term says; testing a field
+  - id: Q-6.13-which-b
+    type: mc
+    objectives: [OBJ-6.13-2]
+    prompt: >-
+      $\beta$ הוא קבוע חיובי. איזה מהשדות הבאים **לא** יכול להיות שדה מגנטי?
+    choices:
+      - text: '$\beta\,(x,\ y,\ z)$'
+        correct: true
+        feedback: 'נכון. $\nabla\cdot\vec B = \beta + \beta + \beta = 3\beta \neq 0$: הקווים יוצאים מהראשית לכל הכיוונים, כמו ממטען מגנטי, וכזה אין.'
+      - text: '$\beta\,(x,\ y,\ -2z)$'
+        feedback: '$\nabla\cdot\vec B = \beta + \beta - 2\beta = 0$: השדה הזה מותר. בדקו את הדיברגנץ של כל שדה.'
+      - text: '$\beta\,(-y,\ x,\ 0)$'
+        feedback: 'הדיברגנץ שלו אפס, והרוטור $2\beta$: זה שדה מגנטי אפשרי, למשל בתוך תיל עבה עם זרם אחיד. רוטור שונה מאפס מותר; דיברגנץ לא.'
+      - text: '$\beta\,(y,\ x,\ 0)$'
+        feedback: 'הדיברגנץ שלו $\partial(\beta y)/\partial x + \partial(\beta x)/\partial y = 0$, וגם הרוטור אפס: שדה מגנטי אפשרי באזור בלי זרם.'
+
+  - id: Q-6.13-pole-flux
+    type: twotier
+    objectives: [OBJ-6.13-2]
+    qualitative: true
+    prompt: >-
+      מקיפים את הקוטב הצפוני של מגנט מוט בקופסה סגורה. הקופסה חותכת את המגנט, כך שהקוטב בתוכה והקוטב הדרומי מחוצה לה. מה השטף המגנטי נטו שיוצא מהקופסה?
+    choices:
+      - text: 'אפס.'
+        correct: true
+        feedback: נכון.
+      - text: 'חיובי: מהקוטב הצפוני הקווים יוצאים.'
+        feedback: 'הקווים יוצאים מהקוטב בחוץ, אבל באותה מידה הם נכנסים לקופסה דרך הדופן שחותכת את המגנט, מכיוון הקוטב הדרומי.'
+        misconception: MC-pole-is-magnetic-charge
+      - text: 'שלילי: הקווים נכנסים לקוטב הצפוני.'
+        feedback: 'מחוץ למגנט הקווים יוצאים מהקוטב הצפוני, ובתוכו הם מגיעים אליו. שני השטפים שווים, והנטו אפס.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'קווי שדה מגנטי לא מתחילים ולא נגמרים: הקווים שיוצאים מהקוטב הצפוני ממשיכים בתוך המגנט. $\nabla\cdot\vec B = 0$ בכל נקודה.'
+        correct: true
+        feedback: 'נכון. באיור 6.13א, תיבה סביב הקצה העליון של הסליל השטוח: השדה יוצא מהפאה העליונה ונכנס דרך התחתונה, שבתוך הסליל.'
+      - text: 'הקוטב הצפוני הוא מטען מגנטי חיובי, ומטען כלוא קובע את השטף.'
+        feedback: 'זה נכון למטען חשמלי ולשדה חשמלי. לשדה המגנטי אין מטען: $\nabla\cdot\vec B = 0$, וקוטב אינו מטען. חצו את המגנט וקבלו שני מגנטים, כל אחד עם שני קטבים.'
+        misconception: MC-pole-is-magnetic-charge
+      - text: 'בתוך המגנט אין שדה מגנטי.'
+        feedback: 'בתוך המגנט יש שדה, והוא מצביע מהקוטב הדרומי אל הצפוני. בזכותו הקווים סגורים.'
+
+  - id: Q-6.13-gap-dedt
+    type: numeric
+    objectives: [OBJ-6.13-2]
+    level: mid
+    prompt: >-
+      בין לוחות קבל, באזור שאין בו זרם הולכה, השדה המגנטי הוא $\vec B = \kappa\,(-y,\ x,\ 0)$ עם $\kappa = 4.5\cdot10^{-6}\,\text{T/m}$. באיזה קצב גדל $E_z$? ענו ביחידות של $10^{11}\,\text{V/(m}\cdot\text{s)}$. (השתמשו ב-$\mu_0\varepsilon_0 = 1/c^2$, עם $c = 3\cdot10^8\,\text{m/s}$.)
+    answer: 8.1
+    unit: 10¹¹ V/(m·s)
+    tolerance: 0.02
+    correctFeedback: 'נכון. $(\nabla\times\vec B)_z = \kappa - (-\kappa) = 2\kappa$, ובלי זרם $\mu_0\varepsilon_0\,\partial E_z/\partial t = 2\kappa$: $\partial E_z/\partial t = 2\kappa c^2 = 2\cdot4.5\cdot10^{-6}\cdot9\cdot10^{16} = 8.1\cdot10^{11}\,\text{V/(m}\cdot\text{s)}$.'
+    wrongFeedback: 'חשבו את $(\nabla\times\vec B)_z = \partial B_y/\partial x - \partial B_x/\partial y$, והציבו בחוק אמפר-מקסוול בלי $\vec J$.'
+    commonWrong:
+      - value: 4.05
+        feedback: 'ספרתם רק את $\partial B_y/\partial x = \kappa$. גם $B_x = -\kappa y$ תורם: $-\partial B_x/\partial y = +\kappa$. הרוטור $2\kappa$.'
+      - value: -8.1
+        feedback: 'הוספתם מינוס כמו בחוק פאראדיי. בחוק אמפר-מקסוול אין מינוס: $\nabla\times\vec B = +\mu_0\varepsilon_0\,\partial\vec E/\partial t$.'
+
+  - id: Q-6.13-says
+    type: mc
+    objectives: [OBJ-6.13-2]
+    qualitative: true
+    prompt: >-
+      מה אומר $\nabla\times\vec B = \mu_0\vec J + \mu_0\varepsilon_0\,\partial\vec E/\partial t$ על נקודה בריק, שאין בה זרם, אבל השדה החשמלי בה משתנה?
+    choices:
+      - text: 'יש בה רוטור של $\vec B$: שדה חשמלי שמשתנה מסובב את השדה המגנטי גם בלי זרם.'
+        correct: true
+        feedback: 'נכון. זה בדיוק מה שקורה בין לוחות קבל שנטען: אין שם זרם הולכה, והרוטור של $\vec B$ הוא $\mu_0\varepsilon_0\,\partial\vec E/\partial t$.'
+      - text: 'הרוטור של $\vec B$ אפס, כי אין שם זרם.'
+        feedback: 'זה היה נכון לפני התיקון של מקסוול. האיבר $\mu_0\varepsilon_0\,\partial\vec E/\partial t$ נותן רוטור גם בלי זרם.'
+        misconception: MC-continuity-without-displacement
+      - text: 'השדה המגנטי בה אפס.'
+        feedback: 'המשוואה מדברת על הרוטור, לא על הערך. אפילו בלי שום שינוי בשדה החשמלי, השדה המגנטי בנקודה בלי זרם יכול להיות שונה מאפס, כמו ליד תיל.'
+      - text: 'יש בה דיברגנץ של $\vec B$.'
+        feedback: 'הדיברגנץ של $\vec B$ אפס תמיד. חוק אמפר-מקסוול עוסק ברוטור.'
+        misconception: MC-pole-is-magnetic-charge
+
+  # ------------------------------------------------ OBJ-6.13-3: the static and empty-space limits
+  - id: Q-6.13-static
+    type: mc
+    objectives: [OBJ-6.13-3]
+    qualitative: true
+    prompt: >-
+      מה נשאר מארבע משוואות מקסוול כששום דבר לא משתנה בזמן?
+    choices:
+      - text: '$\nabla\cdot\vec E = \rho/\varepsilon_0$, $\nabla\times\vec E = 0$, $\nabla\cdot\vec B = 0$, $\nabla\times\vec B = \mu_0\vec J$: שני זוגות נפרדים.'
+        correct: true
+        feedback: 'נכון. האלקטרוסטטיקה של פרקים 1 ו-2 והמגנטוסטטיקה של פרק 4. רק שינוי בזמן מחבר בין השדה החשמלי לשדה המגנטי.'
+      - text: 'אותן ארבע משוואות: האיברים עם $\partial/\partial t$ תמיד קטנים מכדי שישפיעו.'
+        feedback: 'בסטטיקה הם לא קטנים, הם אפס, ולכן חוק פאראדיי נעשה $\nabla\times\vec E = 0$. ומחוץ לסטטיקה הם לא תמיד קטנים: בכל תופעות ההשראה של פרק 5 הם העיקר.'
+      - text: '$\nabla\times\vec E = 0$ ו-$\nabla\times\vec B = 0$: בלי שינוי בזמן אין רוטור לשום שדה.'
+        feedback: 'גם בסטטיקה זרם קבוע יוצר רוטור של $\vec B$: $\nabla\times\vec B = \mu_0\vec J$, כמו בתוך תיל עבה.'
+      - text: 'רק $\nabla\cdot\vec E = \rho/\varepsilon_0$; את השאר צריך רק כשיש תנועה.'
+        feedback: '$\nabla\cdot\vec B = 0$ ו-$\nabla\times\vec B = \mu_0\vec J$ מתארים גם זרם קבוע ומגנטים, ו-$\nabla\times\vec E = 0$ הוא מה שנותן פוטנציאל.'
+
+  - id: Q-6.13-axis
+    type: vector
+    objectives: [OBJ-6.13-3]
+    qualitative: true
+    allowOutIn: true
+    prompt: >-
+      בליבה של סליל השדה המגנטי יוצא מהדף, והזרם בסליל **יורד**, כך שהשדה המגנטי נחלש. על הציר עצמו השדה החשמלי המושרה אפס. לאיזה כיוון מצביע $\nabla\times\vec E$ בנקודה על הציר?
+    answer: out
+    correctFeedback: 'נכון. $\nabla\times\vec E = -\partial\vec B/\partial t$. השדה המגנטי מצביע החוצה ונחלש, ולכן $\partial\vec B/\partial t$ פנימה, ו-$-\partial\vec B/\partial t$ החוצה. השדה החשמלי מסביב מסתובב נגד כיוון השעון, ומנסה לשמור על השטף (חוק לנץ).'
+    wrong:
+      - dir: zero
+        feedback: 'הרוטור תלוי בסירקולציה סביב הנקודה, לא בשדה בה. סביב לולאה זעירה על הציר הסירקולציה היא $-\dot\Phi_B$, לא אפס.'
+        misconception: MC-curl-zero-where-field-zero
+      - dir: in
+        feedback: 'זה הכיוון של $\partial\vec B/\partial t$. בחוק פאראדיי יש מינוס: $\nabla\times\vec E = -\partial\vec B/\partial t$, החוצה.'
+    wrongFeedback: 'מצאו את הכיוון של $\partial\vec B/\partial t$ (השדה החוצה ונחלש), והפכו אותו.'
+
+  - id: Q-6.13-empty
+    type: mc
+    objectives: [OBJ-6.13-3]
+    qualitative: true
+    prompt: >-
+      באזור ריק, בלי מטענים ובלי זרמים, אילו משוואות קושרות את השדה החשמלי לשדה המגנטי?
+    choices:
+      - text: '$\nabla\times\vec E = -\partial\vec B/\partial t$ ו-$\nabla\times\vec B = \mu_0\varepsilon_0\,\partial\vec E/\partial t$.'
+        correct: true
+        feedback: 'נכון. שדה מגנטי שמשתנה יוצר רוטור של $\vec E$, ושדה חשמלי שמשתנה יוצר רוטור של $\vec B$. כך השדות יכולים להחזיק זה את זה בלי מקורות, ומכאן הגלים של שיעור 6.14.'
+      - text: 'אף אחת: בלי מטענים ובלי זרמים אין שדות.'
+        feedback: 'בלי מקורות, שני חוקי גאוס נותנים $\nabla\cdot\vec E = \nabla\cdot\vec B = 0$, אבל זוג משוואות הרוטור עדיין קושר שדות שמשתנים. "ריק" פירושו בלי מקורות, לא בלי שדות.'
+      - text: '$\nabla\cdot\vec E = 0$ ו-$\nabla\cdot\vec B = 0$.'
+        feedback: 'שתי המשוואות האלה נכונות בריק, אבל כל אחת עוסקת בשדה אחד בלבד. הקשר בין השדות הוא בזוג משוואות הרוטור.'
+      - text: '$\nabla\times\vec E = 0$ ו-$\nabla\times\vec B = 0$.'
+        feedback: 'זה נכון רק אם בנוסף שום דבר לא משתנה. בריק עם שדות שמשתנים, הרוטורים הם $-\partial\vec B/\partial t$ ו-$\mu_0\varepsilon_0\,\partial\vec E/\partial t$.'
+        misconception: MC-curl-e-always-zero
+
+  - id: Q-6.13-outside
+    type: twotier
+    objectives: [OBJ-6.13-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בליבה של סליל ארוך השדה המגנטי גדל; מחוץ לליבה השדה המגנטי אפס בכל רגע. בנקודה מחוץ לליבה: האם יש שדה חשמלי מושרה?
+    choices:
+      - text: 'כן, אבל הרוטור שלו שם אפס.'
+        correct: true
+        feedback: נכון.
+      - text: 'לא, כי שם השדה המגנטי לא משתנה.'
+        feedback: 'השדה המגנטי שם לא משתנה, ולכן **הרוטור** של השדה החשמלי שם אפס. השדה עצמו קיים: מעגל סביב הליבה מקיף שטף שמשתנה, והסירקולציה סביבו לא אפס.'
+        misconception: MC-induced-e-only-inside
+      - text: 'כן, והרוטור שלו שם שווה ל-$-\partial B/\partial t$ שבליבה.'
+        feedback: 'הרוטור בנקודה תלוי במה שקורה **בנקודה**. מחוץ לליבה $\partial\vec B/\partial t = 0$, והרוטור אפס.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'מעגל סביב הליבה מקיף שטף משתנה, ולכן הסירקולציה סביבו $-d\Phi_B/dt \neq 0$; אבל לולאה זעירה מחוץ לליבה לא מקיפה שטף, ו-$\nabla\times\vec E = -\partial\vec B/\partial t = 0$ שם.'
+        correct: true
+        feedback: 'נכון. באיור 6.13א, מחוץ לליבה: השדה החשמלי לא אפס, והסירקולציה סביב הלולאה והרוטור אפס, כמו מחוץ לתיל דק בשיעור 6.8.'
+      - text: 'שדה חשמלי מושרה נוצר רק במקום שבו השדה המגנטי משתנה.'
+        feedback: 'במקום שבו השדה המגנטי משתנה נוצר **רוטור** של השדה החשמלי. השדה עצמו מתפשט גם החוצה, כמו שהשדה המגנטי של תיל קיים גם מחוץ לתיל.'
+        misconception: MC-induced-e-only-inside
+      - text: 'לשדה חשמלי תמיד אין רוטור.'
+        feedback: 'בתוך הליבה הרוטור $-\partial\vec B/\partial t \neq 0$. רק בסטטיקה הרוטור של $\vec E$ אפס תמיד.'
+        misconception: MC-curl-e-always-zero
+
+  # ------------------------------------------------ OBJ-6.13-4: charge conservation
+  - id: Q-6.13-continuity
+    type: mc
+    objectives: [OBJ-6.13-4]
+    qualitative: true
+    prompt: >-
+      בנקודה מסוימת $\nabla\cdot\vec J > 0$. מה אומרת משוואת הרציפות על צפיפות המטען שם?
+    choices:
+      - text: 'היא יורדת: יוצא מסביבת הנקודה יותר זרם ממה שנכנס.'
+        correct: true
+        feedback: 'נכון. $\partial\rho/\partial t = -\nabla\cdot\vec J < 0$. זה שימור המטען: מטען שיוצא חסר בפנים.'
+      - text: 'היא עולה: זרם נטו מביא מטען.'
+        feedback: '$\nabla\cdot\vec J > 0$ פירושו שזרם נטו **יוצא** מסביבת הנקודה, כמו שטף נטו החוצה. המטען בה יורד.'
+      - text: 'היא חיובית.'
+        feedback: 'משוואת הרציפות מדברת על **קצב השינוי** של $\rho$, לא על הערך שלה. זה ההבדל בינה לבין חוק גאוס, $\nabla\cdot\vec E = \rho/\varepsilon_0$.'
+      - text: 'היא לא משתנה: מטען נשמר.'
+        feedback: 'מטען נשמר בסך הכול, אבל הוא יכול לעבור ממקום למקום. מסביבת הנקודה הזו הוא יוצא.'
+
+  - id: Q-6.13-why-disp
+    type: twotier
+    objectives: [OBJ-6.13-4]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו חוק אמפר בצורה המקומית היה רק $\nabla\times\vec B = \mu_0\vec J$, בלי האיבר של מקסוול, מה היה נובע ממנו על $\nabla\cdot\vec J$?
+    choices:
+      - text: '$\nabla\cdot\vec J = 0$ בכל נקודה ובכל רגע.'
+        correct: true
+        feedback: נכון.
+      - text: 'שום דבר: חוק אמפר לא אומר כלום על $\nabla\cdot\vec J$.'
+        feedback: 'אם לוקחים דיברגנץ של שני הצדדים, צד שמאל הוא דיברגנץ של רוטור, תמיד אפס. לכן החוק כן אומר משהו: $\nabla\cdot\vec J = 0$.'
+        misconception: MC-continuity-without-displacement
+      - text: '$\nabla\cdot\vec J = -\partial\rho/\partial t$, משוואת הרציפות.'
+        feedback: 'משוואת הרציפות יוצאת רק **עם** איבר ההעתקה: ממנו, ומחוק גאוס, מגיע $\partial\rho/\partial t$. בלעדיו נשאר $\nabla\cdot\vec J = 0$.'
+        misconception: MC-continuity-without-displacement
+    reasonPrompt: ולמה זו בעיה?
+    reasons:
+      - text: 'כי אז מטען לא היה יכול להצטבר בשום מקום, ועל הלוח של קבל שנטען מטען כן מצטבר.'
+        correct: true
+        feedback: 'נכון. זה הפרדוקס של שיעור 6.12 בנקודה אחת. עם האיבר $\mu_0\varepsilon_0\,\partial\vec E/\partial t$ ועם חוק גאוס יוצא $\partial\rho/\partial t + \nabla\cdot\vec J = 0$, שמרשה למטען להצטבר בדיוק כמה שהזרם מביא.'
+      - text: 'זו לא בעיה: זרם ההעתקה נחוץ רק לגלים.'
+        feedback: 'זרם ההעתקה נחוץ גם לגלים, אבל קודם כול לעקביות: בלעדיו המשוואות סותרות את שימור המטען בכל קבל שנטען.'
+        misconception: MC-continuity-without-displacement
+      - text: 'כי זרם תמיד זורם במעגל סגור.'
+        feedback: 'זרם הולכה לא תמיד זורם במעגל סגור: בקבל שנטען הוא מגיע ללוח ונעצר שם. בדיוק בגלל זה $\nabla\cdot\vec J = 0$ שגוי.'
+
+  - id: Q-6.13-leak
+    type: numeric
+    objectives: [OBJ-6.13-4]
+    level: bagrut
+    prompt: >-
+      כדור ברדיוס $2\,\text{cm}$ טעון באחידות, וצפיפות המטען בו יורדת בקצב $5\cdot10^{-4}\,\text{C/(m}^3\cdot\text{s)}$ כי המטען זורם החוצה באופן רדיאלי ובאחידות. מה גודל צפיפות הזרם על פני הכדור? ענו ב-$\mu\text{A/m}^2$.
+    answer: 3.33
+    unit: μA/m²
+    tolerance: 0.02
+    correctFeedback: 'נכון. הזרם שיוצא דרך פני הכדור שווה לקצב שבו המטען בתוכו יורד: $J\cdot4\pi R^2 = \tfrac43\pi R^3\cdot5\cdot10^{-4}$, ולכן $J = \dfrac{R}{3}\cdot5\cdot10^{-4} = 3.33\cdot10^{-6}\,\text{A/m}^2$. אפשר לבדוק: $\nabla\cdot\vec J = 5\cdot10^{-4} = -\partial\rho/\partial t$.'
+    wrongFeedback: 'השתמשו במשוואת הרציפות בצורה האינטגרלית: הזרם נטו שיוצא דרך פני הכדור שווה לקצב שבו המטען שבתוכו קטן.'
+    commonWrong:
+      - value: 10
+        feedback: 'שכחתם את ה-$1/3$: הנפח של כדור הוא $\tfrac43\pi R^3$ והשטח $4\pi R^2$, והיחס ביניהם $R/3$, לא $R$.'
+      - value: -3.33
+        feedback: 'הגודל נכון. הזרם זורם החוצה, ונשאלתם על הגודל, שהוא חיובי.'

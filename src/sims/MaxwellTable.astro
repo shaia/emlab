@@ -1,0 +1,123 @@
+---
+/**
+ * MaxwellTable figure for lesson MDX: <Spread figure={MaxwellTable} figureProps={{…}}>.
+ * The table of the four laws is rendered here, at build time (KaTeX through src/lib/tex.ts), and passed
+ * to the island as children: the island only marks terms on it. Partner terms share a `data-pair`;
+ * `data-vanish` names the limit that strikes a term out.
+ */
+import { tex } from '~/lib/tex';
+import MaxwellTable, { type MaxwellTableProps } from './MaxwellTable';
+type Props = Omit<MaxwellTableProps, 'children'>;
+
+interface Term {
+  pair: string;
+  tex: string;
+  label: string;
+  vanish?: 'static' | 'empty';
+}
+type Piece = Term | string;
+interface Law {
+  name: string;
+  int: Piece[];
+  diff: Piece[];
+}
+
+const LAWS: Law[] = [
+  {
+    name: 'חוק גאוס',
+    int: [
+      { pair: 'gauss-e-flux', tex: String.raw`\oint_S \vec E\cdot d\vec A`, label: 'השטף החשמלי דרך משטח סגור' },
+      '=',
+      { pair: 'gauss-e-charge', tex: String.raw`\dfrac{Q_{\text{in}}}{\varepsilon_0}`, label: 'המטען הכלוא חלקי אפסילון אפס', vanish: 'empty' },
+    ],
+    diff: [
+      { pair: 'gauss-e-flux', tex: String.raw`\nabla\cdot\vec E`, label: 'הדיברגנץ של השדה החשמלי' },
+      '=',
+      { pair: 'gauss-e-charge', tex: String.raw`\dfrac{\rho}{\varepsilon_0}`, label: 'צפיפות המטען חלקי אפסילון אפס', vanish: 'empty' },
+    ],
+  },
+  {
+    name: 'חוק גאוס למגנטיות',
+    int: [
+      { pair: 'gauss-b-flux', tex: String.raw`\oint_S \vec B\cdot d\vec A`, label: 'השטף המגנטי דרך משטח סגור' },
+      '=',
+      { pair: 'gauss-b-zero', tex: '0', label: 'אפס: אין מטען מגנטי' },
+    ],
+    diff: [
+      { pair: 'gauss-b-flux', tex: String.raw`\nabla\cdot\vec B`, label: 'הדיברגנץ של השדה המגנטי' },
+      '=',
+      { pair: 'gauss-b-zero', tex: '0', label: 'אפס: אין מטען מגנטי' },
+    ],
+  },
+  {
+    name: 'חוק פאראדיי',
+    int: [
+      { pair: 'faraday-circ', tex: String.raw`\oint_C \vec E\cdot d\vec l`, label: 'הסירקולציה של השדה החשמלי' },
+      '=',
+      { pair: 'faraday-rate', tex: String.raw`-\dfrac{d\Phi_B}{dt}`, label: 'מינוס קצב השינוי של השטף המגנטי', vanish: 'static' },
+    ],
+    diff: [
+      { pair: 'faraday-circ', tex: String.raw`\nabla\times\vec E`, label: 'הרוטור של השדה החשמלי' },
+      '=',
+      { pair: 'faraday-rate', tex: String.raw`-\dfrac{\partial\vec B}{\partial t}`, label: 'מינוס קצב השינוי של השדה המגנטי בנקודה', vanish: 'static' },
+    ],
+  },
+  {
+    name: 'חוק אמפר-מקסוול',
+    int: [
+      { pair: 'ampere-circ', tex: String.raw`\oint_C \vec B\cdot d\vec l`, label: 'הסירקולציה של השדה המגנטי' },
+      '=',
+      { pair: 'ampere-current', tex: String.raw`\mu_0 I_{\text{in}}`, label: 'מיו אפס כפול זרם ההולכה הכלוא', vanish: 'empty' },
+      '+',
+      { pair: 'ampere-disp', tex: String.raw`\mu_0\varepsilon_0\dfrac{d\Phi_E}{dt}`, label: 'זרם ההעתקה: קצב השינוי של השטף החשמלי', vanish: 'static' },
+    ],
+    diff: [
+      { pair: 'ampere-circ', tex: String.raw`\nabla\times\vec B`, label: 'הרוטור של השדה המגנטי' },
+      '=',
+      { pair: 'ampere-current', tex: String.raw`\mu_0\vec J`, label: 'מיו אפס כפול צפיפות זרם ההולכה', vanish: 'empty' },
+      '+',
+      { pair: 'ampere-disp', tex: String.raw`\mu_0\varepsilon_0\dfrac{\partial\vec E}{\partial t}`, label: 'קצב השינוי של השדה החשמלי בנקודה', vanish: 'static' },
+    ],
+  },
+];
+
+const { term = 'gauss-e-flux', still = false, empty = false } = Astro.props;
+const cls = (t: Term) =>
+  ['mx-term', t.pair === term ? 'on' : '', (t.vanish === 'static' && still) || (t.vanish === 'empty' && empty) ? 'gone' : ''].filter(Boolean).join(' ');
+const html = (t: Term) => tex(`$${t.tex}$`, `MaxwellTable ${t.pair}`);
+---
+
+<MaxwellTable client:visible {...Astro.props}>
+  <div class="mx-table" role="group" aria-label="ארבע משוואות מקסוול: בכל שורה הצורה האינטגרלית והצורה הדיפרנציאלית. לחיצה על איבר מסמנת אותו ואת בן הזוג שלו בצורה השנייה.">
+    <div class="mx-head" aria-hidden="true">
+      <span></span><span>צורה אינטגרלית</span><span>צורה דיפרנציאלית</span>
+    </div>
+    {
+      LAWS.map((law) => (
+        <div class="mx-row">
+          <div class="mx-name">{law.name}</div>
+          {(['int', 'diff'] as const).map((form) => (
+            <div class={`mx-form mx-${form}`} dir="ltr">
+              <span class="mx-form-label">{form === 'int' ? 'אינטגרלית' : 'דיפרנציאלית'}</span>
+              {law[form].map((piece) =>
+                typeof piece === 'string' ? (
+                  <span class="mx-op">{piece}</span>
+                ) : (
+                  <button
+                    type="button"
+                    class={cls(piece)}
+                    data-pair={piece.pair}
+                    data-vanish={piece.vanish}
+                    aria-pressed={piece.pair === term ? 'true' : 'false'}
+                    aria-label={`${piece.label} (${form === 'int' ? 'צורה אינטגרלית' : 'צורה דיפרנציאלית'})`}
+                    set:html={html(piece)}
+                  />
+                ),
+              )}
+            </div>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</MaxwellTable>
