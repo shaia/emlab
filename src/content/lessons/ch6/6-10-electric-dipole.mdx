@@ -4,7 +4,7 @@ chapter: 6
 order: 10
 title: הדיפול החשמלי
 subtitle: למה השדה של זוג מטענים מנוגדים דועך מהר יותר משל מטען אחד, ומה עושה לו שדה חיצוני
-minutes: 60
+minutes: 80
 objectives:
   - id: OBJ-6.10-1
     text: להגדיר את מומנט הדיפול ⁦p = qd⁩ כווקטור שמצביע מהמטען השלילי אל החיובי, ולחשב את הפוטנציאל של דיפול רחוק, ⁦V = kp·cosθ/r²⁩.
@@ -149,6 +149,43 @@ $$
 - **התרחקות מהמרכז**, ב-$\Delta r$, כש-$\theta$ קבוע. הרכיב הוא מינוס <Term id="partial-derivative">הנגזרת החלקית</Term> לפי $r$: $E_r = -\dfrac{\partial V}{\partial r}$.
 - **סיבוב בזווית** $\Delta\theta$, כש-$r$ קבוע. זו תנועה לאורך קשת שאורכה $r\,\Delta\theta$ מטרים, ולכן קצב השינוי לכל מטר הוא $\dfrac{1}{r}\dfrac{\partial V}{\partial \theta}$, והרכיב $E_\theta = -\dfrac{1}{r}\dfrac{\partial V}{\partial \theta}$.
 
+בשרטוט: בנקודה P מסמנים שני **וקטורי יחידה**, וקטורים באורך 1 שמסמנים רק כיוון. $\hat r$ ממשיך את הקו מ-O החוצה, בכיוון שבו $r$ גדל. $\hat\theta$ ניצב לו ומשיק למעגל שמרכזו ב-O, בכיוון שבו $\theta$ גדלה: כש-$\vec p$ מצביע למעלה, זה כלפי מטה, הרחק מראש הציר. **למה $\tfrac1r$ ב-$E_\theta$:** צעד קטן $\Delta\theta$ מזיז את P לאורך $\hat\theta$ מרחק $r\,\Delta\theta$ ולא $\Delta\theta$, ולכן השינוי של $V$ לכל **מטר** הוא $\tfrac{\Delta V}{r\,\Delta\theta}$. רחוק מהמרכז אותו שינוי בזווית הוא צעד ארוך יותר, והשדה בכיוון הזה חלש יותר.
+
+<figure class="ltr-space" role="img" aria-label="הציר z פונה למעלה, ו-p לאורכו מהראשית O. נקודה P במרחק r מ-O, בזווית θ מהציר z. ב-P שני חצים באורך 1: r̂ ממשיך את הקו מ-O החוצה, ו-θ̂ ניצב לו ומשיק למעגל שמרכזו ב-O, בכיוון שבו θ גדלה, כלומר מוטה כלפי מטה, הרחק מראש הציר. קו מקווקו מראה שהרכיב של θ̂ לאורך z הוא sinθ כלפי מטה, כלומר −sinθ. קשת מקווקו מסמנת את המעגל: צעד קטן Δθ לאורכו הוא קשת באורך rΔθ." style="margin: 12px 0">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220" width="320" height="220" fill="none" stroke="currentColor" stroke-width="1.5" style="display: block; margin-inline: auto; max-width: 100%; height: auto">
+<defs>
+<marker id="ah-6-10-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor" stroke="none"/></marker>
+<marker id="ah-6-10-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--accent)" stroke="none"/></marker>
+</defs>
+<line x1="80" y1="205" x2="80" y2="18" marker-end="url(#ah-6-10-ink)"/>
+<line x1="80" y1="190" x2="80" y2="175" stroke-width="3.5"/>
+<path d="M74 176L80 163L86 176z" fill="currentColor" stroke="none"/>
+<path d="M80 50A140 140 0 0 1 217.9 165.7" stroke-dasharray="4 4" stroke-width="1"/>
+<line x1="80" y1="190" x2="170" y2="82.8"/>
+<path d="M80 160A30 30 0 0 1 99.3 167" stroke="var(--hand)"/>
+<line x1="170" y1="82.8" x2="204.5" y2="82.8" stroke-dasharray="3 3" stroke-width="1"/>
+<line x1="204.5" y1="82.8" x2="204.5" y2="111.7" stroke-dasharray="3 3" stroke-width="1"/>
+<line x1="170" y1="82.8" x2="198.9" y2="48.3" stroke="var(--accent)" stroke-width="2" marker-end="url(#ah-6-10-acc)"/>
+<line x1="170" y1="82.8" x2="204.5" y2="111.7" stroke="var(--accent)" stroke-width="2" marker-end="url(#ah-6-10-acc)"/>
+<circle cx="170" cy="82.8" r="3" fill="currentColor" stroke="none"/>
+<circle cx="80" cy="190" r="2.5" fill="currentColor" stroke="none"/>
+<g fill="currentColor" stroke="none" font-size="14" font-style="italic">
+<text x="88" y="24">z</text>
+<text x="62" y="182">p</text>
+<text x="66" y="206">O</text>
+<text x="156" y="76">P</text>
+<text x="112" y="132">r</text>
+<text x="96" y="155" fill="var(--hand)">θ</text>
+<text x="202" y="46" fill="var(--accent)">r</text>
+<path d="M202.5 34.5L206 31L209.5 34.5" stroke="var(--accent)" stroke-width="1.2" fill="none"/>
+<text x="210" y="126" fill="var(--accent)">θ</text>
+<path d="M210.5 111.5L214 108L217.5 111.5" stroke="var(--accent)" stroke-width="1.2" fill="none"/>
+<text x="210" y="102" font-size="12">sinθ</text>
+<text x="222" y="168" font-size="12">rΔθ</text>
+</g>
+</svg>
+</figure>
+
 גוזרים את $V = kp\cos\theta\cdot r^{-2}$. לפי $r$, עם כלל החזקה מ-6.1, $(r^{-2})' = -2r^{-3}$; לפי $\theta$, $(\cos\theta)' = -\sin\theta$:
 
 $$
@@ -173,7 +210,7 @@ $$
 
 <Step fig="fig-6-10a" set={{ scene: 'far', r: 1, dir: 'bisector' }} id="bisector-field">
 
-**על האנך האמצעי**, $\theta = 90^\circ$: $\cos\theta = 0$, ונשאר רק $E_\theta$. $\hat\theta$ הוא וקטור יחידה (וקטור באורך 1, שמסמן רק כיוון) בכיוון שבו $\theta$ גדלה: הכיוון שבו הולכים על המעגל כשמתרחקים מהקצה שאליו מצביע $\vec p$. על האנך הכיוון הזה מקביל לציר, ו**הפוך ל-$\vec p$**:
+**על האנך האמצעי**, $\theta = 90^\circ$: $\cos\theta = 0$, ונשאר רק $E_\theta$. $\hat\theta$, כמו בשרטוט שלמעלה, משיק למעגל בכיוון שבו $\theta$ גדלה, כלומר הרחק מהקצה שאליו מצביע $\vec p$. על האנך ($\theta = 90^\circ$) המשיק למעגל מקביל לציר, ו-$\hat\theta$ מצביע **הפוך ל-$\vec p$**:
 
 <Formula tex="E_{90^\circ} = \frac{kp}{r^3}" label="שדה דיפול רחוק, על האנך האמצעי (נגד p)" />
 
@@ -515,7 +552,7 @@ $$
 
 **החוק הכללי:** $E_r = \dfrac{2kp\cos\theta}{r^3}$, $E_\theta = \dfrac{kp\sin\theta}{r^3}$ (מ-$\vec E = -\nabla V$).
 
-**פיתוח:** וקטור היחידה $\hat r$ (מהמרכז החוצה) נוטה בזווית $\theta$ מציר z, ולכן הרכיב שלו לאורך z הוא $\cos\theta$. וקטור היחידה $\hat\theta$ ניצב ל-$\hat r$, בכיוון שבו $\theta$ גדלה, הרחק מראש החץ $\vec p$: הרכיב שלו לאורך z הוא $-\sin\theta$ (ב-$\theta = 90^\circ$ הוא מצביע בדיוק נגד z, כמו שמצאנו על האנך). לכן רכיב השדה לאורך הציר:
+**פיתוח:** וקטור היחידה $\hat r$ (מהמרכז החוצה) נוטה בזווית $\theta$ מציר z, ולכן הרכיב שלו לאורך z הוא $\cos\theta$. וקטור היחידה $\hat\theta$ ניצב ל-$\hat r$, בכיוון שבו $\theta$ גדלה, הרחק מראש החץ $\vec p$. מאיפה $-\sin\theta$? בשרטוט שבפיתוח (שלב הגרדיאנט), $\hat r$ נוטה בזווית $\theta$ **מהציר z**, ולכן $\hat\theta$, שניצב לו, נוטה באותה זווית $\theta$ **מהציר האופקי**, כלפי מטה. וקטור באורך 1 בזווית $\theta$ מתחת לאופק: הרכיב האופקי שלו $\cos\theta$, והרכיב האנכי $\sin\theta$ כלפי מטה, כלומר $-\sin\theta$ לאורך z (הקו המקווקו בשרטוט). בדיקה: ב-$\theta = 90^\circ$ הוא מצביע בדיוק נגד z, כמו שמצאנו על האנך, וב-$\theta = 0$ הוא אופקי. לכן רכיב השדה לאורך הציר:
 
 $$
 E_z = E_r\cos\theta - E_\theta\sin\theta = \frac{kp}{r^3}\left(2\cos^2\theta - \sin^2\theta\right)
