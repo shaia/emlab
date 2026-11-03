@@ -177,7 +177,9 @@ export default function DivCurlProbe(props: DivCurlProbeProps) {
         .map(([a, r]) => [a, clean(r, REF[s.field].ratio)] as const),
     [s.mode, s.field, cx, cy],
   );
-  const singular = enclosesSingularity(f, cx, cy, s.a);
+  // only a box around a line charge (flux λa/ε₀) or a loop around a thin wire (circulation μ₀I) blows up;
+  // a loop around a line charge has circulation 0 and a box around a wire has flux 0, so their limit is 0
+  const singular = enclosesSingularity(f, cx, cy, s.a) && (s.mode === 'box') === (f.kind === 'E');
   const ratio = clean(box ? box.ratio : loop!.ratio, ref.ratio);
   const limit = clean(box ? box.limit : loop!.limit, ref.ratio);
   const integral = clean(box ? box.flux : loop!.circulation, ref.ratio * s.a ** (box ? 3 : 2));
@@ -616,11 +618,9 @@ export default function DivCurlProbe(props: DivCurlProbeProps) {
           {singular ? (
             <span>
               <b>{s.field === 'line' ? 'הקו הטעון עובר בתוך הבדיקה' : 'התיל עובר בתוך הלולאה'}.</b>{' '}
-              {s.mode === 'box' && s.field === 'line'
+              {s.field === 'line'
                 ? 'השטף λa/ε₀ קטן כמו a, הנפח כמו a³, והיחס גדל בלי גבול כשהתיבה קטנה: אין כאן גבול.'
-                : s.mode === 'loop' && s.field === 'wire'
-                  ? 'הסירקולציה נשארת μ₀I, השטח קטן, והיחס גדל בלי גבול: אין כאן גבול.'
-                  : 'אין כאן גבול.'}
+                : 'הסירקולציה נשארת μ₀I, השטח קטן, והיחס גדל בלי גבול: אין כאן גבול.'}
             </span>
           ) : (
             <span>

@@ -509,7 +509,7 @@ challenge:
     source:
       name: JEE Advanced
       year: 2022
-      problem: 'Paper 2, Physics (multiple-correct; question number not shown on the page): charged disc, potential V(z) on its axis, extra constant force −c k̂, β = 2cε₀/(qσ); the options turned into open parts'
+      problem: 'Paper 2, Physics (multiple-correct; question number not shown on the page): charged disc, potential V(z) on its axis, extra constant force −c k̂, β = 2cε₀/(qσ); the options turned into open parts. The source page prints option (D) as "β > 1/4", a transcription error: with β = 0.5 and z₀ = 0.1R the particle oscillates between 0.1R and 1.17R and never reaches the origin. Part (ה) uses β > 1, the condition its own derivation proves'
       url: https://competishun.com/a-disk-of-radius-r-with-uniform-positive-charge-density-sigma-is-placed-on-the-x-y-plane-with-its-center-at-the-origin-the-coulomb-potential-along-the-z-axis-is-vzfracsigma2-epsilon_0leftsqrtr2z2-zrig/
       verified: '2026-11-02'
       adapted: true

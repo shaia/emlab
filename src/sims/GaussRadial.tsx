@@ -78,19 +78,24 @@ export default function GaussRadial(props: GaussRadialProps) {
   const [s, setS] = useState<State>(init);
   const [live, setLive] = useState('');
   const dragging = useRef(false);
-  const fromStep = useRef(false);
+  // the state a text step produced: it must not tick a task, only the student's own controls do. A boolean flag is not
+  // enough: on late hydration the step arrives synchronously during mount, and the mount render's effect consumed it.
+  const stepState = useRef<State | null>(null);
   const prev = useRef<State | null>(null);
   const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: TASK_LABEL[id] ?? id }));
 
   useEffect(
     () =>
       subscribeSteps(props.id, (st) => {
-        fromStep.current = true;
-        setS((p) => ({
-          scene: st.scene === 'ball' || st.scene === 'cylinder' ? st.scene : p.scene,
-          profile: isProfile(st.profile) ? st.profile : p.profile,
-          r: typeof st.r === 'number' ? clampR(st.r) : p.r,
-        }));
+        setS((p) => {
+          const next: State = {
+            scene: st.scene === 'ball' || st.scene === 'cylinder' ? st.scene : p.scene,
+            profile: isProfile(st.profile) ? st.profile : p.profile,
+            r: typeof st.r === 'number' ? clampR(st.r) : p.r,
+          };
+          stepState.current = next;
+          return next;
+        });
       }),
     [props.id],
   );
@@ -102,10 +107,8 @@ export default function GaussRadial(props: GaussRadialProps) {
   useEffect(() => {
     const before = prev.current;
     prev.current = s;
-    if (fromStep.current) {
-      fromStep.current = false;
-      return;
-    }
+    // neither the props' starting state nor a step's state is the student's doing
+    if (!before || s === stepState.current) return;
     const has = (t: string) => props.tasks?.includes(t);
     const done = (t: string) => markTask(`${props.id}:${t}`);
     if (has('cyl-inside') && s.scene === 'cylinder' && s.r <= R - 0.03) done('cyl-inside');

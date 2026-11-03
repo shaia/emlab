@@ -59,6 +59,9 @@ test.describe('live figure', () => {
     await canvas.press('Shift+ArrowLeft');
     for (let i = 0; i < 4; i++) await canvas.press('ArrowDown');
     await expect(readout).toContainText('∮E·dl = 0 V');
+    // the ratio is 0 for every a, so the limit exists: ∇×E = 0 even where the line runs
+    await expect(readout).toContainText('(∇×E)z = 0 V/m²');
+    await expect(readout).not.toContainText('אין כאן גבול');
     await expect(readout).toContainText('לא מסתובב');
     expect((await progress(page)).tasks['fig-6-8a:line-zero']).toBeTruthy();
   });

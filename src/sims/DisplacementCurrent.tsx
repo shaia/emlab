@@ -16,6 +16,7 @@
 
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { MU0 } from '~/physics/constants';
+import { straightWireField } from '~/physics/magnetism';
 import { capacitanceOf, gapField, gapState, surfaceCurrents, timeConstant, type ChargingCapacitor, type LoopAt, type Surface } from '~/physics/displacement';
 import { markTask } from '~/progress/store';
 import { motionAllowed } from '~/progress/settings';
@@ -106,7 +107,7 @@ export default function DisplacementCurrent(props: DisplacementCurrentProps) {
   const now = gapState(cap, s.t * tau);
   const surf: Surface = s.at === 'gap' ? 'flat' : s.surface;
   const cur = surfaceCurrents(s.at, surf, s.r / 100, cap.a, now.I);
-  const Bloop = s.at === 'wire' ? (MU0 * now.I) / (2 * Math.PI * (s.r / 100)) : gapField(now.I, s.r / 100, cap.a);
+  const Bloop = s.at === 'wire' ? straightWireField(now.I, s.r / 100) : gapField(now.I, s.r / 100, cap.a);
   const loopSum = Bloop * 2 * Math.PI * (s.r / 100);
   const rhs = MU0 * (cur.conduction + (s.maxwell ? cur.displacement : 0));
   const clash = Math.abs(loopSum - rhs) > 1e-3 * Math.max(loopSum, rhs, 1e-30);
@@ -190,7 +191,7 @@ export default function DisplacementCurrent(props: DisplacementCurrentProps) {
         { color: p.ink2, dash: [2, 4], label: 'השדה החשמלי E' },
       ]);
     } else {
-      const Bmax = (MU0 * I0) / (2 * Math.PI * cap.a);
+      const Bmax = straightWireField(I0, cap.a);
       const plot = makePlot(
         box,
         { min: 0, max: 2 * aCm, label: 'המרחק מהציר r (סנטימטרים)', ticks: [0, aCm / 2, aCm, 1.5 * aCm, 2 * aCm] },
@@ -198,7 +199,7 @@ export default function DisplacementCurrent(props: DisplacementCurrentProps) {
       );
       drawAxes(ctx, plot, p, { grid: true });
       // the wrong guess "like a wire" inside the plates, faint
-      drawCurve(ctx, plot, (x) => (x > 0.3 && x < aCm ? ((MU0 * g.I) / (2 * Math.PI * (x / 100))) * 1e9 : NaN), { color: withAlpha(p.ink3, 0.9), width: 1.4, dash: [3, 5] });
+      drawCurve(ctx, plot, (x) => (x > 0.3 && x < aCm ? straightWireField(g.I, x / 100) * 1e9 : NaN), { color: withAlpha(p.ink3, 0.9), width: 1.4, dash: [3, 5] });
       drawCurve(ctx, plot, (x) => gapField(g.I, x / 100, cap.a) * 1e9, { color: p.bfield, width: 3 });
       ctx.save();
       ctx.strokeStyle = withAlpha(p.ink2, 0.7);

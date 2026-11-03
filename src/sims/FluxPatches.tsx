@@ -79,17 +79,20 @@ export default function FluxPatches(props: FluxPatchesProps) {
   const [s, setS] = useState<State>(init);
   const [live, setLive] = useState('');
   const dragging = useRef(false);
-  // a state change that came from a text step must not tick a task: only the student's own controls do
-  const fromStep = useRef(false);
+  // the state a text step produced: it must not tick a task, only the student's own controls do. A boolean flag is not
+  // enough: on late hydration the step arrives synchronously during mount, and the mount render's effect consumed it.
+  const stepState = useRef<State | null>(null);
+  const mounted = useRef(false);
   const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: TASK_LABEL[id] ?? id }));
 
   useEffect(
     () =>
       subscribeSteps(props.id, (st) => {
-        fromStep.current = true;
         setS((prev) => {
           const [x, y] = clampXY(typeof st.x === 'number' ? st.x : prev.x, typeof st.y === 'number' ? st.y : prev.y);
-          return { n: typeof st.n === 'number' ? clampN(st.n) : prev.n, x, y };
+          const next: State = { n: typeof st.n === 'number' ? clampN(st.n) : prev.n, x, y };
+          stepState.current = next;
+          return next;
         });
       }),
     [props.id],
@@ -109,10 +112,10 @@ export default function FluxPatches(props: FluxPatchesProps) {
   }, [charges]);
 
   useEffect(() => {
-    if (fromStep.current) {
-      fromStep.current = false;
-      return;
-    }
+    // neither the props' starting state nor a step's state is the student's doing
+    const first = !mounted.current;
+    mounted.current = true;
+    if (first || s === stepState.current) return;
     const has = (t: string) => props.tasks?.includes(t);
     const done = (t: string) => markTask(`${props.id}:${t}`);
     if (has('refine') && inside && Math.abs(patchSum - gauss) / gauss < 0.01 && s.n > 1) done('refine');
