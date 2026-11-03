@@ -1,0 +1,7 @@
+---
+/** TwoFrames figure for lesson MDX: <Spread figure={TwoFrames} figureProps={{…}}>. */
+import TwoFrames, { type TwoFramesProps } from './TwoFrames';
+type Props = TwoFramesProps;
+---
+
+<TwoFrames client:visible {...Astro.props} />

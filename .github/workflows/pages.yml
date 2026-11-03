@@ -27,15 +27,16 @@ concurrency:
 
 jobs:
   # The end-to-end suite is split across shards: in one job, chapter 4 took it past Playwright's 25-minute
-  # globalTimeout. `build` needs every shard, so any red shard still publishes nothing.
+  # globalTimeout, and chapter 6 added a quarter more pages, so four shards. `build` needs every shard, so any red
+  # shard still publishes nothing.
   test:
-    name: test (shard ${{ matrix.shard }}/3)
+    name: test (shard ${{ matrix.shard }}/4)
     runs-on: ubuntu-latest
     timeout-minutes: 40
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3]
+        shard: [1, 2, 3, 4]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -60,7 +61,7 @@ jobs:
 
       - run: npx playwright install --with-deps chromium
       - name: End-to-end tests
-        run: npx playwright test --shard=${{ matrix.shard }}/3
+        run: npx playwright test --shard=${{ matrix.shard }}/4
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

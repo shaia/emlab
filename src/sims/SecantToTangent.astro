@@ -1,0 +1,7 @@
+---
+/** Lesson-6.1 figure: <Spread figure={SecantToTangent} figureProps={{…}}>. */
+import SecantToTangent, { type SecantToTangentProps } from './SecantToTangent';
+type Props = SecantToTangentProps;
+---
+
+<SecantToTangent client:visible {...Astro.props} />

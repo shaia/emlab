@@ -22,11 +22,14 @@ const workbooks = await lessonsWithWorkbook();
 const hasSummary = (await chaptersWithSummary()).has(n);
 const lessonTitle = (id: string) => chapter?.lessons.find((l) => l.id === id)?.title ?? '';
 
+const beyond = chapter?.beyondBagrut ?? false;
+// a chapter beyond the Bagrut keeps the `bagrut` keys but names its levels and multi-part problems for what they are
 const LEVELS = [
   { key: 'basic', label: 'בסיס' },
   { key: 'mid', label: 'בינוני' },
-  { key: 'bagrut', label: 'בגרות' },
+  { key: 'bagrut', label: beyond ? 'מתקדם' : 'בגרות' },
 ] as const;
+const fullLabel = beyond ? 'אתגרים' : 'שאלות בגרות';
 const countOf = (key: string) => byLesson.flatMap((g) => g.questions).filter((q) => q.level === key).length;
 const total = byLesson.reduce((s, g) => s + g.questions.length, 0);
 let counter = 0;
@@ -37,14 +40,23 @@ let counter = 0;
     <header class="sheet sheet-narrow">
       <p class="kicker">פרק {n} · {chapter?.title}</p>
       <h1>דף תרגול</h1>
-      <p class="p-lede">
-        כל שאלות הפרק במקום אחד, לפי שיעור ולפי רמה: <strong>בסיס</strong> לבדיקה שהבנתם את ההגדרות,
-        <strong>בינוני</strong> לחישובים ולנימוקים, <strong>בגרות</strong> לשאלות כמו בשאלון. בסוף הדף שאלות בגרות מלאות עם סעיפים.
-      </p>
+      {
+        beyond ? (
+          <p class="p-lede">
+            כל שאלות הפרק במקום אחד, לפי שיעור ולפי רמה: <strong>בסיס</strong> לבדיקה שהבנתם את ההגדרות,
+            <strong>בינוני</strong> לחישובים ולנימוקים, <strong>מתקדם</strong> לבעיות כמו בשבועות הראשונים באוניברסיטה. בסוף הדף אתגרים עם סעיפים.
+          </p>
+        ) : (
+          <p class="p-lede">
+            כל שאלות הפרק במקום אחד, לפי שיעור ולפי רמה: <strong>בסיס</strong> לבדיקה שהבנתם את ההגדרות,
+            <strong>בינוני</strong> לחישובים ולנימוקים, <strong>בגרות</strong> לשאלות כמו בשאלון. בסוף הדף שאלות בגרות מלאות עם סעיפים.
+          </p>
+        )
+      }
       <div class="level-filter" role="group" aria-label="סינון לפי רמה">
         <button type="button" class="btn" data-filter="all" aria-pressed="true">הכול ({total + bagrut.length})</button>
         {LEVELS.map((l) => <button type="button" class="btn" data-filter={l.key} aria-pressed="false">{l.label} ({countOf(l.key)})</button>)}
-        {bagrut.length > 0 && <button type="button" class="btn" data-filter="bagrut-full" aria-pressed="false">שאלות בגרות מלאות ({bagrut.length})</button>}
+        {bagrut.length > 0 && <button type="button" class="btn" data-filter="bagrut-full" aria-pressed="false">{beyond ? fullLabel : 'שאלות בגרות מלאות'} ({bagrut.length})</button>}
       </div>
       <div class="p-links">
         <a class="btn primary" href={url(`test/ch${n}/`)}>למבחן הפרק</a>
@@ -84,8 +96,10 @@ let counter = 0;
     {
       bagrut.length > 0 && (
         <section class="sheet sheet-narrow practice-bagrut" data-bagrut-group aria-labelledby="pl-bagrut">
-          <h2 id="pl-bagrut">שאלות בגרות</h2>
-          <p class="p-lede">שאלות בפורמט של השאלון: תרחיש אחד וכמה סעיפים. בסעיפי הפתרון המלא כותבים פתרון, משווים לפתרון לדוגמה ומסמנים את מה שעשיתם נכון.</p>
+          <h2 id="pl-bagrut">{fullLabel}</h2>
+          <p class="p-lede">
+            {beyond ? 'בעיות רב-סעיפיות: תרחיש אחד וכמה סעיפים.' : 'שאלות בפורמט של השאלון: תרחיש אחד וכמה סעיפים.'} בסעיפי הפתרון המלא כותבים פתרון, משווים לפתרון לדוגמה ומסמנים את מה שעשיתם נכון.
+          </p>
           {bagrut.map((q, i) => (
             <AnyQuestion client:visible q={q} kind="practice" label={`שאלה ${i + 1}`} />
           ))}

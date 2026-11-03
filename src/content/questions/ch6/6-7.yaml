@@ -1,0 +1,209 @@
+# Lesson 6.7 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are rendered at
+# build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number was recomputed with src/physics/constants.ts (EPS0_DISPLAY) and src/physics/divcurl.ts; the
+# script is r67.ts in the session scratchpad. The data differ on purpose from figure 6.7א and the worked examples.
+
+chapter: 6
+questions:
+  # ------------------------------------------------ OBJ-6.7-1: the definition, and divergence in components
+  - id: Q-6.7-define
+    type: mc
+    objectives: [OBJ-6.7-1]
+    qualitative: true
+    prompt: >-
+      מה מודד הדיברגנץ $\nabla\cdot\vec E$ בנקודה?
+    choices:
+      - text: 'את השטף נטו שיוצא מתיבה זעירה סביב הנקודה, חלקי הנפח של התיבה, בגבול שהתיבה מתכווצת.'
+        correct: true
+        feedback: 'נכון. זו ההגדרה: שטף נטו ליחידת נפח. ברכיבים היא נותנת $\partial E_x/\partial x + \partial E_y/\partial y + \partial E_z/\partial z$.'
+      - text: 'את עוצמת השדה בנקודה.'
+        feedback: 'עוצמת השדה היא $|\vec E|$. הדיברגנץ מודד כמה השדה **משתנה** סביב הנקודה: בשדה אחיד וחזק הוא אפס.'
+        misconception: MC-strong-field-big-divergence
+      - text: 'את השטף נטו דרך תיבה סביב הנקודה, בלי לחלק בנפח.'
+        feedback: 'בלי החלוקה בנפח, השטף דרך תיבה זעירה שואף לאפס כשהתיבה מתכווצת. החלוקה בנפח היא שנותנת מספר ששייך לנקודה.'
+      - text: 'עד כמה קווי השדה מתעקלים סביב הנקודה.'
+        feedback: 'התעקלות של קווים קשורה יותר לרוטור (שיעור 6.8), וגם שם לא בדיוק. הדיברגנץ עוסק בשטף שיוצא מתיבה, לא בצורת הקווים.'
+
+  - id: Q-6.7-components
+    type: numeric
+    objectives: [OBJ-6.7-1]
+    level: mid
+    prompt: >-
+      באזור מסוים השדה החשמלי הוא $\vec E = \beta\,(2x,\ -y,\ 3z)$, עם $\beta = 5\cdot10^{3}\,\text{N}/(\text{C}\cdot\text{m})$. מה $\nabla\cdot\vec E$? ענו ב-$\text{N}/(\text{C}\cdot\text{m})$.
+    answer: 20000
+    unit: N/(C·m)
+    tolerance: 0.02
+    correctFeedback: 'נכון. $\partial E_x/\partial x = 2\beta$, $\partial E_y/\partial y = -\beta$, $\partial E_z/\partial z = 3\beta$, והסכום $4\beta = 2\cdot10^{4}\,\text{N}/(\text{C}\cdot\text{m})$.'
+    wrongFeedback: 'גזרו כל רכיב לפי המשתנה **שלו** בלבד ($E_x$ לפי $x$ וכן הלאה), ושמרו על הסימנים.'
+    commonWrong:
+      - value: 30000
+        feedback: 'חיברתם $2 + 1 + 3$. הרכיב $E_y = -\beta y$ קטן כשעולים ב-$y$, ולכן הנגזרת שלו $-\beta$: הוא מחסיר, לא מוסיף.'
+      - value: 25000
+        feedback: 'שכחתם את הרכיב $E_y$. כל שלושת הרכיבים נכנסים לסכום.'
+      - value: 5000
+        feedback: 'הצבתם רק את $\beta$. הדיברגנץ הוא סכום של שלוש נגזרות: $2\beta - \beta + 3\beta$.'
+
+  - id: Q-6.7-rank-graded
+    type: rank
+    objectives: [OBJ-6.7-1, OBJ-6.7-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      במוט ארוך ברדיוס $R$ צפיפות המטען גדלה עם המרחק מהציר, $\rho = \rho_0\,s/R$, ומחוץ למוט אין מטען. דרגו את $\nabla\cdot\vec E$ בארבע נקודות, מהגדול לקטן.
+    items:
+      - { id: A, label: 'על הציר, $s = 0$' }
+      - { id: B, label: 'בתוך המוט, $s = R/2$' }
+      - { id: C, label: 'בתוך המוט, $s = 0.8R$' }
+      - { id: D, label: 'מחוץ למוט, $s = 1.5R$, שם השדה חזק' }
+    order: [C, B, [A, D]]
+    correctFeedback: 'נכון. $\nabla\cdot\vec E = \rho/\varepsilon_0$, ו-$\rho$ גדל עם $s$ בתוך המוט. על הציר $\rho = 0$, ובחוץ אין מטען, ולכן בשתי הנקודות האלה הדיברגנץ אפס, אף שבחוץ השדה חזק יותר מבציר.'
+    wrongFeedback: 'הדיברגנץ שווה ל-$\rho/\varepsilon_0$ בנקודה, ולא לעוצמת השדה שם. איפה הצפיפות הגדולה ביותר, ואיפה היא אפס?'
+
+  # ------------------------------------------------ OBJ-6.7-2: ∇·E = ρ/ε₀, and ∇·E = 0 is not E = 0
+  - id: Q-6.7-beside-line
+    type: twotier
+    objectives: [OBJ-6.7-2]
+    qualitative: true
+    prompt: >-
+      במרחק $2\,\text{cm}$ מקו טעון ארוך השדה החשמלי הוא $9000\,\text{N/C}$. מה $\nabla\cdot\vec E$ בנקודה הזו?
+    choices:
+      - text: 'אפס.'
+        correct: true
+        feedback: נכון.
+      - text: 'חיובי וגדול, כי השדה שם חזק.'
+        feedback: 'עוצמת השדה לא קובעת את הדיברגנץ. מה שקובע הוא אם יש מטען בנקודה.'
+        misconception: MC-strong-field-big-divergence
+      - text: 'אי אפשר לדעת בלי לדעת את $\lambda$.'
+        feedback: '$\lambda$ קובע כמה השדה חזק, אבל לא את הדיברגנץ מחוץ לקו: שם הוא אפס בכל מקרה.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'בנקודה אין מטען, ו-$\nabla\cdot\vec E = \rho/\varepsilon_0$.'
+        correct: true
+        feedback: 'נכון. בתיבה זעירה סביב הנקודה אין מטען, ולכן השטף שנכנס אליה שווה לשטף שיוצא ממנה. באיור 6.7א רואים את זה בתיבה שליד הקו.'
+      - text: 'קווי השדה מתפזרים הרחק מהקו, ולכן יוצא מכל תיבה יותר שטף ממה שנכנס.'
+        feedback: 'הקווים אכן מתפזרים, אבל בדיוק בקצב שבו השדה נחלש. בתיבה שליד הקו השטף שנכנס ליד הקו שווה לשטף שיוצא בצד הרחוק.'
+        misconception: MC-strong-field-big-divergence
+      - text: 'יש שם שדה, ושדה תמיד יוצא ממקור, ולכן הדיברגנץ לא אפס.'
+        feedback: 'השדה יוצא מהקו, ושם הדיברגנץ לא אפס (אין לו בכלל ערך סופי). בנקודה ריקה, גם כשיש בה שדה, הדיברגנץ אפס.'
+
+  - id: Q-6.7-no-charge-region
+    type: mc
+    objectives: [OBJ-6.7-2]
+    qualitative: true
+    prompt: >-
+      מדדו את השדה החשמלי בכל נקודה של חדר, ומצאו ש-$\nabla\cdot\vec E = 0$ בכל מקום בחדר. מה אפשר להסיק?
+    choices:
+      - text: 'שאין מטען באוויר שבחדר. השדה עצמו יכול להיות שונה מאפס.'
+        correct: true
+        feedback: 'נכון. $\nabla\cdot\vec E = \rho/\varepsilon_0$, ולכן דיברגנץ אפס אומר $\rho = 0$. שדה של מטענים שמחוץ לחדר, או שדה אחיד, עובר בחדר בלי דיברגנץ.'
+      - text: 'שאין שדה חשמלי בחדר.'
+        feedback: 'שדה אחיד, או השדה של קו טעון מחוץ לחדר, שניהם שונים מאפס, והדיברגנץ של שניהם אפס. דיברגנץ אפס מעיד על היעדר מטען, לא על היעדר שדה.'
+        misconception: MC-div-zero-means-field-zero
+      - text: 'שהשדה אחיד בכל החדר.'
+        feedback: 'שדה אחיד הוא רק דוגמה אחת. גם השדה ליד קו טעון משתנה ממקום למקום, ובכל זאת הדיברגנץ שלו אפס מחוץ לקו.'
+      - text: 'שהשטף דרך כל משטח בחדר, גם משטח פתוח, הוא אפס.'
+        feedback: 'הדיברגנץ עוסק בשטף **נטו** דרך משטח **סגור**. דרך חלון פתוח בשדה אחיד עובר שטף גם כשהדיברגנץ אפס.'
+        misconception: MC-div-zero-means-field-zero
+
+  - id: Q-6.7-balloon
+    type: numeric
+    objectives: [OBJ-6.7-2]
+    level: mid
+    prompt: >-
+      כדור פורח מודד את הרכיב האנכי של השדה החשמלי, $E_z$ (חיובי כלפי מעלה). בגובה $2.0\,\text{km}$ הוא מודד $-10\,\text{kV/m}$, ובגובה $2.4\,\text{km}$ הוא מודד $+30\,\text{kV/m}$; בין הגבהים השינוי לינארי, והשדה לא משתנה בכיוונים האופקיים. מה צפיפות המטען בשכבה? ענו בננו-קולון למטר מעוקב ($\text{nC/m}^3$), עם סימן.
+    answer: 0.885
+    unit: nC/m³
+    tolerance: 0.03
+    correctFeedback: 'נכון. רק $\partial E_z/\partial z$ שונה מאפס: $\dfrac{3\cdot10^{4} - (-10^{4})}{400} = 100\,\text{V/m}^2$, ו-$\rho = \varepsilon_0\cdot100 = 8.85\cdot10^{-10}\,\text{C/m}^3$, מטען חיובי.'
+    wrongFeedback: 'השתמשו ב-$\rho = \varepsilon_0\,\partial E_z/\partial z$, עם השינוי בשדה חלקי השינוי בגובה, במטרים.'
+    commonWrong:
+      - value: -0.885
+        feedback: 'הסימן הפוך. $E_z$ **גדל** כשעולים (מ-$-10$ ל-$+30\,\text{kV/m}$), ולכן הנגזרת חיובית והמטען חיובי.'
+      - value: 885
+        feedback: 'חילקתם בהפרש הגבהים בקילומטרים ($0.4$) במקום במטרים ($400$).'
+      - value: 0.4425
+        feedback: 'לקחתם הפרש של $30 - 10 = 20\,\text{kV/m}$. השדה עבר מ-$-10$ ל-$+30$: השינוי $40\,\text{kV/m}$.'
+
+  - id: Q-6.7-axis
+    type: mc
+    objectives: [OBJ-6.7-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בציר של מוט ארוך שטעון באחידות, בצפיפות $\rho$, השדה החשמלי הוא אפס. מה $\nabla\cdot\vec E$ שם?
+    choices:
+      - text: '$\rho/\varepsilon_0$, כמו בכל נקודה אחרת בתוך המוט.'
+        correct: true
+        feedback: 'נכון. השדה אפס בציר, אבל הוא גדל לכל הכיוונים כשמתרחקים ממנו, ולכן מתיבה זעירה סביב הציר יוצא שטף נטו. באיור 6.7א רואים את זה כשמביאים את התיבה לציר.'
+      - text: 'אפס, כי השדה שם אפס.'
+        feedback: 'הדיברגנץ תלוי בשינוי של השדה סביב הנקודה, לא בערך שלו בה. בציר יש מטען, ולכן הדיברגנץ $\rho/\varepsilon_0$.'
+        misconception: MC-zero-field-zero-divergence
+      - text: 'אינסופי, כי כל קווי השדה יוצאים מהציר.'
+        feedback: 'הקווים יוצאים מכל נקודה במוט, לא רק מהציר: המטען מפוזר בכל הנפח באחידות, ולכן הדיברגנץ סופי ושווה בכל נקודה.'
+      - text: '$\rho/(2\varepsilon_0)$, כי השדה בתוך המוט הוא $\rho s/(2\varepsilon_0)$.'
+        feedback: 'זו הנגזרת של רכיב אחד בלבד. שני רכיבים גדלים, $E_x$ עם $x$ ו-$E_y$ עם $y$, וכל אחד תורם $\rho/(2\varepsilon_0)$.'
+
+  # ------------------------------------------------ OBJ-6.7-3: the divergence theorem
+  - id: Q-6.7-inner-faces
+    type: twotier
+    objectives: [OBJ-6.7-3]
+    qualitative: true
+    prompt: >-
+      מחלקים תיבה גדולה ל-8 תיבות קטנות, ומחשבים את השטף נטו של כל אחת. מה הסכום של שמונת השטפים, לעומת השטף נטו של התיבה הגדולה?
+    choices:
+      - text: 'שווה לו.'
+        correct: true
+        feedback: נכון.
+      - text: 'גדול ממנו, כי לתיבות הקטנות יש יחד יותר פאות.'
+        feedback: 'הפאות הנוספות הן פנימיות, וכל אחת משותפת לשתי תיבות. דרכן השטף נספר פעם בפלוס ופעם במינוס.'
+        misconception: MC-inner-faces-count
+      - text: 'קטן ממנו פי 8.'
+        feedback: 'כל תיבה קטנה תורמת חלק מהשטף, והחלקים יחד נותנים את כולו, לא שמינית ממנו.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'דרך פאה משותפת, מה שיוצא מתיבה אחת נכנס לשכנה, והשטף שלה מתבטל בסכום.'
+        correct: true
+        feedback: 'נכון. נשארות רק הפאות החיצוניות, שהן הפאות של התיבה הגדולה. זה משפט הדיברגנץ בקטן, וזה מה שהאיור מראה כשמחלקים את התיבה.'
+      - text: 'על הפאות הפנימיות השדה אפס.'
+        feedback: 'השדה על פאה פנימית לא חייב להיות אפס. השטף דרכה פשוט נספר פעמיים, בסימנים הפוכים.'
+      - text: 'כל פאה פנימית נספרת פעמיים, ולכן יש להוסיף אותה פעמיים.'
+        feedback: 'היא נספרת פעמיים, אבל בסימנים הפוכים: האנך החוצה של תיבה אחת הוא האנך פנימה של השכנה.'
+        misconception: MC-inner-faces-count
+
+  - id: Q-6.7-sphere-flux
+    type: numeric
+    objectives: [OBJ-6.7-3]
+    level: mid
+    prompt: >-
+      באזור מסוים הדיברגנץ של השדה החשמלי אחיד, $\nabla\cdot\vec E = 3\cdot10^{4}\,\text{N}/(\text{C}\cdot\text{m})$. מה השטף נטו דרך פני כדור ברדיוס $10\,\text{cm}$, כשהכדור כולו בתוך האזור? ענו ב-$\text{N}\cdot\text{m}^2/\text{C}$.
+    answer: 125.7
+    unit: N·m²/C
+    tolerance: 0.02
+    correctFeedback: 'נכון. לפי משפט הדיברגנץ, השטף הוא האינטגרל של הדיברגנץ על הנפח. הדיברגנץ אחיד, ולכן $\Phi = 3\cdot10^{4}\cdot\tfrac43\pi(0.1)^3 \approx 126\,\text{N}\cdot\text{m}^2/\text{C}$.'
+    wrongFeedback: 'השטף דרך משטח סגור הוא האינטגרל של $\nabla\cdot\vec E$ על **הנפח** שהמשטח סוגר.'
+    commonWrong:
+      - value: 3770
+        feedback: 'כפלתם בשטח פני הכדור, $4\pi r^2$. לפי משפט הדיברגנץ כופלים בנפח הכדור, $\tfrac43\pi r^3$.'
+      - value: 30
+        feedback: 'כפלתם ב-$r^3$ בלי $\tfrac43\pi$: הנפח של כדור הוא $\tfrac43\pi r^3$.'
+      - value: 377
+        feedback: 'כתבתם את נפח הכדור כ-$4\pi r^3$. הנפח הוא $\tfrac43\pi r^3$, פי שלושה פחות.'
+
+  - id: Q-6.7-point-charge
+    type: mc
+    objectives: [OBJ-6.7-3, OBJ-6.7-2]
+    qualitative: true
+    level: bagrut
+    prompt: >-
+      הדיברגנץ של השדה של מטען נקודתי $q$ הוא אפס בכל נקודה חוץ מהמטען עצמו. ובכל זאת, השטף דרך פני כדור שמקיפים אותו הוא $q/\varepsilon_0$. איך זה מתיישב עם משפט הדיברגנץ?
+    choices:
+      - text: 'כל הדיברגנץ מרוכז בנקודה שבה המטען: שם הוא לא סופי, והאינטגרל שלו על הכדור הוא $q/\varepsilon_0$.'
+        correct: true
+        feedback: 'נכון. זה כמו כדור טעון שמתכווץ עם אותו מטען: הצפיפות גדלה, הנפח קטן, והאינטגרל נשאר $q/\varepsilon_0$. גם באיור 6.7א, תיבה שמכילה את הקו הטעון נותנת יחס שגדל בלי גבול.'
+      - text: 'משפט הדיברגנץ לא נכון לשדות של מטענים נקודתיים.'
+        feedback: 'המשפט נכון, אבל צריך לכלול את הנקודה שבה המטען. שם הדיברגנץ "אינסופי", והאינטגרל שלו סופי.'
+      - text: 'השטף דרך פני הכדור הוא בעצם אפס, כי הדיברגנץ אפס.'
+        feedback: 'השטף הוא $q/\varepsilon_0$ (חוק גאוס, שיעור 1.7). הדיברגנץ אפס בכל נקודה **ריקה**, אבל פני הכדור מקיפים גם את הנקודה שבה המטען.'
+        misconception: MC-div-zero-means-field-zero
+      - text: 'השדה על פני הכדור מתבטל, ולכן נשאר רק המטען.'
+        feedback: 'השדה על פני הכדור לא מתבטל: הוא $kq/r^2$ בכל נקודה, החוצה. השאלה היא רק איפה "נמצא" הדיברגנץ.'

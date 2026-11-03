@@ -1,0 +1,235 @@
+# Lesson 6.8 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are rendered at
+# build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number was recomputed with src/physics/constants.ts (MU0) and src/physics/divcurl.ts; the script is
+# r68.ts in the session scratchpad. The data differ on purpose from figure 6.8א and the worked examples.
+
+chapter: 6
+questions:
+  # ------------------------------------------------ OBJ-6.8-1: the definition, components and direction
+  - id: Q-6.8-define
+    type: mc
+    objectives: [OBJ-6.8-1]
+    qualitative: true
+    prompt: >-
+      מה מודד הרכיב $(\nabla\times\vec B)_z$ בנקודה במישור הדף?
+    choices:
+      - text: 'את הסירקולציה של $\vec B$ סביב לולאה זעירה בדף סביב הנקודה, נגד כיוון השעון, חלקי השטח של הלולאה.'
+        correct: true
+        feedback: 'נכון. זו ההגדרה: סירקולציה ליחידת שטח, בגבול שהלולאה מתכווצת. ברכיבים היא $\partial B_y/\partial x - \partial B_x/\partial y$.'
+      - text: 'עד כמה קווי השדה שעוברים בנקודה מתעקלים.'
+        feedback: 'צורת הקווים לא קובעת את הרוטור: בשכבת זרם הקווים ישרים והרוטור לא אפס, ומחוץ לתיל דק הקווים מעגלים והרוטור אפס.'
+        misconception: MC-curl-means-circles
+      - text: 'את השטף נטו שיוצא מתיבה זעירה סביב הנקודה, חלקי הנפח שלה.'
+        feedback: 'זה הדיברגנץ (שיעור 6.7). הרוטור עוסק בסירקולציה סביב לולאה, לא בשטף דרך משטח סגור.'
+      - text: 'את הסירקולציה סביב לולאה זעירה, בלי לחלק בשטח.'
+        feedback: 'בלי החלוקה בשטח, הסירקולציה של לולאה זעירה שואפת לאפס. החלוקה בשטח נותנת מספר ששייך לנקודה.'
+
+  - id: Q-6.8-components
+    type: numeric
+    objectives: [OBJ-6.8-1]
+    level: mid
+    prompt: >-
+      באזור מסוים השדה המגנטי הוא $\vec B = \beta\,(-3y,\ x,\ 0)$, עם $\beta = 5\cdot10^{-4}\,\text{T/m}$. מה $(\nabla\times\vec B)_z$? ענו ב-$\text{mT/m}$ (מיליטסלה למטר), עם סימן.
+    answer: 2
+    unit: mT/m
+    tolerance: 0.02
+    correctFeedback: 'נכון. $\partial B_y/\partial x = \beta$ ו-$\partial B_x/\partial y = -3\beta$, ולכן $(\nabla\times\vec B)_z = \beta - (-3\beta) = 4\beta = 2\cdot10^{-3}\,\text{T/m}$.'
+    wrongFeedback: 'השתמשו ב-$(\nabla\times\vec B)_z = \partial B_y/\partial x - \partial B_x/\partial y$: $B_y$ נגזר לפי $x$, ו-$B_x$ לפי $y$.'
+    commonWrong:
+      - value: -2
+        feedback: 'הפכתם את סדר החיסור, $\partial B_x/\partial y - \partial B_y/\partial x$. הרכיב החיובי הוא $\partial B_y/\partial x - \partial B_x/\partial y$: סיבוב נגד כיוון השעון.'
+      - value: -1
+        feedback: 'חיברתם את הנגזרות במקום לחסר: $\beta + (-3\beta) = -2\beta$. ברוטור **מחסרים** את $\partial B_x/\partial y$.'
+      - value: 0.002
+        feedback: 'זו התשובה ב-$\text{T/m}$. השאלה מבקשת $\text{mT/m}$: $2\cdot10^{-3}\,\text{T/m} = 2\,\text{mT/m}$.'
+      - value: 0.5
+        feedback: 'ספרתם רק את $\partial B_y/\partial x$. גם $B_x = -3\beta y$ משתנה בכיוון $y$, ותורם $3\beta$.'
+
+  - id: Q-6.8-direction
+    type: vector
+    objectives: [OBJ-6.8-1, OBJ-6.8-2]
+    qualitative: true
+    allowOutIn: true
+    prompt: >-
+      בשדה $\vec B = c\,(y,\ 0,\ 0)$, עם $c > 0$, הקווים ישרים: ימינה מעל ציר $x$ ושמאלה מתחתיו. לאיזה כיוון מצביע $\nabla\times\vec B$?
+    answer: in
+    correctFeedback: 'נכון. $(\nabla\times\vec B)_z = 0 - \partial(cy)/\partial y = -c < 0$: לתוך הדף. גלגל משוטים בדף מסתובב עם כיוון השעון: הלהב העליון נדחף ימינה, התחתון שמאלה.'
+    wrong:
+      - dir: out
+        feedback: 'הגודל נכון, הסימן לא: הלהב העליון נדחף ימינה והתחתון שמאלה, כלומר סיבוב עם כיוון השעון, ולפי כלל יד ימין האגודל לתוך הדף.'
+      - dir: zero
+        feedback: 'הקווים ישרים, אבל הגודל של השדה משתנה בכיוון הניצב להם. זה שדה גזירה, והרוטור שלו לא אפס.'
+        misconception: MC-curl-means-circles
+      - dir: e
+        feedback: 'הרוטור של שדה שמונח בדף ניצב לדף: הוא מתאר סיבוב בדף, והציר של סיבוב כזה יוצא מהדף או נכנס אליו.'
+    wrongFeedback: 'חשבו את $\partial B_y/\partial x - \partial B_x/\partial y$, ותרגמו את הסימן לכיוון בכלל יד ימין.'
+
+  # ------------------------------------------------ OBJ-6.8-2: line shape is not curl
+  - id: Q-6.8-shear
+    type: twotier
+    objectives: [OBJ-6.8-2]
+    qualitative: true
+    prompt: >-
+      בתוך שכבה עבה של זרם, כל קווי השדה המגנטי ישרים ומקבילים, והשדה חזק יותר ככל שמתרחקים מקו האמצע. האם $\nabla\times\vec B$ שם שונה מאפס?
+    choices:
+      - text: 'כן.'
+        correct: true
+        feedback: נכון.
+      - text: 'לא, כי הקווים ישרים.'
+        feedback: 'צורת הקווים לא קובעת את הרוטור. מה שקובע הוא אם הסירקולציה סביב לולאה זעירה שונה מאפס.'
+        misconception: MC-curl-means-circles
+      - text: 'רק בקצוות השכבה, שם השדה מפסיק לגדול.'
+        feedback: 'הרוטור הוא $\mu_0 J$ בכל נקודה בתוך השכבה, כי בכל נקודה בה זורם זרם. בקצה הוא קופץ לאפס.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'בלולאה זעירה, הצלע שבצד החזק תורמת יותר מהצלע שבצד החלש, והסירקולציה לא מתקזזת.'
+        correct: true
+        feedback: 'נכון. גלגל משוטים קטן מסתובב שם במקום, כמו העלה ליד גדת הנהר. ובחוק אמפר המקומי: יש שם זרם, ולכן $\nabla\times\vec B = \mu_0\vec J \neq 0$.'
+      - text: 'רוטור שונה מאפס רק כשהקווים מקיפים משהו.'
+        feedback: 'זו בדיוק הטעות: מחוץ לתיל דק הקווים מקיפים אותו, והרוטור אפס; בשכבת זרם הם לא מקיפים כלום, והרוטור לא אפס.'
+        misconception: MC-curl-means-circles
+      - text: 'כי השדה חזק.'
+        feedback: 'לשדה אחיד וחזק יש רוטור אפס. מה שחשוב הוא איך השדה משתנה בכיוון הניצב לו.'
+
+  - id: Q-6.8-vortex
+    type: mc
+    objectives: [OBJ-6.8-2]
+    qualitative: true
+    prompt: >-
+      במרחק $2\,\text{cm}$ מתיל דק וארוך שזורם בו זרם, קווי השדה המגנטי הם מעגלים סביב התיל. מה $\nabla\times\vec B$ בנקודה הזו?
+    choices:
+      - text: 'אפס.'
+        correct: true
+        feedback: 'נכון. בנקודה אין זרם, ולכן $\nabla\times\vec B = \mu_0\vec J = 0$. ברכיבים, השדה $\propto(-y,\ x)/s^2$ נותן הפרש נגזרות אפס, וגלגל משוטים קטן שם לא מסתובב במקום.'
+      - text: 'שונה מאפס, כי הקווים מעגליים.'
+        feedback: 'קווים מעגליים לא אומרים רוטור. סביב לולאה זעירה שלא מקיפה את התיל, הצלע הקרובה לתיל תורמת נגד ההליכה והרחוקות בכיוונה, והתרומות מתקזזות בדיוק (בשיעור 4.4: התרומה של כל קטע תלויה רק בזווית שבה רואים אותו מהתיל).'
+        misconception: MC-curl-means-circles
+      - text: '$\mu_0 I$, כמו הסירקולציה סביב התיל.'
+        feedback: '$\mu_0 I$ היא הסירקולציה סביב מסלול **שמקיף** את התיל. לולאה זעירה סביב הנקודה לא מקיפה אותו, והסירקולציה שלה אפס.'
+      - text: 'גדול, כי קרוב לתיל השדה חזק.'
+        feedback: 'עוצמת השדה לא קובעת את הרוטור. גם לשדה אחיד וחזק יש רוטור אפס.'
+
+  - id: Q-6.8-rank-wheels
+    type: rank
+    objectives: [OBJ-6.8-2, OBJ-6.8-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מניחים גלגל משוטים זעיר בארבעה מקומות. דרגו את $|\nabla\times\vec B|$ בהם, מהגדול לקטן.
+    items:
+      - { id: A, label: 'בתוך שכבת זרם עם $J = 10^{4}\,\text{A/m}^2$' }
+      - { id: B, label: 'בתוך תיל עבה, ברדיוס $5\,\text{cm}$, עם $10\,\text{A}$ אחידים' }
+      - { id: C, label: 'במרחק $2\,\text{cm}$ מתיל דק עם $10\,\text{A}$' }
+      - { id: D, label: 'בשדה מגנטי אחיד של $1\,\text{T}$' }
+    order: [A, B, [C, D]]
+    correctFeedback: 'נכון. $|\nabla\times\vec B| = \mu_0 J$: בשכבה $\mu_0\cdot10^{4} \approx 1.26\cdot10^{-2}\,\text{T/m}$, בתיל העבה $J \approx 1273\,\text{A/m}^2$ ו-$\mu_0 J = 1.6\cdot10^{-3}\,\text{T/m}$. מחוץ לתיל הדק ובשדה האחיד אין זרם, והרוטור אפס, אף שהשדה האחיד הוא החזק מכולם.'
+    wrongFeedback: 'הרוטור של $\vec B$ הוא $\mu_0\vec J$ בנקודה: איפה זורם זרם, ובאיזו צפיפות? צורת הקווים ועוצמת השדה לא קובעות.'
+
+  - id: Q-6.8-slab-centre
+    type: mc
+    objectives: [OBJ-6.8-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      על קו האמצע של שכבת זרם עבה השדה המגנטי אפס. מה $\nabla\times\vec B$ שם?
+    choices:
+      - text: '$\mu_0 J$, כמו בכל נקודה בתוך השכבה.'
+        correct: true
+        feedback: 'נכון. מעל קו האמצע השדה שמאלה ומתחתיו ימינה, ולכן לולאה זעירה סביב קו האמצע מקבלת סירקולציה. באיור 6.8א הגלגל מסתובב שם, אף שבמרכזו אין שדה.'
+      - text: 'אפס, כי השדה שם אפס.'
+        feedback: 'הרוטור תלוי בשינוי של השדה סביב הנקודה, לא בערך שלו בה. ובנקודה זורם זרם, ולכן $\nabla\times\vec B = \mu_0\vec J \neq 0$.'
+        misconception: MC-curl-zero-where-field-zero
+      - text: 'אפס, כי הקווים ישרים.'
+        feedback: 'שדה גזירה, עם קווים ישרים, יכול להיות בעל רוטור. כאן הוא $\mu_0 J$.'
+        misconception: MC-curl-means-circles
+      - text: 'כפול מבשאר השכבה, כי שם השדה מחליף כיוון.'
+        feedback: 'השדה בשכבה הוא $-\mu_0 J y$, והשיפוע שלו זהה בכל גובה. לכן הרוטור $\mu_0 J$ בכל נקודה, גם על קו האמצע.'
+
+  # ------------------------------------------------ OBJ-6.8-3: ∇×E = 0, ∇×B = μ₀J, Stokes
+  - id: Q-6.8-curl-e
+    type: twotier
+    objectives: [OBJ-6.8-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מישהו טוען שמדד באזור ריק את השדה $\vec E = a\,(3y,\ -x,\ 0)$, עם $a > 0$, ושהשדה נוצר על ידי מטענים במנוחה. האם זה אפשרי?
+    choices:
+      - text: 'לא.'
+        correct: true
+        feedback: נכון.
+      - text: 'כן, כי $\nabla\cdot\vec E = 0$, כמו שצריך באזור בלי מטען.'
+        feedback: 'הדיברגנץ אכן אפס, אבל שדה של מטענים במנוחה צריך גם רוטור אפס. כאן $(\nabla\times\vec E)_z = -4a$.'
+      - text: 'כן, אם המטענים נמצאים מחוץ לאזור.'
+        feedback: 'שדה של מטענים במנוחה, בכל מקום שהם, הוא משמר, ולכן הרוטור שלו אפס בכל מקום.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: '$(\nabla\times\vec E)_z = -a - 3a = -4a \neq 0$, ולשדה אלקטרוסטטי יש רוטור אפס.'
+        correct: true
+        feedback: 'נכון. סביב כל לולאה בשדה הזה הסירקולציה לא אפס, כלומר מטען שמקיף אותה מקבל עבודה בכל סיבוב, וזה לא ייתכן בשדה משמר (שיעור 2.1).'
+      - text: 'הקווים שלו מקיפים את הראשית, ולשדה אלקטרוסטטי אין קווים סגורים.'
+        feedback: 'הנימוק לא מספיק: מה שאסור הוא סירקולציה, לא צורה. כאן הקווים מקיפים את הראשית, אבל ההכרעה באה מהרוטור: שדה עם קווים ישרים יכול להיות אסור באותה מידה.'
+        misconception: MC-curl-means-circles
+      - text: 'שדה אלקטרוסטטי חייב לצאת ממטען, ולכן הדיברגנץ שלו לא יכול להיות אפס.'
+        feedback: 'באזור ריק הדיברגנץ של שדה אלקטרוסטטי אפס, כמו ליד קו טעון. הבעיה בשדה הזה היא הרוטור.'
+
+  - id: Q-6.8-loop-around-line
+    type: mc
+    objectives: [OBJ-6.8-3]
+    qualitative: true
+    prompt: >-
+      לולאה ריבועית מקיפה קו טעון ארוך, עם $\lambda > 0$. מה הסירקולציה של $\vec E$ סביבה, $\oint \vec E\cdot d\vec l$?
+    choices:
+      - text: 'אפס.'
+        correct: true
+        feedback: 'נכון. השדה האלקטרוסטטי משמר, והסירקולציה שלו אפס סביב כל מסלול, גם סביב מטען. באיור 6.8א רואים את זה כשהלולאה מקיפה את הקו.'
+      - text: '$\lambda/\varepsilon_0$, כמו בחוק אמפר.'
+        feedback: 'בחוק אמפר הסירקולציה של $\vec B$ תלויה בזרם הכלוא. למטען הכלוא תלוי **השטף** של $\vec E$, לא הסירקולציה שלו.'
+        misconception: MC-electrostatic-curl-nonzero
+      - text: 'חיובית, כי השדה יוצא מהקו לכל הכיוונים.'
+        feedback: 'השדה יוצא מהקו, כלומר הוא ניצב למעגלים סביבו. לאורך הלולאה חלק מהתרומות חיוביות וחלק שליליות, והן מתקזזות.'
+        misconception: MC-electrostatic-curl-nonzero
+      - text: 'תלויה בגודל הלולאה.'
+        feedback: 'הסירקולציה של שדה אלקטרוסטטי אפס סביב כל לולאה, בכל גודל ובכל מקום.'
+
+  - id: Q-6.8-current-density
+    type: numeric
+    objectives: [OBJ-6.8-3, OBJ-6.8-1]
+    level: bagrut
+    prompt: >-
+      בתיל עבה ברדיוס $3\,\text{mm}$ הזרם מפוזר באחידות, ועל פני התיל מודדים שדה מגנטי של $2\cdot10^{-3}\,\text{T}$. בתוך התיל השדה גדל בקו ישר עם המרחק מהציר, $\vec B = \kappa\,(-y,\ x,\ 0)$. השתמשו ב-$\nabla\times\vec B = \mu_0\vec J$ כדי למצוא את צפיפות הזרם. ענו ב-$\text{A/m}^2$.
+    answer: 1061000
+    unit: A/m²
+    tolerance: 0.03
+    correctFeedback: 'נכון. הגודל של $\kappa(-y,\ x,\ 0)$ הוא $\kappa s$, ולכן $\kappa = B/R = 2\cdot10^{-3}/0.003 \approx 0.667\,\text{T/m}$. $(\nabla\times\vec B)_z = 2\kappa \approx 1.33\,\text{T/m}$, ו-$J = 2\kappa/\mu_0 \approx 1.06\cdot10^{6}\,\text{A/m}^2$. (בדיקה: $I = J\pi R^2 \approx 30\,\text{A}$, ו-$\mu_0 I/(2\pi R) = 2\cdot10^{-3}\,\text{T}$.)'
+    wrongFeedback: 'מצאו את $\kappa$ מהשדה הנמדד, חשבו את $(\nabla\times\vec B)_z$ ברכיבים, והשתמשו ב-$\nabla\times\vec B = \mu_0\vec J$.'
+    commonWrong:
+      - value: 530500
+        feedback: 'שכחתם את אחד משני האיברים: $\partial B_y/\partial x = \kappa$ **וגם** $-\partial B_x/\partial y = \kappa$. הרוטור $2\kappa$.'
+      - value: 1061
+        feedback: 'הצבתם את הרדיוס במילימטרים. $R = 3\cdot10^{-3}\,\text{m}$.'
+
+  - id: Q-6.8-stokes-sum
+    type: twotier
+    objectives: [OBJ-6.8-3]
+    qualitative: true
+    prompt: >-
+      מחלקים לולאה גדולה ל-9 לולאות קטנות, ובכולן הולכים נגד כיוון השעון. מה סכום הסירקולציות של תשע הלולאות, לעומת הסירקולציה של הלולאה הגדולה?
+    choices:
+      - text: 'שווה לה.'
+        correct: true
+        feedback: נכון.
+      - text: 'גדול ממנה, כי יש יותר צלעות.'
+        feedback: 'הצלעות הנוספות פנימיות, וכל אחת משותפת לשתי לולאות. לאורכה הולכים פעם בכיוון אחד ופעם בהפוך.'
+        misconception: MC-stokes-inner-edges-count
+      - text: 'אפס, כי הלולאות מבטלות זו את זו.'
+        feedback: 'רק הצלעות הפנימיות מתבטלות. הצלעות של הלולאה הגדולה נשארות, ונותנות את הסירקולציה שלה.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'בכל צלע פנימית הולכים פעמיים, בכיוונים הפוכים, והתרומות שלה מתבטלות.'
+        correct: true
+        feedback: 'נכון. זה משפט סטוקס בקטן. בגבול של לולאות זעירות, כל אחת תורמת $(\nabla\times\vec F)\cdot d\vec A$, והסכום הוא השטף של הרוטור.'
+      - text: 'על הצלעות הפנימיות השדה אפס.'
+        feedback: 'השדה על צלע פנימית לא חייב להיות אפס. התרומה שלה מתבטלת בגלל כיווני ההליכה ההפוכים.'
+      - text: 'כל צלע פנימית נספרת פעמיים, ולכן צריך להוסיף אותה פעמיים.'
+        feedback: 'היא נספרת פעמיים, אבל בסימנים הפוכים, כי בשתי הלולאות הולכים לאורכה בכיוונים הפוכים.'
+        misconception: MC-stokes-inner-edges-count

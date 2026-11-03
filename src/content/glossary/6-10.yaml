@@ -1,0 +1,56 @@
+# Lesson 6.10 terms (the electric dipole). Format and rules: see glossary/1-5.yaml.
+# "דיפול" itself is defined in 1-5.yaml (id dipole); "קיטוב" in 1-2.yaml (id polarization).
+
+- id: dipole-moment
+  term: מומנט דיפול
+  en: electric dipole moment
+  symbol: '\vec p = q\vec d'
+  unit: C·m
+  definition: 'הווקטור שמתאר דיפול: גודלו p = qd, המטען q כפול המרחק d בין שני המטענים, וכיוונו מהמטען השלילי אל החיובי. רחוק מהדיפול השדה תלוי רק ב-p, ולא ב-q וב-d לחוד.'
+  reject: [מומנט דיפולי]
+  lesson: '6.10'
+
+- id: dipole-axis
+  term: ציר הדיפול
+  en: dipole axis
+  definition: 'הקו הישר שעובר דרך שני המטענים של דיפול. הקו שניצב לו ועובר באמצע בין המטענים הוא האנך האמצעי.'
+  lesson: '6.10'
+
+- id: point-dipole
+  term: דיפול נקודתי
+  en: point dipole
+  definition: 'דיפול שהמרחק בין מטעניו קטן מאוד לעומת המרחק שממנו מסתכלים עליו (r ≫ d). השדה שלו נקבע רק על ידי מומנט הדיפול p: על הציר 2kp/r³, ועל האנך האמצעי kp/r³.'
+  lesson: '6.10'
+
+- id: log-log-graph
+  term: גרף לוגריתמי
+  en: log-log graph
+  definition: 'גרף ששני הצירים שלו מסומנים בחזקות של 10, כך שכל צעד שווה על ציר הוא הכפלה פי 10. בגרף כזה קשר מהצורה y = C·xⁿ נראה כקו ישר, והשיפוע שלו הוא החזקה n: לשדה של מטען נקודתי, 1/r², השיפוע ‎−2‎.'
+  lesson: '6.10'
+
+- id: polar-molecule
+  term: מולקולה קוטבית
+  en: polar molecule
+  definition: 'מולקולה ניטרלית שיש לה מומנט דיפול גם בלי שדה חיצוני, כי המטען השלילי שלה מרוכז יותר בצד אחד. מולקולת המים היא הדוגמה המוכרת. בשדה חשמלי מומנט כוח מסובב אותה כך שהמומנט שלה יפנה בכיוון השדה.'
+  lesson: '6.10'
+
+- id: induced-dipole
+  term: דיפול מושרה
+  en: induced dipole
+  definition: 'דיפול שנוצר באטום או במולקולה ניטרליים כששדה חשמלי מזיז מעט את ענן האלקטרונים ביחס לגרעין. בשדה לא חזק מדי, מומנט הדיפול המושרה ביחס ישר לשדה ובכיוונו.'
+  lesson: '6.10'
+
+- id: polarization-vector
+  term: וקטור הקיטוב
+  en: polarization (dipole moment per unit volume)
+  symbol: '\vec P'
+  unit: C/m²
+  definition: 'מומנט הדיפול ליחידת נפח של חומר מקוטב: אם בכל מטר מעוקב יש n מולקולות, ולכל אחת מומנט p באותו כיוון, אז P = np. יחידותיו C·m למטר מעוקב, כלומר C/m², כמו של צפיפות מטען משטחית.'
+  lesson: '6.10'
+
+- id: bound-charge
+  term: מטען קשור
+  en: bound charge
+  symbol: '\sigma_b'
+  definition: 'המטען שנשאר על פני חומר מבודד מקוטב. בתוך החומר הקצה החיובי של כל מולקולה צמוד לקצה השלילי של שכנתה, והמטענים מבטלים זה את זה; על הפנים נשארת שכבה לא מבוטלת, שצפיפותה σ = P. המטען קשור למולקולות ואינו יכול לזרום.'
+  lesson: '6.10'

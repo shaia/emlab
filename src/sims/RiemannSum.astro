@@ -1,0 +1,7 @@
+---
+/** Lesson-6.2 figure: <Spread figure={RiemannSum} figureProps={{…}}>. */
+import RiemannSum, { type RiemannSumProps } from './RiemannSum';
+type Props = RiemannSumProps;
+---
+
+<RiemannSum client:visible {...Astro.props} />

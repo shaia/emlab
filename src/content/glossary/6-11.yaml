@@ -1,0 +1,34 @@
+# Lesson 6.11 terms. Format and rules: see glossary/1-5.yaml.
+# The cross product itself (מכפלה וקטורית) belongs to lesson 6.3, which teaches it; this lesson explains it in prose
+# where it is used and defines no term for it, so the two lessons cannot collide on one id.
+
+- id: current-element
+  term: אלמנט זרם
+  en: current element
+  symbol: 'I\,d\vec\ell'
+  unit: A·m
+  definition: 'חתיכה קטנה מאוד של תיל שזורם בו זרם I, באורך dℓ, קטנה מספיק כדי שאפשר יהיה לטפל בה כמו בנקודה. הווקטור dℓ מצביע לאורך התיל, בכיוון הזרם. אלמנט הזרם הוא למגנטיות מה שאלמנט המטען dq הוא לחשמל: השדה של התיל כולו הוא האינטגרל של השדות של כל האלמנטים שלו.'
+  lesson: '6.11'
+
+- id: biot-savart-law
+  term: חוק ביו-סבר
+  en: Biot–Savart law
+  symbol: 'd\vec B = \frac{\mu_0}{4\pi}\,\frac{I\,d\vec\ell\times\hat r}{r^2}'
+  unit: T
+  definition: 'החוק שנותן את השדה המגנטי שיוצר אלמנט זרם אחד בנקודה במרחק r ממנו: גודלו μ₀I·dℓ·sinφ/(4πr²), כאשר φ היא הזווית בין dℓ לבין הווקטור מהאלמנט אל הנקודה, וכיוונו ניצב לשניהם, לפי כלל יד ימין. השדה של תיל בכל צורה הוא האינטגרל של התרומות האלה לאורך התיל. נקרא על שם ז׳אן-בטיסט ביו ופליקס סבר, שמדדו ב-1820 את השדה של תיל ישר.'
+  reject: [חוק ביו-סאבר, חוק ביו סבר, חוק ביוט-סבארט]
+  lesson: '6.11'
+
+- id: magnetic-dipole-moment
+  term: מומנט דיפול מגנטי
+  en: magnetic dipole moment
+  symbol: 'm = IA'
+  unit: A·m²
+  definition: 'המכפלה של הזרם בכריכה בשטח שהיא מקיפה, m = I·A, בכיוון האנך לכריכה (כלל יד ימין). רחוק מכריכה, השדה שלה תלוי רק ב-m ולא בצורה או בגודל שלה, ויורד כמו 1/r³, בדיוק כמו השדה של דיפול חשמלי. על הציר הוא μ₀m/(2πz³).'
+  lesson: '6.11'
+
+- id: magnetic-dipole
+  term: דיפול מגנטי
+  en: magnetic dipole
+  definition: 'מקור של שדה מגנטי שנראה מרחוק כמו כריכה קטנה עם זרם, או כמו מגנט מוט קטן: קווי השדה שלו יוצאים מצד אחד וחוזרים לצד השני, והשדה יורד כמו 1/r³. גודלו נקבע על ידי מומנט הדיפול המגנטי.'
+  lesson: '6.11'

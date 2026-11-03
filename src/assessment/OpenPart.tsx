@@ -12,8 +12,11 @@ import './question.css';
 
 const STEP_LABEL: Record<OpenPartData['solution'][number]['kind'], string> = {
   formula: 'נוסחה מדף הנוסחאות',
+  law: 'החוק הכללי',
   manipulation: 'סידור הביטוי',
   substitution: 'הצבה עם יחידות',
+  limit: 'בדיקת גבולות',
+  units: 'בדיקת יחידות',
   result: 'תוצאה: ספרות משמעותיות ויחידות',
 };
 

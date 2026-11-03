@@ -1,0 +1,23 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the upload description support; the
+# length comes from the watch page (lengthSeconds).
+
+- id: v-6-6-line-integrals
+  youtubeId: t3cJYNdQLYg
+  title: 'Line integrals and vector fields | Multivariable Calculus | Khan Academy'
+  channel: Khan Academy
+  lang: en
+  captions: []
+  minutes: 17
+  why: 'שיעור באנגלית מקורס החשבון הרב-ממדי של Khan Academy: לפי תיאור הסרטון, הוא משתמש באינטגרל קווי כדי למצוא את העבודה שעושה שדה וקטורי על חלקיק שנע בו. השוו לחיתוך של מסלול לחתיכות קטנות ולסכום ∫E·dl שבשיעור.'
+  verified: '2026-11-02'
+
+- id: v-6-6-steepest-ascent
+  youtubeId: TEB2z7ZlRAw
+  title: 'Why the gradient is the direction of steepest ascent'
+  channel: Khan Academy
+  lang: en
+  captions: []
+  minutes: 11
+  why: 'סרטון באנגלית של Khan Academy: לפי התיאור שלו, הוא מראה איך הדרך שבה מחשבים את הגרדיאנט (מהנגזרות החלקיות) קשורה לפירוש שלו ככיוון העלייה התלולה ביותר. זה הטיעון של הנגזרת הכיוונית שבשיעור.'
+  verified: '2026-11-02'

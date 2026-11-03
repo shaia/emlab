@@ -1,0 +1,55 @@
+# Lesson 6.2 terms (chapter 6 core). Format and rules: see glossary/1-5.yaml.
+
+- id: riemann-sum
+  term: סכום רימן
+  en: Riemann sum
+  definition: 'קירוב לשטח שמתחת לגרף: מחלקים את הקטע ל-N חתיכות ברוחב Δx, ובכל חתיכה כופלים את גובה הפונקציה ב-Δx. הסכום Σf(xᵢ)Δx מתקרב לאינטגרל כש-N גדל.'
+  lesson: '6.2'
+
+- id: integral
+  term: אינטגרל
+  en: integral
+  symbol: '\int f(x)\,dx'
+  definition: 'הגבול של סכום רימן כשמספר החתיכות שואף לאינסוף ורוחבן לאפס: סכום של אינסוף חתיכות קטנות. אינטגרל מסוים מ-a עד b הוא השטח המסומן שבין הגרף לציר x, כשהשטח מתחת לציר נספר בסימן מינוס. יחידותיו הן יחידות f כפול יחידות x; למשל, האינטגרל של הכוח לאורך הדרך הוא העבודה.'
+  reject: [אינטגראל]
+  lesson: '6.2'
+
+- id: antiderivative
+  term: פונקציה קדומה
+  en: antiderivative
+  symbol: F(x)
+  definition: 'פונקציה F שהנגזרת שלה היא f, כלומר F′ = f. לכל פונקציה יש אינסוף פונקציות קדומות, שנבדלות זו מזו בקבוע.'
+  lesson: '6.2'
+
+- id: fundamental-theorem
+  term: המשפט היסודי
+  en: fundamental theorem of calculus
+  definition: 'המשפט שמקשר בין נגזרת לאינטגרל: האינטגרל של f מ-a עד b שווה ל-F(b) − F(a), כאשר F היא פונקציה קדומה של f. כך מחשבים אינטגרל בלי לסכום חתיכות.'
+  lesson: '6.2'
+
+- id: integration-bounds
+  term: גבולות האינטגרציה
+  en: limits of integration
+  symbol: 'a,\ b'
+  definition: 'שני קצות הקטע שעליו מחשבים אינטגרל מסוים: a למטה ו-b למעלה בסימן ∫ₐᵇ. אל תבלבלו עם גבול (lim) של שיעור 6.1: כאן אלה פשוט נקודת ההתחלה ונקודת הסוף של הקטע.'
+  lesson: '6.2'
+
+- id: signed-area
+  term: שטח מסומן
+  en: signed area
+  definition: 'השטח שבין גרף לציר x, כשהחלק שמעל הציר נספר בפלוס והחלק שמתחת לציר במינוס. האינטגרל המסוים הוא השטח המסומן. בגרף מהירות-זמן השטח המסומן הוא ההעתק, והשטח בלי סימנים הוא הדרך.'
+  lesson: '6.2'
+
+- id: area-function
+  term: פונקציית השטח
+  en: area function
+  symbol: 'A(x)'
+  definition: 'השטח המסומן מתחת לגרף של f מנקודת התחלה קבועה a עד נקודה משתנה x: A(x) = ∫ₐˣ f. המשפט היסודי אומר שהנגזרת שלה היא f עצמה, כלומר A היא פונקציה קדומה של f.'
+  lesson: '6.2'
+
+- id: integration-constant
+  term: קבוע האינטגרציה
+  en: constant of integration
+  symbol: C
+  definition: 'הקבוע C שמוסיפים לפונקציה קדומה, F(x) + C: לקבוע אין נגזרת, ולכן כל הפונקציות F + C נגזרות לאותה f. באינטגרל מסוים הוא מצטמצם, כי F(b) + C − (F(a) + C) = F(b) − F(a).'
+  lesson: '6.2'

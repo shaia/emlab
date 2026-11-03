@@ -1,0 +1,22 @@
+# Lesson 6.5 terms (chapter 6 core). Format and rules: see glossary/1-5.yaml.
+
+- id: area-vector
+  term: וקטור שטח
+  en: area vector
+  symbol: 'd\vec A'
+  definition: 'וקטור שגודלו שטח של חתיכה קטנה של משטח, וכיוונו האנך למשטח. במשטח סגור הוא מצביע החוצה. השטף דרך החתיכה הוא E·dA.'
+  lesson: '6.5'
+
+- id: surface-integral
+  term: אינטגרל משטח
+  en: surface integral
+  symbol: '\int \vec E\cdot d\vec A'
+  definition: 'סכום של גודל מסוים על פני כל החתיכות הקטנות של משטח, בגבול שהחתיכות קטנות לאפס. השטף ∮E·dA הוא אינטגרל משטח על משטח סגור; העיגול על סימן האינטגרל מסמן משטח סגור.'
+  lesson: '6.5'
+
+- id: volume-element
+  term: אלמנט נפח
+  en: volume element
+  symbol: 'dV'
+  definition: 'חתיכה קטנה מאוד של נפח, שבה אפשר להתייחס לצפיפות כקבועה. בבעיות עם סימטריה כדורית לוקחים קליפה דקה ברדיוס r ובעובי dr, שנפחה dV = 4πr²·dr; בגליל, קליפה גלילית באורך L, שנפחה dV = 2πrL·dr. המטען בה הוא dq = ρ·dV.'
+  lesson: '6.5'

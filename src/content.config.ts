@@ -36,7 +36,8 @@ const lessons = defineCollection({
     order: z.number().int().min(1),
     title: z.string(),
     subtitle: z.string().optional(),
-    minutes: z.number().int().min(5).max(60),
+    // the 60-minute cap applies to the Bagrut chapters only and lives in lint-content; chapter 6 has no cap
+    minutes: z.number().int().min(5).max(180),
     objectives: z.array(objective).min(1),
     prerequisites: z.array(z.string()).default([]),
     videos: z.array(z.string()).default([]),
@@ -145,7 +146,8 @@ const openBody = {
   type: z.literal('open'),
   /** the model solution in Bagrut format, one step per entry */
   solution: z
-    .array(z.object({ kind: z.enum(['formula', 'manipulation', 'substitution', 'result']), text: z.string() }))
+    // `law`, `limit` and `units` are the chapter 6 (beyond the Bagrut) steps: general law, limit check, unit check
+    .array(z.object({ kind: z.enum(['formula', 'law', 'manipulation', 'substitution', 'limit', 'units', 'result']), text: z.string() }))
     .min(1),
   /** the checklist the student ticks against their own work */
   rubric: z.array(z.object({ text: z.string(), weight: z.number().positive().default(1) })).min(2),
@@ -238,9 +240,12 @@ const videos = defineCollection({
 
 /* ---- Lesson workbook: open practice problems and sourced challenge problems, answers hidden ---- */
 
-/** One step of a written solution in Bagrut format; the last one is the `result`. */
+/**
+ * One step of a written solution in Bagrut format; the last one is the `result`. Chapter 6 (beyond the Bagrut)
+ * adds `law` (the general law it starts from), `limit` (the limit check) and `units` (the unit check).
+ */
 const solutionStep = z.object({
-  kind: z.enum(['given', 'formula', 'manipulation', 'substitution', 'reasoning', 'result']),
+  kind: z.enum(['given', 'formula', 'law', 'manipulation', 'substitution', 'reasoning', 'limit', 'units', 'result']),
   text: z.string(),
 });
 const workbookItem = {

@@ -1,0 +1,502 @@
+# Workbook, lesson 6.3 (the language of fields). Format and rules: see .claude/CLAUDE.md, "Worked examples,
+# workbook", and the chapter 6 solution shape (law → derivation → symbolic result → limit check → unit check →
+# numbers). Every number was recomputed with src/physics/coordinates.ts (partial, toCylindrical, toSpherical,
+# sphericalBasis, coulombField, angleBetween), vec.ts (cross3, dot3) and constants.ts (K, EPS0, E_CHARGE); script
+# recompute-6-3.mts in the session scratchpad. In a >- block, consecutive lines fold into one paragraph: every
+# part (א, ב, …) starts after a blank line.
+
+lesson: '6.3'
+practice:
+  - id: W-6.3-01
+    level: basic
+    qualitative: true
+    objectives: [OBJ-6.3-1]
+    prompt: >-
+      על מפת מזג אוויר, ציר $x$ מצביע מזרח וציר $y$ צפונה. באזור מסוים הטמפרטורה $T$ עולה ככל שנוסעים מזרחה, ולא משתנה כשנוסעים צפונה.
+
+      א. האם $T(x, y)$ שדה סקלרי או שדה וקטורי? ומה לגבי מהירות הרוח באותו אזור?
+
+      ב. מה הסימנים של $\partial T/\partial x$ ושל $\partial T/\partial y$ באזור הזה?
+
+      ג. מטייל הולך צפונה-מזרחה. האם הטמפרטורה סביבו משתנה? הסבירו בעזרת הנגזרות החלקיות.
+    answer: >-
+      א. $T$ סקלרי; מהירות הרוח וקטורית.
+
+      ב. $\partial T/\partial x > 0$, $\partial T/\partial y = 0$.
+
+      ג. כן, עולה: הרכיב המזרחי של הצעד שלו משנה את $T$, והרכיב הצפוני לא.
+    solution:
+      - kind: law
+        text: >-
+          שדה סקלרי נותן מספר לכל נקודה, ושדה וקטורי נותן חץ. $\partial T/\partial x$ הוא קצב השינוי של $T$ כשזזים רק מזרחה, ו-$\partial T/\partial y$ כשזזים רק צפונה.
+      - kind: reasoning
+        text: >-
+          א. לטמפרטורה אין כיוון: מספר אחד בכל מקום, שדה סקלרי. לרוח יש מהירות וכיוון בכל מקום: שדה וקטורי.
+
+          ב. נסיעה מזרחה מעלה את $T$, ולכן $\partial T/\partial x > 0$. נסיעה צפונה לא משנה אותה, ולכן $\partial T/\partial y = 0$.
+
+          ג. צעד צפונה-מזרחה הוא צעד קטן מזרחה ועוד צעד קטן צפונה. החלק המזרחי משנה את $T$ בקצב $\partial T/\partial x$, והחלק הצפוני לא משנה אותה. לכן הטמפרטורה עולה, אבל לאט יותר מאשר בנסיעה מזרחה ישירה.
+      - kind: limit
+        text: >-
+          אם המטייל היה הולך בדיוק צפונה, כל הצעד היה בכיוון שבו $\partial T/\partial y = 0$, והטמפרטורה לא הייתה משתנה. אם בדיוק מזרחה, הייתה עולה בקצב המלא $\partial T/\partial x$. צפונה-מזרחה נמצא בין שני הקצוות.
+      - kind: result
+        text: >-
+          א. סקלרי (טמפרטורה), וקטורי (רוח). ב. $\partial T/\partial x > 0$, $\partial T/\partial y = 0$. ג. הטמפרטורה עולה, בקצב קטן יותר מאשר מזרחה.
+
+  - id: W-6.3-02
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.3-2]
+    prompt: >-
+      נקודה נמצאת ב-$(x, y, z) = (-2, 2, 1)\,\text{m}$.
+
+      א. מצאו את הקואורדינטות הגליליות שלה, $(s, \varphi, z)$.
+
+      ב. מצאו את הקואורדינטות הכדוריות שלה, $(r, \theta, \varphi)$.
+    answer: >-
+      א. $s \approx 2.83\,\text{m}$, $\varphi = 135^\circ$, $z = 1\,\text{m}$.
+
+      ב. $r = 3\,\text{m}$, $\theta \approx 70.5^\circ$, $\varphi = 135^\circ$.
+    solution:
+      - kind: given
+        text: >-
+          $x = -2\,\text{m}$, $y = 2\,\text{m}$, $z = 1\,\text{m}$.
+      - kind: law
+        text: >-
+          $s = \sqrt{x^2 + y^2}$, $\tan\varphi = y/x$ עם הרביע לפי הסימנים, $r = \sqrt{x^2 + y^2 + z^2}$, $\cos\theta = z/r$.
+      - kind: manipulation
+        text: >-
+          $\tan\varphi = 2/(-2) = -1$. למשוואה הזו שני פתרונות בין $0^\circ$ ל-$360^\circ$: $135^\circ$ ו-$315^\circ$. כאן $x < 0$ ו-$y > 0$, כלומר הרביע השני, ולכן $\varphi = 135^\circ$.
+      - kind: substitution
+        text: >-
+          א. $s = \sqrt{4 + 4} = 2\sqrt2 \approx 2.83\,\text{m}$.
+
+          ב. $r = \sqrt{4 + 4 + 1} = 3\,\text{m}$, $\cos\theta = 1/3$, ולכן $\theta \approx 70.5^\circ$.
+      - kind: limit
+        text: >-
+          $r\sin\theta$ צריך לצאת $s$: $\sin\theta = \sqrt{1 - 1/9} = \sqrt8/3$, ו-$3\cdot\sqrt8/3 = \sqrt8 = 2\sqrt2$. נכון. וגם $z > 0$, כלומר הנקודה מעל המישור $xy$, ואכן $\theta < 90^\circ$.
+      - kind: units
+        text: >-
+          $s$ ו-$r$ במטרים, הזוויות במעלות, כמו שצריך.
+      - kind: result
+        text: >-
+          א. $(2.83\,\text{m},\ 135^\circ,\ 1\,\text{m})$. ב. $(3\,\text{m},\ 70.5^\circ,\ 135^\circ)$.
+
+  - id: W-6.3-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.3-3]
+    prompt: >-
+      נתונים הווקטורים $\vec A = (1, 2, 2)$ ו-$\vec B = (2, -2, 1)$.
+
+      א. חשבו את $\vec A\cdot\vec B$. מה הזווית בין הווקטורים?
+
+      ב. חשבו את $\vec A\times\vec B$ ואת גודלו.
+
+      ג. הראו שהתוצאות של א ו-ב מתאימות זו לזו.
+    answer: >-
+      א. $\vec A\cdot\vec B = 0$, הזווית $90^\circ$.
+
+      ב. $\vec A\times\vec B = (6, 3, -6)$, וגודלו $9$.
+
+      ג. $|\vec A||\vec B|\sin90^\circ = 3\cdot3 = 9$.
+    solution:
+      - kind: law
+        text: >-
+          $\vec A\cdot\vec B = A_xB_x + A_yB_y + A_zB_z = |\vec A||\vec B|\cos\alpha$ ו-$\vec A\times\vec B = (A_yB_z - A_zB_y,\ A_zB_x - A_xB_z,\ A_xB_y - A_yB_x)$, בגודל $|\vec A||\vec B|\sin\alpha$.
+      - kind: substitution
+        text: >-
+          א. $\vec A\cdot\vec B = 1\cdot2 + 2\cdot(-2) + 2\cdot1 = 2 - 4 + 2 = 0$, ולכן $\cos\alpha = 0$ ו-$\alpha = 90^\circ$.
+
+          ב. $\vec A\times\vec B = (2\cdot1 - 2\cdot(-2),\ 2\cdot2 - 1\cdot1,\ 1\cdot(-2) - 2\cdot2) = (6, 3, -6)$, וגודלו $\sqrt{36 + 9 + 36} = 9$.
+      - kind: reasoning
+        text: >-
+          ג. $|\vec A| = \sqrt{1 + 4 + 4} = 3$ ו-$|\vec B| = \sqrt{4 + 4 + 1} = 3$. כשהזווית $90^\circ$, $\sin\alpha = 1$, ולכן $|\vec A\times\vec B| = 3\cdot3 = 9$, כמו שיצא בחישוב מהרכיבים.
+      - kind: limit
+        text: >-
+          המכפלה הווקטורית צריכה להיות ניצבת לשני הגורמים: $(6, 3, -6)\cdot(1, 2, 2) = 6 + 6 - 12 = 0$ ו-$(6, 3, -6)\cdot(2, -2, 1) = 12 - 6 - 6 = 0$. נכון.
+      - kind: result
+        text: >-
+          א. $0$, ו-$90^\circ$. ב. $(6, 3, -6)$, בגודל $9$. ג. $9 = 3\cdot3\cdot\sin90^\circ$.
+
+  - id: W-6.3-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.3-1]
+    prompt: >-
+      מטען נקודתי $Q = 5\,\text{nC}$ נמצא בראשית, והפוטנציאל שלו הוא $V = kQ/\sqrt{x^2 + y^2 + z^2}$.
+
+      א. חשבו את שלוש הנגזרות החלקיות של $V$ בנקודה $(0.3, 0, 0.4)\,\text{m}$.
+
+      ב. מצאו מהן את רכיבי השדה ואת עוצמתו, והשוו לעוצמה $kQ/r^2$.
+    answer: >-
+      א. $\partial V/\partial x = -108\,\text{V/m}$, $\partial V/\partial y = 0$, $\partial V/\partial z = -144\,\text{V/m}$.
+
+      ב. $\vec E = (108, 0, 144)\,\text{N/C}$, בעוצמה $180\,\text{N/C} = kQ/r^2$.
+    solution:
+      - kind: law
+        text: >-
+          $E_x = -\partial V/\partial x$, $E_y = -\partial V/\partial y$, $E_z = -\partial V/\partial z$.
+      - kind: manipulation
+        text: >-
+          לפי כלל השרשרת, כמו בשיעור: $\dfrac{\partial V}{\partial x} = -\dfrac{kQ\,x}{r^3}$, $\dfrac{\partial V}{\partial y} = -\dfrac{kQ\,y}{r^3}$, $\dfrac{\partial V}{\partial z} = -\dfrac{kQ\,z}{r^3}$, עם $r = \sqrt{x^2 + y^2 + z^2}$.
+      - kind: limit
+        text: >-
+          הנקודה במישור $y = 0$, ולכן $\partial V/\partial y = 0$: צעד קטן בכיוון $y$ כמעט לא משנה את המרחק מהמטען. וגם $\vec E = (kQ/r^3)(x, y, z) = (kQ/r^2)\,\hat r$, כלומר החוצה מהמטען, כמו שצריך למטען חיובי.
+      - kind: units
+        text: >-
+          $\dfrac{\text{N}\cdot\text{m}^2/\text{C}^2\cdot\text{C}\cdot\text{m}}{\text{m}^3} = \text{N/C} = \text{V/m}$.
+      - kind: substitution
+        text: >-
+          $r = \sqrt{0.09 + 0.16} = 0.5\,\text{m}$, $kQ = 9\cdot10^9\cdot5\cdot10^{-9} = 45\,\text{V}\cdot\text{m}$, $r^3 = 0.125\,\text{m}^3$.
+
+          א. $\partial V/\partial x = -45\cdot0.3/0.125 = -108\,\text{V/m}$, $\partial V/\partial y = 0$, $\partial V/\partial z = -45\cdot0.4/0.125 = -144\,\text{V/m}$.
+
+          ב. $\vec E = (108, 0, 144)\,\text{N/C}$, $|\vec E| = \sqrt{108^2 + 144^2} = 180\,\text{N/C}$, ו-$kQ/r^2 = 45/0.25 = 180\,\text{N/C}$.
+      - kind: result
+        text: >-
+          א. $-108\,\text{V/m}$, $0$, $-144\,\text{V/m}$. ב. $\vec E = (108, 0, 144)\,\text{N/C}$, $180\,\text{N/C}$, בדיוק $kQ/r^2$.
+
+  - id: W-6.3-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.3-1, OBJ-6.3-2]
+    prompt: >-
+      לכל אחד מהמקרים, קבעו באיזו מערכת קואורדינטות כדאי לעבוד, ובאילו קואורדינטות השדה תלוי.
+
+      א. השדה החשמלי מחוץ לכדור מתכת טעון.
+
+      ב. השדה המגנטי בתוך סליל ארוך (שיעור 4.3).
+
+      ג. השדה החשמלי של טבעת טעונה, בכל נקודה במרחב (ציר $z$ עובר דרך מרכז הטבעת וניצב לה).
+
+      ד. הסבירו למה בשדה של מטען נקודתי, $\vec E = (kq/r^2)\,\hat r$, לא מופיעות הזוויות $\theta$ ו-$\varphi$, ובכל זאת השדה מצביע לכיוונים שונים בנקודות שונות.
+    answer: >-
+      א. כדוריות, תלוי רק ב-$r$.
+
+      ב. גליליות או קרטזיות; בתוך סליל ארוך השדה כמעט אחיד ולא תלוי בכלום.
+
+      ג. גליליות, תלוי ב-$s$ וב-$z$ (לא ב-$\varphi$).
+
+      ד. הכיוון נמצא בתוך $\hat r$, שמשתנה מנקודה לנקודה.
+    solution:
+      - kind: law
+        text: >-
+          בוחרים מערכת שבה הסימטריה של הבעיה פירושה "השדה לא תלוי בקואורדינטה הזו".
+      - kind: reasoning
+        text: >-
+          א. כל סיבוב סביב מרכז הכדור משאיר את הבעיה כפי שהייתה, ולכן השדה תלוי רק ב-$r$ ומצביע לאורך $\hat r$.
+
+          ב. בתוך סליל ארוך השדה כמעט אחיד ולאורך הציר. בקואורדינטות גליליות, עם ציר $z$ לאורך הסליל, $\vec B = B\,\hat z$, וגם בקרטזיות הוא קבוע.
+
+          ג. סיבוב סביב ציר $z$ לא משנה את הטבעת, ולכן אין תלות ב-$\varphi$. אבל הזזה לאורך הציר או התרחקות ממנו כן משנות, ולכן השדה תלוי ב-$s$ וב-$z$: שני משתנים, לא אחד.
+
+          ד. $\hat r$ הוא וקטור יחידה שמצביע מהראשית אל הנקודה, ולכן הכיוון שלו שונה בכל נקודה. הזוויות "מסתתרות" בתוך $\hat r = (\sin\theta\cos\varphi,\ \sin\theta\sin\varphi,\ \cos\theta)$. רק הגודל, $kq/r^2$, לא תלוי בהן.
+      - kind: limit
+        text: >-
+          על ציר הטבעת ($s = 0$) נשאר משתנה אחד, $z$, ושם אפשר לחשב את השדה בקלות יחסית (שיעור 6.4). רחוק מאוד מהטבעת היא נראית כמו מטען נקודתי, והתלות היא שוב רק ב-$r$.
+      - kind: result
+        text: >-
+          א. כדוריות, $r$. ב. גליליות (או קרטזיות), השדה קבוע. ג. גליליות, $s$ ו-$z$. ד. הכיוון בתוך $\hat r$; הגודל תלוי רק ב-$r$.
+
+  - id: W-6.3-06
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.3-3]
+    prompt: >-
+      אלקטרון נע במהירות $\vec v = (0,\ 6\cdot10^{5},\ 8\cdot10^{5})\,\text{m/s}$ בשדה מגנטי אחיד $\vec B = (0.25, 0, 0)\,\text{T}$.
+
+      א. חשבו את הכוח המגנטי $\vec F = q\,\vec v\times\vec B$ ברכיבים ואת גודלו.
+
+      ב. מה ישתנה בכוח אם במקום האלקטרון ינוע פרוטון באותה מהירות?
+
+      ג. מה ישתנה בכוח אם למהירות של האלקטרון יתווסף רכיב $v_x = 10^{6}\,\text{m/s}$?
+    answer: >-
+      א. $\vec F = (0,\ -3.2\cdot10^{-14},\ 2.4\cdot10^{-14})\,\text{N}$, בגודל $4\cdot10^{-14}\,\text{N}$.
+
+      ב. אותו גודל, כיוון הפוך.
+
+      ג. שום דבר.
+    solution:
+      - kind: given
+        text: >-
+          $q = -e = -1.6\cdot10^{-19}\,\text{C}$; $\vec v = (0,\ 6\cdot10^5,\ 8\cdot10^5)\,\text{m/s}$; $\vec B = (0.25, 0, 0)\,\text{T}$.
+      - kind: law
+        text: >-
+          $\vec F = q\,\vec v\times\vec B$, עם $\vec v\times\vec B = (v_yB_z - v_zB_y,\ v_zB_x - v_xB_z,\ v_xB_y - v_yB_x)$.
+      - kind: manipulation
+        text: >-
+          רק $B_x$ שונה מאפס, ולכן $\vec v\times\vec B = (0,\ v_zB_x,\ -v_yB_x)$, ו-$\vec F = q B_x\,(0,\ v_z,\ -v_y)$. הרכיב $v_x$ לא מופיע בכלל.
+      - kind: limit
+        text: >-
+          המהירות ניצבת לשדה ($v_x = 0$), ולכן הגודל צריך להיות $|q|vB$, עם $v = \sqrt{v_y^2 + v_z^2}$. ומשהו מקביל לשדה, כמו $v_x$, לא תורם לכוח, כמו בשיעור 4.5.
+      - kind: units
+        text: >-
+          $\text{C}\cdot\text{m/s}\cdot\text{T} = \text{N}$.
+      - kind: substitution
+        text: >-
+          א. $\vec v\times\vec B = (0,\ 8\cdot10^5\cdot0.25,\ -6\cdot10^5\cdot0.25) = (0,\ 2\cdot10^5,\ -1.5\cdot10^5)$, ו-$\vec F = -1.6\cdot10^{-19}\cdot(0,\ 2\cdot10^5,\ -1.5\cdot10^5) = (0,\ -3.2\cdot10^{-14},\ 2.4\cdot10^{-14})\,\text{N}$. הגודל: $1.6\cdot10^{-19}\cdot10^6\cdot0.25 = 4\cdot10^{-14}\,\text{N}$.
+
+          ב. פרוטון: $q = +e$, וכל הרכיבים מחליפים סימן: $(0,\ 3.2\cdot10^{-14},\ -2.4\cdot10^{-14})\,\text{N}$.
+
+          ג. $v_x$ לא נכנס ל-$\vec v\times\vec B$ כש-$\vec B$ לאורך $x$, ולכן הכוח לא משתנה.
+      - kind: result
+        text: >-
+          א. $(0,\ -3.2\cdot10^{-14},\ 2.4\cdot10^{-14})\,\text{N}$, $4\cdot10^{-14}\,\text{N}$. ב. גודל זהה, כיוון הפוך. ג. אין שינוי.
+
+  - id: W-6.3-07
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.3-4]
+    prompt: >-
+      מטען $q = -5\,\text{nC}$ נמצא בנקודה $\vec r^{\,\prime} = (0.2, -0.1, 0.2)\,\text{m}$. מצאו את השדה החשמלי שלו (ברכיבים, עוצמה וכיוון במילים) בנקודה $\vec r = (0.4, 0.3, 0.6)\,\text{m}$.
+    answer: >-
+      $\vec E \approx (-41.7,\ -83.3,\ -83.3)\,\text{N/C}$, בעוצמה $125\,\text{N/C}$, מנקודת השדה אל המטען.
+    solution:
+      - kind: given
+        text: >-
+          $q = -5\cdot10^{-9}\,\text{C}$, $\vec r^{\,\prime} = (0.2, -0.1, 0.2)\,\text{m}$, $\vec r = (0.4, 0.3, 0.6)\,\text{m}$.
+      - kind: law
+        text: >-
+          $\vec E = kq\,\dfrac{\vec r - \vec r^{\,\prime}}{|\vec r - \vec r^{\,\prime}|^3}$.
+      - kind: manipulation
+        text: >-
+          $\vec R = \vec r - \vec r^{\,\prime} = (0.2,\ 0.4,\ 0.4)\,\text{m}$, $R = \sqrt{0.04 + 0.16 + 0.16} = 0.6\,\text{m}$, $\hat R = (1/3,\ 2/3,\ 2/3)$.
+      - kind: limit
+        text: >-
+          המטען שלילי, ולכן $kq < 0$ והשדה צריך להצביע נגד $\hat R$, כלומר מנקודת השדה אל המטען. וזה מה שיוצא: כל הרכיבים שליליים, בעוד שכל הרכיבים של $\hat R$ חיוביים.
+      - kind: units
+        text: >-
+          $\dfrac{\text{N}\cdot\text{m}^2/\text{C}^2\cdot\text{C}}{\text{m}^2} = \text{N/C}$.
+      - kind: substitution
+        text: >-
+          $kq/R^2 = 9\cdot10^9\cdot(-5\cdot10^{-9})/0.36 = -125\,\text{N/C}$, ו-$\vec E = -125\cdot(1/3,\ 2/3,\ 2/3) \approx (-41.7,\ -83.3,\ -83.3)\,\text{N/C}$.
+      - kind: result
+        text: >-
+          $\vec E \approx (-41.7,\ -83.3,\ -83.3)\,\text{N/C}$, $|\vec E| = 125\,\text{N/C}$, מנקודת השדה לכיוון המטען.
+
+  - id: W-6.3-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.3-4, OBJ-6.3-3]
+    prompt: >-
+      שני מטענים שווים, $q = +2\,\text{nC}$ כל אחד, נמצאים בנקודות $(a, 0, 0)$ ו-$(-a, 0, 0)$, עם $a = 0.1\,\text{m}$. נקודת השדה P נמצאת על ציר $y$, ב-$(0, y, 0)$.
+
+      א. כתבו את שני וקטורי ההפרדה, והראו שהשדה ב-P הוא $\vec E = \dfrac{2kq\,y}{(a^2 + y^2)^{3/2}}\,\hat y$.
+
+      ב. בדקו את התוצאה בשני גבולות: $y \to 0$ ו-$y \gg a$.
+
+      ג. השדה מתאפס ב-$y = 0$ ודועך לאפס רחוק, ולכן יש לו מקסימום. מצאו בעזרת נגזרת (שיעור 6.1) איפה הוא, ומה ערכו.
+    answer: >-
+      א. $\vec R_{1,2} = (\mp a,\ y,\ 0)$; רכיבי ה-$x$ מתבטלים.
+
+      ב. $y \to 0$: $E \to 0$. $y \gg a$: $E \to k(2q)/y^2$.
+
+      ג. ב-$y = a/\sqrt2 \approx 7.07\,\text{cm}$, $E_{\max} \approx 1.39\cdot10^{3}\,\text{N/C}$.
+    solution:
+      - kind: law
+        text: >-
+          $\vec E = \sum_i kq_i\,\dfrac{\vec r - \vec r^{\,\prime}_i}{|\vec r - \vec r^{\,\prime}_i|^3}$.
+      - kind: manipulation
+        text: >-
+          א. $\vec R_1 = (0, y, 0) - (a, 0, 0) = (-a,\ y,\ 0)$ ו-$\vec R_2 = (a,\ y,\ 0)$. לשניהם אורך $\sqrt{a^2 + y^2}$, ולכן $\vec E = \dfrac{kq}{(a^2 + y^2)^{3/2}}\left[(-a, y, 0) + (a, y, 0)\right] = \dfrac{kq}{(a^2 + y^2)^{3/2}}(0,\ 2y,\ 0)$.
+      - kind: limit
+        text: >-
+          ב. כש-$y \to 0$, המונה שואף לאפס והמכנה ל-$a^3$, ולכן $E \to 0$: באמצע בין שני מטענים שווים השדות מבטלים זה את זה (שיעור 1.5). כש-$y \gg a$, $a^2 + y^2 \approx y^2$ ו-$E \approx 2kq\,y/y^3 = k(2q)/y^2$: מרחוק שני המטענים נראים כמו מטען אחד $2q$.
+      - kind: units
+        text: >-
+          $\dfrac{\text{N}\cdot\text{m}^2/\text{C}^2\cdot\text{C}\cdot\text{m}}{\text{m}^3} = \text{N/C}$.
+      - kind: manipulation
+        text: >-
+          ג. נכתוב (עבור $y > 0$) $f(y) = \dfrac{y}{(a^2 + y^2)^{3/2}} = \left(\dfrac{a^2 + y^2}{y^{2/3}}\right)^{-3/2} = \left(a^2 y^{-2/3} + y^{4/3}\right)^{-3/2}$. החזקה $-3/2$ הופכת סדר: $f$ הכי גדולה כש-$h(y) = a^2 y^{-2/3} + y^{4/3}$ הכי קטנה. מכלל החזקה (שיעור 6.1), $h'(y) = -\tfrac23 a^2 y^{-5/3} + \tfrac43 y^{1/3}$. כדי למצוא איפה זה אפס, כופלים את שני האגפים של $h' = 0$ ב-$\tfrac32 y^{5/3}$ (מספר חיובי, ולכן מותר): $-a^2 + 2y^2 = 0$, כלומר $y = a/\sqrt2$.
+      - kind: substitution
+        text: >-
+          $y = 0.1/\sqrt2 \approx 0.0707\,\text{m}$, $a^2 + y^2 = 0.015\,\text{m}^2$, ו-$E_{\max} = \dfrac{2\cdot9\cdot10^9\cdot2\cdot10^{-9}\cdot0.0707}{0.015^{3/2}} \approx 1.39\cdot10^{3}\,\text{N/C}$. לבדיקה: ב-$y = 0.05\,\text{m}$ יוצא $1.29\cdot10^3\,\text{N/C}$ וב-$y = 0.1\,\text{m}$ יוצא $1.27\cdot10^3\,\text{N/C}$, שניהם קטנים יותר.
+      - kind: result
+        text: >-
+          א. $\vec E = 2kq\,y\,(a^2 + y^2)^{-3/2}\,\hat y$. ב. $0$ באמצע, $k(2q)/y^2$ רחוק. ג. $y = a/\sqrt2 \approx 7.07\,\text{cm}$, $E_{\max} \approx 1.39\cdot10^3\,\text{N/C}$.
+
+  - id: W-6.3-09
+    level: bagrut
+    qualitative: true
+    objectives: [OBJ-6.3-1, OBJ-6.3-4]
+    prompt: >-
+      מטען $q$ נמצא בנקודה $\vec r^{\,\prime} = (x', y', z')$, והפוטנציאל שלו הוא $V(\vec r) = kq/|\vec r - \vec r^{\,\prime}|$.
+
+      א. הראו בעזרת נגזרות חלקיות שרכיבי $-\partial V/\partial x$, $-\partial V/\partial y$ ו-$-\partial V/\partial z$ הם בדיוק הרכיבים של $kq\,(\vec r - \vec r^{\,\prime})/|\vec r - \vec r^{\,\prime}|^3$.
+
+      ב. איפה במרחב $\partial V/\partial z = 0$? האם השדה שם אפס?
+
+      ג. תלמיד גזר לפי $x'$ במקום לפי $x$. מה הוא קיבל, ולמה זה הגיוני?
+    answer: >-
+      א. $\partial V/\partial x = -kq\,(x - x')/R^3$, וכך גם ל-$y$ ול-$z$.
+
+      ב. במישור $z = z'$; השדה שם לא אפס (חוץ מהמקום של המטען, שם הוא לא מוגדר).
+
+      ג. $+kq\,(x - x')/R^3$: אותו גודל, סימן הפוך, כי הזזת המטען ימינה שקולה להזזת נקודת השדה שמאלה.
+    solution:
+      - kind: law
+        text: >-
+          $E_x = -\partial V/\partial x$ (וכך לשאר הרכיבים) וכלל השרשרת.
+      - kind: manipulation
+        text: >-
+          א. נסמן $u = (x - x')^2 + (y - y')^2 + (z - z')^2 = R^2$, כך ש-$V = kq\,u^{-1/2}$. כש-$y$ ו-$z$ קבועים, $\partial u/\partial x = 2(x - x')$, ולכן $\dfrac{\partial V}{\partial x} = kq\cdot\left(-\tfrac12\right)u^{-3/2}\cdot2(x - x') = -\dfrac{kq\,(x - x')}{R^3}$. במינוס, זה בדיוק רכיב ה-$x$ של $kq\,\vec R/R^3$, וכך גם $y$ ו-$z$.
+      - kind: reasoning
+        text: >-
+          ב. $\partial V/\partial z = -kq\,(z - z')/R^3$ מתאפס כש-$z = z'$: במישור האופקי שעובר דרך המטען. שם $E_z = 0$, אבל $E_x$ ו-$E_y$ לא אפס, כי $x - x'$ ו-$y - y'$ לא שניהם אפס. השדה שם במישור, הרחק מהמטען או אליו.
+
+          ג. $u$ תלוי ב-$x - x'$, ולכן $\partial u/\partial x' = -2(x - x')$, והתלמיד קיבל $+kq\,(x - x')/R^3$. ההסבר: הפוטנציאל תלוי רק בהפרש $x - x'$, ולכן להזיז את המטען ימינה זה כמו להזיז את נקודת השדה שמאלה.
+      - kind: limit
+        text: >-
+          כשהמטען בראשית ($\vec r^{\,\prime} = 0$) מתקבל $E_x = kq\,x/r^3$, התוצאה מהשיעור. ורחוק מאוד, $R \approx r$, והשדה דועך כמו $1/r^2$, כמו שצריך למטען נקודתי.
+      - kind: units
+        text: >-
+          $V$ בוולט, וגזירה לפי אורך מחלקת במטר: $\text{V/m} = \text{N/C}$, יחידות של שדה.
+      - kind: result
+        text: >-
+          א. $-\partial V/\partial x = kq\,(x - x')/R^3$, וכך לשאר. ב. במישור $z = z'$, והשדה שם לא אפס. ג. סימן הפוך, כי $V$ תלוי רק ב-$\vec r - \vec r^{\,\prime}$.
+
+  - id: W-6.3-10
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.3-2, OBJ-6.3-3]
+    prompt: >-
+      בין שני לוחות גדולים יש שדה אחיד $\vec E = (300, 0, 0)\,\text{N/C}$. נקודה P נמצאת בזווית $\theta = 60^\circ$ מציר $z$, במישור $xz$ ($\varphi = 0$).
+
+      א. כתבו את וקטורי היחידה $\hat r$ ו-$\hat\theta$ ב-P ברכיבים קרטזיים, ובדקו ש-$\hat r\cdot\hat\theta = 0$ ו-$\hat r\times\hat\theta = \hat\varphi = \hat y$.
+
+      ב. מצאו את הרכיב הרדיאלי $E_r = \vec E\cdot\hat r$ ואת הרכיב $E_\theta = \vec E\cdot\hat\theta$ ב-P.
+
+      ג. בדקו ש-$E_r^2 + E_\theta^2 = |\vec E|^2$, והסבירו למה רכיבים בקואורדינטות כדוריות של שדה אחיד משתנים מנקודה לנקודה.
+    answer: >-
+      א. $\hat r = (0.866, 0, 0.5)$, $\hat\theta = (0.5, 0, -0.866)$.
+
+      ב. $E_r \approx 260\,\text{N/C}$, $E_\theta = 150\,\text{N/C}$.
+
+      ג. $259.8^2 + 150^2 = 300^2$; הווקטור לא משתנה, אבל וקטורי היחידה משתנים.
+    solution:
+      - kind: law
+        text: >-
+          $\hat r = (\sin\theta\cos\varphi,\ \sin\theta\sin\varphi,\ \cos\theta)$, $\hat\theta = (\cos\theta\cos\varphi,\ \cos\theta\sin\varphi,\ -\sin\theta)$. הרכיב של וקטור בכיוון של וקטור יחידה הוא המכפלה הסקלרית שלהם.
+      - kind: substitution
+        text: >-
+          א. עם $\theta = 60^\circ$ ו-$\varphi = 0$: $\hat r = (\sqrt3/2,\ 0,\ 1/2) \approx (0.866, 0, 0.5)$ ו-$\hat\theta = (1/2,\ 0,\ -\sqrt3/2)$. $\hat r\cdot\hat\theta = \sqrt3/4 + 0 - \sqrt3/4 = 0$. $\hat r\times\hat\theta = (0\cdot(-\tfrac{\sqrt3}{2}) - \tfrac12\cdot0,\ \tfrac12\cdot\tfrac12 - \tfrac{\sqrt3}{2}\cdot(-\tfrac{\sqrt3}{2}),\ 0) = (0, 1, 0)$.
+
+          ב. $E_r = 300\cdot\sqrt3/2 \approx 259.8\,\text{N/C}$, $E_\theta = 300\cdot1/2 = 150\,\text{N/C}$.
+      - kind: limit
+        text: >-
+          ב-$\theta = 90^\circ$ (על ציר $x$), $\hat r = \hat x$: כל השדה רדיאלי, $E_r = 300$, $E_\theta = 0$. ב-$\theta = 0^\circ$ (על ציר $z$), $\hat\theta = \hat x$: כל השדה בכיוון $\hat\theta$. ב-$60^\circ$ יוצא משהו בין שני הקצוות.
+      - kind: units
+        text: >-
+          וקטורי יחידה בלי יחידות, ולכן $E_r$ ו-$E_\theta$ ב-$\text{N/C}$, כמו $\vec E$.
+      - kind: reasoning
+        text: >-
+          ג. $259.8^2 + 150^2 = 67500 + 22500 = 90000 = 300^2$, כי $\hat r$ ו-$\hat\theta$ ניצבים זה לזה ו-$\vec E$ במישור שלהם. השדה עצמו זהה בכל מקום, אבל $\hat r$ ו-$\hat\theta$ מסתובבים מנקודה לנקודה, ולכן הרכיבים לאורכם משתנים. בשדה אחיד, קרטזיות היא השפה הנוחה.
+      - kind: result
+        text: >-
+          א. $\hat r \approx (0.866, 0, 0.5)$, $\hat\theta = (0.5, 0, -0.866)$. ב. $E_r \approx 260\,\text{N/C}$, $E_\theta = 150\,\text{N/C}$. ג. הסכום $300^2$; וקטורי היחידה הכדוריים מסתובבים.
+
+challenge:
+  - id: W-6.3-c1
+    stars: 1
+    objectives: [OBJ-6.3-3]
+    prompt: >-
+      חלקיק שמטענו $1\,\mu\text{C}$ נע במהירות $\vec v = (2, 3, 4)\,\text{m/s}$ בשדה מגנטי $\vec B = (5, 3, -6)\cdot10^{-3}\,\text{T}$.
+
+      א. חשבו את הכוח המגנטי על החלקיק ברכיבים.
+
+      ב. הראו בעזרת מכפלות סקלריות שהכוח ניצב גם ל-$\vec v$ וגם ל-$\vec B$.
+
+      ג. מצאו את הזווית בין $\vec v$ ל-$\vec B$, ובדקו שגודל הכוח שווה ל-$qvB\sin\alpha$.
+
+      ד. מה הקצב שבו הכוח הזה משנה את האנרגיה הקינטית של החלקיק?
+    answer: >-
+      א. $\vec F = (-30,\ 32,\ -9)\cdot10^{-9}\,\text{N}$.
+
+      ב. $\vec F\cdot\vec v = 0$ ו-$\vec F\cdot\vec B = 0$.
+
+      ג. $\alpha \approx 96.4^\circ$; $|\vec F| \approx 4.48\cdot10^{-8}\,\text{N} = qvB\sin\alpha$.
+
+      ד. אפס.
+    solution:
+      - kind: law
+        text: >-
+          $\vec F = q\,\vec v\times\vec B$; $\cos\alpha = \vec v\cdot\vec B/(|\vec v||\vec B|)$; הספק של כוח הוא $\vec F\cdot\vec v$.
+      - kind: substitution
+        text: >-
+          א. $\vec v\times\vec B = (3\cdot(-6) - 4\cdot3,\ 4\cdot5 - 2\cdot(-6),\ 2\cdot3 - 3\cdot5)\cdot10^{-3} = (-30,\ 32,\ -9)\cdot10^{-3}\,\text{T}\cdot\text{m/s}$, וכפול $q = 10^{-6}\,\text{C}$: $\vec F = (-30,\ 32,\ -9)\cdot10^{-9}\,\text{N}$.
+
+          ב. $\vec F\cdot\vec v \propto (-30)\cdot2 + 32\cdot3 + (-9)\cdot4 = -60 + 96 - 36 = 0$. $\vec F\cdot\vec B \propto (-30)\cdot5 + 32\cdot3 + (-9)\cdot(-6) = -150 + 96 + 54 = 0$.
+
+          ג. $|\vec v| = \sqrt{29} \approx 5.39\,\text{m/s}$, $|\vec B| = \sqrt{70}\cdot10^{-3} \approx 8.37\cdot10^{-3}\,\text{T}$, $\vec v\cdot\vec B = (10 + 9 - 24)\cdot10^{-3} = -5\cdot10^{-3}$. $\cos\alpha = -5/\sqrt{29\cdot70} \approx -0.111$, $\alpha \approx 96.4^\circ$. $qvB\sin\alpha = 10^{-6}\cdot5.39\cdot8.37\cdot10^{-3}\cdot0.994 \approx 4.48\cdot10^{-8}\,\text{N}$, ו-$|\vec F| = \sqrt{900 + 1024 + 81}\cdot10^{-9} = \sqrt{2005}\cdot10^{-9} \approx 4.48\cdot10^{-8}\,\text{N}$.
+      - kind: limit
+        text: >-
+          אם $\vec v$ היה מקביל ל-$\vec B$, הזווית הייתה $0^\circ$ והכוח אפס; אם ניצב, הכוח היה $qvB$. כאן הזווית קרובה ל-$90^\circ$, ולכן הכוח קרוב מאוד ל-$qvB \approx 4.51\cdot10^{-8}\,\text{N}$, ומעט קטן ממנו.
+      - kind: units
+        text: >-
+          $\text{C}\cdot\text{m/s}\cdot\text{T} = \text{N}$; הספק $\text{N}\cdot\text{m/s} = \text{W}$.
+      - kind: reasoning
+        text: >-
+          ד. הקצב שבו כוח משנה אנרגיה קינטית הוא ההספק שלו, $\vec F\cdot\vec v$, ומצאנו ב-ב שהוא אפס. הכוח המגנטי מסובב את המהירות, אבל לא משנה את גודלה.
+      - kind: result
+        text: >-
+          א. $(-30,\ 32,\ -9)\cdot10^{-9}\,\text{N}$. ב. שתי המכפלות אפס. ג. $96.4^\circ$, $4.48\cdot10^{-8}\,\text{N}$. ד. אפס.
+    source:
+      name: JEE Main
+      year: 2020
+      problem: '3 September 2020, Shift 1, Physics Section A, Question 13 (the force on 1 μC moving at (2î + 3ĵ + 4k̂) m/s in (5î + 3ĵ − 6k̂)·10⁻³ T); parts ב–ד added'
+      url: https://cracku.in/13-a-charged-particle-carrying-charge-1-mu-c-is-movin-x-nta-jee-main-3-sep-2020-shift-1-physics
+      verified: '2026-11-02'
+      adapted: true
+
+  - id: W-6.3-c2
+    stars: 2
+    objectives: [OBJ-6.3-4, OBJ-6.3-1]
+    prompt: >-
+      מטען $+q$ נמצא בנקודה $(d, 0, 0)$ ומטען $-q$ בנקודה $(-d, 0, 0)$, עם $q = 2\,\text{nC}$ ו-$d = 5\,\text{cm}$.
+
+      א. מצאו בעזרת וקטורי הפרדה את השדה (גודל וכיוון) בנקודה $(0, a, 0)$, עבור $a > 0$ כלשהו. הראו שכש-$a \gg d$ השדה דועך כמו $1/a^3$, ומה כיוונו אז.
+
+      ב. מצאו את השדה בנקודה $(a, 0, 0)$, עבור $a > d$, ואת הגבול שלו כש-$a \gg d$. פי כמה הוא חזק מהשדה של סעיף א באותו מרחק רחוק?
+
+      ג. כמה עבודה צריך לעשות כדי להעביר מטען $q' = 1\,\text{nC}$ לאט מהנקודה $(a, 0, 0)$ לנקודה $(0, a, 0)$? אל תניחו $a \gg d$.
+
+      ד. הציבו $a = 20\,\text{cm}$ בכל הסעיפים.
+    answer: >-
+      א. $E = \dfrac{2kqd}{(d^2 + a^2)^{3/2}}$ בכיוון $-x$; רחוק $2kqd/a^3$, עדיין בכיוון $-x$.
+
+      ב. $E = \dfrac{4kqad}{(a^2 - d^2)^2}$ בכיוון $+x$; רחוק $4kqd/a^3$, חזק פי 2 ובכיוון ההפוך.
+
+      ג. $W = -\dfrac{2kqq'd}{a^2 - d^2}$.
+
+      ד. $205\,\text{N/C}$ (רחוק בקירוב $225$), $512\,\text{N/C}$ (בקירוב $450$), $W = -4.8\cdot10^{-8}\,\text{J}$.
+    solution:
+      - kind: law
+        text: >-
+          $\vec E = \sum_i kq_i\,\dfrac{\vec r - \vec r^{\,\prime}_i}{|\vec r - \vec r^{\,\prime}_i|^3}$, $V = \sum_i kq_i/|\vec r - \vec r^{\,\prime}_i|$, והעבודה החיצונית $W = q'\,(V_B - V_A)$, כש-A היא נקודת ההתחלה ו-B נקודת הסוף.
+      - kind: manipulation
+        text: >-
+          א. ב-$(0, a, 0)$: $\vec R_+ = (-d, a, 0)$ ו-$\vec R_- = (d, a, 0)$, שניהם באורך $\sqrt{d^2 + a^2}$. לכן $\vec E = \dfrac{kq}{(d^2 + a^2)^{3/2}}\left[(-d, a, 0) - (d, a, 0)\right] = \dfrac{kq}{(d^2 + a^2)^{3/2}}(-2d, 0, 0)$. רכיבי ה-$y$ מתבטלים, ונשאר $E = 2kqd/(d^2 + a^2)^{3/2}$ בכיוון $-x$, מהמטען החיובי לכיוון השלילי.
+
+          ב. ב-$(a, 0, 0)$: $\vec R_+ = (a - d, 0, 0)$ ו-$\vec R_- = (a + d, 0, 0)$, ולכן $E_x = kq\left[\dfrac{1}{(a - d)^2} - \dfrac{1}{(a + d)^2}\right] = kq\,\dfrac{(a + d)^2 - (a - d)^2}{(a^2 - d^2)^2} = \dfrac{4kqad}{(a^2 - d^2)^2}$, בכיוון $+x$.
+
+          ג. ב-$(0, a, 0)$ שני המרחקים שווים, $\sqrt{d^2 + a^2}$, ולכן התרומות של $+q$ ושל $-q$ מבטלות זו את זו: $V = 0$. ב-$(a, 0, 0)$: $V = kq\left[\dfrac{1}{a - d} - \dfrac{1}{a + d}\right] = \dfrac{2kqd}{a^2 - d^2}$. לכן $W = q'(0 - V) = -\dfrac{2kqq'd}{a^2 - d^2}$.
+      - kind: limit
+        text: >-
+          א. כש-$a \gg d$, $(d^2 + a^2)^{3/2} \approx a^3$ ו-$E \approx 2kqd/a^3$. ב. כש-$a \gg d$, $(a^2 - d^2)^2 \approx a^4$ ו-$E \approx 4kqd/a^3$: על הציר חזק פי 2, ובכיוון ההפוך. בשני המקרים $1/a^3$, מהר יותר מ-$1/a^2$ של מטען אחד, כי מרחוק שני המטענים כמעט מבטלים זה את זה (המטען הכולל אפס). ג. כש-$a \to d$ (המטען $q'$ מתחיל צמוד ל-$+q$) העבודה גדלה בלי גבול, כמו שצריך ליד מטען נקודתי; וכש-$d \to 0$ העבודה מתאפסת, כי שני המטענים מתמזגים לאפס.
+      - kind: units
+        text: >-
+          $\dfrac{kqd}{a^3}$: $\dfrac{\text{N}\cdot\text{m}^2/\text{C}^2\cdot\text{C}\cdot\text{m}}{\text{m}^3} = \text{N/C}$. $\dfrac{kqq'd}{a^2}$: $\dfrac{\text{N}\cdot\text{m}^2/\text{C}^2\cdot\text{C}^2\cdot\text{m}}{\text{m}^2} = \text{N}\cdot\text{m} = \text{J}$.
+      - kind: substitution
+        text: >-
+          $kq = 18\,\text{N}\cdot\text{m}^2/\text{C}$, $d = 0.05\,\text{m}$, $a = 0.2\,\text{m}$. א. $E = \dfrac{2\cdot18\cdot0.05}{(0.0425)^{3/2}} \approx 205\,\text{N/C}$; הקירוב $2kqd/a^3 = 225\,\text{N/C}$. ב. $E = \dfrac{4\cdot18\cdot0.2\cdot0.05}{(0.0375)^2} = 512\,\text{N/C}$; הקירוב $450\,\text{N/C}$. ג. $V = \dfrac{2\cdot18\cdot0.05}{0.0375} = 48\,\text{V}$, ו-$W = 10^{-9}\cdot(0 - 48) = -4.8\cdot10^{-8}\,\text{J}$.
+      - kind: result
+        text: >-
+          א. $2kqd/(d^2 + a^2)^{3/2}$, בכיוון $-x$ ($\approx 205\,\text{N/C}$). ב. $4kqad/(a^2 - d^2)^2$, בכיוון $+x$ ($512\,\text{N/C}$), ורחוק פי 2 מסעיף א. ג. $-2kqq'd/(a^2 - d^2) = -4.8\cdot10^{-8}\,\text{J}$: השדה עושה עבודה חיובית, והכוח החיצוני עבודה שלילית.
+    source:
+      name: MIT OpenCourseWare, 8.022 Physics II (Electricity and Magnetism), Fall 2004
+      year: 2004
+      problem: 'Assignment 1, Problem 6 (Electric Dipole): the field at (0, a) and at (a, 0), their limits for a ≫ d, and the work to move q′ between them'
+      url: https://ocw.mit.edu/courses/8-022-physics-ii-electricity-and-magnetism-fall-2004/ddbd87ccfda4c85b876171e4ec340c17_pset1.pdf
+      verified: '2026-11-02'
+      adapted: true

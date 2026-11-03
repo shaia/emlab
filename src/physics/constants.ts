@@ -34,3 +34,9 @@ export const G = 10;
 
 /** Gravitational constant [N·m²/kg²], for the Coulomb–gravity comparison. */
 export const G_NEWTON = 6.67e-11;
+
+/**
+ * Speed of light in vacuum [m/s], the formula sheet's 3·10⁸. With EPS0 = 1/(4πK) and MU0 = 4π·10⁻⁷ the engine's
+ * 1/√(μ₀ε₀) = √(4πK/μ₀) is exactly this value (chapter 6: waves, displacement current, relativity).
+ */
+export const C_LIGHT = 3e8;

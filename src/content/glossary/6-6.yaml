@@ -1,0 +1,30 @@
+# Lesson 6.6 terms (chapter 6 core). Format and rules: see glossary/1-5.yaml.
+
+- id: line-integral
+  term: אינטגרל קווי
+  en: line integral
+  symbol: '\int \vec E\cdot d\vec l'
+  definition: 'סכום של E·dl לאורך מסלול: מחלקים את המסלול לחתיכות קטנות dl ובכל אחת כופלים את רכיב השדה בכיוון ההתקדמות באורכה. כך מחשבים עבודה והפרשי פוטנציאל: V(B) − V(A) = −∫ E·dl מ-A ל-B.'
+  lesson: '6.6'
+
+- id: gradient
+  term: גרדיאנט
+  en: gradient
+  symbol: '\nabla V'
+  definition: 'הווקטור (∂V/∂x, ∂V/∂y, ∂V/∂z) של שדה סקלרי. הוא מצביע לכיוון שבו V עולה הכי מהר, גודלו הוא קצב העלייה הזה, והוא ניצב לקווים שווי הערך. השדה החשמלי הוא E = −∇V.'
+  reject: [גראדיינט, גרדיינט]
+  lesson: '6.6'
+
+- id: nabla
+  term: נבלה
+  en: nabla (del)
+  symbol: '\nabla'
+  definition: 'הסימן ∇ = (∂/∂x, ∂/∂y, ∂/∂z): וקטור של נגזרות חלקיות שמפעילים על שדה. ∇V הוא הגרדיאנט; בהמשך הפרק נפגוש גם את ∇·E (הדיברגנץ) ואת ∇×E (הרוטור).'
+  lesson: '6.6'
+
+- id: directional-derivative
+  term: נגזרת כיוונית
+  en: directional derivative
+  symbol: '\nabla V\cdot\hat u'
+  definition: 'קצב השינוי של שדה סקלרי כשזזים מנקודה בכיוון של וקטור יחידה û: כמה V משתנה לכל מטר של צעד בכיוון הזה. הוא שווה ל-∇V·û = |∇V|cos α, ולכן הוא הגדול ביותר בכיוון של ∇V ואפס בכיוון שניצב לו, לאורך הקו שווה הערך.'
+  lesson: '6.6'

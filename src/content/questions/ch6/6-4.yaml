@@ -1,0 +1,299 @@
+# Lesson 6.4 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/continuous.ts and charge-pieces.ts (rodAxisField,
+# ringAxisField, ringAxisPeak, discAxisField, planeField) and constants.ts (K, EPS0); the script is
+# recompute-6-4.ts in the session scratchpad. The data differ on purpose from figure 6.4 and the examples.
+
+chapter: 6
+questions:
+  # ------------------------------------------------ OBJ-6.4-1: densities, dq, the field as an integral
+  - id: Q-6.4-lambda-total
+    type: numeric
+    objectives: [OBJ-6.4-1]
+    level: mid
+    prompt: >-
+      מוט דק מונח על ציר $x$, מ-$x = 0$ עד $x = L = 0.4\,\text{m}$. הצפיפות הקווית שלו יורדת לאורכו: $\lambda(x) = \lambda_0\,(1 - x/L)$, עם $\lambda_0 = 6\,\text{nC/m}$. מה המטען הכולל על המוט? ענו בננו-קולון (nC).
+    answer: 1.2
+    unit: nC
+    tolerance: 0.03
+    correctFeedback: 'נכון. $Q = \int_0^L \lambda_0(1 - x/L)\,dx = \lambda_0\left[x - \frac{x^2}{2L}\right]_0^L = \lambda_0 L/2 = 6\cdot0.4/2 = 1.2\,\text{nC}$. בדיקת גבולות: הממוצע של צפיפות שיורדת באחידות מ-$\lambda_0$ לאפס הוא $\lambda_0/2$.'
+    wrongFeedback: 'כתבו $dq = \lambda(x)\,dx$ וחברו מ-$0$ עד $L$. הפונקציה הקדומה של $1 - x/L$ היא $x - x^2/(2L)$.'
+    commonWrong:
+      - value: 2.4
+        feedback: 'כפלתם $\lambda_0 L$, כאילו הצפיפות אחידה ושווה לערך בקצה. היא יורדת לאפס, ולכן המטען קטן יותר: מחברים $\lambda(x)\,dx$.'
+        misconception: MC-dq-whole-body
+      - value: 0
+        feedback: 'הצבתם את הצפיפות בקצה $x = L$, שם היא אפס, וכפלתם באורך. הצפיפות משתנה, וצריך לחבר אלמנטים לאורך כל המוט.'
+        misconception: MC-dq-whole-body
+
+  - id: Q-6.4-dq-ring-of-disc
+    type: mc
+    objectives: [OBJ-6.4-1]
+    qualitative: true
+    prompt: >-
+      מחלקים דיסקה טעונה, בצפיפות משטחית אחידה $\sigma$, לטבעות דקות. מה המטען $dq$ של טבעת ברדיוס $s$ וברוחב $ds$?
+    choices:
+      - text: '$dq = \sigma\cdot2\pi s\,ds$'
+        correct: true
+        feedback: 'נכון. השטח של טבעת דקה הוא ההיקף שלה, $2\pi s$, כפול הרוחב $ds$, ו-$dq$ הוא הצפיפות כפול השטח הזה.'
+      - text: '$dq = \sigma\cdot\pi s^2$'
+        feedback: '$\pi s^2$ הוא השטח של כל הדיסקה עד רדיוס $s$, לא של הטבעת הדקה. האלמנט הוא חתיכה קטנה אחת: היקף כפול רוחב.'
+        misconception: MC-dq-whole-body
+      - text: '$dq = \sigma\,ds$'
+        feedback: '$\sigma$ היא מטען ליחידת **שטח**, ולכן צריך לכפול בשטח, לא ברוחב בלבד. היחידות של $\sigma\,ds$ הן $\text{C/m}$, לא קולון.'
+      - text: '$dq = \sigma\cdot2\pi R\,ds$, עם $R$ רדיוס הדיסקה'
+        feedback: 'ההיקף הוא של הטבעת שבחרנו, ברדיוס $s$, ולא של שפת הדיסקה. טבעת פנימית קצרה יותר ונושאת פחות מטען.'
+        misconception: MC-dq-whole-body
+
+  - id: Q-6.4-pieces-sum
+    type: twotier
+    objectives: [OBJ-6.4-1]
+    qualitative: true
+    prompt: >-
+      באיור 6.4א מחלקים מוט טעון ל-$N$ מטענים נקודתיים ומחברים את השדות שלהם בנקודה $P$. מה קורה לסכום כש-$N$ גדל מאוד?
+    choices:
+      - text: 'הוא מתקרב לערך סופי אחד: השדה של המוט הרציף.'
+        correct: true
+        feedback: 'נכון. זו הסיבה שאפשר להגדיר את השדה כאינטגרל: הסכום מתכנס.'
+      - text: 'הוא גדל בלי גבול, כי מחברים יותר ויותר שדות.'
+        feedback: 'מחברים יותר שדות, אבל כל אחד מהם חלש יותר. המטען הכולל לא משתנה.'
+        misconception: MC-more-pieces-more-field
+      - text: 'הוא לא משתנה בכלל, כי המטען הכולל קבוע.'
+        feedback: 'באיור רואים שהסכום משתנה: עם $N = 1$ הוא רחוק מהשדה המדויק, ועם $N$ גדול הוא מתקרב אליו. המטען הכולל קבוע, אבל המקומות שלו משתנים.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'המטען של כל חתיכה הוא $Q/N$: כש-$N$ גדל, כל תרומה קטנה באותו יחס, והחלוקה רק מתארת את המוט טוב יותר.'
+        correct: true
+        feedback: 'נכון. זה בדיוק סכום רימן: יותר חתיכות, כל אחת קטנה יותר, והסכום מתקרב לאינטגרל.'
+      - text: 'כל חתיכה נוספת מוסיפה עוד שדה, והשדות תמיד מתחברים.'
+        feedback: 'שדות הם וקטורים, ובנוסף, המטען של כל חתיכה קטן כש-$N$ גדל. מספר התרומות לבדו לא קובע את הסכום.'
+        misconception: MC-more-pieces-more-field
+      - text: 'בסופו של דבר כל החתיכות נמצאות באותה נקודה.'
+        feedback: 'החתיכות פרוסות לאורך כל המוט, בכל $N$. הן רק קטנות יותר.'
+
+  # ------------------------------------------------ OBJ-6.4-2: the rod, symmetry
+  - id: Q-6.4-rod-bisector-dir
+    type: vector
+    objectives: [OBJ-6.4-2]
+    qualitative: true
+    prompt: >-
+      מוט אופקי טעון באחידות במטען **חיובי**. הנקודה $P$ נמצאת מעל אמצע המוט, על הקו שניצב לו. מה כיוון השדה החשמלי ב-$P$?
+    answer: n
+    correctFeedback: 'נכון. כל חתיכה בחצי השמאלי מתבטלת לאורך המוט עם החתיכה הסימטרית לה בחצי הימני. נשאר רק הרכיב הניצב, הרחק מהמוט החיובי: למעלה.'
+    wrong:
+      - dir: ne
+        feedback: 'זה כיוון השדה של חתיכה אחת בחצי השמאלי. החתיכה הסימטרית לה בחצי הימני נותנת שדה שנוטה שמאלה באותה מידה, והנטיות מתבטלות.'
+        misconception: MC-add-magnitudes
+      - dir: nw
+        feedback: 'זה כיוון השדה של חתיכה אחת בחצי הימני. החתיכה הסימטרית לה בחצי השמאלי מבטלת את הנטייה.'
+        misconception: MC-add-magnitudes
+      - dir: s
+        feedback: 'מוט חיובי דוחה מטען בוחן חיובי, ולכן השדה מעל המוט מצביע הרחק ממנו, למעלה.'
+    wrongFeedback: 'זווגו כל חתיכה עם החתיכה הסימטרית לה, ובדקו אילו רכיבים מתבטלים.'
+
+  - id: Q-6.4-rod-axis
+    type: numeric
+    objectives: [OBJ-6.4-2]
+    level: mid
+    prompt: >-
+      מוט באורך $0.5\,\text{m}$ טעון באחידות במטען $5\,\text{nC}$. מה עוצמת השדה בנקודה על המשך המוט, $0.25\,\text{m}$ מהקצה הקרוב? ענו ב-N/C.
+    answer: 240
+    unit: N/C
+    tolerance: 0.03
+    correctFeedback: 'נכון. כל התרומות על אותו קו: $E = k\lambda\left(\frac1d - \frac1{d+L}\right) = \frac{kQ}{d(d+L)} = \frac{9\cdot10^9\cdot5\cdot10^{-9}}{0.25\cdot0.75} = 240\,\text{N/C}$.'
+    wrongFeedback: 'חברו $k\,dq/u^2$ עם $dq = \lambda\,du$, כאשר $u$ רץ מ-$d$ עד $d + L$.'
+    commonWrong:
+      - value: 720
+        feedback: 'זה $kQ/d^2$: כאילו כל המטען מרוכז בקצה הקרוב. רוב המוט רחוק יותר.'
+        misconception: MC-rod-as-point
+      - value: 180
+        feedback: 'זה $kQ/(0.5)^2$: מטען נקודתי באמצע המוט. כאן המרחק לא גדול בהרבה מהאורך, והחלק הקרוב של המוט תורם יותר.'
+        misconception: MC-rod-as-point
+
+  - id: Q-6.4-long-rod-model
+    type: mc
+    objectives: [OBJ-6.4-2, OBJ-6.4-4]
+    qualitative: true
+    prompt: >-
+      מתי השדה של מוט באורך $L$, בנקודה במרחק $r$ מאמצעו (על ציר הסימטריה), קרוב לנוסחה של תיל אינסופי, $2k\lambda/r$?
+    choices:
+      - text: 'כש-$r$ קטן בהרבה מ-$L$.'
+        correct: true
+        feedback: 'נכון. אז $\sqrt{r^2+L^2/4}\approx L/2$, והנוסחה המלאה נותנת $2k\lambda/r$. מקרוב, הקצוות רחוקים מאוד, והמוט נראה אינסופי.'
+      - text: 'כש-$r$ גדול בהרבה מ-$L$.'
+        feedback: 'רחוק מהמוט הוא נראה כמו נקודה, והשדה $kQ/r^2$, שיורד כמו $1/r^2$, לא כמו $1/r$.'
+        misconception: MC-line-formula-everywhere
+      - text: 'תמיד: זו הנוסחה של השדה של מוט.'
+        feedback: 'זו נוסחה של גבול. במרחק שווה לאורך המוט, למשל, היא טועה ביותר מ-10%.'
+        misconception: MC-line-formula-everywhere
+      - text: 'אף פעם, כי מוט אמיתי אינו אינסופי.'
+        feedback: 'שום מוט אינו אינסופי, אבל קרוב מספיק אליו הנוסחה מדויקת כמה שרוצים. זו המשמעות של גבול.'
+
+  - id: Q-6.4-rod-off-bisector
+    type: mc
+    objectives: [OBJ-6.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מוט אופקי טעון באחידות במטען חיובי. הנקודה $P$ נמצאת מעט מעל המוט, ליד הקצה **הימני** שלו (ולא מעל האמצע). מה אפשר לומר על השדה ב-$P$?
+    choices:
+      - text: 'יש לו רכיב כלפי מעלה, ורכיב ימינה, הרחק מרוב המוט.'
+        correct: true
+        feedback: 'נכון. רוב המטען משמאל ל-$P$, ואין חתיכות מימין שיבטלו את הרכיב האופקי שלו. הסימטריה של ציר הסימטריה לא קיימת כאן.'
+      - text: 'הוא ניצב למוט, כמו בכל נקודה ליד מוט.'
+        feedback: 'השדה ניצב למוט רק על ציר הסימטריה, שם כל חתיכה מתבטלת עם החתיכה הסימטרית לה. ליד הקצה אין לחתיכות שמשמאל בנות זוג מימין.'
+        misconception: MC-add-magnitudes
+      - text: 'הוא מצביע שמאלה, אל אמצע המוט.'
+        feedback: 'מוט חיובי דוחה. התרומות של החתיכות שמשמאל ל-$P$ מצביעות הרחק מהן, ימינה.'
+      - text: 'אי אפשר לדעת בלי לחשב אינטגרל.'
+        feedback: 'את הגודל המדויק מחשבים באינטגרל, אבל את הכיוון אפשר לקבוע מראש: בודקים אילו רכיבים מתבטלים ואילו לא.'
+
+  # ------------------------------------------------ OBJ-6.4-3: the ring on its axis
+  - id: Q-6.4-ring-centre
+    type: twotier
+    objectives: [OBJ-6.4-3]
+    qualitative: true
+    prompt: >-
+      טבעת דקה טעונה באחידות במטען חיובי $Q$. מה השדה החשמלי במרכז הטבעת?
+    choices:
+      - text: 'אפס.'
+        correct: true
+        feedback: 'נכון.'
+      - text: 'השדה החזק ביותר על הציר.'
+        feedback: 'במרכז כל חתיכה של הטבעת קרובה, אבל השדות שלה מצביעים לכל הכיוונים במישור הטבעת, ומתבטלים. השדה החזק ביותר על הציר הוא במרחק $R/\sqrt2$ מהמרכז.'
+        misconception: MC-ring-centre-max
+      - text: '$kQ/R^2$, כי כל המטען במרחק $R$.'
+        feedback: '$kQ/R^2$ הוא סכום **הגדלים** של התרומות. אבל התרומות הן וקטורים בכיוונים שונים, ובמרכז הם מתבטלים.'
+        misconception: MC-add-magnitudes
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'לכל חתיכה יש חתיכה מולה, באותו מרחק, שהשדה שלה במרכז הפוך בדיוק.'
+        correct: true
+        feedback: 'נכון. באיור 6.4א שרשרת החצים במרכז נסגרת למצולע וחוזרת לנקודת ההתחלה.'
+      - text: 'במרכז כל המטען הכי קרוב, ולכן התרומות הכי חזקות.'
+        feedback: 'התרומות אכן חזקות, אבל הן מתבטלות בזוגות. גודל של כל תרומה לחוד לא אומר כלום על הסכום הווקטורי.'
+        misconception: MC-ring-centre-max
+      - text: 'בתוך טבעת, כמו בתוך קליפה, אין מטען כלוא.'
+        feedback: 'הטבעת היא לא משטח סגור, ואי אפשר להפעיל עליה את חוק גאוס כך. התשובה כאן נובעת מהסימטריה, חתיכה מול חתיכה.'
+
+  - id: Q-6.4-ring-axis
+    type: numeric
+    objectives: [OBJ-6.4-3]
+    prompt: >-
+      טבעת ברדיוס $12\,\text{cm}$ טעונה באחידות במטען $5\,\text{nC}$. מה עוצמת השדה על הציר שלה, $9\,\text{cm}$ מהמרכז? ענו ב-N/C.
+    answer: 1200
+    unit: N/C
+    tolerance: 0.03
+    correctFeedback: 'נכון. $r = \sqrt{0.09^2+0.12^2} = 0.15\,\text{m}$, ו-$E = \frac{kQz}{r^3} = \frac{9\cdot10^9\cdot5\cdot10^{-9}\cdot0.09}{0.15^3} = 1200\,\text{N/C}$, לאורך הציר, הרחק מהטבעת.'
+    wrongFeedback: 'כל החתיכות באותו מרחק $r = \sqrt{z^2+R^2}$, ורק הרכיב לאורך הציר, $\cos\theta = z/r$, נשאר.'
+    commonWrong:
+      - value: 2000
+        feedback: 'זה $kQ/r^2$: חיברתם את הגדלים של כל התרומות בלי הגורם $\cos\theta = z/r$. הרכיבים הניצבים לציר מתבטלים, ונשאר רק החלק $z/r$ של כל תרומה.'
+        misconception: MC-add-magnitudes
+      - value: 5556
+        feedback: 'זה $kQ/z^2$: כאילו כל המטען במרכז הטבעת. זה נכון רק רחוק מאוד, כש-$z \gg R$.'
+
+  - id: Q-6.4-ring-peak
+    type: numeric
+    objectives: [OBJ-6.4-3]
+    level: mid
+    prompt: >-
+      טבעת ברדיוס $20\,\text{cm}$ טעונה באחידות. באיזה מרחק מהמרכז, על הציר, השדה חזק ביותר? ענו בסנטימטרים (cm).
+    answer: 14.14
+    unit: cm
+    tolerance: 0.02
+    correctFeedback: 'נכון. השיא ב-$z = R/\sqrt2 = 20/1.414 \approx 14.1\,\text{cm}$, שם $\cos\theta = 1/\sqrt3$.'
+    wrongFeedback: 'כתבו את השדה בעזרת $c = \cos\theta$: $E \propto c - c^3$, ומצאו איפה הנגזרת מתאפסת.'
+    commonWrong:
+      - value: 0
+        feedback: 'במרכז השדה **אפס**: כל התרומות ניצבות לציר ומתבטלות. השיא נמצא בין המרכז לבין הדעיכה הרחוקה.'
+        misconception: MC-ring-centre-max
+      - value: 20
+        feedback: 'זה $z = R$. שם השדה כבר עבר את השיא. אפסו את הנגזרת של $c - c^3$.'
+      - value: 11.55
+        feedback: 'זה $R/\sqrt3$: מצאתם $\cos\theta = 1/\sqrt3$, אבל $\cos\theta = z/\sqrt{z^2+R^2}$, לא $z/R$. פתרו את $3z^2 = z^2+R^2$.'
+
+  - id: Q-6.4-ring-rank
+    type: rank
+    objectives: [OBJ-6.4-3]
+    level: mid
+    prompt: >-
+      טבעת ברדיוס $R$ טעונה באחידות. דרגו את עוצמת השדה בארבע נקודות על הציר, מהחזקה לחלשה:
+    items:
+      - id: c
+        label: 'במרכז הטבעת'
+      - id: q
+        label: 'במרחק $R/4$ מהמרכז'
+      - id: r
+        label: 'במרחק $R$ מהמרכז'
+      - id: t
+        label: 'במרחק $3R$ מהמרכז'
+    order: [r, q, t, c]
+    correctFeedback: 'נכון. ביחידות $kQ/R^2$: ב-$R$ השדה כ-$0.354$, ב-$R/4$ כ-$0.228$, ב-$3R$ כ-$0.095$, ובמרכז אפס. השיא ב-$R/\sqrt2\approx0.71R$, בין $R/4$ ל-$R$.'
+    wrongFeedback: 'הציבו כל $z$ ב-$E = kQz/(z^2+R^2)^{3/2}$, כמספר כפול $kQ/R^2$. במרכז אל תשכחו את הסימטריה.'
+    hints:
+      - 'השדה החזק ביותר נמצא ב-$z = R/\sqrt2$. איזו מהנקודות קרובה אליו יותר?'
+
+  # ------------------------------------------------ OBJ-6.4-4: the disc, the plane, limit checks
+  - id: Q-6.4-disc-near
+    type: numeric
+    objectives: [OBJ-6.4-4]
+    level: bagrut
+    prompt: >-
+      דיסקה ברדיוס $30\,\text{cm}$ טעונה באחידות בצפיפות $\sigma = 2\,\mu\text{C/m}^2$. מה עוצמת השדה על הציר שלה, $4\,\text{cm}$ מהמרכז? ענו ב-N/C.
+    answer: 98150
+    unit: N/C
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\frac{\sigma}{2\varepsilon_0} = 2\pi k\sigma \approx 1.13\cdot10^5\,\text{N/C}$, ו-$\frac{z}{\sqrt{z^2+R^2}} = \frac{0.04}{0.303} \approx 0.132$, ולכן $E \approx 1.13\cdot10^5\cdot0.868 \approx 9.8\cdot10^4\,\text{N/C}$.'
+    wrongFeedback: 'השתמשו ב-$E = \frac{\sigma}{2\varepsilon_0}\left(1 - \frac{z}{\sqrt{z^2+R^2}}\right)$.'
+    commonWrong:
+      - value: 113100
+        feedback: 'זה $\sigma/(2\varepsilon_0)$, השדה של לוח אינסופי. כאן $z/R \approx 0.13$, לא קטן מספיק: המודל טועה ב-15%.'
+      - value: 3181000
+        feedback: 'זה $kQ/z^2$ עם $Q = \sigma\pi R^2$: כאילו הדיסקה נקודה. ב-$4\,\text{cm}$ מדיסקה ברדיוס $30\,\text{cm}$ זה רחוק מהאמת.'
+
+  - id: Q-6.4-limit-check
+    type: mc
+    objectives: [OBJ-6.4-4]
+    qualitative: true
+    level: bagrut
+    prompt: >-
+      ארבעה תלמידים חישבו את השדה על הציר של דיסקה ברדיוס $R$ בצפיפות $\sigma$, וקיבלו ארבע תשובות שונות. רק אחת מהן עוברת את שתי בדיקות הגבולות: לוח אינסופי ($R \to \infty$) ומטען נקודתי ($z \gg R$). איזו?
+    choices:
+      - text: '$\dfrac{\sigma}{2\varepsilon_0}\left(1 - \dfrac{z}{\sqrt{z^2+R^2}}\right)$'
+        correct: true
+        feedback: 'נכון. כש-$R \to \infty$ נשאר $\sigma/(2\varepsilon_0)$, וכש-$z \gg R$, בעזרת המשיק, $\approx \frac{\sigma}{2\varepsilon_0}\cdot\frac{R^2}{2z^2} = \frac{kQ}{z^2}$.'
+      - text: '$\dfrac{\sigma}{2\varepsilon_0}\cdot\dfrac{z}{\sqrt{z^2+R^2}}$'
+        feedback: 'כש-$R \to \infty$ היא שואפת לאפס, לא ל-$\sigma/(2\varepsilon_0)$. וכש-$z \gg R$ היא שואפת לקבוע, ולא דועכת כמו $1/z^2$. היא נכשלת בשתי הבדיקות.'
+      - text: '$\dfrac{k\sigma\pi R^2}{z^2+R^2}$'
+        feedback: 'רחוק מהדיסקה היא נותנת $kQ/z^2$, אבל כש-$R \to \infty$ היא שואפת ל-$k\sigma\pi = \sigma/(4\varepsilon_0)$: חצי מהשדה של לוח אינסופי.'
+        misconception: MC-plane-factor-two
+      - text: '$\dfrac{\sigma}{2\varepsilon_0}\left(1 - \dfrac{R}{\sqrt{z^2+R^2}}\right)$'
+        feedback: 'כש-$R \to \infty$ היא שואפת לאפס, וכש-$z \gg R$ היא שואפת לקבוע $\sigma/(2\varepsilon_0)$. השדה של גוף סופי חייב לדעוך רחוק ממנו.'
+
+  - id: Q-6.4-plane-why
+    type: twotier
+    objectives: [OBJ-6.4-4]
+    qualitative: true
+    prompt: >-
+      לפי הנוסחה של הדיסקה, כשהדיסקה גדלה בלי גבול השדה על הציר הוא $\sigma/(2\varepsilon_0)$ בכל מרחק. מה קורה לשדה של לוח אינסופי כשמתרחקים ממנו?
+    choices:
+      - text: 'הוא לא משתנה.'
+        correct: true
+        feedback: 'נכון.'
+      - text: 'הוא נחלש, כי כל חתיכה של הלוח רחוקה יותר.'
+        feedback: 'כל חתיכה אכן רחוקה יותר, אבל זה לא כל הסיפור. ראו את הנימוק.'
+        misconception: MC-plane-field-falls
+      - text: 'הוא מתחזק, כי רואים יותר מהלוח.'
+        feedback: 'רואים יותר מהלוח בזווית טובה, אבל כל חתיכה גם רחוקה יותר. שני הדברים מתקזזים בדיוק.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'כל טבעת נחלשת עם המרחק, אבל יותר טבעות רואות את הנקודה קרוב לכיוון הציר; באינטגרל המרחק מצטמצם.'
+        correct: true
+        feedback: 'נכון. באינטגרל של הדיסקה, $z \cdot (1/z) = 1$: כשאין שפה, המרחק נעלם מהתוצאה.'
+      - text: 'השדה של כל חתיכה יורד כמו $1/r^2$, ולכן גם הסכום יורד.'
+        feedback: 'חתיכה בודדת יורדת כמו $1/r^2$, אבל כשמתרחקים, חלק גדל מהלוח תורם לרכיב שלאורך הציר. בלוח אינסופי שני הדברים מתקזזים.'
+        misconception: MC-plane-field-falls
+      - text: 'השדה של לוח הוא $\sigma/\varepsilon_0$, ואין בו $r$.'
+        feedback: '$\sigma/\varepsilon_0$ הוא השדה בין שני לוחות מקבילים, או ליד פני מוליך. ללוח בודד, $\sigma/(2\varepsilon_0)$. והשאלה היא **למה** אין בו $r$.'
+        misconception: MC-plane-factor-two

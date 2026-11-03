@@ -1,0 +1,69 @@
+# Lesson 6.3 terms (chapter 6 core). Format and rules: see glossary/1-5.yaml.
+
+- id: scalar-field
+  term: שדה סקלרי
+  en: scalar field
+  definition: 'פונקציה שנותנת מספר אחד לכל נקודה במרחב, V(x, y, z). הפוטנציאל החשמלי והטמפרטורה בחדר הם שדות סקלריים.'
+  lesson: '6.3'
+
+- id: vector-field
+  term: שדה וקטורי
+  en: vector field
+  definition: 'פונקציה שנותנת וקטור לכל נקודה במרחב, עם שלושה רכיבים שכל אחד מהם תלוי במקום: E(x, y, z). השדה החשמלי והשדה המגנטי הם שדות וקטוריים.'
+  lesson: '6.3'
+
+- id: partial-derivative
+  term: נגזרת חלקית
+  en: partial derivative
+  symbol: '\partial f/\partial x'
+  definition: 'הנגזרת של פונקציה של כמה משתנים לפי משתנה אחד, כשכל השאר נשארים קבועים. ∂V/∂x הוא קצב השינוי של V כשזזים רק בכיוון x.'
+  lesson: '6.3'
+
+- id: separation-vector
+  term: וקטור ההפרדה
+  en: separation vector
+  symbol: '\vec r - \vec r^{\,\prime}'
+  definition: 'הווקטור מנקודת המקור r′ (שם נמצא המטען) אל נקודת השדה r (שם מודדים). גודלו הוא המרחק ביניהן, וכיוונו קובע את כיוון השדה של מטען חיובי.'
+  lesson: '6.3'
+
+- id: cylindrical-coordinates
+  term: קואורדינטות גליליות
+  en: cylindrical coordinates
+  symbol: '(s, \varphi, z)'
+  definition: 'תיאור של נקודה לפי המרחק s מציר z, הזווית φ סביב הציר והגובה z. מתאימות לבעיות עם סימטריה של תיל או גליל.'
+  lesson: '6.3'
+
+- id: spherical-coordinates
+  term: קואורדינטות כדוריות
+  en: spherical coordinates
+  symbol: '(r, \theta, \varphi)'
+  definition: 'תיאור של נקודה לפי המרחק r מהראשית, הזווית θ מציר z והזווית φ סביב ציר z. מתאימות לבעיות עם סימטריה של נקודה או כדור.'
+  lesson: '6.3'
+
+- id: position-vector
+  term: וקטור מקום
+  en: position vector
+  symbol: '\vec r'
+  definition: 'החץ מהראשית אל נקודה במרחב. הרכיבים שלו הם הקואורדינטות של הנקודה, r = (x, y, z), וגודלו הוא המרחק של הנקודה מהראשית. אם מזיזים את הראשית, וקטור המקום של כל נקודה משתנה.'
+  lesson: '6.3'
+
+- id: unit-vector
+  term: וקטור יחידה
+  en: unit vector
+  symbol: '\hat n'
+  definition: 'וקטור שגודלו 1 (בלי יחידות), שמסמן רק כיוון. מקבלים אותו מכל וקטור שאינו אפס כשמחלקים אותו בגודלו: n̂ = A/|A|. מסמנים אותו בכובע: x̂, ŷ, ẑ לאורך הצירים, r̂ החוצה מהראשית.'
+  lesson: '6.3'
+
+- id: dot-product
+  term: מכפלה סקלרית
+  en: dot product (scalar product)
+  symbol: '\vec A\cdot\vec B'
+  definition: 'מספר שמתקבל משני וקטורים: A·B = AxBx + AyBy + AzBz = |A||B|cos α, כש-α הזווית ביניהם. היא אפס כשהווקטורים ניצבים, חיובית כשהזווית חדה ושלילית כשהיא קהה. A·B חלקי |B| הוא הרכיב של A בכיוון של B.'
+  lesson: '6.3'
+
+- id: cross-product
+  term: מכפלה וקטורית
+  en: cross product (vector product)
+  symbol: '\vec A\times\vec B'
+  definition: 'וקטור שמתקבל משני וקטורים, ניצב לשניהם, בכיוון שקובע כלל יד ימין (האצבעות מ-A אל B, האגודל בכיוון A×B). גודלו |A||B|sin α, שטח המקבילית שהם פורשים. ברכיבים: (AyBz − AzBy, AzBx − AxBz, AxBy − AyBx). הסדר חשוב: B×A = −A×B.'
+  lesson: '6.3'
