@@ -1,0 +1,9 @@
+# Lesson 5.1 terms. Added ahead of chapter 5, because lessons 6.13–6.14 use them. Format and rules: see glossary/1-5.yaml.
+
+- id: magnetic-flux
+  term: שטף מגנטי
+  en: magnetic flux
+  symbol: '\Phi_B'
+  unit: Wb
+  definition: 'כמה שדה מגנטי עובר דרך משטח. בשדה אחיד שניצב למשטח שטחו A, השטף הוא Φ = B·A; כשהשדה נוטה בזווית θ מהאנך למשטח, Φ = B·A·cosθ. היחידה היא ובר, Wb = T·m².'
+  lesson: '5.1'

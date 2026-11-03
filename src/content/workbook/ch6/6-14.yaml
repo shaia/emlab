@@ -1,0 +1,548 @@
+# Workbook, lesson 6.14 (electromagnetic waves and the energy in the field). Format and rules: see .claude/CLAUDE.md,
+# "Worked examples, workbook" and "Chapter 6". Solutions follow the chapter 6 shape: given → law → manipulation →
+# limit → units → substitution → result. Every number was recomputed with src/physics/waves.ts (wavelength,
+# amplitudeB, amplitudeFromIntensity, intensityAtDistance, energyDensityE/B, solenoidB, wireSurfaceFlow,
+# capacitorEdgeFlow), calculus.ts (riemann, for the c2 flux) and constants.ts (EPS0_DISPLAY, MU0). In a >- block, consecutive
+# lines fold into one paragraph: every part (א, ב, …) starts after a blank line.
+
+lesson: '6.14'
+practice:
+  - id: W-6.14-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.14-1, OBJ-6.14-2]
+    prompt: >-
+      תנור מיקרוגל פועל בתדירות $2.45\,\text{GHz}$. בתוך התנור המשרעת של השדה החשמלי מגיעה ל-$2000\,\text{V/m}$.
+
+      א. מה אורך הגל?
+
+      ב. אילו זה היה גל מישורי שמתקדם, מה הייתה המשרעת של השדה המגנטי?
+    answer: >-
+      א. $\lambda \approx 12.2\,\text{cm}$.
+
+      ב. $B_0 \approx 6.67\cdot10^{-6}\,\text{T}$.
+    solution:
+      - kind: given
+        text: >-
+          $f = 2.45\cdot10^9\,\text{Hz}$, $E_0 = 2000\,\text{V/m}$.
+      - kind: law
+        text: >-
+          $c = f\lambda$, ובגל מישורי בריק $E_0 = cB_0$.
+      - kind: manipulation
+        text: >-
+          $\lambda = c/f$ ו-$B_0 = E_0/c$.
+      - kind: limit
+        text: >-
+          תדירות גבוהה פי 2 הייתה נותנת גל קצר פי 2, ו-$B_0$ לא תלוי בתדירות כלל.
+      - kind: units
+        text: >-
+          $(\text{m/s})/(1/\text{s}) = \text{m}$; $(\text{V/m})/(\text{m/s}) = \text{V}\cdot\text{s/m}^2 = \text{T}$.
+      - kind: substitution
+        text: >-
+          $\lambda = \dfrac{3\cdot10^8}{2.45\cdot10^9} \approx 0.122\,\text{m}$; $B_0 = \dfrac{2000}{3\cdot10^8} \approx 6.67\cdot10^{-6}\,\text{T}$.
+      - kind: result
+        text: >-
+          $\lambda \approx 12.2\,\text{cm}$, $B_0 \approx 6.67\,\mu\text{T}$.
+
+  - id: W-6.14-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-6.14-2]
+    prompt: >-
+      גל אלקטרומגנטי מישורי נע לתוך הדף (⊗). בנקודה מסוימת, ברגע מסוים, השדה החשמלי מצביע ימינה בדף.
+
+      א. מה כיוון השדה המגנטי באותה נקודה ובאותו רגע?
+
+      ב. קבעו ונמקו: רבע מחזור אחר כך השדה החשמלי בנקודה הזו אפס. מה השדה המגנטי אז?
+    answer: >-
+      א. למטה בדף.
+
+      ב. גם הוא אפס: השדות באותו מופע.
+    solution:
+      - kind: given
+        text: >-
+          צירים: $x$ ימינה, $y$ למעלה, $z$ החוצה מהדף. כיוון ההתקדמות $-\hat z$, ו-$\vec E \parallel +\hat x$.
+      - kind: law
+        text: >-
+          כיוון ההתקדמות הוא הכיוון של $\vec E\times\vec B$; $\vec B \perp \vec E$, ושניהם ניצבים לכיוון ההתקדמות; $B = E/c$ בכל נקודה ובכל רגע.
+      - kind: reasoning
+        text: >-
+          א. $\vec B$ לאורך $\pm\hat y$. $\hat x\times\hat y = +\hat z$, החוצה מהדף, הפוך מכיוון ההתקדמות. לכן $\vec B \parallel -\hat y$: $\hat x\times(-\hat y) = -\hat z$.
+
+          ב. מחוק פאראדיי שני השדות הם $\sin$ של אותו מופע, ולכן $B = E/c$ בכל רגע. כש-$E = 0$ גם $B = 0$.
+      - kind: limit
+        text: >-
+          אילו הגל היה יוצא מהדף, עם אותו $\vec E$, השדה המגנטי היה מצביע למעלה.
+      - kind: units
+        text: >-
+          אין כאן מספרים; התשובות הן כיוונים.
+      - kind: result
+        text: >-
+          א. למטה בדף, $-\hat y$. ב. אפס.
+
+  - id: W-6.14-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.14-3]
+    prompt: >-
+      קבל לוחות ששטח כל לוח בו $0.01\,\text{m}^2$, והמרחק בין הלוחות $2\,\text{mm}$, מחובר למתח של $500\,\text{V}$.
+
+      א. מה השדה החשמלי בין הלוחות, ומה צפיפות האנרגיה שם?
+
+      ב. כמה אנרגיה אגורה בשדה? השוו ל-$\tfrac12CV^2$.
+    answer: >-
+      א. $E = 2.5\cdot10^5\,\text{V/m}$, $u \approx 0.277\,\text{J/m}^3$.
+
+      ב. $U \approx 5.53\cdot10^{-6}\,\text{J}$, בדיוק $\tfrac12CV^2$.
+    solution:
+      - kind: given
+        text: >-
+          $A = 0.01\,\text{m}^2$, $d = 2\cdot10^{-3}\,\text{m}$, $V = 500\,\text{V}$.
+      - kind: law
+        text: >-
+          $E = V/d$; $u = \varepsilon_0E^2/2$; $C = \varepsilon_0A/d$.
+      - kind: manipulation
+        text: >-
+          $U = u\cdot Ad = \dfrac{\varepsilon_0}{2}\,\dfrac{V^2}{d^2}\,Ad = \dfrac12\,\dfrac{\varepsilon_0A}{d}\,V^2 = \tfrac12CV^2$.
+      - kind: limit
+        text: >-
+          כש-$V \to 0$ אין שדה ואין אנרגיה. מתח כפול נותן פי 4 אנרגיה, כמו $\tfrac12CV^2$.
+      - kind: units
+        text: >-
+          $\text{C}^2/(\text{N}\,\text{m}^2)\cdot(\text{V/m})^2$, ו-$\text{V} = \text{N}\cdot\text{m/C}$: $\text{N/m}^2 = \text{J/m}^3$.
+      - kind: substitution
+        text: >-
+          $E = 500/0.002 = 2.5\cdot10^5\,\text{V/m}$; $u = \tfrac12\cdot8.85\cdot10^{-12}\cdot(2.5\cdot10^5)^2 \approx 0.277\,\text{J/m}^3$; $U = 0.277\cdot0.01\cdot0.002 \approx 5.53\cdot10^{-6}\,\text{J}$.
+      - kind: result
+        text: >-
+          $E = 2.5\cdot10^5\,\text{V/m}$, $u \approx 0.277\,\text{J/m}^3$, $U \approx 5.53\,\mu\text{J} = \tfrac12CV^2$.
+
+  - id: W-6.14-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.14-1]
+    prompt: >-
+      השדה החשמלי של גל הוא $E_y = E_0\cos(3x - 9\cdot10^8\,t)$, עם $x$ במטרים ו-$t$ בשניות.
+
+      א. מה מהירות הגל, אורך הגל והתדירות?
+
+      ב. חשבו את $\partial^2E_y/\partial x^2$ ואת $\partial^2E_y/\partial t^2$, והראו שהגל מקיים את משוואת הגלים של גל אלקטרומגנטי בריק.
+    answer: >-
+      א. $v = 3\cdot10^8\,\text{m/s}$, $\lambda \approx 2.09\,\text{m}$, $f \approx 1.43\cdot10^8\,\text{Hz}$.
+
+      ב. $\partial^2E_y/\partial x^2 = -9E_y$, $\partial^2E_y/\partial t^2 = -8.1\cdot10^{17}E_y$; היחס $1/(9\cdot10^{16}) = 1/c^2$.
+    solution:
+      - kind: given
+        text: >-
+          $k = 3\,\text{rad/m}$, $\omega = 9\cdot10^8\,\text{rad/s}$.
+      - kind: law
+        text: >-
+          $v = \omega/k$, $\lambda = 2\pi/k$, $f = \omega/(2\pi)$; משוואת הגלים $\dfrac{\partial^2E}{\partial x^2} = \dfrac{1}{c^2}\,\dfrac{\partial^2E}{\partial t^2}$.
+      - kind: manipulation
+        text: >-
+          לפי כלל השרשרת, כל גזירה של $\cos(3x - 9\cdot10^8t)$ לפי $x$ מוציאה גורם $3$, ולפי $t$ גורם $-9\cdot10^8$, ושתי גזירות מחזירות $-\cos$:
+
+          $\dfrac{\partial^2E_y}{\partial x^2} = -3^2E_0\cos(\ldots) = -9E_y$ ו-$\dfrac{\partial^2E_y}{\partial t^2} = -(9\cdot10^8)^2E_0\cos(\ldots) = -8.1\cdot10^{17}E_y$.
+      - kind: reasoning
+        text: >-
+          היחס בין שתי הנגזרות הוא $\dfrac{9}{8.1\cdot10^{17}} = \dfrac{1}{9\cdot10^{16}} = \dfrac{1}{(3\cdot10^8)^2}$, כלומר $k^2/\omega^2 = 1/c^2$, וזו בדיוק משוואת הגלים.
+      - kind: limit
+        text: >-
+          אילו $\omega$ היה, למשל, $6\cdot10^8\,\text{rad/s}$, היחס היה $1/(2\cdot10^8)^2$: הגל לא היה מקיים את המשוואה עם $c$, ולא היה גל אלקטרומגנטי בריק.
+      - kind: units
+        text: >-
+          $\partial^2E/\partial x^2$ ב-$\text{V/m}^3$ ו-$\partial^2E/\partial t^2$ ב-$\text{V}/(\text{m}\cdot\text{s}^2)$; היחס ב-$\text{s}^2/\text{m}^2$, כמו $1/c^2$.
+      - kind: substitution
+        text: >-
+          $v = 9\cdot10^8/3 = 3\cdot10^8\,\text{m/s}$; $\lambda = 2\pi/3 \approx 2.09\,\text{m}$; $f = 9\cdot10^8/(2\pi) \approx 1.43\cdot10^8\,\text{Hz}$.
+      - kind: result
+        text: >-
+          $v = c$, $\lambda \approx 2.09\,\text{m}$, $f \approx 143\,\text{MHz}$; הגל מקיים את משוואת הגלים.
+
+  - id: W-6.14-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.14-1]
+    prompt: >-
+      קבעו ונמקו לגבי כל טענה:
+
+      א. "קרני רנטגן נעות בריק מהר יותר מגלי רדיו, כי התדירות שלהן גבוהה יותר."
+
+      ב. "אילו $\mu_0$ היה גדול פי 2, אור היה נע לאט יותר." מה הייתה מהירותו?
+
+      ג. "בלי זרם ההעתקה לא היו גלים אלקטרומגנטיים."
+    answer: >-
+      א. שגויה: כל הגלים האלקטרומגנטיים נעים בריק ב-$c$.
+
+      ב. נכונה: $c/\sqrt2 \approx 2.12\cdot10^8\,\text{m/s}$.
+
+      ג. נכונה: בלי האיבר $\mu_0\varepsilon_0\,\partial E/\partial t$ אין משוואת גלים.
+    solution:
+      - kind: law
+        text: >-
+          $c = 1/\sqrt{\mu_0\varepsilon_0}$, מתוך חוק פאראדיי וחוק אמפר-מקסוול בריק.
+      - kind: reasoning
+        text: >-
+          א. בגזירה התדירות לא קובעת את המהירות: מכל תדירות $\omega$ יוצא $\omega/k = 1/\sqrt{\mu_0\varepsilon_0}$. התדירות קובעת רק את אורך הגל.
+
+          ב. $\mu_0$ מתחת לשורש ובמכנה, ולכן פי 2 בו הוא פי $\sqrt2$ פחות במהירות.
+
+          ג. בלי זרם ההעתקה, בריק היה $\nabla\times\vec B = 0$. אז חוק אמפר היה נותן $\partial B_z/\partial x = 0$: $B_z$ זהה בכל x ותלוי רק בזמן. חוק פאראדיי היה נותן $\partial E_y/\partial x = -dB_z/dt$, שזהה בכל x, ולכן $\partial^2E_y/\partial x^2 = 0$: $E_y$ קו ישר ב-x, בלי פסגות שנעות. שדה חשמלי שמשתנה לא היה יוצר שדה מגנטי, והשרשרת שמקיימת את הגל הייתה נקטעת.
+      - kind: limit
+        text: >-
+          כש-$\mu_0\varepsilon_0 \to 0$, כלומר כשזרם ההעתקה נעלם, $c \to \infty$: אין גל שנע, השדות "מגיעים" לכל מקום מיד.
+      - kind: units
+        text: >-
+          $1/\sqrt{\text{s}^2/\text{m}^2} = \text{m/s}$.
+      - kind: substitution
+        text: >-
+          $c' = \dfrac{3\cdot10^8}{\sqrt2} \approx 2.12\cdot10^8\,\text{m/s}$.
+      - kind: result
+        text: >-
+          א. שגויה. ב. נכונה, $2.12\cdot10^8\,\text{m/s}$. ג. נכונה.
+
+  - id: W-6.14-06
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.14-2, OBJ-6.14-3, OBJ-6.14-4]
+    prompt: >-
+      בגל אלקטרומגנטי מישורי $E_0 = 120\,\text{V/m}$.
+
+      א. מה $B_0$?
+
+      ב. מה צפיפות האנרגיה הכוללת בפסגה, ומה הממוצע שלה בזמן?
+
+      ג. מה עוצמת הגל?
+    answer: >-
+      א. $B_0 = 4\cdot10^{-7}\,\text{T}$.
+
+      ב. בפסגה $\varepsilon_0E_0^2 \approx 1.27\cdot10^{-7}\,\text{J/m}^3$; בממוצע $\varepsilon_0E_0^2/2 \approx 6.37\cdot10^{-8}\,\text{J/m}^3$.
+
+      ג. $\approx 19.1\,\text{W/m}^2$.
+    solution:
+      - kind: given
+        text: >-
+          $E_0 = 120\,\text{V/m}$.
+      - kind: law
+        text: >-
+          $E_0 = cB_0$; $u = \varepsilon_0E^2/2 + B^2/(2\mu_0)$, ובגל $u = \varepsilon_0E^2$; $\langle S\rangle = c\,\langle u\rangle$.
+      - kind: manipulation
+        text: >-
+          בנקודה קבועה $u = \varepsilon_0E_0^2\sin^2(kx - \omega t)$. הממוצע של $\sin^2$ על מחזור הוא $\tfrac12$, ולכן $\langle u\rangle = \varepsilon_0E_0^2/2$ ו-$\langle S\rangle = c\varepsilon_0E_0^2/2$.
+      - kind: limit
+        text: >-
+          הממוצע הוא חצי מהערך בפסגה, כמו שצריך לגודל שמתנודד בין אפס לפסגה בצורת $\sin^2$.
+      - kind: units
+        text: >-
+          $\text{J/m}^3\cdot\text{m/s} = \text{W/m}^2$.
+      - kind: substitution
+        text: >-
+          $B_0 = 120/(3\cdot10^8) = 4\cdot10^{-7}\,\text{T}$; $\varepsilon_0E_0^2 = 8.85\cdot10^{-12}\cdot120^2 \approx 1.27\cdot10^{-7}\,\text{J/m}^3$; $\langle u\rangle \approx 6.37\cdot10^{-8}\,\text{J/m}^3$; $\langle S\rangle = 3\cdot10^8\cdot6.37\cdot10^{-8} \approx 19.1\,\text{W/m}^2$.
+      - kind: result
+        text: >-
+          $B_0 = 0.4\,\mu\text{T}$; $u_{\max} \approx 1.27\cdot10^{-7}\,\text{J/m}^3$, $\langle u\rangle \approx 6.37\cdot10^{-8}\,\text{J/m}^3$; $\langle S\rangle \approx 19.1\,\text{W/m}^2$.
+
+  - id: W-6.14-07
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.14-4]
+    prompt: >-
+      תחנת רדיו משדרת הספק של $50\,\text{kW}$, ונניח שהוא מתפזר באופן שווה לכל הכיוונים.
+
+      א. מה עוצמת הגל במרחק $10\,\text{km}$?
+
+      ב. מה המשרעות $E_0$ ו-$B_0$ שם?
+
+      ג. מה משתנה במרחק $20\,\text{km}$?
+    answer: >-
+      א. $\langle S\rangle \approx 3.98\cdot10^{-5}\,\text{W/m}^2$.
+
+      ב. $E_0 \approx 0.173\,\text{V/m}$, $B_0 \approx 5.77\cdot10^{-10}\,\text{T}$.
+
+      ג. העוצמה קטנה פי 4, המשרעות פי 2.
+    solution:
+      - kind: given
+        text: >-
+          $P = 5\cdot10^4\,\text{W}$, $r = 10^4\,\text{m}$.
+      - kind: law
+        text: >-
+          $\langle S\rangle = \dfrac{P}{4\pi r^2}$ (ההספק מתפזר על כדור); $\langle S\rangle = \tfrac12c\varepsilon_0E_0^2$; $E_0 = cB_0$.
+      - kind: manipulation
+        text: >-
+          $E_0 = \sqrt{\dfrac{2\langle S\rangle}{c\varepsilon_0}} = \sqrt{\dfrac{2P}{4\pi r^2c\varepsilon_0}} \propto \dfrac{1}{r}$.
+      - kind: limit
+        text: >-
+          כש-$r \to \infty$ העוצמה והשדות שואפים לאפס; כל ההספק עובר דרך כל כדור סביב התחנה, בכל רדיוס.
+      - kind: units
+        text: >-
+          $\text{W}/\text{m}^2$; ו-$\sqrt{(\text{W/m}^2)/(\text{m/s}\cdot\text{C}^2/(\text{N}\,\text{m}^2))} = \text{N/C} = \text{V/m}$.
+      - kind: substitution
+        text: >-
+          $\langle S\rangle = \dfrac{5\cdot10^4}{4\pi\cdot10^8} \approx 3.98\cdot10^{-5}\,\text{W/m}^2$; $E_0 = \sqrt{\dfrac{2\cdot3.98\cdot10^{-5}}{3\cdot10^8\cdot8.85\cdot10^{-12}}} \approx 0.173\,\text{V/m}$; $B_0 = 0.173/(3\cdot10^8) \approx 5.77\cdot10^{-10}\,\text{T}$.
+      - kind: result
+        text: >-
+          $\langle S\rangle \approx 3.98\cdot10^{-5}\,\text{W/m}^2$, $E_0 \approx 0.173\,\text{V/m}$, $B_0 \approx 0.577\,\text{nT}$; ב-$20\,\text{km}$ העוצמה רבע, והמשרעות חצי.
+
+  - id: W-6.14-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.14-3]
+    prompt: >-
+      סליל ארוך באורך $40\,\text{cm}$ ובשטח חתך $10\,\text{cm}^2$, עם $800$ כריכות, מוביל זרם של $5\,\text{A}$.
+
+      א. מה השדה המגנטי בסליל, ומה צפיפות האנרגיה בו?
+
+      ב. כמה אנרגיה אגורה בשדה (הזניחו את השדה שמחוץ לסליל)?
+
+      ג. הראו בעזרת חוק פאראדיי שזו העבודה שהמקור עושה כשהוא מעלה את הזרם מאפס ל-$5\,\text{A}$.
+
+      ד. מה משתנה אם מכפילים את הזרם?
+    answer: >-
+      א. $B \approx 1.26\cdot10^{-2}\,\text{T}$, $u \approx 62.8\,\text{J/m}^3$.
+
+      ב. $U \approx 2.51\cdot10^{-2}\,\text{J}$.
+
+      ג. ההספק נגד הכא״מ המושרה הוא $A\ell\,\dfrac{d}{dt}\big(B^2/(2\mu_0)\big)$.
+
+      ד. האנרגיה גדלה פי 4.
+    solution:
+      - kind: given
+        text: >-
+          $\ell = 0.4\,\text{m}$, $A = 10^{-3}\,\text{m}^2$, $N = 800$, ולכן $n = N/\ell = 2000\,\text{m}^{-1}$; $I = 5\,\text{A}$.
+      - kind: law
+        text: >-
+          $B = \mu_0nI$; $u = B^2/(2\mu_0)$; חוק פאראדיי: בכל כריכה כא״מ מושרה $A\,dB/dt$.
+      - kind: manipulation
+        text: >-
+          ג. בכל $N = n\ell$ הכריכות יחד הכא״מ הוא $n\ell A\,dB/dt$, והמקור דוחף נגדו את הזרם $I = B/(\mu_0n)$. ההספק שהוא משקיע: $P = I\cdot n\ell A\,\dfrac{dB}{dt} = \dfrac{A\ell}{\mu_0}\,B\,\dfrac{dB}{dt} = A\ell\,\dfrac{d}{dt}\!\left(\dfrac{B^2}{2\mu_0}\right)$ (כלל השרשרת). העבודה הכוללת, מ-$B = 0$ עד הערך הסופי, היא לכן $A\ell\cdot B^2/(2\mu_0) = u\cdot A\ell$, בלי קשר לקצב שבו העלו את הזרם.
+      - kind: limit
+        text: >-
+          כש-$I \to 0$, $U \to 0$. והתוצאה לא תלויה בקצב: העלאה מהירה נותנת כא״מ גדול לזמן קצר, ואיטית כא״מ קטן לזמן ארוך.
+      - kind: units
+        text: >-
+          $\text{J/m}^3\cdot\text{m}^3 = \text{J}$.
+      - kind: substitution
+        text: >-
+          $B = 4\pi\cdot10^{-7}\cdot2000\cdot5 \approx 1.26\cdot10^{-2}\,\text{T}$; $u = \dfrac{(1.26\cdot10^{-2})^2}{2\cdot4\pi\cdot10^{-7}} \approx 62.8\,\text{J/m}^3$; $U = 62.8\cdot10^{-3}\cdot0.4 \approx 2.51\cdot10^{-2}\,\text{J}$.
+      - kind: result
+        text: >-
+          $B \approx 12.6\,\text{mT}$, $u \approx 62.8\,\text{J/m}^3$, $U \approx 25.1\,\text{mJ}$; בזרם כפול $B$ כפול ו-$U$ פי 4.
+
+  - id: W-6.14-09
+    level: bagrut
+    qualitative: true
+    objectives: [OBJ-6.14-4]
+    prompt: >-
+      סוללה של $1.5\,\text{V}$, בלי התנגדות פנימית, מחוברת בשני תילים אידיאליים (התנגדות אפס) לנגד, וזורם במעגל זרם של $0.5\,\text{A}$.
+
+      א. קבעו ונמקו: מה כיוון וקטור פוינטינג על פני הנגד?
+
+      ב. בתוך התילים האידיאליים אין שדה חשמלי. כמה אנרגיה זורמת **בתוך** התילים?
+
+      ג. כמה אנרגיה בשנייה יוצאת מהסוללה, וכמה נכנסת לנגד? איפה היא עוברת בדרך?
+    answer: >-
+      א. פנימה, אל ציר הנגד.
+
+      ב. אפס.
+
+      ג. $0.75\,\text{W}$ יוצאים מהסוללה ונכנסים לנגד, דרך השדה שבחלל שסביב המעגל.
+    solution:
+      - kind: given
+        text: >-
+          $\varepsilon = 1.5\,\text{V}$, $I = 0.5\,\text{A}$, תילים בלי התנגדות.
+      - kind: law
+        text: >-
+          $\vec S = \vec E\times\vec B/\mu_0$; על פני נגד $E = V/L$ לאורכו ו-$B = \mu_0I/(2\pi a)$ סביבו, והשטף של $\vec S$ דרך הדופן הוא $VI$.
+      - kind: reasoning
+        text: >-
+          א. על פני הנגד $\vec E$ בכיוון הזרם, ו-$\vec B$ מקיף אותו לפי כלל יד ימין; המכפלה $\vec E\times\vec B$ מצביעה אל הציר.
+
+          ב. בתוך תיל אידיאלי $\vec E = 0$, ולכן $\vec S = 0$: שום אנרגיה לא זורמת בתוך התיל.
+
+          ג. במעגל אין הפסדים אחרים, ולכן כל ההספק שהסוללה נותנת, $\varepsilon I$, מגיע לנגד, שם הוא $VI$ עם $V = \varepsilon$. הוא עובר בשדה החשמלי והמגנטי שבחלל שמחוץ לתילים; התילים רק "מכוונים" את השדות.
+      - kind: limit
+        text: >-
+          אילו המעגל היה פתוח, $I = 0$ ו-$B = 0$: יש שדה חשמלי בין התילים, אבל אין זרימה של אנרגיה.
+      - kind: units
+        text: >-
+          $\text{V}\cdot\text{A} = \text{W}$.
+      - kind: substitution
+        text: >-
+          $P = 1.5\cdot0.5 = 0.75\,\text{W}$.
+      - kind: result
+        text: >-
+          א. פנימה. ב. אפס. ג. $0.75\,\text{W}$, דרך השדה שמחוץ לתילים.
+
+  - id: W-6.14-10
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.14-1, OBJ-6.14-2, OBJ-6.14-4]
+    prompt: >-
+      קרן לייזר אדומה, באורך גל $633\,\text{nm}$ ובהספק $1\,\text{mW}$, נעה בכיוון $+\hat z$, וחתך הקרן עיגול ברדיוס $0.5\,\text{mm}$. השדה החשמלי שלה לאורך $\hat x$. התייחסו אליה כגל מישורי.
+
+      א. מה התדירות, מספר הגל והתדירות הזוויתית?
+
+      ב. מה העוצמה, ומה $E_0$ ו-$B_0$?
+
+      ג. כתבו ביטויים ל-$\vec E(z, t)$ ול-$\vec B(z, t)$, כולל הכיוונים.
+
+      ד. כמה אנרגיה יש במטר אחד של הקרן?
+    answer: >-
+      א. $f \approx 4.74\cdot10^{14}\,\text{Hz}$, $k \approx 9.93\cdot10^6\,\text{rad/m}$, $\omega \approx 2.98\cdot10^{15}\,\text{rad/s}$.
+
+      ב. $\langle S\rangle \approx 1.27\cdot10^3\,\text{W/m}^2$, $E_0 \approx 979\,\text{V/m}$, $B_0 \approx 3.26\cdot10^{-6}\,\text{T}$.
+
+      ג. $\vec E = E_0\sin(kz - \omega t)\,\hat x$, $\vec B = B_0\sin(kz - \omega t)\,\hat y$.
+
+      ד. $\approx 3.33\cdot10^{-12}\,\text{J}$.
+    solution:
+      - kind: given
+        text: >-
+          $\lambda = 6.33\cdot10^{-7}\,\text{m}$, $P = 10^{-3}\,\text{W}$, $R = 5\cdot10^{-4}\,\text{m}$; כיוון ההתקדמות $+\hat z$, $\vec E \parallel \hat x$.
+      - kind: law
+        text: >-
+          $c = f\lambda$, $k = 2\pi/\lambda$, $\omega = 2\pi f$; $\langle S\rangle = P/(\pi R^2) = \tfrac12c\varepsilon_0E_0^2$; $E_0 = cB_0$; הגל נע בכיוון $\vec E\times\vec B$.
+      - kind: manipulation
+        text: >-
+          ג. צריך $\hat x\times\vec B \parallel +\hat z$, ו-$\hat x\times\hat y = \hat z$, ולכן $\vec B \parallel +\hat y$, באותו מופע.
+
+          ד. האנרגיה בקטע באורך $\ell$ של הקרן עוברת כל נקודה בזמן $\ell/c$, ולכן היא $P\ell/c$.
+      - kind: limit
+        text: >-
+          $P\ell/c$ שווה גם ל-$\langle u\rangle\cdot\pi R^2\ell$, עם $\langle u\rangle = \langle S\rangle/c$. ורדיוס כפול, באותו הספק, נותן עוצמה רבע ו-$E_0$ חצי.
+      - kind: units
+        text: >-
+          $\text{W}\cdot\text{m}/(\text{m/s}) = \text{J}$.
+      - kind: substitution
+        text: >-
+          $f = \dfrac{3\cdot10^8}{6.33\cdot10^{-7}} \approx 4.74\cdot10^{14}\,\text{Hz}$, $k = \dfrac{2\pi}{6.33\cdot10^{-7}} \approx 9.93\cdot10^6\,\text{rad/m}$, $\omega \approx 2.98\cdot10^{15}\,\text{rad/s}$.
+
+          $\langle S\rangle = \dfrac{10^{-3}}{\pi\cdot(5\cdot10^{-4})^2} \approx 1.27\cdot10^3\,\text{W/m}^2$; $E_0 = \sqrt{\dfrac{2\cdot1273}{3\cdot10^8\cdot8.85\cdot10^{-12}}} \approx 979\,\text{V/m}$; $B_0 \approx 3.26\cdot10^{-6}\,\text{T}$.
+
+          $P\ell/c = 10^{-3}\cdot1/(3\cdot10^8) \approx 3.33\cdot10^{-12}\,\text{J}$.
+      - kind: result
+        text: >-
+          $f \approx 4.74\cdot10^{14}\,\text{Hz}$; $\langle S\rangle \approx 1.27\,\text{kW/m}^2$, $E_0 \approx 979\,\text{V/m}$, $B_0 \approx 3.26\,\mu\text{T}$; $\vec E \parallel \hat x$, $\vec B \parallel \hat y$ באותו מופע; כ-$3.33\cdot10^{-12}\,\text{J}$ במטר.
+
+challenge:
+  - id: W-6.14-c1
+    stars: 1
+    objectives: [OBJ-6.14-3, OBJ-6.14-4]
+    prompt: >-
+      זרם קבוע $I$ טוען קבל עם לוחות עגולים ברדיוס $a$, במרחק $s$ זה מזה ($s \ll a$). ברגע מסוים המטען על הלוח החיובי הוא $Q$.
+
+      א. מצאו את גודלו וכיוונו של וקטור פוינטינג בין הלוחות, במרחק $r \le a$ מהציר.
+
+      ב. דרך איזה משטח כדאי לחשב את ההספק שנכנס לקבל? חשבו אותו.
+
+      ג. הראו שהאנרגיה שנכנסת לקבל מרגע שהיה ריק עד שהמטען עליו $Q$ היא $Q^2/(2C)$.
+
+      ד. הציבו $a = 5\,\text{cm}$, $s = 1\,\text{mm}$, $I = 2\,\text{mA}$, אחרי $10\,\mu\text{s}$ מתחילת הטעינה: מה $S$ בשפת הלוחות, מה ההספק, ומה האנרגיה האגורה?
+    answer: >-
+      א. $S = \dfrac{EIr}{2\pi a^2}$, אל הציר, עם $E = Q/(\varepsilon_0\pi a^2)$.
+
+      ב. דרך הדופן הגלילית שבשפת הלוחות: $P = \dfrac{QI}{C}$.
+
+      ג. $\int_0^Q \dfrac{q}{C}\,dq = \dfrac{Q^2}{2C}$.
+
+      ד. $S \approx 1.83\cdot10^3\,\text{W/m}^2$, $P \approx 0.576\,\text{W}$, $U \approx 2.88\cdot10^{-6}\,\text{J}$.
+    solution:
+      - kind: given
+        text: >-
+          לוחות ברדיוס $a$, מרווח $s$, זרם קבוע $I = dQ/dt$, מטען $Q$; $C = \varepsilon_0\pi a^2/s$.
+      - kind: law
+        text: >-
+          $\vec S = \vec E\times\vec B/\mu_0$; בין הלוחות $E = Q/(\varepsilon_0\pi a^2)$ (שיעור 2.6), ומחוק אמפר-מקסוול $B = \dfrac{\mu_0Ir}{2\pi a^2}$ במרחק $r \le a$ (שיעור 6.12).
+      - kind: manipulation
+        text: >-
+          א. $\vec E$ לאורך הציר, מהלוח החיובי לשלילי, ו-$\vec B$ מקיף את הציר לפי כלל יד ימין סביב הכיוון שבו $\vec E$ גדל. המכפלה $\vec E\times\vec B$ מצביעה אל הציר, וגודלה $S = \dfrac{EB}{\mu_0} = \dfrac{EIr}{2\pi a^2}$.
+
+          ב. $\vec S$ רדיאלי, ולכן אינו חוצה את הלוחות עצמם: כל הזרימה נכנסת דרך הדופן הגלילית שבשפה, $r = a$, ששטחה $2\pi as$. שם $S = EI/(2\pi a)$, ו-$P = S\cdot2\pi as = EIs = \dfrac{QIs}{\varepsilon_0\pi a^2} = \dfrac{QI}{C}$.
+
+          ג. $P = \dfrac{Q}{C}\,\dfrac{dQ}{dt}$, ולכן האנרגיה שנכנסה היא $\int_0^Q \dfrac{q}{C}\,dq = \dfrac{Q^2}{2C}$, האנרגיה של קבל משיעור 2.7.
+      - kind: limit
+        text: >-
+          על הציר, $r = 0$, $S = 0$; ו-$S$ גדל עד השפה, כי שם עוברת כל האנרגיה שממלאת את הנפח שבפנים. כש-$I \to 0$ אין שדה מגנטי ואין זרימה, והאנרגיה בקבל לא משתנה.
+      - kind: units
+        text: >-
+          $\text{V/m}\cdot\text{A}\cdot\text{m}/\text{m}^2 = \text{W/m}^2$; $\text{C}\cdot\text{A}/\text{F} = \text{V}\cdot\text{A} = \text{W}$.
+      - kind: substitution
+        text: >-
+          $Q = 2\cdot10^{-3}\cdot10^{-5} = 2\cdot10^{-8}\,\text{C}$; $C = \dfrac{8.85\cdot10^{-12}\cdot\pi\cdot0.05^2}{10^{-3}} \approx 6.95\cdot10^{-11}\,\text{F}$; $E = \dfrac{Q}{\varepsilon_0\pi a^2} \approx 2.88\cdot10^5\,\text{V/m}$; בשפה $B = \dfrac{\mu_0I}{2\pi a} = 8\cdot10^{-9}\,\text{T}$, ו-$S = \dfrac{EB}{\mu_0} \approx 1.83\cdot10^3\,\text{W/m}^2$.
+
+          $P = \dfrac{QI}{C} \approx 0.576\,\text{W}$; $U = \dfrac{Q^2}{2C} \approx 2.88\cdot10^{-6}\,\text{J}$.
+      - kind: result
+        text: >-
+          וקטור פוינטינג מצביע אל הציר, והאנרגיה נכנסת לקבל מהצד, דרך השפה, לא דרך התילים; בסך הכול $Q^2/(2C)$. במספרים: $1.83\cdot10^3\,\text{W/m}^2$, $0.576\,\text{W}$, $2.88\,\mu\text{J}$.
+    source:
+      name: MIT 8.022 Physics II (Fall 2004, OpenCourseWare), Assignment 11
+      year: 2004
+      problem: 'Problem 3: Poynting vector and capacitor'
+      url: https://ocw.mit.edu/courses/8-022-physics-ii-electricity-and-magnetism-fall-2004/3feaf8e5d972bbf737fed4fc532c3c93_pset11.pdf
+      verified: '2026-11-03'
+      adapted: true
+
+  - id: W-6.14-c2
+    stars: 2
+    objectives: [OBJ-6.14-4]
+    prompt: >-
+      כבל קואקסיאלי מעביר הספק ישר מסוללה לצרכן. הכבל בנוי משני גלילים דקים ומוליכים, בלי התנגדות, שציר משותף להם: גליל פנימי ברדיוס $a$ וגליל חיצוני ברדיוס $b$, שניהם באורך $\ell$. בקצה אחד סוללה עם כא״מ $\varepsilon$ מחוברת בין שני הגלילים, ובקצה השני נגד $R$ מחובר ביניהם. הזרם זורם בגליל הפנימי לכיוון הנגד וחוזר בגליל החיצוני.
+
+      א. כמה הספק הופך לחום בנגד?
+
+      ב. מה השדה החשמלי והשדה המגנטי בין הגלילים, במרחק $r$ מהציר ($a < r < b$)? (רמז: הגליל הפנימי טעון כמו תיל ארוך בצפיפות מטען קווית $\lambda$, והמתח בין הגלילים הוא $\varepsilon$. מותר להשתמש בכך שהפונקציה הקדומה של $1/r$ היא $\ln r$, הלוגריתם הטבעי.)
+
+      ג. מה וקטור פוינטינג בין הגלילים, ולאן הוא מצביע?
+
+      ד. הראו שהשטף של וקטור פוינטינג דרך הטבעת שבין הגלילים, בחתך של הכבל, שווה להספק של סעיף א.
+
+      ה. הופכים את הסוללה. האם כיוון וקטור פוינטינג משתנה?
+
+      ו. הציבו $a = 1\,\text{mm}$, $b = 4\,\text{mm}$, $\varepsilon = 12\,\text{V}$, $R = 6\,\Omega$: מה $S$ במרחק $2\,\text{mm}$ מהציר?
+    answer: >-
+      א. $P = \varepsilon^2/R$.
+
+      ב. $E = \dfrac{\varepsilon}{r\ln(b/a)}$, רדיאלי; $B = \dfrac{\mu_0 I}{2\pi r}$ עם $I = \varepsilon/R$, מקיף את הציר.
+
+      ג. $S = \dfrac{\varepsilon I}{2\pi r^2\ln(b/a)}$, לאורך הכבל, מהסוללה אל הנגד.
+
+      ד. $\int_a^b S\cdot2\pi r\,dr = \varepsilon I = \varepsilon^2/R$.
+
+      ה. לא: $\vec E$ ו-$\vec B$ מתהפכים שניהם.
+
+      ו. $S \approx 6.89\cdot10^5\,\text{W/m}^2$.
+    solution:
+      - kind: given
+        text: >-
+          גלילים ברדיוסים $a < b$, באורך $\ell$, בלי התנגדות; כא״מ $\varepsilon$; נגד $R$. הגלילים אידיאליים, ולכן הזרם $I = \varepsilon/R$ והמתח בין הגלילים $\varepsilon$ לכל אורך הכבל.
+      - kind: law
+        text: >-
+          $P = \varepsilon I$; השדה של תיל טעון ארוך $E = \dfrac{\lambda}{2\pi\varepsilon_0 r}$ (גאוס), והמתח $V = \int_a^b E\,dr$; חוק אמפר $B\cdot2\pi r = \mu_0 I$; $\vec S = \vec E\times\vec B/\mu_0$.
+      - kind: manipulation
+        text: >-
+          ב. $\varepsilon = \displaystyle\int_a^b \frac{\lambda}{2\pi\varepsilon_0 r}\,dr = \frac{\lambda}{2\pi\varepsilon_0}\ln\frac{b}{a}$, ולכן $\dfrac{\lambda}{2\pi\varepsilon_0} = \dfrac{\varepsilon}{\ln(b/a)}$ ו-$E = \dfrac{\varepsilon}{r\ln(b/a)}$, מהגליל הפנימי (החיובי) החוצה. מעגל ברדיוס $r$ בין הגלילים מקיף רק את הזרם של הגליל הפנימי: $B = \dfrac{\mu_0 I}{2\pi r}$.
+
+          ג. נניח שהזרם בגליל הפנימי בכיוון $+\hat z$, אל הנגד. בנקודה מעל הציר, $\vec E \parallel +\hat y$ (החוצה מהציר), ו-$\vec B$ לפי כלל יד ימין סביב $+\hat z$ מצביע שם ב-$-\hat x$. $\hat y\times(-\hat x) = +\hat z$: לאורך הכבל, אל הנגד. הגודל $S = \dfrac{EB}{\mu_0} = \dfrac{\varepsilon I}{2\pi r^2\ln(b/a)}$.
+
+          ד. דרך טבעת דקה ברדיוס $r$ וברוחב $dr$ עובר $S\cdot2\pi r\,dr = \dfrac{\varepsilon I}{\ln(b/a)}\,\dfrac{dr}{r}$, ובסכום מ-$a$ עד $b$: $\dfrac{\varepsilon I}{\ln(b/a)}\cdot\ln\dfrac{b}{a} = \varepsilon I$.
+
+          ה. הפיכת הסוללה הופכת את המטען על הגלילים (ולכן את $\vec E$) וגם את הזרם (ולכן את $\vec B$). המכפלה $\vec E\times\vec B$ לא משתנה: האנרגיה זורמת תמיד מהסוללה אל הנגד.
+      - kind: limit
+        text: >-
+          $\ell$ לא מופיע: בכבל אידיאלי לא אובדת אנרגיה בדרך, כמה ארוך שיהיה. כש-$b \to a$ הרווח צר, $\ln(b/a) \approx (b - a)/a$, והשדה בין הגלילים כמעט אחיד, $E \approx \varepsilon/(b - a)$, כמו בקבל לוחות. וכש-$R \to \infty$ (מעגל פתוח) $I = 0$, אין שדה מגנטי, ואין זרימה, אף שיש שדה חשמלי.
+      - kind: units
+        text: >-
+          $\text{V}\cdot\text{A}/\text{m}^2 = \text{W/m}^2$; ו-$\text{W/m}^2\cdot\text{m}^2 = \text{W}$.
+      - kind: substitution
+        text: >-
+          $I = 12/6 = 2\,\text{A}$, $P = 24\,\text{W}$; $\ln 4 \approx 1.386$; ב-$r = 2\,\text{mm}$: $E = \dfrac{12}{0.002\cdot1.386} \approx 4.33\cdot10^3\,\text{V/m}$, $B = \dfrac{4\pi\cdot10^{-7}\cdot2}{2\pi\cdot0.002} = 2\cdot10^{-4}\,\text{T}$, $S = \dfrac{EB}{\mu_0} \approx 6.89\cdot10^5\,\text{W/m}^2$.
+      - kind: result
+        text: >-
+          כל ההספק, $\varepsilon^2/R = 24\,\text{W}$, זורם לאורך הכבל ברווח שבין הגלילים, לא בתוך המוליכים, תמיד מהסוללה אל הנגד; ב-$r = 2\,\text{mm}$, $S \approx 6.89\cdot10^5\,\text{W/m}^2$.
+    source:
+      name: MIT 8.022 Physics II (Fall 2004, OpenCourseWare), Assignment 11
+      year: 2004
+      problem: 'Problem 4: Poynting vector and coaxial cable'
+      url: https://ocw.mit.edu/courses/8-022-physics-ii-electricity-and-magnetism-fall-2004/3feaf8e5d972bbf737fed4fc532c3c93_pset11.pdf
+      verified: '2026-11-03'
+      adapted: true

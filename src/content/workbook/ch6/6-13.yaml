@@ -1,0 +1,498 @@
+# Workbook, lesson 6.13 (Maxwell's equations in differential form). Format and rules: see .claude/CLAUDE.md,
+# "Worked examples, workbook", and the chapter 6 solution shape (law … limit, units, result).
+# Every number was recomputed with src/physics/constants.ts (MU0, EPS0, EPS0_DISPLAY); script w613.ts in the
+# session scratchpad. In a >- block, consecutive lines fold into one paragraph: every part (א, ב, …) starts
+# after a blank line.
+
+lesson: '6.13'
+practice:
+  - id: W-6.13-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.13-2]
+    prompt: >-
+      באזור מסוים השדה החשמלי הוא $\vec E = \alpha\,(x,\ y,\ 0)$, עם $\alpha = 500\,\text{N/(C}\cdot\text{m)}$, והשדה המגנטי לא משתנה בזמן.
+
+      א. בדקו שהשדה מקיים את חוק פאראדיי.
+
+      ב. מה צפיפות המטען באזור?
+    answer: >-
+      א. $(\nabla\times\vec E)_z = 0 = -\partial B_z/\partial t$.
+
+      ב. $\rho = 2\alpha\varepsilon_0 \approx 8.85\cdot10^{-9}\,\text{C/m}^3$.
+    solution:
+      - kind: law
+        text: >-
+          $\nabla\times\vec E = -\dfrac{\partial\vec B}{\partial t}$ ו-$\nabla\cdot\vec E = \dfrac{\rho}{\varepsilon_0}$.
+      - kind: manipulation
+        text: >-
+          א. $(\nabla\times\vec E)_z = \partial(\alpha y)/\partial x - \partial(\alpha x)/\partial y = 0$, ושני הרכיבים האחרים כוללים רק $E_z = 0$ ונגזרות לפי $z$. השדה המגנטי לא משתנה, ולכן גם צד ימין אפס.
+
+          ב. $\nabla\cdot\vec E = \partial(\alpha x)/\partial x + \partial(\alpha y)/\partial y = 2\alpha$, ולכן $\rho = 2\alpha\varepsilon_0$.
+      - kind: substitution
+        text: >-
+          $\rho = 2\cdot500\cdot8.85\cdot10^{-12} = 8.85\cdot10^{-9}\,\text{C/m}^3$.
+      - kind: limit
+        text: >-
+          כש-$\alpha \to 0$ השדה נעלם ואיתו המטען. וזה השדה בתוך מוט טעון באחידות (שיעור 6.7): בראשית $E = 0$, אבל $\rho$ שם כמו בכל מקום אחר.
+      - kind: units
+        text: >-
+          $\dfrac{\text{N}}{\text{C}\cdot\text{m}}\cdot\dfrac{\text{C}^2}{\text{N}\cdot\text{m}^2} = \dfrac{\text{C}}{\text{m}^3}$.
+      - kind: result
+        text: >-
+          א. הרוטור אפס, כנדרש כשהשדה המגנטי קבוע. ב. $8.85\cdot10^{-9}\,\text{C/m}^3$, אחיד בכל האזור.
+
+  - id: W-6.13-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-6.13-2]
+    prompt: >-
+      לכל תיאור, קבעו ונמקו איזו משוואת מקסוול בצורה הדיפרנציאלית אומרת מה יש בנקודה:
+
+      א. בנקודה מסוימת $\nabla\cdot\vec E < 0$.
+
+      ב. מישהו טוען שמצא נקודה שממנה קווי שדה מגנטי יוצאים לכל הכיוונים.
+
+      ג. בנקודה בריק, בלי שום זרם, $\nabla\times\vec B \neq 0$.
+    answer: >-
+      א. חוק גאוס: יש שם מטען שלילי.
+
+      ב. חוק גאוס למגנטיות: אין נקודה כזו.
+
+      ג. חוק אמפר-מקסוול: השדה החשמלי שם משתנה.
+    solution:
+      - kind: law
+        text: >-
+          $\nabla\cdot\vec E = \rho/\varepsilon_0$, $\nabla\cdot\vec B = 0$, $\nabla\times\vec B = \mu_0\vec J + \mu_0\varepsilon_0\,\partial\vec E/\partial t$.
+      - kind: reasoning
+        text: >-
+          א. $\rho = \varepsilon_0\,\nabla\cdot\vec E < 0$: יש בנקודה מטען שלילי, וקווי השדה החשמלי נכנסים לסביבתה יותר משהם יוצאים.
+
+          ב. קווים שיוצאים מנקודה לכל הכיוונים פירושם שטף נטו החוצה מכל קופסה סביבה, כלומר $\nabla\cdot\vec B > 0$. זה דורש מטען מגנטי, ו-$\nabla\cdot\vec B = 0$ אומר שאין כזה.
+
+          ג. בלי זרם, $\nabla\times\vec B = \mu_0\varepsilon_0\,\partial\vec E/\partial t$. לכן $\partial\vec E/\partial t \neq 0$: השדה החשמלי בנקודה משתנה, כמו בין לוחות קבל שנטען.
+      - kind: limit
+        text: >-
+          בסטטיקה התיאור ג בלתי אפשרי: בלי זרם ובלי שינוי בזמן $\nabla\times\vec B = 0$. ובנקודה שבה אין מטען $\nabla\cdot\vec E = 0$, גם אם השדה שם חזק.
+      - kind: units
+        text: >-
+          אין מספרים. $\varepsilon_0\,\nabla\cdot\vec E$ נמדד ב-$\text{C/m}^3$, יחידה של צפיפות מטען.
+      - kind: result
+        text: >-
+          א. מטען שלילי בנקודה. ב. אין נקודה כזו: אין מטען מגנטי. ג. שדה חשמלי שמשתנה בנקודה.
+
+  - id: W-6.13-03
+    level: basic
+    qualitative: true
+    objectives: [OBJ-6.13-1]
+    prompt: >-
+      לכל אחד מארבעת החוקים בצורה האינטגרלית, קבעו באיזה משפט משתמשים כדי לעבור לצורה הדיפרנציאלית, ולמה דווקא בו:
+
+      א. חוק גאוס, $\oint_S \vec E\cdot d\vec A = Q_{\text{in}}/\varepsilon_0$.
+
+      ב. חוק גאוס למגנטיות.
+
+      ג. חוק פאראדיי.
+
+      ד. חוק אמפר-מקסוול.
+    answer: >-
+      א, ב: משפט הדיברגנץ (שטף דרך משטח סגור). ג, ד: משפט סטוקס (סירקולציה סביב מסלול סגור).
+    solution:
+      - kind: law
+        text: >-
+          משפט הדיברגנץ: $\oint_S \vec F\cdot d\vec A = \int_V (\nabla\cdot\vec F)\,dV$. משפט סטוקס: $\oint_C \vec F\cdot d\vec l = \int_S (\nabla\times\vec F)\cdot d\vec A$.
+      - kind: reasoning
+        text: >-
+          בשני חוקי גאוס צד שמאל הוא שטף דרך משטח **סגור**, וצד ימין (המטען הכלוא, או אפס) הוא אינטגרל על הנפח שבתוכו. משפט הדיברגנץ הופך גם את צד שמאל לאינטגרל על הנפח, ונותן $\nabla\cdot\vec E = \rho/\varepsilon_0$ ו-$\nabla\cdot\vec B = 0$.
+
+          בחוק פאראדיי ובחוק אמפר-מקסוול צד שמאל הוא סירקולציה סביב מסלול, וצד ימין אינטגרל על משטח שהמסלול הוא השפה שלו (שטף משתנה, זרם). משפט סטוקס הופך גם את צד שמאל לאינטגרל על המשטח, ונותן את שני חוקי הרוטור.
+      - kind: limit
+        text: >-
+          בכל ארבעת המקרים הצעד האחרון זהה: השוויון מתקיים לכל נפח או לכל משטח, ולכן הפונקציות שבתוך האינטגרלים שוות בכל נקודה. אילו החוק היה מתקיים רק למשטח אחד, לא הייתה צורה מקומית.
+      - kind: units
+        text: >-
+          אין מספרים. הדיברגנץ והרוטור הם שדה חלקי אורך: $\text{N/(C}\cdot\text{m)}$ ו-$\text{V/m}^2$ לשדה חשמלי, $\text{T/m}$ לשדה מגנטי.
+      - kind: result
+        text: >-
+          א, ב: משפט הדיברגנץ. ג, ד: משפט סטוקס.
+
+  - id: W-6.13-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.13-3]
+    prompt: >-
+      במישור הדף השדה החשמלי הוא $\vec E = \gamma\,(y,\ -x,\ 0)$, עם $\gamma = 0.15\,\text{V/m}^2$. השדה המגנטי ניצב לדף.
+
+      א. באיזה קצב משתנה השדה המגנטי, ולאיזה כיוון?
+
+      ב. האם שדה כזה יכול להיות שדה של מטענים במנוחה?
+
+      ג. ומה עם $\vec E' = \gamma\,(y,\ x,\ 0)$?
+    answer: >-
+      א. $\partial B_z/\partial t = 2\gamma = 0.3\,\text{T/s}$: הרכיב שיוצא מהדף גדל.
+
+      ב. לא: הרוטור שלו לא אפס.
+
+      ג. הרוטור שלו אפס: הוא יכול להיות שדה אלקטרוסטטי, והשדה המגנטי לא משתנה.
+    solution:
+      - kind: law
+        text: >-
+          $\nabla\times\vec E = -\dfrac{\partial\vec B}{\partial t}$; בסטטיקה $\nabla\times\vec E = 0$.
+      - kind: manipulation
+        text: >-
+          א. $(\nabla\times\vec E)_z = \partial(-\gamma x)/\partial x - \partial(\gamma y)/\partial y = -\gamma - \gamma = -2\gamma$, ולכן $\partial B_z/\partial t = 2\gamma$.
+
+          ג. $(\nabla\times\vec E')_z = \gamma - \gamma = 0$.
+      - kind: reasoning
+        text: >-
+          ב. לשדה של מטענים במנוחה $\nabla\times\vec E = 0$. כאן הרוטור $-2\gamma \neq 0$: הקווים מעגלים עם כיוון השעון, וזה שדה מושרה, שנוצר מהשדה המגנטי שמשתנה. גם הכיוון מתאים לחוק לנץ: שדה מגנטי שיוצא מהדף וגדל, ושדה חשמלי עם כיוון השעון.
+      - kind: substitution
+        text: >-
+          $\partial B_z/\partial t = 2\cdot0.15 = 0.3\,\text{T/s}$.
+      - kind: limit
+        text: >-
+          כש-$\gamma \to 0$ השדה המגנטי לא משתנה, ונשארים בסטטיקה. ו-$\vec E$ שבסעיף א הוא בדיוק השדה בליבה של סליל, $\vec E = -\tfrac{\dot B}{2}(-y,\ x,\ 0)$, עם $\dot B = 2\gamma$.
+      - kind: units
+        text: >-
+          $\text{V/m}^2 = \text{T/s}$, כי $\text{T} = \text{V}\cdot\text{s/m}^2$.
+      - kind: result
+        text: >-
+          א. $0.3\,\text{T/s}$, הרכיב שיוצא מהדף גדל. ב. לא. ג. כן, הוא יכול להיות אלקטרוסטטי.
+
+  - id: W-6.13-05
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.13-4]
+    prompt: >-
+      בחומר מוליך צפיפות הזרם היא $\vec J = (kx,\ 0,\ 0)$, עם $k = 3\,\text{A/m}^3$.
+
+      א. באיזה קצב משתנה צפיפות המטען?
+
+      ב. קובייה בצלע $10\,\text{cm}$, שמרכזה בראשית, נמצאת בחומר. באיזה קצב משתנה המטען שבתוכה? בדקו בעזרת הזרם שעובר דרך הפאות שלה.
+    answer: >-
+      א. $\partial\rho/\partial t = -3\,\text{C/(m}^3\cdot\text{s)}$.
+
+      ב. $dQ/dt = -3\cdot10^{-3}\,\text{C/s}$; הזרם נטו שיוצא דרך הפאות הוא $3\,\text{mA}$.
+    solution:
+      - kind: law
+        text: >-
+          $\dfrac{\partial\rho}{\partial t} + \nabla\cdot\vec J = 0$, ובצורה האינטגרלית $\oint \vec J\cdot d\vec A = -\dfrac{dQ_{\text{in}}}{dt}$.
+      - kind: manipulation
+        text: >-
+          א. $\nabla\cdot\vec J = \partial(kx)/\partial x = k$, ולכן $\partial\rho/\partial t = -k$.
+
+          ב. הקצב אחיד, ולכן $dQ/dt = -kL^3$. ובדיקה: רק דרך שתי הפאות שניצבות ל-$x$ עובר זרם. בפאה $x = L/2$ יוצא $k\tfrac{L}{2}\cdot L^2$; בפאה $x = -L/2$ הזרם בכיוון $-x$, כלומר שוב **החוצה**, $k\tfrac{L}{2}\cdot L^2$. יחד $kL^3$ החוצה.
+      - kind: substitution
+        text: >-
+          $kL^3 = 3\cdot0.1^3 = 3\cdot10^{-3}\,\text{A}$, ולכן $dQ/dt = -3\cdot10^{-3}\,\text{C/s}$.
+      - kind: limit
+        text: >-
+          כש-$k \to 0$ הזרם אחיד (או אפס), נכנס כמו שהוא יוצא, והמטען לא משתנה. וקובייה זעירה: הזרם נטו קטן כמו $L^3$, כמו הנפח, ולכן היחס ביניהם, $\nabla\cdot\vec J$, נשאר $k$.
+      - kind: units
+        text: >-
+          $\text{A/m}^3 = \text{C/(m}^3\cdot\text{s)}$; ו-$\text{A/m}^3\cdot\text{m}^3 = \text{A} = \text{C/s}$.
+      - kind: result
+        text: >-
+          א. $-3\,\text{C/(m}^3\cdot\text{s)}$: המטען יורד בכל נקודה. ב. $-3\cdot10^{-3}\,\text{C/s}$, בדיוק הזרם נטו שיוצא, $3\,\text{mA}$.
+
+  - id: W-6.13-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.13-3]
+    prompt: >-
+      קבעו ונמקו, לגבי כל טענה, אם היא נכונה:
+
+      א. "ליד ליבה של סליל, שהשדה המגנטי בה משתנה, אפשר להגדיר מתח בין שתי נקודות בלי לציין באיזה מסלול הולכים."
+
+      ב. "כשכל הזרמים קבועים, השדה המגנטי לא תלוי בשום מטען, והשדה החשמלי לא תלוי בשום זרם."
+
+      ג. "בריק, אם השדה המגנטי משתנה בזמן, גם השדה החשמלי לא יכול להיות אפס בכל מקום."
+    answer: >-
+      א. לא נכון. ב. נכון. ג. נכון.
+    solution:
+      - kind: law
+        text: >-
+          $\nabla\times\vec E = -\partial\vec B/\partial t$; בסטטיקה המשוואות נפרדות לזוג של $\vec E$ (עם $\rho$) ולזוג של $\vec B$ (עם $\vec J$).
+      - kind: reasoning
+        text: >-
+          א. מתח שלא תלוי במסלול דורש סירקולציה אפס סביב כל מסלול סגור, כלומר $\nabla\times\vec E = 0$. ליד הליבה $\partial\vec B/\partial t \neq 0$ בתוכה, ולכן הסירקולציה סביב מסלול שמקיף את הליבה היא הכא״מ המושרה: מתח בין שתי נקודות תלוי בצד שבו עוקפים את הליבה.
+
+          ב. כששום דבר לא משתנה, $\nabla\cdot\vec B = 0$ ו-$\nabla\times\vec B = \mu_0\vec J$ לא כוללים את $\rho$, ו-$\nabla\cdot\vec E = \rho/\varepsilon_0$ ו-$\nabla\times\vec E = 0$ לא כוללים את $\vec J$.
+
+          ג. אילו $\vec E = 0$ בכל מקום, גם $\nabla\times\vec E = 0$, ואז $\partial\vec B/\partial t = 0$, בניגוד להנחה.
+      - kind: limit
+        text: >-
+          בטענה א: אם השדה בליבה מפסיק להשתנות, הרוטור נעלם, והמתח שוב לא תלוי במסלול, כמו בפרק 2. בטענה ג: זו הסיבה ששדות שמשתנים בריק באים תמיד בזוגות.
+      - kind: units
+        text: >-
+          אין מספרים.
+      - kind: result
+        text: >-
+          א. לא נכון: ליד ליבה שהשדה בה משתנה המתח תלוי במסלול. ב. נכון: בסטטיקה המשוואות נפרדות. ג. נכון.
+
+  - id: W-6.13-07
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.13-1]
+    prompt: >-
+      בשכבה רחבה, $|x| < d$ עם $d = 1\,\text{cm}$, צפיפות המטען היא $\rho = \rho_0\,x^2/d^2$, עם $\rho_0 = 2\cdot10^{-6}\,\text{C/m}^3$. מהסימטריה השדה בכיוון $x$, ו-$E_x(0) = 0$.
+
+      א. בעזרת חוק גאוס בצורה האינטגרלית, עם קופסה שפאה אחת שלה במישור $x = 0$ והשנייה ב-$x$, מצאו את $E_x(x)$ בתוך השכבה.
+
+      ב. בדקו שהתוצאה מקיימת את חוק גאוס בצורה הדיפרנציאלית.
+
+      ג. מה השדה ב-$x = d$?
+    answer: >-
+      א. $E_x = \dfrac{\rho_0 x^3}{3\varepsilon_0 d^2}$.
+
+      ב. $\partial E_x/\partial x = \rho_0 x^2/(\varepsilon_0 d^2) = \rho/\varepsilon_0$.
+
+      ג. כ-$753\,\text{N/C}$.
+    solution:
+      - kind: law
+        text: >-
+          $\oint \vec E\cdot d\vec A = \dfrac{1}{\varepsilon_0}\int \rho\,dV$, ו-$\nabla\cdot\vec E = \dfrac{\rho}{\varepsilon_0}$.
+      - kind: manipulation
+        text: >-
+          א. לקופסה שטח פאה $A$. דרך הפאה ב-$x = 0$ השדה אפס, ודרך הדפנות הצדדיות השדה מקביל להן: השטף $E_x(x)\,A$. המטען בפנים: $A\int_0^x \rho_0\,\dfrac{x'^2}{d^2}\,dx' = \dfrac{A\rho_0 x^3}{3d^2}$. מחלקים ב-$A$.
+
+          ב. $\nabla\cdot\vec E = \dfrac{\partial E_x}{\partial x} = \dfrac{\rho_0}{3\varepsilon_0 d^2}\cdot3x^2 = \dfrac{\rho_0 x^2}{\varepsilon_0 d^2} = \dfrac{\rho}{\varepsilon_0}$.
+      - kind: substitution
+        text: >-
+          $E_x(d) = \dfrac{\rho_0 d}{3\varepsilon_0} = \dfrac{2\cdot10^{-6}\cdot0.01}{3\cdot8.85\cdot10^{-12}} \approx 753\,\text{N/C}$.
+      - kind: limit
+        text: >-
+          ב-$x = 0$ גם השדה וגם הצפיפות אפס. השדה גדל כמו $x^3$, מהר יותר מבשכבה אחידה ($\propto x$), כי רוב המטען ליד השוליים. וכש-$\rho_0 \to 0$ אין שדה.
+      - kind: units
+        text: >-
+          $\dfrac{\text{C/m}^3\cdot\text{m}}{\text{C}^2/(\text{N}\cdot\text{m}^2)} = \dfrac{\text{N}}{\text{C}}$.
+      - kind: result
+        text: >-
+          א. $E_x = \rho_0 x^3/(3\varepsilon_0 d^2)$. ב. הדיברגנץ שווה ל-$\rho/\varepsilon_0$ בכל נקודה. ג. כ-$753\,\text{N/C}$, בכיוון $+x$.
+
+  - id: W-6.13-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.13-3]
+    prompt: >-
+      בליבה של סליל, ברדיוס $R = 2\,\text{cm}$, השדה המגנטי אחיד ומשתנה כמו $B(t) = B_0\sin(\omega t)$, עם $B_0 = 0.1\,\text{T}$ ותדירות $50\,\text{Hz}$.
+
+      א. מצאו ביטוי לשדה החשמלי המושרה בתוך הליבה ומחוצה לה.
+
+      ב. מה השדה החשמלי הגדול ביותר על דופן הליבה, ומה במרחק $5\,\text{cm}$ מהציר?
+
+      ג. באילו רגעים השדה החשמלי הכי חזק? מה הרוטור שלו בתוך הליבה באותם רגעים?
+    answer: >-
+      א. $E = \tfrac{s}{2}B_0\omega\cos(\omega t)$ בפנים, $\tfrac{R^2}{2s}B_0\omega\cos(\omega t)$ בחוץ.
+
+      ב. $0.314\,\text{V/m}$ ו-$0.126\,\text{V/m}$.
+
+      ג. כש-$B = 0$; אז $|\nabla\times\vec E| = B_0\omega \approx 31.4\,\text{V/m}^2$.
+    solution:
+      - kind: law
+        text: >-
+          $\oint \vec E\cdot d\vec l = -\dfrac{d\Phi_B}{dt}$ ו-$\nabla\times\vec E = -\dfrac{\partial\vec B}{\partial t}$.
+      - kind: manipulation
+        text: >-
+          בשיעור ראינו: $E = s\dot B/2$ בפנים ו-$R^2\dot B/(2s)$ בחוץ (בגודל). לפי כלל השרשרת (שיעור 6.1), $\dot B = B_0\omega\cos(\omega t)$, עם $\omega = 2\pi f$. הרוטור בפנים: $-\dot B$.
+      - kind: substitution
+        text: >-
+          $\omega = 2\pi\cdot50 \approx 314\,\text{s}^{-1}$. ב-$s = R$: $\dfrac{0.02\cdot0.1\cdot314}{2} \approx 0.314\,\text{V/m}$. ב-$s = 5\,\text{cm}$: $\dfrac{0.02^2\cdot0.1\cdot314}{2\cdot0.05} \approx 0.126\,\text{V/m}$. הרוטור: $B_0\omega \approx 31.4\,\text{V/m}^2$.
+      - kind: limit
+        text: >-
+          השדה החשמלי תלוי ב-$\dot B$, לא ב-$B$: הוא הכי חזק כש-$B$ עובר דרך אפס ומשתנה הכי מהר, ואפס כש-$B$ מרבי. כש-$\omega \to 0$ (שדה קבוע) אין שדה מושרה, וחוזרים ל-$\nabla\times\vec E = 0$. ב-$s = R$ שני הביטויים שווים.
+      - kind: units
+        text: >-
+          $\text{m}\cdot\text{T}\cdot\text{s}^{-1} = \text{V/m}$, ו-$\text{T/s} = \text{V/m}^2$.
+      - kind: result
+        text: >-
+          ב. כ-$0.314\,\text{V/m}$ על הדופן וכ-$0.126\,\text{V/m}$ ב-$5\,\text{cm}$. ג. ברגעים שבהם $B = 0$; אז הרוטור בגודל $31.4\,\text{V/m}^2$ בכל נקודה בליבה.
+
+  - id: W-6.13-09
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.13-2, OBJ-6.13-4]
+    prompt: >-
+      קבל עם לוחות עגולים ברדיוס $5\,\text{cm}$ נטען בזרם $0.2\,\text{A}$ ברגע מסוים. מקיפים את הלוח החיובי בקופסה סגורה: התיל נכנס אליה מצד אחד, ופאה אחת שלה נמצאת ברווח שבין הלוחות.
+
+      א. מה הזרם נטו שיוצא מהקופסה, ומה קצב השינוי של המטען בתוכה?
+
+      ב. באיזה קצב משתנה השדה החשמלי בין הלוחות?
+
+      ג. הראו שהשטף של $\vec J + \varepsilon_0\,\partial\vec E/\partial t$ החוצה מהקופסה אפס. מה זה אומר על $\nabla\cdot\big(\vec J + \varepsilon_0\,\partial\vec E/\partial t\big)$?
+    answer: >-
+      א. $-0.2\,\text{A}$ (נכנס), ו-$dQ/dt = 0.2\,\text{C/s}$.
+
+      ב. כ-$2.88\cdot10^{12}\,\text{V/(m}\cdot\text{s)}$.
+
+      ג. $-I + I = 0$; לכן $\nabla\cdot\big(\vec J + \varepsilon_0\,\partial\vec E/\partial t\big) = 0$.
+    solution:
+      - kind: law
+        text: >-
+          שימור המטען, $\oint \vec J\cdot d\vec A = -dQ/dt$; בין הלוחות $E = Q/(\varepsilon_0 A)$; חוק גאוס.
+      - kind: manipulation
+        text: >-
+          א. הזרם נכנס ולא יוצא: $\oint \vec J\cdot d\vec A = -I$, ולכן $dQ/dt = I$.
+
+          ב. $\dfrac{dE}{dt} = \dfrac{1}{\varepsilon_0\pi a^2}\,\dfrac{dQ}{dt} = \dfrac{I}{\varepsilon_0\pi a^2}$.
+
+          ג. השדה החשמלי נמצא רק ברווח, ויוצא מהקופסה דרך הפאה שבו: $\varepsilon_0\oint \dfrac{\partial\vec E}{\partial t}\cdot d\vec A = \varepsilon_0\pi a^2\,\dfrac{dE}{dt} = I$. יחד עם זרם ההולכה: $-I + I = 0$. זה נכון לכל קופסה, ולכן לפי משפט הדיברגנץ הדיברגנץ של הסכום אפס בכל נקודה.
+      - kind: substitution
+        text: >-
+          $\dfrac{dE}{dt} = \dfrac{0.2}{8.85\cdot10^{-12}\cdot\pi\cdot0.05^2} \approx 2.88\cdot10^{12}\,\text{V/(m}\cdot\text{s)}$.
+      - kind: limit
+        text: >-
+          כשהקבל מלא, $I = 0$, ושני האיברים אפס. ו-$\nabla\cdot\big(\vec J + \varepsilon_0\,\partial\vec E/\partial t\big) = 0$ הוא בדיוק מה שהדיברגנץ של חוק אמפר-מקסוול דורש: $\nabla\cdot(\nabla\times\vec B) = 0$. בלי איבר ההעתקה היה צריך $\nabla\cdot\vec J = 0$, וזה סותר את סעיף א.
+      - kind: units
+        text: >-
+          $\dfrac{\text{A}}{\text{C}^2/(\text{N}\cdot\text{m}^2)\cdot\text{m}^2} = \dfrac{\text{N}}{\text{C}\cdot\text{s}} = \dfrac{\text{V}}{\text{m}\cdot\text{s}}$.
+      - kind: result
+        text: >-
+          א. $0.2\,\text{A}$ נכנס, ו-$dQ/dt = 0.2\,\text{C/s}$. ב. כ-$2.88\cdot10^{12}\,\text{V/(m}\cdot\text{s)}$. ג. הסכום של זרם ההולכה וזרם ההעתקה לא נערם בשום מקום: הדיברגנץ שלו אפס.
+
+  - id: W-6.13-10
+    level: bagrut
+    qualitative: true
+    objectives: [OBJ-6.13-1, OBJ-6.13-2, OBJ-6.13-4]
+    prompt: >-
+      נניח שמישהו מגלה מטען מגנטי, עם צפיפות $\rho_m$, ושבחוק גאוס למגנטיות כותבים $\nabla\cdot\vec B = \mu_0\rho_m$.
+
+      א. מה הייתה אומרת הצורה האינטגרלית של החוק הזה על קופסה סביב מטען מגנטי?
+
+      ב. קחו את הדיברגנץ של חוק פאראדיי, $\nabla\times\vec E = -\partial\vec B/\partial t$. מה יוצא על $\rho_m$?
+
+      ג. מה הייתם מוסיפים לחוק פאראדיי כדי שמטען מגנטי יוכל לזרום ממקום למקום? היעזרו במה שעשה מקסוול לחוק אמפר.
+    answer: >-
+      א. שטף נטו $\mu_0 Q_m$ דרך הקופסה.
+
+      ב. $\partial\rho_m/\partial t = 0$ בכל נקודה: מטען מגנטי לא היה יכול לזוז.
+
+      ג. "זרם מגנטי": $\nabla\times\vec E = -\mu_0\vec J_m - \partial\vec B/\partial t$, ואז יוצא $\partial\rho_m/\partial t + \nabla\cdot\vec J_m = 0$.
+    solution:
+      - kind: law
+        text: >-
+          משפט הדיברגנץ; $\nabla\cdot(\nabla\times\vec F) = 0$ לכל שדה; משוואת הרציפות.
+      - kind: reasoning
+        text: >-
+          א. לפי משפט הדיברגנץ, $\oint \vec B\cdot d\vec A = \mu_0\int \rho_m\,dV = \mu_0 Q_m$: מקופסה סביב מטען מגנטי היה יוצא שטף, כמו שטף חשמלי ממטען חשמלי.
+
+          ב. צד שמאל הוא דיברגנץ של רוטור, אפס. צד ימין: $-\dfrac{\partial}{\partial t}(\nabla\cdot\vec B) = -\mu_0\dfrac{\partial\rho_m}{\partial t}$. לכן $\partial\rho_m/\partial t = 0$: הצפיפות של מטען מגנטי לא הייתה יכולה להשתנות באף נקודה, כלומר מטען כזה לא היה יכול לזוז.
+
+          ג. זו בדיוק הבעיה של חוק אמפר בלי איבר ההעתקה, הפוכה. מוסיפים איבר של זרם מגנטי: $\nabla\times\vec E = -\mu_0\vec J_m - \partial\vec B/\partial t$. הדיברגנץ נותן $0 = -\mu_0\nabla\cdot\vec J_m - \mu_0\,\partial\rho_m/\partial t$, משוואת רציפות למטען המגנטי.
+      - kind: limit
+        text: >-
+          כש-$\rho_m = 0$ ו-$\vec J_m = 0$ חוזרים בדיוק למשוואות מקסוול שבשיעור. התוספת לא משנה שום דבר בעולם שבו אין מטען מגנטי, ועד היום לא נמצא כזה.
+      - kind: units
+        text: >-
+          $\mu_0\rho_m$ צריך להיות ביחידות של $\nabla\cdot\vec B$, $\text{T/m}$. ו-$\mu_0 J_m$ ביחידות של $\nabla\times\vec E$, $\text{V/m}^2$.
+      - kind: result
+        text: >-
+          א. שטף נטו $\mu_0 Q_m$. ב. $\partial\rho_m/\partial t = 0$: מטען מגנטי לא היה זז. ג. איבר של זרם מגנטי בחוק פאראדיי, שממנו יוצאת משוואת רציפות למטען המגנטי.
+
+challenge:
+  - id: W-6.13-c1
+    stars: 1
+    objectives: [OBJ-6.13-1, OBJ-6.13-2]
+    prompt: >-
+      תיל עבה ואינסופי, ברדיוס $a = 1\,\text{cm}$, מוביל זרם קבוע $I = 3\,\text{A}$, מפוזר באחידות על החתך. בתיל יש חריץ צר, ברוחב $w \ll a$, ושני הצדדים שלו הם לוחות של קבל: מטען מצטבר עליהם, והזרם ממשיך מהצד השני.
+
+      א. באיזה קצב גדל השדה החשמלי בחריץ?
+
+      ב. מצאו את השדה המגנטי בחריץ, במרחק $s < a$ מהציר. מה הוא ב-$s = 5\,\text{mm}$?
+
+      ג. השוו לשדה המגנטי בתוך התיל עצמו, באותו מרחק מהציר, בעזרת הצורה הדיפרנציאלית של חוק אמפר-מקסוול.
+    answer: >-
+      א. $\dfrac{\partial E}{\partial t} = \dfrac{I}{\varepsilon_0\pi a^2} \approx 1.08\cdot10^{15}\,\text{V/(m}\cdot\text{s)}$.
+
+      ב. $B = \dfrac{\mu_0 I s}{2\pi a^2}$; ב-$5\,\text{mm}$, $3\cdot10^{-5}\,\text{T}$.
+
+      ג. זהה: בשני המקומות $\nabla\times\vec B = \mu_0 I/(\pi a^2)$.
+    solution:
+      - kind: law
+        text: >-
+          $\oint \vec B\cdot d\vec l = \mu_0 I_{\text{in}} + \mu_0\varepsilon_0\,\dfrac{d\Phi_E}{dt}$, ו-$\nabla\times\vec B = \mu_0\vec J + \mu_0\varepsilon_0\,\dfrac{\partial\vec E}{\partial t}$.
+      - kind: manipulation
+        text: >-
+          א. על כל צד של החריץ המטען גדל בקצב $I$, והוא מפוזר על שטח $\pi a^2$. החריץ צר, ולכן השדה בו כמו בין לוחות: $E = \dfrac{Q}{\varepsilon_0\pi a^2}$, ו-$\dfrac{\partial E}{\partial t} = \dfrac{I}{\varepsilon_0\pi a^2}$.
+
+          ב. מהסימטריה $B$ משיק למעגל ברדיוס $s$ ושווה עליו. בחריץ אין זרם הולכה; המעגל מקיף שטף חשמלי $E\pi s^2$: $B\cdot2\pi s = \mu_0\varepsilon_0\pi s^2\,\dfrac{I}{\varepsilon_0\pi a^2}$, ולכן $B = \dfrac{\mu_0 I s}{2\pi a^2}$.
+
+          ג. בחריץ $\nabla\times\vec B = \mu_0\varepsilon_0\,\dfrac{\partial\vec E}{\partial t} = \dfrac{\mu_0 I}{\pi a^2}$. בתיל $\nabla\times\vec B = \mu_0 J = \dfrac{\mu_0 I}{\pi a^2}$. אותו רוטור, אותה סימטריה, ולכן אותו שדה: בתוך תיל עבה $B = \mu_0 I s/(2\pi a^2)$, כמו בשיעור 4.4.
+      - kind: substitution
+        text: >-
+          $\dfrac{\partial E}{\partial t} = \dfrac{3}{8.85\cdot10^{-12}\cdot\pi\cdot0.01^2} \approx 1.08\cdot10^{15}\,\text{V/(m}\cdot\text{s)}$, ו-$B = \dfrac{4\pi\cdot10^{-7}\cdot3\cdot0.005}{2\pi\cdot0.01^2} = 3\cdot10^{-5}\,\text{T}$.
+      - kind: limit
+        text: >-
+          על הציר $B = 0$; ב-$s = a$ השדה $\mu_0 I/(2\pi a) = 6\cdot10^{-5}\,\text{T}$, השדה של תיל דק. מכשיר שמודד שדה מגנטי ועובר לאורך התיל לא מרגיש את החריץ: זרם ההעתקה ממשיך את זרם ההולכה בדיוק.
+      - kind: units
+        text: >-
+          $\dfrac{\text{T}\cdot\text{m/A}\cdot\text{A}\cdot\text{m}}{\text{m}^2} = \text{T}$.
+      - kind: result
+        text: >-
+          א. כ-$1.08\cdot10^{15}\,\text{V/(m}\cdot\text{s)}$. ב. $B = \mu_0 I s/(2\pi a^2)$, ו-$3\cdot10^{-5}\,\text{T}$ ב-$5\,\text{mm}$. ג. אותו שדה כמו בתוך התיל.
+    source:
+      name: MIT OpenCourseWare, 8.022 Physics II (Electricity and Magnetism), Fall 2004, Assignment 10
+      year: 2004
+      problem: 'Problem 7: an infinite fat wire with a narrow gap that forms a parallel-plate capacitor; the magnetic field in the gap at s < a'
+      url: https://ocw.mit.edu/courses/8-022-physics-ii-electricity-and-magnetism-fall-2004/be74c0b0d90ecdd1f7878bae40e42a6e_pset10.pdf
+      verified: '2026-11-03'
+      adapted: true
+
+  - id: W-6.13-c2
+    stars: 2
+    objectives: [OBJ-6.13-2, OBJ-6.13-3]
+    prompt: >-
+      בריק, בלי מטענים ובלי זרמים, נתונים שדה חשמלי ושדה מגנטי:
+
+      $\vec E = E_0\,\hat x\cos(\alpha y - \gamma z + \delta t)$, $\quad\vec B = B_0\,(\hat y + \hat z)\cos(\alpha y - \gamma z + \delta t)$,
+
+      עם $E_0 = 30\,\text{V/m}$ ו-$\alpha = 10\,\text{m}^{-1}$. $\gamma$, $\delta$ ו-$B_0$ קבועים חיוביים.
+
+      א. הציבו בשני חוקי גאוס. איזה תנאי יוצא?
+
+      ב. הציבו בחוק פאראדיי, ומצאו את $B_0$ לפי $E_0$, $\alpha$ ו-$\delta$.
+
+      ג. הציבו בחוק אמפר-מקסוול, ומצאו את $\delta$.
+
+      ד. חשבו את $\delta$ ואת $B_0$. הראו שהתבנית של השדות זזה לאורך הכיוון $(0,\ -1,\ 1)/\sqrt2$, ומצאו את המהירות שלה.
+    answer: >-
+      א. $\gamma = \alpha$ (חוק גאוס החשמלי מתקיים תמיד).
+
+      ב. $B_0 = E_0\alpha/\delta$.
+
+      ג. $\delta = \sqrt2\,\alpha c$.
+
+      ד. $\delta \approx 4.24\cdot10^{9}\,\text{s}^{-1}$, $B_0 \approx 7.07\cdot10^{-8}\,\text{T}$; התבנית זזה במהירות $c = 3\cdot10^8\,\text{m/s}$.
+    solution:
+      - kind: law
+        text: >-
+          בריק: $\nabla\cdot\vec E = 0$, $\nabla\cdot\vec B = 0$, $\nabla\times\vec E = -\partial\vec B/\partial t$, $\nabla\times\vec B = \mu_0\varepsilon_0\,\partial\vec E/\partial t$. נסמן $\phi = \alpha y - \gamma z + \delta t$; לפי כלל השרשרת $\partial\cos\phi/\partial y = -\alpha\sin\phi$, $\partial\cos\phi/\partial z = \gamma\sin\phi$, $\partial\cos\phi/\partial t = -\delta\sin\phi$.
+      - kind: manipulation
+        text: >-
+          א. $\nabla\cdot\vec E = \partial E_x/\partial x = 0$, כי $E_x$ לא תלוי ב-$x$. $\nabla\cdot\vec B = \partial B_y/\partial y + \partial B_z/\partial z = B_0(-\alpha + \gamma)\sin\phi$, ולכן $\gamma = \alpha$.
+
+          ב. $\nabla\times\vec E = \big(0,\ \partial E_x/\partial z,\ -\partial E_x/\partial y\big) = E_0\sin\phi\,(0,\ \gamma,\ \alpha)$, ו-$-\partial\vec B/\partial t = B_0\delta\sin\phi\,(0,\ 1,\ 1)$. לכן $E_0\gamma = E_0\alpha = B_0\delta$.
+
+          ג. $(\nabla\times\vec B)_x = \partial B_z/\partial y - \partial B_y/\partial z = -B_0(\alpha + \gamma)\sin\phi = -2\alpha B_0\sin\phi$, ושני הרכיבים האחרים אפס. $\mu_0\varepsilon_0\,\partial E_x/\partial t = -\mu_0\varepsilon_0 E_0\delta\sin\phi$. לכן $2\alpha B_0 = E_0\delta/c^2$. מציבים את $B_0$ מסעיף ב: $\dfrac{2\alpha^2}{\delta} = \dfrac{\delta}{c^2}$, ו-$\delta = \sqrt2\,\alpha c$.
+      - kind: manipulation
+        text: >-
+          ד. נסמן $u = (z - y)/\sqrt2$, המרחק לאורך $(0,\ -1,\ 1)/\sqrt2$. אז $\alpha y - \alpha z = -\sqrt2\,\alpha u$, ו-$\phi = -\sqrt2\,\alpha u + \delta t$. שיא, $\phi = 0$, נמצא ב-$u = \dfrac{\delta t}{\sqrt2\,\alpha}$: הוא זז במהירות $\dfrac{\delta}{\sqrt2\,\alpha} = c$.
+      - kind: substitution
+        text: >-
+          $\delta = \sqrt2\cdot10\cdot3\cdot10^8 \approx 4.24\cdot10^{9}\,\text{s}^{-1}$; $B_0 = \dfrac{30\cdot10}{4.24\cdot10^{9}} \approx 7.07\cdot10^{-8}\,\text{T}$, וגודל $\vec B$ המרבי $\sqrt2 B_0 = 10^{-7}\,\text{T} = E_0/c$.
+      - kind: limit
+        text: >-
+          אילו $\delta = 0$ (שדות שלא משתנים), חוק פאראדיי היה דורש $E_0\alpha = 0$: בריק, שדה חשמלי שמשתנה במקום חייב שדה מגנטי שמשתנה בזמן. ו-$\vec E \perp \vec B$, ושניהם ניצבים לכיוון התנועה: $\hat x\cdot(0,\ -1,\ 1) = 0$ ו-$(0,\ 1,\ 1)\cdot(0,\ -1,\ 1) = 0$.
+      - kind: units
+        text: >-
+          $\alpha c$: $\text{m}^{-1}\cdot\text{m/s} = \text{s}^{-1}$. $E_0\alpha/\delta$: $\dfrac{\text{V/m}\cdot\text{m}^{-1}}{\text{s}^{-1}} = \dfrac{\text{V}\cdot\text{s}}{\text{m}^2} = \text{T}$.
+      - kind: result
+        text: >-
+          $\gamma = \alpha$, $B_0 = E_0\alpha/\delta \approx 7.07\cdot10^{-8}\,\text{T}$, $\delta = \sqrt2\,\alpha c \approx 4.24\cdot10^{9}\,\text{s}^{-1}$. התבנית זזה במהירות האור: זה גל אלקטרומגנטי, כמו שיראה שיעור 6.14.
+    source:
+      name: MIT OpenCourseWare, 8.022 Physics II (Electricity and Magnetism), Fall 2004, Assignment 10
+      year: 2004
+      problem: 'Problem 6: an electric and magnetic field pair; substitute into all of Maxwell''s equations in charge-free, current-free space and find the conditions on the constants'
+      url: https://ocw.mit.edu/courses/8-022-physics-ii-electricity-and-magnetism-fall-2004/be74c0b0d90ecdd1f7878bae40e42a6e_pset10.pdf
+      verified: '2026-11-03'
+      adapted: true

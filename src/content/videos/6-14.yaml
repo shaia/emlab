@@ -1,0 +1,34 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below) on the
+# `verified` date. `why` claims only what the title, the upload description or its chapter list support;
+# the length comes from the watch page (lengthSeconds). The Hebrew video's description says nothing about
+# its content, so its note claims only what the title says.
+
+- id: v-6-14-matimatix
+  youtubeId: OwBd6RpeSuY
+  title: 'גלים אלקטרומגנטיים ומהירות האור- מציאת מהירות האור עם משוואות מקסוול חלק א'
+  channel: 'MATIMATIX'
+  lang: he
+  captions: []
+  minutes: 9
+  why: 'סרטון בעברית, החלק הראשון בסדרה. לפי הכותרת שלו, הוא מוצא את מהירות האור ממשוואות מקסוול. התיאור שלו לא מפרט את התוכן.'
+  verified: '2026-11-03'
+
+- id: v-6-14-khan
+  youtubeId: O9YioslUtyI
+  title: "Deriving speed of light using Maxwell's equations | EM waves | Physics | Khan Academy"
+  channel: 'Khan Academy India - English'
+  lang: en
+  captions: []
+  minutes: 20
+  why: 'סרטון באנגלית. לפי התיאור ורשימת הפרקים שלו: הנחות, בדיקה ששדות הגל מקיימים את חוקי גאוס, בדיקה מול חוק פאראדיי, בדיקה מול חוק אמפר, וסיכום שבו יוצאת מהירות האור.'
+  verified: '2026-11-03'
+
+- id: v-6-14-asylum
+  youtubeId: C7tQJ42nGno
+  title: "Circuit Energy doesn't FLOW the way you THINK!"
+  channel: 'The Science Asylum'
+  lang: en
+  captions: []
+  minutes: 8
+  why: 'סרטון באנגלית. לפי התיאור שלו, לפי וקטור פוינטינג אנרגיה חשמלית זורמת בכל מקום שבו יש גם שדה חשמלי וגם שדה מגנטי, ולא באותו כיוון כמו הזרם.'
+  verified: '2026-11-03'

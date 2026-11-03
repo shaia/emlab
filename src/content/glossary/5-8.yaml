@@ -1,0 +1,7 @@
+# Lesson 5.8 terms. Added ahead of chapter 5, because lessons 6.13–6.14 use them. Format and rules: see glossary/1-5.yaml.
+
+- id: maxwell-equations
+  term: משוואות מקסוול
+  en: Maxwell's equations
+  definition: 'ארבעת החוקים שמתארים יחד את כל החשמל והמגנטיות: חוק גאוס לשדה החשמלי, חוק גאוס לשדה המגנטי (אין מטען מגנטי), חוק פאראדיי, וחוק אמפר-מקסוול. בצורה האינטגרלית הם מדברים על שטף וסירקולציה; בצורה הדיפרנציאלית על דיברגנץ ורוטור בכל נקודה.'
+  lesson: '5.8'
