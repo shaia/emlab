@@ -1,0 +1,377 @@
+# Lesson 6.14 question bank (electromagnetic waves and the energy in the field). Strings may hold $inline$ /
+# $$display$$ TeX and **bold**; they are rendered at build time. Every number below was recomputed with
+# src/physics/waves.ts (amplitudeB, amplitudeFromIntensity, intensityAtDistance, energyDensityE/B, wavelength)
+# and constants.ts (EPS0_DISPLAY, MU0, C_LIGHT); the data differ on purpose from figure 6.14א and the worked examples.
+
+chapter: 6
+questions:
+  # ------------------------------------------------ OBJ-6.14-1: the curl equations, the wave equation, c
+  - id: Q-6.14-omega
+    type: numeric
+    objectives: [OBJ-6.14-1]
+    prompt: >-
+      השדה החשמלי של גל אלקטרומגנטי בריק הוא $E_y = E_0\sin(4x - \omega t)$, עם $x$ במטרים. מה התדירות הזוויתית $\omega$? ענו ב-$\text{rad/s}$.
+    answer: 1.2e9
+    unit: rad/s
+    tolerance: 0.03
+    correctFeedback: 'נכון. בריק $\omega/k = c$, ולכן $\omega = ck = 3\cdot10^8\cdot4 = 1.2\cdot10^9\,\text{rad/s}$.'
+    wrongFeedback: 'מהירות הגל היא $\omega/k$, ובגל אלקטרומגנטי בריק היא $c$. כאן $k = 4\,\text{rad/m}$.'
+    commonWrong:
+      - value: 7.5e7
+        feedback: 'חילקתם את $c$ ב-$k$. המהירות היא $\omega/k$, ולכן $\omega = ck$, כפל.'
+      - value: 1.91e8
+        feedback: 'זו התדירות $f = \omega/(2\pi)$, במחזורים לשנייה. השאלה שואלת על $\omega$ עצמו.'
+      - value: 4.71e8
+        feedback: 'פירשתם את 4 כאורך הגל במטרים, ולקחתם $k = 2\pi/4$. המספר שמול $x$ בתוך ה-$\sin$ הוא $k$ עצמו.'
+
+  - id: Q-6.14-eps-world
+    type: numeric
+    objectives: [OBJ-6.14-1]
+    level: mid
+    prompt: >-
+      דמיינו עולם שבו $\mu_0$ כמו אצלנו, אבל $\varepsilon_0$ גדול פי 4. באיזו מהירות היו נעים בו גלים אלקטרומגנטיים בריק? ענו ב-$\text{m/s}$.
+    answer: 1.5e8
+    unit: m/s
+    tolerance: 0.03
+    correctFeedback: 'נכון. $c = 1/\sqrt{\mu_0\varepsilon_0}$: פי 4 מתחת לשורש הוא פי 2 בתוצאה, ולכן $1.5\cdot10^8\,\text{m/s}$.'
+    wrongFeedback: 'המהירות היא $1/\sqrt{\mu_0\varepsilon_0}$. שימו לב לשורש.'
+    commonWrong:
+      - value: 7.5e7
+        feedback: 'חילקתם ב-4. אבל $\varepsilon_0$ נמצא מתחת לשורש: פי 4 בו הוא פי 2 במהירות.'
+      - value: 6e8
+        feedback: 'המהירות **קטנה** כש-$\varepsilon_0$ גדל, כי הוא במכנה.'
+      - value: 1.2e9
+        feedback: 'כפלתם ב-4. $\varepsilon_0$ במכנה ומתחת לשורש: המהירות קטנה פי 2.'
+
+  - id: Q-6.14-why-c
+    type: mc
+    objectives: [OBJ-6.14-1]
+    qualitative: true
+    prompt: >-
+      למה מקסוול הסיק ב-1865 שאור הוא גל אלקטרומגנטי?
+    choices:
+      - text: 'כי מהירות הגלים שנובעים מהמשוואות שלו, $1/\sqrt{\mu_0\varepsilon_0}$, יצאה שווה למהירות האור שכבר נמדדה, אף שבחישוב הופיעו רק קבועים מניסויים בקבלים ובזרמים.'
+        correct: true
+        feedback: 'נכון. שני מספרים שולחניים, ממדידות של כוחות בין מטענים ובין זרמים, נתנו את מהירות האור.'
+      - text: 'כי ראו באור שדה מגנטי שמתנודד.'
+        feedback: 'השדה המגנטי של אור חלש מאוד ומתנודד מהר מאוד; ב-1865 לא היה אפשר למדוד אותו. ההכרעה באה מהחישוב.'
+      - text: 'כי אור צריך תווך, והתווך הזה הוא השדה החשמלי.'
+        feedback: 'הגל שבמשוואות אינו צריך שום תווך: השדות יוצרים זה את זה בריק. אור מגיע מהשמש דרך ריק.'
+        misconception: MC-em-wave-needs-medium
+      - text: 'כי אור הוא זרם של מטענים חשמליים שנעים במהירות גבוהה.'
+        feedback: 'בגל אלקטרומגנטי אין מטענים שנעים: יש רק שדות, וזרם ההעתקה שלהם אינו זרימה של מטען.'
+
+  - id: Q-6.14-vacuum
+    type: twotier
+    objectives: [OBJ-6.14-1]
+    qualitative: true
+    prompt: >-
+      שואבים את כל האוויר מכלי זכוכית. האם אור עדיין עובר דרך הכלי?
+    choices:
+      - text: 'כן.'
+        correct: true
+        feedback: נכון.
+      - text: 'לא: בלי חומר אין במה להתנודד.'
+        feedback: 'כך זה בגל קול, שהוא תנודה של האוויר. גל אלקטרומגנטי הוא תנודה של שדות, והם קיימים גם בריק.'
+        misconception: MC-em-wave-needs-medium
+      - text: 'כן, אבל לאט יותר, כי אין אוויר שיעביר אותו.'
+        feedback: 'בריק אור נע במהירות $c = 1/\sqrt{\mu_0\varepsilon_0}$. בגזירה לא הופיע שום חומר.'
+        misconception: MC-em-wave-needs-medium
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'שדה מגנטי שמשתנה יוצר שדה חשמלי (פאראדיי), ושדה חשמלי שמשתנה יוצר שדה מגנטי (זרם ההעתקה), גם בריק.'
+        correct: true
+        feedback: 'נכון. שתי משוואות הרוטור בריק מספיקות, ומהן יוצאת משוואת הגלים.'
+      - text: 'האור נע על גבי שכבה דקה של חומר שנשארת תמיד בכלי.'
+        feedback: 'אין צורך בשום חומר. גם בין השמש לכדור הארץ אין כמעט כלום, והאור עובר.'
+        misconception: MC-em-wave-needs-medium
+      - text: 'הזכוכית מעבירה את התנודות של האור מצד לצד.'
+        feedback: 'גם בלי שום כלי, בחלל, אור עובר. הוא לא צריך את הזכוכית.'
+        misconception: MC-em-wave-needs-medium
+
+  - id: Q-6.14-freq
+    type: mc
+    objectives: [OBJ-6.14-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מכפילים את התדירות של גל אלקטרומגנטי בריק. מה קורה לאורך הגל ולמהירות?
+    choices:
+      - text: 'אורך הגל קטן פי 2, והמהירות לא משתנה.'
+        correct: true
+        feedback: 'נכון. $\omega/k = 1/\sqrt{\mu_0\varepsilon_0}$ לא תלוי בתדירות, ולכן $f\lambda = c$ קבוע.'
+      - text: 'אורך הגל לא משתנה, והמהירות גדלה פי 2.'
+        feedback: 'המהירות נקבעת רק מ-$\mu_0$ ומ-$\varepsilon_0$. אם $f$ גדל ו-$f\lambda$ קבוע, $\lambda$ קטן.'
+      - text: 'שניהם גדלים פי $\sqrt2$.'
+        feedback: 'אם שניהם היו גדלים, $f\lambda$ היה גדל פי $2\sqrt2$, אבל $f\lambda = c$ קבוע.'
+      - text: 'אורך הגל קטן פי 2 וגם המהירות קטנה.'
+        feedback: 'המכפלה $f\lambda$ היא המהירות. אם $f$ כפול ו-$\lambda$ בחצי, המכפלה לא משתנה.'
+
+  # ------------------------------------------------ OBJ-6.14-2: E₀ = cB₀ and the directions
+  - id: Q-6.14-b-amplitude
+    type: numeric
+    objectives: [OBJ-6.14-2]
+    prompt: >-
+      בגל אלקטרומגנטי מישורי בריק המשרעת של השדה החשמלי היא $45\,\text{V/m}$. מה המשרעת של השדה המגנטי? ענו בננו-טסלה ($\text{nT}$).
+    answer: 150
+    unit: nT
+    tolerance: 0.03
+    correctFeedback: 'נכון. $B_0 = E_0/c = 45/(3\cdot10^8) = 1.5\cdot10^{-7}\,\text{T} = 150\,\text{nT}$.'
+    wrongFeedback: 'מחוק פאראדיי בגל, $E_0 = cB_0$, ולכן $B_0 = E_0/c$. $1\,\text{nT} = 10^{-9}\,\text{T}$.'
+    commonWrong:
+      - value: 1.35e19
+        feedback: 'כפלתם ב-$c$. $E_0 = cB_0$, ולכן מחלקים.'
+      - value: 5e-7
+        feedback: 'חילקתם ב-$c^2$. $c^2 = 1/(\mu_0\varepsilon_0)$ מופיע במשוואת הגלים, אבל היחס בין המשרעות הוא $c$.'
+      - value: 0.15
+        feedback: 'זה $B_0$ במיקרוטסלה. השאלה מבקשת ננו-טסלה: $0.15\,\mu\text{T} = 150\,\text{nT}$.'
+
+  - id: Q-6.14-in-phase
+    type: twotier
+    objectives: [OBJ-6.14-2]
+    qualitative: true
+    prompt: >-
+      בגל אלקטרומגנטי שנע בריק, בנקודה מסוימת ברגע מסוים, השדה החשמלי **אפס**. מה השדה המגנטי באותה נקודה ובאותו רגע?
+    choices:
+      - text: 'גם הוא אפס.'
+        correct: true
+        feedback: נכון.
+      - text: 'הוא בערך הגדול ביותר שלו.'
+        feedback: 'כך היה אילו השדות התחלפו, כמו אנרגיה קינטית ופוטנציאלית במתנד. בגל שמתקדם הם באותו מופע.'
+        misconception: MC-em-fields-alternate
+      - text: 'אי אפשר לדעת בלי לדעת את התדירות.'
+        feedback: 'הקשר בין השדות לא תלוי בתדירות: $B = E/c$ בכל נקודה ובכל רגע.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'חוק פאראדיי דורש ש-$\partial E/\partial x$ ו-$-\partial B/\partial t$ יהיו שווים בכל נקודה, וזה קורה רק אם לשני השדות אותה צורת $\sin(kx - \omega t)$.'
+        correct: true
+        feedback: 'נכון. ולכן $B = E/c$ בכל נקודה ובכל רגע, ובפרט שניהם אפס יחד.'
+      - text: 'האנרגיה עוברת הלוך ושוב בין השדות, ולכן כשאחד ריק השני מלא.'
+        feedback: 'האנרגיה בגל לא עוברת בין השדות. היא נעה יחד עם הגל, ובכל נקודה חציה בכל שדה.'
+        misconception: MC-em-fields-alternate
+      - text: 'השדה המגנטי נוצר רק כשהשדה החשמלי אפס.'
+        feedback: 'קצב השינוי של השדה החשמלי לא קובע את השדה המגנטי עצמו, אלא את **השיפוע** שלו במרחב: $-\partial B_z/\partial x = \mu_0\varepsilon_0\,\partial E_y/\partial t$. השיפוע של $B$ הכי גדול איפה ש-$B$ אפס, ו-$B$ עצמו מגיע לפסגה יחד עם $E$.'
+        misconception: MC-em-fields-alternate
+
+  - id: Q-6.14-b-direction
+    type: vector
+    objectives: [OBJ-6.14-2]
+    allowOutIn: true
+    level: mid
+    prompt: >-
+      גל אלקטרומגנטי מישורי נע בדף ימינה. בנקודה P, ברגע מסוים, השדה החשמלי מצביע למטה בדף. מה כיוון השדה המגנטי ב-P באותו רגע?
+    answer: in
+    correctFeedback: 'נכון. צריך $\vec E\times\vec B$ ימינה, בכיוון ההתקדמות: $(-\hat y)\times(-\hat z) = \hat y\times\hat z = +\hat x$. לכן $\vec B$ לאורך $-\hat z$, לתוך הדף.'
+    wrong:
+      - dir: out
+        feedback: 'זה נכון כשהשדה החשמלי מצביע **למעלה**. כאן הוא למטה, ושני השדות מתהפכים יחד.'
+        misconception: MC-em-fields-alternate
+      - dir: e
+        feedback: 'זה כיוון ההתקדמות. השדה המגנטי ניצב לו: הגל רוחבי.'
+      - dir: n
+        feedback: 'השדה המגנטי ניצב לשדה החשמלי, ולא מקביל או הפוך לו.'
+      - dir: zero
+        feedback: 'בגל שמתקדם השדות באותו מופע: איפה שהשדה החשמלי שונה מאפס, גם המגנטי שונה מאפס.'
+        misconception: MC-em-fields-alternate
+    wrongFeedback: 'כיוון ההתקדמות הוא הכיוון של $\vec E\times\vec B$. מצאו כיוון של $\vec B$, ניצב לדף, שעבורו $(-\hat y)\times\vec B$ מצביע ימינה.'
+
+  - id: Q-6.14-travel
+    type: mc
+    objectives: [OBJ-6.14-2]
+    level: mid
+    prompt: >-
+      בגל אלקטרומגנטי מישורי, בנקודה מסוימת, $\vec E$ מצביע בכיוון $+\hat z$ ו-$\vec B$ בכיוון $+\hat x$. לאן הגל נע?
+    choices:
+      - text: 'בכיוון $+\hat y$.'
+        correct: true
+        feedback: 'נכון. $\hat z\times\hat x = \hat y$ (הסדר המחזורי $x \to y \to z \to x$).'
+      - text: 'בכיוון $-\hat y$.'
+        feedback: 'זה $\hat x\times\hat z$, הסדר ההפוך. כיוון ההתקדמות הוא $\vec E\times\vec B$, בסדר הזה.'
+      - text: 'בכיוון $+\hat z$, כיוון השדה החשמלי.'
+        feedback: 'הגל רוחבי: הוא נע בכיוון שניצב לשני השדות.'
+      - text: 'אי אפשר לדעת מהשדות ברגע אחד.'
+        feedback: 'אפשר: כיוון ההתקדמות הוא הכיוון של $\vec E\times\vec B$ בכל נקודה שבה השדות אינם אפס.'
+
+  - id: Q-6.14-arrows
+    type: mc
+    objectives: [OBJ-6.14-2]
+    qualitative: true
+    prompt: >-
+      בציור של גל אור החצים של השדה החשמלי מגיעים לגובה של $2\,\text{cm}$ מעל הציר ומתחתיו. מה זה אומר?
+    choices:
+      - text: 'כלום על רוחב האור: אורך החץ הוא עוצמת השדה בנקודה שעל הציר, בקנה מידה שבחר מי שצייר.'
+        correct: true
+        feedback: 'נכון. כל חץ מצויר בנקודה אחת על הציר. היחידות שלו הן וולט למטר, לא סנטימטרים.'
+      - text: 'שקרן האור ברוחב $4\,\text{cm}$.'
+        feedback: 'החצים אינם מרחקים. גל מישורי ממלא את כל המישור שניצב לכיוון ההתקדמות, וגודל החצים לא קשור לרוחב שלו.'
+        misconception: MC-wave-arrows-are-motion
+      - text: 'שמשהו בגל עולה ויורד $2\,\text{cm}$ מכל צד של הציר.'
+        feedback: 'שום דבר לא זז הצידה. בכל נקודה רק עוצמת השדה וכיוונו משתנים בזמן.'
+        misconception: MC-wave-arrows-are-motion
+      - text: 'שאורך הגל הוא $2\,\text{cm}$.'
+        feedback: 'אורך הגל הוא המרחק **לאורך הציר** בין שתי פסגות. הגובה של החצים מראה את המשרעת.'
+
+  # ------------------------------------------------ OBJ-6.14-3: energy density
+  - id: Q-6.14-capacitor-u
+    type: numeric
+    objectives: [OBJ-6.14-3]
+    prompt: >-
+      בין לוחות של קבל השדה החשמלי אחיד, $5\cdot10^5\,\text{V/m}$, והנפח שבין הלוחות $2\cdot10^{-5}\,\text{m}^3$. כמה אנרגיה אגורה בשדה? ענו במיקרו-ג׳ול ($\mu\text{J}$).
+    answer: 22.1
+    unit: μJ
+    tolerance: 0.03
+    correctFeedback: 'נכון. $u = \varepsilon_0E^2/2 = 8.85\cdot10^{-12}\cdot(5\cdot10^5)^2/2 \approx 1.11\,\text{J/m}^3$, ובנפח כולו $U \approx 2.21\cdot10^{-5}\,\text{J}$.'
+    wrongFeedback: 'צפיפות האנרגיה החשמלית היא $\varepsilon_0E^2/2$, ואותה כופלים בנפח.'
+    commonWrong:
+      - value: 44.3
+        feedback: 'שכחתם את החצי: $u = \varepsilon_0E^2/2$, כמו $\tfrac12CV^2$.'
+      - value: 4.43e-5
+        feedback: 'כפלתם ב-$E$ ולא ב-$E^2$. צפיפות האנרגיה תלויה בריבוע השדה.'
+      - value: 1.11
+        feedback: 'זו צפיפות האנרגיה ב-$\text{J/m}^3$. כפלו אותה בנפח, והמירו למיקרו-ג׳ול.'
+
+  - id: Q-6.14-solenoid-u
+    type: numeric
+    objectives: [OBJ-6.14-3]
+    level: mid
+    prompt: >-
+      בתוך סליל ארוך השדה המגנטי אחיד, $0.2\,\text{T}$, בנפח של $10^{-3}\,\text{m}^3$, ומחוצה לו השדה זניח. כמה אנרגיה אגורה בשדה? ענו בג׳ול.
+    answer: 15.9
+    unit: J
+    tolerance: 0.03
+    correctFeedback: 'נכון. $u = B^2/(2\mu_0) = 0.04/(2\cdot4\pi\cdot10^{-7}) \approx 1.59\cdot10^4\,\text{J/m}^3$, ובנפח כולו $15.9\,\text{J}$.'
+    wrongFeedback: 'צפיפות האנרגיה המגנטית היא $B^2/(2\mu_0)$, ואותה כופלים בנפח.'
+    commonWrong:
+      - value: 31.8
+        feedback: 'שכחתם את החצי: $u = B^2/(2\mu_0)$.'
+      - value: 79.6
+        feedback: 'השתמשתם ב-$B$ ולא ב-$B^2$.'
+      - value: 2.51e-11
+        feedback: 'כפלתם ב-$\mu_0$ במקום לחלק בו. $\mu_0$ במכנה, ולכן הצפיפות גדולה.'
+
+  - id: Q-6.14-shares
+    type: twotier
+    objectives: [OBJ-6.14-3]
+    qualitative: true
+    prompt: >-
+      איזה חלק מהאנרגיה של גל אור נמצא בשדה המגנטי שלו?
+    choices:
+      - text: 'חצי.'
+        correct: true
+        feedback: נכון.
+      - text: 'חלק זניח, כ-$1/(3\cdot10^8)$.'
+        feedback: 'זה היחס בין המספרים $B$ ו-$E$, שנמדדים ביחידות שונות. האנרגיה תלויה ב-$B^2/(2\mu_0)$, ו-$\mu_0$ קטן מאוד.'
+        misconception: MC-magnetic-energy-negligible
+      - text: 'הכול: השדה החשמלי של אור הוא רק תוצאה של המגנטי.'
+        feedback: 'שני השדות יוצרים זה את זה, אף אחד מהם אינו "רק תוצאה". והאנרגיה מתחלקת שווה ביניהם.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'בגל $B = E/c$ ו-$c^2 = 1/(\mu_0\varepsilon_0)$, ולכן $B^2/(2\mu_0) = \varepsilon_0E^2/2$ בכל נקודה.'
+        correct: true
+        feedback: 'נכון. גם בגרף שמתחת לאיור 6.14א שני הקווים מתלכדים.'
+      - text: 'השדה המגנטי של אור קטן מאוד בטסלה, ולכן האנרגיה שלו זניחה.'
+        feedback: 'גם $\mu_0$ קטן מאוד, ומחלקים בו. החישוב נותן בדיוק חצי.'
+        misconception: MC-magnetic-energy-negligible
+      - text: 'האנרגיה נמצאת כל פעם בשדה אחר, ולכן בממוצע חצי.'
+        feedback: 'השדות באותו מופע: הם לא מתחלפים, והחלוקה לחצי נכונה בכל רגע ובכל נקודה, לא רק בממוצע.'
+        misconception: MC-em-fields-alternate
+
+  - id: Q-6.14-rank-u
+    type: rank
+    objectives: [OBJ-6.14-3]
+    level: mid
+    prompt: >-
+      דרגו את צפיפות האנרגיה בשדה, מהגדולה לקטנה.
+    items:
+      - { id: mri, label: 'שדה מגנטי של $1.5\,\text{T}$ במכשיר MRI' }
+      - { id: spark, label: 'שדה חשמלי של $3\cdot10^6\,\text{V/m}$, הגבול שבו אוויר נפרץ' }
+      - { id: earth, label: 'השדה המגנטי של כדור הארץ, $5\cdot10^{-5}\,\text{T}$' }
+      - { id: sun, label: 'אור השמש ליד כדור הארץ, בממוצע ($1360\,\text{W/m}^2$)' }
+    order: [mri, spark, earth, sun]
+    correctFeedback: 'נכון. כ-$8.95\cdot10^5$, $39.8$, $9.95\cdot10^{-4}$ ו-$4.53\cdot10^{-6}\,\text{J/m}^3$. שדה מגנטי של טסלה אוגר הרבה יותר אנרגיה מכל שדה חשמלי שאוויר מחזיק, ואור השמש, שמחמם אותנו, אוגר מעט מאוד בכל מטר מעוקב: הוא פשוט נע מהר מאוד.'
+    wrongFeedback: 'חשבו: $B^2/(2\mu_0)$ לשדות המגנטיים, $\varepsilon_0E^2/2$ לחשמלי, ולאור $\langle u\rangle = \langle S\rangle/c$.'
+
+  # ------------------------------------------------ OBJ-6.14-4: Poynting vector and intensity
+  - id: Q-6.14-laser
+    type: numeric
+    objectives: [OBJ-6.14-4]
+    level: mid
+    prompt: >-
+      מצביע לייזר של $5\,\text{mW}$ מאיר כתם ששטחו $1\,\text{mm}^2$. התייחסו לקרן כגל מישורי. מה המשרעת של השדה החשמלי בקרן? ענו ב-$\text{V/m}$.
+    answer: 1940
+    unit: V/m
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\langle S\rangle = 5\cdot10^{-3}/10^{-6} = 5000\,\text{W/m}^2$, ו-$E_0 = \sqrt{2\langle S\rangle/(c\varepsilon_0)} \approx 1.94\cdot10^3\,\text{V/m}$.'
+    wrongFeedback: 'העוצמה היא ההספק חלקי השטח, ו-$\langle S\rangle = \tfrac12c\varepsilon_0E_0^2$. שימו לב: $1\,\text{mm}^2 = 10^{-6}\,\text{m}^2$.'
+    commonWrong:
+      - value: 1372
+        feedback: 'שכחתם את החצי שבממוצע: $\langle S\rangle = \tfrac12c\varepsilon_0E_0^2$, ולכן $E_0 = \sqrt{2\langle S\rangle/(c\varepsilon_0)}$.'
+      - value: 3.77e6
+        feedback: 'שכחתם להוציא שורש: זה $E_0^2$.'
+      - value: 61.4
+        feedback: 'השתמשתם ב-$1\,\text{mm}^2 = 10^{-3}\,\text{m}^2$. מילימטר רבוע הוא $10^{-6}\,\text{m}^2$.'
+
+  - id: Q-6.14-double-e
+    type: mc
+    objectives: [OBJ-6.14-4]
+    qualitative: true
+    prompt: >-
+      מגדילים פי 2 את המשרעת של השדה החשמלי בגל. מה קורה לעוצמה?
+    choices:
+      - text: 'היא גדלה פי 4.'
+        correct: true
+        feedback: 'נכון. $\langle S\rangle = \tfrac12c\varepsilon_0E_0^2$, ובאותה מידה גם $\langle S\rangle = E_0B_0/(2\mu_0)$, וגם $B_0$ מוכפל.'
+      - text: 'היא גדלה פי 2.'
+        feedback: 'העוצמה תלויה ב-$E_0^2$: גם $\vec E$ וגם $\vec B$, שגדל איתו, נכנסים ל-$\vec E\times\vec B$.'
+      - text: 'היא לא משתנה, כי המהירות לא משתנה.'
+        feedback: 'המהירות אכן לא משתנה, אבל צפיפות האנרגיה, $\varepsilon_0E^2$, גדלה פי 4, וגם האנרגיה שעוברת בשנייה.'
+      - text: 'היא גדלה פי 8: פי 4 באנרגיה ופי 2 במהירות.'
+        feedback: 'המהירות של גל אלקטרומגנטי בריק היא $c$, בלי קשר למשרעת.'
+
+  - id: Q-6.14-wire-energy
+    type: twotier
+    objectives: [OBJ-6.14-4]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סוללה מחוברת בתילים לנגד, והנגד מתחמם. איך מגיעה האנרגיה לנגד?
+    choices:
+      - text: 'היא זורמת בשדה שמחוץ לתילים ונכנסת לנגד דרך הדופן שלו.'
+        correct: true
+        feedback: נכון.
+      - text: 'האלקטרונים נושאים אותה בתוך התיל, מהסוללה עד הנגד.'
+        feedback: 'האלקטרונים בתיל נעים לאט מאוד. וקטור פוינטינג על פני הנגד מצביע פנימה, והשטף שלו הוא בדיוק $VI$.'
+        misconception: MC-energy-flows-in-wire
+      - text: 'היא זורמת בתוך התיל, בכיוון הזרם, כמו מים בצינור.'
+        feedback: 'בתוך תיל חיבור טוב השדה החשמלי כמעט אפס, ולכן גם וקטור פוינטינג בתוכו כמעט אפס. האנרגיה זורמת מחוץ לתילים, ונכנסת לנגד מהדופן שלו.'
+        misconception: MC-energy-flows-in-wire
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'על פני הנגד $\vec E$ לאורכו ו-$\vec B$ מקיף אותו, ולכן $\vec E\times\vec B/\mu_0$ מצביע פנימה, והשטף שלו דרך הדופן הוא $VI$.'
+        correct: true
+        feedback: 'נכון. ובחישוב הרדיוס של הנגד מתבטל, כמו שהספק לא תלוי בו.'
+      - text: 'האלקטרונים מאבדים אנרגיה קינטית בנגד ונעצרים בו.'
+        feedback: 'האלקטרונים לא נעצרים: אותו זרם יוצא מהנגד כמו שנכנס. האנרגיה מגיעה מהשדה.'
+        misconception: MC-energy-flows-in-wire
+      - text: 'האנרגיה עוברת בתיל כי התיל מוליך טוב.'
+        feedback: 'דווקא בתוך מוליך טוב השדה החשמלי כמעט אפס, ולכן וקטור פוינטינג בתוכו כמעט אפס.'
+        misconception: MC-energy-flows-in-wire
+
+  - id: Q-6.14-bulb
+    type: numeric
+    objectives: [OBJ-6.14-4]
+    level: bagrut
+    prompt: >-
+      נורה פולטת $60\,\text{W}$ של אור באופן שווה לכל הכיוונים. מה המשרעת של השדה החשמלי של האור במרחק $3\,\text{m}$ ממנה? התייחסו לאור שם כגל מישורי, וענו ב-$\text{V/m}$.
+    answer: 20
+    unit: V/m
+    tolerance: 0.03
+    correctFeedback: 'נכון. ההספק מתפזר על כדור: $\langle S\rangle = 60/(4\pi\cdot3^2) \approx 0.531\,\text{W/m}^2$, ו-$E_0 = \sqrt{2\langle S\rangle/(c\varepsilon_0)} \approx 20.0\,\text{V/m}$.'
+    wrongFeedback: 'במרחק $r$ ההספק מתפזר על שטח של כדור, $4\pi r^2$. משם $\langle S\rangle = \tfrac12c\varepsilon_0E_0^2$.'
+    commonWrong:
+      - value: 14.1
+        feedback: 'שכחתם את החצי שבממוצע: $E_0 = \sqrt{2\langle S\rangle/(c\varepsilon_0)}$.'
+      - value: 34.6
+        feedback: 'חילקתם ב-$4\pi r$ ולא ב-$4\pi r^2$. שטח הכדור תלוי בריבוע הרדיוס.'
+      - value: 70.9
+        feedback: 'חילקתם ב-$r^2$ בלבד. שטח הכדור הוא $4\pi r^2$.'
