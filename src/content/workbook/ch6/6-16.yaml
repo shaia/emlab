@@ -1,0 +1,500 @@
+# Workbook, lesson 6.16 (review: from the Bagrut to university). Format and rules: see .claude/CLAUDE.md,
+# "Worked examples, workbook", and the chapter 6 solution shape (law … limit, units, result).
+# Every number was recomputed with src/physics (constants.ts; continuous.ts discAxisField/discAxisPotential,
+# ringAxisField; magnetism.ts finiteSolenoidAxisField, loopAxisField; biotsavart.ts segmentFieldAt;
+# dipole.ts bisectorFieldExact/Far). In a >- block, consecutive lines fold into one paragraph: every part
+# (א, ב, …) starts after a blank line.
+
+lesson: '6.16'
+practice:
+  - id: W-6.16-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.16-1]
+    prompt: >-
+      שני לוחות גדולים ומקבילים טעונים במטענים מנוגדים, בצפיפות $\pm\sigma$ עם $\sigma = 5\,\text{nC/m}^2$.
+
+      א. גזרו מהשדה של לוח אחד, $\sigma/(2\varepsilon_0)$, ומעקרון הסופרפוזיציה, את השדה בין הלוחות ומחוצה להם.
+
+      ב. מה השדה בין הלוחות?
+    answer: >-
+      א. בין הלוחות $\sigma/\varepsilon_0$, מהלוח החיובי אל השלילי; מחוצה להם אפס.
+
+      ב. כ-$565\,\text{N/C}$.
+    solution:
+      - kind: law
+        text: >-
+          עקרון הסופרפוזיציה: השדה הוא סכום השדות של שני הלוחות. לכל לוח, לפי חוק גאוס, $\sigma/(2\varepsilon_0)$, ניצב ללוח, החוצה ממנו אם הוא חיובי ואליו אם הוא שלילי.
+      - kind: manipulation
+        text: >-
+          בין הלוחות שני השדות באותו כיוון, מהחיובי אל השלילי: $\dfrac{\sigma}{2\varepsilon_0} + \dfrac{\sigma}{2\varepsilon_0} = \dfrac{\sigma}{\varepsilon_0}$. מחוץ ללוחות הם בכיוונים הפוכים ומתבטלים.
+      - kind: substitution
+        text: >-
+          $E = \dfrac{5\cdot10^{-9}}{8.85\cdot10^{-12}} \approx 565\,\text{N/C}$.
+      - kind: limit
+        text: >-
+          ההנחה היא לוחות אינסופיים. בלוחות סופיים התוצאה נכונה רק כשהמרחק בין הלוחות קטן בהרבה מהרוחב שלהם, ולא ליד השפות. רחוק מאוד משני הלוחות הם נראים כמו שני מטענים מנוגדים קרובים, דיפול, והשדה שם לא אפס אלא חלש מאוד.
+      - kind: units
+        text: >-
+          $\dfrac{\text{C/m}^2}{\text{C}^2/(\text{N}\cdot\text{m}^2)} = \text{N/C}$.
+      - kind: result
+        text: >-
+          א. $\sigma/\varepsilon_0$ בין הלוחות, אפס מחוצה להם. ב. כ-$565\,\text{N/C}$.
+
+  - id: W-6.16-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-6.16-1]
+    prompt: >-
+      לכל נוסחה מהבגרות, כתבו מאיזה חוק כללי היא נובעת, ואיזו הנחה הוסיפו:
+
+      א. $B = \mu_0 I/(2\pi r)$.
+
+      ב. $\Delta V = Ed$.
+
+      ג. $\varepsilon = -N\,\Delta\Phi/\Delta t$.
+
+      ד. $c = 1/\sqrt{\mu_0\varepsilon_0}$.
+    answer: >-
+      א. ביו-סבר או אמפר; תיל ישר ארוך בהרבה מהמרחק.
+
+      ב. האינטגרל הקווי $-\int\vec E\cdot d\vec l$; שדה אחיד.
+
+      ג. חוק פאראדיי $\oint\vec E\cdot d\vec l = -d\Phi/dt$; $N$ כריכות זהות, וקצב שינוי קבוע (או כא״מ ממוצע).
+
+      ד. משוואות מקסוול בריק; בלי מטען ובלי זרם.
+    solution:
+      - kind: law
+        text: >-
+          ארבעה חוקים: $d\vec B = \dfrac{\mu_0}{4\pi}\dfrac{I\,d\vec\ell\times\hat r}{r^2}$ ו-$\oint\vec B\cdot d\vec l = \mu_0 I_{\text{in}}$; $V(B) - V(A) = -\int_A^B\vec E\cdot d\vec l$; $\oint\vec E\cdot d\vec l = -d\Phi_B/dt$; ושני חוקי הרוטור של מקסוול.
+      - kind: reasoning
+        text: >-
+          א. בביו-סבר, קטע ישר שאורכו גדול בהרבה מהמרחק אליו; באמפר, סימטריה גלילית, כך שהשדה שווה על מעגל סביב התיל.
+
+          ב. כשהשדה קבוע לאורך המסלול, האינטגרל הוא מכפלה: $Ed$.
+
+          ג. הכא״מ סביב כריכה אחת הוא $-d\Phi/dt$; $N$ כריכות זהות בטור נותנות פי $N$. עם $\Delta$ במקום $d$ מקבלים את הכא״מ הממוצע, ששווה לרגעי רק כשהקצב קבוע.
+
+          ד. בלי מטען ובלי זרם, שני חוקי הרוטור נותנים משוואת גלים, והמהירות היא $1/\sqrt{\mu_0\varepsilon_0}$ (שיעור 6.14).
+      - kind: limit
+        text: >-
+          כל הנחה היא גם גבול: א נכשלת כשהמרחק דומה לאורך התיל; ב נכשלת ליד מטען נקודתי, שם השדה לא אחיד; ג נותנת רק ממוצע כשהשטף משתנה בקצב לא קבוע; ד היא מהירות הגל בריק, ולא בחומר.
+      - kind: units
+        text: >-
+          אין מספרים. בדיקה מהירה ל-ד: $\mu_0\varepsilon_0$ נמדד ב-$\text{s}^2/\text{m}^2$, ולכן $1/\sqrt{\mu_0\varepsilon_0}$ ב-$\text{m/s}$.
+      - kind: result
+        text: >-
+          א. ביו-סבר או אמפר, תיל ארוך. ב. אינטגרל קווי, שדה אחיד. ג. חוק פאראדיי, $N$ כריכות וקצב קבוע. ד. מקסוול בריק.
+
+  - id: W-6.16-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-6.16-2]
+    prompt: >-
+      שלושה ביטויים מוצעים לשדה המגנטי על הציר של כריכה (זרם $I$, רדיוס $R$, גובה $z$ מעל המרכז):
+
+      א. $\dfrac{\mu_0 IR^2}{2(R^2 + z^2)^{3/2}}$
+
+      ב. $\dfrac{\mu_0 IR}{2(R^2 + z^2)^{3/2}}$
+
+      ג. $\dfrac{\mu_0 I}{2\sqrt{R^2 + z^2}}$
+
+      איזה מהם נפסל בבדיקת יחידות? ובאיזה גבול נפסל אחד מהשניים האחרים?
+    answer: >-
+      ב נפסל ביחידות ($\text{T/m}$). ג נפסל בגבול הרחוק: הוא יורד כמו $1/z$, ולא כמו $1/z^3$ של דיפול מגנטי. נשאר א.
+    solution:
+      - kind: law
+        text: >-
+          $\mu_0 I$ חלקי אורך הוא שדה מגנטי: $\dfrac{\text{T}\cdot\text{m/A}\cdot\text{A}}{\text{m}} = \text{T}$. רחוק מהכריכה היא דיפול מגנטי, $\mu_0 m/(2\pi z^3)$ עם $m = I\pi R^2$ (שיעור 6.11), ובמרכזה $\mu_0 I/(2R)$.
+      - kind: manipulation
+        text: >-
+          א: אורך בריבוע חלקי אורך בשלישית, כלומר אחד חלקי אורך ✓. ב: אורך חלקי אורך בשלישית, אחד חלקי אורך בריבוע ✗. ג: אחד חלקי אורך ✓.
+
+          במרכז, $z = 0$: א נותן $\mu_0 I/(2R)$ ✓; ג נותן $\mu_0 I/(2R)$ ✓. רחוק, $z \gg R$: א נותן $\mu_0 IR^2/(2z^3) = \mu_0 m/(2\pi z^3)$ ✓; ג נותן $\mu_0 I/(2z)$ ✗.
+      - kind: limit
+        text: >-
+          גבול המרכז לא מבחין בין א ל-ג; רק הגבול הרחוק מבחין. לכן בודקים את שני הקצוות.
+      - kind: units
+        text: >-
+          ב: $\dfrac{\text{T}\cdot\text{m/A}\cdot\text{A}\cdot\text{m}}{\text{m}^3} = \text{T/m}$, לא טסלה.
+      - kind: result
+        text: >-
+          ב נפסל ביחידות, ג בגבול הרחוק. רק א יכול להיות נכון, והוא אכן הביטוי של שיעור 6.11.
+
+  - id: W-6.16-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.16-2]
+    prompt: >-
+      טבעת טעונה ברדיוס $R = 5\,\text{cm}$. השדה על הציר שלה הוא $E = kQz/(z^2 + R^2)^{3/2}$.
+
+      א. הראו שרחוק מהטבעת הטעות היחסית של $kQ/z^2$ היא בערך $\tfrac32(R/z)^2$.
+
+      ב. מאיזה גובה $kQ/z^2$ בתוך 1% מהשדה? חשבו פעם בקירוב ופעם בדיוק.
+    answer: >-
+      א. $E = \dfrac{kQ}{z^2}(1 + R^2/z^2)^{-3/2} \approx \dfrac{kQ}{z^2}\left(1 - \tfrac32\dfrac{R^2}{z^2}\right)$.
+
+      ב. $z \ge 12.2R \approx 61\,\text{cm}$ (בקירוב $12.25R$, כמעט אותו דבר).
+    solution:
+      - kind: law
+        text: >-
+          הביטוי הסגור של שיעור 6.4, והקירוב $(1 + u)^n \approx 1 + nu$ כש-$u$ קטן.
+      - kind: manipulation
+        text: >-
+          א. מוציאים $z^2$ מהסוגריים: $(z^2 + R^2)^{3/2} = z^3(1 + R^2/z^2)^{3/2}$, ולכן $E = \dfrac{kQ}{z^2}(1 + u)^{-3/2}$ עם $u = R^2/z^2$. בקירוב $(1 + u)^{-3/2} \approx 1 - \tfrac32 u$: השדה קטן מ-$kQ/z^2$ בחלק יחסי $\tfrac32 u$.
+
+          ב. בקירוב: $\tfrac32(R/z)^2 = 0.01$, ולכן $z/R = \sqrt{150} = 12.25$. בדיוק: $(1 + u)^{-3/2} = 0.99$, כלומר $1 + u = 0.99^{-2/3} = 1.00672$, ו-$z/R = 1/\sqrt{0.00672} = 12.2$.
+      - kind: substitution
+        text: >-
+          $z \ge 12.2\cdot5\,\text{cm} \approx 61\,\text{cm}$.
+      - kind: limit
+        text: >-
+          כש-$z \to \infty$ הטעות שואפת לאפס, כמו $1/z^2$. בכיוון השני, ב-$z = R$ הנוסחה הרחוקה טועה כבר פי $2^{3/2} \approx 2.8$, והקירוב לטעות (150%) כבר לא שימושי: הוא תקף רק כש-$u$ קטן.
+      - kind: units
+        text: >-
+          $u = R^2/z^2$ חסר יחידות, כמו שצריך לטעות יחסית.
+      - kind: result
+        text: >-
+          א. הטעות היחסית $\approx\tfrac32(R/z)^2$. ב. מגובה של כ-$12R$, כלומר כ-$61\,\text{cm}$, הטבעת היא מטען נקודתי בתוך 1%.
+
+  - id: W-6.16-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-6.16-2]
+    prompt: >-
+      תלמידה גזרה לשדה המגנטי על הציר של כריכה את $B = \dfrac{\mu_0 IR}{2(R^2 + z^2)}$. היא בדקה שהיחידות נכונות, ושבמרכז, $z = 0$, יוצא $\mu_0 I/(2R)$.
+
+      א. האם הבדיקות שלה מספיקות?
+
+      ב. באיזה גבול הביטוי נכשל, ואיך יודעים מה צריך לצאת שם בלי האינטגרל?
+    answer: >-
+      א. לא: היחידות וקצה אחד לא מספיקים.
+
+      ב. רחוק, $z \gg R$: הביטוי יורד כמו $1/z^2$, אבל כריכה רחוקה היא דיפול מגנטי, והשדה שלו יורד כמו $1/z^3$.
+    solution:
+      - kind: law
+        text: >-
+          בדיקת גבולות מלאה: יחידות, **כל** קצה, סימטריה. רחוק מכריכה היא דיפול מגנטי, $B = \mu_0 m/(2\pi z^3)$ עם $m = I\pi R^2$ (שיעור 6.11).
+      - kind: reasoning
+        text: >-
+          א. שתי הבדיקות נכונות ועוברות: $\mu_0 IR/\text{m}^2$ הוא $\mu_0 I/\text{m}$, טסלה, והמרכז נותן $\mu_0 I/(2R)$. אבל לביטוי יש קצה נוסף, והוא לא נבדק.
+
+          ב. רחוק: $B \approx \mu_0 IR/(2z^2)$, שיפוע $-2$ בגרף לוגריתמי. לכריכה אין מטען מגנטי נטו (אין כזה בכלל), ולכן רחוק ממנה השדה לא יכול לרדת כמו של מטען, $1/z^2$; הוא חייב לרדת כמו של דיפול, $1/z^3$. הביטוי הנכון, $\mu_0 IR^2/(2(R^2 + z^2)^{3/2})$, עובר את שני הקצוות.
+      - kind: limit
+        text: >-
+          הקצה הרחוק הוא כאן המבחן החזק: הוא בודק את **החזקה**, ובדיקת יחידות לא יכולה לבדוק חזקה של $R/z$, שאין לו יחידות.
+      - kind: units
+        text: >-
+          $\dfrac{\text{T}\cdot\text{m/A}\cdot\text{A}\cdot\text{m}}{\text{m}^2} = \text{T}$: הביטוי השגוי עובר את בדיקת היחידות.
+      - kind: result
+        text: >-
+          א. לא. ב. בגבול הרחוק: $1/z^2$ במקום $1/z^3$.
+
+  - id: W-6.16-06
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.16-1, OBJ-6.16-2]
+    prompt: >-
+      הפוטנציאל על הציר של דיסקה טעונה (רדיוס $R$, צפיפות $\sigma$), בגובה $z > 0$, הוא $V = \dfrac{\sigma}{2\varepsilon_0}\left(\sqrt{z^2 + R^2} - z\right)$ (שיעור 6.6).
+
+      א. מצאו ממנו את השדה על הציר.
+
+      ב. בדקו את שני הקצוות של $V$ ושל $E$: קרוב מאוד לדיסקה, ורחוק ממנה.
+
+      ג. מה השדה ב-$z = R = 10\,\text{cm}$, כש-$\sigma = 8\,\text{nC/m}^2$?
+    answer: >-
+      א. $E = \dfrac{\sigma}{2\varepsilon_0}\left(1 - \dfrac{z}{\sqrt{z^2 + R^2}}\right)$.
+
+      ב. $z \to 0$: $E \to \sigma/(2\varepsilon_0)$. $z \gg R$: $V \to kQ/z$, $E \to kQ/z^2$, עם $Q = \sigma\pi R^2$.
+
+      ג. כ-$132\,\text{N/C}$.
+    solution:
+      - kind: law
+        text: >-
+          $E_z = -\dfrac{dV}{dz}$ (שיעור 6.6).
+      - kind: manipulation
+        text: >-
+          א. לפי כלל השרשרת, $\dfrac{d}{dz}\sqrt{z^2 + R^2} = \dfrac{z}{\sqrt{z^2 + R^2}}$, ולכן $E = -\dfrac{\sigma}{2\varepsilon_0}\left(\dfrac{z}{\sqrt{z^2 + R^2}} - 1\right) = \dfrac{\sigma}{2\varepsilon_0}\left(1 - \dfrac{z}{\sqrt{z^2 + R^2}}\right)$.
+
+          ב. רחוק: $\sqrt{z^2 + R^2} = z\sqrt{1 + R^2/z^2} \approx z\left(1 + \dfrac{R^2}{2z^2}\right)$, ולכן $V \approx \dfrac{\sigma}{2\varepsilon_0}\cdot\dfrac{R^2}{2z} = \dfrac{\sigma\pi R^2}{4\pi\varepsilon_0 z} = \dfrac{kQ}{z}$.
+      - kind: substitution
+        text: >-
+          ג. $E = \dfrac{8\cdot10^{-9}}{2\cdot8.85\cdot10^{-12}}\left(1 - \dfrac{1}{\sqrt2}\right) = 452\cdot0.293 \approx 132\,\text{N/C}$.
+      - kind: limit
+        text: >-
+          $z \to 0$: $E \to \sigma/(2\varepsilon_0)$, הלוח האינסופי, ו-$V \to \sigma R/(2\varepsilon_0)$, ערך סופי. $z \gg R$: $V \to kQ/z$ ו-$E \to kQ/z^2$, מטען נקודתי. וגם $E = -dV/dz$ של $kQ/z$ הוא $kQ/z^2$: שני הקצוות מתאימים זה לזה.
+      - kind: units
+        text: >-
+          $\sigma/\varepsilon_0$ ב-$\text{N/C}$, כפול אורך: $\text{N}\cdot\text{m/C} = \text{V}$ ל-$V$; וב-$E$ הסוגריים חסרי יחידות.
+      - kind: result
+        text: >-
+          א. $E = \dfrac{\sigma}{2\varepsilon_0}\left(1 - z/\sqrt{z^2 + R^2}\right)$. ב. לוח ליד הדיסקה, מטען נקודתי רחוק ממנה. ג. כ-$132\,\text{N/C}$.
+
+  - id: W-6.16-07
+    level: mid
+    qualitative: false
+    objectives: [OBJ-6.16-3]
+    prompt: >-
+      בודקים את חוק פאראדיי: סליל עם שטח חתך $20\,\text{cm}^2$ נמצא בשדה מגנטי אחיד, לאורך הציר שלו, שגדל בקצב קבוע. מודדים את הכא״מ בחמישה קצבים:
+
+      $\dfrac{dB}{dt}\ (\text{T/s}):\ 0.1,\ 0.2,\ 0.3,\ 0.4,\ 0.5 \qquad \varepsilon\ (\text{mV}):\ 31,\ 59,\ 91,\ 119,\ 151$
+
+      א. איזה גרף צריך לצאת ישר, ומה השיפוע שלו לפי החוק?
+
+      ב. מצאו את מספר הכריכות.
+
+      ג. איזו תוצאה הייתה סותרת את החוק?
+    answer: >-
+      א. $\varepsilon$ מול $dB/dt$: קו ישר דרך הראשית, בשיפוע $NA$.
+
+      ב. $N = 150$.
+
+      ג. למשל, כא״מ שונה מאפס כשהשדה קבוע, או נקודות שלא על קו ישר.
+    solution:
+      - kind: law
+        text: >-
+          $|\varepsilon| = N\dfrac{d\Phi}{dt} = NA\dfrac{dB}{dt}$: השטף $BA$, והשטח קבוע.
+      - kind: manipulation
+        text: >-
+          א. $\varepsilon = (NA)\cdot\dfrac{dB}{dt}$ הוא $y = ax$, עם השיפוע $NA$.
+
+          ב. שתי נקודות רחוקות על הקו: $(0.1,\ 30\,\text{mV})$ ו-$(0.5,\ 150\,\text{mV})$, ולכן השיפוע $\dfrac{120\cdot10^{-3}}{0.4} = 0.3\,\text{V}\cdot\text{s/T}$. השיפוע הוא $NA$, ולכן מחלקים אותו בשטח החתך כדי לבודד את $N$.
+      - kind: substitution
+        text: >-
+          $N = \dfrac{0.3}{2\cdot10^{-3}} = 150$.
+      - kind: limit
+        text: >-
+          ב-$dB/dt = 0$ הקו עובר בראשית: שדה קבוע, חזק ככל שיהיה, לא משרה דבר (שיעור 5.2). זו הטענה שפאראדיי גילה, ונקודה ב-$dB/dt = 0$ עם כא״מ שונה מאפס הייתה מפילה אותה.
+      - kind: units
+        text: >-
+          $\text{m}^2\cdot\text{T/s} = \text{Wb/s} = \text{V}$; השיפוע $\text{V}\cdot\text{s/T} = \text{m}^2$, שטח כפול מספר כריכות.
+      - kind: result
+        text: >-
+          א. $\varepsilon$ מול $dB/dt$, שיפוע $NA$. ב. $150$ כריכות. ג. קו שלא עובר בראשית, או נקודות שסוטות מהקו יותר משגיאת המדידה.
+
+  - id: W-6.16-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.16-1, OBJ-6.16-2]
+    prompt: >-
+      השדה של קטע תיל ישר שזורם בו $I$, בנקודה במרחק $s$ מהקו שלו, הוא $B = \dfrac{\mu_0 I}{4\pi s}(\sin\theta_2 - \sin\theta_1)$ (שיעור 6.11), כש-$\theta_1$, $\theta_2$ הזוויות אל הקצוות, נמדדות מהאנך.
+
+      א. כתבו את השדה על האנך האמצעי של קטע באורך $L$, ובדקו את שני הקצוות שלו.
+
+      ב. מה $L/s$ המינימלי כדי ש-$\mu_0 I/(2\pi s)$ יהיה בתוך 1%? ובמרחק $5\,\text{cm}$?
+
+      ג. מה השדה מול הקצה של תיל ארוך מאוד, בניצב לתיל?
+    answer: >-
+      א. $B = \dfrac{\mu_0 I}{2\pi s}\cdot\dfrac{L/2}{\sqrt{s^2 + L^2/4}}$; ארוך: $\mu_0 I/(2\pi s)$; קצר: $\mu_0 IL/(4\pi s^2)$.
+
+      ב. $L/s \ge 14.0$; כלומר $L \ge 70\,\text{cm}$.
+
+      ג. $\mu_0 I/(4\pi s)$, חצי מתיל אינסופי.
+    solution:
+      - kind: law
+        text: >-
+          חוק ביו-סבר, באינטגרל על קטע ישר: $B = \dfrac{\mu_0 I}{4\pi s}(\sin\theta_2 - \sin\theta_1)$.
+      - kind: manipulation
+        text: >-
+          א. על האנך האמצעי $\sin\theta_2 = -\sin\theta_1 = \dfrac{L/2}{\sqrt{s^2 + L^2/4}}$, ולכן $B = \dfrac{\mu_0 I}{2\pi s}\cdot\dfrac{L/2}{\sqrt{s^2 + L^2/4}}$.
+
+          ב. היחס לתיל אינסופי הוא $\dfrac{L/2}{\sqrt{s^2 + L^2/4}} \ge 0.99$. נסמן $t = L/(2s)$: $t/\sqrt{1 + t^2} \ge 0.99$. מעלים בריבוע: $t^2 \ge 0.9801(1 + t^2)$, כלומר $0.0199\,t^2 \ge 0.9801$, ו-$t \ge 7.02$.
+
+          ג. מול הקצה: $\theta_1 = 0$ ו-$\theta_2 \to 90^\circ$, ולכן $\sin\theta_2 - \sin\theta_1 = 1$.
+      - kind: substitution
+        text: >-
+          ב. $L/s = 2t \ge 14.0$, ובמרחק $5\,\text{cm}$: $L \ge 14.0\cdot5 = 70\,\text{cm}$.
+      - kind: limit
+        text: >-
+          $L \gg s$: היחס שואף ל-1, $\mu_0 I/(2\pi s)$ של שיעור 4.2. $L \ll s$: $\sqrt{s^2 + L^2/4} \approx s$, ונשאר $\mu_0 IL/(4\pi s^2)$, אלמנט זרם אחד בביו-סבר, בניצב לקו אל הנקודה. וב-ג, חצי תיל אינסופי נותן חצי שדה: לפי הסופרפוזיציה, שני חצאים יחד נותנים תיל שלם.
+      - kind: units
+        text: >-
+          $\dfrac{\text{T}\cdot\text{m/A}\cdot\text{A}}{\text{m}} = \text{T}$; היחס חסר יחידות.
+      - kind: result
+        text: >-
+          א. $B = \dfrac{\mu_0 I}{2\pi s}\cdot\dfrac{L/2}{\sqrt{s^2 + L^2/4}}$. ב. $L \ge 14s$, $70\,\text{cm}$ במרחק $5\,\text{cm}$. ג. $\mu_0 I/(4\pi s)$.
+
+  - id: W-6.16-09
+    level: bagrut
+    qualitative: true
+    objectives: [OBJ-6.16-3, OBJ-6.16-1]
+    prompt: >-
+      במעבדה משחזרים ניסוי בסגנון של הרץ: משדר שולח גל רדיו בתדירות $100\,\text{MHz}$ אל לוח מתכת, והגל חוזר ממנו. נוצר גל עומד, וגלאי שנע בין המשדר ללוח מוצא מקומות שבהם האות כמעט אפס, במרחקים של $1.5\,\text{m}$ זה מזה.
+
+      א. מה מהירות הגל לפי המדידה? (בגל עומד, המרחק בין שני מקומות סמוכים שבהם האות אפס הוא חצי אורך גל.)
+
+      ב. השוו ל-$1/\sqrt{\mu_0\varepsilon_0}$. מה המדידה הזו בודקת במשוואות מקסוול?
+
+      ג. איזו תוצאה הייתה מפילה את התאוריה?
+    answer: >-
+      א. $3\cdot10^8\,\text{m/s}$.
+
+      ב. $1/\sqrt{\mu_0\varepsilon_0} \approx 3.0\cdot10^8\,\text{m/s}$, אותה מהירות. היא בודקת את זרם ההעתקה: בלעדיו אין גל.
+
+      ג. מהירות שונה בבירור מ-$1/\sqrt{\mu_0\varepsilon_0}$, או שלא נוצר גל בכלל.
+    solution:
+      - kind: law
+        text: >-
+          $v = f\lambda$; ומשוואות מקסוול בריק חוזות $c = 1/\sqrt{\mu_0\varepsilon_0}$ (שיעור 6.14).
+      - kind: reasoning
+        text: >-
+          א. $\lambda = 2\cdot1.5 = 3\,\text{m}$, ו-$v = f\lambda = 10^8\cdot3 = 3\cdot10^8\,\text{m/s}$.
+
+          ב. $\mu_0$ ו-$\varepsilon_0$ נמדדים בניסויים של זרמים ומטענים במנוחה, בלי שום גל. החיזוי של מקסוול הוא שמהם, יחד, יוצאת מהירות הגל. הגל עצמו נובע מחוק פאראדיי ומאיבר ההעתקה בחוק אמפר-מקסוול: בלי זרם ההעתקה אין גל, ולכן המדידה בודקת אותו. ושהמהירות היא מהירות האור קושר את האור לחשמל ולמגנטיות.
+
+          ג. מהירות שונה מ-$3\cdot10^8\,\text{m/s}$ יותר משגיאת המדידה, או שהגלאי לא מוצא גל בכלל.
+      - kind: substitution
+        text: >-
+          $\dfrac{1}{\sqrt{4\pi\cdot10^{-7}\cdot8.85\cdot10^{-12}}} \approx 3.0\cdot10^8\,\text{m/s}$.
+      - kind: limit
+        text: >-
+          בגבול שבו השדות לא משתנים, $\partial/\partial t = 0$, משוואות מקסוול נפרדות לאלקטרוסטטיקה ולמגנטוסטטיקה, ואין גל בכלל. לכן רק ניסוי עם שדות שמשתנים מהר, כמו של הרץ, יכול לבדוק את האיבר החדש.
+      - kind: units
+        text: >-
+          $\text{Hz}\cdot\text{m} = \text{m/s}$; $\mu_0\varepsilon_0$ ב-$\text{s}^2/\text{m}^2$.
+      - kind: result
+        text: >-
+          א. $3\cdot10^8\,\text{m/s}$. ב. כמו $1/\sqrt{\mu_0\varepsilon_0}$; המדידה בודקת את זרם ההעתקה ואת החיזוי שהאור הוא גל אלקטרומגנטי. ג. מהירות אחרת, או שאין גל.
+
+  - id: W-6.16-10
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-6.16-2, OBJ-6.16-1]
+    prompt: >-
+      השדה על האנך האמצעי של דיפול ($\pm q$ במרחק $d$), במרחק $r$ ממרכזו, הוא $E = \dfrac{kqd}{(r^2 + d^2/4)^{3/2}}$, נגד כיוון $\vec p$.
+
+      א. בדקו את שני הקצוות: $r \gg d$, ו-$r = 0$.
+
+      ב. עם $q = 2\,\text{nC}$, $d = 4\,\text{mm}$ ו-$r = 2\,\text{cm}$: מה השדה, ובכמה אחוזים $kp/r^3$ טועה?
+    answer: >-
+      א. $r \gg d$: $kp/r^3$, דיפול נקודתי. $r = 0$: $8kq/d^2$, הסכום של שני שדות של $kq/(d/2)^2$.
+
+      ב. $E \approx 8.87\cdot10^3\,\text{N/C}$; $kp/r^3 = 9.0\cdot10^3\,\text{N/C}$, גבוה בכ-1.5%.
+    solution:
+      - kind: law
+        text: >-
+          סופרפוזיציה של שני מטענים נקודתיים (הביטוי המדויק של שיעור 6.10), ושדה הדיפול הנקודתי $kp/r^3$ על האנך האמצעי.
+      - kind: manipulation
+        text: >-
+          א. $r \gg d$: $(r^2 + d^2/4)^{3/2} \approx r^3$, ונשאר $kqd/r^3 = kp/r^3$. $r = 0$: $\dfrac{kqd}{(d/2)^3} = \dfrac{8kq}{d^2}$. ובאמצע, בין שני המטענים, כל מטען במרחק $d/2$ ותורם $kq/(d/2)^2 = 4kq/d^2$, שניהם באותו כיוון, מ-$+q$ אל $-q$: $8kq/d^2$ ✓.
+
+          ב. היחס לשדה הרחוק הוא $(1 + d^2/(4r^2))^{-3/2}$.
+      - kind: substitution
+        text: >-
+          $E = \dfrac{9\cdot10^{9}\cdot2\cdot10^{-9}\cdot0.004}{(0.02^2 + 0.002^2)^{3/2}} = \dfrac{0.072}{(4.04\cdot10^{-4})^{3/2}} \approx 8.87\cdot10^3\,\text{N/C}$; $\dfrac{kp}{r^3} = \dfrac{0.072}{8\cdot10^{-6}} = 9.0\cdot10^3\,\text{N/C}$; היחס $(1.01)^{-3/2} = 0.985$.
+      - kind: limit
+        text: >-
+          שני הקצוות עוברים, ולכן הביטוי ראוי לאמון. ובגרף לוגריתמי: רחוק השיפוע $-3$, וקרוב למרכז השדה סופי והשיפוע $0$. הטעות של הדיפול הנקודתי כאן, בערך $\tfrac32\cdot\dfrac{d^2}{4r^2} = 1.5\%$, יורדת כמו $1/r^2$.
+      - kind: units
+        text: >-
+          $\dfrac{\text{N}\cdot\text{m}^2/\text{C}^2\cdot\text{C}\cdot\text{m}}{\text{m}^3} = \text{N/C}$.
+      - kind: result
+        text: >-
+          א. $kp/r^3$ רחוק, $8kq/d^2$ במרכז. ב. כ-$8.87\cdot10^3\,\text{N/C}$, נגד $\vec p$; $kp/r^3$ גבוה ממנו בכ-1.5%.
+
+challenge:
+  - id: W-6.16-c1
+    stars: 1
+    objectives: [OBJ-6.16-1, OBJ-6.16-2]
+    prompt: >-
+      סליל ברדיוס $a$ ובאורך $l$ מלופף באחידות, עם $n$ כריכות למטר, וזורם בו זרם $I$. מודדים את השדה המגנטי על הציר, ומוצאים שבמרכז הסליל הוא גדול פי $1.6$ מאשר בכל אחד מקצותיו.
+
+      א. כתבו את השדה במרכז ובקצה, ומצאו את היחס ביניהם כפונקציה של $l/a$.
+
+      ב. בדקו את היחס בשני הקצוות של $l/a$. האם יכלו למדוד יחס של $2.2$?
+
+      ג. מצאו את $l/a$.
+
+      ד. עם $a = 2\,\text{cm}$, $n = 1000\,\text{m}^{-1}$ ו-$I = 2\,\text{A}$: מה השדה במרכז?
+    answer: >-
+      א. $\dfrac{B_{\text{c}}}{B_{\text{e}}} = \dfrac{2\sqrt{l^2 + a^2}}{\sqrt{l^2 + 4a^2}}$.
+
+      ב. מ-1 (סליל קצר) עד 2 (סליל ארוך); $2.2$ בלתי אפשרי.
+
+      ג. $l/a = 2\sqrt{(1.6^2 - 1)/(4 - 1.6^2)} \approx 2.08$.
+
+      ד. כ-$1.81\cdot10^{-3}\,\text{T}$.
+    solution:
+      - kind: law
+        text: >-
+          ביו-סבר, ערימת כריכות (שיעור 6.11): $B = \dfrac{\mu_0 nI}{2}(\cos\alpha_1 + \cos\alpha_2)$.
+      - kind: manipulation
+        text: >-
+          א. במרכז שני הקצוות במרחק $l/2$: $B_{\text{c}} = \mu_0 nI\,\dfrac{l/2}{\sqrt{l^2/4 + a^2}} = \mu_0 nI\,\dfrac{l}{\sqrt{l^2 + 4a^2}}$. בקצה, הקצה הרחוק במרחק $l$ והקרוב במרחק אפס ($\cos 90^\circ = 0$): $B_{\text{e}} = \dfrac{\mu_0 nI}{2}\cdot\dfrac{l}{\sqrt{l^2 + a^2}}$. מחלקים.
+
+          ג. מעלים בריבוע: $4(l^2 + a^2) = \rho^2(l^2 + 4a^2)$ עם $\rho = 1.6$. מכנסים: $l^2(4 - \rho^2) = 4a^2(\rho^2 - 1)$, ולכן $\dfrac{l}{a} = 2\sqrt{\dfrac{\rho^2 - 1}{4 - \rho^2}}$.
+      - kind: substitution
+        text: >-
+          ג. $\dfrac{l}{a} = 2\sqrt{\dfrac{1.56}{1.44}} = 2.08$, כלומר $l \approx 4.16\,\text{cm}$.
+
+          ד. $B_{\text{c}} = 4\pi\cdot10^{-7}\cdot1000\cdot2\cdot\dfrac{0.0416}{\sqrt{0.0416^2 + 4\cdot0.02^2}} = 2.51\cdot10^{-3}\cdot0.721 \approx 1.81\cdot10^{-3}\,\text{T}$.
+      - kind: limit
+        text: >-
+          $l \ll a$: היחס $\dfrac{2a}{2a} = 1$, כי בסליל קצר הקצה והמרכז כמעט אותה נקודה. $l \gg a$: היחס $\dfrac{2l}{l} = 2$, המרכז $\mu_0 nI$ והקצה חצי ממנו. היחס עולה בין שני הערכים האלה ולא יוצא מהם, ולכן מדידה של $2.2$ אומרת שהמדידה שגויה, לא שהסליל מיוחד. וב-ג: $\rho \to 1$ נותן $l \to 0$, ו-$\rho \to 2$ נותן $l \to \infty$, כמו שצריך.
+      - kind: units
+        text: >-
+          היחס חסר יחידות; $\mu_0 nI$: $\text{T}\cdot\text{m/A}\cdot\text{m}^{-1}\cdot\text{A} = \text{T}$.
+      - kind: result
+        text: >-
+          א. $2\sqrt{l^2 + a^2}/\sqrt{l^2 + 4a^2}$. ב. בין 1 ל-2; $2.2$ בלתי אפשרי. ג. $l/a \approx 2.08$. ד. כ-$1.81\cdot10^{-3}\,\text{T}$, רק 72% מ-$\mu_0 nI$.
+    source:
+      name: University of Oxford, First-Year Electromagnetism, Problem Set 3 (Prof. N. Harnew), Hilary Term 2022
+      year: 2022
+      problem: 'E.4, Magnetic field inside a solenoid: the axial field is √2 times as large at the centre as at the ends; find l/a (the ratio changed to 1.6 here, parts ב and ד added)'
+      url: https://users.physics.ox.ac.uk/~harnew/lectures/EM_ProblemSet3.pdf
+      verified: '2026-11-05'
+      adapted: true
+
+  - id: W-6.16-c2
+    stars: 2
+    objectives: [OBJ-6.16-2, OBJ-6.16-1]
+    prompt: >-
+      שני מודלים של מגנט זעיר. **מודל גילברט:** שני מטענים מגנטיים (שאין כאלה בטבע, אבל נניח), $-q_m$ ב-$z = 0$ ו-$+q_m$ ב-$z = d$, עם כוח כמו של קולון, $F = \dfrac{\mu_0}{4\pi}\cdot\dfrac{q_{m1}q_{m2}}{r^2}$, ושדה $B = F/q_m$. **מודל אמפר:** כריכה זעירה ברדיוס $r$ עם זרם $I$, במישור $z = 0$.
+
+      א. מה היחידות של $q_m$?
+
+      ב. מצאו את השדה במודל גילברט על הציר, ב-$z > d$, ואת הגבול שלו כש-$d \to 0$ ו-$p_m = q_m d$ קבוע.
+
+      ג. במודל אמפר: מצאו מבדיקת יחידות את החזקה $\gamma$, כך ש-$kIr^\gamma$ ($k$ מספר) יהיה ביחידות של $p_m$. מהו הגבול של השדה על הציר כש-$r \to 0$, ואיזה $k$ נותן שני מודלים זהים מחוץ למגנט?
+
+      ד. מגנט הוא גליל צפוף של מגנטים זעירים כאלה, כולם באותו כיוון, $+z$, עם מומנט $M$ ליחידת נפח. מצאו את השדה במרכז הגליל: במודל גילברט כשהגליל שטוח (רדיוס גדול בהרבה מהאורך), ובמודל אמפר כשהוא ארוך (רדיוס קטן בהרבה מהאורך). איזה מהשניים מתאים ל-$\nabla\cdot\vec B = 0$? מה $\mu_0 M$ כש-$M = 8\cdot10^5\,\text{A/m}$?
+    answer: >-
+      א. $\text{A}\cdot\text{m}$.
+
+      ב. $B = \dfrac{\mu_0 q_m}{4\pi}\left(\dfrac{1}{(z - d)^2} - \dfrac{1}{z^2}\right) \to \dfrac{\mu_0 p_m}{2\pi z^3}$.
+
+      ג. $\gamma = 2$; $B \to \dfrac{\mu_0 Ir^2}{2z^3}$; $k = \pi$, כלומר $p_m = I\pi r^2$.
+
+      ד. גילברט: $\mu_0 M$ נגד $+z$; אמפר: $\mu_0 M$ בכיוון $+z$. אמפר מתאים. $\mu_0 M \approx 1.0\,\text{T}$.
+    solution:
+      - kind: law
+        text: >-
+          קולון וסופרפוזיציה למטענים המגנטיים; ביו-סבר לכריכה (שיעור 6.11); ולגליל, השדה בין שני לוחות טעונים ($\sigma/\varepsilon_0$ במקבילה המגנטית) ובתוך סליל ארוך ($\mu_0 nI$).
+      - kind: manipulation
+        text: >-
+          א. $q_m = F/B$: $\dfrac{\text{N}}{\text{T}} = \dfrac{\text{N}}{\text{N}/(\text{A}\cdot\text{m})} = \text{A}\cdot\text{m}$.
+
+          ב. ב-$z > d$ הנקודה במרחק $z - d$ מ-$+q_m$ ובמרחק $z$ מ-$-q_m$: $B = \dfrac{\mu_0 q_m}{4\pi}\left(\dfrac{1}{(z - d)^2} - \dfrac{1}{z^2}\right)$. כש-$d \ll z$: $\dfrac{1}{(z - d)^2} \approx \dfrac{1}{z^2}\left(1 + \dfrac{2d}{z}\right)$, ונשאר $\dfrac{\mu_0 q_m}{4\pi}\cdot\dfrac{2d}{z^3} = \dfrac{\mu_0 p_m}{2\pi z^3}$.
+
+          ג. $p_m = q_m d$ ביחידות $\text{A}\cdot\text{m}^2$, ו-$I$ באמפר, ולכן $\gamma = 2$. הכריכה: $B = \dfrac{\mu_0 Ir^2}{2(r^2 + z^2)^{3/2}} \to \dfrac{\mu_0 Ir^2}{2z^3}$. משווים ל-$\dfrac{\mu_0 kIr^2}{2\pi z^3}$: $k = \pi$.
+
+          ד. **גילברט:** בתוך הגליל המטענים של שכנים מבטלים זה את זה, ונשארים רק על שני הבסיסים: $+$ על הבסיס העליון ו-$-$ על התחתון, בצפיפות $\sigma_m = M$: אם כל מגנט זעיר הוא קובייה בצלע $d$, על כל $d^2$ של בסיס יושב $q_m$, ו-$\sigma_m = q_m/d^2 = p_m/d^3 = M$, בדיוק כמו המטען הקשור $\sigma_b = P$ בשיעור 6.10. גליל שטוח הוא כמו קבל לוחות: $B = \mu_0\sigma_m = \mu_0 M$, מהבסיס החיובי אל השלילי, כלומר **נגד** $+z$. **אמפר:** הזרמים של שכנים מבטלים זה את זה בפנים, ונשאר זרם על הדופן, $M$ אמפר למטר אורך. גליל ארוך הוא סליל: $B = \mu_0 M$, **בכיוון** $+z$.
+      - kind: substitution
+        text: >-
+          $\mu_0 M = 4\pi\cdot10^{-7}\cdot8\cdot10^5 \approx 1.0\,\text{T}$, כמו במגנט ניאודימיום חזק.
+      - kind: limit
+        text: >-
+          בחוץ, רחוק, שני המודלים נותנים את אותו $1/z^3$, ולכן מדידה בחוץ לא מבחינה ביניהם. בפנים הם הפוכים. $\nabla\cdot\vec B = 0$ אומר שקווי השדה המגנטי סגורים: הם יוצאים מהקוטב הצפוני, חוזרים מבחוץ אל הדרומי, וממשיכים **בתוך** המגנט מהדרומי אל הצפוני, בכיוון $+z$. רק מודל אמפר נותן זאת; מודל גילברט מצייר קווים שמתחילים ונגמרים על מטענים, כמו שדה חשמלי. ושני חישובי הגליל משתמשים בגבול: לוחות שרחבים בהרבה מהמרחק ביניהם, וסליל שארוך בהרבה מהרדיוס שלו, כל אחד בקצה שבו הנוסחה שלו נכונה.
+      - kind: units
+        text: >-
+          $p_m$: $\text{A}\cdot\text{m}\cdot\text{m} = \text{A}\cdot\text{m}^2$, כמו $I\pi r^2$. $M$: $\text{A}\cdot\text{m}^2/\text{m}^3 = \text{A/m}$, ו-$\mu_0 M$: $\text{T}\cdot\text{m/A}\cdot\text{A/m} = \text{T}$.
+      - kind: result
+        text: >-
+          א. $\text{A}\cdot\text{m}$. ב. $\mu_0 p_m/(2\pi z^3)$. ג. $\gamma = 2$, $k = \pi$. ד. $\mu_0 M \approx 1.0\,\text{T}$ בשני המודלים, בכיוונים הפוכים; מודל אמפר (כיוון $+z$) מתאים ל-$\nabla\cdot\vec B = 0$.
+    source:
+      name: USA Physics Olympiad (USAPhO), Part B (AAPT)
+      year: 2015
+      problem: 'Question B2, The nature of magnetic dipoles: parts a(i)–(iii), b(i)–(iv), c(i)–(ii) (the cylinder given its moment per unit volume M; the question of which model obeys ∇·B = 0 and the number added)'
+      url: https://www.aapt.org/physicsteam/2019/upload/USAPhO-2015-Solutions.pdf
+      verified: '2026-11-05'
+      adapted: true

@@ -1,0 +1,253 @@
+# Lesson 6.16 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are rendered at
+# build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number was recomputed with src/physics (constants.ts K, MU0; continuous.ts lineField;
+# magnetism.ts finiteSolenoidAxisField, solenoidField); the data differ from figure 6.16א and the worked examples.
+
+chapter: 6
+questions:
+  # ------------------------------------------------ OBJ-6.16-1: a Bagrut formula from its general law
+  - id: Q-6.16-gauss-assumption
+    type: mc
+    objectives: [OBJ-6.16-1]
+    qualitative: true
+    prompt: >-
+      בחוק גאוס, $\oint \vec E\cdot d\vec A = Q_{\text{in}}/\varepsilon_0$, משתמשים כדי לקבל את השדה של לוח טעון, $\sigma/(2\varepsilon_0)$. איזו הנחה הופכת את החוק לנוסחה הזו?
+    choices:
+      - text: 'הלוח אינסופי וטעון באחידות, ולכן השדה ניצב ללוח ושווה בגודלו בכל נקודה באותו מרחק ממנו.'
+        correct: true
+        feedback: 'נכון. רק אז השטף דרך כל בסיס של גליל גאוס הוא $EA$, ודרך הדופן אפס. כשהלוח סופי, ההנחה נכונה רק קרוב אליו, במרחק קטן בהרבה מהרוחב שלו.'
+      - text: 'חוק גאוס מתקיים רק למשטחים סימטריים, ולכן בוחרים גליל.'
+        feedback: 'חוק גאוס מתקיים לכל משטח סגור. הסימטריה של **הלוח** היא מה שמאפשר לחלץ ממנו את השדה; בלעדיה החוק עדיין נכון, אבל נותן רק את השטף.'
+        misconception: MC-integral-needs-symmetry
+      - text: 'הלוח הוא מוליך.'
+        feedback: 'החומר לא משנה את הנוסחה. גם בלוח מתכת מבודד המטען מתחלק בין שני הפנים, חצי על כל צד, וליד כל צד השדה $\sigma/(2\varepsilon_0)$, עם $\sigma$ המטען של הלוח ליחידת שטח. מה שקובע הוא שהלוח אינסופי וטעון באחידות.'
+      - text: 'הנקודה רחוקה מהלוח בהרבה מהגודל שלו.'
+        feedback: 'זה התנאי ההפוך. רחוק מהלוח הוא נראה כמו מטען נקודתי, $kQ/r^2$. נוסחת הלוח נכונה **קרוב** אליו.'
+        misconception: MC-bagrut-formula-exact
+
+  - id: Q-6.16-v-ed
+    type: twotier
+    objectives: [OBJ-6.16-1]
+    qualitative: true
+    prompt: >-
+      הקשר $\Delta V = Ed$ נובע מ-$V(B) - V(A) = -\int_A^B \vec E\cdot d\vec l$. האם אפשר להשתמש בו כדי למצוא את הפרש הפוטנציאל בין שתי נקודות, במרחק $1\,\text{cm}$ ו-$3\,\text{cm}$ ממטען נקודתי, עם השדה בנקודה הקרובה?
+    choices:
+      - text: 'לא.'
+        correct: true
+        feedback: נכון.
+      - text: 'כן, אם מציבים את $E$ בנקודה הקרובה ו-$d = 2\,\text{cm}$.'
+        feedback: 'השדה של מטען נקודתי יורד פי 9 בין שתי הנקודות. מכפלה אחת של שדה במרחק מניחה שהשדה קבוע לאורך כל המסלול.'
+        misconception: MC-bagrut-formula-exact
+      - text: 'כן, אבל רק אם מציבים את השדה הממוצע בין שתי הנקודות.'
+        feedback: 'הממוצע הפשוט של שני הערכים אינו מה שהאינטגרל נותן, כי השדה לא יורד בקו ישר. צריך את האינטגרל עצמו: $kq(1/r_1 - 1/r_2)$.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'האינטגרל הופך למכפלה $Ed$ רק כש-$\vec E$ קבוע לאורך המסלול, כמו בין לוחות מקבילים.'
+        correct: true
+        feedback: 'נכון. ליד מטען נקודתי עושים את האינטגרל: $\Delta V = kq/r_1 - kq/r_2$.'
+      - text: '$\Delta V = Ed$ הוא חוק כללי, שנכון לכל שדה.'
+        feedback: 'החוק הכללי הוא האינטגרל הקווי. $\Delta V = Ed$ הוא המקרה הפרטי של שדה אחיד.'
+        misconception: MC-bagrut-formula-exact
+      - text: 'ליד מטען נקודתי אין פוטנציאל, כי השדה לא אחיד.'
+        feedback: 'לשדה של מטען נקודתי יש פוטנציאל, $kq/r$: הוא שדה משמר. מה שחסר הוא האחידות, לא הפוטנציאל.'
+
+  - id: Q-6.16-which-exact
+    type: multi
+    objectives: [OBJ-6.16-1]
+    qualitative: true
+    prompt: >-
+      סמנו את כל המקרים שבהם נוסחת הבגרות **מדויקת**, ולא רק גבול של ביטוי מדויק:
+    choices:
+      - text: '$kQ/r^2$, השדה במרחק $r$ ממרכז כדור מתכת טעון ברדיוס $R < r$.'
+        correct: true
+        feedback: 'נכון: חוק גאוס עם סימטריה כדורית נותן את זה לכל $r > R$, בלי שום קירוב.'
+      - text: '$\varepsilon = BLv$, מוט שנע בניצב לשדה מגנטי אחיד, בניצב לעצמו ולשדה.'
+        correct: true
+        feedback: 'נכון: בשדה אחיד, כוח לורנץ על מטען יחידה הוא $vB$ בכל נקודה של המוט, והעבודה לאורכו $vBL$, בדיוק.'
+      - text: '$\sigma/(2\varepsilon_0)$, השדה $1\,\text{cm}$ מלוח מרובע טעון בצלע $1\,\text{m}$.'
+        feedback: 'זה גבול: הלוח לא אינסופי. הקירוב טוב מאוד כאן, כי המרחק קטן פי 100 מהצלע, אבל הוא לא מדויק, ורחוק מהלוח הוא נכשל לגמרי.'
+        misconception: MC-bagrut-formula-exact
+      - text: '$\mu_0 nI$, השדה במרכז סליל באורך $20\,\text{cm}$ וברדיוס $2\,\text{cm}$.'
+        feedback: 'זה גבול של $\mu_0 NI/\sqrt{L^2 + 4R^2}$. כאן הוא טוב ל-2%, כי הסליל ארוך פי 10 מהרדיוס, אבל לא מדויק.'
+        misconception: MC-bagrut-formula-exact
+      - text: '$\mu_0 I/(2\pi r)$, השדה $5\,\text{cm}$ מאמצע תיל ישר באורך $1\,\text{m}$.'
+        feedback: 'זה גבול של קטע סופי בביו-סבר, $L \gg r$. כאן הוא טוב לחצי אחוז בערך, אבל לא מדויק.'
+        misconception: MC-bagrut-formula-exact
+
+  - id: Q-6.16-line-field
+    type: numeric
+    objectives: [OBJ-6.16-1]
+    level: mid
+    prompt: >-
+      מוט ארוך מאוד טעון באחידות בצפיפות $\lambda = 6\,\text{nC/m}$. בעזרת חוק גאוס וגליל גאוס סביב המוט, מצאו את גודל השדה במרחק $4\,\text{cm}$ ממנו (רחוק מהקצוות). ענו ב-$\text{N/C}$.
+    answer: 2700
+    unit: N/C
+    tolerance: 0.02
+    correctFeedback: 'נכון. דרך הבסיסים אין שטף, ודרך הדופן $E\cdot2\pi rL$: $E\cdot2\pi rL = \lambda L/\varepsilon_0$, ולכן $E = \dfrac{\lambda}{2\pi\varepsilon_0 r} = \dfrac{2k\lambda}{r} = \dfrac{2\cdot9\cdot10^{9}\cdot6\cdot10^{-9}}{0.04} = 2.7\cdot10^{3}\,\text{N/C}$.'
+    wrongFeedback: 'בגליל גאוס ברדיוס $r$ ובאורך $L$: המטען הכלוא $\lambda L$, והשטף רק דרך הדופן, $E\cdot2\pi rL$.'
+    commonWrong:
+      - value: 1350
+        feedback: 'כתבתם $k\lambda/r$. עם $\varepsilon_0 = 1/(4\pi k)$, $\lambda/(2\pi\varepsilon_0 r) = 2k\lambda/r$: הגורם 2 בא מ-$4\pi/2\pi$.'
+      - value: 33750
+        feedback: 'השתמשתם בנוסחה של מטען נקודתי, $k\lambda/r^2$. מוט ארוך הוא לא נקודה: השדה שלו יורד כמו $1/r$, והיחידות של $k\lambda/r^2$ אינן בכלל יחידות של שדה.'
+        misconception: MC-units-prove-formula
+      - value: 67500
+        feedback: 'כתבתם $2k\lambda/r^2$. בדקו יחידות: $k\lambda/r^2$ הוא $\text{N/(C}\cdot\text{m)}$, לא $\text{N/C}$.'
+
+  # ------------------------------------------------ OBJ-6.16-2: limits, units, log-log slopes
+  - id: Q-6.16-suspect-ring
+    type: twotier
+    objectives: [OBJ-6.16-2]
+    qualitative: true
+    prompt: >-
+      מישהו מציע לשדה על הציר של טבעת טעונה (מטען $Q$, רדיוס $R$, גובה $z$) את הביטוי $E = \dfrac{kQ}{z^2 + R^2}$. היחידות נכונות, ורחוק מהטבעת הוא נותן $kQ/z^2$. האם הוא יכול להיות נכון?
+    choices:
+      - text: 'לא.'
+        correct: true
+        feedback: נכון.
+      - text: 'כן: הוא עובר את בדיקת היחידות ואת הגבול הרחוק.'
+        feedback: 'שתי הבדיקות האלה הכרחיות, אבל לא מספיקות. בדקו את הקצה השני, את מרכז הטבעת.'
+        misconception: MC-one-limit-enough
+      - text: 'אי אפשר לדעת בלי לחשב את האינטגרל.'
+        feedback: 'אפשר. בדיקת גבולות תופסת אותו בלי שום אינטגרל: מה הוא נותן ב-$z = 0$?'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'במרכז הטבעת, $z = 0$, הוא נותן $kQ/R^2$, אבל שם השדה חייב להיות אפס: כל חתיכה של הטבעת מתבטלת מול החתיכה שממול.'
+        correct: true
+        feedback: 'נכון. הביטוי הנכון, $kQz/(z^2 + R^2)^{3/2}$, מתאפס במרכז ונותן $kQ/z^2$ רחוק. באיור 6.16א, במצב "נוסחה חשודה", ראו את הקו האדום נשאר גבוה משמאל.'
+      - text: 'כשהיחידות נכונות, נשאר רק לבדוק את המספרים.'
+        feedback: 'היחידות לא רואות חזקה שגויה של $z/R$, שאין לו יחידות. כאן החשודה שגויה בצורה, לא רק במספר.'
+        misconception: MC-units-prove-formula
+      - text: 'רחוק מהטבעת הוא נותן $kQ/z^2$, וזה מה שבודקים.'
+        feedback: 'זה רק קצה אחד. לכל ביטוי שני קצוות, וכאן הביטוי נכשל בשני.'
+        misconception: MC-one-limit-enough
+
+  - id: Q-6.16-loglog-slope
+    type: mc
+    objectives: [OBJ-6.16-2]
+    prompt: >-
+      מודדים את השדה על הציר של דיסקה טעונה, בגובה קבוע $z$ מעליה, ומשנים את רדיוס הדיסקה $R$. בגרף לוגריתמי של $E$ מול $R$, מה השיפוע כש-$R \ll z$?
+    choices:
+      - text: '$+2$'
+        correct: true
+        feedback: 'נכון. דיסקה קטנה היא מטען נקודתי, $E = kQ/z^2$ עם $Q = \sigma\pi R^2$: $E \propto R^2$. וכש-$R \gg z$ השיפוע $0$: $\sigma/(2\varepsilon_0)$ לא תלוי ב-$R$.'
+      - text: '$-2$'
+        feedback: '$-2$ הוא השיפוע מול **המרחק** $z$, של מטען נקודתי. כאן המרחק קבוע ומשתנה הרדיוס, והמטען גדל כמו $R^2$.'
+      - text: '$0$'
+        feedback: '$0$ הוא השיפוע בקצה השני, דיסקה רחבה, שבו השדה הוא של לוח אינסופי ולא תלוי ב-$R$.'
+        misconception: MC-bagrut-formula-exact
+      - text: '$+1$'
+        feedback: 'השדה פרופורציוני למטען, והמטען לשטח הדיסקה, $\pi R^2$: החזקה $2$, לא $1$.'
+
+  - id: Q-6.16-dipole-units
+    type: mc
+    objectives: [OBJ-6.16-2]
+    prompt: >-
+      ארבעה ביטויים מוצעים לשדה החשמלי על הציר של דיפול ($\pm q$ במרחק $d$), במרחק $r$ מהמרכז, $r > d/2$. איזה מהם נפסל כבר בבדיקת יחידות?
+    choices:
+      - text: '$\dfrac{kqd}{r^2}$'
+        correct: true
+        feedback: 'נכון. $\dfrac{\text{N}\cdot\text{m}^2}{\text{C}^2}\cdot\dfrac{\text{C}\cdot\text{m}}{\text{m}^2} = \text{N}\cdot\text{m/C} = \text{V}$: זה פוטנציאל, לא שדה. (והוא גם יורד כמו $1/r^2$, לא $1/r^3$.)'
+      - text: '$\dfrac{2kqrd}{(r^2 - d^2/4)^2}$'
+        feedback: 'זה הביטוי המדויק (שיעור 6.10), ביחידות $\text{N/C}$. הוא עובר גם את שני הקצוות: $2kp/r^3$ רחוק, ו-$kq/(r - d/2)^2$ ליד $+q$.'
+      - text: '$\dfrac{2kqd}{(r^2 - d^2/4)^{3/2}}$'
+        feedback: 'היחידות שלו נכונות, $\text{N/C}$, ורחוק הוא נותן $2kp/r^3$. הוא שגוי, אבל רק בדיקת גבולות תופסת אותו: ליד $+q$ הוא גדל כמו $(r - d/2)^{-3/2}$ ולא כמו $(r - d/2)^{-2}$.'
+        misconception: MC-units-prove-formula
+      - text: '$\dfrac{2kqd}{r^3}$'
+        feedback: 'היחידות נכונות, וזה השדה הרחוק של דיפול נקודתי. הוא קירוב טוב רק כש-$r \gg d$, אבל לא נפסל ביחידות.'
+
+  - id: Q-6.16-solenoid-length
+    type: numeric
+    objectives: [OBJ-6.16-2]
+    level: mid
+    prompt: >-
+      השדה במרכז סליל באורך $L$ וברדיוס $R$ הוא $B = \dfrac{\mu_0 nI}{\sqrt{1 + 4R^2/L^2}}$. מה היחס $L/R$ הקטן ביותר שבו $\mu_0 nI$ בתוך $0.5\%$ מהשדה במרכז?
+    answer: 19.9
+    unit: ''
+    tolerance: 0.02
+    correctFeedback: 'נכון. $1/\sqrt{1 + 4R^2/L^2} \ge 0.995$: $4R^2/L^2 \le 1/0.995^2 - 1 = 0.01008$, ולכן $L/R \ge 2/\sqrt{0.01008} = 19.9$. בקירוב, הטעות $2R^2/L^2 = 0.005$ נותנת $L/R = 20$. סליל ארוך צריך להיות ארוך פי 20 מהרדיוס כדי שהנוסחה תהיה טובה לחצי אחוז.'
+    wrongFeedback: 'דרשו $\dfrac{1}{\sqrt{1 + 4R^2/L^2}} \ge 0.995$, העלו בריבוע והפכו, ובודדו את $L/R$.'
+    commonWrong:
+      - value: 9.96
+        feedback: 'שכחתם את ה-4: $4R^2/L^2$, כי במרכז כל קצה במרחק $L/2$. עם $R^2/L^2$ יוצא חצי מהאורך הנכון.'
+      - value: 28.2
+        feedback: 'שכחתם את השורש: $1 + 4R^2/L^2 \le 1/0.995$, ולא $1/0.995^2$.'
+
+  # ------------------------------------------------ OBJ-6.16-3: experiment and theory
+  - id: Q-6.16-hertz
+    type: twotier
+    objectives: [OBJ-6.16-3]
+    qualitative: true
+    prompt: >-
+      ב-1865 חישב מקסוול מהמשוואות שלו שקיימים גלים אלקטרומגנטיים במהירות $1/\sqrt{\mu_0\varepsilon_0}$, שהיא מהירות האור. מה הוסיף הניסוי של הרץ, כעשרים שנה אחר כך?
+    choices:
+      - text: 'הוא הראה שהגלים קיימים: יצר אותם ממעגל חשמלי, קלט אותם, ומדד שהם נעים במהירות האור.'
+        correct: true
+        feedback: נכון.
+      - text: 'שום דבר חדש: הוא רק הדגים בכיתה מה שכבר ידעו מהמשוואות.'
+        feedback: 'לפני הרץ איש לא יצר או קלט גל כזה ממעגל חשמלי. זרם ההעתקה היה הנחה של מקסוול, והחיזוי יכול היה להיכשל.'
+        misconception: MC-theory-needs-no-test
+      - text: 'הוא מדד לראשונה את מהירות האור.'
+        feedback: 'את מהירות האור מדדו לפני כן, במדידות של אור בלבד; מקסוול השווה אליה את החישוב שלו. הרץ מצא שגם הגלים **החשמליים** נעים במהירות הזו.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'חיזוי של תאוריה הוא השערה עד שניסוי שיכול היה להפיל אותה מאשר אותו.'
+        correct: true
+        feedback: 'נכון. אילו הרץ היה מוצא שהגלים לא מגיעים, או מגיעים במהירות אחרת, התאוריה הייתה נופלת.'
+      - text: 'משוואה שנגזרה בחשבון נכון לא צריכה בדיקה.'
+        feedback: 'חשבון נכון מתוך הנחה שגויה נותן תשובה שגויה. רק ניסוי בודק את ההנחות, כאן את זרם ההעתקה.'
+        misconception: MC-theory-needs-no-test
+      - text: 'הרץ השתמש במשוואות מקסוול כדי לחשב את התוצאה של הניסוי שלו.'
+        feedback: 'התאוריה חוזה מה צריך לצאת, אבל הניסוי מודד מה יוצא באמת. זה מה שנותן לו את הכוח לבדוק אותה.'
+
+  - id: Q-6.16-graph-straight
+    type: mc
+    objectives: [OBJ-6.16-3]
+    qualitative: true
+    prompt: >-
+      ביו וסבר מדדו את השדה המגנטי של תיל ישר וארוך במרחקים שונים ממנו. כדי לבדוק אם $B = \mu_0 I/(2\pi r)$, איזה גרף צריך לצאת קו ישר דרך הראשית?
+    choices:
+      - text: '$B$ מול $1/r$'
+        correct: true
+        feedback: 'נכון. $B = \left(\dfrac{\mu_0 I}{2\pi}\right)\cdot\dfrac{1}{r}$ הוא $y = ax$ עם $x = 1/r$, והשיפוע $\mu_0 I/(2\pi)$. בגרף לוגריתמי: קו ישר בשיפוע $-1$.'
+      - text: '$B$ מול $1/r^2$'
+        feedback: 'זה הגרף של מטען נקודתי, $kQ/r^2$. השדה של תיל ארוך יורד לאט יותר, כמו $1/r$; בגרף הזה הנקודות יתעקמו.'
+      - text: '$B$ מול $r$'
+        feedback: 'השדה **יורד** עם המרחק. בגרף של $B$ מול $r$ הנקודות יורדות בעקומה, ועקומה יורדת מתאימה להרבה חוקים.'
+      - text: '$Br$ מול $r$'
+        feedback: 'אם החוק נכון, $Br$ קבוע, וזה קו אופקי: בדיקה טובה, אבל הוא לא עובר דרך הראשית, ושיפועו אפס. את הקבוע קוראים בגובה שלו.'
+
+  - id: Q-6.16-slope-mu0
+    type: numeric
+    objectives: [OBJ-6.16-3]
+    level: mid
+    prompt: >-
+      בגרף של השדה המגנטי ליד תיל ארוך שזורם בו $20\,\text{A}$, $B$ מול $1/r$, השיפוע של הקו המתאים ביותר הוא $4.0\cdot10^{-6}\,\text{T}\cdot\text{m}$. מה הערך של $\mu_0$ לפי המדידה? ענו ביחידות של $10^{-7}\,\text{T}\cdot\text{m/A}$.
+    answer: 12.57
+    unit: 10⁻⁷ T·m/A
+    tolerance: 0.02
+    correctFeedback: 'נכון. השיפוע הוא $\mu_0 I/(2\pi)$, ולכן $\mu_0 = \dfrac{2\pi\cdot4.0\cdot10^{-6}}{20} = 1.257\cdot10^{-6} = 12.57\cdot10^{-7}\,\text{T}\cdot\text{m/A}$, כמו $4\pi\cdot10^{-7}$.'
+    wrongFeedback: 'כתבו מה השיפוע של $B$ מול $1/r$ לפי הנוסחה, ובודדו ממנו את $\mu_0$.'
+    commonWrong:
+      - value: 2
+        feedback: 'חילקתם את השיפוע בזרם בלבד. השיפוע הוא $\mu_0 I/(2\pi)$, ולכן צריך גם לכפול ב-$2\pi$.'
+      - value: 25.13
+        feedback: 'כפלתם ב-$4\pi$. ה-$4\pi$ של ביו-סבר מתקצר ל-$2\pi$ בתיל ארוך: השיפוע הוא $\mu_0 I/(2\pi)$.'
+      - value: 6.28
+        feedback: 'כפלתם ב-$\pi$ במקום $2\pi$: $B = \mu_0 I/(2\pi r)$.'
+
+  - id: Q-6.16-history
+    type: rank
+    objectives: [OBJ-6.16-3]
+    qualitative: true
+    prompt: >-
+      סדרו את הגילויים לפי הסדר שבו קרו, מהמוקדם למאוחר:
+    items:
+      - { id: coulomb, label: 'מאזן הפיתול: הכוח בין מטענים יורד כמו $1/r^2$' }
+      - { id: oersted, label: 'מצפן ליד תיל: זרם יוצר שדה מגנטי' }
+      - { id: faraday, label: 'מגנט שנע ליד סליל מניע בו זרם' }
+      - { id: maxwell, label: 'חישוב: משוואות החשמל והמגנטיות חוזות גל במהירות האור' }
+      - { id: hertz, label: 'גל אלקטרומגנטי נוצר ממעגל חשמלי ונקלט בצד השני של החדר' }
+    order: [coulomb, oersted, faraday, maxwell, hertz]
+    correctFeedback: 'נכון: קולון (1785), אורסטד (1820), פאראדיי (1831), מקסוול (1865), הרץ (סוף שנות ה-80). שימו לב לשני האחרונים: החיזוי קודם, והניסוי שבדק אותו מאוחר יותר.'
+    wrongFeedback: 'קולון ב-1785; אורסטד ב-1820; פאראדיי ב-1831, כשחיפש את ההפך מהגילוי של אורסטד; מקסוול ב-1865; הרץ בסוף שנות ה-80 של המאה ה-19, כעשרים שנה אחרי מקסוול.'
