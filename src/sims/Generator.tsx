@@ -136,7 +136,7 @@ export default function Generator(props: GeneratorProps) {
     const e = tidy(brushEmf(g, t, st.rings), e0);
     const flux = tidy(fluxPerTurn(g, t), st.B * AREA);
     const ringsHe = st.rings === 'slip' ? 'טבעות החלקה, זרם חילופין' : 'טבעת מפוצלת, זרם ישר פועם';
-    return `הזווית בין האנך לכריכה לבין השדה ${fmtDeg(thetaOf(st.angle))}. השטף דרך כריכה ${sci(flux * 1000)} מיליוובר, הכא״מ בין המברשות ${sci(e)} וולט, והשיא ${sci(e0)} וולט. ${ringsHe}.`;
+    return `הסליל הסתובב בזווית θ = ωt של ${fmtDeg(wrap360(st.angle))} מהמצב שבו האנך לכריכה בכיוון השדה. השטף דרך כריכה ${sci(flux * 1000)} מיליוובר, הכא״מ בין המברשות ${sci(e)} וולט, והשיא ${sci(e0)} וולט. ${ringsHe}.`;
   };
 
   const set = (patch: Partial<State>) => {
@@ -270,7 +270,7 @@ export default function Generator(props: GeneratorProps) {
   const readout = (
     <>
       <span>
-        בין האנך לשדה: <b class="q">θ = {fmtDeg(thetaOf(s.angle))}</b>
+        הזווית שהסליל הסתובב: <b class="q">θ = ωt = {fmtDeg(wrap360(s.angle))}</b>
       </span>
       <span>
         השטף דרך כריכה: <b class="q">Φ = BA·cosθ = {sci(fluxNow * 1000)} mWb</b>
@@ -402,12 +402,6 @@ function layoutOf(w: number, h: number, tall: boolean): Layout {
 }
 
 const machineCentre = (m: Box): [number, number] => [m.x + m.w / 2, m.y + m.h * 0.52];
-
-/** the angle between the normal and B, 0–180° */
-function thetaOf(deg: number) {
-  const a = wrap360(deg);
-  return a > 180 ? 360 - a : a;
-}
 
 /* ------------------------------------------------------------------ drawing */
 
