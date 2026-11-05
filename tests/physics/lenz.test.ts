@@ -139,6 +139,20 @@ describe('conservation', () => {
     expect(relativeError(half, chargeThrough(1, magnetRingFlux(mag, ring.a, -1), phi0, ring.R))).toBeLessThan(1e-4);
   });
 
+  it('the push a ring gets depends only on how far the magnet moves relative to it, so receding takes back what approaching gave', () => {
+    // impulse ∫F dt over a relative move from u0 to u1 at constant relative speed w
+    const impulse = (u0: number, u1: number, w: number): number => {
+      const T = (u1 - u0) / w;
+      return riemann((t) => ringResponse(mag, ring, u0 + w * t, w).force, 0, T, 4000);
+    };
+    const slow = impulse(-0.4, -0.05, 0.1);
+    const fast = impulse(-0.4, -0.05, 0.9);
+    expect(slow).toBeGreaterThan(0); // pushed ahead of the approaching magnet
+    expect(relativeError(fast, slow)).toBeLessThan(1e-6);
+    // the ring then moves away from a magnet at rest: the same path backwards, at any speed
+    expect(relativeError(impulse(-0.05, -0.4, -0.3), -slow)).toBeLessThan(1e-6);
+  });
+
   it('a falling magnet: the work of gravity becomes kinetic energy plus heat in the tube', () => {
     let st: FallState = { t: 0, s: -0.05, v: 0, heat: 0 };
     const dt = 2e-4;
