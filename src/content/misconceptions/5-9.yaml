@@ -1,7 +1,7 @@
 # Lesson 5.9 misconceptions. Each is detected by a tagged distractor in questions/ch5/5-9.yaml. The lesson's
 # questions also tag misconceptions owned by other lessons: MC-gauss-outside-charge-counts, MC-gauss-flux-equals-kq
-# (1.7), MC-no-field-between-plates, MC-displacement-is-charge-flow, MC-displacement-follows-field (6.12) and
-# MC-em-wave-needs-medium (6.14).
+# (1.7), MC-no-field-between-plates, MC-displacement-is-charge-flow and MC-displacement-follows-field (6.12).
+# The wave's misconceptions moved to 5-10.yaml with lesson 5.10.
 
 - id: MC-maxwell-faraday-flux-closed-surface
   title: 'בחוק פאראדיי השטף נמדד דרך משטח סגור'
@@ -26,15 +26,3 @@
   belief: 'השדה החשמלי המושרה קיים רק בתוך האזור שבו השדה המגנטי משתנה. מחוץ לליבה של סליל אין שדה חשמלי, ולכן גם הסכום סביב מסלול שמקיף אותה מבחוץ הוא אפס.'
   truth: 'השדה המושרה ממלא את כל המרחב סביב הליבה, ונחלש עם המרחק. מסלול שמקיף את הליבה מבחוץ מקבל כא״מ שווה למינוס קצב השינוי של כל השטף שבליבה.'
   remedy: { lesson: '5.9', anchor: fig-5-9a, label: 'איור 5.9א: חוק פאראדיי, החיצים הכתומים מחוץ לליבה' }
-
-- id: MC-maxwell-speed-depends-on-frequency
-  title: 'גל בתדירות גבוהה נע מהר יותר'
-  belief: 'קרני רנטגן ואור נעים בריק מהר יותר מגלי רדיו, כי התדירות שלהם גבוהה יותר: יותר מחזורים בשנייה פירושו התקדמות מהירה יותר.'
-  truth: 'בריק כל הגלים האלקטרומגנטיים נעים באותה מהירות, c = 1/√(μ₀ε₀), כי היא תלויה רק בשני הקבועים. תדירות גבוהה יותר פירושה אורך גל קצר יותר, λ = c/f, לא מהירות גדולה יותר.'
-  remedy: { lesson: '5.9', anchor: fig-5-9b, label: 'איור 5.9ב: שנו את התדירות, וקראו את המהירות ואת אורך הגל' }
-
-- id: MC-maxwell-light-unlike-radio
-  title: 'אור וגלי רדיו הם שני דברים שונים במהותם'
-  belief: 'גלי רדיו הם תופעה חשמלית, ואור הוא משהו אחר לגמרי. רק מה שאנטנות משדרות קשור לחשמל ולמגנטיות.'
-  truth: 'אור, גלי רדיו, מיקרוגל, קרני רנטגן וקרינת גמא הם כולם גלים אלקטרומגנטיים: שדה חשמלי ושדה מגנטי שמקיימים זה את זה. הם נבדלים רק בתדירות, ולכן באורך הגל, ונעים בריק באותה מהירות.'
-  remedy: { lesson: '5.9', anchor: fig-5-9b, label: 'איור 5.9ב: הספקטרום, מגלי רדיו ועד קרינת גמא' }

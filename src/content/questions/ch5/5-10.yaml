@@ -1,0 +1,300 @@
+# Lesson 5.10 question bank (the electromagnetic wave). Strings may hold $inline$ / $$display$$ TeX and **bold**;
+# they are rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/maxwellfour.ts (waveSpeed, travelTime, vacuumWavelength,
+# vacuumFrequency, bandOf) and constants.ts (MU0, EPS0_DISPLAY = 8.85·10⁻¹², the sheet's ε₀) in this session.
+# Q-5.10-what-travels, -same-speed, -c-from-constants, -fm-wavelength and -rank-wavelength came from lesson 5.9.
+
+chapter: 5
+questions:
+  # ------------------------------------------------ OBJ-5.10-1: the mechanism
+  - id: Q-5.10-what-travels
+    type: mc
+    objectives: [OBJ-5.10-1]
+    qualitative: true
+    prompt: >-
+      אור השמש מגיע אלינו דרך 150 מיליון קילומטרים של כמעט-ריק. מה מתקדם בדרך?
+    choices:
+      - text: 'שדה חשמלי ושדה מגנטי שמשתנים ויוצרים זה את זה, בלי שום חומר.'
+        correct: true
+        feedback: 'נכון. שדה מגנטי שמשתנה יוצר שדה חשמלי (פאראדיי), ושדה חשמלי שמשתנה יוצר שדה מגנטי (התוספת של מקסוול). בריק אין צורך בשום דבר אחר.'
+      - text: 'תנודות של גז דליל מאוד שממלא את החלל, כמו קול באוויר.'
+        feedback: 'גל אלקטרומגנטי לא צריך חומר שיתנודד בו. מה שמתנודד הוא השדות עצמם, וזה אפשרי בריק מוחלט.'
+        misconception: MC-em-wave-needs-medium
+      - text: 'מטענים חשמליים שעפים מהשמש אלינו.'
+        feedback: 'בגל אלקטרומגנטי שום מטען לא נוסע. מטענים בשמש יוצרים את הגל, אבל מה שמתקדם הוא שדות.'
+        misconception: MC-em-wave-carries-charge
+      - text: 'אי אפשר להסביר אור בחשמל ובמגנטיות: אור הוא תופעה מסוג אחר.'
+        feedback: 'מקסוול מצא שהגל של השדות נע במהירות האור, והרץ יצר גלים כאלה ממעגל חשמלי. אור הוא גל אלקטרומגנטי.'
+        misconception: MC-maxwell-light-unlike-radio
+
+  - id: Q-5.10-peak-together
+    type: twotier
+    objectives: [OBJ-5.10-1]
+    qualitative: true
+    prompt: >-
+      בגל אלקטרומגנטי שנע בריק, בנקודה מסוימת וברגע מסוים, השדה החשמלי **אפס**. מה השדה המגנטי באותה נקודה ובאותו רגע?
+    choices:
+      - text: 'גם הוא אפס.'
+        correct: true
+        feedback: 'נכון.'
+      - text: 'בשיא שלו.'
+        feedback: 'כך היה אילו השדות היו מתחלפים, כמו אנרגיה קינטית ופוטנציאלית במטוטלת. בגל שנע בריק הם מגיעים לאפס ולשיא יחד.'
+        misconception: MC-em-fields-alternate
+      - text: 'חצי מהשיא שלו.'
+        feedback: 'השדות לא נמצאים באמצע הדרך זה מזה. הגרפים של $E$ ושל $B$ תלולים באותם מקומות ושטוחים באותם מקומות, ולכן הם עוברים באפס יחד ומגיעים לשיא יחד.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'בגל שמתקדם שני השדות מגיעים לאפס, לשיא ולשפל באותה נקודה ובאותו רגע, כמו שהגשש באיור 5.10א מראה.'
+        correct: true
+        feedback: 'נכון. השדות לא "מתחלפים" אלא מתקדמים יחד, כתבנית אחת.'
+      - text: 'השדה המגנטי נוצר מהשדה החשמלי, ולכן הוא הכי חזק כשהשדה החשמלי משתנה הכי מהר, כלומר כשהוא אפס.'
+        feedback: 'קצב השינוי של השדה החשמלי בנקודה קובע את **ההבדל** בשדה המגנטי בין שני צדי הנקודה, לא את השדה המגנטי עצמו. איפה ש-$E$ משתנה הכי מהר, הגרף של $B$ הכי תלול, וגרף של גל הכי תלול באפס שלו. כלומר, דווקא שם $B$ עובר באפס, יחד עם $E$.'
+        misconception: MC-em-fields-alternate
+      - text: 'האנרגיה של הגל עוברת הלוך ושוב בין השדה החשמלי לשדה המגנטי.'
+        feedback: 'האנרגיה לא עוברת בין השדות; היא נעה יחד עם הגל. בנקודה שבה שני השדות אפס, גם אין שם אנרגיה באותו רגע.'
+        misconception: MC-em-fields-alternate
+
+  - id: Q-5.10-no-maxwell-term
+    type: mc
+    objectives: [OBJ-5.10-1]
+    qualitative: true
+    prompt: >-
+      נניח שחוק אמפר היה נשאר כמו בשיעור 4.4, בלי התוספת של מקסוול, וחוק פאראדיי בלי שינוי. מה היה קורה לגלים אלקטרומגנטיים?
+    choices:
+      - text: 'לא היו גלים: שדה חשמלי שמשתנה לא היה יוצר שדה מגנטי, והשרשרת הייתה נקטעת.'
+        correct: true
+        feedback: 'נכון. בריק אין זרם, ובלי התוספת $\oint \vec B\cdot d\vec l = 0$ סביב כל מסלול. השדה המגנטי של הגל לא היה נוצר, ולכן גם לא השדה החשמלי הבא.'
+      - text: 'היו גלים, אבל איטיים יותר.'
+        feedback: 'בלי התוספת אין גל בכלל, לא איטי ולא מהיר. המהירות $1/\sqrt{\mu_0\varepsilon_0}$ יוצאת מהמכפלה של האיבר של מקסוול עם חוק פאראדיי.'
+      - text: 'היו גלים של שדה מגנטי בלבד, כי חוק פאראדיי נשאר.'
+        feedback: 'חוק פאראדיי יוצר שדה חשמלי משדה מגנטי שמשתנה. כדי שהשדה המגנטי יתחדש, צריך שהשדה החשמלי ייצור אותו, וזה בדיוק האיבר החסר.'
+      - text: 'לא היה שום הבדל, כי בריק ממילא אין זרם.'
+        feedback: 'דווקא בגלל שבריק אין זרם, האיבר של מקסוול הוא היחיד שנשאר בצד ימין של חוק אמפר-מקסוול. בלעדיו אין לשדה המגנטי מקור.'
+
+  - id: Q-5.10-b-direction
+    type: mc
+    objectives: [OBJ-5.10-1]
+    qualitative: true
+    prompt: >-
+      גל אלקטרומגנטי מתקדם מזרח, לאורך הקרקע. השדה החשמלי שלו אנכי, למעלה ולמטה. באיזה כיוון השדה המגנטי שלו?
+    choices:
+      - text: 'אופקי, בכיוון צפון-דרום.'
+        correct: true
+        feedback: 'נכון. השדה המגנטי ניצב לשדה החשמלי (ולכן אופקי) וגם לכיוון ההתקדמות (ולכן לא מזרח-מערב). נשאר רק צפון-דרום.'
+      - text: 'אנכי, כמו השדה החשמלי.'
+        feedback: 'בגל השדות ניצבים זה לזה. אילו השדה המגנטי היה אנכי, הוא היה מקביל לשדה החשמלי.'
+      - text: 'אופקי, בכיוון מזרח, כיוון ההתקדמות.'
+        feedback: 'בגל אלקטרומגנטי בריק שני השדות ניצבים לכיוון ההתקדמות. שום שדה לא מצביע לאורך הדרך שהגל עובר.'
+        misconception: MC-wave-arrows-are-motion
+      - text: 'אין לו כיוון קבוע: הוא מצביע לכל הכיוונים.'
+        feedback: 'בכל נקודה לשדה המגנטי של הגל יש כיוון אחד, ניצב לשדה החשמלי ולכיוון ההתקדמות. הוא רק מתהפך בכל חצי מחזור.'
+
+  # ------------------------------------------------ OBJ-5.10-2: c from the constants, travel times
+  - id: Q-5.10-c-from-constants
+    type: numeric
+    objectives: [OBJ-5.10-2]
+    level: mid
+    prompt: >-
+      חשבו את $\dfrac{1}{\sqrt{\mu_0\varepsilon_0}}$ מתוך הערכים שבדף הנוסחאות: $\mu_0 = 4\pi\cdot10^{-7}\,\text{T}\cdot\text{m/A}$ ו-$\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$. ענו ב-$\text{m/s}$.
+    answer: 3e8
+    unit: m/s
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\mu_0\varepsilon_0 \approx 1.112\cdot10^{-17}\,\text{s}^2/\text{m}^2$, והשורש ההפוך הוא $3.00\cdot10^{8}\,\text{m/s}$: מהירות האור.'
+    wrongFeedback: 'כפלו קודם את שני הקבועים, הוציאו שורש, ואז חלקו את $1$ בתוצאה.'
+    commonWrong:
+      - value: 9e16
+        feedback: 'שכחתם את השורש: $1/(\mu_0\varepsilon_0) \approx 9\cdot10^{16}$ הוא $c^2$.'
+      - value: 3.33e-9
+        feedback: 'זה $\sqrt{\mu_0\varepsilon_0}$, בלי החלוקה. חלקו את $1$ בתוצאה.'
+
+  - id: Q-5.10-same-speed
+    type: twotier
+    objectives: [OBJ-5.10-2, OBJ-5.10-3]
+    qualitative: true
+    prompt: >-
+      גל רדיו בתדירות $10^{8}\,\text{Hz}$ וקרן רנטגן בתדירות $10^{18}\,\text{Hz}$ יוצאים יחד מנקודה אחת בריק. מי מגיע ראשון למרחק של קילומטר?
+    choices:
+      - text: 'מגיעים יחד.'
+        correct: true
+        feedback: 'נכון.'
+      - text: 'קרן הרנטגן, כי התדירות שלה גבוהה יותר.'
+        feedback: 'תדירות גבוהה פירושה אורך גל קצר, לא מהירות גדולה. בריק כל הגלים האלקטרומגנטיים נעים באותה מהירות.'
+        misconception: MC-maxwell-speed-depends-on-frequency
+      - text: 'גל הרדיו, כי אורך הגל שלו ארוך יותר.'
+        feedback: 'גל ארוך לא מתקדם מהר יותר. $c = \lambda f$: כשאורך הגל ארוך יותר, התדירות קטנה יותר, והמכפלה זהה.'
+        misconception: MC-maxwell-speed-depends-on-frequency
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'המהירות בריק היא $c = 1/\sqrt{\mu_0\varepsilon_0}$, ובה אין שום תלות בתדירות.'
+        correct: true
+        feedback: 'נכון. המהירות נקבעת על ידי שני הקבועים בלבד. התדירות קובעת רק את אורך הגל, $\lambda = c/f$.'
+      - text: 'גל רנטגן נושא יותר אנרגיה, ולכן הוא מהיר יותר.'
+        feedback: 'אנרגיה ומהירות הן שני דברים שונים. כל הגלים האלקטרומגנטיים נעים בריק באותה מהירות.'
+        misconception: MC-maxwell-speed-depends-on-frequency
+      - text: 'רדיו ורנטגן הם תופעות שונות, ולכן אין סיבה שתהיה להם אותה מהירות.'
+        feedback: 'הם אותה תופעה: גל אלקטרומגנטי בתדירויות שונות. לכן יש להם אותה מהירות בריק.'
+        misconception: MC-maxwell-light-unlike-radio
+
+  - id: Q-5.10-moon-delay
+    type: numeric
+    objectives: [OBJ-5.10-2]
+    level: mid
+    prompt: >-
+      מדענים שולחים פולס של אור לייזר אל מראה שאסטרונאוטים השאירו על הירח, וקולטים את ההחזר. המרחק לירח הוא $3.84\cdot10^{5}\,\text{km}$. כמה זמן עובר מהשליחה עד שההחזר נקלט? ענו בשניות.
+    answer: 2.56
+    unit: s
+    tolerance: 0.03
+    correctFeedback: 'נכון. האור עובר את המרחק פעמיים: $t = \dfrac{2\cdot3.84\cdot10^{8}}{3\cdot10^{8}} = 2.56\,\text{s}$.'
+    wrongFeedback: 'מ-$d = ct$: $t = d/c$, עם המרחק במטרים. כמה פעמים האור עובר את המרחק לירח?'
+    commonWrong:
+      - value: 1.28
+        feedback: 'זה הזמן בכיוון אחד. הפולס צריך להגיע לירח ולחזור, ולכן הדרך היא פעמיים המרחק.'
+      - value: 2.56e-3
+        feedback: 'הצבתם את המרחק בקילומטרים, $3.84\cdot10^{5}$, במקום במטרים, $3.84\cdot10^{8}\,\text{m}$.'
+
+  - id: Q-5.10-eps-change
+    type: mc
+    objectives: [OBJ-5.10-2]
+    qualitative: true
+    prompt: >-
+      נניח שבעולם אחר $\varepsilon_0$ היה גדול פי 4, ו-$\mu_0$ לא היה משתנה. מה היה קורה למהירות של גל אלקטרומגנטי בריק?
+    choices:
+      - text: 'היא הייתה קטנה פי 2.'
+        correct: true
+        feedback: 'נכון. $c = 1/\sqrt{\mu_0\varepsilon_0}$: המכפלה גדלה פי 4, השורש שלה פי $\sqrt4 = 2$, והמהירות קטנה פי 2.'
+      - text: 'היא הייתה קטנה פי 4.'
+        feedback: 'שכחתם את השורש. המהירות הפוכה לשורש של $\varepsilon_0$, לא ל-$\varepsilon_0$ עצמו.'
+      - text: 'היא הייתה גדלה פי 2.'
+        feedback: '$\varepsilon_0$ נמצא במכנה, בתוך השורש. כשהוא גדל, המהירות קטנה.'
+      - text: 'היא לא הייתה משתנה, כי מהירות האור היא קבוע של הטבע ולא תלויה בחשמל ובמגנטיות.'
+        feedback: 'זה התגלית של מקסוול: מהירות האור **יוצאת** משני הקבועים של חשמל ומגנטיות. אילו הם היו שונים, גם היא הייתה שונה.'
+        misconception: MC-maxwell-light-unlike-radio
+
+  # ------------------------------------------------ OBJ-5.10-3: c = λf and the spectrum
+  - id: Q-5.10-fm-wavelength
+    type: numeric
+    objectives: [OBJ-5.10-3]
+    prompt: >-
+      תחנת רדיו משדרת בתדירות $100\,\text{MHz}$. מה אורך הגל שלה? ענו במטרים.
+    answer: 3
+    unit: m
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\lambda = \dfrac{c}{f} = \dfrac{3\cdot10^{8}}{10^{8}} = 3\,\text{m}$.'
+    wrongFeedback: 'מ-$c = \lambda f$: $\lambda = c/f$, עם $f$ בהרץ. $1\,\text{MHz} = 10^{6}\,\text{Hz}$.'
+    commonWrong:
+      - value: 0.333
+        feedback: 'חילקתם הפוך, $f/c$. אורך הגל הוא $c/f$.'
+      - value: 3e6
+        feedback: 'הצבתם $f = 100$ בלי הקידומת. $100\,\text{MHz} = 10^{8}\,\text{Hz}$.'
+      - value: 3000
+        feedback: 'הצבתם $100\,\text{kHz}$. מגה-הרץ הוא $10^{6}\,\text{Hz}$, ו-$100\,\text{MHz} = 10^{8}\,\text{Hz}$.'
+
+  - id: Q-5.10-rank-wavelength
+    type: rank
+    objectives: [OBJ-5.10-3]
+    level: mid
+    prompt: >-
+      דרגו את הגלים לפי אורך הגל שלהם בריק, מהארוך ביותר לקצר ביותר.
+    items:
+      - id: grid
+        label: 'השדה של רשת החשמל, $50\,\text{Hz}$'
+      - id: fm
+        label: 'רדיו FM, $100\,\text{MHz}$'
+      - id: oven
+        label: 'תנור מיקרוגל, $2.45\,\text{GHz}$'
+      - id: green
+        label: 'אור ירוק, $5.6\cdot10^{14}\,\text{Hz}$'
+      - id: xray
+        label: 'קרני רנטגן, $3\cdot10^{18}\,\text{Hz}$'
+    order: [grid, fm, oven, green, xray]
+    correctFeedback: 'נכון. $\lambda = c/f$: ככל שהתדירות גבוהה יותר, אורך הגל קצר יותר. מ-$6000\,\text{km}$ ברשת החשמל, דרך $3\,\text{m}$, $12\,\text{cm}$ ו-$536\,\text{nm}$, ועד $10^{-10}\,\text{m}$ ברנטגן.'
+    wrongFeedback: 'כל הגלים נעים באותה מהירות, ולכן $\lambda = c/f$: אורך הגל הפוך לתדירות. סדרו לפי התדירות, מהנמוכה לגבוהה.'
+
+  - id: Q-5.10-double-f
+    type: mc
+    objectives: [OBJ-5.10-3]
+    qualitative: true
+    prompt: >-
+      תחנת רדיו מכפילה את התדירות שבה היא משדרת. מה קורה לגל שהיא שולחת, בריק?
+    choices:
+      - text: 'אורך הגל קטן פי 2, והמהירות לא משתנה.'
+        correct: true
+        feedback: 'נכון. המהירות תלויה רק ב-$\mu_0$ וב-$\varepsilon_0$. מ-$\lambda = c/f$, תדירות כפולה נותנת אורך גל קטן פי 2.'
+      - text: 'המהירות גדלה פי 2, ואורך הגל לא משתנה.'
+        feedback: 'כך זה היה אילו המהירות הייתה תלויה בתדירות. בריק היא לא: היא $c$ בכל תדירות.'
+        misconception: MC-maxwell-speed-depends-on-frequency
+      - text: 'גם אורך הגל וגם המהירות גדלים פי 2.'
+        feedback: 'אילו גם אורך הגל וגם התדירות היו גדלים פי 2, המכפלה $\lambda f$, שהיא המהירות, הייתה גדלה פי 4, ולא פי 2. בריק המהירות קבועה, ולכן כשהתדירות גדלה, אורך הגל קטן.'
+        misconception: MC-maxwell-speed-depends-on-frequency
+      - text: 'הגל יוצא מהספקטרום של גלי הרדיו והופך לאור.'
+        feedback: 'תדירות כפולה היא שינוי קטן על פני הספקטרום. מרדיו FM לאור נראה התדירות צריכה לגדול פי מיליון בערך.'
+
+  # ------------------------------------------------ OBJ-5.10-4: antennas, and what the wave carries
+  - id: Q-5.10-antenna-orientation
+    type: twotier
+    objectives: [OBJ-5.10-4]
+    qualitative: true
+    prompt: >-
+      תחנת רדיו משדרת מאנטנה שעומדת אנכית. מקלט רחוק קולט את האות דרך מוט מתכת ישר. באיזה מצב של המוט האות הכי חזק?
+    choices:
+      - text: 'כשהמוט אנכי.'
+        correct: true
+        feedback: 'נכון.'
+      - text: 'כשהמוט אופקי ומצביע אל התחנה.'
+        feedback: 'במצב הזה המוט ניצב לשדה החשמלי של הגל, והשדה לא דוחף את האלקטרונים לאורך המוט. האות כמעט אפס.'
+        misconception: MC-em-wave-carries-charge
+      - text: 'בכל מצב האות זהה, כי הגל ממלא את כל המרחב.'
+        feedback: 'הגל ממלא את המרחב, אבל לשדה החשמלי שלו יש כיוון. הוא מניע אלקטרונים רק לאורך הכיוון הזה.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'השדה החשמלי של הגל אנכי, כמו האנטנה המשדרת, והוא דוחף את האלקטרונים לאורך המוט רק כשהמוט מקביל לו.'
+        correct: true
+        feedback: 'נכון. הזרם במקלט נוצר כשהשדה החשמלי מניע את האלקטרונים הלוך ושוב לאורך המוט.'
+      - text: 'האלקטרונים שיוצאים מהאנטנה המשדרת נכנסים הכי טוב למוט שמצביע אל התחנה.'
+        feedback: 'שום אלקטרון לא עובר מהתחנה למקלט. הגל מניע את האלקטרונים שכבר נמצאים במוט.'
+        misconception: MC-em-wave-carries-charge
+      - text: 'השדה המגנטי של הגל אנכי, והוא מניע את האלקטרונים לאורכו.'
+        feedback: 'השדה המגנטי של הגל ניצב לשדה החשמלי, ולכן כאן הוא אופקי. את האלקטרונים במוט ישר מניע השדה החשמלי.'
+
+  - id: Q-5.10-which-emits
+    type: multi
+    objectives: [OBJ-5.10-4]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סמנו את כל המקורות ששולחים גל אלקטרומגנטי.
+    choices:
+      - text: 'אנטנה שזורם בה זרם חילופין בתדירות $90\,\text{MHz}$.'
+        correct: true
+        feedback: 'נכון. המטענים נעים בה הלוך ושוב, והשדות סביבה משתנים כל הזמן. הגל יוצא באותה תדירות.'
+      - text: 'כדור מתכת טעון שעומד במקום.'
+        feedback: 'סביב הכדור יש שדה חשמלי, אבל הוא לא משתנה. בלי קצב שינוי אין שדה מגנטי שנוצר ממנו, ואין גל.'
+        misconception: MC-em-wave-from-steady-current
+      - text: 'תיל ארוך שזורם בו זרם קבוע מסוללה.'
+        feedback: 'זרם קבוע יוצר שדה מגנטי קבוע. השטף לא משתנה, ולכן לא נוצר שדה חשמלי, ואין גל.'
+        misconception: MC-em-wave-from-steady-current
+      - text: 'מטען שנע הלוך ושוב על קפיץ.'
+        correct: true
+        feedback: 'נכון. מטען שמתנודד הוא אנטנה קטנה: השדה שלו משתנה, והשינוי מתקדם החוצה במהירות $c$, בתדירות של התנודה.'
+      - text: 'מגנט מוט שמונח על השולחן.'
+        feedback: 'השדה של מגנט שלא זז קבוע. אין בו שום שינוי, ולכן אין גל.'
+        misconception: MC-em-wave-from-steady-current
+
+  - id: Q-5.10-what-reaches
+    type: mc
+    objectives: [OBJ-5.10-4]
+    qualitative: true
+    prompt: >-
+      בזמן שרדיו קולט תחנה, מה מגיע מהאנטנה של התחנה אל האנטנה של הרדיו?
+    choices:
+      - text: 'גל של שדות, שנושא אנרגיה ומידע; האלקטרונים של כל אנטנה נשארים בה.'
+        correct: true
+        feedback: 'נכון. האלקטרונים בכל אנטנה נעים הלוך ושוב במקומם. מה שעובר ביניהן הוא השדות, ואיתם אנרגיה ומידע.'
+      - text: 'אלקטרונים שיוצאים מהאנטנה של התחנה ועפים באוויר אל הרדיו.'
+        feedback: 'אילו כך, התחנה הייתה נטענת במטען חיובי הולך וגדל, והרדיו במטען שלילי. שום מטען לא עובר: עוברים שדות.'
+        misconception: MC-em-wave-carries-charge
+      - text: 'אוויר שמתנודד, כמו בגל קול.'
+        feedback: 'גל רדיו עובר גם בריק, למשל מלוויין. הוא לא צריך אוויר.'
+        misconception: MC-em-wave-needs-medium
+      - text: 'שום דבר: הרדיו מייצר את הצליל בעצמו, והתחנה רק מכוונת אותו.'
+        feedback: 'אם מכבים את התחנה, הרדיו שותק. משהו מגיע ממנה: הגל, שמניע את האלקטרונים באנטנה של הרדיו.'

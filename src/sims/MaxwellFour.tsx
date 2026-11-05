@@ -1,5 +1,5 @@
 /**
- * Maxwell's four laws in integral form (lesson 5.9). Above: a strip of the laws, rendered by the wrapper
+ * Maxwell's four laws in integral form (lesson 5.9) and the electromagnetic wave (lesson 5.10). Above: a strip of the laws, rendered by the wrapper
  * (KaTeX at build time) and passed in as children; a click on a law opens its scene and marks its two
  * sides. Under the strip, what each side measures and what makes it nonzero. Below: one scene per law,
  * each with the closed surface or the closed path the law speaks about, and both sides of the law in the
@@ -15,7 +15,8 @@
  *   or in the gap, with a flat surface or a bag through the gap; Ampère's law of lesson 4.4 against the
  *   circulation, with and without Maxwell's term.
  * - wave: a plane wave in vacuum, E and B in phase, moving at c; the frequency slider places it in the
- *   spectrum, and λ = c/f. The wave is drawn in slow motion and not to scale.
+ *   spectrum, and λ = c/f. The wave is drawn in slow motion and not to scale. A click on the line (or the
+ *   arrow keys) stops the wave and puts a probe there, which reads E/E₀ and B/B₀ from `waveProbe`.
  * Tasks tick only on the learner's own actions (`user`), never on a text step.
  */
 
@@ -36,6 +37,7 @@ import {
   SCENE_CHARGES,
   sphereGauss,
   vacuumWavelength,
+  waveProbe,
   waveSpeed,
   type Band,
 } from '~/physics/maxwellfour';
@@ -118,6 +120,8 @@ const TASK_LABEL: Record<string, string> = {
   'ampere-gap': 'העבירו את המסלול אל בין הלוחות, שם אין שום זרם של מטענים. האם יש שם שדה מגנטי?',
   'wave-light': 'גל: שנו את התדירות עד שהגל יהיה אור נראה. מה אורך הגל, ומה המהירות?',
   'wave-grid': 'גל: קבעו את התדירות של רשת החשמל, 50 הרץ. מה אורך הגל עכשיו?',
+  'wave-peak': 'גל: לחצו על הקו בנקודה שבה החץ הכתום הכי ארוך. מה השדה המגנטי שם?',
+  'wave-bands': 'גל: עברו בפס הגרירה בשלושה תחומים שונים של הספקטרום. האם המהירות משתנה?',
 };
 
 export interface MaxwellFourProps {
@@ -143,6 +147,9 @@ export interface MaxwellFourProps {
   rA?: number;
   /** wave: log₁₀ of the frequency in Hz */
   logf?: number;
+  /** wave: stopped, with a probe at this fraction of the figure's width */
+  paused?: boolean;
+  probe?: number;
   tasks?: string[];
   children?: ComponentChildren;
 }
@@ -161,6 +168,8 @@ interface State {
   maxwell: boolean;
   rA: number;
   logf: number;
+  paused: boolean;
+  probe: number | null;
 }
 
 function initial(p: MaxwellFourProps): State {
@@ -179,6 +188,8 @@ function initial(p: MaxwellFourProps): State {
     maxwell: p.maxwell ?? false,
     rA: p.rA ?? 0.03,
     logf: p.logf ?? 8,
+    paused: p.paused ?? false,
+    probe: p.probe ?? null,
   };
 }
 
@@ -187,6 +198,12 @@ const clampAt = (x: number, y: number, m = 0.005): Vec2 => [
   Math.max(-WORLD_W / 2 + m, Math.min(WORLD_W / 2 - m, snap(x))),
   Math.max(-WORLD_H / 2 + m, Math.min(WORLD_H / 2 - m, snap(y))),
 ];
+/** a fraction of a peak, to two decimals, with a true minus sign */
+const frac = (v: number) => {
+  const r = Math.round(v * 100) / 100;
+  return `${r < 0 ? '−' : ''}${Math.abs(r).toFixed(2)}`;
+};
+const probeWords = (pr: { E: number; B: number }) => `בגשש: השדה החשמלי ${frac(pr.E)} מהשיא, השדה המגנטי ${frac(pr.B)} מהשיא.`;
 const cm = (m: number) => `${sci(Math.round(m * 1000) / 10)} cm`;
 /** a value that is zero up to the numerical sum, shown as zero */
 const clean = (v: number, scale: number) => (Math.abs(v) < 2e-4 * Math.abs(scale) ? 0 : v);
@@ -202,6 +219,11 @@ const LOG_L_MAX = 7;
 const LOG_L_MIN = -13;
 const F_MIN_LOG = 1.5;
 const F_MAX_LOG = 21;
+
+/** slow motion: a crest moves this many pixels per second, whatever f is */
+const WAVE_PX_PER_S = 40;
+/** where the wave is drawn on a canvas W × H px: its axis, the arrows' full length, one wavelength, the ends */
+const waveGeom = (W: number, H: number) => ({ axisY: H * 0.36, amp: H * 0.2, lamPx: W / 2.4, x0: 24, x1: W - 40 });
 
 const PRESETS: { name: string; f: number }[] = [
   { name: 'רשת החשמל', f: 50 },
@@ -227,6 +249,10 @@ export default function MaxwellFour(props: MaxwellFourProps) {
   const [live, setLive] = useState('');
   const drag = useRef<{ dx: number; dy: number } | null>(null);
   const stripRef = useRef<HTMLDivElement>(null);
+  /** the wave's time at the last frame drawn [s]; frozen while the wave is stopped */
+  const waveT = useRef(0);
+  /** the spectrum bands the learner has moved the wave through */
+  const bandsSeen = useRef(new Set<Band>());
   const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: TASK_LABEL[id] ?? id }));
 
   useEffect(
@@ -246,6 +272,9 @@ export default function MaxwellFour(props: MaxwellFourProps) {
           next.r = num('r') ?? next.r;
           next.rA = num('rA') ?? next.rA;
           next.logf = num('logf') ?? next.logf;
+          if (typeof st.paused === 'boolean') next.paused = st.paused;
+          if (typeof st.probe === 'number') next.probe = st.probe;
+          else if (st.probe === null || st.paused === false) next.probe = null;
           if (st.at === 'wire' || st.at === 'gap') next.at = st.at;
           if (st.surface === 'flat' || st.surface === 'bulge') next.surface = st.surface;
           if (typeof st.maxwell === 'boolean') next.maxwell = st.maxwell;
@@ -277,6 +306,15 @@ export default function MaxwellFour(props: MaxwellFourProps) {
   const band = bandOf(lam);
   const c = waveSpeed();
 
+  /** E/E₀ and B/B₀ at the probe (a fraction of the axis), at the wave's frozen time */
+  const probeAt = (frac: number) => {
+    const v = viewRef.current;
+    if (!v) return null;
+    const g = waveGeom(v.w, v.h);
+    const x = g.x0 + frac * (g.x1 - g.x0);
+    return waveProbe(x / g.lamPx, (waveT.current * WAVE_PX_PER_S) / g.lamPx);
+  };
+
   /** a change made by the learner (never a text step): check the tasks against the new state */
   const user = (next: State) => {
     setS(next);
@@ -294,8 +332,14 @@ export default function MaxwellFour(props: MaxwellFourProps) {
     if (next.law === 'ampere' && next.at === 'gap') done('ampere-gap');
     if (next.law === 'wave') {
       const b = bandOf(vacuumWavelength(10 ** next.logf));
-      if (b === 'visible') done('wave-light');
-      if (Math.abs(10 ** next.logf - 50) < 5) done('wave-grid');
+      if (next.logf !== s.logf) {
+        if (b === 'visible') done('wave-light');
+        if (Math.abs(10 ** next.logf - 50) < 5) done('wave-grid');
+        bandsSeen.current.add(b);
+        if (bandsSeen.current.size >= 3) done('wave-bands');
+      }
+      const pr = next.probe !== null && next.paused ? probeAt(next.probe) : null;
+      if (pr && next.probe !== s.probe && Math.abs(pr.E) >= 0.9) done('wave-peak');
     }
   };
 
@@ -578,14 +622,12 @@ export default function MaxwellFour(props: MaxwellFourProps) {
   };
 
   const drawWave = (ctx: CanvasRenderingContext2D, view: View, p: Palette, t: number) => {
+    waveT.current = t;
     const W = view.w;
     const H = view.h;
-    const axisY = H * 0.36;
-    const amp = H * 0.2;
-    const lamPx = W / 2.4;
-    const shift = t * 40; // slow motion: a crest moves 40 px per second, whatever f is
-    const x0 = 24;
-    const x1 = W - 40;
+    const { axisY, amp, lamPx, x0, x1 } = waveGeom(W, H);
+    const tP = (t * WAVE_PX_PER_S) / lamPx; // the time in periods
+    const at = (x: number) => waveProbe(x / lamPx, tP);
     ctx.save();
     ctx.strokeStyle = p.ink3;
     ctx.lineWidth = 1.2;
@@ -602,18 +644,35 @@ export default function MaxwellFour(props: MaxwellFourProps) {
     ctx.lineWidth = 1.2;
     ctx.beginPath();
     for (let x = x0; x <= x1; x += 3) {
-      const ph = (2 * Math.PI * (x - shift)) / lamPx;
-      const y = axisY - amp * Math.sin(ph);
+      const y = axisY - amp * at(x).E;
       if (x === x0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     }
     ctx.stroke();
     ctx.restore();
     const step = lamPx / 8;
+    const shift = t * WAVE_PX_PER_S;
     for (let x = x0 + ((shift % step) + step) % step; x <= x1; x += step) {
-      const v = Math.sin((2 * Math.PI * (x - shift)) / lamPx);
+      const { E: v, B: b } = at(x);
       if (Math.abs(v) > 0.08) arrow(ctx, x, axisY, x, axisY - amp * v, { color: p.efield, width: 2, head: 7 });
-      if (Math.abs(v) > 0.15) depthGlyph(ctx, x, axisY, 2.5 + 5 * Math.abs(v), v > 0 ? 'out' : 'in', p.bfield, { fill: p.paper, width: 1.6 });
+      if (Math.abs(b) > 0.15) depthGlyph(ctx, x, axisY, 2.5 + 5 * Math.abs(b), b > 0 ? 'out' : 'in', p.bfield, { fill: p.paper, width: 1.6 });
+    }
+    // the probe: a dashed line through the chosen point, with E and B drawn there in full
+    if (s.paused && s.probe !== null) {
+      const px = x0 + s.probe * (x1 - x0);
+      const { E: v, B: b } = at(px);
+      ctx.save();
+      ctx.strokeStyle = p.accent;
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(px, axisY - amp - 14);
+      ctx.lineTo(px, axisY + amp + 6);
+      ctx.stroke();
+      ctx.restore();
+      if (Math.abs(v) > 0.02) arrow(ctx, px, axisY, px, axisY - amp * v, { color: p.efield, width: 3.5, head: 9 });
+      if (Math.abs(b) > 0.02) depthGlyph(ctx, px, axisY, 3 + 6 * Math.abs(b), b > 0 ? 'out' : 'in', p.bfield, { fill: p.paper, width: 2.4 });
+      label(ctx, p, 'גשש', px, axisY - amp - 22, p.accent, { size: 12, rtl: true });
     }
     // one wavelength, marked
     const lx = x0 + 10;
@@ -682,7 +741,7 @@ export default function MaxwellFour(props: MaxwellFourProps) {
     else drawWave(ctx, view, p, t);
   };
 
-  const { canvasRef, invalidate, viewRef } = useFigureCanvas(draw, { worldWidth: WORLD_W, worldHeight: WORLD_H, animate: s.law === 'wave' });
+  const { canvasRef, invalidate, viewRef } = useFigureCanvas(draw, { worldWidth: WORLD_W, worldHeight: WORLD_H, animate: s.law === 'wave' && !s.paused });
   useEffect(invalidate, [s]);
 
   /* ------------------------------------------------------------------ input */
@@ -696,6 +755,15 @@ export default function MaxwellFour(props: MaxwellFourProps) {
 
   const onPointerDown = (e: PointerEvent) => {
     const v = viewRef.current;
+    if (v && s.law === 'wave') {
+      const g = waveGeom(v.w, v.h);
+      const frac = Math.max(0, Math.min(1, (e.offsetX - g.x0) / (g.x1 - g.x0)));
+      const next = { ...s, paused: true, probe: frac };
+      user(next);
+      const pr = probeAt(frac);
+      if (pr) setLive(probeWords(pr));
+      return;
+    }
     if (!v || !draggable) return;
     const [wx, wy] = toWorld(v, e.offsetX, e.offsetY);
     const [px, py] = posOf(s);
@@ -720,6 +788,15 @@ export default function MaxwellFour(props: MaxwellFourProps) {
     drag.current = null;
   };
   const onKeyDown = (e: KeyboardEvent) => {
+    if (s.law === 'wave' && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+      e.preventDefault();
+      const d = (e.key === 'ArrowRight' ? 1 : -1) * (e.shiftKey ? 0.1 : 1 / 48);
+      const frac = Math.max(0, Math.min(1, (s.probe ?? 0.5) + (s.paused && s.probe !== null ? d : 0)));
+      user({ ...s, paused: true, probe: frac });
+      const pr = probeAt(frac);
+      if (pr) setLive(probeWords(pr));
+      return;
+    }
     if (!draggable) return;
     const dirs: Record<string, Vec2> = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1] };
     const d = dirs[e.key];
@@ -732,6 +809,7 @@ export default function MaxwellFour(props: MaxwellFourProps) {
     setLive(describePos(next));
   };
   const reset = () => {
+    bandsSeen.current.clear();
     setS(initial(props));
     setLive('האיור אופס.');
   };
@@ -823,6 +901,7 @@ export default function MaxwellFour(props: MaxwellFourProps) {
         </>
       );
     }
+    const pr = s.probe !== null ? probeAt(s.probe) : null;
     return (
       <>
         <span>
@@ -834,6 +913,14 @@ export default function MaxwellFour(props: MaxwellFourProps) {
         <span>
           המהירות בריק, מהקבועים בלבד: <b class="q">c = 1/√(μ₀ε₀) = {sci(c)} m/s</b>, בכל תדירות
         </span>
+        {s.paused && pr ? (
+          <span>
+            בגשש: <b class="q">E = {frac(pr.E)}·E₀</b> {pr.E > 0.02 ? '(למעלה)' : pr.E < -0.02 ? '(למטה)' : ''}, <b class="q">B = {frac(pr.B)}·B₀</b>{' '}
+            {pr.B > 0.02 ? '(⊙ יוצא מהדף)' : pr.B < -0.02 ? '(⊗ נכנס לדף)' : ''}
+          </span>
+        ) : (
+          <span>לחצו על הקו כדי לעצור את הגל ולמדוד בנקודה אחת.</span>
+        )}
       </>
     );
   };
@@ -872,6 +959,9 @@ export default function MaxwellFour(props: MaxwellFourProps) {
     return (
       <>
         <Slider label="התדירות (סולם של חזקות 10)" value={s.logf} min={F_MIN_LOG} max={F_MAX_LOG} step={0.05} format={(v) => `${sci(10 ** v)} Hz`} onChange={(v) => user({ ...s, logf: v })} />
+        <div class="group" role="group" aria-label="הגל">
+          <Toggle label="עצירת הגל" on={s.paused} onChange={(v) => user({ ...s, paused: v, probe: v ? s.probe : null })} />
+        </div>
         <div class="group" role="group" aria-label="תדירויות מוכרות">
           {PRESETS.map((pr) => (
             <button type="button" key={pr.name} class="toggle" onClick={() => user({ ...s, logf: Math.log10(pr.f) })}>
@@ -900,7 +990,7 @@ export default function MaxwellFour(props: MaxwellFourProps) {
       <p class="mf-says">{SAYS[s.law]}</p>
       <SimShell
         fig={props.id}
-        label={`איור חי: ${sceneLabel()}${draggable ? ' גררו בעכבר או במגע, או הקישו במקום כלשהו; במקלדת: חיצים מזיזים.' : ''}`}
+        label={`איור חי: ${sceneLabel()}${draggable ? ' גררו בעכבר או במגע, או הקישו במקום כלשהו; במקלדת: חיצים מזיזים.' : s.law === 'wave' ? ' הקישו על הקו כדי לעצור את הגל ולמדוד בנקודה; במקלדת: חיצים ימינה ושמאלה מזיזים את הגשש.' : ''}`}
         canvasRef={canvasRef}
         aspect={ASPECT}
         live={live}
@@ -910,7 +1000,7 @@ export default function MaxwellFour(props: MaxwellFourProps) {
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
-        cursor={draggable ? (drag.current ? 'grabbing' : 'grab') : 'default'}
+        cursor={draggable ? (drag.current ? 'grabbing' : 'grab') : s.law === 'wave' ? 'crosshair' : 'default'}
         readout={readout()}
         controls={controls()}
       />

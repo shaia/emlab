@@ -1,0 +1,23 @@
+# Lesson 5.10 terms (the electromagnetic wave). Format and rules: see glossary/1-5.yaml. The wave itself
+# (electromagnetic-wave) and the wavelength are kept in glossary/6-14.yaml, where they were written first, with
+# lesson: '5.10'.
+
+- id: speed-of-light
+  term: מהירות האור
+  en: speed of light
+  symbol: 'c'
+  unit: m/s
+  definition: 'המהירות שבה כל גל אלקטרומגנטי נע בריק, בכל תדירות: c = 1/√(μ₀ε₀) ≈ 3·10⁸ m/s. היא יוצאת משני קבועים של חשמל ומגנטיות, ε₀ ו-μ₀, ולכן גם האור, גלי הרדיו וקרני הרנטגן נעים בה.'
+  lesson: '5.10'
+
+- id: antenna
+  term: אנטנה
+  en: antenna
+  definition: 'מוליך שמשדר גל אלקטרומגנטי או קולט אותו. באנטנה משדרת זורם זרם חילופין: המטענים נעים בה הלוך ושוב, והשדות שסביבה משתנים ושולחים גל באותה תדירות. באנטנה קולטת השדה החשמלי של גל שמגיע מניע הלוך ושוב את האלקטרונים שלה, ונוצר בה זרם חילופין באותה תדירות.'
+  lesson: '5.10'
+
+- id: electromagnetic-spectrum
+  term: ספקטרום אלקטרומגנטי
+  en: electromagnetic spectrum
+  definition: 'כל הגלים האלקטרומגנטיים, מסודרים לפי התדירות או לפי אורך הגל: גלי רדיו, מיקרוגל, תת-אדום, אור נראה, על-סגול, קרני רנטגן וקרינת גמא. בריק כולם נעים באותה מהירות, c = 3·10⁸ m/s, ונבדלים רק בתדירות, ולכן גם באורך הגל, λ = c/f. הגבולות בין התחומים מקובלים, ולא חדים.'
+  lesson: '5.10'
