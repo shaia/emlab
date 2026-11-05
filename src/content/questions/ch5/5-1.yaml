@@ -1,0 +1,331 @@
+# Lesson 5.1 question bank (magnetic flux). Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/induction.ts (fluxUniform, wireRectFlux) and
+# src/physics/loopflux.ts (wireB, wireStripSum). Φ is measured along the chosen normal n̂; θ is between B and n̂.
+
+chapter: 5
+questions:
+  # ------------------------------------------------ OBJ-5.1-1: Φ = BA·cosθ, the weber, the sign
+  - id: Q-5.1-plane-angle
+    type: mc
+    objectives: [OBJ-5.1-1]
+    qualitative: true
+    prompt: >-
+      קווי שדה מגנטי אחיד יוצרים זווית של $30^\circ$ עם **מישור** של לולאה שטוחה. איזו זווית מציבים בנוסחה $\Phi = BA\cos\theta$?
+    choices:
+      - text: '$60^\circ$'
+        correct: true
+        feedback: 'נכון. $\theta$ היא הזווית בין השדה לאנך, והאנך ניצב למישור: $\theta = 90^\circ - 30^\circ = 60^\circ$. השטף $BA\cos60^\circ = BA\sin30^\circ$.'
+      - text: '$30^\circ$'
+        feedback: '$30^\circ$ היא הזווית בין השדה למישור. בנוסחה הזווית נמדדת מהאנך, שניצב למישור. בדיקה: אם השדה היה במישור (זווית אפס מהמישור), $\cos0 = 1$ היה נותן שטף מלא, אבל הקווים מחליקים לאורך הלולאה ולא עוברים דרכה.'
+        misconception: MC-magflux-angle-from-plane
+      - text: 'לא מציבים זווית: השטף הוא $BA$ בכל מקרה.'
+        feedback: 'השטף תלוי בזווית: לולאה מוטה "רואה" פחות קווים. כשהשדה במישור הלולאה השטף אפס, אף שהשדה והשטח לא השתנו.'
+        misconception: MC-magflux-ignores-tilt
+      - text: '$120^\circ$'
+        feedback: 'זו הזווית לאנך ההפוך, וגם היא אפשרית אם בוחרים אותו, אבל אז השטף יוצא שלילי. בלי בחירה מיוחדת של אנך, הזווית בין השדה לאנך שקרוב אליו היא $60^\circ$.'
+
+  - id: Q-5.1-flux-tilted
+    type: numeric
+    objectives: [OBJ-5.1-1]
+    prompt: >-
+      לולאה ריבועית שאורך צלעה $20\,\text{cm}$ נמצאת בשדה מגנטי אחיד של $0.5\,\text{T}$. קווי השדה יוצרים זווית של $30^\circ$ עם מישור הלולאה. מה השטף דרך הלולאה? ענו בובר (למשל 0.004).
+    answer: 0.01
+    unit: Wb
+    tolerance: 0.03
+    correctFeedback: 'נכון. $A = 0.2^2 = 0.04\,\text{m}^2$ ו-$\theta = 90^\circ - 30^\circ = 60^\circ$, ולכן $\Phi = 0.5\cdot0.04\cdot\cos60^\circ = 0.01\,\text{Wb}$.'
+    wrongFeedback: 'חשבו את השטח במטרים רבועים, וקבעו את הזווית בין השדה **לאנך**, לא למישור.'
+    commonWrong:
+      - value: 0.0173
+        feedback: 'הצבתם $\cos30^\circ$, כלומר את הזווית בין השדה למישור. הזווית בנוסחה היא בין השדה לאנך: $60^\circ$.'
+        misconception: MC-magflux-angle-from-plane
+      - value: 0.02
+        feedback: 'זה $BA$, השטף כשהשדה ניצב ללולאה. כאן הלולאה מוטה, ופחות קווים עוברים דרכה.'
+        misconception: MC-magflux-ignores-tilt
+      - value: 100
+        feedback: 'הצבתם את השטח בסנטימטרים רבועים, $400$. במטרים רבועים $A = 0.04\,\text{m}^2$.'
+
+  - id: Q-5.1-flip-sign
+    type: numeric
+    objectives: [OBJ-5.1-1, OBJ-5.1-2]
+    level: mid
+    prompt: >-
+      לולאה מעגלית שרדיוסה $10\,\text{cm}$ נמצאת בשדה מגנטי אחיד של $0.3\,\text{T}$, והאנך שבחרנו לה מצביע בכיוון השדה. מסובבים את הלולאה חצי סיבוב סביב קוטר שלה, והאנך מסתובב איתה. מה השינוי בשטף, $\Delta\Phi = \Phi_2 - \Phi_1$? ענו בובר, עם סימן.
+    answer: -0.01885
+    unit: Wb
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\Phi_1 = BA = 0.3\cdot\pi\cdot0.1^2 = 9.42\cdot10^{-3}\,\text{Wb}$, ואחרי חצי סיבוב $\Phi_2 = -9.42\cdot10^{-3}\,\text{Wb}$. השינוי $-2BA = -1.88\cdot10^{-2}\,\text{Wb}$.'
+    wrongFeedback: 'חשבו את השטף לפני ואחרי. אחרי חצי סיבוב האנך מצביע נגד השדה: $\cos180^\circ = -1$.'
+    commonWrong:
+      - value: 0
+        feedback: 'הלולאה נראית אותו דבר אחרי חצי סיבוב, אבל האנך התהפך, והקווים עוברים דרכה מהצד השני. השטף התהפך מ-$BA$ ל-$-BA$.'
+        misconception: MC-magflux-sign-fixed
+      - value: 0.01885
+        feedback: 'הגודל נכון, אבל השטף ירד מחיובי לשלילי, ולכן השינוי שלילי.'
+      - value: -0.00942
+        feedback: 'זה רק השטף בסוף, $\Phi_2$. השינוי הוא $\Phi_2 - \Phi_1$: מ-$+BA$ ל-$-BA$.'
+
+  - id: Q-5.1-weber
+    type: mc
+    objectives: [OBJ-5.1-1]
+    qualitative: true
+    prompt: >-
+      איזו מהיחידות שווה לובר אחד, $1\,\text{Wb}$?
+    choices:
+      - text: '$1\,\text{T}\cdot\text{m}^2$'
+        correct: true
+        feedback: 'נכון. השטף הוא שדה כפול שטח, $\Phi = BA\cos\theta$, ולקוסינוס אין יחידות.'
+      - text: '$1\,\text{T}/\text{m}^2$'
+        feedback: 'השטף הוא שדה **כפול** שטח, לא שדה חלקי שטח: לולאה גדולה יותר מקבלת יותר קווים.'
+      - text: '$1\,\text{T}\cdot\text{m}$'
+        feedback: 'מטר הוא יחידה של אורך. השטף הוא שדה כפול **שטח**, במטרים רבועים.'
+      - text: '$1\,\text{N}\cdot\text{m}^2/\text{C}$'
+        feedback: 'זו היחידה של השטף **החשמלי** משיעור 1.7, $EA\cos\theta$. בשטף המגנטי מופיע $B$, בטסלה.'
+
+  # ------------------------------------------------ OBJ-5.1-2: lines through the loop, the three ways
+  - id: Q-5.1-zero-flux-field
+    type: twotier
+    objectives: [OBJ-5.1-2, OBJ-5.1-1]
+    qualitative: true
+    prompt: >-
+      מודדים שהשטף המגנטי דרך לולאה שטוחה הוא אפס. האם בהכרח אין שדה מגנטי במקום שבו נמצאת הלולאה?
+    choices:
+      - text: 'לא, יכול להיות שם שדה חזק.'
+        correct: true
+        feedback: נכון.
+      - text: 'כן, אם אין שטף אין שדה.'
+        feedback: 'שטף אפס אומר רק שנטו אף קו לא עובר דרך הלולאה. בדקו באיור 5.1א מה קורה ב-$\theta = 90^\circ$.'
+        misconception: MC-magflux-zero-means-no-field
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'אם מישור הלולאה מקביל לשדה, הקווים מחליקים לאורכה ואף אחד לא עובר דרכה, גם בשדה חזק.'
+        correct: true
+        feedback: 'נכון. אז $\theta = 90^\circ$ ו-$\cos90^\circ = 0$: השטף אפס, והשדה יכול להיות כל גודל.'
+      - text: 'השטף הוא השדה כפול השטח, ולכן שטף אפס מחייב שדה אפס.'
+        feedback: 'בנוסחה יש גם $\cos\theta$. השטף מתאפס גם כשהשדה מקביל למישור הלולאה.'
+        misconception: MC-magflux-zero-means-no-field
+      - text: 'שטף מגנטי הוא תמיד אפס, גם כשיש שדה.'
+        feedback: 'זה נכון רק למשטח **סגור**. דרך לולאה שטוחה שפונה אל השדה השטף הוא $BA$, לא אפס.'
+        misconception: MC-magflux-pole-like-charge
+
+  - id: Q-5.1-which-changes
+    type: multi
+    objectives: [OBJ-5.1-2]
+    qualitative: true
+    prompt: >-
+      לולאה מעגלית נמצאת בשדה מגנטי אחיד שממלא אזור גדול, והשדה ניצב למישורה. אילו מהפעולות משנות את השטף דרך הלולאה? סמנו את כל התשובות הנכונות.
+    choices:
+      - text: 'מסובבים את הלולאה סביב קוטר שלה.'
+        correct: true
+        feedback: 'נכון. הזווית $\theta$ משתנה, ואיתה השטף.'
+      - text: 'מזיזים את הלולאה הצידה, בתוך האזור האחיד, בלי לסובב אותה.'
+        feedback: 'בשדה אחיד $B$ זהה בכל מקום, והשטח והזווית לא השתנו. אותם קווים עוברים דרכה, והשטף לא משתנה.'
+        misconception: MC-magflux-motion-changes-flux
+      - text: 'מגדילים את השדה.'
+        correct: true
+        feedback: 'נכון. שדה חזק יותר מצויר בקווים צפופים יותר, ויותר קווים עוברים דרך הלולאה.'
+      - text: 'מועכים את הלולאה לצורת אליפסה.'
+        correct: true
+        feedback: 'נכון. השטח שהיא תוחמת קטן, ולכן גם השטף.'
+      - text: 'מזיזים את הלולאה לאורך קווי השדה, בתוך האזור האחיד.'
+        feedback: 'לאורך הקווים השדה זהה, והלולאה לא הסתובבה ולא שינתה צורה: השטף לא משתנה.'
+        misconception: MC-magflux-motion-changes-flux
+
+  - id: Q-5.1-rank-tilt
+    type: rank
+    objectives: [OBJ-5.1-2, OBJ-5.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אותה לולאה, באותו שדה אחיד, בארבעה מצבים. $\theta$ היא הזווית בין השדה לאנך שבחרנו ללולאה. סדרו את המצבים לפי השטף, **עם הסימן**, מהגדול לקטן.
+    items:
+      - { id: t60, label: '$\theta = 60^\circ$' }
+      - { id: t180, label: '$\theta = 180^\circ$' }
+      - { id: t0, label: '$\theta = 0$' }
+      - { id: t90, label: '$\theta = 90^\circ$' }
+    order: [t0, t60, t90, t180]
+    correctFeedback: 'נכון. $\cos\theta$ הוא $1$, $0.5$, $0$ ו-$-1$: השטף $BA$, $0.5BA$, אפס, ו-$-BA$, כשהקווים עוברים נגד האנך.'
+    wrongFeedback: 'חשבו $\cos\theta$ לכל מצב. כשהקווים עוברים דרך הלולאה נגד האנך, השטף שלילי, ולכן קטן מאפס.'
+
+  - id: Q-5.1-lines-count
+    type: numeric
+    objectives: [OBJ-5.1-2]
+    level: mid
+    prompt: >-
+      בציור של שדה מגנטי אחיד כל קו מייצג שטף של $0.5\,\text{mWb}$. כשלולאה פונה אל השדה, 12 קווים עוברים דרכה. מכפילים את השדה, ומטים את הלולאה כך ש-$\theta = 60^\circ$. מה השטף עכשיו? ענו בובר (למשל 0.004).
+    answer: 0.006
+    unit: Wb
+    tolerance: 0.03
+    correctFeedback: 'נכון. בהתחלה $12\cdot0.5 = 6\,\text{mWb}$. שדה כפול מכפיל את השטף, וההטיה כופלת אותו ב-$\cos60^\circ = 0.5$: $6\cdot2\cdot0.5 = 6\,\text{mWb} = 0.006\,\text{Wb}$. שני השינויים ביטלו זה את זה.'
+    wrongFeedback: 'מצאו קודם את השטף ההתחלתי מספירת הקווים. אחר כך: פי כמה גדל השדה, ובמה כופלת ההטיה?'
+    commonWrong:
+      - value: 0.003
+        feedback: 'התחשבתם בהטיה, אבל שכחתם שהשדה הוכפל: הקווים מצטופפים, ועוברים יותר קווים.'
+      - value: 0.012
+        feedback: 'התחשבתם בהכפלת השדה, אבל שכחתם את ההטיה: ב-$60^\circ$ הלולאה "רואה" רק חצי מהקווים.'
+        misconception: MC-magflux-ignores-tilt
+      - value: 0.0104
+        feedback: 'כפלתם ב-$\sin60^\circ$. בזווית $\theta$ בין השדה לאנך כופלים ב-$\cos\theta$.'
+        misconception: MC-magflux-angle-from-plane
+
+  # ------------------------------------------------ OBJ-5.1-3: non-uniform field, wire and rectangle
+  - id: Q-5.1-wire-halves
+    type: mc
+    objectives: [OBJ-5.1-3]
+    qualitative: true
+    prompt: >-
+      מלבן נמצא במישור של תיל ישר וארוך שזורם בו זרם, וצלעותיו הארוכות מקבילות לתיל. מחלקים את המלבן לשני חצאים שווים בקו שמקביל לתיל. מה נכון לגבי השטף דרך שני החצאים?
+    choices:
+      - text: 'השטף דרך החצי הקרוב לתיל גדול יותר.'
+        correct: true
+        feedback: 'נכון. השדה של תיל חלש ככל שמתרחקים, $B = \dfrac{\mu_0 I}{2\pi r}$. בשטח שווה, החצי שבשדה החזק יותר מקבל יותר קווים.'
+      - text: 'השטף שווה, כי השטחים שווים.'
+        feedback: 'השטח שווה, אבל השדה לא: ליד התיל הקווים צפופים יותר. שטף הוא שדה כפול שטח, ובשדה לא אחיד מחשבים אותו ברצועות.'
+        misconception: MC-magflux-equal-areas-equal-flux
+      - text: 'השטף דרך החצי הרחוק גדול יותר, כי הוא רחוק מהזרם.'
+        feedback: 'הפוך: ככל שמתרחקים מהתיל השדה שלו נחלש, והקווים מתרווחים.'
+      - text: 'השטף דרך שני החצאים אפס, כי השדה של תיל מסתובב סביבו.'
+        feedback: 'השדה מסתובב סביב התיל, ולכן במישור שבו נמצא התיל הוא ניצב למישור, בדיוק הכיוון שעובר דרך המלבן.'
+
+  - id: Q-5.1-wire-two-strips
+    type: numeric
+    objectives: [OBJ-5.1-3]
+    level: mid
+    prompt: >-
+      תיל ישר וארוך נושא זרם של $15\,\text{A}$. מלבן בגובה $40\,\text{cm}$ נמצא במישור התיל, וצלעותיו המקבילות לתיל במרחקים $2\,\text{cm}$ ו-$8\,\text{cm}$ ממנו. העריכו את השטף דרך המלבן בשתי רצועות שוות, לפי השדה באמצע כל רצועה. ענו בובר (למשל 3e-6).
+    answer: 1.582e-6
+    unit: Wb
+    tolerance: 0.03
+    correctFeedback: 'נכון. אמצעי הרצועות ב-$3.5$ וב-$6.5\,\text{cm}$: $B = \dfrac{2\cdot10^{-7}\cdot15}{0.035} = 8.57\cdot10^{-5}\,\text{T}$ ו-$4.62\cdot10^{-5}\,\text{T}$. שטח כל רצועה $0.03\cdot0.4 = 0.012\,\text{m}^2$, והסכום $1.58\cdot10^{-6}\,\text{Wb}$.'
+    wrongFeedback: 'כל רצועה ברוחב $3\,\text{cm}$. מצאו את השדה באמצע כל אחת, $B = \dfrac{\mu_0 I}{2\pi r}$, כפלו בשטח שלה, וחברו.'
+    commonWrong:
+      - value: 1.44e-6
+        feedback: 'זו רצועה אחת: השדה באמצע המלבן, ב-$5\,\text{cm}$, כפול כל השטח. השאלה ביקשה שתי רצועות, וכך הרצועה הקרובה, בשדה החזק, מקבלת את חלקה.'
+        misconception: MC-magflux-equal-areas-equal-flux
+      - value: 3.6e-6
+        feedback: 'הצבתם את השדה ליד הצלע הקרובה, ב-$2\,\text{cm}$, לכל המלבן. השדה שם חזק מהשדה בשאר המלבן.'
+        misconception: MC-magflux-equal-areas-equal-flux
+      - value: 9.0e-7
+        feedback: 'הצבתם את השדה ליד הצלע הרחוקה, ב-$8\,\text{cm}$, לכל המלבן. השדה שם חלש מהשדה בשאר המלבן.'
+
+  - id: Q-5.1-wire-exact
+    type: numeric
+    objectives: [OBJ-5.1-3]
+    level: bagrut
+    prompt: >-
+      אותו תיל ואותו מלבן: זרם $15\,\text{A}$, גובה $40\,\text{cm}$, צלעות במרחקים $2\,\text{cm}$ ו-$8\,\text{cm}$. חשבו את השטף המדויק בנוסחה $\Phi = \dfrac{\mu_0 I h}{2\pi}\ln\dfrac{r_2}{r_1}$. ענו בובר (למשל 3e-6).
+    answer: 1.664e-6
+    unit: Wb
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\Phi = 2\cdot10^{-7}\cdot15\cdot0.4\cdot\ln4 = 1.2\cdot10^{-6}\cdot1.386 = 1.66\cdot10^{-6}\,\text{Wb}$, קצת יותר מההערכה בשתי רצועות.'
+    wrongFeedback: '$\dfrac{\mu_0}{2\pi} = 2\cdot10^{-7}\,\text{T}\cdot\text{m/A}$, ו-$\ln$ הוא הלוגריתם הטבעי של היחס $r_2/r_1 = 4$.'
+    commonWrong:
+      - value: 7.22e-7
+        feedback: 'השתמשתם ב-log לפי בסיס 10. בנוסחה מופיע הלוגריתם הטבעי, המקש ln: $\ln4 \approx 1.386$.'
+      - value: -1.664e-6
+        feedback: 'הפכתם את היחס, $\ln(r_1/r_2)$. בנוסחה המרחק הגדול במונה, והשטף חיובי לאנך שבכיוון השדה.'
+      - value: 1.045e-5
+        feedback: 'שכחתם לחלק ב-$2\pi$: $\mu_0 = 4\pi\cdot10^{-7}$, ו-$\dfrac{\mu_0}{2\pi} = 2\cdot10^{-7}$.'
+
+  - id: Q-5.1-wire-scale
+    type: mc
+    objectives: [OBJ-5.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מלבן נמצא במישור של תיל ישר וארוך, וצלעותיו המקבילות לתיל במרחקים $r$ ו-$2r$ ממנו. מזיזים אותו ומרחיבים אותו, כך שצלעותיו במרחקים $2r$ ו-$4r$. הגובה והזרם לא משתנים. מה קורה לשטף?
+    choices:
+      - text: 'הוא לא משתנה.'
+        correct: true
+        feedback: 'נכון. המלבן בשדה חלש פי 2, אבל רחב פי 2, ושני השינויים מבטלים זה את זה. בנוסחה, $\ln(4r/2r) = \ln(2r/r) = \ln2$.'
+      - text: 'הוא קטן פי 2, כי השדה של תיל קטן פי 2 במרחק כפול.'
+        feedback: 'השדה אכן קטן פי 2, אבל המלבן גם רחב פי 2: כל רצועה חדשה רחבה פי 2 ונמצאת בשדה חלש פי 2.'
+        misconception: MC-magflux-equal-areas-equal-flux
+      - text: 'הוא גדל פי 2, כי השטח גדל פי 2.'
+        feedback: 'השטח גדל פי 2, אבל השדה בכל המלבן החדש חלש פי 2. בשדה לא אחיד אי אפשר להסתכל רק על השטח.'
+      - text: 'הוא קטן פי 4, כי השדה יורד כמו $1/r^2$.'
+        feedback: 'השדה של תיל ישר יורד כמו $1/r$ (שיעור 4.2). $1/r^2$ הוא השדה של מטען נקודתי.'
+
+  # ------------------------------------------------ OBJ-5.1-4: closed surfaces
+  - id: Q-5.1-closed-pole
+    type: twotier
+    objectives: [OBJ-5.1-4]
+    qualitative: true
+    prompt: >-
+      מקיפים את הקוטב הצפוני של מגנט מוט במשטח סגור, כדור קטן, כך שהקוטב הדרומי נשאר בחוץ. מה השטף המגנטי דרך הכדור?
+    choices:
+      - text: 'אפס.'
+        correct: true
+        feedback: נכון.
+      - text: 'חיובי: מהקוטב הצפוני הקווים יוצאים.'
+        feedback: 'מהקוטב הקווים אכן יוצאים, אבל זה לא כל הסיפור. מאיפה הם הגיעו אל הקוטב? בדקו באיור 5.1ג.'
+        misconception: MC-magflux-pole-like-charge
+      - text: 'שלילי: הקווים נכנסים אל המגנט.'
+        feedback: 'מחוץ למגנט הקווים נכנסים אל הקוטב **הדרומי**, שנמצא מחוץ לכדור. מהקוטב הצפוני הם יוצאים.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'קווי השדה המגנטי סגורים: כל קו שיוצא מהקוטב הצפוני נכנס לכדור דרך גוף המגנט.'
+        correct: true
+        feedback: 'נכון. בתוך המגנט הקווים הולכים מ-S אל N. אין קוטב בודד, ולכן אין קו שמתחיל בתוך הכדור: כמה שיוצאים, כך נכנסים.'
+      - text: 'הקוטב הצפוני הוא כמו מטען חיובי, ולפי חוק גאוס השטף שווה ל"מטען המגנטי" שבפנים.'
+        feedback: 'אין מטען מגנטי: בשיעור 4.1 ראינו שגם חתיכה קטנה של מגנט היא מגנט שלם, עם שני קטבים. הקווים לא מתחילים בקוטב, הם עוברים דרכו.'
+        misconception: MC-magflux-pole-like-charge
+      - text: 'בתוך הכדור אין שדה מגנטי.'
+        feedback: 'יש: הקוטב והחלק של המגנט שבתוך הכדור מוקפים בשדה חזק. השטף נטו אפס, אבל השדה לא.'
+        misconception: MC-magflux-zero-means-no-field
+
+  - id: Q-5.1-cube-face
+    type: numeric
+    objectives: [OBJ-5.1-4, OBJ-5.1-1]
+    level: mid
+    prompt: >-
+      קובייה דמיונית שאורך צלעה $20\,\text{cm}$ נמצאת בשדה מגנטי אחיד של $0.5\,\text{T}$, ששתיים מפאותיה ניצבות לו. האנך של כל פאה מצביע החוצה מהקובייה. מה השטף דרך הפאה שדרכה הקווים **נכנסים** לקובייה? ענו בובר, עם סימן.
+    answer: -0.02
+    unit: Wb
+    tolerance: 0.03
+    correctFeedback: 'נכון. $A = 0.04\,\text{m}^2$, והאנך החיצוני של פאת הכניסה מצביע נגד השדה: $\Phi = 0.5\cdot0.04\cdot\cos180^\circ = -0.02\,\text{Wb}$. דרך הפאה שממול $+0.02\,\text{Wb}$, ודרך כל הקובייה אפס.'
+    wrongFeedback: 'במשטח סגור האנך מצביע החוצה. בפאה שדרכה הקווים נכנסים, האנך החיצוני מצביע נגד השדה.'
+    commonWrong:
+      - value: 0.02
+        feedback: 'הגודל נכון, אבל בפאה הזאת הקווים עוברים נגד האנך החיצוני, ולכן השטף שלילי.'
+        misconception: MC-magflux-sign-fixed
+      - value: 2000
+        feedback: 'הצבתם את השטח בסנטימטרים רבועים. $20\,\text{cm} = 0.2\,\text{m}$, ו-$A = 0.04\,\text{m}^2$.'
+
+  - id: Q-5.1-bowl
+    type: mc
+    objectives: [OBJ-5.1-4]
+    qualitative: true
+    level: bagrut
+    prompt: >-
+      לולאה מעגלית נמצאת בשדה מגנטי אחיד שניצב למישורה, והשטף דרכה $\Phi_0$. על הלולאה מותחים משטח בצורת קערה, חצי כדור, ששטחו פי 2 משטח הלולאה. מה השטף דרך הקערה?
+    choices:
+      - text: '$\Phi_0$'
+        correct: true
+        feedback: 'נכון. הקערה והלולאה השטוחה יוצרים יחד משטח סגור, והשטף המגנטי דרך משטח סגור הוא אפס. כל קו שעובר דרך הלולאה עובר גם דרך הקערה.'
+      - text: '$2\Phi_0$'
+        feedback: 'שטח הקערה גדול פי 2, אבל השדה לא ניצב לה ברוב המקומות, ולכן אי אפשר להכפיל את $B$ בשטח שלה. ספרו קווים: אותם קווים עוברים דרך שני המשטחים.'
+        misconception: MC-magflux-bigger-surface-more-flux
+      - text: 'אפס, כי הקערה היא חצי ממשטח סגור.'
+        feedback: 'שטף אפס הוא דרך משטח סגור **שלם**. הקערה לבדה פתוחה, והקווים שעוברים דרך הלולאה עוברים גם דרכה.'
+        misconception: MC-magflux-pole-like-charge
+      - text: 'אי אפשר לדעת בלי לחשב את השדה בכל נקודה על הקערה.'
+        feedback: 'אפשר: מכיוון שהשטף דרך משטח סגור הוא אפס, השטף דרך הקערה חייב להיות שווה לשטף דרך המשטח השטוח של הלולאה.'
+
+  - id: Q-5.1-electric-vs-magnetic
+    type: mc
+    objectives: [OBJ-5.1-4]
+    qualitative: true
+    prompt: >-
+      משווים שטף חשמלי לשטף מגנטי דרך **משטח סגור**. איזו טענה נכונה?
+    choices:
+      - text: 'השטף החשמלי יכול להיות שונה מאפס, והשטף המגנטי תמיד אפס.'
+        correct: true
+        feedback: 'נכון. קווי שדה חשמלי מתחילים במטענים חיוביים ונגמרים בשליליים, ולכן השטף שווה למטען הכלוא חלקי $\varepsilon_0$. קווי שדה מגנטי סגורים, ואין מטען מגנטי.'
+      - text: 'שניהם תמיד אפס.'
+        feedback: 'השטף החשמלי דרך משטח סגור שמקיף מטען הוא $q/\varepsilon_0$, לא אפס (שיעור 1.7).'
+      - text: 'שניהם יכולים להיות שונים מאפס: מגנט בפנים נותן שטף מגנטי, כמו מטען.'
+        feedback: 'מגנט שלם בתוך המשטח, או רק קוטב אחד שלו, נותן שטף מגנטי אפס: כל קו שיוצא חוזר דרך המגנט.'
+        misconception: MC-magflux-pole-like-charge
+      - text: 'השטף המגנטי יכול להיות שונה מאפס, והחשמלי תמיד אפס.'
+        feedback: 'הפוך. השטף החשמלי תלוי במטען הכלוא, והשטף המגנטי תמיד אפס.'
