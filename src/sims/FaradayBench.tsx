@@ -36,8 +36,10 @@ import SimShell, { Slider, type TaskDef } from './core/SimShell';
 
 /* ------------------------------------------------------------------ the apparatus */
 
-/** width / height of the stage */
+/** width / height of the stage, the share of its height the bench takes, and where the axis sits in the bench */
 const ASPECT = 0.9;
+const BENCH_FRAC = 0.43;
+const AXIS_FRAC = 0.68;
 /** world span drawn across the bench [m], and its left edge */
 const WORLD_W = 0.44;
 const X_LEFT = -0.25;
@@ -421,8 +423,8 @@ export default function FaradayBench(props: FaradayBenchProps) {
     const W = view.w;
     const H = view.h;
     const ppm = W / WORLD_W;
-    const benchH = H * 0.47;
-    const axisY = benchH * 0.66;
+    const benchH = H * BENCH_FRAC;
+    const axisY = benchH * AXIS_FRAC;
     const sx = (x: number) => (x - X_LEFT) * ppm;
     drawBench(ctx, p, s, { W, benchH, axisY, ppm, sx }, magnetLines, coilLines);
     drawGraphs(ctx, p, s, { W, H, top: benchH });
@@ -440,7 +442,7 @@ export default function FaradayBench(props: FaradayBenchProps) {
     const v = viewRef.current;
     if (!v) return false;
     const ppm = v.w / WORLD_W;
-    const axisY = v.h * 0.47 * 0.66;
+    const axisY = v.h * BENCH_FRAC * AXIS_FRAC;
     const cx = (sourcePos - X_LEFT) * ppm;
     const halfW = (s.mode === 'magnet' ? MAG_L / 2 : 0.012) * ppm + 14;
     const halfH = (s.mode === 'magnet' ? MAG_R : A_SRC) * ppm + 14;
@@ -450,7 +452,7 @@ export default function FaradayBench(props: FaradayBenchProps) {
   const hitSwitch = (ex: number, ey: number): boolean => {
     const v = viewRef.current;
     if (!v || s.mode !== 'coils') return false;
-    const sw = switchBox(v.w, v.h * 0.47, v.w / WORLD_W, s.xs);
+    const sw = switchBox(v.h * BENCH_FRAC, v.w / WORLD_W, s.xs);
     return Math.abs(ex - sw.x) < 26 && Math.abs(ey - sw.y) < 20;
   };
 
@@ -734,7 +736,7 @@ interface BenchLayout {
 }
 
 /** where the switch of the source coil's circuit sits, in screen space */
-function switchBox(W: number, benchH: number, ppm: number, xs: number) {
+function switchBox(benchH: number, ppm: number, xs: number) {
   const cx = (xs - X_LEFT) * ppm;
   return { x: (leftColumn(cx, ppm) + cx + 0.006 * ppm) / 2, y: benchH * 0.14 };
 }
@@ -952,7 +954,7 @@ function drawSourceCircuit(ctx: CanvasRenderingContext2D, p: Palette, s: Sim, L:
   const cx = sx(s.xs);
   const top = axisY - A_SRC * ppm;
   const lead = 0.006 * ppm;
-  const sw = switchBox(L.W, benchH, ppm, s.xs);
+  const sw = switchBox(benchH, ppm, s.xs);
   const yTop = sw.y;
   const yBot = yTop + 30;
   const xL = leftColumn(cx, ppm);
