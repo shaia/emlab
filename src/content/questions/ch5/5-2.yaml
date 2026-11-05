@@ -1,0 +1,327 @@
+# Lesson 5.2 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/induction.ts (averageEmf); script q52.ts in the
+# session scratchpad. The data differ from figure 5.2 and the worked examples on purpose.
+
+chapter: 5
+questions:
+  # ------------------------------------------------ OBJ-5.2-1: when is an emf induced
+  - id: Q-5.2-magnet-at-rest
+    type: mc
+    objectives: [OBJ-5.2-1]
+    qualitative: true
+    prompt: >-
+      מגנט מוט חזק מונח בתוך סליל כבר דקה, ולא זז. קצות הסליל מחוברים לגלוונומטר שהאפס שלו באמצע. מחליפים את המגנט, בזהירות, במגנט חזק פי 2, ומשאירים גם אותו במנוחה דקה. מה מראה הגלוונומטר בזמן שהמגנט החזק נח בתוך הסליל?
+    choices:
+      - text: 'אפס.'
+        correct: true
+        feedback: 'נכון. השטף דרך הסליל גדול, אבל קבוע: $\Delta\Phi = 0$, ולכן $\varepsilon = 0$. המחוג זז רק בזמן ההחלפה, כשהשטף השתנה.'
+      - text: 'סטייה קבועה, גדולה פי 2 מזו של המגנט הראשון.'
+        feedback: 'השדה של מגנט שנח לא מניע זרם, חזק ככל שיהיה. מה שמשרה כא"מ הוא שינוי בשטף, והשטף לא משתנה כשהמגנט נח.'
+        misconception: MC-faraday-field-not-change
+      - text: 'סטייה קבועה, באותו גודל כמו עם המגנט הראשון.'
+        feedback: 'גם עם המגנט הראשון המחוג היה באפס בזמן המנוחה. שטף קבוע לא משרה כא"מ.'
+        misconception: MC-faraday-field-not-change
+      - text: 'סטייה שהולכת וגדלה, כל עוד המגנט בפנים.'
+        feedback: 'שום דבר לא משתנה בזמן שהמגנט נח, ולכן גם המחוג לא זז. כא"מ מושרה נוצר רק כשהשטף משתנה.'
+        misconception: MC-faraday-field-not-change
+
+  - id: Q-5.2-which-induce
+    type: multi
+    objectives: [OBJ-5.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סליל מחובר לגלוונומטר. באילו מהמצבים הבאים זורם בסליל זרם מושרה? סמנו את כל התשובות הנכונות.
+    choices:
+      - text: 'מקרבים את הסליל אל מגנט שמונח על השולחן.'
+        correct: true
+        feedback: 'נכון. ככל שהסליל מתקרב, יותר קווי שדה עוברים דרכו, והשטף משתנה. לא משנה מי מהשניים זז.'
+      - text: 'בסליל סמוך זורם זרם, ומקטינים אותו בעזרת נגד משתנה.'
+        correct: true
+        feedback: 'נכון. זרם שקטן נותן שדה שנחלש, והשטף דרך הסליל שלנו קטן. כל שינוי בזרם הסמוך משרה כא"מ, לא רק הדלקה וכיבוי.'
+      - text: 'בסליל סמוך זורם זרם חזק וקבוע.'
+        feedback: 'השדה של זרם קבוע קבוע, והשטף דרך הסליל שלנו לא משתנה. אין כא"מ מושרה, אף שהשדה עובר דרך הסליל.'
+        misconception: MC-faraday-field-not-change
+      - text: 'מגנט מונח בתוך הסליל, ושניהם נישאים יחד לאורך החדר באותה מהירות.'
+        feedback: 'המגנט והסליל לא זזים זה ביחס לזה, ולכן השטף דרך הסליל לא משתנה. תנועה לבדה לא מספיקה.'
+        misconception: MC-faraday-field-not-change
+      - text: 'מגנט מוט נמצא על הציר של הסליל, ומסובבים אותו סביב הציר הזה.'
+        feedback: 'השדה של מגנט מוט סימטרי סביב הציר שלו, ולכן סיבוב כזה לא משנה אותו באף נקודה. השטף לא משתנה, ואין זרם.'
+
+  - id: Q-5.2-switch-steady
+    type: twotier
+    objectives: [OBJ-5.2-1]
+    qualitative: true
+    prompt: >-
+      שני סלילים עומדים זה ליד זה על אותו ציר. הראשון מחובר לסוללה דרך מפסק, והשני לגלוונומטר. סוגרים את המפסק ומחכים חצי דקה. מה מראה הגלוונומטר **אחרי** חצי הדקה?
+    choices:
+      - text: 'אפס.'
+        correct: true
+        feedback: נכון.
+      - text: 'סטייה קבועה, כל עוד המפסק סגור.'
+        feedback: 'בזמן שהמפסק סגור עובר בסליל הראשון זרם קבוע, והשדה שלו קבוע. שטף קבוע לא משרה כא"מ.'
+        misconception: MC-faraday-field-not-change
+      - text: 'סטייה שהולכת וקטנה, כי הסוללה מתרוקנת.'
+        feedback: 'סוללה מתרוקנת במשך שעות, לא בחצי דקה. אחרי שהזרם התייצב, השטף דרך הסליל השני לא משתנה, והמחוג באפס.'
+        misconception: MC-faraday-field-not-change
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'השטף דרך הסליל השני השתנה רק בזמן שהזרם בסליל הראשון עלה. אחרי שהזרם התייצב, $\Delta\Phi = 0$.'
+        correct: true
+        feedback: 'נכון. המחוג זז לרגע כשסוגרים את המפסק, וחוזר לאפס. הוא יזוז שוב, לצד השני, כשיפתחו את המפסק.'
+      - text: 'השדה של הסליל הראשון לא מגיע לסליל השני.'
+        feedback: 'השדה מגיע, והשטף דרך הסליל השני גדול. אבל הוא קבוע, ולכן לא משרה כא"מ.'
+      - text: 'השדה של הסליל הראשון עובר דרך הסליל השני, ולכן מניע בו זרם.'
+        feedback: 'שדה שעובר דרך סליל לא מניע בו זרם. רק שינוי בשטף משרה כא"מ.'
+        misconception: MC-faraday-field-not-change
+
+  # ------------------------------------------------ OBJ-5.2-2: ε = −NΔΦ/Δt and I = ε/R
+  - id: Q-5.2-average-emf
+    type: numeric
+    objectives: [OBJ-5.2-2]
+    prompt: >-
+      סליל של $150$ כריכות נמצא ליד מגנט. מקרבים את המגנט, ותוך $0.05\,\text{s}$ השטף דרך כל כריכה גדל מ-$1.2\cdot10^{-4}\,\text{Wb}$ ל-$4.2\cdot10^{-4}\,\text{Wb}$. מה **גודל** הכא"מ המושרה הממוצע בסליל? ענו בוולט.
+    answer: 0.9
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\Delta\Phi = 4.2\cdot10^{-4} - 1.2\cdot10^{-4} = 3\cdot10^{-4}\,\text{Wb}$, ו-$|\varepsilon| = N\dfrac{|\Delta\Phi|}{\Delta t} = 150\cdot\dfrac{3\cdot10^{-4}}{0.05} = 0.9\,\text{V}$.'
+    wrongFeedback: 'מחשבים קודם את השינוי בשטף דרך כריכה אחת, אחר כך מחלקים בזמן ומכפילים במספר הכריכות: $|\varepsilon| = N\,|\Delta\Phi|/\Delta t$.'
+    commonWrong:
+      - value: 0.006
+        feedback: 'זה הכא"מ בכריכה אחת. הכריכות מחוברות בטור, וכל אחת תורמת את אותו כא"מ: מכפילים ב-$N = 150$.'
+        misconception: MC-faraday-ignore-turns
+      - value: 1.26
+        feedback: 'הצבתם את השטף הסופי, $4.2\cdot10^{-4}\,\text{Wb}$. הכא"מ תלוי בשינוי בשטף, $\Delta\Phi = 3\cdot10^{-4}\,\text{Wb}$, לא בשטף עצמו.'
+        misconception: MC-faraday-emf-follows-flux
+      - value: 0.045
+        feedback: 'זה $N\,\Delta\Phi$, בלי לחלק בזמן. הכא"מ הוא קצב השינוי: מחלקים ב-$\Delta t = 0.05\,\text{s}$.'
+        misconception: MC-faraday-change-not-rate
+      - value: 0.00225
+        feedback: 'כפלתם ב-$\Delta t$ במקום לחלק בו. שינוי מהיר יותר, $\Delta t$ קטן יותר, נותן כא"מ **גדול** יותר.'
+        misconception: MC-faraday-change-not-rate
+
+  - id: Q-5.2-current
+    type: numeric
+    objectives: [OBJ-5.2-2]
+    level: mid
+    prompt: >-
+      סליל של $400$ כריכות מחובר למעגל שההתנגדות הכוללת שלו $8\,\Omega$. תוך $0.2\,\text{s}$ השטף דרך כל כריכה קטן מ-$5\cdot10^{-4}\,\text{Wb}$ ל-$1\cdot10^{-4}\,\text{Wb}$. מה גודל הזרם המושרה הממוצע? ענו באמפר.
+    answer: 0.1
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. $|\varepsilon| = 400\cdot\dfrac{4\cdot10^{-4}}{0.2} = 0.8\,\text{V}$, ו-$I = \dfrac{0.8}{8} = 0.1\,\text{A}$.'
+    wrongFeedback: 'שני שלבים: קודם הכא"מ, $|\varepsilon| = N\,|\Delta\Phi|/\Delta t$, ואחר כך הזרם, $I = |\varepsilon|/R$.'
+    commonWrong:
+      - value: 0.8
+        feedback: 'זה הכא"מ, בוולט. השאלה על הזרם: מחלקים בהתנגדות, $I = \varepsilon/R$.'
+      - value: 6.4
+        feedback: 'כפלתם את הכא"מ בהתנגדות. לפי חוק אוהם הזרם הוא הכא"מ **חלקי** ההתנגדות.'
+      - value: 0.00025
+        feedback: 'זה הזרם שכריכה אחת הייתה מניעה. בסליל $400$ כריכות בטור, והכא"מ גדול פי $400$.'
+        misconception: MC-faraday-ignore-turns
+      - value: 0.125
+        feedback: 'הצבתם את השטף ההתחלתי, $5\cdot10^{-4}\,\text{Wb}$, במקום השינוי בשטף, $4\cdot10^{-4}\,\text{Wb}$.'
+        misconception: MC-faraday-emf-follows-flux
+
+  - id: Q-5.2-faster-same-change
+    type: mc
+    objectives: [OBJ-5.2-2]
+    qualitative: true
+    prompt: >-
+      מכניסים מגנט לסליל תוך $0.5\,\text{s}$, והכא"מ המושרה הממוצע הוא $12\,\text{mV}$. מוציאים את המגנט ומכניסים אותו שוב, מאותה נקודת התחלה ועד אותה נקודה בתוך הסליל, אבל תוך $0.1\,\text{s}$. מה גודל הכא"מ הממוצע עכשיו?
+    choices:
+      - text: '$60\,\text{mV}$'
+        correct: true
+        feedback: 'נכון. השינוי בשטף זהה, והזמן קצר פי $5$, ולכן הקצב, והכא"מ, גדולים פי $5$.'
+      - text: '$12\,\text{mV}$'
+        feedback: 'השינוי בשטף אותו שינוי, אבל הכא"מ הוא **קצב** השינוי, $\Delta\Phi/\Delta t$. בזמן קצר פי $5$, הכא"מ גדול פי $5$.'
+        misconception: MC-faraday-change-not-rate
+      - text: '$2.4\,\text{mV}$'
+        feedback: 'זה היה נכון אם הכא"מ היה פרופורציוני לזמן. הוא פרופורציוני ל-$1/\Delta t$: מהר יותר, כא"מ גדול יותר.'
+        misconception: MC-faraday-change-not-rate
+      - text: '$300\,\text{mV}$'
+        feedback: 'הכא"מ פרופורציוני ל-$1/\Delta t$, לא ל-$1/\Delta t^2$. זמן קצר פי $5$ נותן כא"מ גדול פי $5$, לא פי $25$.'
+
+  - id: Q-5.2-rank-turns-time
+    type: rank
+    objectives: [OBJ-5.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ארבעה סלילים באותו גודל. בכל אחד מהם השטף דרך כל כריכה משתנה באותה כמות $\Delta\Phi$, אבל מספר הכריכות והזמן שונים. סדרו את הסלילים לפי גודל הכא"מ הממוצע, מהגדול לקטן (שני סלילים עם כא"מ שווה תופסים אותו מקום).
+    items:
+      - { id: a, label: '$100$ כריכות, $\Delta t = 0.2\,\text{s}$' }
+      - { id: b, label: '$200$ כריכות, $\Delta t = 0.2\,\text{s}$' }
+      - { id: c, label: '$200$ כריכות, $\Delta t = 0.8\,\text{s}$' }
+      - { id: d, label: '$400$ כריכות, $\Delta t = 0.4\,\text{s}$' }
+    order: [[b, d], a, c]
+    correctFeedback: 'נכון. הכא"מ פרופורציוני ל-$N/\Delta t$: $1000$, $1000$, $500$ ו-$250$ לשנייה, כפול $\Delta\Phi$. בסליל d יש פי 2 כריכות מבסליל b, אבל השינוי איטי פי 2, והשניים מתקזזים.'
+    wrongFeedback: 'חשבו לכל סליל את $N/\Delta t$. הכא"מ גדל עם מספר הכריכות, וקטן כשהשינוי לוקח יותר זמן.'
+
+  - id: Q-5.2-turns-flux
+    type: mc
+    objectives: [OBJ-5.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מכניסים מגנט לסליל של $100$ כריכות, ומודדים את הכא"מ. אחר כך מלפפים על אותו גליל עוד $100$ כריכות, צמודות לראשונות, ומכניסים את המגנט שוב באותה תנועה. מה קרה לשטף דרך כל כריכה, ומה לכא"מ?
+    choices:
+      - text: 'השטף דרך כל כריכה לא השתנה, והכא"מ גדל פי 2.'
+        correct: true
+        feedback: 'נכון. השטף דרך כריכה תלוי במגנט ובשטח שלה, לא במספר הכריכות. אבל עכשיו יש פי 2 כריכות בטור, וכל אחת תורמת את אותו כא"מ.'
+      - text: 'השטף דרך כל כריכה לא השתנה, ולכן גם הכא"מ לא השתנה.'
+        feedback: 'בכל כריכה נוצר כא"מ $\Delta\Phi/\Delta t$, והכריכות מחוברות בטור, כמו סוללות בטור. פי 2 כריכות, פי 2 כא"מ.'
+        misconception: MC-faraday-ignore-turns
+      - text: 'השטף דרך כל כריכה גדל פי 2, והכא"מ גדל פי 2.'
+        feedback: 'הכריכות הנוספות לא מוסיפות שדה, ולכן השטף דרך כל כריכה נשאר כמו שהיה. מה שגדל פי 2 הוא מספר הכריכות שבהן נוצר כא"מ.'
+        misconception: MC-faraday-ignore-turns
+      - text: 'השטף דרך כל כריכה גדל פי 2, והכא"מ גדל פי 4.'
+        feedback: 'השטף דרך כל כריכה לא משתנה כשמוסיפים כריכות. הכא"מ גדל פי 2, רק בגלל $N$.'
+        misconception: MC-faraday-ignore-turns
+
+  # ------------------------------------------------ OBJ-5.2-3: the emf as the slope of Φ(t)
+  - id: Q-5.2-graph-largest
+    type: mc
+    objectives: [OBJ-5.2-3]
+    qualitative: true
+    prompt: >-
+      השטף דרך סליל משתנה כך: מ-$0$ עד $2\,\text{s}$ הוא עולה בקצב קבוע מ-$0$ ל-$6\cdot10^{-4}\,\text{Wb}$, מ-$2$ עד $5\,\text{s}$ הוא נשאר קבוע, ומ-$5$ עד $6\,\text{s}$ הוא יורד בקצב קבוע בחזרה ל-$0$. באיזה פרק זמן גודל הכא"מ המושרה הכי גדול?
+    choices:
+      - text: 'מ-$5$ עד $6\,\text{s}$.'
+        correct: true
+        feedback: 'נכון. שם הגרף של $\Phi(t)$ הכי תלול: אותו שינוי בשטף כמו בקטע הראשון, בחצי מהזמן.'
+      - text: 'מ-$2$ עד $5\,\text{s}$.'
+        feedback: 'בקטע הזה השטף הכי גדול, אבל הוא לא משתנה: הגרף אופקי, השיפוע אפס, והכא"מ אפס.'
+        misconception: MC-faraday-emf-follows-flux
+      - text: 'מ-$0$ עד $2\,\text{s}$.'
+        feedback: 'גם כאן יש כא"מ, אבל השיפוע $3\cdot10^{-4}\,\text{Wb/s}$, חצי מהשיפוע בקטע האחרון, $6\cdot10^{-4}\,\text{Wb/s}$.'
+      - text: 'באותה מידה מ-$0$ עד $2\,\text{s}$ ומ-$5$ עד $6\,\text{s}$, כי בשניהם השטף משתנה ב-$6\cdot10^{-4}\,\text{Wb}$.'
+        feedback: 'השינוי בשטף שווה, אבל הזמן לא: הכא"מ הוא קצב השינוי, ובקטע האחרון השינוי מהיר פי 2.'
+        misconception: MC-faraday-change-not-rate
+
+  - id: Q-5.2-graph-slope
+    type: numeric
+    objectives: [OBJ-5.2-3, OBJ-5.2-4]
+    level: mid
+    prompt: >-
+      סליל של $50$ כריכות. השטף דרך כל כריכה, לאורך האנך שבחרנו, עולה בקצב קבוע מ-$0$ ל-$6\cdot10^{-4}\,\text{Wb}$ בין $t = 0$ ל-$t = 2\,\text{s}$. מה הכא"מ המושרה, **כולל הסימן**, ברגע $t = 1\,\text{s}$? ענו בוולט.
+    answer: -0.015
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. הגרף ישר, ולכן השיפוע שלו בכל רגע הוא $\dfrac{6\cdot10^{-4}}{2} = 3\cdot10^{-4}\,\text{Wb/s}$, ו-$\varepsilon = -50\cdot3\cdot10^{-4} = -0.015\,\text{V}$. השטף גדל, ולכן הכא"מ שלילי.'
+    wrongFeedback: 'הכא"מ ברגע מסוים הוא $-N$ כפול השיפוע של הגרף של $\Phi(t)$. בקטע ישר השיפוע הוא $\Delta\Phi/\Delta t$ של הקטע כולו.'
+    commonWrong:
+      - value: 0.015
+        feedback: 'הגודל נכון, אבל הסימן לא. לפי $\varepsilon = -N\,\Delta\Phi/\Delta t$, כשהשטף גדל, $\Delta\Phi > 0$, הכא"מ **שלילי**.'
+        misconception: MC-faraday-sign-follows-flux
+      - value: -0.0003
+        feedback: 'זה מינוס השיפוע, בלי $N$. יש $50$ כריכות בטור: $\varepsilon = -50\cdot3\cdot10^{-4}$.'
+        misconception: MC-faraday-ignore-turns
+      - value: -0.06
+        feedback: 'כפלתם את השינוי בשטף בזמן, $50\cdot6\cdot10^{-4}\cdot2$, במקום לחלק בו. השיפוע הוא השינוי בשטף **לכל שנייה**: $6\cdot10^{-4}/2$.'
+        misconception: MC-faraday-change-not-rate
+
+  - id: Q-5.2-zero-crossing
+    type: twotier
+    objectives: [OBJ-5.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      השטף דרך סליל יורד בקצב קבוע, מ-$+4\cdot10^{-4}\,\text{Wb}$ ל-$-4\cdot10^{-4}\,\text{Wb}$, בין $t = 0$ ל-$t = 0.4\,\text{s}$. ברגע $t = 0.2\,\text{s}$ השטף אפס. מה הכא"מ המושרה ברגע הזה?
+    choices:
+      - text: 'בדיוק כמו בכל רגע אחר בין $0$ ל-$0.4\,\text{s}$, ולא אפס.'
+        correct: true
+        feedback: נכון.
+      - text: 'אפס, כי השטף אפס.'
+        feedback: 'הכא"מ לא תלוי בגובה הגרף של $\Phi$ אלא בשיפוע שלו. ברגע $t = 0.2\,\text{s}$ הגרף חוצה את האפס באותו שיפוע כמו בכל הקטע.'
+        misconception: MC-faraday-emf-follows-flux
+      - text: 'הכי גדול, כי ברגע הזה השטף מחליף סימן.'
+        feedback: 'הגרף ישר, ולכן השיפוע שלו, והכא"מ, קבועים לאורך כל הקטע. ברגע $t = 0.2\,\text{s}$ אין שום דבר מיוחד מבחינת הכא"מ.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'הכא"מ הוא $-N$ כפול השיפוע של הגרף $\Phi(t)$, והשיפוע קבוע לאורך כל הקטע.'
+        correct: true
+        feedback: 'נכון. השיפוע $\dfrac{-8\cdot10^{-4}}{0.4} = -2\cdot10^{-3}\,\text{Wb/s}$ בכל רגע, ולכן $\varepsilon = N\cdot2\cdot10^{-3}\,\text{V}$, חיובי, בכל רגע, גם כשהשטף אפס.'
+      - text: 'הכא"מ פרופורציוני לשטף.'
+        feedback: 'אילו כך היה, מגנט שנח בתוך סליל היה נותן כא"מ קבוע. הכא"מ פרופורציוני לקצב השינוי של השטף.'
+        misconception: MC-faraday-emf-follows-flux
+      - text: 'כשהשטף מחליף סימן, גם הכא"מ מחליף סימן.'
+        feedback: 'הסימן של הכא"מ נקבע לפי הסימן של **השינוי** בשטף, לא לפי הסימן של השטף. כאן השטף יורד כל הזמן, ולכן הכא"מ חיובי כל הזמן.'
+        misconception: MC-faraday-sign-follows-flux
+
+  # ------------------------------------------------ OBJ-5.2-4: the sign convention
+  - id: Q-5.2-sign-decrease
+    type: twotier
+    objectives: [OBJ-5.2-4]
+    qualitative: true
+    prompt: >-
+      בוחרים לכריכה אנך בכיוון השדה המגנטי שעובר דרכה, ולכן השטף חיובי. השדה נחלש, והשטף קטן (אבל נשאר חיובי). מה הסימן של הכא"מ המושרה?
+    choices:
+      - text: 'חיובי: הזרם המושרה זורם בכיוון החיובי שהאנך קובע.'
+        correct: true
+        feedback: נכון.
+      - text: 'שלילי: הזרם המושרה זורם נגד הכיוון החיובי.'
+        feedback: 'שלילי הוא הסימן של **השינוי** בשטף, $\Delta\Phi < 0$. חוק פאראדיי מכפיל אותו במינוס: $\varepsilon = -N\,\Delta\Phi/\Delta t > 0$.'
+        misconception: MC-faraday-sign-follows-flux
+      - text: 'אפס, כי השטף עדיין חיובי.'
+        feedback: 'הכא"מ תלוי בשינוי בשטף, לא בשטף. השטף משתנה, ולכן יש כא"מ.'
+        misconception: MC-faraday-emf-follows-flux
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'השטף קטן, $\Delta\Phi < 0$, והמינוס בחוק פאראדיי הופך את הסימן.'
+        correct: true
+        feedback: 'נכון. הכא"מ מנוגד בסימנו לשינוי בשטף.'
+      - text: 'השטף חיובי, ולכן גם הכא"מ חיובי.'
+        feedback: 'התשובה נכונה, אבל הנימוק לא: אילו השטף החיובי היה **גדל**, הכא"מ היה שלילי. מה שקובע הוא הסימן של השינוי.'
+        misconception: MC-faraday-sign-follows-flux
+      - text: 'כא"מ מושרה תמיד חיובי.'
+        feedback: 'לכא"מ מושרה יש סימן, לפי הכיוון החיובי שבחרנו: הכנסה של מגנט והוצאה שלו נותנות סימנים הפוכים, והמחוג זז לצדדים הפוכים.'
+
+  - id: Q-5.2-sign-numeric
+    type: numeric
+    objectives: [OBJ-5.2-4, OBJ-5.2-2]
+    level: bagrut
+    prompt: >-
+      סליל של $100$ כריכות. השטף דרך כל כריכה, לאורך האנך שבחרנו, משתנה תוך $0.02\,\text{s}$ מ-$+3\cdot10^{-4}\,\text{Wb}$ ל-$-1\cdot10^{-4}\,\text{Wb}$: השדה מתהפך ונחלש. מה הכא"מ המושרה הממוצע, **כולל הסימן**? ענו בוולט.
+    answer: 2
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\Delta\Phi = -1\cdot10^{-4} - 3\cdot10^{-4} = -4\cdot10^{-4}\,\text{Wb}$, ולכן $\varepsilon = -100\cdot\dfrac{-4\cdot10^{-4}}{0.02} = +2\,\text{V}$.'
+    wrongFeedback: '$\Delta\Phi = \Phi_2 - \Phi_1$, עם הסימנים: שטף שעובר מחיובי לשלילי משתנה בסכום הגדלים. אחר כך $\varepsilon = -N\,\Delta\Phi/\Delta t$.'
+    commonWrong:
+      - value: -2
+        feedback: 'זה $N\,\Delta\Phi/\Delta t$ בלי המינוס. השטף קטן, $\Delta\Phi < 0$, ולכן הכא"מ חיובי.'
+        misconception: MC-faraday-sign-follows-flux
+      - value: 1
+        feedback: 'חיסרתם את הגדלים, $3\cdot10^{-4} - 1\cdot10^{-4}$. אבל השטף עבר מ-$+3\cdot10^{-4}$ ל-$-1\cdot10^{-4}$: השינוי הוא $4\cdot10^{-4}\,\text{Wb}$, כי הוא חצה את האפס.'
+      - value: 0.02
+        feedback: 'זה הכא"מ בכריכה אחת. בסליל $100$ כריכות בטור.'
+        misconception: MC-faraday-ignore-turns
+
+  - id: Q-5.2-flip-normal
+    type: twotier
+    objectives: [OBJ-5.2-4]
+    qualitative: true
+    level: mid
+    prompt: >-
+      שתי תלמידות פותרות אותה שאלה על מגנט שנכנס לסליל. דנה בוחרת אנך בכיוון אחד, ומאיה בכיוון ההפוך. מה נכון לגבי התשובות שלהן?
+    choices:
+      - text: 'הסימנים של $\Phi$, של $\Delta\Phi$ ושל $\varepsilon$ הפוכים אצל השתיים, אבל שתיהן מתארות אותו זרם, באותו כיוון.'
+        correct: true
+        feedback: נכון.
+      - text: 'הסימנים הפוכים, ולכן אחת מהן מקבלת זרם בכיוון הלא נכון.'
+        feedback: 'אצל כל אחת מהן גם הכיוון החיובי התהפך יחד עם האנך. כא"מ חיובי אצל אחת וכא"מ שלילי אצל השנייה מתארים אותו כיוון סיבוב של הזרם.'
+        misconception: MC-faraday-sign-follows-flux
+      - text: 'שתיהן מקבלות בדיוק אותם סימנים, כי הכא"מ לא תלוי באנך.'
+        feedback: 'השטף נמדד לאורך האנך, ולכן אנך הפוך הופך את הסימן של $\Phi$, ואיתו את הסימנים של $\Delta\Phi$ ושל $\varepsilon$.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'האנך קובע גם את הסימן של השטף וגם, בכלל יד ימין, את הכיוון החיובי. כשהוא מתהפך, שניהם מתהפכים יחד.'
+        correct: true
+        feedback: 'נכון. כמו באיור 5.2ב: היפוך האנך הופך את שני הגרפים, והמחוג זז בדיוק כמו קודם.'
+      - text: 'המינוס בחוק פאראדיי מבטל את היפוך האנך, ולכן הסימן של $\varepsilon$ לא משתנה.'
+        feedback: 'המינוס שם תמיד, אצל שתיהן. היפוך האנך הופך את $\Delta\Phi$, ולכן הופך גם את $\varepsilon$.'
+      - text: 'כיוון הזרם נקבע לפי הסימן של $\varepsilon$ בלבד.'
+        feedback: 'הסימן של $\varepsilon$ אומר רק אם הזרם בכיוון החיובי או נגדו. בלי לדעת מה הכיוון החיובי, הסימן לא מספר לאן הזרם זורם.'
+        misconception: MC-faraday-sign-follows-flux
