@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below) on the `verified`
+# date. `why` claims only what the title, the chapter list or the upload summary supports; nobody has watched them.
+
+- id: v-5-10-crash-course
+  youtubeId: K40lNL3KsJ4
+  title: "Maxwell's Equations: Crash Course Physics #37"
+  channel: CrashCourse
+  lang: en
+  captions: []
+  minutes: 11
+  why: 'פרק באנגלית, אותו פרק כמו בשיעור 5.9. לפי התקצירים שלו, אחרי ארבעת החוקים הוא מראה איך הם מנבאים גלים של שדה חשמלי ושדה מגנטי שנעים במהירות האור, ושהאור הנראה הוא חלק קטן מהספקטרום. זה החלק של השיעור הזה.'
+  verified: '2026-11-05'
+
+- id: v-5-10-matimatix
+  youtubeId: OwBd6RpeSuY
+  title: 'גלים אלקטרומגנטיים ומהירות האור- מציאת מהירות האור עם משוואות מקסוול חלק א'
+  channel: 'MATIMATIX'
+  lang: he
+  captions: []
+  minutes: 9
+  why: 'סרטון בעברית, החלק הראשון בסדרה. לפי הכותרת שלו, הוא מוצא את מהירות האור ממשוואות מקסוול. התיאור שלו לא מפרט את התוכן, והאורך לא אומת מחדש.'
+  verified: '2026-11-05'

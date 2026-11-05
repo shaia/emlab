@@ -10,8 +10,10 @@ import {
   gapFieldRate,
   SCENE_CHARGES,
   sphereGauss,
+  travelTime,
   vacuumFrequency,
   vacuumWavelength,
+  waveProbe,
   waveSpeed,
 } from '~/physics/maxwellfour';
 import { relativeError } from '~/physics/vec';
@@ -76,7 +78,31 @@ describe('analytic limits', () => {
   });
 });
 
+describe('analytic limits: the wave', () => {
+  it('light crosses the Sun–Earth distance, 1.5·10¹¹ m, in 500 s, and the Earth–Moon distance, 3.84·10⁸ m, in 1.28 s', () => {
+    expect(relativeError(travelTime(1.5e11), 500)).toBeLessThan(1e-12);
+    expect(relativeError(travelTime(3.84e8), 1.28)).toBeLessThan(1e-12);
+  });
+
+  it('the probe reads E and B at their peaks together a quarter wavelength from a zero, and both zero at the zero', () => {
+    const peak = waveProbe(0.25, 0);
+    expect(relativeError(peak.E, 1)).toBeLessThan(1e-12);
+    expect(relativeError(peak.B, 1)).toBeLessThan(1e-12);
+    const zero = waveProbe(0, 0);
+    expect(Math.abs(zero.E)).toBeLessThan(1e-12);
+    expect(Math.abs(zero.B)).toBeLessThan(1e-12);
+  });
+});
+
 describe('conservation', () => {
+  it('in the travelling wave E/E₀ and B/B₀ are equal at every point and instant: the fields are in step, they never take turns', () => {
+    for (const x of [0, 0.1, 0.37, 0.5, 0.8]) for (const t of [0, 0.2, 0.65]) {
+      const p = waveProbe(x, t);
+      expect(Math.abs(p.E - p.B)).toBeLessThan(1e-12);
+    }
+  });
+
+
   it('Gauss for B: the flux out of a cube equals the flux into it, wherever the cube is, the north pole included', () => {
     for (const [x, y, a] of [
       [0, COIL_H, 0.03],
@@ -123,6 +149,18 @@ describe('scaling', () => {
     expect(up).toBeLessThan(0); // B out of the page and growing: E turns clockwise, against the walk
     expect(relativeError(down / up, -0.5)).toBeLessThan(1e-9);
     expect(relativeError(big, up)).toBeLessThan(1e-12);
+  });
+
+  it('the pattern moves one wavelength per period toward +x: what the probe reads at x, t it reads at x + 1, t + 1, and at x + ¼, t + ¼', () => {
+    for (const [x, t] of [[0.1, 0.3], [0.62, 0.05]]) {
+      const a = waveProbe(x, t);
+      expect(Math.abs(waveProbe(x + 1, t + 1).E - a.E)).toBeLessThan(1e-12);
+      expect(Math.abs(waveProbe(x + 0.25, t + 0.25).B - a.B)).toBeLessThan(1e-12);
+    }
+  });
+
+  it('the travel time grows in proportion to the distance', () => {
+    expect(relativeError(travelTime(2e7) / travelTime(1e7), 2)).toBeLessThan(1e-12);
   });
 
   it('every frequency travels at the same speed in vacuum: λ·f = c, and λ halves when f doubles', () => {

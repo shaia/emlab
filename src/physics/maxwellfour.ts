@@ -1,8 +1,9 @@
 /**
  * Maxwell's four laws in integral form (lesson 5.9): one scene per law, each with the closed surface or
  * the closed path the law speaks about, and both sides of the law computed independently, so that the
- * figure MaxwellFour can show them agree. Plus the electromagnetic wave: its speed from the two
- * constants, c = 1/√(μ₀ε₀), and where a frequency sits in the electromagnetic spectrum.
+ * figure MaxwellFour can show them agree. Plus the electromagnetic wave (lesson 5.10): its speed from the
+ * two constants, c = 1/√(μ₀ε₀), the travel time d/c, the fields at a point of the wave as fractions of
+ * their peaks, and where a frequency sits in the electromagnetic spectrum.
  *
  * MODEL SPECIFICATION
  * - System:
@@ -25,7 +26,8 @@
  *     μ₀ times the current of moving charges through the chosen surface, plus (when Maxwell's term is
  *     on) μ₀ε₀ times the rate of change of the electric flux through it (`surfaceCurrents`).
  *   - Wave: a plane wave in vacuum (waves.ts); its speed comes from the constants alone, and the
- *     wavelength from λ = c/f. Spectrum bands by wavelength, with the usual approximate boundaries.
+ *     wavelength from λ = c/f. `waveProbe` reads E/E₀ and B/B₀ at a point from `waveAt` of waves.ts.
+ *     Spectrum bands by wavelength, with the usual approximate boundaries.
  * - Dynamics: none beyond the given rates (a snapshot); the wave is drawn by `waveAt`.
  * - Boundary: the core's field and the gap's electric field vanish outside their circles; every source
  *   is long along z except the point charges.
@@ -48,7 +50,7 @@ import { circulation, straightWireField } from './magnetism';
 import { inducedE } from './maxwell';
 import type { Vec2, Vec3 } from './vec';
 import type { Field2 } from './vectorcalc';
-import { speedFromConstants } from './waves';
+import { amplitudeB, speedFromConstants, waveAt, type PlaneWave } from './waves';
 
 /* ------------------------------------------------------------------ Gauss for E */
 
@@ -204,6 +206,22 @@ export const vacuumWavelength = (f: number): number => speedFromConstants() / f;
 
 /** Frequency in vacuum for a wavelength, f = c/λ [Hz]. */
 export const vacuumFrequency = (lambda: number): number => speedFromConstants() / lambda;
+
+/** The time a wave takes to cross a distance d in vacuum, t = d/c [s]. */
+export const travelTime = (d: number): number => d / speedFromConstants();
+
+/** A unit wave (one wavelength per unit length, one period per unit time) for `waveProbe`. */
+const UNIT_WAVE: PlaneWave = { E0: 1, f: 1, v: 1 };
+
+/**
+ * E and B at a point of a wave travelling toward +x, as fractions of their peaks (E/E₀, B/B₀), at a
+ * position x given in wavelengths and a time t given in periods: the true wave of waves.ts, with B in
+ * step with E (no lag). Positive E is up the page, positive B out of it (⊙).
+ */
+export function waveProbe(xInWavelengths: number, tInPeriods: number): { E: number; B: number } {
+  const w = waveAt(UNIT_WAVE, xInWavelengths, tInPeriods);
+  return { E: w.E / UNIT_WAVE.E0, B: w.B / amplitudeB(UNIT_WAVE) };
+}
 
 export type Band = 'radio' | 'microwave' | 'infrared' | 'visible' | 'ultraviolet' | 'xray' | 'gamma';
 

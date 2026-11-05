@@ -48,16 +48,15 @@ test.describe('live figures', () => {
     await expect(page.locator('.sim-tasks li.done')).toHaveCount(0);
   });
 
-  test('both figures draw, in LTR physics space', async ({ page }) => {
+  test('the figure draws, in LTR physics space, and the strip holds the four laws only', async ({ page }) => {
     await page.goto(LESSON);
     const canvases = page.locator('.sim-stage canvas');
-    expect(await canvases.count()).toBe(2);
-    for (let i = 0; i < 2; i++) {
-      const c = canvases.nth(i);
-      await c.scrollIntoViewIfNeeded();
-      await expect(c).toHaveCSS('direction', 'ltr');
-      await expect.poll(() => inked(c)).toBeGreaterThan(200);
-    }
+    expect(await canvases.count()).toBe(1);
+    const c = canvases.first();
+    await c.scrollIntoViewIfNeeded();
+    await expect(c).toHaveCSS('direction', 'ltr');
+    await expect.poll(() => inked(c)).toBeGreaterThan(200);
+    await expect(page.locator('#fig-5-9a [data-law]')).toHaveCount(4);
   });
 
   test('Gauss: 452 N·m²/C around +4 nC; a sphere round both charges is bigger and carries less, 226', async ({ page }) => {
@@ -121,22 +120,6 @@ test.describe('live figures', () => {
     await expect(readout).toContainText('ε₀·ΔΦ_E/Δt = 0.72 A');
     const tasks = (await progress(page)).tasks;
     for (const t of ['ampere-bag', 'ampere-fix', 'ampere-gap']) expect(tasks[`fig-5-9a:${t}`]).toBeTruthy();
-    await noSideScroll(page);
-  });
-
-  test('the wave: 3 m at 100 MHz, c from the constants at every frequency, light and the grid', async ({ page }) => {
-    const fig = await openFigure(page, 'fig-5-9b');
-    const readout = fig.locator('.sim-readout');
-    await expect(readout).toContainText('λ = c/f = 3 m');
-    await expect(readout).toContainText('c = 1/√(μ₀ε₀) = 3·10⁸ m/s');
-    await fig.getByRole('button', { name: 'אור ירוק' }).click();
-    await expect(readout).toContainText('אור נראה');
-    await expect(readout).toContainText('536 nm');
-    await expect(readout).toContainText('c = 1/√(μ₀ε₀) = 3·10⁸ m/s');
-    await fig.getByRole('button', { name: 'רשת החשמל' }).click();
-    await expect(readout).toContainText('6000 km');
-    const tasks = (await progress(page)).tasks;
-    for (const t of ['wave-light', 'wave-grid']) expect(tasks[`fig-5-9b:${t}`]).toBeTruthy();
     await noSideScroll(page);
   });
 });
