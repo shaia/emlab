@@ -1,0 +1,23 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. Durations come from the watch page. `why` claims only what the title and
+# the upload description support.
+
+- id: v-5-3-lenz-he
+  youtubeId: SBbTFk-5EGI
+  title: 'חוק לנץ'
+  channel: Physics-Rulezz
+  lang: he
+  captions: []
+  minutes: 8
+  why: 'הסבר בעברית על חוק לנץ, הסרטון השלישי בסדרה על השראה אלקטרומגנטית לפיזיקה 5 יחידות (לפי תיאור הסרטון). בזמן הצפייה בדקו שהכיוונים שמתקבלים בסרטון מתאימים למתכון של ארבעת הצעדים מהשיעור.'
+  verified: '2026-11-05'
+
+- id: v-5-3-copper-pipe
+  youtubeId: N7tIi71-AjA
+  title: "Lenz's Law with Copper Pipe (H16) [5K20.25]"
+  channel: MIT Physics Instructional Resources Lab
+  lang: en
+  captions: []
+  minutes: 2
+  why: 'הדגמה אמיתית מהמעבדה של MIT: מגנט שמופל לתוך צינור נחושת מוליך נופל לאט, כי הזרם שהוא משרה בצינור יוצר שדה שמתנגד לשינוי (לפי תיאור הסרטון). השוו לאיור 5.3ב: האם המגנט בסרטון נראה כמי שנופל במהירות קבועה?'
+  verified: '2026-11-05'
