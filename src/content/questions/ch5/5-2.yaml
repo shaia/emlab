@@ -97,6 +97,8 @@ questions:
       - value: 0.045
         feedback: 'זה $N\,\Delta\Phi$, בלי לחלק בזמן. הכא"מ הוא קצב השינוי: מחלקים ב-$\Delta t = 0.05\,\text{s}$.'
         misconception: MC-faraday-change-not-rate
+      - value: -0.9
+        feedback: 'החישוב נכון, וגם הסימן: לאורך אנך בכיוון השדה של המגנט השטף גדל, ולכן $\varepsilon = -0.9\,\text{V}$. אבל השאלה שואלת על **הגודל**, $|\varepsilon|$, וגודל הוא תמיד חיובי: $0.9\,\text{V}$.'
       - value: 0.00225
         feedback: 'כפלתם ב-$\Delta t$ במקום לחלק בו. שינוי מהיר יותר, $\Delta t$ קטן יותר, נותן כא"מ **גדול** יותר.'
         misconception: MC-faraday-change-not-rate
