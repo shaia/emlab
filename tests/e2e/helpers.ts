@@ -20,7 +20,12 @@ export const hydrated = (el: Locator) => expect(el.locator('xpath=ancestor-or-se
 /**
  * Stop text steps from driving the figures. Scrolling a figure into view can bring a step paragraph
  * to mid-screen, and the step then resets the figure mid-test (by design: it is scrollytelling).
- * A capturing listener on window runs before the figures' own listeners and swallows the event.
+ * The step is dropped at dispatch (`steps.ts` calls `window.dispatchEvent` each time). A capturing
+ * listener cannot do it: the event targets window itself, and Chromium runs at-target listeners in
+ * registration order, so a figure that hydrated before the freeze still heard every step.
  */
 export const freezeSteps = (page: Page) =>
-  page.evaluate(() => window.addEventListener('emlab:step', (e) => e.stopImmediatePropagation(), true));
+  page.evaluate(() => {
+    const dispatch = window.dispatchEvent.bind(window);
+    window.dispatchEvent = (e: Event) => (e.type === 'emlab:step' ? true : dispatch(e));
+  });
