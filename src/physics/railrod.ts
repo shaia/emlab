@@ -1,6 +1,7 @@
 /**
- * A rod sliding on two parallel rails closed by a resistor, for lesson 5.4 and its figure RailRodLab:
- * the rod on an incline (the field perpendicular to the rails or vertical), the closed-form state of a
+ * A rod sliding on two parallel rails closed by a resistor, for lessons 5.4 and 5.5 and their figure
+ * RailRodLab: the rod on an incline (the field perpendicular to the rails or vertical), the rod falling
+ * between vertical rails, the rod pulled by a hanging mass over a pulley, the closed-form state of a
  * run made of segments (a parameter changes, a new segment starts from the present speed), and the
  * energy and power bookkeeping the figure shows.
  *
@@ -11,6 +12,10 @@
  *   plane makes an emf: B itself when the field is perpendicular to the rails, B·cosα when the field
  *   is vertical. With a vertical field the magnetic force on the rod is horizontal; its component
  *   along the rails is B·I·L·cosα, with I = B·L·v·cosα/R, i.e. the braking of a rod in a field B·cosα.
+ *   Between vertical rails (α = 90°, the field perpendicular to the rails) the drive is the whole
+ *   weight m·g. A rod pulled by a light string over a light frictionless pulley by a hanging mass M
+ *   moves with it as one body: the drive is M·g and the inertia m + M (the RailRod's m is then m + M),
+ *   and the tension follows from M's own equation, T = M·(g − a).
  * - Dynamics: m·dv/dt = F − B⊥²L²v/R, solved in closed form (railSpeed, railDistance). The Joule heat
  *   of a segment follows from energy conservation, Q = F·Δx − ΔK, which the tests check against the
  *   heat railStep integrates as I²R.
@@ -23,6 +28,7 @@
  *   braking and no terminal speed; callers keep B⊥·L ≠ 0 and R > 0.
  */
 
+import { G } from './constants';
 import {
   inclineDrive,
   railBrakingForce,
@@ -45,6 +51,21 @@ export const perpendicularField = (B: number, alpha: number, field: InclineField
 export function inclineRod(m: number, L: number, B: number, R: number, alpha: number, field: InclineField): RailRod {
   return { m, L, R, B: perpendicularField(B, alpha, field), F: inclineDrive(m, alpha) };
 }
+
+/** A rod of mass m falling between vertical rails, the field perpendicular to their plane: drive m·g. */
+export const fallRod = (m: number, L: number, B: number, R: number): RailRod => ({ m, L, B, R, F: m * G });
+
+/**
+ * A rod of mass m on horizontal rails, pulled over a pulley by a hanging mass M: the pair moves as one
+ * body of mass m + M driven by M·g. The RailRod's m is the total inertia m + M.
+ */
+export const pulleyRod = (m: number, M: number, L: number, B: number, R: number): RailRod => ({ m: m + M, L, B, R, F: M * G });
+
+/** Tension in the string of a pulleyRod at speed v: T = M·(g − a) [N]. */
+export const pulleyTension = (p: RailRod, M: number, v: number): number => M * (G - railAcceleration(p, v));
+
+/** Speed of a body falling freely from rest for a time t: g·t [m/s]. */
+export const freeFallSpeed = (t: number): number => G * t;
 
 /** Kinetic energy ½mv² [J]. */
 export const kinetic = (m: number, v: number): number => 0.5 * m * v * v;

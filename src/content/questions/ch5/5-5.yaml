@@ -1,0 +1,381 @@
+# Lesson 5.5 question bank (inclined and vertical rails, a hanging mass). Strings may hold $inline$ /
+# $$display$$ TeX and **bold**; they are rendered at build time.
+# Every number below was recomputed with src/physics/induction.ts (motionalEmf, railCurrent,
+# railBrakingForce, railTerminalSpeed, railTimeConstant) and src/physics/railrod.ts (inclineRod, fallRod,
+# pulleyRod, pulleyTension, railAcceleration, perpendicularField); script scratch-nums55.ts.
+# Side views: x right, y up, z out of the page. The incline rises to the right; the rod slides down to the left.
+# Q-5.5-vertical-field-vt is the former Q-5.4-incline, moved here with the incline.
+
+chapter: 5
+questions:
+  # ------------------------------------------------ OBJ-5.5-1: the incline, B perpendicular to the rails
+  - id: Q-5.5-incline-drive
+    type: mc
+    objectives: [OBJ-5.5-1]
+    qualitative: true
+    prompt: >-
+      מוט משתחרר על מסילות חלקות שנוטות בזווית $\alpha$ לאופק, בשדה מגנטי שניצב למישור המסילות. איזה כוח ממלא כאן את התפקיד של הכוח המושך של שיעור 5.4?
+    choices:
+      - text: 'רכיב הכובד לאורך המסילות, $mg\sin\alpha$.'
+        correct: true
+        feedback: 'נכון. הכוח הנורמלי מאזן את רכיב הכובד שניצב למסילות, $mg\cos\alpha$, ונשאר רק הרכיב במורד, $mg\sin\alpha$, שמניע את המוט.'
+      - text: 'כל המשקל, $mg$.'
+        feedback: 'המוט לא יכול לנוע בניצב למסילות: את רכיב הכובד שניצב להן מאזן הכוח הנורמלי. רק $mg\sin\alpha$ פועל לאורך המסילות. כל המשקל מניע את המוט רק כשהמסילות אנכיות.'
+      - text: 'הכוח הנורמלי של המסילות.'
+        feedback: 'הכוח הנורמלי ניצב למסילות, ולכן אין לו רכיב לאורכן. הוא לא מניע את המוט ולא עושה עליו עבודה.'
+      - text: 'הכוח המגנטי על המוט.'
+        feedback: 'הכוח המגנטי על הזרם המושרה תמיד נגד התנועה, במעלה המדרון. הוא בולם, לא מניע.'
+        misconception: MC-rail-magnetic-force-helps
+
+  - id: Q-5.5-incline-vt
+    type: numeric
+    objectives: [OBJ-5.5-1]
+    prompt: >-
+      מוט שמסתו $0.2\,\text{kg}$ משתחרר על מסילות חלקות שנוטות בזווית $30^\circ$, במרחק $0.5\,\text{m}$ זו מזו. בתחתית המדרון המסילות מחוברות בנגד של $0.5\,\Omega$, והשדה $0.8\,\text{T}$ ניצב למישור המסילות. מה המהירות הסופית של המוט, במטר לשנייה?
+    answer: 3.125
+    unit: m/s
+    tolerance: 0.02
+    correctFeedback: 'נכון. $v_T = \dfrac{mgR\sin\alpha}{B^2L^2} = \dfrac{0.2\cdot10\cdot0.5\cdot0.5}{0.64\cdot0.25} = \dfrac{0.5}{0.16} \approx 3.13\,\text{m/s}$.'
+    wrongFeedback: 'במהירות הסופית הכוח הבולם $B^2L^2v/R$ שווה לכוח המניע $mg\sin\alpha$.'
+    commonWrong:
+      - value: 6.25
+        feedback: 'שכחתם את $\sin\alpha$: הכוח המניע הוא רק רכיב הכובד לאורך המסילות.'
+      - value: 5.41
+        feedback: 'הצבתם $\cos\alpha$ במקום $\sin\alpha$. הרכיב שלאורך המדרון הוא $mg\sin\alpha$; ב-$\alpha = 0$ (מסילות אופקיות) הוא צריך להתאפס.'
+      - value: 2.5
+        feedback: 'העליתם בריבוע רק את $L$. גם $B$ מופיע פעמיים, בכא"מ ובכוח.'
+
+  - id: Q-5.5-incline-mass
+    type: twotier
+    objectives: [OBJ-5.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מוט מחליק במסילות משופעות, בשדה שניצב להן, ומגיע למהירות סופית. מחליפים אותו במוט כבד פי 2, מאותו אורך ומאותה התנגדות. מה המהירות הסופית של המוט הכבד?
+    choices:
+      - text: 'גדולה פי 2.'
+        correct: true
+        feedback: נכון.
+      - text: 'אותה מהירות סופית.'
+        feedback: 'זה היה נכון בשיעור 5.4, כשכוח מושך קבוע הניע את המוט. כאן הכובד מניע אותו, והכוח המניע גדל עם המסה.'
+        misconception: MC-rail-mass-never-matters
+      - text: 'קטנה פי 2.'
+        feedback: 'הכוח הבולם $B^2L^2v/R$ לא תלוי במסה. מוט כבד יותר נמשך במורד בכוח גדול יותר, ולכן צריך לנוע מהר יותר כדי שהבלימה תשתווה לו.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'הכוח המניע $mg\sin\alpha$ גדל פי 2, והכוח הבולם $B^2L^2v/R$ לא תלוי במסה: הם משתווים במהירות כפולה.'
+        correct: true
+        feedback: 'נכון. $v_T = mgR\sin\alpha/(B^2L^2)$, יחס ישר למסה.'
+      - text: 'המהירות הסופית נקבעת רק מ-$B$, $L$ ו-$R$.'
+        feedback: 'היא נקבעת מאיזון בין הכוח המניע לכוח הבולם. כאן הכוח המניע תלוי במסה.'
+        misconception: MC-rail-mass-never-matters
+      - text: 'למוט כבד יש יותר אינרציה, ולכן הוא נבלם לאט יותר.'
+        feedback: 'אינרציה קובעת כמה זמן לוקח להגיע למהירות הסופית ($\tau$ גדל), לא את המהירות עצמה. המהירות הסופית היא המצב שבו הכוח השקול אפס, ושם המסה מופיעה רק דרך הכוח המניע.'
+
+  - id: Q-5.5-incline-current-dir
+    type: vector
+    objectives: [OBJ-5.5-1]
+    allowOutIn: true
+    level: mid
+    prompt: >-
+      מבט מהצד על מסילות משופעות: המדרון עולה ימינה, והמוט, שניצב לדף, מחליק במורד, כלומר שמאלה ולמטה. השדה המגנטי ניצב למישור המסילות, ומצביע מהמדרון החוצה (למעלה ושמאלה). מה כיוון הזרם המושרה במוט?
+    answer: in
+    correctFeedback: 'נכון. כוח לורנץ על מטען חיובי: האצבעות בכיוון השדה, האגודל במורד המדרון, וכף היד פונה לתוך הדף. בדיקה: סובבו את הדף כך שהמסילות אופקיות; השדה למעלה, המוט נע שמאלה, והכוח המגנטי על זרם לתוך הדף פונה ימינה, נגד התנועה.'
+    wrong:
+      - dir: out
+        feedback: 'זה הזרם שהיה זורם אילו המוט היה עולה במדרון. בזרם החוצה מהדף הכוח המגנטי היה דוחף את המוט במורד, עם התנועה, וזה סותר את חוק לנץ.'
+        misconception: MC-rail-magnetic-force-helps
+      - dir: sw
+        feedback: 'זה כיוון התנועה. הזרם זורם לאורך המוט, והמוט ניצב לדף: הזרם לתוך הדף או החוצה ממנו.'
+      - dir: zero
+        feedback: 'המוט נע בשדה, והשטח של המעגל משתנה, ולכן יש כא"מ, וזרם במעגל הסגור.'
+        misconception: MC-rail-uniform-field-no-emf
+    wrongFeedback: 'המוט ניצב לדף, ולכן הזרם בו לתוך הדף או החוצה ממנו. השתמשו בכלל כף יד ימין על מטען חיובי שנע במורד המדרון.'
+
+  - id: Q-5.5-steeper
+    type: mc
+    objectives: [OBJ-5.5-1]
+    qualitative: true
+    prompt: >-
+      אותו מוט, אותן מסילות ואותו שדה (ניצב למסילות). מגדילים את זווית השיפוע מ-$20^\circ$ ל-$40^\circ$. מה קורה למהירות הסופית?
+    choices:
+      - text: 'גדלה, אבל פחות מפי 2.'
+        correct: true
+        feedback: 'נכון. $v_T \propto \sin\alpha$, ו-$\sin40^\circ/\sin20^\circ \approx 0.643/0.342 \approx 1.88$.'
+      - text: 'גדלה בדיוק פי 2, כי הזווית גדלה פי 2.'
+        feedback: '$v_T$ פרופורציונית ל-$\sin\alpha$, לא לזווית עצמה, ו-$\sin40^\circ$ קטן מ-$2\sin20^\circ$.'
+      - text: 'לא משתנה, כי השדה ניצב למסילות בשני המקרים.'
+        feedback: 'הבלימה באמת אותה בלימה בכל מהירות. אבל הכוח המניע, $mg\sin\alpha$, גדל עם השיפוע.'
+      - text: 'קטנה, כי המוט לוחץ פחות על המסילות.'
+        feedback: 'הכוח הנורמלי אכן קטן, אבל הוא ניצב לתנועה ולא משפיע עליה (אין חיכוך). מה שמשתנה הוא הכוח המניע, שגדל.'
+
+  # ------------------------------------------------ OBJ-5.5-2: the incline in a vertical field
+  - id: Q-5.5-vertical-field-vt
+    type: numeric
+    objectives: [OBJ-5.5-2]
+    level: bagrut
+    prompt: >-
+      מוט שמסתו $50\,\text{g}$ משתחרר על מסילות חלקות שנוטות בזווית $30^\circ$ לאופק, במרחק $40\,\text{cm}$ זו מזו. בתחתית המדרון המסילות מחוברות בנגד של $0.5\,\Omega$. בכל האזור שדה **אנכי** של $0.5\,\text{T}$. מה המהירות הסופית של המוט, במטר לשנייה?
+    answer: 4.17
+    unit: m/s
+    tolerance: 0.02
+    correctFeedback: 'נכון. רק $B\cos30^\circ \approx 0.433\,\text{T}$ ניצב למסילות: $v_T = \dfrac{mgR\sin\alpha}{B^2L^2\cos^2\alpha} = \dfrac{0.05\cdot10\cdot0.5\cdot0.5}{0.25\cdot0.16\cdot0.75} \approx 4.17\,\text{m/s}$.'
+    wrongFeedback: 'הכוח המניע $mg\sin\alpha$. השדה אנכי, ולכן רק $B\cos\alpha$ ניצב למישור המסילות: גם בכא"מ וגם ברכיב הבולם של הכוח.'
+    commonWrong:
+      - value: 3.125
+        feedback: 'הצבתם את כל $B$, כאילו השדה ניצב למסילות. רק $B\cos\alpha$ עובר דרך המעגל.'
+        misconception: MC-rail-incline-full-field
+      - value: 3.61
+        feedback: 'הכנסתם $\cos\alpha$ רק פעם אחת. הוא מופיע פעמיים: בכא"מ, $BLv\cos\alpha$, וברכיב של הכוח האופקי לאורך המסילות.'
+        misconception: MC-rail-incline-full-field
+      - value: 8.33
+        feedback: 'שכחתם את $\sin\alpha$: הכוח המניע הוא רק רכיב הכובד לאורך המסילות, $mg\sin\alpha$.'
+
+  - id: Q-5.5-vertical-compare
+    type: mc
+    objectives: [OBJ-5.5-2]
+    qualitative: true
+    prompt: >-
+      אותו מוט מחליק באותן מסילות משופעות בזווית $\alpha$, פעם בשדה שניצב למסילות ופעם בשדה **אנכי** באותה עוצמה. איך משתווה המהירות הסופית בשדה האנכי?
+    choices:
+      - text: 'גדולה פי $1/\cos^2\alpha$.'
+        correct: true
+        feedback: 'נכון. רק $B\cos\alpha$ ניצב למסילות. הכא"מ קטן פי $\cos\alpha$, ולכן גם הזרם, והכוח האופקי $BIL$ בולם רק ברכיב שלו לאורך המסילות, עוד $\cos\alpha$: הבלימה קטנה פי $\cos^2\alpha$.'
+      - text: 'אותה מהירות, כי עוצמת השדה זהה.'
+        feedback: 'עוצמה זהה, אבל רק הרכיב הניצב למישור המסילות יוצר כא"מ. בשדה אנכי זה רק $B\cos\alpha$.'
+        misconception: MC-rail-incline-full-field
+      - text: 'גדולה פי $1/\cos\alpha$.'
+        feedback: '$\cos\alpha$ מופיע פעמיים. פעם אחת בכא"מ: רק $B\cos\alpha$ יוצר אותו, ולכן גם הזרם מוכפל ב-$\cos\alpha$. ופעם שנייה בכוח: הכוח המגנטי $BIL$ אופקי, ורק הרכיב שלו לאורך המסילות, $BIL\cos\alpha$, בולם. יחד הבלימה מוכפלת ב-$\cos^2\alpha$.'
+        misconception: MC-rail-incline-full-field
+      - text: 'קטנה יותר, כי שדה אנכי בולם חזק יותר.'
+        feedback: 'שדה אנכי עובר דרך המעגל באלכסון, ופחות שטף נוסף לכל מטר שהמוט מתקדם. הבלימה חלשה יותר, והמהירות הסופית גדולה יותר.'
+
+  - id: Q-5.5-parallel-component
+    type: twotier
+    objectives: [OBJ-5.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מוט מחליק במסילות משופעות בשדה אנכי. מפרקים את השדה לשני רכיבים: אחד ניצב למישור המסילות, ואחד במישור המסילות, לאורך המדרון. האם הרכיב שלאורך המדרון תורם לבלימה של המוט?
+    choices:
+      - text: 'לא.'
+        correct: true
+        feedback: נכון.
+      - text: 'כן, בדיוק כמו הרכיב הניצב.'
+        feedback: 'שני הרכיבים לא עושים אותו דבר: רק הרכיב הניצב למסילות עובר דרך המעגל.'
+        misconception: MC-rail-incline-full-field
+      - text: 'כן, הוא דוחף את המוט במורד.'
+        feedback: 'אין לו רכיב כוח לאורך המסילות כלל, לא במעלה ולא במורד.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'הרכיב הזה מקביל למהירות של המוט, ולכן לא מפעיל כוח לורנץ על המטענים ולא יוצר כא"מ; הכוח שלו על הזרם ניצב למסילות, ומאזן אותו הכוח הנורמלי.'
+        correct: true
+        feedback: 'נכון. בלשון השטף: הוא מקביל למישור המעגל, ולכן לא עובר דרכו.'
+      - text: 'הוא מבטל את הרכיב הניצב.'
+        feedback: 'שני רכיבים ניצבים זה לזה לא מבטלים זה את זה. כל אחד פועל לחוד, והניצב הוא שבולם.'
+      - text: 'כל השדה עובר דרך המעגל, ולכן כל השדה בולם.'
+        feedback: 'דרך המעגל עובר רק הרכיב שניצב למישור שלו, כמו ב-$\Phi = BA\cos\theta$ של שיעור 5.1.'
+        misconception: MC-rail-incline-full-field
+
+  - id: Q-5.5-vertical-emf
+    type: numeric
+    objectives: [OBJ-5.5-2]
+    level: mid
+    prompt: >-
+      מוט באורך $0.5\,\text{m}$ מחליק במהירות $2\,\text{m/s}$ במסילות שנוטות בזווית $60^\circ$ לאופק, בשדה **אנכי** של $0.6\,\text{T}$. מה הכא"מ המושרה במוט, בוולט?
+    answer: 0.3
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. הרכיב שניצב למסילות $B\cos60^\circ = 0.3\,\text{T}$, ו-$\varepsilon = (B\cos\alpha)Lv = 0.3\cdot0.5\cdot2 = 0.3\,\text{V}$.'
+    wrongFeedback: 'רק הרכיב של השדה שניצב למישור המסילות יוצר כא"מ. מה הזווית בין השדה האנכי לבין האנך למסילות?'
+    commonWrong:
+      - value: 0.6
+        feedback: 'הצבתם את כל $B$. רק $B\cos\alpha$ ניצב למישור המסילות.'
+        misconception: MC-rail-incline-full-field
+      - value: 0.52
+        feedback: 'הצבתם $\sin\alpha$. הזווית בין השדה האנכי לבין האנך למסילות היא $\alpha$ עצמה, ולכן הרכיב הניצב $B\cos\alpha$. (בדיקה: במסילות אופקיות, $\alpha = 0$, כל השדה ניצב.)'
+
+  # ------------------------------------------------ OBJ-5.5-3: vertical rails and a hanging mass
+  - id: Q-5.5-fall-graph
+    type: mc
+    objectives: [OBJ-5.5-3]
+    qualitative: true
+    prompt: >-
+      מוט משתחרר ממנוחה בין שתי מסילות אנכיות, בשדה שניצב למישור המסילות; בראש המסילות הן מחוברות בנגד. איך נראה גרף המהירות של המוט לפי הזמן?
+    choices:
+      - text: 'בהתחלה הוא צמוד לקו של נפילה חופשית (שיפוע $g$), אחר כך מתעקם ומתקרב לקו אופקי.'
+        correct: true
+        feedback: 'נכון. במנוחה אין זרם, ולכן ברגע הראשון התאוצה $g$. ככל שהמהירות גדלה, הכוח הבולם כלפי מעלה גדל, והתאוצה קטנה עד שהמוט נופל במהירות קבועה.'
+      - text: 'קו ישר בשיפוע $g$: השדה לא משפיע על נפילה.'
+        feedback: 'בזמן הנפילה השטח של המעגל גדל, ולכן זורם זרם, ועל הזרם פועל כוח מגנטי כלפי מעלה. רק במעגל פתוח המוט נופל חופשית.'
+        misconception: MC-rail-falls-like-free-fall
+      - text: 'עולה עד מקסימום, ואחר כך יורד לאפס: הבלם עוצר את המוט.'
+        feedback: 'הכוח הבולם גדל עם המהירות, והוא משתווה למשקל ב-$v_T$, לא עובר אותו. כדי לעצור את המוט הוא היה צריך לפעול גם במנוחה, אבל במנוחה אין זרם.'
+        misconception: MC-eddy-brake-stops-completely
+      - text: 'קו ישר בשיפוע קטן מ-$g$, כי הבלימה מקטינה את התאוצה.'
+        feedback: 'הבלימה לא קבועה: היא גדלה עם המהירות. לכן התאוצה לא קבועה, והגרף מתעקם.'
+
+  - id: Q-5.5-fall-vt
+    type: numeric
+    objectives: [OBJ-5.5-3]
+    prompt: >-
+      מוט שמסתו $30\,\text{g}$ ואורכו בין המסילות $0.3\,\text{m}$ נופל בין שתי מסילות אנכיות חלקות, בשדה של $0.5\,\text{T}$ שניצב למישור המסילות. ההתנגדות הכוללת של המעגל $0.6\,\Omega$. מה המהירות הסופית של המוט, במטר לשנייה?
+    answer: 8
+    unit: m/s
+    tolerance: 0.03
+    correctFeedback: 'נכון. $v_T = \dfrac{mgR}{B^2L^2} = \dfrac{0.03\cdot10\cdot0.6}{0.25\cdot0.09} = \dfrac{0.18}{0.0225} = 8\,\text{m/s}$.'
+    wrongFeedback: 'במהירות הסופית הכוח הבולם $B^2L^2v/R$ שווה למשקל $mg$.'
+    commonWrong:
+      - value: 1.2
+        feedback: 'חילקתם ב-$BL$ בלי ריבועים. $B$ ו-$L$ מופיעים פעמיים: בכא"מ ובכוח.'
+      - value: 0.8
+        feedback: 'הצבתם את המסה במקום המשקל. הכוח המניע הוא $mg = 0.3\,\text{N}$.'
+      - value: 2.4
+        feedback: 'העליתם בריבוע רק את $B$. גם $L$ מופיע בריבוע.'
+
+  - id: Q-5.5-brake-hold
+    type: twotier
+    objectives: [OBJ-5.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מוט נופל בין מסילות אנכיות שמחוברות בנגד, בשדה מגנטי. תלמיד מציע: "נגדיל מאוד את השדה, והמוט יעצור ויישאר תלוי באוויר". האם זה יקרה?
+    choices:
+      - text: 'לא: המוט יגיע למהירות סופית קטנה, אבל לא ייעצר.'
+        correct: true
+        feedback: נכון.
+      - text: 'כן, בשדה חזק מספיק המוט נעצר.'
+        feedback: 'שדה חזק מקטין את המהירות הסופית, פי $B^2$, אבל לא מאפס אותה.'
+        misconception: MC-eddy-brake-stops-completely
+      - text: 'לא: בשדה חזק המוט נופל מהר יותר.'
+        feedback: 'שדה חזק יותר בולם חזק יותר בכל מהירות, ולכן המהירות הסופית קטנה.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'הכוח הבולם פרופורציוני למהירות: במנוחה אין כא"מ, אין זרם ואין כוח, והמשקל מזיז את המוט שוב.'
+        correct: true
+        feedback: 'נכון. בלם מגנטי מגביל מהירות, הוא לא מחזיק. גם במגדלי נפילה מוסיפים בלם אחר לעצירה הסופית.'
+      - text: 'שדה מגנטי לא פועל על מוט שאין בו סוללה.'
+        feedback: 'הזרם במוט מושרה מהתנועה שלו, ועליו פועל השדה. בלי תנועה אין זרם, ולכן אין כוח.'
+      - text: 'הכוח המגנטי תמיד קטן מהמשקל.'
+        feedback: 'זה לא תמיד: הכוח הבולם תלוי במהירות, וכשהמוט מהיר מ-$v_T$ (למשל אם זרקו אותו כלפי מטה) הכוח הבולם גדול מהמשקל והמוט מאט. הנקודה היא שבמנוחה הכוח הבולם אפס.'
+        misconception: MC-eddy-brake-stops-completely
+
+  - id: Q-5.5-pulley-a0
+    type: numeric
+    objectives: [OBJ-5.5-3]
+    level: mid
+    prompt: >-
+      מוט שמסתו $0.15\,\text{kg}$ מונח על מסילות אופקיות חלקות בשדה מגנטי. חוט קל קשור למוט, עובר מעל גלגלת קלה וחלקה בקצה השולחן, ובקצהו תלויה משקולת של $50\,\text{g}$. משחררים את המערכת ממנוחה. מה התאוצה של המשקולת ברגע הראשון, במטר לשנייה בריבוע?
+    answer: 2.5
+    unit: m/s^2
+    tolerance: 0.03
+    correctFeedback: 'נכון. במנוחה אין זרם, ו-$Mg = 0.5\,\text{N}$ מאיץ את כל המערכת: $a = \dfrac{Mg}{m + M} = \dfrac{0.5}{0.2} = 2.5\,\text{m/s}^2$.'
+    wrongFeedback: 'המוט והמשקולת נעים יחד. כתבו את החוק השני של ניוטון למערכת כולה.'
+    commonWrong:
+      - value: 3.33
+        feedback: 'חילקתם רק במסת המוט. גם המשקולת עצמה צריכה להאיץ: $(m + M)a = Mg$.'
+        misconception: MC-rail-pulley-rod-mass-only
+      - value: 10
+        feedback: 'זו תאוצה של נפילה חופשית, כאילו המשקולת לבדה (או $Mg$ חלקי $M$). המשקולת קשורה למוט, והמשקל שלה מאיץ את שניהם.'
+        misconception: MC-rail-pulley-rod-mass-only
+
+  - id: Q-5.5-pulley-rod-mass
+    type: mc
+    objectives: [OBJ-5.5-3]
+    qualitative: true
+    prompt: >-
+      משקולת תלויה מושכת מוט על מסילות אופקיות בשדה מגנטי, והמערכת מגיעה למהירות סופית. מחליפים את המוט במוט כבד פי 2, מאותו אורך ומאותה התנגדות, ומשאירים את המשקולת. מה קורה?
+    choices:
+      - text: 'אותה מהירות סופית, אבל המערכת מגיעה אליה לאט יותר.'
+        correct: true
+        feedback: 'נכון. במהירות הסופית $B^2L^2v_T/R = Mg$, ומסת המוט לא מופיעה. היא מופיעה רק באינרציה, $\tau = (m + M)R/(B^2L^2)$.'
+      - text: 'המהירות הסופית קטנה, כי המשקולת צריכה לגרור מוט כבד יותר.'
+        feedback: 'בהאצה, כן: התאוצה ההתחלתית $Mg/(m + M)$ קטנה. אבל במהירות קבועה אין צורך להאיץ את המוט, והמשקולת צריכה רק לאזן את הבלימה.'
+        misconception: MC-rail-pulley-rod-mass-only
+      - text: 'המהירות הסופית גדלה פי 2, כמו במסילות אנכיות.'
+        feedback: 'במסילות אנכיות המסה של המוט היא גם מקור הכוח המניע. כאן הכוח המניע הוא משקל המשקולת, $Mg$, והוא לא השתנה.'
+        misconception: MC-rail-mass-never-matters
+      - text: 'המהירות הסופית קטנה פי 2, ומגיעים אליה מהר יותר.'
+        feedback: 'מוט כבד יותר לא מגביר את הבלימה, $B^2L^2v/R$, ולא מקצר את הזמן: האינרציה גדלה.'
+
+  # ------------------------------------------------ OBJ-5.5-4: energy, and who does the work
+  - id: Q-5.5-who-works
+    type: twotier
+    objectives: [OBJ-5.5-4]
+    qualitative: true
+    prompt: >-
+      מוט נופל במהירות הסופית שלו בין מסילות אנכיות, והנגד מתחמם. מאיפה באה האנרגיה של החום?
+    choices:
+      - text: 'מהאנרגיה הפוטנציאלית של המוט.'
+        correct: true
+        feedback: נכון.
+      - text: 'מהמגנט שיוצר את השדה.'
+        feedback: 'המגנט לא נחלש ולא מאבד אנרגיה. הוא רק המנגנון שמעביר את האנרגיה מהתנועה לזרם.'
+        misconception: MC-rail-field-supplies-energy
+      - text: 'מהאנרגיה הקינטית של המוט.'
+        feedback: 'המהירות קבועה, ולכן האנרגיה הקינטית לא משתנה. היא לא יכולה להיות מקור החום.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'המוט מאבד גובה בקצב $v_T$, ולכן אנרגיה פוטנציאלית בקצב $mgv_T$, וזה בדיוק ההספק בנגד, $I^2R$.'
+        correct: true
+        feedback: 'נכון. במהירות הסופית $mg = BIL$, ולכן $mgv_T = BILv_T = I\cdot BLv_T = I\varepsilon = I^2R$.'
+      - text: 'הכוח המגנטי עושה עבודה חיובית על המוט.'
+        feedback: 'הכוח המגנטי על המוט כלפי מעלה, נגד התנועה: העבודה שלו שלילית. את העבודה החיובית עושה הכובד.'
+        misconception: MC-rail-magnetic-force-helps
+      - text: 'השדה המגנטי נחלש לאט, והאנרגיה שלו הופכת לחום.'
+        feedback: 'השדה של המגנט קבוע לאורך כל הנפילה, ולכן גם הכא"מ $BLv_T$ קבוע. אם השדה היה נחלש, המהירות הסופית הייתה משתנה.'
+        misconception: MC-rail-field-supplies-energy
+
+  - id: Q-5.5-fall-power
+    type: numeric
+    objectives: [OBJ-5.5-4]
+    level: mid
+    prompt: >-
+      מוט שמסתו $50\,\text{g}$ נופל בין מסילות אנכיות במהירות הסופית שלו, $6\,\text{m/s}$. ההתנגדות הכוללת של המעגל $0.75\,\Omega$. מה הזרם במעגל, באמפר? (לא נתונים השדה ולא אורך המוט.)
+    answer: 2
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. במהירות הסופית $mgv_T = I^2R$: $0.05\cdot10\cdot6 = 3\,\text{W}$, ולכן $I = \sqrt{3/0.75} = 2\,\text{A}$.'
+    wrongFeedback: 'במהירות הסופית כל ההספק של הכובד, $mgv_T$, הופך לחום, $I^2R$.'
+    commonWrong:
+      - value: 4
+        feedback: 'זה $I^2$. הוציאו שורש: $I = \sqrt{P/R}$.'
+      - value: 3
+        feedback: 'זה ההספק של הכובד, בוואט. הזרם מתקבל מ-$P = I^2R$.'
+      - value: 0.632
+        feedback: 'הצבתם את המסה במקום המשקל: ההספק של הכובד הוא $mg\cdot v_T$, עם $g = 10\,\text{m/s}^2$.'
+
+  - id: Q-5.5-incline-energy-way
+    type: mc
+    objectives: [OBJ-5.5-4]
+    qualitative: true
+    prompt: >-
+      מוט משתחרר ממנוחה במסילות משופעות בשדה מגנטי, ועדיין לא הגיע למהירות הסופית. נסמן ב-$\Delta U$ את האנרגיה הפוטנציאלית שהוא איבד עד עכשיו, וב-$K$ את האנרגיה הקינטית שלו עכשיו. מה נכון?
+    choices:
+      - text: '$\Delta U > K$: ההפרש הפך לחום בנגד.'
+        correct: true
+        feedback: 'נכון. $\Delta U = K + Q$, וחום מתפתח מהרגע שהמוט נע וזורם זרם.'
+      - text: '$\Delta U = K$: חום מתחיל להתפתח רק במהירות הסופית.'
+        feedback: 'זרם זורם, וחום מתפתח, מהרגע הראשון שהמוט נע. במהירות הסופית **כל** האנרגיה שהוא מאבד הופכת לחום; לפני כן רק חלק ממנה.'
+        misconception: MC-rail-work-all-kinetic
+      - text: '$\Delta U < K$: השדה המגנטי מוסיף למוט אנרגיה.'
+        feedback: 'הכוח המגנטי נגד התנועה ולוקח אנרגיה מהמוט. השדה לא מקור אנרגיה.'
+        misconception: MC-rail-field-supplies-energy
+      - text: 'אי אפשר לדעת בלי לדעת את זווית השיפוע.'
+        feedback: 'הזווית קובעת כמה, אבל לא את הסימן: כל עוד זורם זרם מתפתח חום, ולכן $\Delta U > K$.'
+
+  - id: Q-5.5-incline-heat
+    type: numeric
+    objectives: [OBJ-5.5-4, OBJ-5.5-1]
+    prompt: >-
+      מוט שמסתו $0.1\,\text{kg}$ מחליק במהירות הסופית שלו במסילות שנוטות בזווית $30^\circ$. כמה חום, בג'אול, מתפתח בנגד בזמן שהמוט עובר $3\,\text{m}$ לאורך המסילות?
+    answer: 1.5
+    unit: J
+    tolerance: 0.03
+    correctFeedback: 'נכון. המהירות קבועה, ולכן כל האנרגיה הפוטנציאלית שאבדה הופכת לחום. המוט יורד לגובה $3\sin30^\circ = 1.5\,\text{m}$: $Q = mgh = 0.1\cdot10\cdot1.5 = 1.5\,\text{J}$. לא צריך לדעת את $B$, $L$ או $R$.'
+    wrongFeedback: 'בכמה ירד המוט בגובה, ולאן הולכת האנרגיה הפוטנציאלית שאבדה?'
+    commonWrong:
+      - value: 3
+        feedback: 'הצבתם את הדרך לאורך המסילות במקום הירידה בגובה. הגובה ירד ב-$3\sin\alpha$.'
+      - value: 2.6
+        feedback: 'הצבתם $\cos\alpha$. הירידה בגובה לאורך מדרון היא $d\sin\alpha$.'
