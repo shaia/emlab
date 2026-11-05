@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { K, MU0 } from '~/physics/constants';
-import { logSlope } from '~/physics/dipole';
+import { axisFieldExact, logSlope } from '~/physics/dipole';
+import { discAxisField, ringAxisField, rodBisectorField } from '~/physics/continuous';
+import { finiteSolenoidAxisField } from '~/physics/magnetism';
+import { symmetricSegmentField } from '~/physics/biotsavart';
 import { DISC, DIPOLE, LIMIT_CASES, limitError, limitRatio, RING, ROD, SOLENOID, suspectRatio, WIRE, type End } from '~/physics/limits';
 import { relativeError } from '~/physics/vec';
 
@@ -85,8 +88,17 @@ describe('scaling: the slope of each log-log graph is the power of its limit', (
     expect(slope('dipole', 0.5)).toBeCloseTo(-3, 3);
   });
   it('doubling the source doubles every exact field (linearity)', () => {
-    const double = (Q: number, z: number) => (K * 2 * Q * z) / (z * z + RING.R ** 2) ** 1.5;
-    expect(relativeError(double(RING.Q, 0.2), 2 * LIMIT_CASES.ring.exact(0.2))).toBeLessThan(1e-12);
+    // each exact field recomputed from its own module with the source (Q, λ, σ, I, I, q) doubled
+    const x = 0.2;
+    const doubled: Record<keyof typeof LIMIT_CASES, number> = {
+      ring: ringAxisField(2 * RING.Q, RING.R, x),
+      rod: rodBisectorField(2 * ROD.lambda, x, ROD.r),
+      disc: discAxisField(2 * DISC.sigma, x, DISC.z),
+      solenoid: finiteSolenoidAxisField(SOLENOID.N, x, SOLENOID.R, 2 * SOLENOID.I, 0),
+      wire: symmetricSegmentField(2 * WIRE.I, x, WIRE.s),
+      dipole: axisFieldExact(2 * DIPOLE.q, DIPOLE.d, x),
+    };
+    for (const c of cases) expect(relativeError(doubled[c.id], 2 * c.exact(x))).toBeLessThan(1e-12);
   });
 });
 

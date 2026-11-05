@@ -19,7 +19,8 @@
  * - Ignored: the thickness of every wire, ring and coil winding; the pitch of the solenoid (it is a
  *   current sheet, as in `finiteSolenoidAxisField`).
  * - Valid when: x stays inside the case's [min, max]. Each limit holds at its own end only: the ratio
- *   exact/limit tends to 1 there (the relative error falls as a power of x, see `limitError`), and the
+ *   exact/limit tends to 1 there (the relative error falls as a power of x, or of x − d/2 at the dipole's
+ *   near end; see `limitError`), and the
  *   limit is not meant to hold at the other end.
  * - Failure modes: the dipole's exact field diverges as x → d/2 (the point is on +q), so its range starts
  *   just beyond d/2. A suspect formula is wrong on purpose: it passes one end and fails the other.
