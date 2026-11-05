@@ -69,7 +69,7 @@ const tEndOf = (v: number) => PATH / v;
 /** the scene's world window [m] */
 const XMIN = -0.34;
 const XMAX = 0.74;
-const SCENE_H = 0.3;
+const SCENE_H = 0.4;
 
 /** The moments where the strip graphs have corners, from 0 to the end of the pass. */
 function stripBreaks(v: number): number[] {
@@ -83,7 +83,8 @@ function stripArea(v: number, t: number): number {
   const p = passOf(v);
   let q = 0;
   for (let i = 0; i + 1 < br.length && br[i] < t; i++) q += riemann((u) => passCurrent(p, u), br[i], Math.min(br[i + 1], t), 50);
-  return q;
+  // the two pulses cancel to rounding noise after a full pass: show it as the zero it is
+  return Math.abs(q) < 1e-12 ? 0 : q;
 }
 
 /* ------------------------------------------------------------------ build presets */
@@ -159,7 +160,7 @@ const BELL_TOL = 0.06;
 const TASK_LABEL: Record<string, string> = {
   'full-pass': 'העבירו את הלולאה מעבר שלם דרך השדה. מתי זורם זרם, ומתי לא?',
   'pause-inside': 'עצרו את הזמן כשהלולאה כולה בתוך השדה. מה הזרם ברגע הזה?',
-  faster: 'הכפילו את המהירות, ל-0.2 m/s, והעבירו את הלולאה שוב. מה קרה לכא"מ ולמשך הפולס?',
+  faster: 'הכפילו את המהירות, ל-0.2 m/s, והעבירו את הלולאה שוב. מה קרה לכא"מ, ולזמן שבו זורם זרם?',
   'build-flux': 'בנו את גרף הכא"מ לגרף השטף, ולחצו "בדיקה".',
   'build-field': 'בנו את גרף הכא"מ לגרף השדה, ולחצו "בדיקה".',
   'bell-peak': 'הזיזו את הסמן לשיא של גרף השטף. כמה הכא"מ שם?',
@@ -252,7 +253,7 @@ function layout(W: number, H: number, mode: Mode): { scene: Box | null; plots: B
   const R = 12;
   const bottom = 30;
   const gap = 10;
-  const sceneH = mode === 'strip' ? H * 0.27 : 0;
+  const sceneH = mode === 'strip' ? H * 0.3 : 0;
   const top = mode === 'strip' ? sceneH + 6 : 8;
   const ph = (H - top - bottom - 2 * gap) / 3;
   const plots = [0, 1, 2].map((i) => ({ x: L, y: top + i * (ph + gap), w: W - L - R, h: ph }));
@@ -309,14 +310,14 @@ function axes(ctx: CanvasRenderingContext2D, p: Palette, pl: Plot, o: { yTicks: 
     for (let t = 0; t <= pl.tMax + 1e-9; t += o.tStep, k++) if (k % every === 0) text(ctx, p, sci(Number(t.toFixed(6))), pl.px(t), box.y + box.h + 9, p.ink2, 'center', 11, 400);
     text(ctx, p, 't (s)', box.x + box.w, box.y + box.h + 22, p.ink, 'right', 12);
   }
-  // title, top right, on a paper backing
+  // title, top left (the figure's tool buttons sit top right), on a paper backing
   ctx.save();
   ctx.font = `600 12px ${p.fontUi}`;
   const tw = ctx.measureText(o.title).width;
   ctx.fillStyle = withAlpha(p.paper, 0.85);
-  ctx.fillRect(box.x + box.w - tw - 10, box.y + 2, tw + 8, 17);
+  ctx.fillRect(box.x + 3, box.y + 2, tw + 8, 17);
   ctx.restore();
-  text(ctx, p, o.title, box.x + box.w - 6, box.y + 11, o.color, 'right', 12);
+  text(ctx, p, o.title, box.x + 7, box.y + 11, o.color, 'left', 12);
 }
 
 function polyline(ctx: CanvasRenderingContext2D, pl: Plot, pts: [number, number][], color: string, width = 2.4, dash: number[] = []) {
@@ -401,6 +402,14 @@ export default function FluxTimeline(props: FluxTimelineProps) {
   };
   const [s, setS] = useState<State>(init);
   const [live, setLive] = useState('');
+  /** a phone-width stage gets a taller aspect, set after mount (the server renders the desktop one) */
+  const [narrow, setNarrow] = useState(false);
+  useEffect(() => {
+    const f = () => setNarrow(window.innerWidth < 560);
+    f();
+    window.addEventListener('resize', f);
+    return () => window.removeEventListener('resize', f);
+  }, []);
   const userActed = useRef(false);
   /** true while the strip is moving because the learner made it move (play or drag) */
   const userRun = useRef(false);
@@ -624,7 +633,7 @@ export default function FluxTimeline(props: FluxTimelineProps) {
     ctx.stroke();
     ctx.restore();
     depthField(ctx, { x: sx0, y: sc.y, w: sx1 - sx0, h: sc.h }, 'in', p.bfield, sc.h < 120 ? 18 : 24, 0.5);
-    text(ctx, p, `B = ${sci(STRIP.B)} T ⊗`, sx0 + 4, sc.y + 9, p.bfield, 'left', 12);
+    text(ctx, p, `B = ${sci(STRIP.B)} T ⊗`, sx1 - 4, sc.y + sc.h - 8, p.bfield, 'right', 12);
     // the loop
     const xl = X(STRIP.x0 + s.v * s.t);
     const xr = xl + STRIP.w * k;
@@ -647,8 +656,8 @@ export default function FluxTimeline(props: FluxTimelineProps) {
       text(ctx, p, 'I', xr + 10, yt + 8, p.current, 'left', 13);
     }
     // the speed
-    const vy = yt - 9;
-    if (vy > sc.y + 14) {
+    const vy = yt - 11;
+    if (vy > sc.y + 6) {
       arrow(ctx, (xl + xr) / 2 - 16, vy, (xl + xr) / 2 + 16, vy, { color: p.ink2, width: 1.6, head: 7 });
       text(ctx, p, 'v', (xl + xr) / 2 + 22, vy, p.ink2, 'left', 12);
     }
@@ -657,10 +666,11 @@ export default function FluxTimeline(props: FluxTimelineProps) {
       const len = Math.max(16, Math.min(1, push / 0.02) * 46);
       const sideX = T.leadIn <= s.t && s.t < T.trailIn ? xr : xl;
       arrow(ctx, sideX, yc + 14, sideX - len, yc + 14, { color: p.force, width: 2.6, head: 9, glow: withAlpha(p.paper, 0.9) });
-      text(ctx, p, 'כוח מגנטי', sideX - len - 4, yc + 14, p.force, 'right', 11, 600, 'rtl');
+      const roomy = STRIP.w * k > 64;
+      if (roomy) text(ctx, p, 'כוח מגנטי', sideX - len / 2, yc + 27, p.force, 'center', 11, 600, 'rtl');
       const hx = xl - 4;
       arrow(ctx, hx - len, yc - 14, hx, yc - 14, { color: p.hand, width: 2.6, head: 9 });
-      text(ctx, p, 'דחיפה', hx - len - 4, yc - 14, p.hand, 'right', 11, 600, 'rtl');
+      if (roomy) text(ctx, p, 'דחיפה', hx - len - 4, yc - 14, p.hand, 'right', 11, 600, 'rtl');
     }
   };
 
@@ -726,6 +736,10 @@ export default function FluxTimeline(props: FluxTimelineProps) {
   };
 
   const drawBuild = (ctx: CanvasRenderingContext2D, p: Palette, plots: Box[]) => {
+    // the right / wrong marks use the page's own feedback colours, which readPalette does not carry
+    const cs = canvasRef.current ? getComputedStyle(canvasRef.current) : null;
+    const ok = cs?.getPropertyValue('--ok').trim() || p.ink;
+    const bad = cs?.getPropertyValue('--bad').trim() || p.pos;
     const srcPl = mkPlot(plots[0], pr.tMax, pr.srcRange[0], pr.srcRange[1]);
     const ePl = mkPlot(plots[1], pr.tMax, pr.emfRange[0], pr.emfRange[1]);
     const iPl = mkPlot(plots[2], pr.tMax, pr.emfRange[0] / pr.R, pr.emfRange[1] / pr.R);
@@ -756,7 +770,7 @@ export default function FluxTimeline(props: FluxTimelineProps) {
         return;
       }
       const right = correctAt(s, i);
-      const c = s.checked && !right ? p.neg : p.efield;
+      const c = s.checked && !right ? bad : p.efield;
       polyline(ctx, ePl, [
         [q.t0, l],
         [q.t1, l],
@@ -765,7 +779,7 @@ export default function FluxTimeline(props: FluxTimelineProps) {
         [q.t0, l / pr.R],
         [q.t1, l / pr.R],
       ], p.current, 3);
-      if (s.checked) text(ctx, p, right ? '✓' : '✗', ePl.px((q.t0 + q.t1) / 2), ePl.py(l) + (l >= 0 ? -10 : 10), right ? p.accent : p.neg, 'center', 13);
+      if (s.checked) text(ctx, p, right ? '✓' : '✗', ePl.px((q.t0 + q.t1) / 2), ePl.py(l) + (l >= 0 ? -10 : 10), right ? ok : bad, 'center', 14, 700);
     });
   };
 
@@ -957,7 +971,7 @@ export default function FluxTimeline(props: FluxTimelineProps) {
               <>כל המדרגות נכונות. גרף הזרם הוא אותן מדרגות, מחולקות ב-R.</>
             ) : (
               <>
-                נכונות {nRight} מתוך {ps.length} מדרגות. בכל קטע: ε = −N·(השיפוע{pr.src === 'field' ? ' של B, כפול A' : ''}).
+                נכונות {nRight} מתוך {ps.length} מדרגות. בכל קטע הכא"מ הוא מינוס N כפול השיפוע{pr.src === 'field' ? ' של B, כפול A' : ''}.
               </>
             )}
           </span>
@@ -993,7 +1007,7 @@ export default function FluxTimeline(props: FluxTimelineProps) {
       fig={props.id}
       label={`איור חי: ${describe()}`}
       canvasRef={canvasRef}
-      aspect={s.mode === 'strip' ? 0.95 : 1.3}
+      aspect={s.mode === 'strip' ? (narrow ? 0.78 : 1.1) : narrow ? 1 : 1.3}
       live={live}
       tasks={tasks}
       onKeyDown={onKeyDown}
