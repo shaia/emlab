@@ -49,7 +49,7 @@ questions:
       - text: 'ככל שעובר יותר שטף דרך הסליל, הכא"מ גדול יותר.'
         feedback: 'זה השטף, לא השינוי שלו. סליל במצב קבוע עם הרבה שטף דרכו לא יוצר כא"מ בכלל. רק שינוי בשטף משרה כא"מ.'
         misconception: MC-generator-emf-follows-flux
-      - text: 'בשיא השטף משתנה הכי מהר, כי הסליל עובר דרך המצב המיוחד.'
+      - text: 'בשיא השטף משתנה הכי מהר, כי ברגע הזה מישור הסליל ניצב לשדה.'
         feedback: 'להפך: השטף משתנה הכי מהר כשהוא עובר באפס, ולא בשיא. בשיא הגרף מתהפך מעלייה לירידה, ולרגע הוא שטוח.'
         misconception: MC-generator-emf-follows-flux
 
@@ -142,7 +142,7 @@ questions:
         correct: true
         feedback: 'נכון. $\varepsilon_0 = NBA\omega$ ו-$T = 2\pi/\omega$. השטף משתנה באותה כמות בחצי מהזמן, ולכן קצב השינוי כפול.'
       - text: 'השיא לא משתנה, וזמן המחזור קטן פי 2.'
-        feedback: 'הכא"מ הוא קצב השינוי של השטף. אותו שינוי, מ-$BA$ ל-$-BA$, בחצי מהזמן, נותן קצב כפול: $\varepsilon_0 = NBA\omega$ גדל פי 2.'
+        feedback: 'הכא"מ הוא קצב השינוי של השטף. אותו שינוי, מ-$BA$ ל-$\Phi = -BA$, בחצי מהזמן, נותן קצב כפול: $\varepsilon_0 = NBA\omega$ גדל פי 2.'
         misconception: MC-generator-faster-same-peak
       - text: 'השיא גדל פי 2, וזמן המחזור לא משתנה.'
         feedback: 'זמן המחזור הוא הזמן של סיבוב אחד. סיבוב מהיר פי 2 נמשך חצי מהזמן: $T = 2\pi/\omega$.'
@@ -256,7 +256,7 @@ questions:
         feedback: 'נורה (נגד) לא מחזירה אנרגיה: היא הופכת אותה לחום ולאור בכל רגע שזורם בה זרם, לכל כיוון.'
         misconception: MC-ac-mean-zero-no-energy
       - text: 'היא מקבלת אנרגיה רק בחצי מחזור, כשהזרם חיובי.'
-        feedback: 'הנורה לא מבחינה בין הכיוונים. ההספק $I^2R$ זהה לזרם $I$ ולזרם $-I$.'
+        feedback: 'הנורה לא מבחינה בין הכיוונים. ההספק $I^2R$ זהה לזרם $I$ ולזרם באותו גודל בכיוון ההפוך.'
         misconception: MC-ac-mean-zero-no-energy
 
   - id: Q-5.7-mean-power
@@ -309,7 +309,7 @@ questions:
     answer: 325.3
     unit: V
     tolerance: 0.02
-    correctFeedback: 'נכון. $V_0 = \sqrt2\cdot230 \approx 325\,\text{V}$. המתח בשקע נע בין $+325\,\text{V}$ ל-$-325\,\text{V}$, $50$ פעמים בשנייה.'
+    correctFeedback: 'נכון. $V_0 = \sqrt2\cdot230 \approx 325\,\text{V}$. המתח בשקע נע בין $V = 325\,\text{V}$ ל-$V = -325\,\text{V}$, $50$ פעמים בשנייה.'
     wrongFeedback: '$230\,\text{V}$ הוא הערך האפקטיבי, והשיא גדול ממנו פי $\sqrt2$.'
     commonWrong:
       - value: 230

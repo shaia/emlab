@@ -10,7 +10,7 @@
  * Right: Φ(t) per turn with the tangent at the cursor (its slope is the emf), ε(t) at the brushes with
  * the effective-value line, and the lamp's power p(t) with its mean ε₀²/(2R); the parts of p above the
  * mean are shaded one way and the gaps below it another, to show they are equal. A faint dashed curve
- * is the starting setting, so a change of N, B or f is seen against it.
+ * appears once N, B or f is changed: the starting setting, to compare against.
  *
  * Every value comes from src/physics/induction.ts and generator.ts. The coil turns counter-clockwise
  * at f turns per second (slowed far below 50 Hz so the eye can follow it). Still mode never animates:
@@ -200,7 +200,7 @@ export default function Generator(props: GeneratorProps) {
     const phiRad = st.running ? phi.current : st.angle * RAD;
     const tall = view.w / view.h < 1;
     const L = layoutOf(view.w, view.h, tall);
-    drawMachine(ctx, p, st, g, phiRad, L.machine);
+    drawMachine(ctx, p, g, phiRad, L.machine);
     drawRings(ctx, p, st, g, phiRad, L.rings, ghost.current);
     drawGraphs(ctx, p, st, g, phiRad, L.graphs, ghost.current);
   };
@@ -434,7 +434,7 @@ function text(ctx: CanvasRenderingContext2D, p: Palette, s: string, x: number, y
 }
 
 /** The view along the axle: poles, field lines (dark where they pass through the coil), coil, current, velocity, normal. */
-function drawMachine(ctx: CanvasRenderingContext2D, p: Palette, st: State, g: Gen, phi: number, m: Box) {
+function drawMachine(ctx: CanvasRenderingContext2D, p: Palette, g: Gen, phi: number, m: Box) {
   const [cx, cy] = machineCentre(m);
   const pw = Math.max(20, m.w * 0.1);
   const faceL = m.x + 8 + pw;
@@ -742,6 +742,8 @@ function drawGraphs(ctx: CanvasRenderingContext2D, p: Palette, st: State, g: Gen
   const tc = cursorTime(phi, st.f);
   const e0 = generatorPeak(g);
   const e0g = generatorPeak(g0);
+  // the starting setting is drawn faintly only once the reader has changed N, B or f
+  const changed = st.f !== ghost.f || st.N !== ghost.N || st.B !== ghost.B;
   const hRow = box.h / 3;
   const rowBox = (k: number): Box =>
     insetBox({ x: box.x, y: box.y + k * hRow, w: box.w, h: hRow }, { l: 50, r: 12, t: 12, b: k === 2 ? 40 : 22 });
@@ -757,7 +759,7 @@ function drawGraphs(ctx: CanvasRenderingContext2D, p: Palette, st: State, g: Gen
   const P1 = makePlot(rowBox(0), axisT(0), { ...sym(phiMax), label: 'Φ (mWb)' });
   drawAxes(ctx, P1, p);
   const fluxAt = (gg: Gen) => (t: number) => fluxPerTurn(gg, t) * 1000;
-  curve(ctx, P1, fluxAt(g0), { color: withAlpha(p.bfield, 0.45), width: 1.2, dash: [4, 4] });
+  if (changed) curve(ctx, P1, fluxAt(g0), { color: withAlpha(p.bfield, 0.45), width: 1.2, dash: [4, 4] });
   curve(ctx, P1, fluxAt(g), { color: p.bfield, width: 2.2 });
   // the tangent at the cursor: its slope is −ε/N
   const F = fluxAt(g);
@@ -777,7 +779,7 @@ function drawGraphs(ctx: CanvasRenderingContext2D, p: Palette, st: State, g: Gen
   const P2 = makePlot(rowBox(1), axisT(1), { ...sym(eMax), label: 'ε (V)' });
   drawAxes(ctx, P2, p);
   const brushAt = (gg: Gen) => (t: number) => brushEmf(gg, t, st.rings);
-  curve(ctx, P2, brushAt(g0), { color: withAlpha(p.efield, 0.45), width: 1.2, dash: [4, 4] });
+  if (changed) curve(ctx, P2, brushAt(g0), { color: withAlpha(p.efield, 0.45), width: 1.2, dash: [4, 4] });
   if (st.rings === 'split') curve(ctx, P2, (t) => generatorEmf(g, t), { color: withAlpha(p.efield, 0.35), width: 1.2, dash: [2, 3] });
   curve(ctx, P2, brushAt(g), { color: p.efield, width: 2.2 });
   // the effective value
@@ -831,7 +833,7 @@ function drawGraphs(ctx: CanvasRenderingContext2D, p: Palette, st: State, g: Gen
   ctx.fillStyle = withAlpha(p.accent, 0.16);
   ctx.fill();
   ctx.restore();
-  curve(ctx, P3, pow(g0), { color: withAlpha(p.current, 0.5), width: 1.2, dash: [4, 4] });
+  if (changed) curve(ctx, P3, pow(g0), { color: withAlpha(p.current, 0.5), width: 1.2, dash: [4, 4] });
   curve(ctx, P3, pow(g), { color: mix(p.current, p.ink, 0.25), width: 2.2 });
   clipTo(ctx, P3.box, () => {
     ctx.strokeStyle = p.hand;
