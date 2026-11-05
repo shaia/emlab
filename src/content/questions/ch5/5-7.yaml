@@ -1,0 +1,322 @@
+# Lesson 5.7 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/induction.ts (generatorPeak, rms, acMeanPower)
+# and src/physics/generator.ts (angularSpeed, periodOf, peakOfRms, rectifiedMean); script rc57q.ts in
+# the session scratchpad. The data differ from figure 5.7א and the worked examples on purpose.
+
+chapter: 5
+questions:
+  # ------------------------------------------------ OBJ-5.7-1: from the flux to the emf
+  - id: Q-5.7-max-emf-position
+    type: mc
+    objectives: [OBJ-5.7-1]
+    qualitative: true
+    prompt: >-
+      סליל של גנרטור מסתובב במהירות קבועה בשדה מגנטי אחיד. באיזה מצב הכא"מ המושרה בסליל הגדול ביותר?
+    choices:
+      - text: 'כשמישור הסליל לאורך קווי השדה, והשטף דרכו אפס.'
+        correct: true
+        feedback: 'נכון. הכא"מ תלוי בקצב השינוי של השטף. כשהשטף עובר באפס הוא משתנה הכי מהר: השיפוע של גרף $\Phi = BA\cos\omega t$ הכי תלול שם, ו-$\varepsilon = NBA\omega\sin\omega t$ בשיא.'
+      - text: 'כשמישור הסליל ניצב לקווי השדה, והשטף דרכו הגדול ביותר.'
+        feedback: 'במצב הזה השטף בשיא, והגרף שלו שטוח לרגע: השטף כמעט לא משתנה, ולכן הכא"מ **אפס**. הכא"מ תלוי בכמה מהר השטף משתנה, לא בכמה שטף יש.'
+        misconception: MC-generator-emf-follows-flux
+      - text: 'כשמישור הסליל יוצר זווית של $45^\circ$ עם קווי השדה, באמצע בין שני המצבים.'
+        feedback: 'שם הכא"מ $\varepsilon_0\sin45^\circ$, כ-$71\%$ מהשיא. השיא מתקבל רק כשמישור הסליל לאורך השדה.'
+      - text: 'הכא"מ זהה בכל המצבים, כי הסליל מסתובב במהירות קבועה.'
+        feedback: 'המהירות הזוויתית קבועה, אבל קצב השינוי של השטף לא: לפעמים הצלעות חוצות את קווי השדה, ולפעמים הן נעות לאורכם. לכן הכא"מ עולה ויורד, $\varepsilon_0\sin\omega t$.'
+
+  - id: Q-5.7-flux-slope
+    type: twotier
+    objectives: [OBJ-5.7-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בגרף של השטף דרך סליל של גנרטור, לפי הזמן, השטף מגיע לשיא ברגע $t_1$. מה הכא"מ בסליל ברגע $t_1$?
+    choices:
+      - text: 'אפס.'
+        correct: true
+        feedback: 'נכון.'
+      - text: 'הגדול ביותר.'
+        feedback: 'הכא"מ הוא מינוס $N$ כפול השיפוע של גרף השטף, לא הגובה שלו. בשיא הגרף שטוח, והשיפוע אפס.'
+        misconception: MC-generator-emf-follows-flux
+      - text: 'חצי מהשיא.'
+        feedback: 'בשיא של גרף השטף הקו המשיק אופקי: השיפוע, ולכן הכא"מ, אפס בדיוק.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'בשיא של גרף השטף הקו המשיק אופקי: לרגע השטף לא משתנה.'
+        correct: true
+        feedback: 'נכון. $\varepsilon = -N\dfrac{\Delta\Phi}{\Delta t}$, ובשיא $\Delta\Phi \approx 0$ בפרק זמן קצר. במצב הזה מישור הסליל ניצב לשדה, והצלעות נעות לאורך קווי השדה.'
+      - text: 'ככל שעובר יותר שטף דרך הסליל, הכא"מ גדול יותר.'
+        feedback: 'זה השטף, לא השינוי שלו. סליל במצב קבוע עם הרבה שטף דרכו לא יוצר כא"מ בכלל. רק שינוי בשטף משרה כא"מ.'
+        misconception: MC-generator-emf-follows-flux
+      - text: 'בשיא השטף משתנה הכי מהר, כי הסליל עובר דרך המצב המיוחד.'
+        feedback: 'להפך: השטף משתנה הכי מהר כשהוא עובר באפס, ולא בשיא. בשיא הגרף מתהפך מעלייה לירידה, ולרגע הוא שטוח.'
+        misconception: MC-generator-emf-follows-flux
+
+  - id: Q-5.7-side-current
+    type: vector
+    objectives: [OBJ-5.7-1]
+    qualitative: true
+    level: mid
+    allowOutIn: true
+    prompt: >-
+      מסתכלים לאורך הציר של גנרטור, כמו באיור 5.7א. השדה המגנטי מצביע **ימינה**. ברגע מסוים הצלע השמאלית של הסליל, שמקבילה לציר, נעה **למעלה**. מה כיוון הזרם המושרה בצלע הזו?
+    answer: in
+    correctFeedback: 'נכון. על מטען חיובי בצלע פועל כוח לורנץ $q\vec v\times\vec B$. בכלל כף יד ימין: האצבעות ימינה (השדה), האגודל למעלה (המהירות), וכף היד פונה לתוך הדף, ⊗. בכיוון הזה הכוח מניע את הזרם בצלע.'
+    wrong:
+      - dir: out
+        feedback: 'זה הכיוון כשהצלע נעה למטה, או כשהשדה מצביע שמאלה. האצבעות ימינה, בכיוון השדה, האגודל למעלה, בכיוון המהירות: כף היד פונה לתוך הדף.'
+      - dir: n
+        feedback: 'הכוח על המטענים ניצב למהירות, ולא בכיוונה. הוא ניצב גם לשדה, ולכן כאן הוא ניצב לדף.'
+      - dir: e
+        feedback: 'הכוח המגנטי ניצב לשדה, ולא בכיוונו. הזרם בצלע זורם לאורכה, והצלע מקבילה לציר, כלומר ניצבת לדף.'
+      - dir: zero
+        feedback: 'הצלע נעה בניצב לשדה, ולכן בדיוק עכשיו היא חוצה הכי הרבה קווי שדה: הכא"מ בה הגדול ביותר, לא אפס.'
+        misconception: MC-generator-emf-follows-flux
+    wrongFeedback: 'השתמשו בכוח לורנץ על מטען חיובי בצלע: כלל כף יד ימין, האצבעות בכיוון השדה, האגודל בכיוון המהירות.'
+
+  - id: Q-5.7-instant-emf
+    type: numeric
+    objectives: [OBJ-5.7-1, OBJ-5.7-2]
+    level: mid
+    prompt: >-
+      סליל של $80$ כריכות ששטחו $6\cdot10^{-3}\,\text{m}^2$ מסתובב במהירות זוויתית של $50\,\text{rad/s}$ בשדה מגנטי אחיד של $0.25\,\text{T}$. מה הכא"מ ברגע שבו **מישור הסליל** יוצר זווית של $40^\circ$ עם קווי השדה? ענו בוולט.
+    answer: 4.596
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\varepsilon_0 = NBA\omega = 80\cdot0.25\cdot6\cdot10^{-3}\cdot50 = 6\,\text{V}$. הזווית בנוסחה היא בין האנך לשדה: $90^\circ - 40^\circ = 50^\circ$, ו-$\varepsilon = 6\sin50^\circ \approx 4.6\,\text{V}$.'
+    wrongFeedback: 'מצאו קודם את $\varepsilon_0 = NBA\omega$. ב-$\varepsilon = \varepsilon_0\sin\theta$, הזווית $\theta$ היא בין האנך לסליל לבין השדה.'
+    commonWrong:
+      - value: 3.857
+        feedback: 'הצבתם את הזווית בין **מישור** הסליל לשדה, $40^\circ$. בנוסחה $\theta$ היא הזווית בין **האנך** לשדה, $50^\circ$. בדיקה: כשהמישור קרוב להיות לאורך השדה, הכא"מ קרוב לשיא.'
+      - value: 6
+        feedback: 'זה ערך השיא, $\varepsilon_0 = NBA\omega$, כשמישור הסליל לאורך השדה. כאן המישור יוצר $40^\circ$ עם השדה, והכא"מ קטן יותר.'
+      - value: 0.05745
+        feedback: 'זה הכא"מ של כריכה אחת. בסליל $80$ כריכות, וכל אחת תורמת את אותו כא"מ.'
+
+  # ------------------------------------------------ OBJ-5.7-2: peak, period, frequency, scaling
+  - id: Q-5.7-peak
+    type: numeric
+    objectives: [OBJ-5.7-2]
+    prompt: >-
+      סליל מלבני של $250$ כריכות, $12\,\text{cm}$ על $8\,\text{cm}$, מסתובב $600$ סיבובים בדקה בשדה מגנטי אחיד של $0.15\,\text{T}$, שניצב לציר. מה ערך השיא של הכא"מ? ענו בוולט.
+    answer: 22.62
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. $600$ סיבובים בדקה הם $f = 10\,\text{Hz}$, ולכן $\omega = 2\pi\cdot10 \approx 62.8\,\text{rad/s}$. $A = 0.12\cdot0.08 = 9.6\cdot10^{-3}\,\text{m}^2$, ו-$\varepsilon_0 = NBA\omega = 250\cdot0.15\cdot9.6\cdot10^{-3}\cdot62.8 \approx 22.6\,\text{V}$.'
+    wrongFeedback: 'המירו את מספר הסיבובים בדקה למהירות זוויתית: קודם $f$ בסיבובים לשנייה, ואז $\omega = 2\pi f$. אחר כך $\varepsilon_0 = NBA\omega$, עם השטח במטרים רבועים.'
+    commonWrong:
+      - value: 3.6
+        feedback: 'הצבתם $f = 10\,\text{Hz}$ במקום $\omega$. בנוסחה $\varepsilon_0 = NBA\omega$ צריך את המהירות הזוויתית, $\omega = 2\pi f \approx 62.8\,\text{rad/s}$.'
+      - value: 216
+        feedback: 'הצבתם $600$ במקום $\omega$. $600$ הם סיבובים **בדקה**: $f = 600/60 = 10\,\text{Hz}$, ו-$\omega = 2\pi f$.'
+      - value: 1357
+        feedback: 'הכפלתם ב-$2\pi$, אבל שכחתם לחלק ב-$60$: $600$ סיבובים בדקה הם $10$ סיבובים בשנייה.'
+
+  - id: Q-5.7-period
+    type: numeric
+    objectives: [OBJ-5.7-2]
+    prompt: >-
+      הסליל של גנרטור משלים $1500$ סיבובים בדקה. מה זמן המחזור של הכא"מ שהוא יוצר? ענו בשניות.
+    answer: 0.04
+    unit: s
+    tolerance: 0.02
+    correctFeedback: 'נכון. $1500$ סיבובים ב-$60\,\text{s}$ הם $f = 25\,\text{Hz}$, והכא"מ חוזר על עצמו כל סיבוב: $T = 1/f = 0.04\,\text{s}$.'
+    wrongFeedback: 'זמן המחזור הוא הזמן של סיבוב אחד: $60$ שניות חלקי מספר הסיבובים בדקה.'
+    commonWrong:
+      - value: 25
+        feedback: 'זו התדירות, מספר הסיבובים בשנייה, $f = 25\,\text{Hz}$. זמן המחזור הוא ההופכי שלה, $T = 1/f$.'
+      - value: 0.000667
+        feedback: 'חילקתם $1$ ב-$1500$, אבל $1500$ הם סיבובים בדקה, לא בשנייה. סיבוב אחד לוקח $60/1500$ שניות.'
+      - value: 157.1
+        feedback: 'זו המהירות הזוויתית, $\omega = 2\pi f \approx 157\,\text{rad/s}$. זמן המחזור הוא $T = 2\pi/\omega$.'
+
+  - id: Q-5.7-faster
+    type: mc
+    objectives: [OBJ-5.7-2]
+    qualitative: true
+    prompt: >-
+      מסובבים גנרטור מהר פי 2 מקודם. מה קורה לערך השיא של הכא"מ ולזמן המחזור?
+    choices:
+      - text: 'השיא גדל פי 2, וזמן המחזור קטן פי 2.'
+        correct: true
+        feedback: 'נכון. $\varepsilon_0 = NBA\omega$ ו-$T = 2\pi/\omega$. השטף משתנה באותה כמות בחצי מהזמן, ולכן קצב השינוי כפול.'
+      - text: 'השיא לא משתנה, וזמן המחזור קטן פי 2.'
+        feedback: 'הכא"מ הוא קצב השינוי של השטף. אותו שינוי, מ-$BA$ ל-$-BA$, בחצי מהזמן, נותן קצב כפול: $\varepsilon_0 = NBA\omega$ גדל פי 2.'
+        misconception: MC-generator-faster-same-peak
+      - text: 'השיא גדל פי 2, וזמן המחזור לא משתנה.'
+        feedback: 'זמן המחזור הוא הזמן של סיבוב אחד. סיבוב מהיר פי 2 נמשך חצי מהזמן: $T = 2\pi/\omega$.'
+      - text: 'השיא גדל פי 4, וזמן המחזור קטן פי 2.'
+        feedback: 'פי 4 גדל **ההספק** הממוצע בנגד, כי הוא תלוי בריבוע השיא. השיא עצמו פרופורציוני ל-$\omega$, ולכן גדל פי 2.'
+
+  - id: Q-5.7-rank-peaks
+    type: rank
+    objectives: [OBJ-5.7-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ארבעה גנרטורים, ובכולם סלילים באותו שטח. דרגו אותם לפי ערך השיא של הכא"מ, מהגדול לקטן (גנרטורים עם שיא שווה באותה דרגה).
+    items:
+      - id: g1
+        label: '$100$ כריכות, $0.2\,\text{T}$, $5$ סיבובים בשנייה'
+      - id: g2
+        label: '$200$ כריכות, $0.2\,\text{T}$, $2.5$ סיבובים בשנייה'
+      - id: g3
+        label: '$100$ כריכות, $0.4\,\text{T}$, $10$ סיבובים בשנייה'
+      - id: g4
+        label: '$50$ כריכות, $0.2\,\text{T}$, $5$ סיבובים בשנייה'
+    order: [g3, [g1, g2], g4]
+    correctFeedback: 'נכון. $\varepsilon_0 = NBA\omega$ פרופורציוני למכפלה $N\cdot B\cdot f$: $400$ לשלישי, $100$ לראשון ולשני, ו-$50$ לרביעי. בשני כפול מספר הכריכות, אבל חצי מהירות: השיא כמו בראשון.'
+    wrongFeedback: 'השיא פרופורציוני ל-$N$, ל-$B$ ולמהירות הסיבוב יחד, $\varepsilon_0 = NBA\omega$. חשבו לכל גנרטור את המכפלה $N\cdot B\cdot f$, ובדקו שלא שכחתם שמהירות הסיבוב משפיעה כמו מספר הכריכות.'
+
+  # ------------------------------------------------ OBJ-5.7-3: slip rings, commutator, the motor
+  - id: Q-5.7-commutator-output
+    type: mc
+    objectives: [OBJ-5.7-3]
+    qualitative: true
+    prompt: >-
+      מחליפים בגנרטור את טבעות ההחלקה בטבעת מפוצלת (קומוטטור), ומחברים אותו לנורה. איך נראה גרף המתח בין המברשות לפי הזמן?
+    choices:
+      - text: 'גבעות של סינוס, כולן מעל לציר: המתח עולה מאפס לשיא וחוזר לאפס, פעמיים בכל סיבוב.'
+        correct: true
+        feedback: 'נכון. הטבעת המפוצלת הופכת את החיבור בדיוק כשהכא"מ עובר באפס, ולכן במקום החצאים השליליים מקבלים אותם חצאים, הפוכים: $|\varepsilon_0\sin\omega t|$. זה זרם ישר פועם.'
+      - text: 'קו ישר אופקי: מתח קבוע, כמו של סוללה.'
+        feedback: 'הקומוטטור לא משנה את גודל הכא"מ, רק את הסימן שלו. הגודל עדיין עולה ויורד, ופעמיים בכל סיבוב הוא אפס: זרם ישר **פועם**, לא קבוע.'
+        misconception: MC-commutator-steady-dc
+      - text: 'סינוס רגיל, חיובי ושלילי, כמו עם טבעות החלקה.'
+        feedback: 'עם טבעות החלקה כל טבעת מחוברת תמיד לאותו קצה של הסליל. בטבעת המפוצלת החיבור מתחלף כל חצי סיבוב, וזה הופך את החצאים השליליים לחיוביים.'
+      - text: 'גל מרובע: מתח קבוע שמתהפך בבת אחת כל חצי סיבוב.'
+        feedback: 'הטבעת המפוצלת לא מתהפכת בזמן שהמתח בשיא, אלא דווקא כשהוא אפס. וגודל הכא"מ ממשיך לעלות ולרדת כמו סינוס.'
+        misconception: MC-commutator-steady-dc
+
+  - id: Q-5.7-crank-harder
+    type: twotier
+    objectives: [OBJ-5.7-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מסובבים ביד גנרטור קטן, במהירות קבועה, והוא מדליק נורה. מנתקים את הנורה, כך שהמעגל פתוח, וממשיכים לסובב באותה מהירות. מה קורה?
+    choices:
+      - text: 'קל יותר לסובב.'
+        correct: true
+        feedback: 'נכון.'
+      - text: 'קשה יותר לסובב.'
+        feedback: 'בלי נורה אין זרם, ובלי זרם אין כוחות מגנטיים על הסליל. נשאר רק החיכוך.'
+      - text: 'אין שינוי, כי הסליל ממשיך להסתובב באותה מהירות באותו שדה.'
+        feedback: 'הכא"מ באמת לא משתנה, אבל המומנט שמתנגד לסיבוב נוצר על ידי **הזרם**. בלי זרם אין מומנט כזה, ומסובבים בקלות.'
+        misconception: MC-generator-free-energy
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'בלי זרם בסליל אין עליו כוחות מגנטיים, ואין מומנט שמתנגד לסיבוב.'
+        correct: true
+        feedback: 'נכון. כשהזרם זורם, הכוחות עליו יוצרים מומנט $NBIA\sin\theta$ נגד הסיבוב (חוק לנץ), כמו במנוע של שיעור 4.10. ההספק שמשקיעים נגדו, $\tau\omega$, הוא ההספק $\varepsilon I$ שהנורה מקבלת.'
+      - text: 'כשהמעגל פתוח, אין כא"מ בסליל.'
+        feedback: 'גם במעגל פתוח השטף משתנה, והכא"מ $NBA\omega\sin\omega t$ קיים: אפשר למדוד אותו בוולטמטר. מה שנעלם הוא הזרם.'
+      - text: 'הגנרטור מייצר אנרגיה בעצמו, וקשה לסובב רק בגלל החיכוך.'
+        feedback: 'הגנרטור לא מייצר אנרגיה, רק ממיר אותה. כל ג''אול שהנורה מקבלת הושקע בסיבוב נגד המומנט של הזרם המושרה.'
+        misconception: MC-generator-free-energy
+
+  - id: Q-5.7-rings-true
+    type: multi
+    objectives: [OBJ-5.7-3]
+    qualitative: true
+    prompt: >-
+      אילו מהמשפטים נכונים? סמנו את כל התשובות הנכונות.
+    choices:
+      - text: 'עם טבעות החלקה, כל טבעת מחוברת תמיד לאותו קצה של הסליל, ולכן הזרם במעגל החיצוני מחליף כיוון.'
+        correct: true
+        feedback: 'נכון. הכא"מ של הסליל מגיע למעגל כמו שהוא, $\varepsilon_0\sin\omega t$: זרם חילופין.'
+      - text: 'הטבעת המפוצלת מחליפה את החיבור למברשות כשמישור הסליל ניצב לשדה.'
+        correct: true
+        feedback: 'נכון. במצב הזה הכא"מ אפס ומתחיל להתהפך, וההחלפה מבטלת את ההיפוך.'
+      - text: 'הטבעת המפוצלת מחליפה את החיבור למברשות כשמישור הסליל לאורך השדה.'
+        feedback: 'במצב הזה הכא"מ בשיא. החלפה שם הייתה הופכת את הסימן באמצע חצי המחזור, והתוצאה לא הייתה זרם ישר.'
+      - text: 'גנרטור עם טבעת מפוצלת נותן מתח קבוע בזמן.'
+        feedback: 'הכיוון קבוע, אבל הגודל עולה ויורד בין אפס לשיא: $|\varepsilon_0\sin\omega t|$, זרם ישר פועם.'
+        misconception: MC-commutator-steady-dc
+      - text: 'גנרטור עם טבעת מפוצלת בנוי כמו מנוע זרם ישר; מסובבים אותו ביד, ומקבלים זרם.'
+        correct: true
+        feedback: 'נכון. זה בדיוק המנוע של שיעור 4.10, שפועל בכיוון ההפוך.'
+
+  # ------------------------------------------------ OBJ-5.7-4: effective value, mean power, the grid
+  - id: Q-5.7-ac-energy
+    type: mc
+    objectives: [OBJ-5.7-4]
+    qualitative: true
+    prompt: >-
+      נורה מחוברת לגנרטור של זרם חילופין. על מחזור שלם, הממוצע של הזרם בנורה הוא אפס. מה נכון לגבי האנרגיה שהנורה מקבלת?
+    choices:
+      - text: 'היא מקבלת אנרגיה בשני חצאי המחזור, וההספק הממוצע חיובי.'
+        correct: true
+        feedback: 'נכון. ההספק ברגע הוא $I^2R$, ריבוע, ולכן הוא לא שלילי אף פעם: הנורה מתחממת בשני כיווני הזרם. ההספק הממוצע $\varepsilon_0^2/(2R)$.'
+      - text: 'בממוצע היא לא מקבלת אנרגיה, כי הממוצע של הזרם אפס.'
+        feedback: 'ההספק תלוי בריבוע הזרם, ולא בזרם עצמו. בחצי המחזור השני הזרם שלילי, אבל $I^2R$ חיובי: הנורה מתחממת גם אז.'
+        misconception: MC-ac-mean-zero-no-energy
+      - text: 'היא מקבלת אנרגיה בחצי מחזור אחד, ומחזירה אותה לגנרטור בחצי השני.'
+        feedback: 'נורה (נגד) לא מחזירה אנרגיה: היא הופכת אותה לחום ולאור בכל רגע שזורם בה זרם, לכל כיוון.'
+        misconception: MC-ac-mean-zero-no-energy
+      - text: 'היא מקבלת אנרגיה רק בחצי מחזור, כשהזרם חיובי.'
+        feedback: 'הנורה לא מבחינה בין הכיוונים. ההספק $I^2R$ זהה לזרם $I$ ולזרם $-I$.'
+        misconception: MC-ac-mean-zero-no-energy
+
+  - id: Q-5.7-mean-power
+    type: numeric
+    objectives: [OBJ-5.7-4]
+    prompt: >-
+      גנרטור שערך השיא של הכא"מ שלו $40\,\text{V}$ מחובר לנגד של $20\,\Omega$ (ההתנגדות של הסליל זניחה). מה ההספק הממוצע בנגד? ענו בוואט.
+    answer: 40
+    unit: W
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\bar P = \dfrac{\varepsilon_0^2}{2R} = \dfrac{40^2}{2\cdot20} = 40\,\text{W}$: חצי מההספק בשיא, $80\,\text{W}$, כי הממוצע של $\sin^2$ על מחזור הוא חצי.'
+    wrongFeedback: 'ההספק ברגע $\dfrac{\varepsilon_0^2}{R}\sin^2\omega t$, והממוצע של $\sin^2$ על מחזור הוא חצי.'
+    commonWrong:
+      - value: 80
+        feedback: 'זה ההספק **בשיא**, $\varepsilon_0^2/R$, ברגעים שבהם הכא"מ בשיא. רוב הזמן ההספק קטן יותר, והממוצע חצי ממנו.'
+        misconception: MC-ac-mean-power-peak-squared
+      - value: 20
+        feedback: 'הצבתם בנוסחה את חצי השיא, $20\,\text{V}$, ומקבלים $\varepsilon_0^2/(4R)$. הממוצע הוא של **ההספק**, $\sin^2$, ולא של המתח: $\varepsilon_0^2/(2R)$.'
+        misconception: MC-ac-mean-power-peak-squared
+      - value: 0
+        feedback: 'הממוצע של הכא"מ אפס, אבל ההספק $\varepsilon^2/R$ לא שלילי אף פעם, ולכן הממוצע שלו חיובי.'
+        misconception: MC-ac-mean-zero-no-energy
+
+  - id: Q-5.7-effective
+    type: numeric
+    objectives: [OBJ-5.7-4]
+    prompt: >-
+      ערך השיא של מתח חילופין הוא $12\,\text{V}$. מה הערך האפקטיבי שלו? ענו בוולט.
+    answer: 8.485
+    unit: V
+    tolerance: 0.02
+    correctFeedback: 'נכון. $\varepsilon_{\text{eff}} = \dfrac{\varepsilon_0}{\sqrt2} = \dfrac{12}{\sqrt2} \approx 8.49\,\text{V}$: מתח קבוע כזה נותן בנגד את אותו הספק ממוצע.'
+    wrongFeedback: 'הערך האפקטיבי מוגדר דרך ההספק: $\varepsilon_{\text{eff}}^2/R = \varepsilon_0^2/(2R)$.'
+    commonWrong:
+      - value: 6
+        feedback: 'זה חצי מהשיא. הערך האפקטיבי הוא השורש של ממוצע **הריבוע**: $\sqrt{\tfrac12}\,\varepsilon_0 \approx 0.71\,\varepsilon_0$, ולא $0.5\,\varepsilon_0$.'
+        misconception: MC-ac-effective-is-half-peak
+      - value: 7.64
+        feedback: 'זה הממוצע של $|\varepsilon|$, $\tfrac{2}{\pi}\varepsilon_0$. הערך האפקטיבי מוגדר דרך ההספק, שתלוי בריבוע: $\varepsilon_0/\sqrt2$.'
+        misconception: MC-ac-effective-is-half-peak
+      - value: 16.97
+        feedback: 'הכפלתם ב-$\sqrt2$ במקום לחלק. הערך האפקטיבי קטן מהשיא: $\varepsilon_0/\sqrt2$.'
+
+  - id: Q-5.7-grid-peak
+    type: numeric
+    objectives: [OBJ-5.7-4]
+    level: mid
+    prompt: >-
+      ברשת החשמל בישראל המתח הוא $230\,\text{V}$ אפקטיבי, $50\,\text{Hz}$. מה המתח הגבוה ביותר שהשקע מגיע אליו? ענו בוולט.
+    answer: 325.3
+    unit: V
+    tolerance: 0.02
+    correctFeedback: 'נכון. $V_0 = \sqrt2\cdot230 \approx 325\,\text{V}$. המתח בשקע נע בין $+325\,\text{V}$ ל-$-325\,\text{V}$, $50$ פעמים בשנייה.'
+    wrongFeedback: '$230\,\text{V}$ הוא הערך האפקטיבי, והשיא גדול ממנו פי $\sqrt2$.'
+    commonWrong:
+      - value: 230
+        feedback: '$230\,\text{V}$ הוא הערך **האפקטיבי**, שקובע את ההספק הממוצע. השיא גדול ממנו פי $\sqrt2$.'
+        misconception: MC-grid-230-is-peak
+      - value: 162.6
+        feedback: 'חילקתם ב-$\sqrt2$, כאילו $230\,\text{V}$ הוא השיא. הוא הערך האפקטיבי, והשיא הוא $\sqrt2\cdot230$.'
+        misconception: MC-grid-230-is-peak
+      - value: 460
+        feedback: 'הכפלתם ב-2. הערך האפקטיבי הוא השיא חלקי $\sqrt2$, ולכן השיא $\sqrt2\cdot230$, לא $2\cdot230$.'
