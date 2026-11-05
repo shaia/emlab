@@ -1,0 +1,22 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below) on the
+# `verified` date. `why` rests only on the title and the upload description (neither video has a chapter
+# list): Hertz's discovery of radio and its link to Maxwell's equations; the Bar-Ilan course summary through
+# the four Maxwell equations and the vacuum wave equation. Lengths from the watch page (604 s, 552 s).
+
+- id: v-6-16-hertz
+  youtubeId: E46ZU2rsupA
+  title: "How Heinrich Hertz Discovered Radio to Validate Maxwell's Equations"
+  channel: Kathy Loves Physics
+  lang: en
+  minutes: 10
+  why: 'סרטון באנגלית, כעשר דקות, על הניסויים של הרץ: לפי הכותרת והתיאור, איך הוא גילה את גלי הרדיו, ומה הקשר שלהם למשוואות מקסוול. בזמן הצפייה חפשו את שלושת החלקים של ניסוי שבודק תאוריה: מה התאוריה חוזה, מה נמדד, ומה היה מפיל אותה.'
+  verified: '2026-11-05'
+
+- id: v-6-16-barilan
+  youtubeId: b_ZhrwBqIKQ
+  title: '17 - סיכום משוואות מקסוול'
+  channel: Physics Department Bar Ilan
+  lang: he
+  minutes: 9
+  why: 'סרטון בעברית מהמחלקה לפיזיקה באוניברסיטת בר-אילן, מתוך סדרה שמלווה את הקורס "חשמל ומגנטיות". לפי התיאור, הוא מסכם את הקורס כולו בארבע משוואות מקסוול, ומראה איך מגיעים מהן למשוואת הגלים האלקטרומגנטיים בריק. זו טעימה מהקורס שאליו הפרק הזה הוא גשר: בדקו כמה מהסימנים שבו אתם כבר קוראים.'
+  verified: '2026-11-05'
