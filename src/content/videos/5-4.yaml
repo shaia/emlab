@@ -1,0 +1,25 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. Durations and descriptions come from the watch page. `why` claims only what
+# the title and the upload description (or its chapter list) support.
+
+- id: v-5-4-rod-battery
+  youtubeId: YCdDdH1wN_E
+  title: 'כאמ מושרה - תראו כמה זה מבלבל ...'
+  channel: מרכז שוורץ/רייסמן הדרכות למורי פיזיקה
+  lang: he
+  captions: []
+  minutes: 24
+  why: 'הרצאה בעברית מסדרת ההדרכה למורי פיזיקה. לפי תיאור הסרטון, הוא מראה את הקיטוב שנוצר במוט מוליך שנע בשדה מגנטי, מנקודת המבט של הכוחות על האלקטרונים, ומסביר ש"מוט נע עובד כמו סוללה ממש"; בהמשך הוא עובר ללולאה בשדה משתנה, הנושא של שיעור 5.6. השוו לגזירה של ε = BLv בשיעור.'
+  verified: '2026-11-05'
+
+- id: v-5-4-lenz-rod
+  youtubeId: 9xB6zQg1eUg
+  title: 'כיוון זרם מושרה לפי חוק לנץ'
+  channel: אליה וינוקור
+  lang: he
+  captions: []
+  start: 0
+  end: 273
+  minutes: 4.5
+  why: 'לפי רשימת הפרקים של הסרטון, בארבע הדקות הראשונות קובעים את כיוון הזרם במוט שנע ימינה או שמאלה, בשדה לתוך הדף או מתוכו, בכל פעם בשתי דרכים: לפי כוח לורנץ ולפי חוק לנץ. זה בדיוק התרגיל של דוגמה 5.4.2. הקטע שאחרי 4:33, על מגנט וטבעת, שייך לשיעור 5.3.'
+  verified: '2026-11-05'
