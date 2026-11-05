@@ -3,7 +3,7 @@ import { G } from '~/physics/constants';
 import { derivative } from '~/physics/calculus';
 import { fluxUniform, motionalEmf, railBrakingForce, railCurrent, railDistance, railSpeed, railStep, railTerminalSpeed, railTimeConstant, type RailRod, type RailState } from '~/physics/induction';
 import { lorentzForce, wireForceVec } from '~/physics/magnetism';
-import { inclineRod, kinetic, perpendicularField, railAcceleration, railAt, railPowers, railTimeToFraction, runAt, runWork, type RailSegment } from '~/physics/railrod';
+import { fallRod, freeFallSpeed, inclineRod, kinetic, perpendicularField, pulleyRod, pulleyTension, railAcceleration, railAt, railPowers, railTimeToFraction, runAt, runWork, type RailSegment } from '~/physics/railrod';
 import { relativeError } from '~/physics/vec';
 
 /** the lesson's default rod: v_T = 5 m/s, τ = 2.5 s */
@@ -61,6 +61,32 @@ describe('analytic limit: the motional emf and the terminal speed', () => {
     expect(relativeError(railTerminalSpeed(p), (0.1 * G * 1 * Math.sin(30 * deg)) / (1 * 0.25))).toBeLessThan(1e-12);
   });
 
+  it('between vertical rails the rod reaches v_T = mgR/(B²L²), the incline at α = 90°, with τ = v_T/g', () => {
+    const p = fallRod(0.1, 0.5, 1, 1);
+    expect(relativeError(railTerminalSpeed(p), (0.1 * G * 1) / 0.25)).toBeLessThan(1e-12);
+    expect(relativeError(railTerminalSpeed(p), railTerminalSpeed(inclineRod(0.1, 0.5, 1, 1, Math.PI / 2, 'normal')))).toBeLessThan(1e-12);
+    expect(relativeError(railTimeConstant(p), railTerminalSpeed(p) / G)).toBeLessThan(1e-12);
+    // released from rest it starts in free fall: a = g, and for t ≪ τ the speed is g·t
+    expect(relativeError(railAcceleration(p, 0), G)).toBeLessThan(1e-12);
+    const t = 1e-4 * railTimeConstant(p);
+    expect(relativeError(railSpeed(p, 0, t), freeFallSpeed(t))).toBeLessThan(1e-4);
+    // and it always falls slower than a free body
+    for (const s of [0.1, 0.4, 1, 3]) expect(railSpeed(p, 0, s)).toBeLessThan(freeFallSpeed(s));
+  });
+
+  it('a rod pulled by a hanging mass M starts at a = Mg/(m + M), ends at v_T = MgR/(B²L²), and the string then holds Mg', () => {
+    const m = 0.1;
+    const M = 0.05;
+    const p = pulleyRod(m, M, 0.5, 0.5, 0.5);
+    expect(relativeError(railAcceleration(p, 0), (M * G) / (m + M))).toBeLessThan(1e-12);
+    expect(relativeError(railTerminalSpeed(p), (M * G * 0.5) / 0.0625)).toBeLessThan(1e-12);
+    expect(relativeError(railTimeConstant(p), ((m + M) * 0.5) / 0.0625)).toBeLessThan(1e-12);
+    expect(relativeError(pulleyTension(p, M, railTerminalSpeed(p)), M * G)).toBeLessThan(1e-12);
+    // at any speed the rod's own equation holds: T − F_B = m·a
+    const v = 1.3;
+    expect(relativeError(pulleyTension(p, M, v) - railBrakingForce(p, v), m * railAcceleration(p, v))).toBeLessThan(1e-12);
+  });
+
   it('with a vertical field, the full Lorentz force gives the braking of a field B·cosα along the rails', () => {
     // side view: the incline rises to the right at α, the rod (along z) slides down it at v; B vertical (+y)
     const alpha = 30 * deg;
@@ -98,6 +124,22 @@ describe('conservation: energy of the rod on rails', () => {
     }
   });
 
+  it('falling or pulled by a mass, the work of gravity becomes kinetic energy of everything that moves plus heat', () => {
+    const fall = fallRod(0.1, 0.5, 1, 1);
+    const pulley = pulleyRod(0.1, 0.05, 0.5, 0.5, 0.5);
+    for (const p of [fall, pulley]) {
+      for (const T of [0.3, 1, 4]) {
+        const s = railAt(p, rest, T);
+        // the drive is gravity on the falling body: F·x is m·g·h (or M·g·h); the inertia p.m is all of it
+        expect(Math.abs(p.F * s.x - kinetic(p.m, s.v) - s.heat)).toBeLessThan(1e-12);
+        const num = integrate(p, rest, T, 4000);
+        expect(relativeError(num.heat, s.heat)).toBeLessThan(1e-8);
+      }
+      const { drive, joule } = railPowers(p, railTerminalSpeed(p));
+      expect(relativeError(drive, joule)).toBeLessThan(1e-12);
+    }
+  });
+
   it('a run in segments keeps K₀ + W = K + Q across every change of parameters', () => {
     const segs: RailSegment[] = [{ t0: 0, s0: rest, p: rod }];
     const t1 = 6;
@@ -132,6 +174,16 @@ describe('scaling: what sets the terminal speed and the time constant', () => {
     const c = inclineRod(0.1, 0.5, 1, 1, 30 * deg, 'vertical');
     expect(relativeError(railTerminalSpeed(b), 2 * railTerminalSpeed(a))).toBeLessThan(1e-12);
     expect(relativeError(railTerminalSpeed(c), railTerminalSpeed(a) / Math.cos(30 * deg) ** 2)).toBeLessThan(1e-12);
+  });
+  it('between vertical rails v_T ∝ m; pulled by a hanging mass, v_T ∝ M and the rod mass only sets τ', () => {
+    const a = fallRod(0.1, 0.5, 1, 1);
+    expect(relativeError(railTerminalSpeed(fallRod(0.2, 0.5, 1, 1)), 2 * railTerminalSpeed(a))).toBeLessThan(1e-12);
+    const p = pulleyRod(0.1, 0.05, 0.5, 0.5, 0.5);
+    const heavyRod = pulleyRod(0.2, 0.05, 0.5, 0.5, 0.5);
+    const heavyMass = pulleyRod(0.1, 0.1, 0.5, 0.5, 0.5);
+    expect(relativeError(railTerminalSpeed(heavyRod), railTerminalSpeed(p))).toBeLessThan(1e-12);
+    expect(railTimeConstant(heavyRod)).toBeGreaterThan(railTimeConstant(p));
+    expect(relativeError(railTerminalSpeed(heavyMass), 2 * railTerminalSpeed(p))).toBeLessThan(1e-12);
   });
 });
 
