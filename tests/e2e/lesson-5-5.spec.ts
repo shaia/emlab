@@ -98,8 +98,8 @@ test.describe('live figures', () => {
     const down = fig.getByRole('button', { name: 'ε למטה' });
     const next = fig.getByRole('button', { name: 'הקטע הבא' });
     const check = fig.getByRole('button', { name: 'בדיקה' });
-    // −30, 0, +60, +20, 0 mV
-    const steps = [-3, 0, 6, 2, 0];
+    // −30, 0, +40, +20 mV
+    const steps = [-3, 0, 4, 2];
     for (let i = 0; i < steps.length; i++) {
       if (steps[i] === 0) {
         await up.click();
@@ -107,10 +107,10 @@ test.describe('live figures', () => {
       }
       for (let k = 0; k < Math.abs(steps[i]); k++) await (steps[i] > 0 ? up : down).click();
       if (i === 2) {
-        // a slip first: 50 mV on the steep fall is marked wrong
+        // a slip first: 30 mV on the steep fall is marked wrong
         await down.click();
         await check.click();
-        await expect(readout).toContainText('נכונות 2 מתוך 5');
+        await expect(readout).toContainText('נכונות 2 מתוך 4');
         await up.click();
       }
       if (i < steps.length - 1) await next.click();
