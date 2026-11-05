@@ -1,0 +1,520 @@
+# Chapter 5 Bagrut-style questions: a scenario with lettered parts (א, ב, ג…), 33 points each, as in
+# paper 036371. Format and rules: see questions/ch1/bagrut.yaml.
+#
+# Directions are worked as on the Bagrut: magnitudes from Faraday's law, |ε| = N·|ΔΦ|/Δt, and the
+# direction from Lenz's law. Every direction claim agrees with the signed law of the chapter (the normal
+# and the positive sense tied by the right-hand rule, Φ measured along the normal).
+#
+# Every number was computed with src/physics, not by hand:
+# - question 1: railrod.ts (fallRod, railAcceleration, railPowers, kinetic) and induction.ts
+#   (railTerminalSpeed, railTimeConstant, railCurrent, railSpeed, railDistance: the speed after 2.0 m);
+# - question 2: fluxgraphs.ts (passTimes, passFlux, passEmf, passCurrent, passPushForce, passPushPower,
+#   passHeatPower, passCharge, passWork);
+# - question 3: generator.ts (angularSpeed, periodOf, cycleMean, instantPower, drivePower) and induction.ts
+#   (generatorPeak, rms, acMeanPower, fluxUniform).
+# The commonWrong values are the same functions' formulas with the named mistake made (a square dropped,
+# f in place of ω, N left out…), evaluated with tsx.
+
+chapter: 5
+questions:
+  # ------------------------------------------------------------ 1: a rod falling between vertical rails
+  - id: Q-5-bagrut-1
+    type: bagrut
+    title: מוט נופל בין מסילות אנכיות
+    prompt: >-
+      שתי מסילות מתכת אנכיות, ארוכות וחלקות, נמצאות במישור הדף, במרחק $L = 0.40\,\text{m}$ זו מזו. בקצה העליון הן
+      מחוברות דרך נגד $R = 0.80\,\Omega$. מוט מתכת אופקי שמסתו $m = 20\,\text{g}$ מונח על המסילות, נוגע בהן כל הזמן
+      ויכול להחליק לאורכן בלי חיכוך. בכל האזור יש שדה מגנטי אחיד $B = 0.50\,\text{T}$ לתוך הדף (⊗), ניצב למישור
+      המסילות. משחררים את המוט ממנוחה. הזניחו את ההתנגדות של המוט ושל המסילות ואת התנגדות האוויר, והשתמשו
+      ב-$g = 10\,\text{m/s}^2$.
+    diagramAlt: >-
+      שתי מסילות אנכיות, משמאל ומימין, ובראשן נגד R שמחבר ביניהן. מוט אופקי מונח על המסילות באמצע הגובה, וחץ g מצביע
+      כלפי מטה. בכל השטח שבין המסילות ומסביבן סימני ⊗, שדה לתוך הדף. המרחק בין המסילות מסומן L.
+    diagram: |
+      <svg viewBox="0 0 420 260" width="420" height="260" font-size="15" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="2" fill="none">
+          <line x1="120" y1="30" x2="120" y2="250"/>
+          <line x1="300" y1="30" x2="300" y2="250"/>
+          <polyline points="120,30 180,30"/>
+          <polyline points="240,30 300,30"/>
+          <rect x="180" y="22" width="60" height="16"/>
+          <line x1="120" y1="232" x2="300" y2="232" stroke-width="1" stroke-dasharray="4 3"/>
+        </g>
+        <rect x="104" y="140" width="212" height="9" rx="2" fill="var(--equip)" stroke="currentColor" stroke-width="1.5"/>
+        <g fill="var(--bfield)" font-size="17">
+          <text x="150" y="85">⊗</text><text x="200" y="85">⊗</text><text x="250" y="85">⊗</text>
+          <text x="150" y="200">⊗</text><text x="200" y="200">⊗</text><text x="250" y="200">⊗</text>
+          <text x="40" y="120">⊗</text><text x="350" y="120">⊗</text>
+        </g>
+        <line x1="370" y1="160" x2="370" y2="215" stroke="currentColor" stroke-width="2"/>
+        <polygon points="364,212 370,224 376,212" fill="currentColor"/>
+        <text x="380" y="195" fill="currentColor">g</text>
+        <text x="210" y="16" text-anchor="middle" fill="currentColor">R</text>
+        <text x="210" y="131" text-anchor="middle" fill="currentColor">m</text>
+        <text x="210" y="250" text-anchor="middle" fill="currentColor">L</text>
+        <text x="350" y="60" fill="var(--bfield)">B</text>
+      </svg>
+    parts:
+      - label: א
+        type: vector
+        points: 5
+        level: basic
+        qualitative: true
+        objectives: [OBJ-5.4-2, OBJ-5.3-1]
+        allowOutIn: true
+        prompt: המוט נופל. מה כיוון הזרם המושרה במוט?
+        answer: e
+        correctFeedback: >-
+          נכון. בכוח לורנץ: המטענים החיוביים שבמוט נעים איתו כלפי מטה, בשדה לתוך הדף, ובכלל כף יד ימין (האצבעות לתוך
+          הדף, האגודל למטה) הכוח עליהם ימינה. ובחוק לנץ: המעגל שמעל המוט גדל, השטף ⊗ דרכו גדל, השדה המושרה ⊙
+          מתנגד לגידול, וזרם ⊙ בתוך המעגל זורם נגד כיוון השעון, כלומר ימינה בצלע התחתונה, במוט.
+        wrong:
+          - dir: w
+            feedback: >-
+              זה הזרם שהיה יוצר שדה ⊗, באותו כיוון כמו השטף שגדל, כלומר זרם שמגדיל את השינוי. הזרם המושרה מתנגד
+              לשינוי: השטף ⊗ גדל, ולכן השדה המושרה ⊙, והזרם במוט ימינה.
+            misconception: MC-faraday-sign-follows-flux
+          - dir: zero
+            feedback: >-
+              השדה אחיד וקבוע, אבל המעגל שמעל המוט גדל, ולכן השטף דרכו משתנה. וגם בלי השטף: המטענים במוט נעים בשדה,
+              וכוח לורנץ דוחף אותם לאורך המוט.
+            misconception: MC-rail-uniform-field-no-emf
+          - dir: in
+            feedback: 'הזרם זורם לאורך המוט, במישור הדף. כוח לורנץ על המטענים ניצב לשדה, ולכן הוא לא יכול להיות לתוך הדף.'
+            misconception: MC-magnetic-force-along-field
+        wrongFeedback: 'השתמשו בכלל כף יד ימין על המטענים החיוביים שבמוט, או בחוק לנץ על המעגל שמעל המוט, ובדקו שהשניים מסכימים.'
+
+      - label: ב
+        type: mc
+        points: 6
+        level: mid
+        qualitative: true
+        objectives: [OBJ-5.5-3, OBJ-5.4-3]
+        prompt: 'איזה מהתיאורים הבאים מתאר את הגרף של מהירות המוט כתלות בזמן, $v(t)$, מרגע השחרור? קבעו ונמקו.'
+        choices:
+          - text: 'הגרף מתחיל באפס בשיפוע $g$, השיפוע שלו קטן בהדרגה, והוא מתקרב לקו אופקי, המהירות הסופית.'
+            correct: true
+            feedback: >-
+              נכון. ברגע השחרור $v = 0$, אין כא"מ ואין זרם, ולכן $a = g$. ככל שהמהירות גדלה, הכוח הבולם
+              $B^2L^2v/R$ גדל והתאוצה קטנה, עד שהבלימה משתווה למשקל והמהירות מתייצבת. כמו צנחן.
+          - text: 'קו ישר מהראשית בשיפוע $g$, כמו בנפילה חופשית.'
+            feedback: >-
+              זה נכון רק לרגע הראשון. ברגע שהמוט נע, נוצר זרם, ועל המוט פועל כוח מגנטי כלפי מעלה שגדל עם המהירות.
+              התאוצה קטנה, והגרף מתעקם לקו אופקי.
+            misconception: MC-rail-falls-like-free-fall
+          - text: 'הגרף עולה לשיא, ואחר כך יורד חזרה לאפס: הבלם עוצר את המוט.'
+            feedback: >-
+              הכוח הבולם קיים רק כשהמוט נע, והוא גדל עם המהירות. כשהוא משתווה למשקל הכוח השקול אפס, והמהירות
+              מפסיקה לגדול, אבל לא קטנה. הבלם מגביל את המהירות, ולא עוצר.
+            misconception: MC-eddy-brake-stops-completely
+          - text: 'קו ישר בשיפוע קטן מ-$g$ כבר מהרגע הראשון, כי השדה בולם את המוט מההתחלה.'
+            feedback: >-
+              שדה בלי שינוי בשטף לא משרה כלום. ברגע השחרור המוט עומד, השטף לא משתנה, אין זרם ואין כוח מגנטי, ולכן
+              התאוצה ההתחלתית היא $g$. והבלימה גדלה עם המהירות, ולכן הגרף לא ישר.
+            misconception: MC-faraday-field-not-change
+
+      - label: ג
+        type: numeric
+        points: 6
+        level: mid
+        objectives: [OBJ-5.5-3]
+        prompt: מה המהירות הסופית של המוט?
+        answer: 4.0
+        unit: m/s
+        correctFeedback: >-
+          נכון. במהירות הסופית הכוח הבולם שווה למשקל: $\dfrac{B^2L^2v_T}{R} = mg$, ולכן
+          $v_T = \dfrac{mgR}{B^2L^2} = \dfrac{0.020\cdot10\cdot0.80}{0.50^2\cdot0.40^2} = 4.0\,\text{m/s}$.
+        wrongFeedback: >-
+          כתבו את הכוח הבולם, $F_B = BIL$ עם $I = BLv/R$, והשוו אותו למשקל. זכרו להמיר גרמים לקילוגרמים.
+        commonWrong:
+          - value: 2.0
+            feedback: 'לא העליתם את $B$ בריבוע. $B$ נכנס פעמיים: פעם בכא"מ $BLv$, ופעם בכוח $BIL$.'
+          - value: 1.6
+            feedback: 'לא העליתם את $L$ בריבוע. גם $L$ נכנס פעמיים: בכא"מ ובכוח על המוט.'
+          - value: 5.0
+            feedback: >-
+              שכחתם את $R$: $mg/(B^2L^2) = 5.0$. הזרם הוא $I = BLv/R$, ולכן $R$ מופיע במונה של המהירות הסופית:
+              התנגדות גדולה יותר, זרם קטן יותר, ובלימה חלשה יותר.
+          - value: 0.8
+            feedback: 'השתמשתם ב-$BL$ במקום ב-$B^2L^2$: השוויתם את המשקל לכא"מ ולא לכוח הבולם. הכוח הוא $BIL = B^2L^2v/R$.'
+
+      - label: ד
+        type: mc
+        points: 6
+        level: bagrut
+        qualitative: true
+        objectives: [OBJ-5.5-3, OBJ-5.5-1]
+        prompt: 'מחליפים את המוט במוט שמסתו $40\,\text{g}$, באותו אורך ובאותה התנגדות. מה תהיה המהירות הסופית? קבעו ונמקו.'
+        choices:
+          - text: '$8.0\,\text{m/s}$: המשקל גדל פי 2, והכוח הבולם באותה מהירות לא השתנה, ולכן צריך מהירות כפולה כדי לאזן אותו.'
+            correct: true
+            feedback: >-
+              נכון. $v_T = mgR/(B^2L^2)$, ביחס ישר למסה. הבלימה, $B^2L^2v/R$, לא תלויה במסה, אבל הכוח המניע, המשקל,
+              כן. כאן, כשהכובד מניע את המוט, המסה משנה את המהירות הסופית.
+          - text: '$4.0\,\text{m/s}$: כמו בנפילה חופשית, מהירות הנפילה לא תלויה במסה.'
+            feedback: >-
+              בנפילה חופשית התאוצה לא תלויה במסה, כי הכוח היחיד, המשקל, גדל יחד עם המסה. כאן יש גם כוח בולם, שלא תלוי
+              במסה. במהירות הסופית המשקל, $mg$, מאוזן על ידי $B^2L^2v_T/R$, ולכן $v_T$ גדלה עם $m$.
+            misconception: MC-rail-mass-never-matters
+          - text: 'למוט הכבד אין מהירות סופית: הבלם לא מספיק כדי לעצור את התאוצה שלו, והוא ממשיך להאיץ.'
+            feedback: >-
+              הכוח הבולם גדל עם המהירות בלי גבול, ולכן לכל משקל יש מהירות שבה הבלימה משתווה לו. המוט הכבד מגיע
+              למהירות סופית גדולה יותר, $8.0\,\text{m/s}$, ומתקרב אליה בלי לעבור אותה.
+            misconception: MC-rail-rod-speeds-up-forever
+
+      - label: ה
+        type: open
+        points: 10
+        level: bagrut
+        objectives: [OBJ-5.5-4, OBJ-5.4-4, OBJ-5.4-2]
+        prompt: >-
+          חוזרים למוט שמסתו $20\,\text{g}$.
+
+          (1) חשבו את הזרם במעגל כשהמוט נע במהירות הסופית, והראו שההספק של כוח הכובד שווה אז להספק שמתפתח בנגד.
+
+          (2) מודדים שאחרי נפילה של $h = 2.0\,\text{m}$ מרגע השחרור מהירות המוט היא $3.5\,\text{m/s}$. כמה חום התפתח
+          בנגד עד אז? מי עשה את העבודה שהפכה לחום?
+        hints:
+          - 'במהירות הסופית הכוח השקול אפס: $BIL = mg$. בחלק (2) השתמשו בשימור אנרגיה: האנרגיה הפוטנציאלית שאבדה הולכת לאנרגיה קינטית ולחום.'
+        solution:
+          - { kind: formula, text: '$I = \dfrac{\varepsilon}{R} = \dfrac{BLv_T}{R}$; ההספק של הכובד $P_g = mg\,v_T$, וההספק בנגד $P_R = I^2R$.' }
+          - { kind: substitution, text: '$I = \dfrac{0.50\cdot0.40\cdot4.0}{0.80} = 1.0\,\text{A}$. בדיקה: $BIL = 0.50\cdot1.0\cdot0.40 = 0.20\,\text{N} = mg$.' }
+          - { kind: substitution, text: '$P_g = 0.020\cdot10\cdot4.0 = 0.80\,\text{W}$, ו-$P_R = 1.0^2\cdot0.80 = 0.80\,\text{W}$: שווים.' }
+          - { kind: formula, text: 'שימור אנרגיה בדרך למהירות הסופית: $mgh = \tfrac12 mv^2 + Q$.' }
+          - { kind: manipulation, text: '$Q = mgh - \tfrac12 mv^2$.' }
+          - { kind: substitution, text: '$Q = 0.020\cdot10\cdot2.0 - \tfrac12\cdot0.020\cdot3.5^2 = 0.40 - 0.12 \approx 0.28\,\text{J}$.' }
+          - { kind: result, text: '(1) $I = 1.0\,\text{A}$, ו-$P_g = P_R = 0.80\,\text{W}$: במהירות הסופית כל העבודה של הכובד הופכת לחום. (2) כ-$0.28\,\text{J}$. את העבודה עשה כוח הכובד; הכוח המגנטי רק העביר אותה, דרך הזרם, אל הנגד, והשדה המגנטי לא נתן אנרגיה משלו.' }
+        rubric:
+          - text: 'חישבתי את הזרם במהירות הסופית, $1.0\,\text{A}$ (מ-$BLv_T/R$, או מ-$BIL = mg$).'
+          - text: 'חישבתי שני הספקים, $mgv_T$ ו-$I^2R$, וקיבלתי $0.80\,\text{W}$ בשניהם.'
+          - text: 'כתבתי שימור אנרגיה עם שלושה איברים: האנרגיה הפוטנציאלית שאבדה שווה לאנרגיה הקינטית ועוד החום.'
+          - text: 'קיבלתי חום של כ-$0.28\,\text{J}$, עם מסה בקילוגרמים.'
+          - text: 'קבעתי שאת העבודה עושה הכובד, ולא השדה המגנטי או המגנט.'
+
+  # ------------------------------------------------------------ 2: a coil pushed through a strip of field
+  - id: Q-5-bagrut-2
+    type: bagrut
+    title: מסגרת שעוברת דרך רצועת שדה
+    prompt: >-
+      מסגרת מלבנית של $N = 20$ כריכות מונחת במישור הדף. הצלע שלה שניצבת לכיוון התנועה היא $h = 0.10\,\text{m}$,
+      והצלע שלאורך התנועה היא $w = 0.20\,\text{m}$. ההתנגדות הכוללת של המסגרת $R = 2.0\,\Omega$. דוחפים את המסגרת
+      ימינה במהירות קבועה $v = 0.50\,\text{m/s}$ דרך רצועה ברוחב $0.50\,\text{m}$, שבה שדה מגנטי אחיד
+      $B = 0.40\,\text{T}$ לתוך הדף (⊗). מחוץ לרצועה אין שדה. ברגע $t = 0$ הצלע הימנית של המסגרת מגיעה לגבול
+      השמאלי של הרצועה. הזניחו חיכוך.
+    diagramAlt: >-
+      משמאל, מסגרת מלבנית שוכבת ברוחב w ובגובה h, והצלע הימנית שלה נוגעת בקו הגבול השמאלי של רצועה. חץ v ימינה.
+      הרצועה, ברוחב 0.50 מטר, מלאה בסימני ⊗, שדה לתוך הדף. מחוץ לה אין שדה.
+    diagram: |
+      <svg viewBox="0 0 520 205" width="520" height="205" font-size="15" aria-hidden="true">
+        <rect x="230" y="20" width="250" height="150" fill="var(--bfield-glow)" stroke="var(--bfield)" stroke-width="1.5" stroke-dasharray="5 3"/>
+        <g fill="var(--bfield)" font-size="17">
+          <text x="255" y="55">⊗</text><text x="315" y="55">⊗</text><text x="375" y="55">⊗</text><text x="435" y="55">⊗</text>
+          <text x="255" y="105">⊗</text><text x="315" y="105">⊗</text><text x="375" y="105">⊗</text><text x="435" y="105">⊗</text>
+          <text x="255" y="155">⊗</text><text x="315" y="155">⊗</text><text x="375" y="155">⊗</text><text x="435" y="155">⊗</text>
+        </g>
+        <rect x="130" y="70" width="100" height="50" fill="none" stroke="currentColor" stroke-width="3"/>
+        <line x1="140" y1="95" x2="200" y2="95" stroke="currentColor" stroke-width="2"/>
+        <polygon points="198,89 210,95 198,101" fill="currentColor"/>
+        <text x="160" y="88" fill="currentColor">v</text>
+        <text x="180" y="140" text-anchor="middle" fill="currentColor">w</text>
+        <text x="118" y="100" text-anchor="end" fill="currentColor">h</text>
+        <text x="500" y="40" text-anchor="middle" fill="var(--bfield)">B</text>
+        <line x1="230" y1="182" x2="480" y2="182" stroke="currentColor" stroke-width="1"/>
+        <line x1="230" y1="176" x2="230" y2="188" stroke="currentColor"/><line x1="480" y1="176" x2="480" y2="188" stroke="currentColor"/>
+        <text x="355" y="200" text-anchor="middle" fill="currentColor">0.50 m</text>
+      </svg>
+    parts:
+      - label: א
+        type: numeric
+        points: 6
+        level: basic
+        objectives: [OBJ-5.6-2, OBJ-5.2-2]
+        prompt: מה גודל הכא"מ המושרה במסגרת בזמן שהיא נכנסת לשדה?
+        answer: 0.40
+        unit: V
+        correctFeedback: >-
+          נכון. בכל שנייה נכנס לשדה שטח $hv$, ולכן $|\varepsilon| = N\dfrac{\Delta\Phi}{\Delta t} = NBhv =
+          20\cdot0.40\cdot0.10\cdot0.50 = 0.40\,\text{V}$.
+        wrongFeedback: 'חשבו כמה שטח נכנס לשדה בכל שנייה, ומזה את קצב השינוי של השטף דרך כריכה אחת. אל תשכחו את $N$.'
+        commonWrong:
+          - value: 0.020
+            feedback: 'זה הכא"מ בכריכה אחת. הכריכות מחוברות בטור, והכא"מים שלהן מתחברים: כפלו ב-$N = 20$.'
+            misconception: MC-faraday-ignore-turns
+          - value: 0.80
+            feedback: >-
+              הצבתם את $w$, הצלע שלאורך התנועה. הצלע שחוצה את גבול השדה היא $h$; $w$ קובעת רק כמה זמן נמשכת הכניסה,
+              $w/v$.
+
+      - label: ב
+        type: mc
+        points: 5
+        level: basic
+        qualitative: true
+        objectives: [OBJ-5.3-1, OBJ-5.6-2]
+        prompt: מה כיוון הזרם במסגרת, במבט על הדף, בזמן הכניסה?
+        choices:
+          - text: נגד כיוון השעון.
+            correct: true
+            feedback: >-
+              נכון. השטף ⊗ דרך המסגרת גדל. לפי חוק לנץ השדה המושרה מתנגד לגידול, ולכן בתוך המסגרת הוא ⊙. בכלל יד
+              ימין, האגודל החוצה מהדף, והאצבעות מסתובבות נגד כיוון השעון.
+          - text: בכיוון השעון.
+            feedback: >-
+              זרם בכיוון השעון יוצר בתוך המסגרת שדה ⊗, באותו כיוון כמו השטף שגדל: הוא היה מגדיל את השינוי. הזרם המושרה
+              מתנגד לשינוי, ולכן השדה שלו ⊙.
+            misconception: MC-faraday-sign-follows-flux
+          - text: אין זרם, כי השדה ברצועה אחיד וקבוע.
+            feedback: >-
+              השדה קבוע, אבל השטח של המסגרת שבתוך השדה גדל, ולכן השטף דרכה משתנה. זה מספיק כדי להשרות כא"מ.
+            misconception: MC-rail-uniform-field-no-emf
+
+      - label: ג
+        type: mc
+        points: 6
+        level: mid
+        qualitative: true
+        objectives: [OBJ-5.6-1, OBJ-5.6-2, OBJ-5.2-3]
+        prompt: >-
+          איזה מהתיאורים הבאים מתאר את הגרף של הזרם במסגרת, $I(t)$, מ-$t = 0$ ועד שהמסגרת יוצאת כולה מהרצועה?
+          קבעו ונמקו.
+        choices:
+          - text: '$0.20\,\text{A}$ נגד כיוון השעון בין $0$ ל-$0.4\,\text{s}$, אפס בין $0.4$ ל-$1.0\,\text{s}$, ו-$0.20\,\text{A}$ בכיוון השעון בין $1.0$ ל-$1.4\,\text{s}$.'
+            correct: true
+            feedback: >-
+              נכון. הכניסה נמשכת $w/v = 0.4\,\text{s}$, והזרם $0.40/2.0 = 0.20\,\text{A}$. כשהמסגרת כולה בפנים, השטף
+              קבוע ואין זרם, עד שהצלע הימנית מגיעה לגבול הימני: $0.50/0.50 = 1.0\,\text{s}$. ביציאה השטף קטן באותו
+              קצב, והזרם באותו גודל, בכיוון ההפוך.
+          - text: '$0.20\,\text{A}$ נגד כיוון השעון בין $0$ ל-$0.4\,\text{s}$, אפס בין $0.4$ ל-$1.0\,\text{s}$, ושוב $0.20\,\text{A}$ נגד כיוון השעון בין $1.0$ ל-$1.4\,\text{s}$.'
+            feedback: >-
+              ביציאה השטף ⊗ **קטן**, ולכן השדה המושרה ⊗, באותו כיוון כמו השדה, והזרם בכיוון השעון. אילו הזרם היה באותו
+              כיוון בשני הקטעים, השטף לא היה חוזר לאפס בסוף.
+            misconception: MC-strip-same-direction-out
+          - text: '$0.20\,\text{A}$ נגד כיוון השעון כל הזמן שיש חלק של המסגרת בתוך הרצועה, מ-$0$ עד $1.4\,\text{s}$.'
+            feedback: >-
+              כשהמסגרת כולה בתוך השדה היא נעה, אבל השטף דרכה לא משתנה, ולכן אין כא"מ ואין זרם. שתי הצלעות שבשדה
+              דוחפות מטען לאותו כיוון בדף, וסביב המסגרת הדחיפות מבטלות זו את זו.
+            misconception: MC-strip-current-inside-field
+          - text: 'אפס בכניסה וביציאה, וזרם גדול כשהמסגרת כולה בתוך השדה, בין $0.4$ ל-$1.0\,\text{s}$, כי אז השטף הכי גדול.'
+            feedback: >-
+              הזרם הולך אחרי **קצב השינוי** של השטף, לא אחרי הגודל שלו. בפנים השטף הכי גדול, אבל קבוע, והזרם אפס.
+            misconception: MC-graph-emf-peak-at-flux-peak
+
+      - label: ד
+        type: numeric
+        points: 6
+        level: mid
+        objectives: [OBJ-5.6-3]
+        prompt: באיזה כוח צריך לדחוף את המסגרת בזמן הכניסה, כדי שמהירותה תישאר קבועה?
+        answer: 0.16
+        unit: N
+        correctFeedback: >-
+          נכון. $I = \dfrac{0.40}{2.0} = 0.20\,\text{A}$. על הצלע הימנית, באורך $h$, בכל אחת מ-$N$ הכריכות, פועל כוח
+          שמאלה, נגד התנועה: $F = NBIh = 20\cdot0.40\cdot0.20\cdot0.10 = 0.16\,\text{N}$. הדחיפה צריכה להיות שווה לו,
+          ימינה.
+        wrongFeedback: 'מצאו את הזרם, $I = \varepsilon/R$, ואחר כך את הכוח המגנטי על הצלע שבתוך השדה, בכל $N$ הכריכות.'
+        commonWrong:
+          - value: 0.008
+            feedback: >-
+              השתמשתם ב-$N$ רק פעם אחת. $N$ נכנס פעמיים: הכא"מ, ולכן הזרם, גדולים פי $N$, וגם הכוח פועל על $N$ צלעות.
+              $F = N^2B^2h^2v/R$.
+            misconception: MC-faraday-ignore-turns
+          - value: 0
+            feedback: >-
+              המהירות קבועה, אבל על הצלע שבשדה פועל כוח מגנטי בולם, נגד התנועה. כדי שהכוח השקול יהיה אפס, צריך לדחוף
+              בכוח ששווה לו.
+            misconception: MC-strip-no-push-needed
+          - value: 0.32
+            feedback: 'הצבתם את $w$ במקום $h$, באחד הגורמים. הכוח פועל על הצלע שחוצה את גבול השדה, שאורכה $h$.'
+
+      - label: ה
+        type: open
+        points: 10
+        level: bagrut
+        objectives: [OBJ-5.6-4, OBJ-5.6-3]
+        prompt: >-
+          (1) חשבו את המטען שעובר במסגרת בזמן הכניסה, בשתי דרכים: מהשטח מתחת לגרף הזרם, ומהשינוי בשטף. מה המטען נטו
+          שעובר במסגרת במעבר השלם?
+
+          (2) מה ישתנה אם ידחפו את המסגרת דרך הרצועה במהירות כפולה, $1.0\,\text{m/s}$? קבעו ונמקו: מה יהיה המטען
+          שעובר בזמן הכניסה, ומה תהיה העבודה של הדחיפה בזמן הכניסה, לעומת המהירות $0.50\,\text{m/s}$?
+        hints:
+          - 'בזמן הכניסה הזרם קבוע, ולכן השטח מתחת לגרף הוא מלבן. העבודה של הדחיפה היא הכוח כפול הדרך שבה הוא פועל, $w$.'
+        solution:
+          - { kind: formula, text: 'המטען הוא השטח מתחת לגרף הזרם, $Q = I\,\Delta t$, וגם $Q = \dfrac{N\,|\Delta\Phi|}{R}$.' }
+          - { kind: substitution, text: 'מהגרף: $Q = 0.20\cdot0.4 = 0.080\,\text{C}$. מהשטף: $\Delta\Phi = Bhw = 0.40\cdot0.10\cdot0.20 = 8.0\cdot10^{-3}\,\text{Wb}$, ו-$Q = \dfrac{20\cdot8.0\cdot10^{-3}}{2.0} = 0.080\,\text{C}$.' }
+          - { kind: manipulation, text: 'במעבר השלם השטף חוזר לאפס, $\Delta\Phi = 0$: בכניסה עוברים $0.080\,\text{C}$ נגד כיוון השעון, וביציאה $0.080\,\text{C}$ בכיוון השעון.' }
+          - { kind: formula, text: 'הדחיפה $F = \dfrac{N^2B^2h^2v}{R}$ פועלת לאורך הדרך $w$, ולכן $W = Fw$.' }
+          - { kind: substitution, text: 'ב-$0.50\,\text{m/s}$: $W = 0.16\cdot0.20 = 0.032\,\text{J}$. ב-$1.0\,\text{m/s}$ הכוח כפול, $0.32\,\text{N}$, באותה דרך: $W = 0.32\cdot0.20 = 0.064\,\text{J}$.' }
+          - { kind: result, text: '(1) $0.080\,\text{C}$ בכניסה, בשתי הדרכים; נטו במעבר השלם אפס. (2) המטען לא משתנה, $0.080\,\text{C}$, כי הוא תלוי רק בשינוי השטף: הזרם כפול, $0.40\,\text{A}$, בחצי זמן, $0.2\,\text{s}$. העבודה של הדחיפה גדלה פי 2, ל-$0.064\,\text{J}$: הכוח כפול לאורך אותה דרך, וכל העבודה הופכת לחום במסגרת.' }
+        rubric:
+          - text: 'חישבתי את המטען מהשטח, $0.20\,\text{A}\cdot0.4\,\text{s} = 0.080\,\text{C}$.'
+          - text: 'חישבתי את השינוי בשטף דרך כריכה, $8.0\cdot10^{-3}\,\text{Wb}$, וקיבלתי מ-$N|\Delta\Phi|/R$ את אותו מטען.'
+          - text: 'קבעתי שהמטען נטו במעבר השלם אפס, כי השטף חוזר לערכו ההתחלתי.'
+          - text: 'נימקתי שבמהירות כפולה המטען לא משתנה: זרם כפול בחצי זמן.'
+          - text: 'קבעתי שהעבודה של הדחיפה בכניסה גדלה פי 2, ל-$0.064\,\text{J}$, כי הכוח פרופורציוני למהירות והדרך אותה דרך.'
+
+  # ------------------------------------------------------------ 3: an AC generator, and where its emf comes from
+  - id: Q-5-bagrut-3
+    type: bagrut
+    title: גנרטור של זרם חילופין
+    prompt: >-
+      סליל מלבני של $N = 100$ כריכות, במידות $10\,\text{cm} \times 20\,\text{cm}$, מסתובב סביב ציר שניצב לשדה מגנטי
+      אחיד $B = 0.25\,\text{T}$, ומשלים $50$ סיבובים בשנייה. קצות הסליל מחוברים דרך טבעות החלקה ומברשות לגוף חימום
+      שהתנגדותו $R = 50\,\Omega$ (כולל ההתנגדות של הסליל). ברגע $t = 0$ מישור הסליל ניצב לשדה.
+    diagramAlt: >-
+      קוטב צפוני משמאל וקוטב דרומי מימין, וביניהם קווי שדה אופקיים עם חצים ימינה. בין הקטבים סליל מלבני על ציר אנכי
+      מקווקו, עם חץ מעוגל של סיבוב סביב הציר. מתחת לסליל שתי טבעות החלקה על הציר, ושתי מברשות שמחוברות לנגד R.
+    diagram: |
+      <svg viewBox="0 0 440 270" width="440" height="270" font-size="15" aria-hidden="true">
+        <rect x="20" y="40" width="70" height="140" fill="var(--paper-3)" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="350" y="40" width="70" height="140" fill="var(--paper-3)" stroke="currentColor" stroke-width="1.5"/>
+        <text x="55" y="117" text-anchor="middle" fill="currentColor" font-weight="700" font-size="22">N</text>
+        <text x="385" y="117" text-anchor="middle" fill="currentColor" font-weight="700" font-size="22">S</text>
+        <g stroke="var(--bfield)" stroke-width="1.5" fill="var(--bfield)">
+          <line x1="95" y1="60" x2="345" y2="60"/><polygon points="337,55 347,60 337,65" stroke="none"/>
+          <line x1="95" y1="160" x2="345" y2="160"/><polygon points="337,155 347,160 337,165" stroke="none"/>
+          <line x1="95" y1="110" x2="150" y2="110"/><line x1="290" y1="110" x2="345" y2="110"/><polygon points="337,105 347,110 337,115" stroke="none"/>
+        </g>
+        <text x="320" y="52" fill="var(--bfield)">B</text>
+        <line x1="220" y1="20" x2="220" y2="240" stroke="currentColor" stroke-width="1" stroke-dasharray="5 4"/>
+        <polygon points="185,70 255,70 255,150 185,150" fill="none" stroke="currentColor" stroke-width="3"/>
+        <path d="M196,34 A30,8 0 1 0 244,34" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <polygon points="240,29 250,35 239,39" fill="currentColor"/>
+        <line x1="215" y1="150" x2="215" y2="196" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="225" y1="150" x2="225" y2="180" stroke="currentColor" stroke-width="1.5"/>
+        <ellipse cx="220" cy="182" rx="16" ry="5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <ellipse cx="220" cy="198" rx="16" ry="5" fill="none" stroke="currentColor" stroke-width="2"/>
+        <g stroke="currentColor" stroke-width="1.5" fill="none">
+          <polyline points="236,182 300,182 300,200"/>
+          <polyline points="204,198 140,198 140,250 300,250 300,236"/>
+          <rect x="292" y="200" width="16" height="36"/>
+        </g>
+        <text x="318" y="223" fill="currentColor">R</text>
+      </svg>
+    parts:
+      - label: א
+        type: mc
+        points: 5
+        level: basic
+        qualitative: true
+        objectives: [OBJ-5.8-1]
+        prompt: 'ברגע $t = 0$, כשמישור הסליל ניצב לשדה, מה נכון לגבי השטף דרך כריכה ולגבי הכא"מ בסליל?'
+        choices:
+          - text: 'השטף הכי גדול, והכא"מ אפס.'
+            correct: true
+            feedback: >-
+              נכון. כשהמישור ניצב לשדה, האנך לכריכה מקביל לשדה, ו-$\Phi = BA$, הערך הגדול ביותר. אבל ברגע הזה גרף השטף
+              שטוח: השיפוע אפס, ולכן $\varepsilon = 0$. הצלעות הארוכות נעות אז לאורך השדה, וכוח לורנץ לא דוחף מטענים לאורכן.
+          - text: 'השטף הכי גדול, ולכן גם הכא"מ הכי גדול.'
+            feedback: >-
+              הכא"מ נקבע לפי **השיפוע** של גרף השטף, לא לפי הגובה שלו. בשיא השטף לרגע לא משתנה, והכא"מ אפס. הכא"מ הכי
+              גדול רבע מחזור אחר כך, כשהשטף עובר באפס.
+            misconception: MC-generator-emf-follows-flux
+          - text: 'השטף אפס, כי השדה מקביל לאנך, והכא"מ הכי גדול.'
+            feedback: >-
+              הזווית ב-$\Phi = BA\cos\theta$ היא בין השדה **לאנך** לכריכה. כשהמישור ניצב לשדה, $\theta = 0$, והשטף הכי
+              גדול. זה המצב שבו הכא"מ אפס; המצב שתיארתם, שטף אפס וכא"מ מרבי, הוא כשהמישור לאורך השדה.
+            misconception: MC-magflux-angle-from-plane
+
+      - label: ב
+        type: numeric
+        points: 6
+        level: mid
+        objectives: [OBJ-5.8-2]
+        prompt: מה ערך השיא של הכא"מ בסליל?
+        answer: 157
+        unit: V
+        correctFeedback: >-
+          נכון. $A = 0.10\cdot0.20 = 0.020\,\text{m}^2$, $\omega = 2\pi f = 2\pi\cdot50 \approx 314\,\text{rad/s}$, ו-
+          $\varepsilon_0 = NBA\omega = 100\cdot0.25\cdot0.020\cdot314 \approx 157\,\text{V}$.
+        wrongFeedback: 'ערך השיא הוא $\varepsilon_0 = NBA\omega$. המירו את המידות למטרים, ואת מספר הסיבובים בשנייה למהירות זוויתית.'
+        commonWrong:
+          - value: 25
+            feedback: 'הצבתם את התדירות, $f = 50\,\text{Hz}$, במקום המהירות הזוויתית. $\omega = 2\pi f \approx 314\,\text{rad/s}$.'
+          - value: 1.57
+            feedback: 'שכחתם את $N$. בכל אחת מ-100 הכריכות נוצר אותו כא"מ, והן מחוברות בטור.'
+            misconception: MC-faraday-ignore-turns
+          - value: 0.5
+            feedback: 'זה $NBA = 0.50\,\text{Wb}$, השטף המרבי כפול מספר הכריכות, ולא כא"מ. הכא"מ תלוי גם בקצב: כפלו ב-$\omega$.'
+            misconception: MC-generator-faster-same-peak
+
+      - label: ג
+        type: numeric
+        points: 5
+        level: mid
+        objectives: [OBJ-5.8-4]
+        prompt: מה הערך האפקטיבי של הכא"מ?
+        answer: 111
+        unit: V
+        correctFeedback: 'נכון: $\varepsilon_{\text{eff}} = \dfrac{\varepsilon_0}{\sqrt2} = \dfrac{157}{\sqrt2} \approx 111\,\text{V}$. זה המתח הקבוע שהיה נותן לגוף החימום את אותו הספק ממוצע.'
+        wrongFeedback: 'הערך האפקטיבי מוגדר דרך ההספק הממוצע, ולכן הוא השיא חלקי $\sqrt2$.'
+        commonWrong:
+          - value: 78.5
+            feedback: 'חילקתם את השיא ב-2. הערך האפקטיבי נקבע מההספק: הממוצע של $\sin^2$ הוא חצי, ולכן $\varepsilon_{\text{eff}}^2 = \varepsilon_0^2/2$ ו-$\varepsilon_{\text{eff}} = \varepsilon_0/\sqrt2$.'
+            misconception: MC-ac-effective-is-half-peak
+          - value: 222
+            feedback: 'כפלתם ב-$\sqrt2$ במקום לחלק. הערך האפקטיבי קטן מהשיא: $157/\sqrt2 \approx 111\,\text{V}$. (ברשת החשמל, 230 וולט הוא הערך האפקטיבי, והשיא כ-325 וולט.)'
+            misconception: MC-grid-230-is-peak
+          - value: 0
+            feedback: 'זה הממוצע של הכא"מ עצמו על מחזור. הערך האפקטיבי הוא שורש של ממוצע הריבוע, והוא לא אפס: גוף החימום מתחמם בשני כיווני הזרם.'
+            misconception: MC-ac-mean-zero-no-energy
+
+      - label: ד
+        type: mc
+        points: 7
+        level: bagrut
+        qualitative: true
+        objectives: [OBJ-5.7-1, OBJ-5.7-4, OBJ-5.9-2]
+        prompt: >-
+          בגנרטור של תחנת כוח הסלילים קבועים במקום, ובתוכם מסתובב אלקטרומגנט, כך שהשדה המגנטי דרך הסלילים משתנה. המטענים
+          בסלילים לא זזים עם שום חלק מסתובב. מה דוחף אותם לאורך התיל, ואיזה מארבעת החוקים של מקסוול מתאר את זה? קבעו
+          ונמקו.
+        choices:
+          - text: 'שדה חשמלי מושרה, שנוצר מהשינוי של השדה המגנטי וקוויו סגורים. את זה מתאר חוק פאראדיי, $\oint \vec E\cdot d\vec l = -d\Phi_B/dt$.'
+            correct: true
+            feedback: >-
+              נכון. על מטען במנוחה אין כוח מגנטי, כי $v = 0$. מה שדוחף אותו הוא שדה חשמלי מושרה, שקיים בכל מקום שבו
+              השדה המגנטי משתנה, גם בלי מטענים. אלה שני המנגנונים של אותו חוק: בסליל מסתובב כוח לורנץ על התיל שנע, וכאן
+              שדה מושרה בתיל שעומד. בשניהם $\varepsilon = -N\,\Delta\Phi/\Delta t$.
+          - text: 'הכוח המגנטי $qvB$ על המטענים שבסליל. את זה מתאר חוק אמפר.'
+            feedback: >-
+              הכוח המגנטי פועל רק על מטען שנע, וכאן המטענים בסליל עומדים: $v = 0$, ולכן $qvB = 0$. משהו אחר דוחף אותם:
+              שדה חשמלי מושרה. וחוק אמפר מדבר על השדה המגנטי שזרם יוצר, לא על הכוח על מטענים.
+            misconception: MC-induced-lorentz-at-rest
+          - text: 'שדה חשמלי של מטענים שמצטברים על האלקטרומגנט כשהוא מסתובב. את זה מתאר חוק גאוס.'
+            feedback: >-
+              השדה המושרה לא נוצר ממטענים, ולכן הקווים שלו לא מתחילים ולא נגמרים: הם סגורים, ומקיפים את השטף שמשתנה.
+              שדה של מטענים הוא שדה משמר, והעבודה שלו סביב לולאה סגורה אפס, ולכן הוא לא היה יכול להניע זרם סביב הסליל.
+            misconception: MC-induced-field-from-charges
+
+      - label: ה
+        type: open
+        points: 10
+        level: bagrut
+        objectives: [OBJ-5.8-1, OBJ-5.8-4, OBJ-5.8-3, OBJ-5.8-2]
+        prompt: >-
+          חוזרים לגנרטור עם הסליל המסתובב.
+
+          (1) כתבו את הכא"מ כפונקציה של הזמן, ושרטטו את הגרף שלו במשך מחזור אחד, מ-$t = 0$. סמנו על הצירים את זמן
+          המחזור ואת ערך השיא.
+
+          (2) חשבו את ההספק הממוצע בגוף החימום. כמה עבודה צריך מי שמסובב את הסליל להשקיע בדקה אחת? (הזניחו חיכוך.)
+          למה צריך להשקיע עבודה, אם הסליל מסתובב במהירות קבועה?
+
+          (3) מה ישתנה אם הסליל יסתובב $100$ פעמים בשנייה? קבעו את ערך השיא, את זמן המחזור ואת ההספק הממוצע.
+        hints:
+          - 'ב-$t = 0$ השטף בשיא, ולכן הכא"מ מתחיל באפס: $\varepsilon = \varepsilon_0\sin\omega t$. ההספק הממוצע של זרם חילופין בנגד הוא חצי מההספק בשיא.'
+        solution:
+          - { kind: formula, text: '$\Phi = BA\cos\omega t$, ולכן $\varepsilon = NBA\omega\sin\omega t = \varepsilon_0\sin\omega t$, עם $T = \dfrac{1}{f}$.' }
+          - { kind: substitution, text: '$\varepsilon = 157\sin(314t)\,\text{V}$, ו-$T = \dfrac{1}{50} = 0.020\,\text{s}$. הגרף: אפס ב-$t = 0$, שיא $+157\,\text{V}$ ב-$T/4 = 0.005\,\text{s}$, אפס ב-$0.010\,\text{s}$, שפל $-157\,\text{V}$ ב-$0.015\,\text{s}$, ואפס ב-$0.020\,\text{s}$.' }
+          - { kind: formula, text: '$\bar P = \dfrac{\varepsilon_0^2}{2R}$, והעבודה בזמן $t$ היא $W = \bar P\,t$.' }
+          - { kind: substitution, text: '$\bar P = \dfrac{157^2}{2\cdot50} \approx 247\,\text{W}$, ובדקה: $W = 247\cdot60 \approx 1.48\cdot10^{4}\,\text{J}$.' }
+          - { kind: manipulation, text: 'למה צריך עבודה: בסליל זורם זרם מושרה, והשדה מפעיל עליו מומנט, $NBIA\sin\theta$, כמו על המנוע של שיעור 4.10. לפי חוק לנץ המומנט הזה נגד הסיבוב, ולכן מי שמסובב צריך להפעיל מומנט שווה ולהשקיע הספק $\tau\omega = \varepsilon I$, בדיוק ההספק החשמלי.' }
+          - { kind: manipulation, text: 'ב-100 סיבובים בשנייה $\omega$ כפולה: $\varepsilon_0 = NBA\omega$ כפול, $T = 1/f$ חצי, ו-$\bar P \propto \varepsilon_0^2$ גדל פי 4.' }
+          - { kind: result, text: '(1) $\varepsilon = 157\sin(314t)\,\text{V}$, $T = 0.020\,\text{s}$, גרף של סינוס שמתחיל באפס. (2) $\bar P \approx 247\,\text{W}$, ועבודה של כ-$1.5\cdot10^{4}\,\text{J}$ בדקה, כי הזרם המושרה יוצר מומנט נגד הסיבוב. (3) $\varepsilon_0 \approx 314\,\text{V}$, $T = 0.010\,\text{s}$, ו-$\bar P \approx 987\,\text{W}$: מסובבים קשה יותר.' }
+        rubric:
+          - text: 'כתבתי $\varepsilon = \varepsilon_0\sin\omega t$ (לא $\cos$), כי ב-$t = 0$ השטף בשיא והכא"מ אפס.'
+          - text: 'שרטטתי סינוס עם שיא $157\,\text{V}$ וזמן מחזור $0.020\,\text{s}$, ואפסים ב-$0$, $T/2$ ו-$T$.'
+          - text: 'חישבתי הספק ממוצע של כ-$247\,\text{W}$, עם $\varepsilon_0^2/(2R)$ ולא $\varepsilon_0^2/R$.'
+          - text: 'חישבתי עבודה של כ-$1.5\cdot10^{4}\,\text{J}$ בדקה, ונימקתי בחוק לנץ: המומנט על הזרם המושרה מתנגד לסיבוב.'
+          - text: 'קבעתי שבסיבוב מהיר פי 2 השיא כפול, זמן המחזור חצי וההספק הממוצע פי 4.'
