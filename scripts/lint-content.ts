@@ -77,6 +77,7 @@ interface Lesson {
   videos: string[];
   figures: string[];
   minutes: number;
+  order: number;
   body: string;
   raw: string;
 }
@@ -90,7 +91,7 @@ const lessons: Lesson[] = walk(join(CONTENT, 'lessons'))
       fail(rel(file), 'no frontmatter');
       return null;
     }
-    const fm = parse(m[1]) as { id: string; objectives: { id: string }[]; videos?: string[]; figures?: string[]; minutes: number };
+    const fm = parse(m[1]) as { id: string; objectives: { id: string }[]; videos?: string[]; figures?: string[]; minutes: number; order: number };
     return {
       file: rel(file),
       id: fm.id,
@@ -98,6 +99,7 @@ const lessons: Lesson[] = walk(join(CONTENT, 'lessons'))
       videos: fm.videos ?? [],
       figures: fm.figures ?? [],
       minutes: fm.minutes,
+      order: fm.order,
       body: m[2],
       raw,
     };
@@ -242,6 +244,8 @@ for (const m of misconceptions) {
 /* -------------------------------------------------------------- lessons */
 
 const BEYOND_BAGRUT = new Set(chapters.filter((c) => c.beyondBagrut).map((c) => c.n));
+/** Per-chapter exceptions to the 60-minute cap of a Bagrut chapter. */
+const MINUTES_CAP: Record<number, number> = { 5: 120 };
 const TEMPLATE = ['Hook', 'Predict', 'Explore', 'Explain', 'Example', 'Check', 'Watch', 'Summary'];
 /** A prose line of MDX: Markdown joins it with its neighbours into one paragraph. */
 const prose = (s: string) => s.trim() !== '' && !/^\s*(<|\$\$|\||-|\*|#)/.test(s) && !s.includes('="') && !s.includes('$$');
@@ -284,7 +288,13 @@ for (const l of lessons) {
     }
   }
   // A Bagrut-chapter lesson fits one 60-minute sitting, worked examples included; a chapter beyond the Bagrut has no cap.
-  if (!BEYOND_BAGRUT.has(Number(l.id.split('.')[0])) && l.minutes > 60) fail(l.file, `minutes: ${l.minutes} is over the 60-minute cap of a Bagrut chapter`);
+  // Chapter 5 records honest times up to 120 instead (user decision, 2026-11-05): after a split and a trim, student
+  // reads still ran 73–110 minutes, and closing the rest would have cut steps a beginner needs.
+  const [chapter, n] = l.id.split('.').map(Number);
+  const cap = MINUTES_CAP[chapter] ?? 60;
+  if (!BEYOND_BAGRUT.has(chapter) && l.minutes > cap) fail(l.file, `minutes: ${l.minutes} is over the ${cap}-minute cap of chapter ${chapter}`);
+  // Lessons sort by `order`; a renumbering once changed ids and left the old orders behind.
+  if (l.order !== n) fail(l.file, `order: ${l.order} does not match the lesson number ${l.id}`);
   // Chapter 6 (beyond the Bagrut) exists to build the limit-check habit, so every worked example must show one.
   if (BEYOND_BAGRUT.has(Number(l.id.split('.')[0]))) {
     for (const m of l.body.matchAll(/<Example\s+id="([^"]+)"[\s\S]*?<\/Example>/g)) {

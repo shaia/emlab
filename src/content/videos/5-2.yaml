@@ -1,0 +1,13 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below)
+# on the `verified` date. `why` claims only what the title and the description support; the
+# duration comes from the chapter list of a mirror page (rosetta.to), captions were not confirmed.
+
+- id: v-5-2-faraday-intro
+  youtubeId: vcStzn55MG0
+  title: "Faraday's Law Introduction | Physics | Khan Academy"
+  channel: Khan Academy
+  lang: en
+  captions: []
+  minutes: 6
+  why: 'סרטון מבוא באנגלית (לפי התיאור שלו): שטף מגנטי שמשתנה דרך כריכה משרה בה זרם, כשמשנים את השדה, מזיזים את הכריכה או משנים את השטח שלה, וכריכה שעומדת בשדה קבוע לא מקבלת זרם. השוו לניסויים באיור 5.2א.'
+  verified: '2026-11-05'

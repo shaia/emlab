@@ -1,0 +1,468 @@
+# Workbook, lesson 5.8 (the generator and alternating current). Format and rules: see .claude/CLAUDE.md,
+# "Worked examples, workbook". Every number was recomputed with src/physics/induction.ts (generatorPeak,
+# generatorEmf, generatorFlux, rms, acMeanPower) and src/physics/generator.ts (angularSpeed, periodOf,
+# peakOfRms, drivePower, dragTorque, cycleMean); scripts rc57w.ts and rc57c.ts in the session scratchpad.
+# In a >- block, consecutive lines fold into one paragraph: every part (א, ב, …) starts after a blank line.
+
+lesson: '5.8'
+practice:
+  - id: W-5.8-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-5.8-2]
+    prompt: >-
+      בגנרטור יש סליל של $150$ כריכות ששטחו $2\cdot10^{-3}\,\text{m}^2$, בשדה מגנטי אחיד של $0.2\,\text{T}$. ערך השיא של הכא"מ שהוא יוצר $6\,\text{V}$.
+
+      א. מה המהירות הזוויתית של הסליל?
+
+      ב. כמה סיבובים בשנייה הוא משלים, ומה זמן המחזור?
+    answer: >-
+      א. $\omega = 100\,\text{rad/s}$.
+
+      ב. $f \approx 15.9\,\text{Hz}$, $T \approx 0.063\,\text{s}$.
+    solution:
+      - kind: given
+        text: >-
+          $N = 150$, $A = 2\cdot10^{-3}\,\text{m}^2$, $B = 0.2\,\text{T}$, $\varepsilon_0 = 6\,\text{V}$.
+      - kind: formula
+        text: >-
+          $\varepsilon_0 = NBA\omega$, $\omega = 2\pi f$, $T = \dfrac{1}{f}$.
+      - kind: manipulation
+        text: >-
+          א. מחלקים את שני האגפים ב-$NBA$ כדי לבודד את $\omega$: $\omega = \dfrac{\varepsilon_0}{NBA}$.
+
+          ב. $f = \dfrac{\omega}{2\pi}$.
+      - kind: substitution
+        text: >-
+          א. $\omega = \dfrac{6}{150\cdot0.2\cdot2\cdot10^{-3}} = \dfrac{6}{0.06} = 100\,\text{rad/s}$.
+
+          ב. $f = \dfrac{100}{2\pi} \approx 15.9\,\text{Hz}$, $T = \dfrac{1}{15.9} \approx 0.063\,\text{s}$ (או $T = 2\pi/\omega$).
+      - kind: result
+        text: >-
+          א. $100\,\text{rad/s}$. ב. כ-$15.9$ סיבובים בשנייה, $T \approx 0.063\,\text{s}$.
+
+  - id: W-5.8-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-5.8-1]
+    prompt: >-
+      סליל של גנרטור מסתובב במהירות קבועה, זמן המחזור $0.2\,\text{s}$. ברגע $t = 0$ מישור הסליל **לאורך** קווי השדה.
+
+      א. מה השטף דרך הסליל ב-$t = 0$, ומה הכא"מ ברגע הזה (אפס, או הכי גדול)?
+
+      ב. באילו רגעים בין $t = 0$ ל-$t = 0.2\,\text{s}$ הכא"מ אפס? מה מצב הסליל ברגעים האלה?
+
+      ג. תלמידה כתבה: "ב-$t = 0$ אין שטף, ולכן הנורה כבויה." קבעו ונמקו אם היא צודקת.
+    answer: >-
+      א. השטף אפס, והכא"מ הכי גדול.
+
+      ב. ב-$t = 0.05\,\text{s}$ וב-$t = 0.15\,\text{s}$, כשמישור הסליל ניצב לשדה והשטף בשיא.
+
+      ג. לא: ב-$t = 0$ הנורה מאירה הכי חזק.
+    solution:
+      - kind: reasoning
+        text: >-
+          א. כאן ב-$t = 0$ הזווית בין האנך לשדה $90^\circ$, ולא אפס, ולכן הנוסחאות $\Phi = BA\cos\omega t$ ו-$\varepsilon = \varepsilon_0\sin\omega t$ לא חלות כמו שהן: הגרפים מוזזים ברבע מחזור (כאן הכא"מ מתנהג כמו $\cos$). נעבוד עם השיפוע. כשמישור הסליל לאורך השדה, האנך ניצב לשדה, $\cos90^\circ = 0$: אף קו שדה לא עובר דרכו, $\Phi = 0$. אבל ברגע הזה השטף עובר דרך האפס ומשתנה הכי מהר (הגרף שלו הכי תלול), ולכן הכא"מ הכי גדול.
+      - kind: reasoning
+        text: >-
+          ב. הכא"מ אפס כשגרף השטף שטוח, כלומר כשהשטף בשיא או בשפל: מישור הסליל ניצב לשדה. זה קורה רבע סיבוב אחרי $t = 0$, ושוב אחרי חצי סיבוב נוסף: $t = T/4 = 0.05\,\text{s}$ ו-$t = 3T/4 = 0.15\,\text{s}$.
+      - kind: reasoning
+        text: >-
+          ג. היא בלבלה בין השטף לבין קצב השינוי שלו. ההספק בנורה $\varepsilon^2/R$, והכא"מ ב-$t = 0$ בשיא.
+      - kind: result
+        text: >-
+          א. $\Phi = 0$, הכא"מ בשיא. ב. $0.05\,\text{s}$ ו-$0.15\,\text{s}$, המישור ניצב לשדה. ג. היא טועה: הנורה מאירה הכי חזק.
+
+  - id: W-5.8-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-5.8-4]
+    prompt: >-
+      על נורה כתוב $12\,\text{V}$, $24\,\text{W}$. מחברים אותה למקור של מתח חילופין, שהערך האפקטיבי שלו $12\,\text{V}$, והיא מאירה כמתוכנן.
+
+      א. מה ההתנגדות של הנורה, ומה הזרם האפקטיבי בה?
+
+      ב. מה ערכי השיא של המתח ושל הזרם?
+
+      ג. מה ההספק ברגעים שבהם המתח בשיא?
+    answer: >-
+      א. $R = 6\,\Omega$, $I_{\text{eff}} = 2\,\text{A}$.
+
+      ב. $V_0 \approx 17\,\text{V}$, $I_0 \approx 2.83\,\text{A}$.
+
+      ג. $48\,\text{W}$.
+    solution:
+      - kind: given
+        text: >-
+          $V_{\text{eff}} = 12\,\text{V}$, $\bar P = 24\,\text{W}$.
+      - kind: formula
+        text: >-
+          עם ערכים אפקטיביים $\bar P = V_{\text{eff}}I_{\text{eff}} = \dfrac{V_{\text{eff}}^2}{R}$; $V_0 = \sqrt2\,V_{\text{eff}}$, $I_0 = \sqrt2\,I_{\text{eff}}$.
+      - kind: substitution
+        text: >-
+          א. $R = \dfrac{V_{\text{eff}}^2}{\bar P} = \dfrac{144}{24} = 6\,\Omega$, $I_{\text{eff}} = \dfrac{24}{12} = 2\,\text{A}$.
+
+          ב. $V_0 = \sqrt2\cdot12 \approx 17.0\,\text{V}$, $I_0 = \sqrt2\cdot2 \approx 2.83\,\text{A}$.
+
+          ג. $V_0I_0 = 16.97\cdot2.828 \approx 48\,\text{W}$: פי 2 מההספק הממוצע, כי הממוצע של $\sin^2$ הוא חצי.
+      - kind: result
+        text: >-
+          א. $6\,\Omega$, $2\,\text{A}$. ב. כ-$17\,\text{V}$ וכ-$2.83\,\text{A}$. ג. $48\,\text{W}$.
+
+  - id: W-5.8-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-5.8-2, OBJ-5.8-4]
+    prompt: >-
+      סליל מעגלי של $500$ כריכות, ברדיוס של $3\,\text{cm}$, מסתובב $1200$ סיבובים בדקה בשדה מגנטי אחיד של $0.08\,\text{T}$, סביב קוטר שניצב לשדה.
+
+      א. מה ערך השיא של הכא"מ?
+
+      ב. מה הערך האפקטיבי שלו?
+
+      ג. כמה פעמים בשנייה הכא"מ מחליף סימן?
+    answer: >-
+      א. $\varepsilon_0 \approx 14.2\,\text{V}$.
+
+      ב. $\varepsilon_{\text{eff}} \approx 10.0\,\text{V}$.
+
+      ג. $40$ פעמים בשנייה.
+    solution:
+      - kind: given
+        text: >-
+          $N = 500$, $r = 0.03\,\text{m}$, $B = 0.08\,\text{T}$, $1200$ סיבובים בדקה.
+      - kind: formula
+        text: >-
+          $A = \pi r^2$, $\omega = 2\pi f$, $\varepsilon_0 = NBA\omega$, $\varepsilon_{\text{eff}} = \dfrac{\varepsilon_0}{\sqrt2}$.
+      - kind: substitution
+        text: >-
+          $A = \pi\cdot0.03^2 \approx 2.83\cdot10^{-3}\,\text{m}^2$. $f = \dfrac{1200}{60} = 20\,\text{Hz}$, $\omega = 2\pi\cdot20 \approx 125.7\,\text{rad/s}$.
+
+          א. $\varepsilon_0 = 500\cdot0.08\cdot2.83\cdot10^{-3}\cdot125.7 \approx 14.2\,\text{V}$.
+
+          ב. $\varepsilon_{\text{eff}} = \dfrac{14.21}{\sqrt2} \approx 10.0\,\text{V}$.
+      - kind: reasoning
+        text: >-
+          ג. בכל סיבוב הכא"מ עובר באפס ומחליף סימן פעמיים, ויש $20$ סיבובים בשנייה.
+      - kind: result
+        text: >-
+          א. כ-$14.2\,\text{V}$. ב. כ-$10.0\,\text{V}$. ג. $40$ פעמים בשנייה.
+
+  - id: W-5.8-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-5.8-3]
+    prompt: >-
+      גנרטור עם טבעת מפוצלת (קומוטטור) מסתובב $5$ פעמים בשנייה, ומחובר לנורה.
+
+      א. שרטטו באופן איכותי את המתח בין המברשות לפי הזמן, לאורך שני סיבובים. כמה "פעימות" יש בכל שנייה?
+
+      ב. באיזה מצב של הסליל הרווחים בין שני חצאי הטבעת צריכים לעבור מתחת למברשות? נמקו.
+
+      ג. טכנאי הרכיב את הטבעת המפוצלת מסובבת ברבע סיבוב, כך שההחלפה קורה כשמישור הסליל לאורך השדה. האם עכשיו המתח בין המברשות מחליף סימן? נמקו, ותארו את הגרף שלו.
+    answer: >-
+      א. גבעות של סינוס, כולן מעל לציר, $|\varepsilon_0\sin\omega t|$: $10$ פעימות בשנייה.
+
+      ב. כשמישור הסליל ניצב לשדה, שם הכא"מ אפס ומתחיל להתהפך.
+
+      ג. כן: המתח קופץ מ-$\varepsilon = \varepsilon_0$ ל-$\varepsilon = -\varepsilon_0$ באמצע כל פעימה, וממוצעו אפס.
+    solution:
+      - kind: reasoning
+        text: >-
+          א. הסליל עצמו נותן $\varepsilon_0\sin\omega t$. הטבעת המפוצלת הופכת את החיבור בכל פעם שהכא"מ עובר באפס, ולכן החצאים השליליים מופיעים הפוכים: גבעה בכל חצי סיבוב. בשנייה יש $5$ סיבובים, כלומר $10$ גבעות.
+      - kind: reasoning
+        text: >-
+          ב. ההחלפה צריכה לקרות בדיוק כשהכא"מ של הסליל מחליף סימן, כלומר כשהוא אפס. הכא"מ אפס כשהשטף בשיא: מישור הסליל ניצב לשדה. אז ההיפוך של החיבור מבטל את ההיפוך של הכא"מ.
+      - kind: reasoning
+        text: >-
+          ג. אם ההחלפה קורה כשמישור הסליל לאורך השדה, היא קורה כשהכא"מ בשיא. נניח שרגע לפני ההחלפה המתח בין המברשות $\varepsilon = \varepsilon_0$. ההחלפה הופכת אותו ל-$\varepsilon = -\varepsilon_0$. אחר כך הכא"מ של הסליל קטן, ולכן המתח עולה מ-$\varepsilon = -\varepsilon_0$ דרך האפס (כשמישור הסליל ניצב לשדה) עד $\varepsilon = \varepsilon_0$, ואז שוב קופץ ל-$\varepsilon = -\varepsilon_0$. בכל חצי סיבוב חצי מהזמן המתח שלילי וחצי חיובי, והממוצע שלו אפס, כמו בלי קומוטטור: לא מתקבל זרם ישר.
+      - kind: result
+        text: >-
+          א. $|\varepsilon_0\sin\omega t|$, $10$ פעימות בשנייה. ב. כשמישור הסליל ניצב לשדה. ג. כן: הוא קופץ מ-$\varepsilon = \varepsilon_0$ ל-$\varepsilon = -\varepsilon_0$ בכל חצי סיבוב, וממוצעו אפס.
+
+  - id: W-5.8-06
+    level: mid
+    qualitative: false
+    objectives: [OBJ-5.8-1, OBJ-5.8-2]
+    prompt: >-
+      סליל של $120$ כריכות ששטחו $0.015\,\text{m}^2$ מסתובב $4$ פעמים בשנייה בשדה של $0.5\,\text{T}$. ברגע $t = 0$ מישור הסליל ניצב לשדה.
+
+      א. מה ערך השיא של הכא"מ?
+
+      ב. מה הכא"מ ברגע $t = \dfrac{1}{48}\,\text{s}$, ומה השטף דרך כריכה אחת ברגע הזה?
+
+      ג. מה מצב מישור הסליל ביחס לשדה ברגע הזה?
+    answer: >-
+      א. $\varepsilon_0 \approx 22.6\,\text{V}$.
+
+      ב. $\varepsilon \approx 11.3\,\text{V}$, $\Phi \approx 6.5\cdot10^{-3}\,\text{Wb}$.
+
+      ג. האנך יוצר $30^\circ$ עם השדה, והמישור $60^\circ$.
+    solution:
+      - kind: given
+        text: >-
+          $N = 120$, $A = 0.015\,\text{m}^2$, $B = 0.5\,\text{T}$, $f = 4\,\text{Hz}$, ולכן $\omega = 2\pi\cdot4 \approx 25.1\,\text{rad/s}$.
+      - kind: formula
+        text: >-
+          $\varepsilon = NBA\omega\sin\omega t$, $\Phi = BA\cos\omega t$.
+      - kind: substitution
+        text: >-
+          א. $\varepsilon_0 = 120\cdot0.5\cdot0.015\cdot25.13 \approx 22.6\,\text{V}$.
+
+          ב. הזווית: $\omega t = 2\pi\cdot4\cdot\dfrac{1}{48} = \dfrac{\pi}{6}$, כלומר $30^\circ$. $\varepsilon = 22.62\cdot\sin30^\circ \approx 11.3\,\text{V}$, ו-$\Phi = 0.5\cdot0.015\cdot\cos30^\circ \approx 6.5\cdot10^{-3}\,\text{Wb}$.
+      - kind: reasoning
+        text: >-
+          ג. ב-$t = 0$ האנך היה בכיוון השדה, ועכשיו הסליל הסתובב $30^\circ$: האנך $30^\circ$ מהשדה, והמישור, שניצב לאנך, $60^\circ$ מהשדה.
+      - kind: result
+        text: >-
+          א. כ-$22.6\,\text{V}$. ב. כ-$11.3\,\text{V}$, כ-$6.5\cdot10^{-3}\,\text{Wb}$. ג. המישור $60^\circ$ מקווי השדה.
+
+  - id: W-5.8-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-5.8-3]
+    prompt: >-
+      לפנס חירום יש גנרטור קטן עם ידית. מסובבים את הידית באותה מהירות בשלושה מצבים: (1) המעגל פתוח; (2) מחוברת נורה אחת; (3) מחוברות שתי נורות זהות במקביל. ההתנגדות של הסליל זניחה.
+
+      א. דרגו את שלושת המצבים לפי הקושי לסובב את הידית, מהקל לקשה. נמקו.
+
+      ב. האם הכא"מ של הגנרטור שונה בשלושת המצבים?
+
+      ג. מה היחס בין ההספק המכני שמשקיעים במצב (3) לבין ההספק במצב (2)?
+    answer: >-
+      א. (1), אחר כך (2), ואחר כך (3).
+
+      ב. לא: אותו כא"מ, $NBA\omega\sin\omega t$.
+
+      ג. פי 2.
+    solution:
+      - kind: reasoning
+        text: >-
+          א. מה שמקשה על הסיבוב הוא המומנט של הכוחות המגנטיים על הזרם המושרה, $NBIA\sin\theta$, שפועל נגד הסיבוב (חוק לנץ). במעגל פתוח אין זרם, ונשאר רק החיכוך. שתי נורות במקביל הן חצי מההתנגדות של נורה אחת, ולכן הזרם $I = \varepsilon/R$ כפול, וגם המומנט.
+      - kind: reasoning
+        text: >-
+          ב. הכא"מ תלוי רק ב-$N$, $B$, $A$ ו-$\omega$, ואלה לא השתנו. מה שמשתנה הוא הזרם.
+      - kind: reasoning
+        text: >-
+          ג. ההספק המכני שווה להספק החשמלי, $\varepsilon^2/R$ בכל רגע. אותו $\varepsilon$ וחצי $R$: ההספק כפול.
+      - kind: result
+        text: >-
+          א. מהקל לקשה: (1), (2), (3). ב. אותו כא"מ. ג. פי 2.
+
+  - id: W-5.8-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-5.8-2, OBJ-5.8-4]
+    prompt: >-
+      גנרטור עם טבעות החלקה מסתובב $5$ פעמים בשנייה, ומחובר לנגד של $8\,\Omega$ (ההתנגדות של הסליל זניחה). מודדים בנגד הספק ממוצע של $9\,\text{W}$. בסליל $200$ כריכות, והשדה $0.3\,\text{T}$.
+
+      א. מה הערך האפקטיבי של הכא"מ, ומה ערך השיא שלו?
+
+      ב. מה שטח הסליל?
+
+      ג. מכפילים את מהירות הסיבוב. מה יהיה ההספק הממוצע בנגד?
+    answer: >-
+      א. $\varepsilon_{\text{eff}} \approx 8.49\,\text{V}$, $\varepsilon_0 = 12\,\text{V}$.
+
+      ב. $A \approx 6.4\cdot10^{-3}\,\text{m}^2$.
+
+      ג. $36\,\text{W}$.
+    solution:
+      - kind: given
+        text: >-
+          $f = 5\,\text{Hz}$, $R = 8\,\Omega$, $\bar P = 9\,\text{W}$, $N = 200$, $B = 0.3\,\text{T}$.
+      - kind: formula
+        text: >-
+          $\bar P = \dfrac{\varepsilon_{\text{eff}}^2}{R}$, $\varepsilon_0 = \sqrt2\,\varepsilon_{\text{eff}}$, $\varepsilon_0 = NBA\omega$.
+      - kind: manipulation
+        text: >-
+          א. מכפילים ב-$R$ ומוציאים שורש: $\varepsilon_{\text{eff}} = \sqrt{\bar PR}$.
+
+          ב. מחלקים ב-$NB\omega$: $A = \dfrac{\varepsilon_0}{NB\omega}$.
+      - kind: substitution
+        text: >-
+          א. $\varepsilon_{\text{eff}} = \sqrt{9\cdot8} = \sqrt{72} \approx 8.49\,\text{V}$, $\varepsilon_0 = \sqrt2\cdot\sqrt{72} = \sqrt{144} = 12\,\text{V}$.
+
+          ב. $\omega = 2\pi\cdot5 \approx 31.4\,\text{rad/s}$, ו-$A = \dfrac{12}{200\cdot0.3\cdot31.4} \approx 6.4\cdot10^{-3}\,\text{m}^2$.
+      - kind: reasoning
+        text: >-
+          ג. $\varepsilon_0 = NBA\omega$ גדל פי 2, וההספק הממוצע $\varepsilon_0^2/(2R)$ גדל פי $2^2 = 4$: $4\cdot9 = 36\,\text{W}$.
+      - kind: result
+        text: >-
+          א. כ-$8.49\,\text{V}$ ו-$12\,\text{V}$. ב. כ-$6.4\cdot10^{-3}\,\text{m}^2$. ג. $36\,\text{W}$.
+
+  - id: W-5.8-09
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-5.8-3, OBJ-5.8-4]
+    prompt: >-
+      טורבינה קטנה מסובבת גנרטור במהירות זוויתית קבועה של $50\,\text{rad/s}$. ערך השיא של הכא"מ $30\,\text{V}$, והגנרטור מחובר לנגד של $15\,\Omega$ (ההתנגדות של הסליל זניחה).
+
+      א. מה ערך השיא של הזרם, ומה ההספק הממוצע בנגד?
+
+      ב. מה המומנט הגדול ביותר שהטורבינה צריכה להפעיל, ובאיזה מצב של הסליל?
+
+      ג. מה המומנט הממוצע שהטורבינה מפעילה?
+
+      ד. כמה אנרגיה מקבל הנגד ב-$10$ דקות?
+    answer: >-
+      א. $I_0 = 2\,\text{A}$, $\bar P = 30\,\text{W}$.
+
+      ב. $1.2\,\text{N·m}$, כשמישור הסליל לאורך השדה.
+
+      ג. $0.6\,\text{N·m}$.
+
+      ד. $1.8\cdot10^4\,\text{J}$.
+    solution:
+      - kind: given
+        text: >-
+          $\omega = 50\,\text{rad/s}$, $\varepsilon_0 = 30\,\text{V}$, $R = 15\,\Omega$. לא נתונים $N$, $B$ ו-$A$, אבל $NBA = \dfrac{\varepsilon_0}{\omega} = 0.6\,\text{Wb}$.
+      - kind: formula
+        text: >-
+          $I_0 = \dfrac{\varepsilon_0}{R}$, $\bar P = \dfrac{\varepsilon_0^2}{2R}$. המומנט על הזרם $\tau = NBIA\sin\theta$ (שיעור 4.10), וההספק המכני $\tau\omega$ שווה בכל רגע להספק החשמלי.
+      - kind: substitution
+        text: >-
+          א. $I_0 = \dfrac{30}{15} = 2\,\text{A}$, $\bar P = \dfrac{900}{30} = 30\,\text{W}$.
+      - kind: reasoning
+        text: >-
+          ב. המומנט הגדול ביותר כשהזרם בשיא ו-$\sin\theta = 1$, כלומר כשמישור הסליל לאורך השדה: $\tau_{\max} = (NBA)I_0 = 0.6\cdot2 = 1.2\,\text{N·m}$. בדיקה: $\tau_{\max}\omega = 1.2\cdot50 = 60\,\text{W} = \varepsilon_0I_0$.
+
+          ג. ההספק המכני הממוצע שווה להספק החשמלי הממוצע, והמהירות קבועה, ולכן $\bar\tau = \dfrac{\bar P}{\omega} = \dfrac{30}{50} = 0.6\,\text{N·m}$, חצי מהמקסימום.
+      - kind: substitution
+        text: >-
+          ד. $E = \bar P\,t = 30\,\text{W}\cdot600\,\text{s} = 1.8\cdot10^4\,\text{J}$.
+      - kind: result
+        text: >-
+          א. $2\,\text{A}$, $30\,\text{W}$. ב. $1.2\,\text{N·m}$, מישור הסליל לאורך השדה. ג. $0.6\,\text{N·m}$. ד. $1.8\cdot10^4\,\text{J}$.
+
+  - id: W-5.8-10
+    level: bagrut
+    qualitative: true
+    objectives: [OBJ-5.8-1, OBJ-5.8-4]
+    prompt: >-
+      מייבש שיער של $1100\,\text{W}$ מחובר לרשת החשמל, $230\,\text{V}$ אפקטיבי, $50\,\text{Hz}$. הניחו שהוא נגד בלבד.
+
+      א. מה הזרם האפקטיבי, ומה ערך השיא של הזרם?
+
+      ב. כמה פעמים בשנייה ההספק במייבש אפס? מה המתח ברגעים האלה?
+
+      ג. מה ההספק הגדול ביותר, וכמה אנרגיה מקבל המייבש במחזור אחד?
+
+      ד. במדינה אחרת הרשת היא $230\,\text{V}$ אפקטיבי ב-$60\,\text{Hz}$. האם המייבש יחמם שם חזק יותר? נמקו.
+    answer: >-
+      א. $I_{\text{eff}} \approx 4.8\,\text{A}$, $I_0 \approx 6.8\,\text{A}$.
+
+      ב. $100$ פעמים בשנייה; המתח אז אפס.
+
+      ג. $2200\,\text{W}$; $22\,\text{J}$ במחזור.
+
+      ד. לא: אותו ערך אפקטיבי, אותו הספק ממוצע.
+    solution:
+      - kind: given
+        text: >-
+          $\bar P = 1100\,\text{W}$, $V_{\text{eff}} = 230\,\text{V}$, $f = 50\,\text{Hz}$, ולכן $T = 0.02\,\text{s}$.
+      - kind: formula
+        text: >-
+          $\bar P = V_{\text{eff}}I_{\text{eff}}$, $I_0 = \sqrt2\,I_{\text{eff}}$, וההספק ברגע $p = \dfrac{v^2}{R}$.
+      - kind: substitution
+        text: >-
+          א. $I_{\text{eff}} = \dfrac{1100}{230} \approx 4.78\,\text{A}$, $I_0 = \sqrt2\cdot4.78 \approx 6.76\,\text{A}$.
+      - kind: reasoning
+        text: >-
+          ב. $p = v^2/R$ אפס רק כשהמתח $v$ אפס. המתח עובר באפס פעמיים בכל מחזור, ויש $50$ מחזורים בשנייה: $100$ פעמים בשנייה.
+
+          ג. ההספק בשיא פי 2 מהממוצע, כי הממוצע של $\sin^2$ הוא חצי: $2\cdot1100 = 2200\,\text{W}$. במחזור אחד: $E = \bar P\,T = 1100\cdot0.02 = 22\,\text{J}$.
+
+          ד. ההספק הממוצע $V_{\text{eff}}^2/R$ תלוי בערך האפקטיבי ובהתנגדות, ולא בתדירות. ב-$60\,\text{Hz}$ ההספק פועם מהר יותר, אבל הממוצע זהה.
+      - kind: result
+        text: >-
+          א. כ-$4.8\,\text{A}$, כ-$6.8\,\text{A}$. ב. $100$ פעמים בשנייה, כשהמתח אפס. ג. $2200\,\text{W}$, $22\,\text{J}$. ד. לא, אותו הספק.
+
+challenge:
+  - id: W-5.8-c1
+    stars: 1
+    objectives: [OBJ-5.8-1, OBJ-5.8-2]
+    prompt: >-
+      כריכה מעגלית אחת, ברדיוס $10\,\text{cm}$, נמצאת בשדה מגנטי אחיד וחלש של $3\cdot10^{-5}\,\text{T}$ (בערך השדה של כדור הארץ), ובהתחלה מישורה ניצב לשדה. מסובבים אותה במהירות זוויתית קבועה סביב קוטר שניצב לשדה, כך שהיא משלימה **חצי סיבוב** ב-$0.2\,\text{s}$.
+
+      א. מה הכא"מ הגדול ביותר שמושרה בכריכה? ענו במיקרו-וולט.
+
+      ב. מה הכא"מ הממוצע במשך חצי הסיבוב הזה? פי כמה הוא קטן מהשיא?
+
+      ג. תלמיד קיבל בסעיף א תשובה כפולה. איזו טעות בקריאת השאלה נותנת את זה?
+    answer: >-
+      א. כ-$15\,\mu\text{V}$.
+
+      ב. כ-$9.4\,\mu\text{V}$, פי $\dfrac{2}{\pi} \approx 0.64$ מהשיא.
+
+      ג. הוא הניח ש-$0.2\,\text{s}$ הם זמן של סיבוב שלם, ולכן קיבל $\omega$ כפולה, כ-$30\,\mu\text{V}$.
+    solution:
+      - kind: given
+        text: >-
+          $N = 1$, $r = 0.1\,\text{m}$, $A = \pi r^2 \approx 3.14\cdot10^{-2}\,\text{m}^2$, $B = 3\cdot10^{-5}\,\text{T}$. חצי סיבוב, $\pi$ רדיאנים, ב-$0.2\,\text{s}$.
+      - kind: formula
+        text: >-
+          $\omega = \dfrac{\Delta\theta}{\Delta t}$, $\varepsilon_0 = NBA\omega$, והכא"מ הממוצע $\bar\varepsilon = N\dfrac{|\Delta\Phi|}{\Delta t}$.
+      - kind: substitution
+        text: >-
+          א. $\omega = \dfrac{\pi}{0.2} = 5\pi \approx 15.7\,\text{rad/s}$ (זמן המחזור $0.4\,\text{s}$). $\varepsilon_0 = 3\cdot10^{-5}\cdot3.14\cdot10^{-2}\cdot15.7 \approx 1.48\cdot10^{-5}\,\text{V}$.
+      - kind: reasoning
+        text: >-
+          ב. בחצי סיבוב השטף עובר מ-$\Phi = BA$ ל-$\Phi = -BA$: $|\Delta\Phi| = 2BA$. לכן $\bar\varepsilon = \dfrac{2BA}{0.2\,\text{s}} = \dfrac{2\cdot3\cdot10^{-5}\cdot3.14\cdot10^{-2}}{0.2} \approx 9.4\cdot10^{-6}\,\text{V}$. חצי הסיבוב נמשך $\Delta t = \pi/\omega$, ולכן היחס $\dfrac{\bar\varepsilon}{\varepsilon_0} = \dfrac{2BA/(\pi/\omega)}{BA\omega} = \dfrac{2}{\pi}$: הכא"מ הממוצע על חצי סיבוב הוא הממוצע של $\sin$ על חצי מחזור, ולא חצי מהשיא.
+      - kind: reasoning
+        text: >-
+          ג. אם $0.2\,\text{s}$ הם זמן המחזור, $\omega = \dfrac{2\pi}{0.2} = 10\pi\,\text{rad/s}$, כפולה, והשיא יוצא כ-$3\cdot10^{-5}\,\text{V}$. המילים "חצי סיבוב" הן העיקר בשאלה.
+      - kind: result
+        text: >-
+          א. כ-$15\,\mu\text{V}$. ב. כ-$9.4\,\mu\text{V}$, פי $2/\pi$ מהשיא. ג. קריאה של $0.2\,\text{s}$ כזמן של סיבוב שלם.
+    source:
+      name: JEE Main
+      year: 2020
+      problem: '2 September 2020, Shift 1, Question 24: circular coil of radius 10 cm in 3.0×10⁻⁵ T, half a rotation in 0.2 s, maximum emf (parts ב and ג added)'
+      url: 'https://cracku.in/24-a-circular-coil-of-radius-10-cm-is-placed-in-a-uni-x-nta-jee-main-2-sep-2020-shift-1'
+      verified: '2026-11-05'
+      adapted: true
+
+  - id: W-5.8-c2
+    stars: 1
+    objectives: [OBJ-5.8-1, OBJ-5.8-4]
+    prompt: >-
+      כריכה אחת מתיל, בצורת אליפסה, עם חצי ציר ארוך $a$ וחצי ציר קצר $b$ (השטח של אליפסה הוא $\pi ab$), והתנגדות $R$. היא נמצאת בשדה מגנטי אחיד $B$ שניצב למישורה, ומסובבים אותה במהירות זוויתית קבועה $\omega$ סביב הציר הארוך שלה.
+
+      א. הראו שההספק הממוצע שמתפתח בכריכה הוא $\bar P = \dfrac{\pi^2a^2b^2B^2\omega^2}{2R}$.
+
+      ב. אחת מהתשובות שהוצעו בבחינה הייתה "אפס, כי הכא"מ הממוצע על מחזור אפס". מה הטעות?
+
+      ג. חשבו את $\bar P$ עבור $a = 5\,\text{cm}$, $b = 3\,\text{cm}$, $B = 0.4\,\text{T}$, $\omega = 100\,\text{rad/s}$ ו-$R = 0.5\,\Omega$, ואת המומנט הממוצע שצריך להפעיל כדי לשמור על הסיבוב.
+    answer: >-
+      א. $\varepsilon_0 = \pi abB\omega$, ו-$\bar P = \varepsilon_0^2/(2R)$.
+
+      ב. ההספק תלוי בריבוע הכא"מ, והריבוע לא שלילי.
+
+      ג. $\bar P \approx 3.6\cdot10^{-2}\,\text{W}$, $\bar\tau \approx 3.6\cdot10^{-4}\,\text{N·m}$.
+    solution:
+      - kind: given
+        text: >-
+          כריכה אחת, $N = 1$, שטח $A = \pi ab$, התנגדות $R$. ב-$t = 0$ השדה ניצב למישור הכריכה, והיא מסתובבת ב-$\omega$ סביב ציר שבמישורה.
+      - kind: formula
+        text: >-
+          $\Phi = BA\cos\omega t$, $\varepsilon = NBA\omega\sin\omega t$, $p = \dfrac{\varepsilon^2}{R}$, והממוצע של $\sin^2$ על מחזור הוא חצי.
+      - kind: manipulation
+        text: >-
+          א. $\varepsilon_0 = B(\pi ab)\omega$, וההספק ברגע $p = \dfrac{\varepsilon_0^2}{R}\sin^2\omega t$. הממוצע: $\bar P = \dfrac{\varepsilon_0^2}{2R} = \dfrac{\pi^2a^2b^2B^2\omega^2}{2R}$. הצורה לא משנה: הנוסחה $\varepsilon_0 = NBA\omega$ נכונה לכל כריכה שטוחה.
+      - kind: reasoning
+        text: >-
+          ב. נכון שהממוצע של $\varepsilon$ על מחזור אפס, אבל ההספק $\varepsilon^2/R$ חיובי בשני חצאי המחזור: הכריכה מתחממת בשני כיווני הזרם. הממוצע של הריבוע הוא לא הריבוע של הממוצע.
+      - kind: substitution
+        text: >-
+          ג. $A = \pi\cdot0.05\cdot0.03 \approx 4.71\cdot10^{-3}\,\text{m}^2$, $\varepsilon_0 = 0.4\cdot4.71\cdot10^{-3}\cdot100 \approx 0.188\,\text{V}$, $\bar P = \dfrac{0.1885^2}{2\cdot0.5} \approx 3.55\cdot10^{-2}\,\text{W}$. ההספק המכני הממוצע שווה לחשמלי, ולכן $\bar\tau = \dfrac{\bar P}{\omega} = \dfrac{3.55\cdot10^{-2}}{100} \approx 3.6\cdot10^{-4}\,\text{N·m}$.
+      - kind: result
+        text: >-
+          א. $\bar P = \dfrac{\pi^2a^2b^2B^2\omega^2}{2R}$. ב. ההספק תלוי בריבוע, ולא בכא"מ עצמו. ג. כ-$3.6\cdot10^{-2}\,\text{W}$, כ-$3.6\cdot10^{-4}\,\text{N·m}$.
+    source:
+      name: JEE Main
+      year: 2020
+      problem: '3 September 2020, Shift 1, Question 10: elliptical loop of resistance R rotated about the x-axis at ω, average Joule power (parts ב and ג added)'
+      url: 'https://cracku.in/10-an-elliptical-loop-having-resistance-r-of-semi-maj-x-nta-jee-main-3-sep-2020-shift-1'
+      verified: '2026-11-05'
+      adapted: true

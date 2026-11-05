@@ -1,0 +1,7 @@
+# Lesson 5.9 terms. Added ahead of chapter 5, because lessons 6.13–6.14 use them. The spectrum moved to 5-10.yaml. Format and rules: see glossary/1-5.yaml.
+
+- id: maxwell-equations
+  term: משוואות מקסוול
+  en: Maxwell's equations
+  definition: 'ארבעת החוקים שמתארים יחד את כל החשמל והמגנטיות: חוק גאוס לשדה החשמלי, חוק גאוס לשדה המגנטי (אין מטען מגנטי), חוק פאראדיי, וחוק אמפר-מקסוול. בצורה האינטגרלית (שיעור 5.9) הם מדברים על שטף דרך משטח סגור ועל סכום סביב מסלול סגור; בשיעור 6.13, שמעבר לבגרות, הם נכתבים גם לכל נקודה בנפרד.'
+  lesson: '5.9'

@@ -14,12 +14,13 @@ objectives:
     text: לנסח את חוק אמפר-מקסוול ולהשתמש בו עם סימטריה כדי לחשב את השדה המגנטי בין לוחות עגולים, ⁦B = μ₀ε₀(r/2)·dE/dt⁩ בתוך שפת הלוחות ו-⁦μ₀I/(2πr)⁩ מחוצה לה.
   - id: OBJ-6.12-4
     text: להבחין בין זרם העתקה לזרם הולכה, ולהסביר שזרם העתקה אינו תנועה של מטענים אלא שדה חשמלי שמשתנה, ושהוא תלוי בקצב השינוי של השדה ולא בגודלו.
-prerequisites: ['6.5', '6.8', '4.4', '2.6', '3.9']
+prerequisites: ['6.5', '6.8', '4.4', '5.9', '2.6', '3.9']
 videos: [v-6-12-zaks-lab, v-6-12-lewin]
 figures: [fig-6-12a]
 ---
 
 import DisplacementCurrent from '~/sims/DisplacementCurrent.astro';
+import LessonLink from '~/components/LessonLink.astro';
 
 <Spread
   fig="fig-6-12a"
@@ -100,7 +101,7 @@ $$
 I_1 + \varepsilon_0\,\frac{d\Phi_1}{dt} = I_2 + \varepsilon_0\,\frac{d\Phi_2}{dt}
 $$
 
-הסכום זהה דרך כל משטח על המסלול. באיור $I_1 = I$ ו-$\Phi_1 = 0$, ו-$I_2 = 0$: לכן $\varepsilon_0\,d\Phi_2/dt = I$. את הגודל הזה מקסוול הוסיף לחוק, ונקרא לו <Term id="displacement-current">זרם העתקה</Term>:
+הסכום זהה דרך כל משטח על המסלול. באיור $I_1 = I$ ו-$\Phi_1 = 0$, ו-$I_2 = 0$: לכן $\varepsilon_0\,d\Phi_2/dt = I$. את הגודל הזה מקסוול הוסיף לחוק, וזה ה<Term id="displacement-current">זרם העתקה</Term> שפגשתם ב<LessonLink id="5.9">שיעור 5.9</LessonLink>, עכשיו כגודל שמחשבים:
 
 <Formula tex="I_d = \varepsilon_0\,\frac{d\Phi_E}{dt}" label="זרם ההעתקה דרך משטח" />
 

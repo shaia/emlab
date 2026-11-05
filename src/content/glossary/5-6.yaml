@@ -1,7 +1,22 @@
-# Lesson 5.6 terms. Added ahead of chapter 5, because lessons 6.13–6.14 use them. Format and rules: see glossary/1-5.yaml.
+# Lesson 5.6 terms. Format and rules: see glossary/1-5.yaml.
 
-- id: induced-electric-field
-  term: שדה חשמלי מושרה
-  en: induced electric field
-  definition: 'שדה חשמלי שנוצר משדה מגנטי משתנה, ולא ממטענים. קווי השדה שלו סגורים, והסירקולציה שלו סביב לולאה שווה לכא"מ המושרה, ∮E·dl = −dΦ/dt. לכן הוא אינו שדה משמר, ואין לו פוטנציאל.'
+- id: field-strip
+  term: רצועת שדה
+  en: strip of magnetic field
+  definition: 'אזור צר וארוך שבו יש שדה מגנטי אחיד, ומחוץ לו אין שדה בכלל. הגבולות שלו חדים: לולאה שעוברת דרכו נכנסת לשדה, נמצאת כולה בתוכו, ויוצאת ממנו.'
+  lesson: '5.6'
+
+- id: current-time-area
+  term: השטח מתחת לגרף הזרם
+  en: area under the current–time graph
+  unit: C
+  definition: 'השטח שבין גרף הזרם I(t) לציר הזמן. כל רצועה דקה בו היא I·Δt, המטען שעבר בזמן Δt, ולכן השטח כולו הוא המטען שעבר. שטח מתחת לציר נספר במינוס: מטען שעבר בכיוון ההפוך.'
+  lesson: '5.6'
+
+- id: charge-through-circuit
+  term: המטען שעובר במעגל
+  en: charge that flows round the circuit
+  symbol: Q
+  unit: C
+  definition: 'המטען הכולל שעובר דרך חתך של לולאה סגורה בזמן שהשטף דרכה משתנה. בלולאה של N כריכות והתנגדות כוללת R הוא Q = N·|ΔΦ|/R: הוא תלוי רק בשינוי השטף, ולא במהירות שבה השטף השתנה.'
   lesson: '5.6'

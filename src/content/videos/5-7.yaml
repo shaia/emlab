@@ -1,0 +1,13 @@
+# Every id was checked against YouTube's oEmbed on the `verified` date (through the noembed.com proxy,
+# because youtube.com itself was unreachable from the session's sandbox): it exists and is embeddable, with
+# the title and channel below. `why` claims only what the title supports; the length is not confirmed.
+
+- id: v-5-7-lewin-induction
+  youtubeId: nGQbA2jwkWI
+  title: "8.02x - Lect 16 - Electromagnetic Induction, Faraday's Law, Lenz Law, SUPER DEMO"
+  channel: 'Lectures by Walter Lewin. They will make you ♥ Physics.'
+  lang: en
+  captions: []
+  minutes: 50
+  why: 'הרצאה מלאה באנגלית של וולטר לוין מ-MIT. לפי הכותרת שלה, היא עוסקת בהשראה אלקטרומגנטית, בחוק פאראדיי ובחוק לנץ, וכוללת הדגמה גדולה. זו הרצאה ארוכה: צפו בה אם אתם רוצים לראות את הניסויים במעבדה אמיתית.'
+  verified: '2026-11-05'
