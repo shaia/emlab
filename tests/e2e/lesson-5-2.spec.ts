@@ -181,6 +181,11 @@ test.describe('questions', () => {
     const a = (await progress(page)).attempts.at(-1);
     expect(a).toMatchObject({ qid: 'Q-5.2-average-emf', correct: false, misconception: 'MC-faraday-emf-follows-flux', lesson: '5.2' });
     await q.getByRole('button', { name: 'נסו שוב' }).click();
+    // the signed emf is right but the question asks for the magnitude: told so, not just "wrong"
+    await input.fill('-0.9');
+    await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
+    await expect(q.locator('.q-feedback')).toContainText('הגודל');
+    await q.getByRole('button', { name: 'נסו שוב' }).click();
     await input.fill('0.9');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-right/);
