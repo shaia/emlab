@@ -1,5 +1,5 @@
 /**
- * Flux, emf and current as time-aligned graphs, and the charge as the area under I(t). Built for lesson 5.5.
+ * Flux, emf and current as time-aligned graphs, and the charge as the area under I(t). Built for lesson 5.6.
  *
  * Three views, chosen by `mode` (and the mode buttons when `modes` lists more than one):
  * - `strip`: a square loop (20 cm × 20 cm, R = 0.1 Ω) moves at a constant speed v through a 40 cm strip of

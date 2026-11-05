@@ -1,5 +1,5 @@
 /**
- * Maxwell's four laws in integral form (lesson 5.8): one scene per law, each with the closed surface or
+ * Maxwell's four laws in integral form (lesson 5.9): one scene per law, each with the closed surface or
  * the closed path the law speaks about, and both sides of the law computed independently, so that the
  * figure MaxwellFour can show them agree. Plus the electromagnetic wave: its speed from the two
  * constants, c = 1/√(μ₀ε₀), and where a frequency sits in the electromagnetic spectrum.
@@ -227,7 +227,7 @@ export function bandOf(lambda: number): Band {
   return 'gamma';
 }
 
-/* ------------------------------------------------------------------ the scenes of figure 5.8 */
+/* ------------------------------------------------------------------ the scenes of figure 5.9 */
 
 /** Gauss for E: two point charges in the page [C, m]. */
 export const SCENE_CHARGES: readonly PointCharge3[] = [

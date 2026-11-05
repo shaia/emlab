@@ -1,13 +1,23 @@
-# Every id was checked against YouTube's oEmbed on the `verified` date (through the noembed.com proxy,
-# because youtube.com itself was unreachable from the session's sandbox): it exists and is embeddable, with
-# the title and channel below. `why` claims only what the title supports; the length is not confirmed.
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below) on the
+# `verified` date. Durations and caption tracks come from the watch page. `why` claims only what the title
+# and the upload description support.
 
-- id: v-5-6-lewin-induction
-  youtubeId: nGQbA2jwkWI
-  title: "8.02x - Lect 16 - Electromagnetic Induction, Faraday's Law, Lenz Law, SUPER DEMO"
-  channel: 'Lectures by Walter Lewin. They will make you ♥ Physics.'
+- id: v-5-6-falling-magnet
+  youtubeId: ew6XghjpqIg
+  title: 'Electromagnetic Induction | Induced EMF Due To a Falling Magnet | A-level Physics'
+  channel: Forest Learn
   lang: en
+  captions: [en]
+  minutes: 9
+  why: 'גרף אמיתי של כא"מ כפונקציה של הזמן, שמד נתונים רשם כשמגנט נופל דרך סליל. לפי תיאור הסרטון הוא שואל למה יש שיא ושפל, למה הכא"מ אפס באמצע, למה השפל גדול מהשיא, ומה מיוחד בשטח מתחת לגרף. השוו לגרף הפעמון באיור 5.6ב: כאן המגנט מאיץ בנפילה, ולכן שתי הגבעות לא שוות.'
+  verified: '2026-11-05'
+
+- id: v-5-6-bagrut-marathon
+  youtubeId: fWN49cjM9HI
+  title: 'חשמל, פרק 5: השראה אלקטרומגנטית | מרתון לבגרות בפיזיקה, אריאל ליבזון'
+  channel: אריאל ליבזון - Ariel Libson
+  lang: he
   captions: []
-  minutes: 50
-  why: 'הרצאה מלאה באנגלית של וולטר לוין מ-MIT. לפי הכותרת שלה, היא עוסקת בהשראה אלקטרומגנטית, בחוק פאראדיי ובחוק לנץ, וכוללת הדגמה גדולה. זו הרצאה ארוכה: צפו בה אם אתם רוצים לראות את הניסויים במעבדה אמיתית.'
+  minutes: 73
+  why: 'פרק ארוך בעברית מתוך מרתון לבגרות, על השראה אלקטרומגנטית וכא"מ מושרה (לפי תיאור הסרטון). מתאים לחזרה על כל הנושא לפני מבחן. לפי התיאור, בסרטון נאמר בטעות שהזווית בנוסחת השטף היא מהמשטח; הזווית הנכונה היא בין השדה לבין האנך למשטח.'
   verified: '2026-11-05'

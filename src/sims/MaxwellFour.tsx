@@ -1,5 +1,5 @@
 /**
- * Maxwell's four laws in integral form (lesson 5.8). Above: a strip of the laws, rendered by the wrapper
+ * Maxwell's four laws in integral form (lesson 5.9). Above: a strip of the laws, rendered by the wrapper
  * (KaTeX at build time) and passed in as children; a click on a law opens its scene and marks its two
  * sides. Under the strip, what each side measures and what makes it nonzero. Below: one scene per law,
  * each with the closed surface or the closed path the law speaks about, and both sides of the law in the
@@ -91,7 +91,7 @@ const SAYS: Record<Law, ComponentChildren> = {
   faraday: (
     <>
       <b>צד שמאל:</b> הסכום של <span class="q">E∥·Δℓ</span> סביב מסלול סגור: הכא״מ המושרה. <b>צד ימין:</b> מינוס קצב השינוי של השטף המגנטי דרך משטח
-      שהמסלול הוא השפה שלו. הוא שונה מאפס רק כשהשטף משתנה (שיעורים 5.2 ו-5.6).
+      שהמסלול הוא השפה שלו. הוא שונה מאפס רק כשהשטף משתנה (שיעורים 5.2 ו-5.7).
     </>
   ),
   ampere: (

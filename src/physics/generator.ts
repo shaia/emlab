@@ -1,5 +1,5 @@
 /**
- * The rotating-coil generator of lesson 5.7: what the brushes deliver with slip rings and with a split
+ * The rotating-coil generator of lesson 5.8: what the brushes deliver with slip rings and with a split
  * ring, the lamp's instantaneous and mean power, time averages over a cycle, the same emf read as the
  * motional emf of the two long sides, the drag torque the induced current feels (the motor of 4.10 run
  * backwards), and the grid's numbers. Built on `Generator` in induction.ts and the coil of coil.ts.

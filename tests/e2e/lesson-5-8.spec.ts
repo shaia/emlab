@@ -2,7 +2,6 @@ import { expect, test, type Locator, type Page } from '@playwright/test';
 import { freezeSteps, hydrated, inked, progress } from './helpers';
 
 const LESSON = '/lessons/5-8/';
-const WORLD_W = 0.24; // MaxwellFour's world width [m]; the canvas centre is the origin
 
 const setSlider = (slider: Locator, value: number) =>
   slider.evaluate((el: HTMLInputElement, v: number) => {
@@ -10,9 +9,9 @@ const setSlider = (slider: Locator, value: number) =>
     el.dispatchEvent(new Event('input', { bubbles: true }));
   }, value);
 
-async function openFigure(page: Page, id: string) {
+async function openFigure(page: Page) {
   await page.goto(LESSON);
-  const fig = page.locator(`#${id}`);
+  const fig = page.locator('#fig-5-8a');
   await fig.scrollIntoViewIfNeeded();
   await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
   await freezeSteps(page);
@@ -21,21 +20,7 @@ async function openFigure(page: Page, id: string) {
   return fig;
 }
 
-/** click the canvas at a world point [m] */
-async function clickWorld(fig: Locator, x: number, y: number) {
-  const canvas = fig.locator('.sim-stage canvas');
-  const box = await canvas.boundingBox();
-  if (!box) throw new Error('no canvas');
-  const ppm = box.width / WORLD_W;
-  await canvas.click({ position: { x: box.width / 2 + x * ppm, y: box.height / 2 - y * ppm } });
-}
-
-const noSideScroll = async (page: Page) => {
-  const sw = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-  expect(sw).toBeLessThanOrEqual(0);
-};
-
-test.describe('live figures', () => {
+test.describe('live figure', () => {
   test('scrolling through the text never completes a task', async ({ page }) => {
     await page.goto(LESSON);
     await page.evaluate(async () => {
@@ -48,96 +33,79 @@ test.describe('live figures', () => {
     await expect(page.locator('.sim-tasks li.done')).toHaveCount(0);
   });
 
-  test('both figures draw, in LTR physics space', async ({ page }) => {
+  test('the figure draws, in LTR physics space', async ({ page }) => {
     await page.goto(LESSON);
     const canvases = page.locator('.sim-stage canvas');
-    expect(await canvases.count()).toBe(2);
-    for (let i = 0; i < 2; i++) {
-      const c = canvases.nth(i);
-      await c.scrollIntoViewIfNeeded();
-      await expect(c).toHaveCSS('direction', 'ltr');
-      await expect.poll(() => inked(c)).toBeGreaterThan(200);
-    }
+    expect(await canvases.count()).toBe(1);
+    const c = canvases.first();
+    await c.scrollIntoViewIfNeeded();
+    await expect(c).toHaveCSS('direction', 'ltr');
+    await expect.poll(() => inked(c)).toBeGreaterThan(200);
   });
 
-  test('Gauss: 452 N·m²/C around +4 nC; a sphere round both charges is bigger and carries less, 226', async ({ page }) => {
-    const fig = await openFigure(page, 'fig-5-8a');
+  test('the emf is largest where the flux is zero, and zero where the flux is largest', async ({ page }) => {
+    const fig = await openFigure(page);
     const readout = fig.locator('.sim-readout');
-    await expect(readout).toContainText('∮E·dA = 452 N·m²/C');
-    await expect(readout).toContainText('Q_in/ε₀ = 452 N·m²/C');
-    await clickWorld(fig, 0, 0);
-    await setSlider(fig.locator('input[type=range]').first(), 0.08);
-    await expect(readout).toContainText('∮E·dA = 226 N·m²/C');
-    await expect(readout).toContainText('Q_in = +2 nC');
-    expect((await progress(page)).tasks['fig-5-8a:gauss-both']).toBeTruthy();
-  });
-
-  test('Gauss for B: a cube round the north pole lets out what it lets in, net zero', async ({ page }) => {
-    const fig = await openFigure(page, 'fig-5-8a');
-    await fig.locator('[data-law="gauss-b"]').click();
-    await expect(fig.locator('[data-law="gauss-b"]')).toHaveAttribute('aria-pressed', 'true');
-    await clickWorld(fig, 0, 0.05);
-    const readout = fig.locator('.sim-readout');
-    await expect(readout).toContainText('∮B·dA = 0 Wb');
-    await expect(readout).toContainText('השטף שיוצא: 7.36·10⁻⁷ Wb');
-    await expect(readout).toContainText('השטף שנכנס: 7.36·10⁻⁷ Wb');
-    expect((await progress(page)).tasks['fig-5-8a:b-pole']).toBeTruthy();
-  });
-
-  test('Faraday: B growing turns E clockwise; shrinking turns it back; beyond the core the sum stops growing', async ({ page }) => {
-    const fig = await openFigure(page, 'fig-5-8a');
-    await fig.locator('[data-law="faraday"]').click();
-    const readout = fig.locator('.sim-readout');
-    await expect(readout).toContainText('∮E·dl = -5.65·10⁻³ V');
-    await expect(readout).toContainText('−ΔΦ_B/Δt = -5.65·10⁻³ V');
-    await expect(readout).toContainText('עם כיוון השעון');
-    const [rate, radius] = [fig.locator('input[type=range]').nth(0), fig.locator('input[type=range]').nth(1)];
-    for (const v of [1.5, 1, 0.5, 0, -0.5, -1]) await setSlider(rate, v);
-    await expect(readout).toContainText('∮E·dl = 2.83·10⁻³ V');
-    await expect(readout).toContainText('נגד כיוון השעון');
-    await setSlider(radius, 0.06);
-    await expect(readout).toContainText('∮E·dl = 5.03·10⁻³ V');
-    await setSlider(radius, 0.075);
-    await expect(readout).toContainText('∮E·dl = 5.03·10⁻³ V');
+    // the starting state: θ = 60°, 200 turns of 40 cm², 0.5 T, one turn per second
+    await expect(readout).toContainText('θ = 60°');
+    await expect(readout).toContainText('Φ = BA·cosθ = 1 mWb');
+    await expect(readout).toContainText('ε = NBAω·sinθ = 2.18 V');
+    await expect(readout).toContainText('ε₀ = NBAω = 2.51 V');
+    const turn = fig.locator('input[type=range]').first();
+    await setSlider(turn, 90);
+    await expect(readout).toContainText('Φ = BA·cosθ = 0 mWb');
+    await expect(readout).toContainText('ε = NBAω·sinθ = 2.51 V');
+    await setSlider(turn, 0);
+    await expect(readout).toContainText('Φ = BA·cosθ = 2 mWb');
+    await expect(readout).toContainText('ε = NBAω·sinθ = 0 V');
     const tasks = (await progress(page)).tasks;
-    for (const t of ['faraday-shrink', 'faraday-beyond']) expect(tasks[`fig-5-8a:${t}`]).toBeTruthy();
+    expect(tasks['fig-5-8a:emf-max']).toBeTruthy();
+    expect(tasks['fig-5-8a:emf-zero']).toBeTruthy();
   });
 
-  test('Ampère–Maxwell: the bag breaks the old law, Maxwell’s term mends it, and B lives in the gap', async ({ page }) => {
-    const fig = await openFigure(page, 'fig-5-8a');
-    await fig.locator('[data-law="ampere"]').click();
+  test('twice the speed: twice the peak, half the period; twice the turns: four times the mean power', async ({ page }) => {
+    const fig = await openFigure(page);
     const readout = fig.locator('.sim-readout');
-    await expect(readout).toContainText('∮B·dl = 2.51·10⁻⁶ T·m');
-    await expect(readout).toContainText('שווה לצד שמאל');
-    await fig.getByRole('button', { name: 'שקית בין הלוחות' }).click();
-    await expect(readout).toContainText('μ₀I = 0 T·m');
-    await expect(readout).toContainText('שונה מצד שמאל');
-    await fig.getByRole('button', { name: 'התוספת של מקסוול' }).click();
-    await expect(readout).toContainText('μ₀(I + ε₀ΔΦ_E/Δt) = 2.51·10⁻⁶ T·m');
-    await expect(readout).toContainText('שווה לצד שמאל');
-    await fig.getByRole('button', { name: 'המסלול בין הלוחות' }).click();
-    await expect(readout).toContainText('B = 4.8·10⁻⁶ T');
-    await expect(readout).toContainText('I = 0 A');
-    await expect(readout).toContainText('ε₀·ΔΦ_E/Δt = 0.72 A');
+    const sliders = fig.locator('input[type=range]');
+    await expect(readout).toContainText('T = 1/f = 1 s');
+    await expect(readout).toContainText('ε₀²/(2R) = 0.316 W');
+    await setSlider(sliders.nth(1), 2);
+    await expect(readout).toContainText('ε₀ = NBAω = 5.03 V');
+    await expect(readout).toContainText('T = 1/f = 0.5 s');
+    await setSlider(sliders.nth(1), 1);
+    await setSlider(sliders.nth(2), 400);
+    await expect(readout).toContainText('ε₀ = NBAω = 5.03 V');
+    await expect(readout).toContainText('ε₀²/(2R) = 1.26 W');
+    await expect(readout).toContainText('ε₀/√2 = 3.55 V');
     const tasks = (await progress(page)).tasks;
-    for (const t of ['ampere-bag', 'ampere-fix', 'ampere-gap']) expect(tasks[`fig-5-8a:${t}`]).toBeTruthy();
-    await noSideScroll(page);
+    expect(tasks['fig-5-8a:double-f']).toBeTruthy();
+    expect(tasks['fig-5-8a:double-n']).toBeTruthy();
   });
 
-  test('the wave: 3 m at 100 MHz, c from the constants at every frequency, light and the grid', async ({ page }) => {
-    const fig = await openFigure(page, 'fig-5-8b');
+  test('the split ring turns the negative half of the emf positive', async ({ page }) => {
+    const fig = await openFigure(page);
     const readout = fig.locator('.sim-readout');
-    await expect(readout).toContainText('λ = c/f = 3 m');
-    await expect(readout).toContainText('c = 1/√(μ₀ε₀) = 3·10⁸ m/s');
-    await fig.getByRole('button', { name: 'אור ירוק' }).click();
-    await expect(readout).toContainText('אור נראה');
-    await expect(readout).toContainText('536 nm');
-    await expect(readout).toContainText('c = 1/√(μ₀ε₀) = 3·10⁸ m/s');
-    await fig.getByRole('button', { name: 'רשת החשמל' }).click();
-    await expect(readout).toContainText('6000 km');
-    const tasks = (await progress(page)).tasks;
-    for (const t of ['wave-light', 'wave-grid']) expect(tasks[`fig-5-8b:${t}`]).toBeTruthy();
-    await noSideScroll(page);
+    await setSlider(fig.locator('input[type=range]').first(), 300);
+    await expect(readout).toContainText('ε = NBAω·sinθ = -2.18 V');
+    await fig.getByRole('button', { name: 'טבעת מפוצלת' }).click();
+    await expect(readout).toContainText('|ε| = 2.18 V');
+    expect((await progress(page)).tasks['fig-5-8a:split']).toBeTruthy();
+  });
+
+  test('in still mode the generator does not turn by itself', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('emlab:settings', JSON.stringify({ still: true, theme: 'auto' })));
+    const fig = await openFigure(page);
+    await fig.getByRole('button', { name: 'סובבו את הגנרטור' }).click();
+    await page.waitForTimeout(800);
+    await expect(fig.locator('.sim-readout')).toContainText('θ = 60°');
+    await expect(fig.getByRole('button', { name: 'סובבו את הגנרטור' })).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  test('running, the coil turns and the readout follows it', async ({ page }) => {
+    const fig = await openFigure(page);
+    await fig.getByRole('button', { name: 'סובבו את הגנרטור' }).click();
+    await expect.poll(async () => (await fig.locator('.sim-readout').textContent()) ?? '', { timeout: 10_000 }).not.toContain('θ = 60°');
+    await fig.getByRole('button', { name: 'עצרו' }).click();
   });
 });
 
@@ -147,39 +115,39 @@ test.describe('predict, then reveal', () => {
     const predict = page.locator('[data-predict-id="pred-5-8"]');
     await predict.scrollIntoViewIfNeeded();
     await expect(predict).not.toHaveClass(/is-open/);
-    const choice = predict.locator('label.q-choice', { hasText: 'אין שם שדה מגנטי' });
-    await hydrated(choice);
-    await choice.click();
+    await hydrated(predict.locator('label.q-choice').first());
+    await predict.locator('label.q-choice', { hasText: 'השטף דרכו הכי גדול' }).click();
     await predict.getByRole('button', { name: 'זה החיזוי שלי' }).click();
     await expect(predict).toHaveClass(/is-open/);
   });
 });
 
 test.describe('questions', () => {
-  test('numeric: the whole ring area is told apart, then the core area passes', async ({ page }) => {
+  test('numeric: the peak power is caught as a misconception, then the mean power 40 W passes', async ({ page }) => {
     await page.goto(LESSON);
-    const q = page.locator('[data-qid="Q-5.8-faraday-big-loop"]');
+    const q = page.locator('[data-qid="Q-5.8-mean-power"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(q);
     const input = q.locator('input[type=text]');
-    await input.fill('50.3');
+    await input.fill('80');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
-    await expect(q.locator('.q-feedback')).toContainText('כל הטבעת');
+    const a = (await progress(page)).attempts.at(-1);
+    expect(a).toMatchObject({ qid: 'Q-5.8-mean-power', correct: false, misconception: 'MC-ac-mean-power-peak-squared', lesson: '5.8' });
     await q.getByRole('button', { name: 'נסו שוב' }).click();
-    await input.fill('3.14');
+    await input.fill('40');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-right/);
   });
 
-  test('a confident "strongest when full" is recorded as that misconception', async ({ page }) => {
+  test('a confident "largest when the flux is largest" is recorded as that misconception', async ({ page }) => {
     await page.goto(LESSON);
-    const q = page.locator('[data-qid="Q-5.8-full-capacitor"]');
+    const q = page.locator('[data-qid="Q-5.8-max-emf-position"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(q);
-    await q.locator('label', { hasText: 'הכי חזק שהיה' }).click();
+    await q.locator('label', { hasText: 'והשטף דרכו הגדול ביותר' }).click();
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-wrong/);
     const a = (await progress(page)).attempts.at(-1);
-    expect(a).toMatchObject({ qid: 'Q-5.8-full-capacitor', correct: false, confident: true, misconception: 'MC-displacement-follows-field' });
+    expect(a).toMatchObject({ qid: 'Q-5.8-max-emf-position', correct: false, confident: true, misconception: 'MC-generator-emf-follows-flux' });
   });
 });

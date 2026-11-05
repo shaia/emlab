@@ -1,7 +1,13 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Locator, type Page } from '@playwright/test';
 import { freezeSteps, hydrated, inked, progress } from './helpers';
 
 const LESSON = '/lessons/5-6/';
+
+const setSlider = (slider: Locator, value: number) =>
+  slider.evaluate((el: HTMLInputElement, v: number) => {
+    el.value = String(v);
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+  }, value);
 
 async function openFigure(page: Page, id: string) {
   await page.goto(LESSON);
@@ -14,12 +20,7 @@ async function openFigure(page: Page, id: string) {
   return fig;
 }
 
-const noSideScroll = async (page: Page) => {
-  const sw = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-  expect(sw).toBeLessThanOrEqual(0);
-};
-
-test.describe('live figure', () => {
+test.describe('live figures', () => {
   test('scrolling through the text never completes a task', async ({ page }) => {
     await page.goto(LESSON);
     await page.evaluate(async () => {
@@ -32,70 +33,101 @@ test.describe('live figure', () => {
     await expect(page.locator('.sim-tasks li.done')).toHaveCount(0);
   });
 
-  test('the figure draws, in LTR physics space', async ({ page }) => {
+  test('all three figures draw, in LTR physics space', async ({ page }) => {
     await page.goto(LESSON);
     const canvases = page.locator('.sim-stage canvas');
-    expect(await canvases.count()).toBe(1);
-    const c = canvases.first();
-    await c.scrollIntoViewIfNeeded();
-    await expect(c).toHaveCSS('direction', 'ltr');
-    await expect.poll(() => inked(c)).toBeGreaterThan(200);
+    expect(await canvases.count()).toBe(3);
+    for (let i = 0; i < 3; i++) {
+      const c = canvases.nth(i);
+      await c.scrollIntoViewIfNeeded();
+      await expect(c).toHaveCSS('direction', 'ltr');
+      await expect.poll(() => inked(c)).toBeGreaterThan(200);
+    }
   });
 
-  test('inside the core the emf follows the area; round the whole core it stops growing', async ({ page }) => {
+  test('strip: −Bhv entering, nothing fully inside, the current reverses leaving; doubling v doubles the emf', async ({ page }) => {
     const fig = await openFigure(page, 'fig-5-6a');
     const readout = fig.locator('.sim-readout');
-    // a loop of radius 2 cm in a 2 T/s core: π·0.02²·2 = 2.51·10⁻³ V, clockwise for a growing ⊙ field
-    await expect(readout).toContainText('12.6 cm²');
-    await expect(readout).toContainText('2.51·10⁻³ V, עם כיוון השעון');
-    const canvas = fig.locator('canvas');
-    await canvas.focus();
-    // space selects the loop, a second space the rim handle; an arrow grows the radius by 5 mm
-    await canvas.press(' ');
-    await canvas.press(' ');
-    await canvas.press('ArrowRight');
-    await expect(readout).toContainText('3.93·10⁻³ V');
-    expect((await progress(page)).tasks['fig-5-6a:inside-area']).toBeTruthy();
-    // 2.5 cm + 4 × 2 cm = 10.5 cm: the loop now holds the whole core, π·0.04²·2 = 0.0101 V
-    for (let i = 0; i < 4; i++) await canvas.press('Shift+ArrowRight');
-    await expect(readout).toContainText('0.0101 V');
-    await canvas.press('Shift+ArrowRight');
-    await expect(readout).toContainText('0.0101 V');
-    expect((await progress(page)).tasks['fig-5-6a:enclose']).toBeTruthy();
-    await noSideScroll(page);
+    const time = fig.locator('input[type=range]').nth(1);
+    for (const t of [0.5, 1, 1.5, 2]) await setSlider(time, t);
+    await expect(readout).toContainText('Φ = 0.01 Wb');
+    await expect(readout).toContainText('ε = -0.01 V');
+    await expect(readout).toContainText('I = -0.1 A');
+    await expect(readout).toContainText('נגד כיוון השעון');
+    await expect(readout).toContainText('F = 0.01 N');
+    await setSlider(time, 4);
+    await expect(readout).toContainText('I = 0');
+    await expect(readout).toContainText('לא צריך לדחוף');
+    await setSlider(time, 6);
+    await expect(readout).toContainText('I = 0.1 A');
+    await expect(readout).toContainText('בכיוון השעון');
+    await setSlider(time, 8);
+    // twice as fast: twice the emf
+    await setSlider(fig.locator('input[type=range]').first(), 0.2);
+    for (const t of [0.5, 1]) await setSlider(time, t);
+    await expect(readout).toContainText('ε = -0.02 V');
+    await setSlider(time, 2);
+    const tasks = (await progress(page)).tasks;
+    for (const t of ['full-pass', 'pause-inside', 'faster']) expect(tasks[`fig-5-6a:${t}`]).toBeTruthy();
   });
 
-  test('a loop beside the core has zero emf, though the field on it is not zero', async ({ page }) => {
-    const fig = await openFigure(page, 'fig-5-6a');
+  test('charge: the area under I(t) equals −ΔΦ/R, the same at two speeds, and zero after a full pass', async ({ page }) => {
+    const fig = await openFigure(page, 'fig-5-6c');
     const readout = fig.locator('.sim-readout');
-    const canvas = fig.locator('canvas');
-    await canvas.focus();
-    await canvas.press(' ');
-    for (let i = 0; i < 5; i++) await canvas.press('Shift+ArrowRight');
-    await expect(readout).toContainText('0 V');
-    await expect(readout).toContainText('בחלק ממנה הוא דוחף עם כיוון השעון ובחלק נגדו');
-    expect((await progress(page)).tasks['fig-5-6a:beside']).toBeTruthy();
+    const time = fig.locator('input[type=range]').nth(1);
+    for (const t of [1, 2, 3]) await setSlider(time, t);
+    await expect(readout).toContainText('Σ I·Δt = -0.2 C');
+    await expect(readout).toContainText('−ΔΦ/R = -0.2 C');
+    for (const t of [5, 7, 8]) await setSlider(time, t);
+    await expect(readout).toContainText('Σ I·Δt = 0 C');
+    await expect(readout).toContainText('−ΔΦ/R = 0 C');
+    await setSlider(fig.locator('input[type=range]').first(), 0.2);
+    await expect(readout).toContainText('המעבר הקודם');
+    for (const t of [1, 2]) await setSlider(time, t);
+    await expect(readout).toContainText('Σ I·Δt = -0.2 C');
+    const tasks = (await progress(page)).tasks;
+    for (const t of ['entry-charge', 'two-speeds', 'net-zero']) expect(tasks[`fig-5-6c:${t}`]).toBeTruthy();
+    const sw = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(sw).toBeLessThanOrEqual(0);
   });
 
-  test('a shrinking field reverses the induced field', async ({ page }) => {
-    const fig = await openFigure(page, 'fig-5-6a');
+  test('build: the right ε steps for the flux graph pass the check, a wrong one is marked', async ({ page }) => {
+    const fig = await openFigure(page, 'fig-5-6b');
     const readout = fig.locator('.sim-readout');
-    await fig.getByRole('button', { name: 'קטן', exact: true }).click();
-    await expect(readout).toContainText('2.51·10⁻³ V, נגד כיוון השעון');
-    expect((await progress(page)).tasks['fig-5-6a:reverse']).toBeTruthy();
-    // ⊗ shrinking is ⊙ growing again: clockwise
-    await fig.getByRole('button', { name: /השדה:/ }).click();
-    await expect(readout).toContainText('2.51·10⁻³ V, עם כיוון השעון');
+    const up = fig.getByRole('button', { name: 'ε למעלה' });
+    const down = fig.getByRole('button', { name: 'ε למטה' });
+    const next = fig.getByRole('button', { name: 'הקטע הבא' });
+    const check = fig.getByRole('button', { name: 'בדיקה' });
+    // −30, 0, +40, +20 mV
+    const steps = [-3, 0, 4, 2];
+    for (let i = 0; i < steps.length; i++) {
+      if (steps[i] === 0) {
+        await up.click();
+        await down.click();
+      }
+      for (let k = 0; k < Math.abs(steps[i]); k++) await (steps[i] > 0 ? up : down).click();
+      if (i === 2) {
+        // a slip first: 30 mV on the steep fall is marked wrong
+        await down.click();
+        await check.click();
+        await expect(readout).toContainText('נכונות 2 מתוך 4');
+        await up.click();
+      }
+      if (i < steps.length - 1) await next.click();
+    }
+    await check.click();
+    await expect(readout).toContainText('כל המדרגות נכונות');
+    expect((await progress(page)).tasks['fig-5-6b:build-flux']).toBeTruthy();
   });
 
-  test('a released bead gains q|ε| on each lap', async ({ page }) => {
-    const fig = await openFigure(page, 'fig-5-6a');
+  test('bell: at the peak of the flux the emf is zero', async ({ page }) => {
+    const fig = await openFigure(page, 'fig-5-6b');
+    await fig.getByRole('button', { name: 'מגנט עובר בסליל' }).click();
     const readout = fig.locator('.sim-readout');
-    await fig.getByRole('button', { name: 'שחררו חרוז טעון' }).click();
-    expect((await progress(page)).tasks['fig-5-6a:bead']).toBeTruthy();
-    // the first lap takes about 2.4 s of figure time
-    await expect(readout).toContainText('1·q|ε|', { timeout: 15_000 });
-    await noSideScroll(page);
+    const cursor = fig.locator('input[type=range]').first();
+    for (const t of [1, 2, 3]) await setSlider(cursor, t);
+    await expect(readout).toContainText('ε = 0 V');
+    expect((await progress(page)).tasks['fig-5-6b:bell-peak']).toBeTruthy();
   });
 });
 
@@ -105,7 +137,7 @@ test.describe('predict, then reveal', () => {
     const predict = page.locator('[data-predict-id="pred-5-6"]');
     await predict.scrollIntoViewIfNeeded();
     await expect(predict).not.toHaveClass(/is-open/);
-    const choice = predict.locator('label.q-choice', { hasText: 'יגדל פי 4' });
+    const choice = predict.locator('label.q-choice', { hasText: 'אותו מטען בשתי הפעמים' });
     await hydrated(choice);
     await choice.click();
     await predict.getByRole('button', { name: 'זה החיזוי שלי' }).click();
@@ -114,31 +146,30 @@ test.describe('predict, then reveal', () => {
 });
 
 test.describe('questions', () => {
-  test('numeric: the inside formula used outside the core gets targeted feedback, then 5 mV/m passes', async ({ page }) => {
+  test('numeric: the side along the motion is told apart, then Bhv passes', async ({ page }) => {
     await page.goto(LESSON);
-    const q = page.locator('[data-qid="Q-5.6-E-outside"]');
+    const q = page.locator('[data-qid="Q-5.6-strip-emf"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(q);
     const input = q.locator('input[type=text]');
-    await input.fill('80');
+    await input.fill('0.72');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
-    await expect(q.locator('.q-feedback')).toContainText('תוך הליבה');
+    await expect(q.locator('.q-feedback')).toContainText('הצלע שלאורך התנועה');
     await q.getByRole('button', { name: 'נסו שוב' }).click();
-    await input.fill('5');
+    await input.fill('0.24');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-right/);
   });
 
-  test('a confident "the magnetic force pushes them" is recorded as that misconception', async ({ page }) => {
+  test('a confident "a loop moving in a field always carries a current" is recorded as that misconception', async ({ page }) => {
     await page.goto(LESSON);
-    const q = page.locator('[data-qid="Q-5.6-what-pushes"]');
+    const q = page.locator('[data-qid="Q-5.6-strip-inside"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(q);
-    await q.locator('.q-choices').first().locator('label', { hasText: 'הכוח המגנטי, כוח לורנץ' }).click();
-    await q.locator('.reasons label', { hasText: 'מפעיל כוח מגנטי גם על מטענים במנוחה' }).click();
+    await q.locator('label', { hasText: 'זורם זרם קבוע, כי הלולאה נעה' }).click();
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-wrong/);
     const a = (await progress(page)).attempts.at(-1);
-    expect(a).toMatchObject({ qid: 'Q-5.6-what-pushes', correct: false, confident: true, misconception: 'MC-induced-lorentz-at-rest' });
+    expect(a).toMatchObject({ qid: 'Q-5.6-strip-inside', correct: false, confident: true, misconception: 'MC-strip-current-inside-field' });
   });
 });

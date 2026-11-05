@@ -1,17 +1,11 @@
-import { expect, test, type Locator, type Page } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { freezeSteps, hydrated, inked, progress } from './helpers';
 
 const LESSON = '/lessons/5-7/';
 
-const setSlider = (slider: Locator, value: number) =>
-  slider.evaluate((el: HTMLInputElement, v: number) => {
-    el.value = String(v);
-    el.dispatchEvent(new Event('input', { bubbles: true }));
-  }, value);
-
-async function openFigure(page: Page) {
+async function openFigure(page: Page, id: string) {
   await page.goto(LESSON);
-  const fig = page.locator('#fig-5-7a');
+  const fig = page.locator(`#${id}`);
   await fig.scrollIntoViewIfNeeded();
   await expect(fig.locator('astro-island:not([ssr])')).toHaveCount(1);
   await freezeSteps(page);
@@ -19,6 +13,11 @@ async function openFigure(page: Page) {
   await fig.getByRole('button', { name: 'איפוס' }).click();
   return fig;
 }
+
+const noSideScroll = async (page: Page) => {
+  const sw = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect(sw).toBeLessThanOrEqual(0);
+};
 
 test.describe('live figure', () => {
   test('scrolling through the text never completes a task', async ({ page }) => {
@@ -43,69 +42,60 @@ test.describe('live figure', () => {
     await expect.poll(() => inked(c)).toBeGreaterThan(200);
   });
 
-  test('the emf is largest where the flux is zero, and zero where the flux is largest', async ({ page }) => {
-    const fig = await openFigure(page);
+  test('inside the core the emf follows the area; round the whole core it stops growing', async ({ page }) => {
+    const fig = await openFigure(page, 'fig-5-7a');
     const readout = fig.locator('.sim-readout');
-    // the starting state: θ = 60°, 200 turns of 40 cm², 0.5 T, one turn per second
-    await expect(readout).toContainText('θ = 60°');
-    await expect(readout).toContainText('Φ = BA·cosθ = 1 mWb');
-    await expect(readout).toContainText('ε = NBAω·sinθ = 2.18 V');
-    await expect(readout).toContainText('ε₀ = NBAω = 2.51 V');
-    const turn = fig.locator('input[type=range]').first();
-    await setSlider(turn, 90);
-    await expect(readout).toContainText('Φ = BA·cosθ = 0 mWb');
-    await expect(readout).toContainText('ε = NBAω·sinθ = 2.51 V');
-    await setSlider(turn, 0);
-    await expect(readout).toContainText('Φ = BA·cosθ = 2 mWb');
-    await expect(readout).toContainText('ε = NBAω·sinθ = 0 V');
-    const tasks = (await progress(page)).tasks;
-    expect(tasks['fig-5-7a:emf-max']).toBeTruthy();
-    expect(tasks['fig-5-7a:emf-zero']).toBeTruthy();
+    // a loop of radius 2 cm in a 2 T/s core: π·0.02²·2 = 2.51·10⁻³ V, clockwise for a growing ⊙ field
+    await expect(readout).toContainText('12.6 cm²');
+    await expect(readout).toContainText('2.51·10⁻³ V, עם כיוון השעון');
+    const canvas = fig.locator('canvas');
+    await canvas.focus();
+    // space selects the loop, a second space the rim handle; an arrow grows the radius by 5 mm
+    await canvas.press(' ');
+    await canvas.press(' ');
+    await canvas.press('ArrowRight');
+    await expect(readout).toContainText('3.93·10⁻³ V');
+    expect((await progress(page)).tasks['fig-5-7a:inside-area']).toBeTruthy();
+    // 2.5 cm + 4 × 2 cm = 10.5 cm: the loop now holds the whole core, π·0.04²·2 = 0.0101 V
+    for (let i = 0; i < 4; i++) await canvas.press('Shift+ArrowRight');
+    await expect(readout).toContainText('0.0101 V');
+    await canvas.press('Shift+ArrowRight');
+    await expect(readout).toContainText('0.0101 V');
+    expect((await progress(page)).tasks['fig-5-7a:enclose']).toBeTruthy();
+    await noSideScroll(page);
   });
 
-  test('twice the speed: twice the peak, half the period; twice the turns: four times the mean power', async ({ page }) => {
-    const fig = await openFigure(page);
+  test('a loop beside the core has zero emf, though the field on it is not zero', async ({ page }) => {
+    const fig = await openFigure(page, 'fig-5-7a');
     const readout = fig.locator('.sim-readout');
-    const sliders = fig.locator('input[type=range]');
-    await expect(readout).toContainText('T = 1/f = 1 s');
-    await expect(readout).toContainText('ε₀²/(2R) = 0.316 W');
-    await setSlider(sliders.nth(1), 2);
-    await expect(readout).toContainText('ε₀ = NBAω = 5.03 V');
-    await expect(readout).toContainText('T = 1/f = 0.5 s');
-    await setSlider(sliders.nth(1), 1);
-    await setSlider(sliders.nth(2), 400);
-    await expect(readout).toContainText('ε₀ = NBAω = 5.03 V');
-    await expect(readout).toContainText('ε₀²/(2R) = 1.26 W');
-    await expect(readout).toContainText('ε₀/√2 = 3.55 V');
-    const tasks = (await progress(page)).tasks;
-    expect(tasks['fig-5-7a:double-f']).toBeTruthy();
-    expect(tasks['fig-5-7a:double-n']).toBeTruthy();
+    const canvas = fig.locator('canvas');
+    await canvas.focus();
+    await canvas.press(' ');
+    for (let i = 0; i < 5; i++) await canvas.press('Shift+ArrowRight');
+    await expect(readout).toContainText('0 V');
+    await expect(readout).toContainText('בחלק ממנה הוא דוחף עם כיוון השעון ובחלק נגדו');
+    expect((await progress(page)).tasks['fig-5-7a:beside']).toBeTruthy();
   });
 
-  test('the split ring turns the negative half of the emf positive', async ({ page }) => {
-    const fig = await openFigure(page);
+  test('a shrinking field reverses the induced field', async ({ page }) => {
+    const fig = await openFigure(page, 'fig-5-7a');
     const readout = fig.locator('.sim-readout');
-    await setSlider(fig.locator('input[type=range]').first(), 300);
-    await expect(readout).toContainText('ε = NBAω·sinθ = -2.18 V');
-    await fig.getByRole('button', { name: 'טבעת מפוצלת' }).click();
-    await expect(readout).toContainText('|ε| = 2.18 V');
-    expect((await progress(page)).tasks['fig-5-7a:split']).toBeTruthy();
+    await fig.getByRole('button', { name: 'קטן', exact: true }).click();
+    await expect(readout).toContainText('2.51·10⁻³ V, נגד כיוון השעון');
+    expect((await progress(page)).tasks['fig-5-7a:reverse']).toBeTruthy();
+    // ⊗ shrinking is ⊙ growing again: clockwise
+    await fig.getByRole('button', { name: /השדה:/ }).click();
+    await expect(readout).toContainText('2.51·10⁻³ V, עם כיוון השעון');
   });
 
-  test('in still mode the generator does not turn by itself', async ({ page }) => {
-    await page.addInitScript(() => localStorage.setItem('emlab:settings', JSON.stringify({ still: true, theme: 'auto' })));
-    const fig = await openFigure(page);
-    await fig.getByRole('button', { name: 'סובבו את הגנרטור' }).click();
-    await page.waitForTimeout(800);
-    await expect(fig.locator('.sim-readout')).toContainText('θ = 60°');
-    await expect(fig.getByRole('button', { name: 'סובבו את הגנרטור' })).toHaveAttribute('aria-pressed', 'false');
-  });
-
-  test('running, the coil turns and the readout follows it', async ({ page }) => {
-    const fig = await openFigure(page);
-    await fig.getByRole('button', { name: 'סובבו את הגנרטור' }).click();
-    await expect.poll(async () => (await fig.locator('.sim-readout').textContent()) ?? '', { timeout: 10_000 }).not.toContain('θ = 60°');
-    await fig.getByRole('button', { name: 'עצרו' }).click();
+  test('a released bead gains q|ε| on each lap', async ({ page }) => {
+    const fig = await openFigure(page, 'fig-5-7a');
+    const readout = fig.locator('.sim-readout');
+    await fig.getByRole('button', { name: 'שחררו חרוז טעון' }).click();
+    expect((await progress(page)).tasks['fig-5-7a:bead']).toBeTruthy();
+    // the first lap takes about 2.4 s of figure time
+    await expect(readout).toContainText('1·q|ε|', { timeout: 15_000 });
+    await noSideScroll(page);
   });
 });
 
@@ -115,39 +105,40 @@ test.describe('predict, then reveal', () => {
     const predict = page.locator('[data-predict-id="pred-5-7"]');
     await predict.scrollIntoViewIfNeeded();
     await expect(predict).not.toHaveClass(/is-open/);
-    await hydrated(predict.locator('label.q-choice').first());
-    await predict.locator('label.q-choice', { hasText: 'השטף דרכו הכי גדול' }).click();
+    const choice = predict.locator('label.q-choice', { hasText: 'יגדל פי 4' });
+    await hydrated(choice);
+    await choice.click();
     await predict.getByRole('button', { name: 'זה החיזוי שלי' }).click();
     await expect(predict).toHaveClass(/is-open/);
   });
 });
 
 test.describe('questions', () => {
-  test('numeric: the peak power is caught as a misconception, then the mean power 40 W passes', async ({ page }) => {
+  test('numeric: the inside formula used outside the core gets targeted feedback, then 5 mV/m passes', async ({ page }) => {
     await page.goto(LESSON);
-    const q = page.locator('[data-qid="Q-5.7-mean-power"]');
+    const q = page.locator('[data-qid="Q-5.7-E-outside"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(q);
     const input = q.locator('input[type=text]');
     await input.fill('80');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
-    const a = (await progress(page)).attempts.at(-1);
-    expect(a).toMatchObject({ qid: 'Q-5.7-mean-power', correct: false, misconception: 'MC-ac-mean-power-peak-squared', lesson: '5.7' });
+    await expect(q.locator('.q-feedback')).toContainText('תוך הליבה');
     await q.getByRole('button', { name: 'נסו שוב' }).click();
-    await input.fill('40');
+    await input.fill('5');
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-right/);
   });
 
-  test('a confident "largest when the flux is largest" is recorded as that misconception', async ({ page }) => {
+  test('a confident "the magnetic force pushes them" is recorded as that misconception', async ({ page }) => {
     await page.goto(LESSON);
-    const q = page.locator('[data-qid="Q-5.7-max-emf-position"]');
+    const q = page.locator('[data-qid="Q-5.7-what-pushes"]');
     await q.scrollIntoViewIfNeeded();
     await hydrated(q);
-    await q.locator('label', { hasText: 'והשטף דרכו הגדול ביותר' }).click();
+    await q.locator('.q-choices').first().locator('label', { hasText: 'הכוח המגנטי, כוח לורנץ' }).click();
+    await q.locator('.reasons label', { hasText: 'מפעיל כוח מגנטי גם על מטענים במנוחה' }).click();
     await q.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(q).toHaveClass(/is-wrong/);
     const a = (await progress(page)).attempts.at(-1);
-    expect(a).toMatchObject({ qid: 'Q-5.7-max-emf-position', correct: false, confident: true, misconception: 'MC-generator-emf-follows-flux' });
+    expect(a).toMatchObject({ qid: 'Q-5.7-what-pushes', correct: false, confident: true, misconception: 'MC-induced-lorentz-at-rest' });
   });
 });

@@ -1,24 +1,13 @@
-# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below) on the
-# `verified` date. Durations come from the watch page (lengthSeconds). `why` claims only what the title
-# and the description support; neither video was watched. Captions: English tracks were listed on the
-# watch page, the rest were auto-translations and are not claimed.
+# Every id was checked against YouTube's oEmbed on the `verified` date (through the noembed.com proxy,
+# because youtube.com itself was unreachable from the session's sandbox): it exists and is embeddable, with
+# the title and channel below. `why` claims only what the title supports; the length is not confirmed.
 
-- id: v-5-7-generators
-  youtubeId: sAO9gYaMZkg
-  title: 'How electricity is generated (3D Animation - AC&DC Generators)'
-  channel: ScienceWorld
+- id: v-5-7-lewin-induction
+  youtubeId: nGQbA2jwkWI
+  title: "8.02x - Lect 16 - Electromagnetic Induction, Faraday's Law, Lenz Law, SUPER DEMO"
+  channel: 'Lectures by Walter Lewin. They will make you ♥ Physics.'
   lang: en
-  captions: [en]
-  minutes: 5
-  why: 'הנפשה באנגלית. לפי התיאור שלה היא עוברת על גנרטור של זרם חילופין, על השטף המגנטי, על גנרטור של זרם ישר ועל חישוב התדירות של זרם החילופין. חפשו את טבעות ההחלקה ואת הטבעת המפוצלת, והשוו לשני המצבים באיור 5.7א.'
-  verified: '2026-11-05'
-
-- id: v-5-7-rms
-  youtubeId: VB1ZYtzqPQo
-  title: 'What is RMS value? (& why should we care?) | Alternating currents | Physics | Khan Academy'
-  channel: Khan Academy India - English
-  lang: en
-  captions: [en]
-  minutes: 12
-  why: 'הסבר באנגלית. לפי התיאור, הערך האפקטיבי (RMS) של זרם חילופין הוא הזרם הישר שמפתח את אותו הספק ממוצע, ולסינוס הוא השיא חלקי שורש 2. זה ההסבר של "הערך האפקטיבי" בשיעור, בדרך אחרת.'
+  captions: []
+  minutes: 50
+  why: 'הרצאה מלאה באנגלית של וולטר לוין מ-MIT. לפי הכותרת שלה, היא עוסקת בהשראה אלקטרומגנטית, בחוק פאראדיי ובחוק לנץ, וכוללת הדגמה גדולה. זו הרצאה ארוכה: צפו בה אם אתם רוצים לראות את הניסויים במעבדה אמיתית.'
   verified: '2026-11-05'

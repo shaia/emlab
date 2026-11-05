@@ -1,5 +1,5 @@
 /**
- * Induction read off graphs, for lesson 5.5: the emf as minus the slope of a flux graph, a rectangular
+ * Induction read off graphs, for lesson 5.6: the emf as minus the slope of a flux graph, a rectangular
  * loop pushed at constant speed through a strip of field (flux, emf, current, the push it needs and the
  * power that push delivers), and the charge that passes, Q = −N·ΔΦ/R, as the area under I(t).
  *

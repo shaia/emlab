@@ -1,0 +1,357 @@
+# Lesson 5.9 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are rendered at
+# build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/maxwellfour.ts, induction.ts (inducedCircleEmf),
+# constants.ts (MU0, EPS0_DISPLAY = 8.85·10⁻¹², the sheet's ε₀) in this session. The data differ on purpose
+# from figure 5.9א–ב and the worked examples.
+
+chapter: 5
+questions:
+  # ------------------------------------------------ OBJ-5.9-1: reading the four laws
+  - id: Q-5.9-which-surface
+    type: mc
+    objectives: [OBJ-5.9-1]
+    qualitative: true
+    prompt: >-
+      בחוק פאראדיי, $\oint_C \vec E\cdot d\vec l = -\dfrac{d\Phi_B}{dt}$, צד שמאל הוא סכום סביב מסלול סגור $C$. דרך איזה משטח נמדד השטף המגנטי $\Phi_B$ שבצד ימין?
+    choices:
+      - text: 'דרך משטח שהמסלול $C$ הוא השפה שלו, כמו קרום של בועת סבון על טבעת.'
+        correct: true
+        feedback: 'נכון. בשני החוקים של מסלול סגור (פאראדיי ואמפר-מקסוול) השטף נמדד דרך משטח פתוח שהמסלול הוא השפה שלו. אפשר לבחור כל משטח כזה.'
+      - text: 'דרך משטח סגור שמקיף את המסלול, כמו בחוקי גאוס.'
+        feedback: 'דרך משטח סגור השטף המגנטי תמיד אפס (חוק גאוס למגנטיות). אילו מדדו כך, צד ימין היה תמיד אפס, ולא היה אף פעם כא״מ מושרה.'
+        misconception: MC-maxwell-faraday-flux-closed-surface
+      - text: 'דרך הקו של המסלול עצמו: השטף הוא השדה המגנטי כפול אורך המסלול.'
+        feedback: 'שטף הוא תמיד דרך משטח, שדה כפול שטח. השדה כפול אורך הוא הסכום שבצד שמאל של חוק אמפר.'
+      - text: 'דרך כל המרחב, כי השדה החשמלי המושרה ממלא את כל המרחב.'
+        feedback: 'השדה המושרה אכן ממלא את המרחב, אבל השטף נמדד דרך משטח מסוים: משטח שהמסלול הוא השפה שלו.'
+
+  - id: Q-5.9-magnetic-zero
+    type: mc
+    objectives: [OBJ-5.9-1]
+    qualitative: true
+    prompt: >-
+      בחוק גאוס לשדה החשמלי, בצד ימין יש $Q_{\text{in}}/\varepsilon_0$. בחוק גאוס למגנטיות, $\oint_S \vec B\cdot d\vec A = 0$, בצד ימין יש אפס. מה האפס הזה אומר?
+    choices:
+      - text: 'שאין קוטב מגנטי בודד: קווי השדה המגנטי סגורים, וכל קו שנכנס למשטח סגור גם יוצא ממנו.'
+        correct: true
+        feedback: 'נכון. אין מקבילה מגנטית למטען, נקודה שקווים מתחילים בה. גם הקווים שיוצאים מקוטב צפוני חוזרים, בתוך המגנט, אל הקוטב הדרומי.'
+      - text: 'שבתוך משטח סגור אף פעם אין שדה מגנטי.'
+        feedback: 'בתוך משטח סגור יכול להיות שדה מגנטי חזק, למשל כשהוא מקיף מגנט. אפס הוא רק השטף **נטו**: כמה שיוצא פחות כמה שנכנס.'
+      - text: 'שהשטף מגנטי אפס רק כשאין מגנט בתוך המשטח. משטח סביב קוטב צפוני מקבל שטף החוצה.'
+        feedback: 'מהקוטב הצפוני הקווים יוצאים, אבל הם נכנסים למשטח בצד שבתוך המגנט. השטף נטו אפס תמיד, גם סביב קוטב.'
+        misconception: MC-maxwell-pole-is-a-source
+      - text: 'שהשדה המגנטי לא משתנה בזמן.'
+        feedback: 'החוק נכון גם כשהשדה משתנה. קצב השינוי של שדה מגנטי מופיע בחוק אחר: חוק פאראדיי.'
+
+  - id: Q-5.9-gauss-sum
+    type: numeric
+    objectives: [OBJ-5.9-1, OBJ-5.9-2]
+    level: mid
+    prompt: >-
+      בתוך כדור דמיוני נמצאים מטען של $+6\,\text{nC}$ ומטען של $-1\,\text{nC}$. מחוץ לכדור, קרוב אליו, נמצא מטען של $+3\,\text{nC}$. מה השטף החשמלי דרך הכדור? ענו ב-$\text{N}\cdot\text{m}^2/\text{C}$, עם $\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$.
+    answer: 565
+    unit: N·m²/C
+    tolerance: 0.03
+    correctFeedback: 'נכון. $Q_{\text{in}} = +6 - 1 = +5\,\text{nC}$, והשטף $\dfrac{5\cdot10^{-9}}{8.85\cdot10^{-12}} \approx 565\,\text{N}\cdot\text{m}^2/\text{C}$. המטען שבחוץ משנה את השדה על הכדור, אבל לא את השטף נטו.'
+    wrongFeedback: 'צד ימין של חוק גאוס הוא המטען שבתוך המשטח בלבד, עם הסימנים, חלקי $\varepsilon_0$.'
+    commonWrong:
+      - value: 904
+        feedback: 'הוספתם את המטען שבחוץ, $+3\,\text{nC}$. הוא לא נספר: כמה שהשדה שלו נכנס לכדור, כך הוא יוצא.'
+        misconception: MC-gauss-outside-charge-counts
+      - value: 791
+        feedback: 'חיברתם $6 + 1$ בלי הסימנים. המטען השלילי מקטין את המטען הכלוא: $6 - 1 = 5\,\text{nC}$.'
+      - value: 45
+        feedback: 'חישבתם $kQ_{\text{in}}$. השטף הוא $Q_{\text{in}}/\varepsilon_0 = 4\pi k Q_{\text{in}}$, גדול פי $4\pi$.'
+        misconception: MC-gauss-flux-equals-kq
+
+  - id: Q-5.9-always-zero
+    type: multi
+    objectives: [OBJ-5.9-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סמנו את כל הגדלים שהם **תמיד** אפס, לפי משוואות מקסוול.
+    choices:
+      - text: 'השטף המגנטי דרך משטח סגור כלשהו.'
+        correct: true
+        feedback: 'נכון: חוק גאוס למגנטיות.'
+      - text: 'השטף החשמלי דרך משטח סגור שאין בתוכו מטען נטו.'
+        correct: true
+        feedback: 'נכון: לפי חוק גאוס, השטף הוא $Q_{\text{in}}/\varepsilon_0$, ו-$Q_{\text{in}} = 0$.'
+      - text: '$\oint \vec E\cdot d\vec l$ סביב מסלול שהשטף המגנטי דרכו לא משתנה.'
+        correct: true
+        feedback: 'נכון: לפי חוק פאראדיי, צד ימין הוא מינוס קצב השינוי של השטף, ואם השטף לא משתנה, הוא אפס.'
+      - text: '$\oint \vec B\cdot d\vec l$ סביב מסלול שאין דרכו שום זרם של מטענים.'
+        feedback: 'לא תמיד. אם דרך המשטח על המסלול עובר שטף חשמלי שמשתנה, כמו בין לוחות קבל שנטען, הסכום שונה מאפס. זו התוספת של מקסוול.'
+        misconception: MC-no-field-between-plates
+      - text: 'השטף החשמלי דרך משטח סגור סביב כדור מוליך טעון.'
+        feedback: 'המטען של הכדור בתוך המשטח, ולכן השטף הוא $Q/\varepsilon_0$, לא אפס. המטען יושב על פני הכדור, אבל עדיין בתוך משטח שמקיף אותו.'
+
+  # ------------------------------------------------ OBJ-5.9-2: which law, and computing with it
+  - id: Q-5.9-law-ring
+    type: mc
+    objectives: [OBJ-5.9-2]
+    qualitative: true
+    prompt: >-
+      מפילים מגנט דרך טבעת נחושת, ובזמן שהוא עובר דרכה זורם בטבעת זרם. איזה מארבעת החוקים של מקסוול מסביר את הזרם?
+    choices:
+      - text: 'חוק פאראדיי: השטף המגנטי דרך הטבעת משתנה, ונוצר סביבה שדה חשמלי שדוחף את המטענים.'
+        correct: true
+        feedback: 'נכון. שטף מגנטי שמשתנה, ולא שדה מגנטי חזק כשלעצמו, הוא מה שיוצר את הכא״מ.'
+      - text: 'חוק גאוס למגנטיות: המגנט מכניס שטף מגנטי לתוך הטבעת.'
+        feedback: 'חוק גאוס למגנטיות מדבר על משטח סגור, ואומר שהשטף דרכו תמיד אפס. הוא לא מסביר שום זרם.'
+      - text: 'חוק אמפר-מקסוול: הזרם בטבעת יוצר שדה מגנטי.'
+        feedback: 'זה נכון, אבל זה מה שהזרם עושה אחרי שהוא קיים. השאלה היא מה **יוצר** את הזרם.'
+      - text: 'חוק גאוס: המגנט טעון, ומושך את האלקטרונים בטבעת.'
+        feedback: 'מגנט אינו טעון חשמלית. אם הוא לא זז, אין בטבעת זרם, כמה שהוא יהיה קרוב.'
+
+  - id: Q-5.9-law-broken-magnet
+    type: twotier
+    objectives: [OBJ-5.9-2]
+    qualitative: true
+    prompt: >-
+      חוצים מגנט מוט לשניים, כדי לקבל קוטב צפוני לבד וקוטב דרומי לבד. מה מקבלים?
+    choices:
+      - text: 'שני מגנטים קטנים, לכל אחד קוטב צפוני וקוטב דרומי.'
+        correct: true
+        feedback: 'נכון.'
+      - text: 'חתיכה אחת שהיא קוטב צפוני בלבד, וחתיכה שהיא קוטב דרומי בלבד.'
+        feedback: 'כך היה קורה אילו לקוטב היה "מטען מגנטי". מעולם לא נמצא קוטב בודד: בחתך נוצרים שני קטבים חדשים.'
+        misconception: MC-maxwell-pole-is-a-source
+      - text: 'שתי חתיכות ברזל רגילות, בלי מגנטיות בכלל.'
+        feedback: 'החתיכות נשארות ממוגנטות. החיתוך לא מבטל את המגנטיות, הוא רק מוסיף קטבים בחתך.'
+    reasonPrompt: איזה חוק מסביר את זה?
+    reasons:
+      - text: 'חוק גאוס למגנטיות: קווי השדה המגנטי סגורים, ואין נקודה שהם מתחילים בה.'
+        correct: true
+        feedback: 'נכון. קו שיוצא מהקוטב הצפוני ממשיך בתוך המגנט אל הדרומי. בכל חתיכה הקווים עדיין סגורים, ולכן לכל חתיכה שני קטבים.'
+      - text: 'חוק גאוס: לכל חתיכה יש מטען כלוא, ולכן יש לה שטף.'
+        feedback: 'חוק גאוס עוסק בשדה החשמלי ובמטען חשמלי. למגנט אין מטען חשמלי נטו.'
+      - text: 'חוק פאראדיי: החיתוך משנה את השטף, ולכן נוצרים קטבים חדשים.'
+        feedback: 'חוק פאראדיי עוסק בשדה חשמלי שנוצר משטף שמשתנה. הקטבים החדשים לא קשורים לשינוי בזמן: הם שם גם אחרי שהכול נרגע.'
+
+  - id: Q-5.9-faraday-big-loop
+    type: numeric
+    objectives: [OBJ-5.9-2]
+    level: mid
+    prompt: >-
+      בליבה של סליל ארוך, ברדיוס $5\,\text{cm}$, השדה המגנטי אחיד ומשתנה בקצב של $0.4\,\text{T/s}$. מחוץ לליבה אין שדה מגנטי. סביב הליבה, עם אותו מרכז, יש טבעת דקה ברדיוס $20\,\text{cm}$. מה גודל הכא״מ המושרה בטבעת, $|\oint \vec E\cdot d\vec l|$? ענו במילי-וולט (mV).
+    answer: 3.14
+    unit: mV
+    tolerance: 0.03
+    correctFeedback: 'נכון. השטף נספר רק בליבה, $\pi\cdot0.05^2\,\text{m}^2$, ולכן $|\oint \vec E\cdot d\vec l| = \pi\cdot0.05^2\cdot0.4 \approx 3.14\cdot10^{-3}\,\text{V}$. רדיוס הטבעת לא משנה, כל עוד היא מקיפה את כל הליבה.'
+    wrongFeedback: 'לפי חוק פאראדיי, הכא״מ הוא קצב השינוי של השטף דרך הטבעת. איפה יש שדה מגנטי?'
+    commonWrong:
+      - value: 50.3
+        feedback: 'כפלתם בשטח של כל הטבעת, $\pi\cdot0.2^2$. אבל שדה מגנטי יש רק בליבה, ולכן השטף הוא השדה כפול שטח הליבה.'
+        misconception: MC-maxwell-flux-through-empty-area
+      - value: 0
+        feedback: 'על הטבעת אין שדה מגנטי, אבל יש שדה חשמלי מושרה, והשטף דרכה (כולו בליבה) משתנה. הכא״מ אינו אפס.'
+        misconception: MC-maxwell-no-induced-field-outside
+
+  - id: Q-5.9-b-flux-faces
+    type: numeric
+    objectives: [OBJ-5.9-2]
+    level: mid
+    prompt: >-
+      משטח סגור בצורת גליל מקיף את הקוטב הצפוני של מגנט, כך שהמגנט נכנס אליו מלמטה. דרך המכסה העליון יוצא שטף מגנטי של $3\cdot10^{-4}\,\text{Wb}$, ודרך הדופן הצדדית יוצא עוד $1\cdot10^{-4}\,\text{Wb}$. כמה שטף מגנטי **נכנס** דרך המכסה התחתון, שהמגנט חוצה? ענו ב-$10^{-4}\,\text{Wb}$.
+    answer: 4
+    unit: 10⁻⁴ Wb
+    tolerance: 0.03
+    correctFeedback: 'נכון. השטף נטו דרך המשטח הסגור הוא אפס, ולכן כל מה שיוצא, $3 + 1 = 4\cdot10^{-4}\,\text{Wb}$, נכנס דרך המכסה התחתון, מתוך המגנט.'
+    wrongFeedback: 'לפי חוק גאוס למגנטיות, השטף נטו דרך משטח סגור הוא אפס: מה שיוצא שווה למה שנכנס.'
+    commonWrong:
+      - value: 0
+        feedback: 'מהקוטב הצפוני הקווים יוצאים, אבל הם מגיעים אליו מבפנים, דרך המגנט. דרך המכסה התחתון נכנס כל השטף שיוצא מהשאר.'
+        misconception: MC-maxwell-pole-is-a-source
+      - value: 2
+        feedback: 'החסרתם $3 - 1$. גם השטף דרך הדופן **יוצא**, ולכן מחברים: $3 + 1$.'
+      - value: 3
+        feedback: 'שכחתם את השטף שיוצא דרך הדופן הצדדית.'
+
+  # ------------------------------------------------ OBJ-5.9-3: Maxwell's addition, the displacement current
+  - id: Q-5.9-gap-field
+    type: twotier
+    objectives: [OBJ-5.9-3]
+    qualitative: true
+    prompt: >-
+      קבל נטען, וזרם זורם בתיל שמוביל אליו. האם יש שדה מגנטי ברווח שבין הלוחות, ליד השפה שלהם?
+    choices:
+      - text: 'כן: שדה שמקיף את הציר, כמו סביב התיל.'
+        correct: true
+        feedback: 'נכון.'
+      - text: 'לא: בין הלוחות אין זרם, ולכן אין שדה מגנטי.'
+        feedback: 'כך היה לפי חוק אמפר של שיעור 4.4. התוספת של מקסוול אומרת שגם שדה חשמלי שמשתנה יוצר שדה מגנטי, והשדה הזה נמדד בניסויים.'
+        misconception: MC-no-field-between-plates
+      - text: 'רק אם יש בקבל דליפה של מטען בין הלוחות.'
+        feedback: 'גם בקבל אידאלי, שבו שום מטען לא עובר את הרווח, יש שם שדה מגנטי בזמן הטעינה.'
+        misconception: MC-displacement-is-charge-flow
+    reasonPrompt: מה יוצר אותו?
+    reasons:
+      - text: 'השדה החשמלי בין הלוחות גדל, ושדה חשמלי שמשתנה יוצר סביבו שדה מגנטי (התוספת של מקסוול).'
+        correct: true
+        feedback: 'נכון. זרם ההעתקה $\varepsilon_0\,d\Phi_E/dt$ בין הלוחות שווה לזרם בתיל, והוא יוצר את אותו שדה.'
+      - text: 'אלקטרונים קופצים דרך הרווח מלוח ללוח, וזה זרם ההעתקה.'
+        feedback: 'שום מטען לא עובר את הרווח: אילו עבר, הקבל היה מתפרק. זרם ההעתקה הוא שדה חשמלי שמשתנה, לא תנועה של מטענים.'
+        misconception: MC-displacement-is-charge-flow
+      - text: 'השדה של התיל ממשיך לתוך הרווח, כמו שהשדה של מגנט ממשיך מחוצה לו.'
+        feedback: 'זה לא ההסבר. לפי חוק אמפר של שיעור 4.4, מסלול בין הלוחות לא מקיף שום זרם, ולכן הסכום סביבו היה אפס, ושדה שמקיף את הציר לא היה יכול להתקיים שם. את השדה שבין הלוחות יוצר השדה החשמלי שגדל: זרם ההעתקה שעובר דרך המסלול.'
+
+  - id: Q-5.9-displacement-equals
+    type: numeric
+    objectives: [OBJ-5.9-3]
+    prompt: >-
+      קבל נטען בזרם של $0.8\,\text{A}$. מה זרם ההעתקה, $\varepsilon_0\,\Delta\Phi_E/\Delta t$, דרך משטח שחוצה את כל הרווח שבין הלוחות? ענו באמפר.
+    answer: 0.8
+    unit: A
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\Phi_E = q/\varepsilon_0$, ולכן $\varepsilon_0\,\Delta\Phi_E/\Delta t = \Delta q/\Delta t = 0.8\,\text{A}$: בדיוק הזרם בתיל.'
+    wrongFeedback: 'השטף בין הלוחות הוא $q/\varepsilon_0$. כפלו את קצב השינוי שלו ב-$\varepsilon_0$, ותקבלו את קצב השינוי של המטען על הלוח.'
+    commonWrong:
+      - value: 0
+        feedback: 'שום מטען לא עובר את הרווח, אבל זרם ההעתקה אינו זרימה של מטענים. השדה בין הלוחות גדל, וזרם ההעתקה שווה לזרם בתיל.'
+        misconception: MC-displacement-is-charge-flow
+      - value: 0.4
+        feedback: 'זרם ההעתקה לא מתחלק בין הלוחות. כל הזרם שמגיע ללוח ממשיך בין הלוחות כזרם העתקה.'
+
+  - id: Q-5.9-full-capacitor
+    type: mc
+    objectives: [OBJ-5.9-3]
+    qualitative: true
+    prompt: >-
+      קבל מחובר לסוללה כבר זמן רב, והוא מלא: השדה החשמלי בין הלוחות חזק וקבוע. מה השדה המגנטי בין הלוחות?
+    choices:
+      - text: 'אפס: השדה החשמלי לא משתנה, ולכן אין זרם העתקה.'
+        correct: true
+        feedback: 'נכון. שדה מגנטי נוצר מ**שינוי** של השדה החשמלי. גם בתיל הזרם נעצר, ולכן גם סביבו אין שדה מגנטי.'
+      - text: 'הכי חזק שהיה: השדה החשמלי עכשיו הכי חזק.'
+        feedback: 'זרם ההעתקה תלוי בקצב השינוי של השטף, לא בגודל השדה. כשהקבל מלא השדה כבר לא משתנה, וזרם ההעתקה אפס.'
+        misconception: MC-displacement-follows-field
+      - text: 'כמו בזמן הטעינה, כי הלוחות עדיין טעונים.'
+        feedback: 'מטענים שעומדים במקום לא יוצרים שדה מגנטי. השדה המגנטי היה קיים רק כל עוד השדה החשמלי השתנה.'
+      - text: 'אי אפשר לדעת בלי לדעת את המתח של הסוללה.'
+        feedback: 'המתח קובע כמה חזק השדה החשמלי, אבל השדה המגנטי תלוי רק בקצב השינוי שלו, וזה אפס בכל מתח.'
+        misconception: MC-displacement-follows-field
+
+  - id: Q-5.9-field-rate
+    type: numeric
+    objectives: [OBJ-5.9-3]
+    level: bagrut
+    prompt: >-
+      לוחות של קבל הם ריבועים בצלע $10\,\text{cm}$. ברגע מסוים הקבל נטען בזרם של $1.77\,\text{A}$. הניחו שהשדה בין הלוחות אחיד, $E = q/(\varepsilon_0 A)$. באיזה קצב גדל השדה החשמלי בין הלוחות? ענו ב-$\text{V}/(\text{m}\cdot\text{s})$, עם $\varepsilon_0 = 8.85\cdot10^{-12}$.
+    answer: 2e13
+    unit: V/(m·s)
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\dfrac{\Delta E}{\Delta t} = \dfrac{1}{\varepsilon_0 A}\,\dfrac{\Delta q}{\Delta t} = \dfrac{I}{\varepsilon_0 A} = \dfrac{1.77}{8.85\cdot10^{-12}\cdot0.01} = 2\cdot10^{13}\,\text{V}/(\text{m}\cdot\text{s})$.'
+    wrongFeedback: 'השדה הוא $q/(\varepsilon_0 A)$, ו-$A$ ו-$\varepsilon_0$ קבועים. לכן הוא גדל בקצב $\dfrac{1}{\varepsilon_0 A}$ כפול הקצב שבו גדל המטען, הזרם.'
+    commonWrong:
+      - value: 177
+        feedback: 'חילקתם את הזרם בשטח ושכחתם את $\varepsilon_0$: $I/A$ היא צפיפות הזרם, לא קצב השינוי של השדה.'
+      - value: 2e9
+        feedback: 'הצבתם את השטח בסנטימטרים רבועים, $100$, במקום $0.01\,\text{m}^2$.'
+      - value: 2e11
+        feedback: 'הצבתם $A = 1\,\text{m}^2$. השטח של ריבוע בצלע $0.1\,\text{m}$ הוא $0.01\,\text{m}^2$.'
+
+  # ------------------------------------------------ OBJ-5.9-4: the wave, c, the spectrum
+  - id: Q-5.9-what-travels
+    type: mc
+    objectives: [OBJ-5.9-4]
+    qualitative: true
+    prompt: >-
+      אור השמש מגיע אלינו דרך 150 מיליון קילומטרים של כמעט-ריק. מה מתקדם בדרך?
+    choices:
+      - text: 'שדה חשמלי ושדה מגנטי שמשתנים ויוצרים זה את זה, בלי שום חומר.'
+        correct: true
+        feedback: 'נכון. שדה מגנטי שמשתנה יוצר שדה חשמלי (פאראדיי), ושדה חשמלי שמשתנה יוצר שדה מגנטי (התוספת של מקסוול). בריק אין צורך בשום דבר אחר.'
+      - text: 'תנודות של גז דליל מאוד שממלא את החלל, כמו קול באוויר.'
+        feedback: 'גל אלקטרומגנטי לא צריך חומר שיתנודד בו. מה שמתנודד הוא השדות עצמם, וזה אפשרי בריק מוחלט.'
+        misconception: MC-em-wave-needs-medium
+      - text: 'מטענים חשמליים שעפים מהשמש אלינו.'
+        feedback: 'בגל אלקטרומגנטי שום מטען לא נוסע. מטענים בשמש יוצרים את הגל, אבל מה שמתקדם הוא שדות.'
+      - text: 'אי אפשר להסביר אור בחשמל ובמגנטיות: אור הוא תופעה מסוג אחר.'
+        feedback: 'מקסוול מצא שהגל של השדות נע במהירות האור, והרץ יצר גלים כאלה ממעגל חשמלי. אור הוא גל אלקטרומגנטי.'
+        misconception: MC-maxwell-light-unlike-radio
+
+  - id: Q-5.9-same-speed
+    type: twotier
+    objectives: [OBJ-5.9-4]
+    qualitative: true
+    prompt: >-
+      גל רדיו בתדירות $10^{8}\,\text{Hz}$ וקרן רנטגן בתדירות $10^{18}\,\text{Hz}$ יוצאים יחד מנקודה אחת בריק. מי מגיע ראשון למרחק של קילומטר?
+    choices:
+      - text: 'מגיעים יחד.'
+        correct: true
+        feedback: 'נכון.'
+      - text: 'קרן הרנטגן, כי התדירות שלה גבוהה יותר.'
+        feedback: 'תדירות גבוהה פירושה אורך גל קצר, לא מהירות גדולה. בריק כל הגלים האלקטרומגנטיים נעים באותה מהירות.'
+        misconception: MC-maxwell-speed-depends-on-frequency
+      - text: 'גל הרדיו, כי אורך הגל שלו ארוך יותר.'
+        feedback: 'גל ארוך לא מתקדם מהר יותר. $c = \lambda f$: כשאורך הגל ארוך יותר, התדירות קטנה יותר, והמכפלה זהה.'
+        misconception: MC-maxwell-speed-depends-on-frequency
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'המהירות בריק היא $c = 1/\sqrt{\mu_0\varepsilon_0}$, ובה אין שום תלות בתדירות.'
+        correct: true
+        feedback: 'נכון. המהירות נקבעת על ידי שני הקבועים בלבד. התדירות קובעת רק את אורך הגל, $\lambda = c/f$.'
+      - text: 'גל רנטגן נושא יותר אנרגיה, ולכן הוא מהיר יותר.'
+        feedback: 'אנרגיה ומהירות הן שני דברים שונים. כל הגלים האלקטרומגנטיים נעים בריק באותה מהירות.'
+        misconception: MC-maxwell-speed-depends-on-frequency
+      - text: 'רדיו ורנטגן הם תופעות שונות, ולכן אין סיבה שתהיה להם אותה מהירות.'
+        feedback: 'הם אותה תופעה: גל אלקטרומגנטי בתדירויות שונות. לכן יש להם אותה מהירות בריק.'
+        misconception: MC-maxwell-light-unlike-radio
+
+  - id: Q-5.9-c-from-constants
+    type: numeric
+    objectives: [OBJ-5.9-4]
+    level: mid
+    prompt: >-
+      חשבו את $\dfrac{1}{\sqrt{\mu_0\varepsilon_0}}$ מתוך הערכים שבדף הנוסחאות: $\mu_0 = 4\pi\cdot10^{-7}\,\text{T}\cdot\text{m/A}$ ו-$\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$. ענו ב-$\text{m/s}$.
+    answer: 3e8
+    unit: m/s
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\mu_0\varepsilon_0 \approx 1.112\cdot10^{-17}\,\text{s}^2/\text{m}^2$, והשורש ההפוך הוא $3.00\cdot10^{8}\,\text{m/s}$: מהירות האור.'
+    wrongFeedback: 'כפלו קודם את שני הקבועים, הוציאו שורש, ואז חלקו את $1$ בתוצאה.'
+    commonWrong:
+      - value: 9e16
+        feedback: 'שכחתם את השורש: $1/(\mu_0\varepsilon_0) \approx 9\cdot10^{16}$ הוא $c^2$.'
+      - value: 3.33e-9
+        feedback: 'זה $\sqrt{\mu_0\varepsilon_0}$, בלי החלוקה. חלקו את $1$ בתוצאה.'
+
+  - id: Q-5.9-fm-wavelength
+    type: numeric
+    objectives: [OBJ-5.9-4]
+    prompt: >-
+      תחנת רדיו משדרת בתדירות $100\,\text{MHz}$. מה אורך הגל שלה? ענו במטרים.
+    answer: 3
+    unit: m
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\lambda = \dfrac{c}{f} = \dfrac{3\cdot10^{8}}{10^{8}} = 3\,\text{m}$.'
+    wrongFeedback: 'מ-$c = \lambda f$: $\lambda = c/f$, עם $f$ בהרץ. $1\,\text{MHz} = 10^{6}\,\text{Hz}$.'
+    commonWrong:
+      - value: 0.333
+        feedback: 'חילקתם הפוך, $f/c$. אורך הגל הוא $c/f$.'
+      - value: 3e6
+        feedback: 'הצבתם $f = 100$ בלי הקידומת. $100\,\text{MHz} = 10^{8}\,\text{Hz}$.'
+      - value: 3000
+        feedback: 'הצבתם $100\,\text{kHz}$. מגה-הרץ הוא $10^{6}\,\text{Hz}$, ו-$100\,\text{MHz} = 10^{8}\,\text{Hz}$.'
+
+  - id: Q-5.9-rank-wavelength
+    type: rank
+    objectives: [OBJ-5.9-4]
+    level: mid
+    prompt: >-
+      דרגו את הגלים לפי אורך הגל שלהם בריק, מהארוך ביותר לקצר ביותר.
+    items:
+      - id: grid
+        label: 'השדה של רשת החשמל, $50\,\text{Hz}$'
+      - id: fm
+        label: 'רדיו FM, $100\,\text{MHz}$'
+      - id: oven
+        label: 'תנור מיקרוגל, $2.45\,\text{GHz}$'
+      - id: green
+        label: 'אור ירוק, $5.6\cdot10^{14}\,\text{Hz}$'
+      - id: xray
+        label: 'קרני רנטגן, $3\cdot10^{18}\,\text{Hz}$'
+    order: [grid, fm, oven, green, xray]
+    correctFeedback: 'נכון. $\lambda = c/f$: ככל שהתדירות גבוהה יותר, אורך הגל קצר יותר. מ-$6000\,\text{km}$ ברשת החשמל, דרך $3\,\text{m}$, $12\,\text{cm}$ ו-$536\,\text{nm}$, ועד $10^{-10}\,\text{m}$ ברנטגן.'
+    wrongFeedback: 'כל הגלים נעים באותה מהירות, ולכן $\lambda = c/f$: אורך הגל הפוך לתדירות. סדרו לפי התדירות, מהנמוכה לגבוהה.'

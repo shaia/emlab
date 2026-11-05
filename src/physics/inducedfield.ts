@@ -1,6 +1,6 @@
 /**
  * The induced electric field of a long solenoid's core, measured round circular loops anywhere in the
- * plane, and a charged bead that the field pushes along such a loop. Built for lesson 5.6 (figure
+ * plane, and a charged bead that the field pushes along such a loop. Built for lesson 5.7 (figure
  * InducedField).
  *
  * MODEL SPECIFICATION

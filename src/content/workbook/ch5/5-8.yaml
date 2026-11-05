@@ -1,478 +1,468 @@
-# Workbook, lesson 5.8 (Maxwell's equations as the bridge to "radiation and matter"). Format and rules: see
-# .claude/CLAUDE.md, "Worked examples, workbook". Every number was recomputed in this session with
-# src/physics/maxwellfour.ts, induction.ts (inducedCircleEmf, inducedFieldStrength), magnetism.ts
-# (straightWireField) and constants.ts (MU0; EPS0_DISPLAY = 8.85·10⁻¹², the sheet's ε₀). In a >- block,
-# consecutive lines fold into one paragraph: every part (א, ב, …) starts after a blank line.
+# Workbook, lesson 5.8 (the generator and alternating current). Format and rules: see .claude/CLAUDE.md,
+# "Worked examples, workbook". Every number was recomputed with src/physics/induction.ts (generatorPeak,
+# generatorEmf, generatorFlux, rms, acMeanPower) and src/physics/generator.ts (angularSpeed, periodOf,
+# peakOfRms, drivePower, dragTorque, cycleMean); scripts rc57w.ts and rc57c.ts in the session scratchpad.
+# In a >- block, consecutive lines fold into one paragraph: every part (א, ב, …) starts after a blank line.
 
 lesson: '5.8'
 practice:
   - id: W-5.8-01
     level: basic
-    qualitative: true
-    objectives: [OBJ-5.8-1]
-    prompt: >-
-      לכל אחד מארבעת החוקים של מקסוול ענו:
-
-      א. האם החוק מדבר על משטח סגור או על מסלול סגור?
-
-      ב. מה נמדד בצד שמאל, ומה מופיע בצד ימין?
-
-      ג. באיזה שיעור פגשנו אותו לראשונה?
-    answer: >-
-      חוק גאוס: משטח סגור; שטף חשמלי, ומטען כלוא חלקי $\varepsilon_0$; שיעור 1.7.
-
-      חוק גאוס למגנטיות: משטח סגור; שטף מגנטי, ואפס; שיעור 5.1.
-
-      חוק פאראדיי: מסלול סגור; סכום של $\vec E$ סביב המסלול, ומינוס קצב השינוי של השטף המגנטי; שיעורים 5.2 ו-5.6.
-
-      חוק אמפר-מקסוול: מסלול סגור; סכום של $\vec B$ סביב המסלול, ו-$\mu_0$ כפול הזרם הכלוא ועוד $\mu_0\varepsilon_0$ כפול קצב השינוי של השטף החשמלי; שיעור 4.4, והתוספת בשיעור 5.8.
-    solution:
-      - kind: reasoning
-        text: >-
-          חוק שבצד שמאל שלו $\oint_S \ldots\cdot d\vec A$ מדבר על משטח סגור: אלה שני חוקי גאוס. חוק שבצד שמאל שלו $\oint_C \ldots\cdot d\vec l$ מדבר על מסלול סגור: פאראדיי ואמפר-מקסוול.
-      - kind: reasoning
-        text: >-
-          בחוקי גאוס צד ימין הוא מה שנמצא **בתוך** המשטח: מטען (בשדה חשמלי) או כלום (בשדה מגנטי, כי אין קוטב בודד). בחוקי המסלול צד ימין הוא מה שעובר **דרך** משטח שהמסלול הוא השפה שלו: שטף מגנטי שמשתנה (פאראדיי), או זרם ושטף חשמלי שמשתנה (אמפר-מקסוול).
-      - kind: result
-        text: >-
-          שני חוקי גאוס: משטח סגור, שטף בצד שמאל, מטען כלוא חלקי $\varepsilon_0$ או אפס בצד ימין (שיעורים 1.7 ו-5.1). פאראדיי ואמפר-מקסוול: מסלול סגור, סכום סביב המסלול בצד שמאל, ובצד ימין $-d\Phi_B/dt$ או $\mu_0 I_{\text{in}} + \mu_0\varepsilon_0\,d\Phi_E/dt$ (שיעורים 5.2, 5.6 ו-4.4).
-
-  - id: W-5.8-02
-    level: basic
     qualitative: false
-    objectives: [OBJ-5.8-1, OBJ-5.8-2]
+    objectives: [OBJ-5.8-2]
     prompt: >-
-      בתוך קובייה דמיונית יש שלושה מטענים: $+2\,\text{nC}$, $+3\,\text{nC}$ ו-$-8\,\text{nC}$. ליד הקובייה, מחוצה לה, מונח מגנט חזק.
+      בגנרטור יש סליל של $150$ כריכות ששטחו $2\cdot10^{-3}\,\text{m}^2$, בשדה מגנטי אחיד של $0.2\,\text{T}$. ערך השיא של הכא"מ שהוא יוצר $6\,\text{V}$.
 
-      א. מה השטף החשמלי דרך הקובייה?
+      א. מה המהירות הזוויתית של הסליל?
 
-      ב. מה השטף המגנטי דרך הקובייה?
-
-      ג. מזיזים את המגנט כך שחציו בתוך הקובייה. מה השתנה בתשובות?
+      ב. כמה סיבובים בשנייה הוא משלים, ומה זמן המחזור?
     answer: >-
-      א. כ-$-339\,\text{N}\cdot\text{m}^2/\text{C}$ (השטף נכנס).
+      א. $\omega = 100\,\text{rad/s}$.
 
-      ב. אפס.
-
-      ג. שום דבר: השטף החשמלי עדיין $-339\,\text{N}\cdot\text{m}^2/\text{C}$, והמגנטי עדיין אפס.
+      ב. $f \approx 15.9\,\text{Hz}$, $T \approx 0.063\,\text{s}$.
     solution:
       - kind: given
         text: >-
-          בתוך הקובייה: $+2$, $+3$ ו-$-8\,\text{nC}$. $\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$.
+          $N = 150$, $A = 2\cdot10^{-3}\,\text{m}^2$, $B = 0.2\,\text{T}$, $\varepsilon_0 = 6\,\text{V}$.
       - kind: formula
         text: >-
-          $\oint \vec E\cdot d\vec A = \dfrac{Q_{\text{in}}}{\varepsilon_0}$ ו-$\oint \vec B\cdot d\vec A = 0$.
+          $\varepsilon_0 = NBA\omega$, $\omega = 2\pi f$, $T = \dfrac{1}{f}$.
+      - kind: manipulation
+        text: >-
+          א. מחלקים את שני האגפים ב-$NBA$ כדי לבודד את $\omega$: $\omega = \dfrac{\varepsilon_0}{NBA}$.
+
+          ב. $f = \dfrac{\omega}{2\pi}$.
       - kind: substitution
         text: >-
-          א. $Q_{\text{in}} = 2 + 3 - 8 = -3\,\text{nC}$, ולכן $\Phi_E = \dfrac{-3\cdot10^{-9}}{8.85\cdot10^{-12}} \approx -339\,\text{N}\cdot\text{m}^2/\text{C}$. הסימן מינוס אומר שנטו השדה נכנס לקובייה.
-      - kind: reasoning
-        text: >-
-          ב. השטף המגנטי דרך כל משטח סגור הוא אפס, גם כשמגנט חזק נמצא לידו.
+          א. $\omega = \dfrac{6}{150\cdot0.2\cdot2\cdot10^{-3}} = \dfrac{6}{0.06} = 100\,\text{rad/s}$.
 
-          ג. מגנט אינו טעון, ולכן הוא לא משנה את המטען הכלוא. וגם כשחציו בפנים, קווי השדה שלו שיוצאים מהקובייה נכנסים אליה במקום אחר: השטף המגנטי נשאר אפס.
+          ב. $f = \dfrac{100}{2\pi} \approx 15.9\,\text{Hz}$, $T = \dfrac{1}{15.9} \approx 0.063\,\text{s}$ (או $T = 2\pi/\omega$).
       - kind: result
         text: >-
-          א. כ-$-339\,\text{N}\cdot\text{m}^2/\text{C}$. ב. אפס. ג. שתי התשובות לא משתנות.
+          א. $100\,\text{rad/s}$. ב. כ-$15.9$ סיבובים בשנייה, $T \approx 0.063\,\text{s}$.
+
+  - id: W-5.8-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-5.8-1]
+    prompt: >-
+      סליל של גנרטור מסתובב במהירות קבועה, זמן המחזור $0.2\,\text{s}$. ברגע $t = 0$ מישור הסליל **לאורך** קווי השדה.
+
+      א. מה השטף דרך הסליל ב-$t = 0$, ומה הכא"מ ברגע הזה (אפס, או הכי גדול)?
+
+      ב. באילו רגעים בין $t = 0$ ל-$t = 0.2\,\text{s}$ הכא"מ אפס? מה מצב הסליל ברגעים האלה?
+
+      ג. תלמידה כתבה: "ב-$t = 0$ אין שטף, ולכן הנורה כבויה." קבעו ונמקו אם היא צודקת.
+    answer: >-
+      א. השטף אפס, והכא"מ הכי גדול.
+
+      ב. ב-$t = 0.05\,\text{s}$ וב-$t = 0.15\,\text{s}$, כשמישור הסליל ניצב לשדה והשטף בשיא.
+
+      ג. לא: ב-$t = 0$ הנורה מאירה הכי חזק.
+    solution:
+      - kind: reasoning
+        text: >-
+          א. כאן ב-$t = 0$ הזווית בין האנך לשדה $90^\circ$, ולא אפס, ולכן הנוסחאות $\Phi = BA\cos\omega t$ ו-$\varepsilon = \varepsilon_0\sin\omega t$ לא חלות כמו שהן: הגרפים מוזזים ברבע מחזור (כאן הכא"מ מתנהג כמו $\cos$). נעבוד עם השיפוע. כשמישור הסליל לאורך השדה, האנך ניצב לשדה, $\cos90^\circ = 0$: אף קו שדה לא עובר דרכו, $\Phi = 0$. אבל ברגע הזה השטף עובר דרך האפס ומשתנה הכי מהר (הגרף שלו הכי תלול), ולכן הכא"מ הכי גדול.
+      - kind: reasoning
+        text: >-
+          ב. הכא"מ אפס כשגרף השטף שטוח, כלומר כשהשטף בשיא או בשפל: מישור הסליל ניצב לשדה. זה קורה רבע סיבוב אחרי $t = 0$, ושוב אחרי חצי סיבוב נוסף: $t = T/4 = 0.05\,\text{s}$ ו-$t = 3T/4 = 0.15\,\text{s}$.
+      - kind: reasoning
+        text: >-
+          ג. היא בלבלה בין השטף לבין קצב השינוי שלו. ההספק בנורה $\varepsilon^2/R$, והכא"מ ב-$t = 0$ בשיא.
+      - kind: result
+        text: >-
+          א. $\Phi = 0$, הכא"מ בשיא. ב. $0.05\,\text{s}$ ו-$0.15\,\text{s}$, המישור ניצב לשדה. ג. היא טועה: הנורה מאירה הכי חזק.
 
   - id: W-5.8-03
     level: basic
     qualitative: false
     objectives: [OBJ-5.8-4]
     prompt: >-
-      השתמשו ב-$c = 3\cdot10^{8}\,\text{m/s}$.
+      על נורה כתוב $12\,\text{V}$, $24\,\text{W}$. מחברים אותה למקור של מתח חילופין, שהערך האפקטיבי שלו $12\,\text{V}$, והיא מאירה כמתוכנן.
 
-      א. תחנת רדיו AM משדרת בתדירות $1\,\text{MHz}$. מה אורך הגל שלה?
+      א. מה ההתנגדות של הנורה, ומה הזרם האפקטיבי בה?
 
-      ב. רשת Wi-Fi עובדת בתדירות $5\,\text{GHz}$. מה אורך הגל?
+      ב. מה ערכי השיא של המתח ושל הזרם?
 
-      ג. לאור כתום יש אורך גל של $600\,\text{nm}$. מה התדירות שלו?
+      ג. מה ההספק ברגעים שבהם המתח בשיא?
     answer: >-
-      א. $300\,\text{m}$.
+      א. $R = 6\,\Omega$, $I_{\text{eff}} = 2\,\text{A}$.
 
-      ב. $6\,\text{cm}$.
+      ב. $V_0 \approx 17\,\text{V}$, $I_0 \approx 2.83\,\text{A}$.
 
-      ג. $5\cdot10^{14}\,\text{Hz}$.
-    solution:
-      - kind: formula
-        text: >-
-          $c = \lambda f$, ולכן $\lambda = c/f$ ו-$f = c/\lambda$.
-      - kind: substitution
-        text: >-
-          א. $\lambda = \dfrac{3\cdot10^{8}}{10^{6}} = 300\,\text{m}$.
-
-          ב. $\lambda = \dfrac{3\cdot10^{8}}{5\cdot10^{9}} = 0.06\,\text{m} = 6\,\text{cm}$.
-
-          ג. $f = \dfrac{3\cdot10^{8}}{6\cdot10^{-7}} = 5\cdot10^{14}\,\text{Hz}$.
-      - kind: result
-        text: >-
-          א. $300\,\text{m}$. ב. $6\,\text{cm}$. ג. $5\cdot10^{14}\,\text{Hz}$.
-
-  - id: W-5.8-04
-    level: mid
-    qualitative: true
-    objectives: [OBJ-5.8-2]
-    prompt: >-
-      לכל תופעה קבעו איזה חוק של מקסוול מסביר אותה, ונמקו במשפט.
-
-      א. כיריים אינדוקציה מחממות סיר מתכת: בכיריים זורם זרם חילופין, ובתחתית הסיר נוצרים זרמים.
-
-      ב. בתוך מוליך בשיווי משקל אין שדה חשמלי, ולכן כל המטען העודף של המוליך יושב על פניו (שיעור 1.9).
-
-      ג. במרכז סליל שזורם בו זרם יש שדה מגנטי חזק.
-
-      ד. אנטנה של טלפון קולטת אות מאנטנה רחוקה, בלי חוט ביניהן.
-    answer: >-
-      א. חוק פאראדיי.
-
-      ב. חוק גאוס.
-
-      ג. חוק אמפר-מקסוול (האיבר של הזרם).
-
-      ד. פאראדיי ואמפר-מקסוול יחד: גל אלקטרומגנטי.
-    solution:
-      - kind: reasoning
-        text: >-
-          א. זרם החילופין יוצר שדה מגנטי שמשתנה כל הזמן, ולכן השטף המגנטי דרך תחתית הסיר משתנה. שטף שמשתנה יוצר שדה חשמלי שמסתובב, והוא מניע זרמים במתכת: חוק פאראדיי.
-
-          ב. משטח גאוס שעובר כולו בתוך המוליך, ממש מתחת לפני השטח, נמצא בשדה אפס, ולכן השטף דרכו אפס. לפי חוק גאוס, גם המטען בתוכו אפס: כל המטען העודף מחוץ למשטח, כלומר על פני המוליך.
-
-          ג. זרם יוצר שדה מגנטי שמסתובב סביבו, וכל הכריכות יחד יוצרות שדה חזק בתוך הסליל: חוק אמפר-מקסוול, עם האיבר $\mu_0 I_{\text{in}}$ (שיעור 4.4).
-
-          ד. בין האנטנות אין חוט ואין חומר שמוליך. מה שעובר הוא גל: שדה חשמלי שמשתנה יוצר שדה מגנטי (התוספת של מקסוול), ושדה מגנטי שמשתנה יוצר שדה חשמלי (פאראדיי). באנטנה הקולטת, השדה החשמלי של הגל מניע את האלקטרונים.
-      - kind: result
-        text: >-
-          א. פאראדיי. ב. גאוס. ג. אמפר-מקסוול. ד. פאראדיי ואמפר-מקסוול יחד, בגל אלקטרומגנטי.
-
-  - id: W-5.8-05
-    level: mid
-    qualitative: false
-    objectives: [OBJ-5.8-2]
-    prompt: >-
-      בליבה של סליל ארוך, ברדיוס $2.5\,\text{cm}$, השדה המגנטי אחיד ויוצא מהדף, ו**קטן** בקצב קבוע של $1.2\,\text{T/s}$. מחוץ לליבה אין שדה מגנטי. משרטטים שני מעגלים שמרכזם על הציר: ברדיוס $1.5\,\text{cm}$ וברדיוס $5\,\text{cm}$.
-
-      א. מה גודל הסכום $\oint \vec E\cdot d\vec l$ סביב כל מעגל?
-
-      ב. מה עוצמת השדה החשמלי המושרה על כל מעגל?
-
-      ג. האם השדה המושרה מקיף את הציר עם כיוון השעון או נגדו? נמקו.
-    answer: >-
-      א. כ-$8.48\cdot10^{-4}\,\text{V}$ וכ-$2.36\cdot10^{-3}\,\text{V}$.
-
-      ב. $9\cdot10^{-3}\,\text{V/m}$ ו-$7.5\cdot10^{-3}\,\text{V/m}$.
-
-      ג. נגד כיוון השעון.
+      ג. $48\,\text{W}$.
     solution:
       - kind: given
         text: >-
-          $R = 0.025\,\text{m}$, $\left|\dfrac{\Delta B}{\Delta t}\right| = 1.2\,\text{T/s}$, $r_1 = 0.015\,\text{m}$, $r_2 = 0.05\,\text{m}$.
+          $V_{\text{eff}} = 12\,\text{V}$, $\bar P = 24\,\text{W}$.
       - kind: formula
         text: >-
-          $\oint \vec E\cdot d\vec l = -\dfrac{\Delta\Phi_B}{\Delta t}$, ו-$\Phi_B = B\cdot A$, כאשר $A$ הוא השטח שבו יש שדה מגנטי. מהסימטריה $|\oint \vec E\cdot d\vec l| = E\cdot2\pi r$.
+          עם ערכים אפקטיביים $\bar P = V_{\text{eff}}I_{\text{eff}} = \dfrac{V_{\text{eff}}^2}{R}$; $V_0 = \sqrt2\,V_{\text{eff}}$, $I_0 = \sqrt2\,I_{\text{eff}}$.
       - kind: substitution
         text: >-
-          א. המעגל הקטן כולו בליבה: $\pi\cdot0.015^2\cdot1.2 \approx 8.48\cdot10^{-4}\,\text{V}$. המעגל הגדול מקיף את כל הליבה, ולכן השטח הוא $\pi R^2$: $\pi\cdot0.025^2\cdot1.2 \approx 2.36\cdot10^{-3}\,\text{V}$.
-      - kind: manipulation
-        text: >-
-          ב. מחלקים את הסכום באורך המעגל: $E = \dfrac{|\oint \vec E\cdot d\vec l|}{2\pi r}$.
-      - kind: substitution
-        text: >-
-          $E_1 = \dfrac{8.48\cdot10^{-4}}{2\pi\cdot0.015} = 9\cdot10^{-3}\,\text{V/m}$, $E_2 = \dfrac{2.36\cdot10^{-3}}{2\pi\cdot0.05} = 7.5\cdot10^{-3}\,\text{V/m}$.
-      - kind: reasoning
-        text: >-
-          ג. הולכים נגד כיוון השעון, והאנך יוצא מהדף. השטף חיובי ו**קטן**, ולכן $-\Delta\Phi_B/\Delta t$ חיובי, והשדה פונה בכיוון ההליכה: נגד כיוון השעון. בדיקה בחוק לנץ: זרם נגד כיוון השעון היה יוצר שדה מגנטי שיוצא מהדף, ומנסה להשלים את השדה שקטן.
+          א. $R = \dfrac{V_{\text{eff}}^2}{\bar P} = \dfrac{144}{24} = 6\,\Omega$, $I_{\text{eff}} = \dfrac{24}{12} = 2\,\text{A}$.
+
+          ב. $V_0 = \sqrt2\cdot12 \approx 17.0\,\text{V}$, $I_0 = \sqrt2\cdot2 \approx 2.83\,\text{A}$.
+
+          ג. $V_0I_0 = 16.97\cdot2.828 \approx 48\,\text{W}$: פי 2 מההספק הממוצע, כי הממוצע של $\sin^2$ הוא חצי.
       - kind: result
         text: >-
-          א. כ-$8.48\cdot10^{-4}\,\text{V}$ וכ-$2.36\cdot10^{-3}\,\text{V}$. ב. $9\cdot10^{-3}$ ו-$7.5\cdot10^{-3}\,\text{V/m}$. ג. נגד כיוון השעון.
+          א. $6\,\Omega$, $2\,\text{A}$. ב. כ-$17\,\text{V}$ וכ-$2.83\,\text{A}$. ג. $48\,\text{W}$.
+
+  - id: W-5.8-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-5.8-2, OBJ-5.8-4]
+    prompt: >-
+      סליל מעגלי של $500$ כריכות, ברדיוס של $3\,\text{cm}$, מסתובב $1200$ סיבובים בדקה בשדה מגנטי אחיד של $0.08\,\text{T}$, סביב קוטר שניצב לשדה.
+
+      א. מה ערך השיא של הכא"מ?
+
+      ב. מה הערך האפקטיבי שלו?
+
+      ג. כמה פעמים בשנייה הכא"מ מחליף סימן?
+    answer: >-
+      א. $\varepsilon_0 \approx 14.2\,\text{V}$.
+
+      ב. $\varepsilon_{\text{eff}} \approx 10.0\,\text{V}$.
+
+      ג. $40$ פעמים בשנייה.
+    solution:
+      - kind: given
+        text: >-
+          $N = 500$, $r = 0.03\,\text{m}$, $B = 0.08\,\text{T}$, $1200$ סיבובים בדקה.
+      - kind: formula
+        text: >-
+          $A = \pi r^2$, $\omega = 2\pi f$, $\varepsilon_0 = NBA\omega$, $\varepsilon_{\text{eff}} = \dfrac{\varepsilon_0}{\sqrt2}$.
+      - kind: substitution
+        text: >-
+          $A = \pi\cdot0.03^2 \approx 2.83\cdot10^{-3}\,\text{m}^2$. $f = \dfrac{1200}{60} = 20\,\text{Hz}$, $\omega = 2\pi\cdot20 \approx 125.7\,\text{rad/s}$.
+
+          א. $\varepsilon_0 = 500\cdot0.08\cdot2.83\cdot10^{-3}\cdot125.7 \approx 14.2\,\text{V}$.
+
+          ב. $\varepsilon_{\text{eff}} = \dfrac{14.21}{\sqrt2} \approx 10.0\,\text{V}$.
+      - kind: reasoning
+        text: >-
+          ג. בכל סיבוב הכא"מ עובר באפס ומחליף סימן פעמיים, ויש $20$ סיבובים בשנייה.
+      - kind: result
+        text: >-
+          א. כ-$14.2\,\text{V}$. ב. כ-$10.0\,\text{V}$. ג. $40$ פעמים בשנייה.
+
+  - id: W-5.8-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-5.8-3]
+    prompt: >-
+      גנרטור עם טבעת מפוצלת (קומוטטור) מסתובב $5$ פעמים בשנייה, ומחובר לנורה.
+
+      א. שרטטו באופן איכותי את המתח בין המברשות לפי הזמן, לאורך שני סיבובים. כמה "פעימות" יש בכל שנייה?
+
+      ב. באיזה מצב של הסליל הרווחים בין שני חצאי הטבעת צריכים לעבור מתחת למברשות? נמקו.
+
+      ג. טכנאי הרכיב את הטבעת המפוצלת מסובבת ברבע סיבוב, כך שההחלפה קורה כשמישור הסליל לאורך השדה. האם עכשיו המתח בין המברשות מחליף סימן? נמקו, ותארו את הגרף שלו.
+    answer: >-
+      א. גבעות של סינוס, כולן מעל לציר, $|\varepsilon_0\sin\omega t|$: $10$ פעימות בשנייה.
+
+      ב. כשמישור הסליל ניצב לשדה, שם הכא"מ אפס ומתחיל להתהפך.
+
+      ג. כן: המתח קופץ מ-$\varepsilon = \varepsilon_0$ ל-$\varepsilon = -\varepsilon_0$ באמצע כל פעימה, וממוצעו אפס.
+    solution:
+      - kind: reasoning
+        text: >-
+          א. הסליל עצמו נותן $\varepsilon_0\sin\omega t$. הטבעת המפוצלת הופכת את החיבור בכל פעם שהכא"מ עובר באפס, ולכן החצאים השליליים מופיעים הפוכים: גבעה בכל חצי סיבוב. בשנייה יש $5$ סיבובים, כלומר $10$ גבעות.
+      - kind: reasoning
+        text: >-
+          ב. ההחלפה צריכה לקרות בדיוק כשהכא"מ של הסליל מחליף סימן, כלומר כשהוא אפס. הכא"מ אפס כשהשטף בשיא: מישור הסליל ניצב לשדה. אז ההיפוך של החיבור מבטל את ההיפוך של הכא"מ.
+      - kind: reasoning
+        text: >-
+          ג. אם ההחלפה קורה כשמישור הסליל לאורך השדה, היא קורה כשהכא"מ בשיא. נניח שרגע לפני ההחלפה המתח בין המברשות $\varepsilon = \varepsilon_0$. ההחלפה הופכת אותו ל-$\varepsilon = -\varepsilon_0$. אחר כך הכא"מ של הסליל קטן, ולכן המתח עולה מ-$\varepsilon = -\varepsilon_0$ דרך האפס (כשמישור הסליל ניצב לשדה) עד $\varepsilon = \varepsilon_0$, ואז שוב קופץ ל-$\varepsilon = -\varepsilon_0$. בכל חצי סיבוב חצי מהזמן המתח שלילי וחצי חיובי, והממוצע שלו אפס, כמו בלי קומוטטור: לא מתקבל זרם ישר.
+      - kind: result
+        text: >-
+          א. $|\varepsilon_0\sin\omega t|$, $10$ פעימות בשנייה. ב. כשמישור הסליל ניצב לשדה. ג. כן: הוא קופץ מ-$\varepsilon = \varepsilon_0$ ל-$\varepsilon = -\varepsilon_0$ בכל חצי סיבוב, וממוצעו אפס.
 
   - id: W-5.8-06
     level: mid
     qualitative: false
-    objectives: [OBJ-5.8-3]
+    objectives: [OBJ-5.8-1, OBJ-5.8-2]
     prompt: >-
-      לוחות של קבל הם בשטח של $0.03\,\text{m}^2$ כל אחד. ברגע מסוים הקבל נטען בזרם של $0.6\,\text{A}$. הניחו שהשדה בין הלוחות אחיד.
+      סליל של $120$ כריכות ששטחו $0.015\,\text{m}^2$ מסתובב $4$ פעמים בשנייה בשדה של $0.5\,\text{T}$. ברגע $t = 0$ מישור הסליל ניצב לשדה.
 
-      א. באיזה קצב גדל השדה החשמלי בין הלוחות?
+      א. מה ערך השיא של הכא"מ?
 
-      ב. מה זרם ההעתקה דרך משטח שחוצה את כל הרווח?
+      ב. מה הכא"מ ברגע $t = \dfrac{1}{48}\,\text{s}$, ומה השטף דרך כריכה אחת ברגע הזה?
 
-      ג. מה השדה המגנטי במרחק $15\,\text{cm}$ מהתיל שמוביל לקבל?
+      ג. מה מצב מישור הסליל ביחס לשדה ברגע הזה?
     answer: >-
-      א. כ-$2.26\cdot10^{12}\,\text{V}/(\text{m}\cdot\text{s})$.
+      א. $\varepsilon_0 \approx 22.6\,\text{V}$.
 
-      ב. $0.6\,\text{A}$.
+      ב. $\varepsilon \approx 11.3\,\text{V}$, $\Phi \approx 6.5\cdot10^{-3}\,\text{Wb}$.
 
-      ג. $8\cdot10^{-7}\,\text{T}$.
+      ג. האנך יוצר $30^\circ$ עם השדה, והמישור $60^\circ$.
     solution:
       - kind: given
         text: >-
-          $A = 0.03\,\text{m}^2$, $I = 0.6\,\text{A}$, $r = 0.15\,\text{m}$.
+          $N = 120$, $A = 0.015\,\text{m}^2$, $B = 0.5\,\text{T}$, $f = 4\,\text{Hz}$, ולכן $\omega = 2\pi\cdot4 \approx 25.1\,\text{rad/s}$.
       - kind: formula
         text: >-
-          $E = \dfrac{q}{\varepsilon_0 A}$, וזרם ההעתקה $\varepsilon_0\,\dfrac{\Delta\Phi_E}{\Delta t}$ עם $\Phi_E = EA$. השדה של תיל ישר $B = \dfrac{\mu_0 I}{2\pi r}$.
-      - kind: manipulation
-        text: >-
-          $\varepsilon_0$ ו-$A$ קבועים, ולכן השדה גדל בקצב $\dfrac{\Delta E}{\Delta t} = \dfrac{1}{\varepsilon_0 A}\,\dfrac{\Delta q}{\Delta t} = \dfrac{I}{\varepsilon_0 A}$.
+          $\varepsilon = NBA\omega\sin\omega t$, $\Phi = BA\cos\omega t$.
       - kind: substitution
         text: >-
-          א. $\dfrac{\Delta E}{\Delta t} = \dfrac{0.6}{8.85\cdot10^{-12}\cdot0.03} \approx 2.26\cdot10^{12}\,\text{V}/(\text{m}\cdot\text{s})$.
+          א. $\varepsilon_0 = 120\cdot0.5\cdot0.015\cdot25.13 \approx 22.6\,\text{V}$.
 
-          ב. $\varepsilon_0\,\dfrac{\Delta\Phi_E}{\Delta t} = \varepsilon_0 A\,\dfrac{\Delta E}{\Delta t} = I = 0.6\,\text{A}$.
-
-          ג. $B = \dfrac{4\pi\cdot10^{-7}\cdot0.6}{2\pi\cdot0.15} = 8\cdot10^{-7}\,\text{T}$.
+          ב. הזווית: $\omega t = 2\pi\cdot4\cdot\dfrac{1}{48} = \dfrac{\pi}{6}$, כלומר $30^\circ$. $\varepsilon = 22.62\cdot\sin30^\circ \approx 11.3\,\text{V}$, ו-$\Phi = 0.5\cdot0.015\cdot\cos30^\circ \approx 6.5\cdot10^{-3}\,\text{Wb}$.
+      - kind: reasoning
+        text: >-
+          ג. ב-$t = 0$ האנך היה בכיוון השדה, ועכשיו הסליל הסתובב $30^\circ$: האנך $30^\circ$ מהשדה, והמישור, שניצב לאנך, $60^\circ$ מהשדה.
       - kind: result
         text: >-
-          א. כ-$2.26\cdot10^{12}\,\text{V}/(\text{m}\cdot\text{s})$. ב. $0.6\,\text{A}$. ג. $8\cdot10^{-7}\,\text{T}$.
+          א. כ-$22.6\,\text{V}$. ב. כ-$11.3\,\text{V}$, כ-$6.5\cdot10^{-3}\,\text{Wb}$. ג. המישור $60^\circ$ מקווי השדה.
 
   - id: W-5.8-07
     level: mid
     qualitative: true
     objectives: [OBJ-5.8-3]
     prompt: >-
-      קבל מחובר בטור לנגד ולסוללה, ובזמן $t = 0$ סוגרים את המתג. בשיעור 3.9 ראיתם שהזרם במעגל כזה הכי גדול מיד אחרי הסגירה, ודועך לאפס.
+      לפנס חירום יש גנרטור קטן עם ידית. מסובבים את הידית באותה מהירות בשלושה מצבים: (1) המעגל פתוח; (2) מחוברת נורה אחת; (3) מחוברות שתי נורות זהות במקביל. ההתנגדות של הסליל זניחה.
 
-      א. מתי השדה המגנטי בין הלוחות הכי חזק: מיד אחרי סגירת המתג, או אחרי זמן רב? נמקו.
+      א. דרגו את שלושת המצבים לפי הקושי לסובב את הידית, מהקל לקשה. נמקו.
 
-      ב. מתי השדה **החשמלי** בין הלוחות הכי חזק? האם זה סותר את סעיף א?
+      ב. האם הכא"מ של הגנרטור שונה בשלושת המצבים?
 
-      ג. מחליפים את הסוללה במקור של מתח חילופין. האם יהיה שדה מגנטי בין הלוחות גם אחרי זמן רב? נמקו.
+      ג. מה היחס בין ההספק המכני שמשקיעים במצב (3) לבין ההספק במצב (2)?
     answer: >-
-      א. מיד אחרי סגירת המתג.
+      א. (1), אחר כך (2), ואחר כך (3).
 
-      ב. אחרי זמן רב. אין סתירה: השדה המגנטי תלוי בקצב השינוי של השדה החשמלי, לא בגודלו.
+      ב. לא: אותו כא"מ, $NBA\omega\sin\omega t$.
 
-      ג. כן: השדה החשמלי ממשיך להשתנות כל הזמן, ולכן יש זרם העתקה, ושדה מגנטי שמתחלף.
+      ג. פי 2.
     solution:
       - kind: reasoning
         text: >-
-          א. זרם ההעתקה בין הלוחות שווה בכל רגע לזרם בתיל, $\varepsilon_0\,\Delta\Phi_E/\Delta t = I$. הזרם הכי גדול מיד אחרי הסגירה, ולכן גם זרם ההעתקה והשדה המגנטי שהוא יוצר.
+          א. מה שמקשה על הסיבוב הוא המומנט של הכוחות המגנטיים על הזרם המושרה, $NBIA\sin\theta$, שפועל נגד הסיבוב (חוק לנץ). במעגל פתוח אין זרם, ונשאר רק החיכוך. שתי נורות במקביל הן חצי מההתנגדות של נורה אחת, ולכן הזרם $I = \varepsilon/R$ כפול, וגם המומנט.
       - kind: reasoning
         text: >-
-          ב. השדה החשמלי ביחס ישר למטען על הלוחות, והמטען הכי גדול כשהקבל מלא, אחרי זמן רב. אז הוא כבר לא משתנה, וזרם ההעתקה אפס. מיד אחרי הסגירה המצב הפוך: השדה החשמלי כמעט אפס, אבל גדל הכי מהר. השדה המגנטי נקבע לפי קצב השינוי.
+          ב. הכא"מ תלוי רק ב-$N$, $B$, $A$ ו-$\omega$, ואלה לא השתנו. מה שמשתנה הוא הזרם.
       - kind: reasoning
         text: >-
-          ג. במתח חילופין המטען על הלוחות עולה ויורד כל הזמן, ולכן גם השדה החשמלי ביניהם. זרם ההעתקה לא דועך, ובכל רגע הוא שווה לזרם בתיל. כך "עובר" זרם חילופין דרך קבל, אף ששום מטען לא חוצה את הרווח.
+          ג. ההספק המכני שווה להספק החשמלי, $\varepsilon^2/R$ בכל רגע. אותו $\varepsilon$ וחצי $R$: ההספק כפול.
       - kind: result
         text: >-
-          א. מיד אחרי הסגירה. ב. אחרי זמן רב, בלי סתירה. ג. כן, שדה מגנטי שמתחלף כל הזמן.
+          א. מהקל לקשה: (1), (2), (3). ב. אותו כא"מ. ג. פי 2.
 
   - id: W-5.8-08
     level: bagrut
     qualitative: false
-    objectives: [OBJ-5.8-1, OBJ-5.8-3]
+    objectives: [OBJ-5.8-2, OBJ-5.8-4]
     prompt: >-
-      תיל ישר מביא זרם של $3\,\text{A}$ לקבל שנטען. סביב התיל, לפני הקבל, משרטטים מעגל ברדיוס $2\,\text{cm}$.
+      גנרטור עם טבעות החלקה מסתובב $5$ פעמים בשנייה, ומחובר לנגד של $8\,\Omega$ (ההתנגדות של הסליל זניחה). מודדים בנגד הספק ממוצע של $9\,\text{W}$. בסליל $200$ כריכות, והשדה $0.3\,\text{T}$.
 
-      א. מה השדה המגנטי על המעגל, ומה הסכום $\oint \vec B\cdot d\vec l$ סביבו?
+      א. מה הערך האפקטיבי של הכא"מ, ומה ערך השיא שלו?
 
-      ב. על המעגל פורשים שקית שעוקפת את הלוח ומסתיימת בין הלוחות, כך שהתיל לא חוצה אותה. מה הזרם של מטענים דרך השקית?
+      ב. מה שטח הסליל?
 
-      ג. לפי חוק אמפר-מקסוול, באיזה קצב חייב להשתנות השטף החשמלי דרך השקית?
-
-      ד. מה היה מנבא חוק אמפר בלי התוספת של מקסוול, אם מחשבים אותו דרך השקית?
+      ג. מכפילים את מהירות הסיבוב. מה יהיה ההספק הממוצע בנגד?
     answer: >-
-      א. $3\cdot10^{-5}\,\text{T}$, וסכום של כ-$3.77\cdot10^{-6}\,\text{T}\cdot\text{m}$.
+      א. $\varepsilon_{\text{eff}} \approx 8.49\,\text{V}$, $\varepsilon_0 = 12\,\text{V}$.
 
-      ב. אפס.
+      ב. $A \approx 6.4\cdot10^{-3}\,\text{m}^2$.
 
-      ג. כ-$3.39\cdot10^{11}\,\text{N}\cdot\text{m}^2/(\text{C}\cdot\text{s})$.
-
-      ד. אפס, בסתירה לסעיף א.
+      ג. $36\,\text{W}$.
     solution:
       - kind: given
         text: >-
-          $I = 3\,\text{A}$, $r = 0.02\,\text{m}$, $\mu_0 = 4\pi\cdot10^{-7}\,\text{T}\cdot\text{m/A}$, $\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$.
+          $f = 5\,\text{Hz}$, $R = 8\,\Omega$, $\bar P = 9\,\text{W}$, $N = 200$, $B = 0.3\,\text{T}$.
       - kind: formula
         text: >-
-          $B = \dfrac{\mu_0 I}{2\pi r}$, ו-$\oint \vec B\cdot d\vec l = \mu_0 I_{\text{in}} + \mu_0\varepsilon_0\,\dfrac{\Delta\Phi_E}{\Delta t}$.
-      - kind: substitution
-        text: >-
-          א. $B = \dfrac{4\pi\cdot10^{-7}\cdot3}{2\pi\cdot0.02} = 3\cdot10^{-5}\,\text{T}$, ו-$\oint \vec B\cdot d\vec l = B\cdot2\pi r = \mu_0 I \approx 3.77\cdot10^{-6}\,\text{T}\cdot\text{m}$.
-      - kind: reasoning
-        text: >-
-          ב. התיל נגמר בלוח, שבתוך השקית, ולכן הוא לא חוצה אותה. בין הלוחות לא עובר מטען. הזרם של מטענים דרך השקית הוא אפס.
+          $\bar P = \dfrac{\varepsilon_{\text{eff}}^2}{R}$, $\varepsilon_0 = \sqrt2\,\varepsilon_{\text{eff}}$, $\varepsilon_0 = NBA\omega$.
       - kind: manipulation
         text: >-
-          ג. צד שמאל לא תלוי במשטח, ולכן דרך השקית $\mu_0\varepsilon_0\,\dfrac{\Delta\Phi_E}{\Delta t} = \mu_0 I$. מחלקים ב-$\mu_0\varepsilon_0$: $\dfrac{\Delta\Phi_E}{\Delta t} = \dfrac{I}{\varepsilon_0}$.
+          א. מכפילים ב-$R$ ומוציאים שורש: $\varepsilon_{\text{eff}} = \sqrt{\bar PR}$.
+
+          ב. מחלקים ב-$NB\omega$: $A = \dfrac{\varepsilon_0}{NB\omega}$.
       - kind: substitution
         text: >-
-          $\dfrac{\Delta\Phi_E}{\Delta t} = \dfrac{3}{8.85\cdot10^{-12}} \approx 3.39\cdot10^{11}\,\text{N}\cdot\text{m}^2/(\text{C}\cdot\text{s})$.
+          א. $\varepsilon_{\text{eff}} = \sqrt{9\cdot8} = \sqrt{72} \approx 8.49\,\text{V}$, $\varepsilon_0 = \sqrt2\cdot\sqrt{72} = \sqrt{144} = 12\,\text{V}$.
+
+          ב. $\omega = 2\pi\cdot5 \approx 31.4\,\text{rad/s}$, ו-$A = \dfrac{12}{200\cdot0.3\cdot31.4} \approx 6.4\cdot10^{-3}\,\text{m}^2$.
       - kind: reasoning
         text: >-
-          ד. בלי התוספת, צד ימין דרך השקית הוא $\mu_0\cdot0 = 0$, ואילו השדה האמיתי נותן $3.77\cdot10^{-6}\,\text{T}\cdot\text{m}$: החוק הישן סותר את עצמו.
+          ג. $\varepsilon_0 = NBA\omega$ גדל פי 2, וההספק הממוצע $\varepsilon_0^2/(2R)$ גדל פי $2^2 = 4$: $4\cdot9 = 36\,\text{W}$.
       - kind: result
         text: >-
-          א. $3\cdot10^{-5}\,\text{T}$; $3.77\cdot10^{-6}\,\text{T}\cdot\text{m}$. ב. אפס. ג. כ-$3.39\cdot10^{11}\,\text{N}\cdot\text{m}^2/(\text{C}\cdot\text{s})$. ד. אפס.
+          א. כ-$8.49\,\text{V}$ ו-$12\,\text{V}$. ב. כ-$6.4\cdot10^{-3}\,\text{m}^2$. ג. $36\,\text{W}$.
 
   - id: W-5.8-09
     level: bagrut
     qualitative: false
-    objectives: [OBJ-5.8-4]
+    objectives: [OBJ-5.8-3, OBJ-5.8-4]
     prompt: >-
-      א. חשבו מתוך $\mu_0$ ו-$\varepsilon_0$ שבדף הנוסחאות את מהירות הגל האלקטרומגנטי בריק.
+      טורבינה קטנה מסובבת גנרטור במהירות זוויתית קבועה של $50\,\text{rad/s}$. ערך השיא של הכא"מ $30\,\text{V}$, והגנרטור מחובר לנגד של $15\,\Omega$ (ההתנגדות של הסליל זניחה).
 
-      ב. המרחק מהשמש לכדור הארץ הוא $1.5\cdot10^{11}\,\text{m}$. כמה זמן לוקח לאור להגיע אלינו?
+      א. מה ערך השיא של הזרם, ומה ההספק הממוצע בנגד?
 
-      ג. אות GPS משודר בתדירות $1.575\,\text{GHz}$. מה אורך הגל שלו?
+      ב. מה המומנט הגדול ביותר שהטורבינה צריכה להפעיל, ובאיזה מצב של הסליל?
 
-      ד. מה היה משתנה במהירות האור, אילו $\mu_0$ היה גדול פי 4 ($\varepsilon_0$ ללא שינוי)?
+      ג. מה המומנט הממוצע שהטורבינה מפעילה?
+
+      ד. כמה אנרגיה מקבל הנגד ב-$10$ דקות?
     answer: >-
-      א. $3.00\cdot10^{8}\,\text{m/s}$.
+      א. $I_0 = 2\,\text{A}$, $\bar P = 30\,\text{W}$.
 
-      ב. $500\,\text{s}$, כשמונה דקות ועשרים שניות.
+      ב. $1.2\,\text{N·m}$, כשמישור הסליל לאורך השדה.
 
-      ג. כ-$19.0\,\text{cm}$.
+      ג. $0.6\,\text{N·m}$.
 
-      ד. היא הייתה קטנה פי 2, ל-$1.5\cdot10^{8}\,\text{m/s}$.
+      ד. $1.8\cdot10^4\,\text{J}$.
     solution:
+      - kind: given
+        text: >-
+          $\omega = 50\,\text{rad/s}$, $\varepsilon_0 = 30\,\text{V}$, $R = 15\,\Omega$. לא נתונים $N$, $B$ ו-$A$, אבל $NBA = \dfrac{\varepsilon_0}{\omega} = 0.6\,\text{Wb}$.
       - kind: formula
         text: >-
-          $c = \dfrac{1}{\sqrt{\mu_0\varepsilon_0}}$, $t = \dfrac{d}{c}$, $\lambda = \dfrac{c}{f}$.
+          $I_0 = \dfrac{\varepsilon_0}{R}$, $\bar P = \dfrac{\varepsilon_0^2}{2R}$. המומנט על הזרם $\tau = NBIA\sin\theta$ (שיעור 4.10), וההספק המכני $\tau\omega$ שווה בכל רגע להספק החשמלי.
       - kind: substitution
         text: >-
-          א. $\mu_0\varepsilon_0 = 4\pi\cdot10^{-7}\cdot8.85\cdot10^{-12} \approx 1.112\cdot10^{-17}\,\text{s}^2/\text{m}^2$, ולכן $c = \dfrac{1}{\sqrt{1.112\cdot10^{-17}}} \approx 3.00\cdot10^{8}\,\text{m/s}$.
-
-          ב. $t = \dfrac{1.5\cdot10^{11}}{3\cdot10^{8}} = 500\,\text{s}$.
-
-          ג. $\lambda = \dfrac{3\cdot10^{8}}{1.575\cdot10^{9}} \approx 0.190\,\text{m}$.
+          א. $I_0 = \dfrac{30}{15} = 2\,\text{A}$, $\bar P = \dfrac{900}{30} = 30\,\text{W}$.
       - kind: reasoning
         text: >-
-          ד. $c$ הפוך לשורש של $\mu_0$. אם $\mu_0$ גדל פי 4, השורש גדל פי $\sqrt4 = 2$, והמהירות קטנה פי 2: $1.5\cdot10^{8}\,\text{m/s}$.
+          ב. המומנט הגדול ביותר כשהזרם בשיא ו-$\sin\theta = 1$, כלומר כשמישור הסליל לאורך השדה: $\tau_{\max} = (NBA)I_0 = 0.6\cdot2 = 1.2\,\text{N·m}$. בדיקה: $\tau_{\max}\omega = 1.2\cdot50 = 60\,\text{W} = \varepsilon_0I_0$.
+
+          ג. ההספק המכני הממוצע שווה להספק החשמלי הממוצע, והמהירות קבועה, ולכן $\bar\tau = \dfrac{\bar P}{\omega} = \dfrac{30}{50} = 0.6\,\text{N·m}$, חצי מהמקסימום.
+      - kind: substitution
+        text: >-
+          ד. $E = \bar P\,t = 30\,\text{W}\cdot600\,\text{s} = 1.8\cdot10^4\,\text{J}$.
       - kind: result
         text: >-
-          א. $3.00\cdot10^{8}\,\text{m/s}$. ב. $500\,\text{s}$. ג. כ-$19.0\,\text{cm}$. ד. קטנה פי 2.
+          א. $2\,\text{A}$, $30\,\text{W}$. ב. $1.2\,\text{N·m}$, מישור הסליל לאורך השדה. ג. $0.6\,\text{N·m}$. ד. $1.8\cdot10^4\,\text{J}$.
 
   - id: W-5.8-10
     level: bagrut
     qualitative: true
-    objectives: [OBJ-5.8-2, OBJ-5.8-4]
+    objectives: [OBJ-5.8-1, OBJ-5.8-4]
     prompt: >-
-      א. בריק אין מטען ואין זרם. אילו איברים במשוואות מקסוול נעלמים שם, ואילו שני חוקים נשארים עם צד ימין ששונה מאפס?
+      מייבש שיער של $1100\,\text{W}$ מחובר לרשת החשמל, $230\,\text{V}$ אפקטיבי, $50\,\text{Hz}$. הניחו שהוא נגד בלבד.
 
-      ב. הסבירו במילים איך שני החוקים האלה מאפשרים לגל אלקטרומגנטי להתקדם בריק בלי שום חומר.
+      א. מה הזרם האפקטיבי, ומה ערך השיא של הזרם?
 
-      ג. נניח שמקסוול לא היה מוסיף את האיבר שלו לחוק אמפר. האם עדיין היו גלים אלקטרומגנטיים? נמקו.
+      ב. כמה פעמים בשנייה ההספק במייבש אפס? מה המתח ברגעים האלה?
 
-      ד. תלמיד אומר: "בגל, כשהשדה החשמלי בשיא, השדה המגנטי אפס, כי הם מתחלפים". האם הוא צודק?
+      ג. מה ההספק הגדול ביותר, וכמה אנרגיה מקבל המייבש במחזור אחד?
+
+      ד. במדינה אחרת הרשת היא $230\,\text{V}$ אפקטיבי ב-$60\,\text{Hz}$. האם המייבש יחמם שם חזק יותר? נמקו.
     answer: >-
-      א. $Q_{\text{in}}$ ו-$I_{\text{in}}$ נעלמים; נשארים פאראדיי והאיבר של מקסוול בחוק אמפר-מקסוול.
+      א. $I_{\text{eff}} \approx 4.8\,\text{A}$, $I_0 \approx 6.8\,\text{A}$.
 
-      ב. שדה מגנטי שמשתנה יוצר שדה חשמלי, ושדה חשמלי שמשתנה יוצר שדה מגנטי, וכך ההפרעה מתקדמת.
+      ב. $100$ פעמים בשנייה; המתח אז אפס.
 
-      ג. לא: בלי התוספת, שדה חשמלי שמשתנה לא יוצר שדה מגנטי, והשרשרת נקטעת.
+      ג. $2200\,\text{W}$; $22\,\text{J}$ במחזור.
 
-      ד. לא: בגל השדות מגיעים לשיא יחד.
+      ד. לא: אותו ערך אפקטיבי, אותו הספק ממוצע.
     solution:
+      - kind: given
+        text: >-
+          $\bar P = 1100\,\text{W}$, $V_{\text{eff}} = 230\,\text{V}$, $f = 50\,\text{Hz}$, ולכן $T = 0.02\,\text{s}$.
+      - kind: formula
+        text: >-
+          $\bar P = V_{\text{eff}}I_{\text{eff}}$, $I_0 = \sqrt2\,I_{\text{eff}}$, וההספק ברגע $p = \dfrac{v^2}{R}$.
+      - kind: substitution
+        text: >-
+          א. $I_{\text{eff}} = \dfrac{1100}{230} \approx 4.78\,\text{A}$, $I_0 = \sqrt2\cdot4.78 \approx 6.76\,\text{A}$.
       - kind: reasoning
         text: >-
-          א. בחוק גאוס $Q_{\text{in}} = 0$, ובחוק אמפר-מקסוול $I_{\text{in}} = 0$. בחוק גאוס למגנטיות צד ימין אפס ממילא. נשארים $\oint \vec E\cdot d\vec l = -\dfrac{d\Phi_B}{dt}$ ו-$\oint \vec B\cdot d\vec l = \mu_0\varepsilon_0\,\dfrac{d\Phi_E}{dt}$.
-      - kind: reasoning
-        text: >-
-          ב. אם במקום כלשהו השדה החשמלי משתנה, נוצר סביבו שדה מגנטי, שגם הוא משתנה. השדה המגנטי שמשתנה יוצר סביבו, קצת הלאה, שדה חשמלי שמשתנה, וכן הלאה. כל אחד מהשדות נוצר מהשינוי של השני, ולכן הם לא צריכים מטענים, זרמים או חומר. מה שמתקדם הוא תבנית של שדות, במהירות $c = 1/\sqrt{\mu_0\varepsilon_0}$.
-      - kind: reasoning
-        text: >-
-          ג. בלי התוספת, בריק $\oint \vec B\cdot d\vec l = 0$ סביב כל מסלול: שדה חשמלי שמשתנה לא יוצר שדה מגנטי. השדה המגנטי של הגל לא היה נוצר, ולא היה שדה מגנטי שמשתנה כדי ליצור את השדה החשמלי הבא. השרשרת נקטעת, ואין גל. המהירות $c$ עצמה יוצאת מהמכפלה $\mu_0\varepsilon_0$, ו-$\varepsilon_0$ נכנס לחוק דרך התוספת.
-      - kind: reasoning
-        text: >-
-          ד. לא. השדה המגנטי נוצר מקצב השינוי של השדה החשמלי **בסביבה**, לא מהערך שלו בנקודה אחת. בגל שמתקדם, השדה החשמלי והשדה המגנטי מגיעים לשיא באותה נקודה ובאותו רגע, כמו שרואים באיור 5.8ב.
+          ב. $p = v^2/R$ אפס רק כשהמתח $v$ אפס. המתח עובר באפס פעמיים בכל מחזור, ויש $50$ מחזורים בשנייה: $100$ פעמים בשנייה.
+
+          ג. ההספק בשיא פי 2 מהממוצע, כי הממוצע של $\sin^2$ הוא חצי: $2\cdot1100 = 2200\,\text{W}$. במחזור אחד: $E = \bar P\,T = 1100\cdot0.02 = 22\,\text{J}$.
+
+          ד. ההספק הממוצע $V_{\text{eff}}^2/R$ תלוי בערך האפקטיבי ובהתנגדות, ולא בתדירות. ב-$60\,\text{Hz}$ ההספק פועם מהר יותר, אבל הממוצע זהה.
       - kind: result
         text: >-
-          א. נשארים פאראדיי והאיבר של מקסוול. ב. כל שדה נוצר מהשינוי של השני. ג. לא היו גלים. ד. התלמיד טועה: השדות באותו מופע.
+          א. כ-$4.8\,\text{A}$, כ-$6.8\,\text{A}$. ב. $100$ פעמים בשנייה, כשהמתח אפס. ג. $2200\,\text{W}$, $22\,\text{J}$. ד. לא, אותו הספק.
 
 challenge:
   - id: W-5.8-c1
     stars: 1
-    objectives: [OBJ-5.8-3]
+    objectives: [OBJ-5.8-1, OBJ-5.8-2]
     prompt: >-
-      בין הלוחות של קבל לוחות מקבילים נוצר זרם העתקה של $4.425\,\mu\text{A}$, בזמן שהמתח על הקבל משתנה בקצב של $10^{6}\,\text{V/s}$. השטח של כל לוח הוא $40\,\text{cm}^2$, וביניהם ריק.
+      כריכה מעגלית אחת, ברדיוס $10\,\text{cm}$, נמצאת בשדה מגנטי אחיד וחלש של $3\cdot10^{-5}\,\text{T}$ (בערך השדה של כדור הארץ), ובהתחלה מישורה ניצב לשדה. מסובבים אותה במהירות זוויתית קבועה סביב קוטר שניצב לשדה, כך שהיא משלימה **חצי סיבוב** ב-$0.2\,\text{s}$.
 
-      א. מה המרחק בין הלוחות?
+      א. מה הכא"מ הגדול ביותר שמושרה בכריכה? ענו במיקרו-וולט.
 
-      ב. מה הזרם בתילים שמובילים לקבל באותו רגע?
+      ב. מה הכא"מ הממוצע במשך חצי הסיבוב הזה? פי כמה הוא קטן מהשיא?
 
-      ג. מה השדה המגנטי במרחק $10\,\text{cm}$ מאחד התילים?
+      ג. תלמיד קיבל בסעיף א תשובה כפולה. איזו טעות בקריאת השאלה נותנת את זה?
     answer: >-
-      א. $8\,\text{mm}$.
+      א. כ-$15\,\mu\text{V}$.
 
-      ב. $4.425\,\mu\text{A}$.
+      ב. כ-$9.4\,\mu\text{V}$, פי $\dfrac{2}{\pi} \approx 0.64$ מהשיא.
 
-      ג. כ-$8.85\cdot10^{-12}\,\text{T}$.
+      ג. הוא הניח ש-$0.2\,\text{s}$ הם זמן של סיבוב שלם, ולכן קיבל $\omega$ כפולה, כ-$30\,\mu\text{V}$.
     solution:
       - kind: given
         text: >-
-          $I_d = 4.425\cdot10^{-6}\,\text{A}$, $\dfrac{\Delta V}{\Delta t} = 10^{6}\,\text{V/s}$, $A = 40\cdot10^{-4}\,\text{m}^2 = 4\cdot10^{-3}\,\text{m}^2$, $\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$.
+          $N = 1$, $r = 0.1\,\text{m}$, $A = \pi r^2 \approx 3.14\cdot10^{-2}\,\text{m}^2$, $B = 3\cdot10^{-5}\,\text{T}$. חצי סיבוב, $\pi$ רדיאנים, ב-$0.2\,\text{s}$.
       - kind: formula
         text: >-
-          בין הלוחות $E = V/d$, ולכן $\Phi_E = EA = \dfrac{VA}{d}$, וזרם ההעתקה $I_d = \varepsilon_0\,\dfrac{\Delta\Phi_E}{\Delta t} = \dfrac{\varepsilon_0 A}{d}\,\dfrac{\Delta V}{\Delta t}$. (זה גם $C\,\Delta V/\Delta t$, עם $C = \varepsilon_0 A/d$ של שיעור 2.6.)
-      - kind: manipulation
-        text: >-
-          א. מכפילים את שני האגפים ב-$d$ ומחלקים ב-$I_d$: $d = \dfrac{\varepsilon_0 A}{I_d}\,\dfrac{\Delta V}{\Delta t}$.
+          $\omega = \dfrac{\Delta\theta}{\Delta t}$, $\varepsilon_0 = NBA\omega$, והכא"מ הממוצע $\bar\varepsilon = N\dfrac{|\Delta\Phi|}{\Delta t}$.
       - kind: substitution
         text: >-
-          $d = \dfrac{8.85\cdot10^{-12}\cdot4\cdot10^{-3}\cdot10^{6}}{4.425\cdot10^{-6}} = 8\cdot10^{-3}\,\text{m}$.
+          א. $\omega = \dfrac{\pi}{0.2} = 5\pi \approx 15.7\,\text{rad/s}$ (זמן המחזור $0.4\,\text{s}$). $\varepsilon_0 = 3\cdot10^{-5}\cdot3.14\cdot10^{-2}\cdot15.7 \approx 1.48\cdot10^{-5}\,\text{V}$.
       - kind: reasoning
         text: >-
-          ב. זרם ההעתקה בין הלוחות שווה בכל רגע לזרם שמביא את המטען ללוח: $I = 4.425\,\mu\text{A}$.
-      - kind: substitution
+          ב. בחצי סיבוב השטף עובר מ-$\Phi = BA$ ל-$\Phi = -BA$: $|\Delta\Phi| = 2BA$. לכן $\bar\varepsilon = \dfrac{2BA}{0.2\,\text{s}} = \dfrac{2\cdot3\cdot10^{-5}\cdot3.14\cdot10^{-2}}{0.2} \approx 9.4\cdot10^{-6}\,\text{V}$. חצי הסיבוב נמשך $\Delta t = \pi/\omega$, ולכן היחס $\dfrac{\bar\varepsilon}{\varepsilon_0} = \dfrac{2BA/(\pi/\omega)}{BA\omega} = \dfrac{2}{\pi}$: הכא"מ הממוצע על חצי סיבוב הוא הממוצע של $\sin$ על חצי מחזור, ולא חצי מהשיא.
+      - kind: reasoning
         text: >-
-          ג. $B = \dfrac{\mu_0 I}{2\pi r} = \dfrac{4\pi\cdot10^{-7}\cdot4.425\cdot10^{-6}}{2\pi\cdot0.1} \approx 8.85\cdot10^{-12}\,\text{T}$, פחות ממיליונית של השדה של כדור הארץ. לכן קשה כל כך למדוד את השדה של זרם ההעתקה.
+          ג. אם $0.2\,\text{s}$ הם זמן המחזור, $\omega = \dfrac{2\pi}{0.2} = 10\pi\,\text{rad/s}$, כפולה, והשיא יוצא כ-$3\cdot10^{-5}\,\text{V}$. המילים "חצי סיבוב" הן העיקר בשאלה.
       - kind: result
         text: >-
-          א. $8\,\text{mm}$. ב. $4.425\,\mu\text{A}$. ג. כ-$8.85\cdot10^{-12}\,\text{T}$.
+          א. כ-$15\,\mu\text{V}$. ב. כ-$9.4\,\mu\text{V}$, פי $2/\pi$ מהשיא. ג. קריאה של $0.2\,\text{s}$ כזמן של סיבוב שלם.
     source:
-      name: JEE Main (NTA)
-      year: 2022
-      problem: '29 June 2022, Evening Shift (Shift 2): the plate separation x·10⁻³ m from a displacement current of 4.425 μA at 10⁶ V/s, plates of 40 cm²; parts (b) and (c) added'
-      url: https://questions.examside.com/past-years/jee/question/pthe-displacement-current-of-4425-mua-is-developed-i-jee-main-physics-motion-vpq0mhcevpnpfoyt
+      name: JEE Main
+      year: 2020
+      problem: '2 September 2020, Shift 1, Question 24: circular coil of radius 10 cm in 3.0×10⁻⁵ T, half a rotation in 0.2 s, maximum emf (parts ב and ג added)'
+      url: 'https://cracku.in/24-a-circular-coil-of-radius-10-cm-is-placed-in-a-uni-x-nta-jee-main-2-sep-2020-shift-1'
       verified: '2026-11-05'
       adapted: true
 
   - id: W-5.8-c2
-    stars: 2
-    objectives: [OBJ-5.8-2, OBJ-5.8-3]
+    stars: 1
+    objectives: [OBJ-5.8-1, OBJ-5.8-4]
     prompt: >-
-      קליפה כדורית עבה, עם רדיוס פנימי $a$ ורדיוס חיצוני $b$, עשויה מחומר שמוליך מעט מאוד: ההתנגדות הסגולית שלו $\rho = 10^{12}\,\Omega\cdot\text{m}$ (שיעור 3.3). במרכז הקליפה, בחלל הריק, מוחזק מטען נקודתי $q_0$. בזמן $t = 0$ כל החומר של הקליפה ניטרלי, גם הפנים וגם החוץ. עם הזמן נאסף על הפנים הפנימיים של הקליפה מטען $-Q(t)$, ועל הפנים החיצוניים $+Q(t)$, והחומר עצמו נשאר ניטרלי.
+      כריכה אחת מתיל, בצורת אליפסה, עם חצי ציר ארוך $a$ וחצי ציר קצר $b$ (השטח של אליפסה הוא $\pi ab$), והתנגדות $R$. היא נמצאת בשדה מגנטי אחיד $B$ שניצב למישורה, ומסובבים אותה במהירות זוויתית קבועה $\omega$ סביב הציר הארוך שלה.
 
-      א. בעזרת חוק גאוס, מצאו את השדה החשמלי בתוך החומר, במרחק $r$ מהמרכז ($a < r < b$), בזמן שהמטען על הפנים הפנימיים הוא $-Q$.
+      א. הראו שההספק הממוצע שמתפתח בכריכה הוא $\bar P = \dfrac{\pi^2a^2b^2B^2\omega^2}{2R}$.
 
-      ב. צפיפות הזרם בחומר היא $J = E/\rho$ (שיעור 3.3: $I = V/R$ ו-$R = \rho L/A$ נותנים זרם ליחידת שטח $E/\rho$). הראו שהזרם הכולל שזורם החוצה דרך כדור ברדיוס $r$ בתוך החומר הוא $I = \dfrac{q_0 - Q}{\varepsilon_0\,\rho}$, בלי תלות ב-$r$.
+      ב. אחת מהתשובות שהוצעו בבחינה הייתה "אפס, כי הכא"מ הממוצע על מחזור אפס". מה הטעות?
 
-      ג. הזרם הזה הוא קצב הגידול של $Q$. זו אותה משוואה כמו בטעינת קבל דרך נגד (שיעור 3.9), עם קבוע זמן $\tau = \varepsilon_0\rho$. כתבו את $Q(t)$, ומצאו את $\tau$, את $Q$ כש-$t = \tau$, ואת הזמן שבו $Q = q_0/2$.
-
-      ד. בחומר זורם זרם בכל הכיוונים החוצה. מהסימטריה, השדה המגנטי שהוא יוצר חייב להיות אפס. הראו בעזרת חוק אמפר-מקסוול שאין כאן סתירה: מה עושה זרם ההעתקה דרך משטח בתוך החומר?
+      ג. חשבו את $\bar P$ עבור $a = 5\,\text{cm}$, $b = 3\,\text{cm}$, $B = 0.4\,\text{T}$, $\omega = 100\,\text{rad/s}$ ו-$R = 0.5\,\Omega$, ואת המומנט הממוצע שצריך להפעיל כדי לשמור על הסיבוב.
     answer: >-
-      א. $E = \dfrac{k\,(q_0 - Q)}{r^2}$, החוצה.
+      א. $\varepsilon_0 = \pi abB\omega$, ו-$\bar P = \varepsilon_0^2/(2R)$.
 
-      ב. $I = 4\pi r^2\,\dfrac{E}{\rho} = \dfrac{q_0 - Q}{\varepsilon_0\rho}$.
+      ב. ההספק תלוי בריבוע הכא"מ, והריבוע לא שלילי.
 
-      ג. $Q(t) = q_0\left(1 - e^{-t/\tau}\right)$; $\tau = 8.85\,\text{s}$; $Q(\tau) \approx 0.632\,q_0$; $Q = q_0/2$ אחרי כ-$6.13\,\text{s}$.
-
-      ד. השדה החשמלי בחומר קטן, וזרם ההעתקה שווה לזרם בגודלו והפוך לו בכיוון: הסכום אפס, ולכן $B = 0$.
+      ג. $\bar P \approx 3.6\cdot10^{-2}\,\text{W}$, $\bar\tau \approx 3.6\cdot10^{-4}\,\text{N·m}$.
     solution:
       - kind: given
         text: >-
-          $\rho = 10^{12}\,\Omega\cdot\text{m}$; מטען $q_0$ במרכז; $-Q$ על הפנים הפנימיים; $\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$, $k = \dfrac{1}{4\pi\varepsilon_0}$.
-      - kind: reasoning
+          כריכה אחת, $N = 1$, שטח $A = \pi ab$, התנגדות $R$. ב-$t = 0$ השדה ניצב למישור הכריכה, והיא מסתובבת ב-$\omega$ סביב ציר שבמישורה.
+      - kind: formula
         text: >-
-          א. משטח גאוס כדורי ברדיוס $r$ בתוך החומר מקיף את $q_0$ ואת $-Q$ שעל הפנים הפנימיים; החומר שביניהם ניטרלי. מהסימטריה השדה רדיאלי ושווה בגודלו על המשטח: $E\cdot4\pi r^2 = \dfrac{q_0 - Q}{\varepsilon_0}$, ולכן $E = \dfrac{q_0 - Q}{4\pi\varepsilon_0 r^2} = \dfrac{k\,(q_0 - Q)}{r^2}$.
+          $\Phi = BA\cos\omega t$, $\varepsilon = NBA\omega\sin\omega t$, $p = \dfrac{\varepsilon^2}{R}$, והממוצע של $\sin^2$ על מחזור הוא חצי.
       - kind: manipulation
         text: >-
-          ב. הזרם דרך הכדור הוא צפיפות הזרם כפול השטח: $I = J\cdot4\pi r^2 = \dfrac{E}{\rho}\cdot4\pi r^2 = \dfrac{q_0 - Q}{4\pi\varepsilon_0 r^2\,\rho}\cdot4\pi r^2 = \dfrac{q_0 - Q}{\varepsilon_0\rho}$. ה-$r^2$ מצטמצם: כל מה שזורם דרך כדור אחד זורם גם דרך הבא, כי החומר לא צובר מטען.
+          א. $\varepsilon_0 = B(\pi ab)\omega$, וההספק ברגע $p = \dfrac{\varepsilon_0^2}{R}\sin^2\omega t$. הממוצע: $\bar P = \dfrac{\varepsilon_0^2}{2R} = \dfrac{\pi^2a^2b^2B^2\omega^2}{2R}$. הצורה לא משנה: הנוסחה $\varepsilon_0 = NBA\omega$ נכונה לכל כריכה שטוחה.
       - kind: reasoning
         text: >-
-          ג. הזרם מביא מטען אל הפנים החיצוניים, ולכן $\dfrac{\Delta Q}{\Delta t} = \dfrac{q_0 - Q}{\tau}$ עם $\tau = \varepsilon_0\rho$. בטעינת קבל, $\dfrac{\Delta q}{\Delta t} = \dfrac{C\varepsilon - q}{RC}$, והפתרון $q = C\varepsilon\left(1 - e^{-t/RC}\right)$. כאן $q_0$ במקום $C\varepsilon$ ו-$\tau$ במקום $RC$: $Q(t) = q_0\left(1 - e^{-t/\tau}\right)$.
+          ב. נכון שהממוצע של $\varepsilon$ על מחזור אפס, אבל ההספק $\varepsilon^2/R$ חיובי בשני חצאי המחזור: הכריכה מתחממת בשני כיווני הזרם. הממוצע של הריבוע הוא לא הריבוע של הממוצע.
       - kind: substitution
         text: >-
-          $\tau = 8.85\cdot10^{-12}\cdot10^{12} = 8.85\,\text{s}$. ב-$t = \tau$: $Q = q_0(1 - e^{-1}) \approx 0.632\,q_0$. $Q = q_0/2$ כש-$e^{-t/\tau} = \tfrac12$, כלומר $t = \tau\ln2 \approx 8.85\cdot0.693 \approx 6.13\,\text{s}$.
-      - kind: reasoning
-        text: >-
-          ד. ניקח מסלול מעגלי בתוך החומר, ועליו משטח: כיפה של הכדור ברדיוס $r$. דרך הכיפה עובר החוצה חלק מזרם המטענים. אבל השדה החשמלי בחומר, $\dfrac{k(q_0 - Q)}{r^2}$, **קטן** כש-$Q$ גדל, ולכן השטף החשמלי דרך הכיפה קטן, וזרם ההעתקה דרכה פונה **פנימה**. דרך כל הכדור: $\Phi_E = \dfrac{q_0 - Q}{\varepsilon_0}$, ולכן $\varepsilon_0\,\dfrac{\Delta\Phi_E}{\Delta t} = -\dfrac{\Delta Q}{\Delta t} = -I$. בכל חלק של הכדור זרם ההעתקה מבטל בדיוק את זרם המטענים, ולכן צד ימין של חוק אמפר-מקסוול אפס, ו-$B = 0$, כמו שהסימטריה דורשת. בלי התוספת של מקסוול, החוק היה דורש שדה מגנטי סביב הזרם, שהסימטריה אוסרת.
+          ג. $A = \pi\cdot0.05\cdot0.03 \approx 4.71\cdot10^{-3}\,\text{m}^2$, $\varepsilon_0 = 0.4\cdot4.71\cdot10^{-3}\cdot100 \approx 0.188\,\text{V}$, $\bar P = \dfrac{0.1885^2}{2\cdot0.5} \approx 3.55\cdot10^{-2}\,\text{W}$. ההספק המכני הממוצע שווה לחשמלי, ולכן $\bar\tau = \dfrac{\bar P}{\omega} = \dfrac{3.55\cdot10^{-2}}{100} \approx 3.6\cdot10^{-4}\,\text{N·m}$.
       - kind: result
         text: >-
-          א. $E = k(q_0 - Q)/r^2$. ב. $I = (q_0 - Q)/(\varepsilon_0\rho)$. ג. $Q = q_0(1 - e^{-t/\tau})$, $\tau = 8.85\,\text{s}$, $Q(\tau) \approx 0.632\,q_0$, וחצי אחרי כ-$6.13\,\text{s}$. ד. זרם ההעתקה מבטל את זרם המטענים, ו-$B = 0$.
+          א. $\bar P = \dfrac{\pi^2a^2b^2B^2\omega^2}{2R}$. ב. ההספק תלוי בריבוע, ולא בכא"מ עצמו. ג. כ-$3.6\cdot10^{-2}\,\text{W}$, כ-$3.6\cdot10^{-4}\,\text{N·m}$.
     source:
-      name: USAPhO Semifinal Exam (AAPT)
-      year: 2010
-      problem: 'Part A, Question A2: a resistive spherical shell around a point charge, the charge on the outer surface as a function of time; part (d), on the Ampère–Maxwell law, added'
-      url: https://www.aapt.org/physicsteam/2019/upload/USAPhO-2010-Solutions.pdf
+      name: JEE Main
+      year: 2020
+      problem: '3 September 2020, Shift 1, Question 10: elliptical loop of resistance R rotated about the x-axis at ω, average Joule power (parts ב and ג added)'
+      url: 'https://cracku.in/10-an-elliptical-loop-having-resistance-r-of-semi-maj-x-nta-jee-main-3-sep-2020-shift-1'
       verified: '2026-11-05'
       adapted: true

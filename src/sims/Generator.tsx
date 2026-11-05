@@ -1,5 +1,5 @@
 /**
- * A rotating-coil generator. Built for lesson 5.7.
+ * A rotating-coil generator. Built for lesson 5.8.
  *
  * Left, top: the view along the axle, as in figure 4.10א. The coil is seen edge-on between the poles
  * of a magnet; the field lines that pass through it are drawn dark, the others faint, so the flux is

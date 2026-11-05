@@ -1,5 +1,5 @@
 /**
- * The induced electric field round the core of a long solenoid, seen end-on. Built for lesson 5.6.
+ * The induced electric field round the core of a long solenoid, seen end-on. Built for lesson 5.7.
  *
  * - The core (radius 4 cm, as in lesson 6.13) holds a uniform B, ⊙ or ⊗, that grows or shrinks at a rate
  *   the learner sets. Outside the core there is no magnetic field.

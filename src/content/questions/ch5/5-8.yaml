@@ -1,357 +1,322 @@
-# Lesson 5.8 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are rendered at
-# build time. YAML note: plain and single-quoted strings keep backslashes literally.
-# Every number below was recomputed with src/physics/maxwellfour.ts, induction.ts (inducedCircleEmf),
-# constants.ts (MU0, EPS0_DISPLAY = 8.85·10⁻¹², the sheet's ε₀) in this session. The data differ on purpose
-# from figure 5.8א–ב and the worked examples.
+# Lesson 5.8 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
+# rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
+# Every number below was recomputed with src/physics/induction.ts (generatorPeak, rms, acMeanPower)
+# and src/physics/generator.ts (angularSpeed, periodOf, peakOfRms, rectifiedMean); script rc57q.ts in
+# the session scratchpad. The data differ from figure 5.8א and the worked examples on purpose.
 
 chapter: 5
 questions:
-  # ------------------------------------------------ OBJ-5.8-1: reading the four laws
-  - id: Q-5.8-which-surface
+  # ------------------------------------------------ OBJ-5.8-1: from the flux to the emf
+  - id: Q-5.8-max-emf-position
     type: mc
     objectives: [OBJ-5.8-1]
     qualitative: true
     prompt: >-
-      בחוק פאראדיי, $\oint_C \vec E\cdot d\vec l = -\dfrac{d\Phi_B}{dt}$, צד שמאל הוא סכום סביב מסלול סגור $C$. דרך איזה משטח נמדד השטף המגנטי $\Phi_B$ שבצד ימין?
+      סליל של גנרטור מסתובב במהירות קבועה בשדה מגנטי אחיד. באיזה מצב הכא"מ המושרה בסליל הגדול ביותר?
     choices:
-      - text: 'דרך משטח שהמסלול $C$ הוא השפה שלו, כמו קרום של בועת סבון על טבעת.'
+      - text: 'כשמישור הסליל לאורך קווי השדה, והשטף דרכו אפס.'
         correct: true
-        feedback: 'נכון. בשני החוקים של מסלול סגור (פאראדיי ואמפר-מקסוול) השטף נמדד דרך משטח פתוח שהמסלול הוא השפה שלו. אפשר לבחור כל משטח כזה.'
-      - text: 'דרך משטח סגור שמקיף את המסלול, כמו בחוקי גאוס.'
-        feedback: 'דרך משטח סגור השטף המגנטי תמיד אפס (חוק גאוס למגנטיות). אילו מדדו כך, צד ימין היה תמיד אפס, ולא היה אף פעם כא״מ מושרה.'
-        misconception: MC-maxwell-faraday-flux-closed-surface
-      - text: 'דרך הקו של המסלול עצמו: השטף הוא השדה המגנטי כפול אורך המסלול.'
-        feedback: 'שטף הוא תמיד דרך משטח, שדה כפול שטח. השדה כפול אורך הוא הסכום שבצד שמאל של חוק אמפר.'
-      - text: 'דרך כל המרחב, כי השדה החשמלי המושרה ממלא את כל המרחב.'
-        feedback: 'השדה המושרה אכן ממלא את המרחב, אבל השטף נמדד דרך משטח מסוים: משטח שהמסלול הוא השפה שלו.'
+        feedback: 'נכון. הכא"מ תלוי בקצב השינוי של השטף. כשהשטף עובר באפס הוא משתנה הכי מהר: השיפוע של גרף $\Phi = BA\cos\omega t$ הכי תלול שם, ו-$\varepsilon = NBA\omega\sin\omega t$ בשיא.'
+      - text: 'כשמישור הסליל ניצב לקווי השדה, והשטף דרכו הגדול ביותר.'
+        feedback: 'במצב הזה השטף בשיא, והגרף שלו שטוח לרגע: השטף כמעט לא משתנה, ולכן הכא"מ **אפס**. הכא"מ תלוי בכמה מהר השטף משתנה, לא בכמה שטף יש.'
+        misconception: MC-generator-emf-follows-flux
+      - text: 'כשמישור הסליל יוצר זווית של $45^\circ$ עם קווי השדה, באמצע בין שני המצבים.'
+        feedback: 'שם הכא"מ $\varepsilon_0\sin45^\circ$, כ-$71\%$ מהשיא. השיא מתקבל רק כשמישור הסליל לאורך השדה.'
+      - text: 'הכא"מ זהה בכל המצבים, כי הסליל מסתובב במהירות קבועה.'
+        feedback: 'המהירות הזוויתית קבועה, אבל קצב השינוי של השטף לא: לפעמים הצלעות חוצות את קווי השדה, ולפעמים הן נעות לאורכם. לכן הכא"מ עולה ויורד, $\varepsilon_0\sin\omega t$.'
 
-  - id: Q-5.8-magnetic-zero
-    type: mc
+  - id: Q-5.8-flux-slope
+    type: twotier
     objectives: [OBJ-5.8-1]
     qualitative: true
+    level: mid
     prompt: >-
-      בחוק גאוס לשדה החשמלי, בצד ימין יש $Q_{\text{in}}/\varepsilon_0$. בחוק גאוס למגנטיות, $\oint_S \vec B\cdot d\vec A = 0$, בצד ימין יש אפס. מה האפס הזה אומר?
+      בגרף של השטף דרך סליל של גנרטור, לפי הזמן, השטף מגיע לשיא ברגע $t_1$. מה הכא"מ בסליל ברגע $t_1$?
     choices:
-      - text: 'שאין קוטב מגנטי בודד: קווי השדה המגנטי סגורים, וכל קו שנכנס למשטח סגור גם יוצא ממנו.'
+      - text: 'אפס.'
         correct: true
-        feedback: 'נכון. אין מקבילה מגנטית למטען, נקודה שקווים מתחילים בה. גם הקווים שיוצאים מקוטב צפוני חוזרים, בתוך המגנט, אל הקוטב הדרומי.'
-      - text: 'שבתוך משטח סגור אף פעם אין שדה מגנטי.'
-        feedback: 'בתוך משטח סגור יכול להיות שדה מגנטי חזק, למשל כשהוא מקיף מגנט. אפס הוא רק השטף **נטו**: כמה שיוצא פחות כמה שנכנס.'
-      - text: 'שהשטף מגנטי אפס רק כשאין מגנט בתוך המשטח. משטח סביב קוטב צפוני מקבל שטף החוצה.'
-        feedback: 'מהקוטב הצפוני הקווים יוצאים, אבל הם נכנסים למשטח בצד שבתוך המגנט. השטף נטו אפס תמיד, גם סביב קוטב.'
-        misconception: MC-maxwell-pole-is-a-source
-      - text: 'שהשדה המגנטי לא משתנה בזמן.'
-        feedback: 'החוק נכון גם כשהשדה משתנה. קצב השינוי של שדה מגנטי מופיע בחוק אחר: חוק פאראדיי.'
+        feedback: 'נכון.'
+      - text: 'הגדול ביותר.'
+        feedback: 'הכא"מ הוא מינוס $N$ כפול השיפוע של גרף השטף, לא הגובה שלו. בשיא הגרף שטוח, והשיפוע אפס.'
+        misconception: MC-generator-emf-follows-flux
+      - text: 'חצי מהשיא.'
+        feedback: 'בשיא של גרף השטף הקו המשיק אופקי: השיפוע, ולכן הכא"מ, אפס בדיוק.'
+    reasonPrompt: מה הנימוק?
+    reasons:
+      - text: 'בשיא של גרף השטף הקו המשיק אופקי: לרגע השטף לא משתנה.'
+        correct: true
+        feedback: 'נכון. $\varepsilon = -N\dfrac{\Delta\Phi}{\Delta t}$, ובשיא $\Delta\Phi \approx 0$ בפרק זמן קצר. במצב הזה מישור הסליל ניצב לשדה, והצלעות נעות לאורך קווי השדה.'
+      - text: 'ככל שעובר יותר שטף דרך הסליל, הכא"מ גדול יותר.'
+        feedback: 'זה השטף, לא השינוי שלו. סליל במצב קבוע עם הרבה שטף דרכו לא יוצר כא"מ בכלל. רק שינוי בשטף משרה כא"מ.'
+        misconception: MC-generator-emf-follows-flux
+      - text: 'בשיא השטף משתנה הכי מהר, כי ברגע הזה מישור הסליל ניצב לשדה.'
+        feedback: 'להפך: השטף משתנה הכי מהר כשהוא עובר באפס, ולא בשיא. בשיא הגרף מתהפך מעלייה לירידה, ולרגע הוא שטוח.'
+        misconception: MC-generator-emf-follows-flux
 
-  - id: Q-5.8-gauss-sum
+  - id: Q-5.8-side-current
+    type: vector
+    objectives: [OBJ-5.8-1]
+    qualitative: true
+    level: mid
+    allowOutIn: true
+    prompt: >-
+      מסתכלים לאורך הציר של גנרטור, כמו באיור 5.8א. השדה המגנטי מצביע **ימינה**. ברגע מסוים הצלע השמאלית של הסליל, שמקבילה לציר, נעה **למעלה**. מה כיוון הזרם המושרה בצלע הזו?
+    answer: in
+    correctFeedback: 'נכון. על מטען חיובי בצלע פועל כוח לורנץ $q\vec v\times\vec B$. בכלל כף יד ימין: האצבעות ימינה (השדה), האגודל למעלה (המהירות), וכף היד פונה לתוך הדף, ⊗. בכיוון הזה הכוח מניע את הזרם בצלע.'
+    wrong:
+      - dir: out
+        feedback: 'זה הכיוון כשהצלע נעה למטה, או כשהשדה מצביע שמאלה. האצבעות ימינה, בכיוון השדה, האגודל למעלה, בכיוון המהירות: כף היד פונה לתוך הדף.'
+      - dir: n
+        feedback: 'הכוח על המטענים ניצב למהירות, ולא בכיוונה. הוא ניצב גם לשדה, ולכן כאן הוא ניצב לדף.'
+      - dir: e
+        feedback: 'הכוח המגנטי ניצב לשדה, ולא בכיוונו. הזרם בצלע זורם לאורכה, והצלע מקבילה לציר, כלומר ניצבת לדף.'
+      - dir: zero
+        feedback: 'הצלע נעה בניצב לשדה, ולכן בדיוק עכשיו היא חוצה הכי הרבה קווי שדה: הכא"מ בה הגדול ביותר, לא אפס.'
+        misconception: MC-generator-emf-follows-flux
+    wrongFeedback: 'השתמשו בכוח לורנץ על מטען חיובי בצלע: כלל כף יד ימין, האצבעות בכיוון השדה, האגודל בכיוון המהירות.'
+
+  - id: Q-5.8-instant-emf
     type: numeric
     objectives: [OBJ-5.8-1, OBJ-5.8-2]
     level: mid
     prompt: >-
-      בתוך כדור דמיוני נמצאים מטען של $+6\,\text{nC}$ ומטען של $-1\,\text{nC}$. מחוץ לכדור, קרוב אליו, נמצא מטען של $+3\,\text{nC}$. מה השטף החשמלי דרך הכדור? ענו ב-$\text{N}\cdot\text{m}^2/\text{C}$, עם $\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$.
-    answer: 565
-    unit: N·m²/C
+      סליל של $80$ כריכות ששטחו $6\cdot10^{-3}\,\text{m}^2$ מסתובב במהירות זוויתית של $50\,\text{rad/s}$ בשדה מגנטי אחיד של $0.25\,\text{T}$. מה הכא"מ ברגע שבו **מישור הסליל** יוצר זווית של $40^\circ$ עם קווי השדה? ענו בוולט.
+    answer: 4.596
+    unit: V
     tolerance: 0.03
-    correctFeedback: 'נכון. $Q_{\text{in}} = +6 - 1 = +5\,\text{nC}$, והשטף $\dfrac{5\cdot10^{-9}}{8.85\cdot10^{-12}} \approx 565\,\text{N}\cdot\text{m}^2/\text{C}$. המטען שבחוץ משנה את השדה על הכדור, אבל לא את השטף נטו.'
-    wrongFeedback: 'צד ימין של חוק גאוס הוא המטען שבתוך המשטח בלבד, עם הסימנים, חלקי $\varepsilon_0$.'
+    correctFeedback: 'נכון. $\varepsilon_0 = NBA\omega = 80\cdot0.25\cdot6\cdot10^{-3}\cdot50 = 6\,\text{V}$. הזווית בנוסחה היא בין האנך לשדה: $90^\circ - 40^\circ = 50^\circ$, ו-$\varepsilon = 6\sin50^\circ \approx 4.6\,\text{V}$.'
+    wrongFeedback: 'מצאו קודם את $\varepsilon_0 = NBA\omega$. ב-$\varepsilon = \varepsilon_0\sin\theta$, הזווית $\theta$ היא בין האנך לסליל לבין השדה.'
     commonWrong:
-      - value: 904
-        feedback: 'הוספתם את המטען שבחוץ, $+3\,\text{nC}$. הוא לא נספר: כמה שהשדה שלו נכנס לכדור, כך הוא יוצא.'
-        misconception: MC-gauss-outside-charge-counts
-      - value: 791
-        feedback: 'חיברתם $6 + 1$ בלי הסימנים. המטען השלילי מקטין את המטען הכלוא: $6 - 1 = 5\,\text{nC}$.'
-      - value: 45
-        feedback: 'חישבתם $kQ_{\text{in}}$. השטף הוא $Q_{\text{in}}/\varepsilon_0 = 4\pi k Q_{\text{in}}$, גדול פי $4\pi$.'
-        misconception: MC-gauss-flux-equals-kq
+      - value: 3.857
+        feedback: 'הצבתם את הזווית בין **מישור** הסליל לשדה, $40^\circ$. בנוסחה $\theta$ היא הזווית בין **האנך** לשדה, $50^\circ$. בדיקה: כשהמישור קרוב להיות לאורך השדה, הכא"מ קרוב לשיא.'
+      - value: 6
+        feedback: 'זה ערך השיא, $\varepsilon_0 = NBA\omega$, כשמישור הסליל לאורך השדה. כאן המישור יוצר $40^\circ$ עם השדה, והכא"מ קטן יותר.'
+      - value: 0.05745
+        feedback: 'זה הכא"מ של כריכה אחת. בסליל $80$ כריכות, וכל אחת תורמת את אותו כא"מ.'
 
-  - id: Q-5.8-always-zero
-    type: multi
-    objectives: [OBJ-5.8-1]
-    qualitative: true
-    level: mid
+  # ------------------------------------------------ OBJ-5.8-2: peak, period, frequency, scaling
+  - id: Q-5.8-peak
+    type: numeric
+    objectives: [OBJ-5.8-2]
     prompt: >-
-      סמנו את כל הגדלים שהם **תמיד** אפס, לפי משוואות מקסוול.
-    choices:
-      - text: 'השטף המגנטי דרך משטח סגור כלשהו.'
-        correct: true
-        feedback: 'נכון: חוק גאוס למגנטיות.'
-      - text: 'השטף החשמלי דרך משטח סגור שאין בתוכו מטען נטו.'
-        correct: true
-        feedback: 'נכון: לפי חוק גאוס, השטף הוא $Q_{\text{in}}/\varepsilon_0$, ו-$Q_{\text{in}} = 0$.'
-      - text: '$\oint \vec E\cdot d\vec l$ סביב מסלול שהשטף המגנטי דרכו לא משתנה.'
-        correct: true
-        feedback: 'נכון: לפי חוק פאראדיי, צד ימין הוא מינוס קצב השינוי של השטף, ואם השטף לא משתנה, הוא אפס.'
-      - text: '$\oint \vec B\cdot d\vec l$ סביב מסלול שאין דרכו שום זרם של מטענים.'
-        feedback: 'לא תמיד. אם דרך המשטח על המסלול עובר שטף חשמלי שמשתנה, כמו בין לוחות קבל שנטען, הסכום שונה מאפס. זו התוספת של מקסוול.'
-        misconception: MC-no-field-between-plates
-      - text: 'השטף החשמלי דרך משטח סגור סביב כדור מוליך טעון.'
-        feedback: 'המטען של הכדור בתוך המשטח, ולכן השטף הוא $Q/\varepsilon_0$, לא אפס. המטען יושב על פני הכדור, אבל עדיין בתוך משטח שמקיף אותו.'
+      סליל מלבני של $250$ כריכות, $12\,\text{cm}$ על $8\,\text{cm}$, מסתובב $600$ סיבובים בדקה בשדה מגנטי אחיד של $0.15\,\text{T}$, שניצב לציר. מה ערך השיא של הכא"מ? ענו בוולט.
+    answer: 22.62
+    unit: V
+    tolerance: 0.03
+    correctFeedback: 'נכון. $600$ סיבובים בדקה הם $f = 10\,\text{Hz}$, ולכן $\omega = 2\pi\cdot10 \approx 62.8\,\text{rad/s}$. $A = 0.12\cdot0.08 = 9.6\cdot10^{-3}\,\text{m}^2$, ו-$\varepsilon_0 = NBA\omega = 250\cdot0.15\cdot9.6\cdot10^{-3}\cdot62.8 \approx 22.6\,\text{V}$.'
+    wrongFeedback: 'המירו את מספר הסיבובים בדקה למהירות זוויתית: קודם $f$ בסיבובים לשנייה, ואז $\omega = 2\pi f$. אחר כך $\varepsilon_0 = NBA\omega$, עם השטח במטרים רבועים.'
+    commonWrong:
+      - value: 3.6
+        feedback: 'הצבתם $f = 10\,\text{Hz}$ במקום $\omega$. בנוסחה $\varepsilon_0 = NBA\omega$ צריך את המהירות הזוויתית, $\omega = 2\pi f \approx 62.8\,\text{rad/s}$.'
+      - value: 216
+        feedback: 'הצבתם $600$ במקום $\omega$. $600$ הם סיבובים **בדקה**: $f = 600/60 = 10\,\text{Hz}$, ו-$\omega = 2\pi f$.'
+      - value: 1357
+        feedback: 'הכפלתם ב-$2\pi$, אבל שכחתם לחלק ב-$60$: $600$ סיבובים בדקה הם $10$ סיבובים בשנייה.'
 
-  # ------------------------------------------------ OBJ-5.8-2: which law, and computing with it
-  - id: Q-5.8-law-ring
+  - id: Q-5.8-period
+    type: numeric
+    objectives: [OBJ-5.8-2]
+    prompt: >-
+      הסליל של גנרטור משלים $1500$ סיבובים בדקה. מה זמן המחזור של הכא"מ שהוא יוצר? ענו בשניות.
+    answer: 0.04
+    unit: s
+    tolerance: 0.02
+    correctFeedback: 'נכון. $1500$ סיבובים ב-$60\,\text{s}$ הם $f = 25\,\text{Hz}$, והכא"מ חוזר על עצמו כל סיבוב: $T = 1/f = 0.04\,\text{s}$.'
+    wrongFeedback: 'זמן המחזור הוא הזמן של סיבוב אחד: $60$ שניות חלקי מספר הסיבובים בדקה.'
+    commonWrong:
+      - value: 25
+        feedback: 'זו התדירות, מספר הסיבובים בשנייה, $f = 25\,\text{Hz}$. זמן המחזור הוא ההופכי שלה, $T = 1/f$.'
+      - value: 0.000667
+        feedback: 'חילקתם $1$ ב-$1500$, אבל $1500$ הם סיבובים בדקה, לא בשנייה. סיבוב אחד לוקח $60/1500$ שניות.'
+      - value: 157.1
+        feedback: 'זו המהירות הזוויתית, $\omega = 2\pi f \approx 157\,\text{rad/s}$. זמן המחזור הוא $T = 2\pi/\omega$.'
+
+  - id: Q-5.8-faster
     type: mc
     objectives: [OBJ-5.8-2]
     qualitative: true
     prompt: >-
-      מפילים מגנט דרך טבעת נחושת, ובזמן שהוא עובר דרכה זורם בטבעת זרם. איזה מארבעת החוקים של מקסוול מסביר את הזרם?
+      מסובבים גנרטור מהר פי 2 מקודם. מה קורה לערך השיא של הכא"מ ולזמן המחזור?
     choices:
-      - text: 'חוק פאראדיי: השטף המגנטי דרך הטבעת משתנה, ונוצר סביבה שדה חשמלי שדוחף את המטענים.'
+      - text: 'השיא גדל פי 2, וזמן המחזור קטן פי 2.'
         correct: true
-        feedback: 'נכון. שטף מגנטי שמשתנה, ולא שדה מגנטי חזק כשלעצמו, הוא מה שיוצר את הכא״מ.'
-      - text: 'חוק גאוס למגנטיות: המגנט מכניס שטף מגנטי לתוך הטבעת.'
-        feedback: 'חוק גאוס למגנטיות מדבר על משטח סגור, ואומר שהשטף דרכו תמיד אפס. הוא לא מסביר שום זרם.'
-      - text: 'חוק אמפר-מקסוול: הזרם בטבעת יוצר שדה מגנטי.'
-        feedback: 'זה נכון, אבל זה מה שהזרם עושה אחרי שהוא קיים. השאלה היא מה **יוצר** את הזרם.'
-      - text: 'חוק גאוס: המגנט טעון, ומושך את האלקטרונים בטבעת.'
-        feedback: 'מגנט אינו טעון חשמלית. אם הוא לא זז, אין בטבעת זרם, כמה שהוא יהיה קרוב.'
+        feedback: 'נכון. $\varepsilon_0 = NBA\omega$ ו-$T = 2\pi/\omega$. השטף משתנה באותה כמות בחצי מהזמן, ולכן קצב השינוי כפול.'
+      - text: 'השיא לא משתנה, וזמן המחזור קטן פי 2.'
+        feedback: 'הכא"מ הוא קצב השינוי של השטף. אותו שינוי, מ-$BA$ ל-$\Phi = -BA$, בחצי מהזמן, נותן קצב כפול: $\varepsilon_0 = NBA\omega$ גדל פי 2.'
+        misconception: MC-generator-faster-same-peak
+      - text: 'השיא גדל פי 2, וזמן המחזור לא משתנה.'
+        feedback: 'זמן המחזור הוא הזמן של סיבוב אחד. סיבוב מהיר פי 2 נמשך חצי מהזמן: $T = 2\pi/\omega$.'
+      - text: 'השיא גדל פי 4, וזמן המחזור קטן פי 2.'
+        feedback: 'פי 4 גדל **ההספק** הממוצע בנגד, כי הוא תלוי בריבוע השיא. השיא עצמו פרופורציוני ל-$\omega$, ולכן גדל פי 2.'
 
-  - id: Q-5.8-law-broken-magnet
-    type: twotier
+  - id: Q-5.8-rank-peaks
+    type: rank
     objectives: [OBJ-5.8-2]
     qualitative: true
-    prompt: >-
-      חוצים מגנט מוט לשניים, כדי לקבל קוטב צפוני לבד וקוטב דרומי לבד. מה מקבלים?
-    choices:
-      - text: 'שני מגנטים קטנים, לכל אחד קוטב צפוני וקוטב דרומי.'
-        correct: true
-        feedback: 'נכון.'
-      - text: 'חתיכה אחת שהיא קוטב צפוני בלבד, וחתיכה שהיא קוטב דרומי בלבד.'
-        feedback: 'כך היה קורה אילו לקוטב היה "מטען מגנטי". מעולם לא נמצא קוטב בודד: בחתך נוצרים שני קטבים חדשים.'
-        misconception: MC-maxwell-pole-is-a-source
-      - text: 'שתי חתיכות ברזל רגילות, בלי מגנטיות בכלל.'
-        feedback: 'החתיכות נשארות ממוגנטות. החיתוך לא מבטל את המגנטיות, הוא רק מוסיף קטבים בחתך.'
-    reasonPrompt: איזה חוק מסביר את זה?
-    reasons:
-      - text: 'חוק גאוס למגנטיות: קווי השדה המגנטי סגורים, ואין נקודה שהם מתחילים בה.'
-        correct: true
-        feedback: 'נכון. קו שיוצא מהקוטב הצפוני ממשיך בתוך המגנט אל הדרומי. בכל חתיכה הקווים עדיין סגורים, ולכן לכל חתיכה שני קטבים.'
-      - text: 'חוק גאוס: לכל חתיכה יש מטען כלוא, ולכן יש לה שטף.'
-        feedback: 'חוק גאוס עוסק בשדה החשמלי ובמטען חשמלי. למגנט אין מטען חשמלי נטו.'
-      - text: 'חוק פאראדיי: החיתוך משנה את השטף, ולכן נוצרים קטבים חדשים.'
-        feedback: 'חוק פאראדיי עוסק בשדה חשמלי שנוצר משטף שמשתנה. הקטבים החדשים לא קשורים לשינוי בזמן: הם שם גם אחרי שהכול נרגע.'
-
-  - id: Q-5.8-faraday-big-loop
-    type: numeric
-    objectives: [OBJ-5.8-2]
     level: mid
     prompt: >-
-      בליבה של סליל ארוך, ברדיוס $5\,\text{cm}$, השדה המגנטי אחיד ומשתנה בקצב של $0.4\,\text{T/s}$. מחוץ לליבה אין שדה מגנטי. סביב הליבה, עם אותו מרכז, יש טבעת דקה ברדיוס $20\,\text{cm}$. מה גודל הכא״מ המושרה בטבעת, $|\oint \vec E\cdot d\vec l|$? ענו במילי-וולט (mV).
-    answer: 3.14
-    unit: mV
-    tolerance: 0.03
-    correctFeedback: 'נכון. השטף נספר רק בליבה, $\pi\cdot0.05^2\,\text{m}^2$, ולכן $|\oint \vec E\cdot d\vec l| = \pi\cdot0.05^2\cdot0.4 \approx 3.14\cdot10^{-3}\,\text{V}$. רדיוס הטבעת לא משנה, כל עוד היא מקיפה את כל הליבה.'
-    wrongFeedback: 'לפי חוק פאראדיי, הכא״מ הוא קצב השינוי של השטף דרך הטבעת. איפה יש שדה מגנטי?'
-    commonWrong:
-      - value: 50.3
-        feedback: 'כפלתם בשטח של כל הטבעת, $\pi\cdot0.2^2$. אבל שדה מגנטי יש רק בליבה, ולכן השטף הוא השדה כפול שטח הליבה.'
-        misconception: MC-maxwell-flux-through-empty-area
-      - value: 0
-        feedback: 'על הטבעת אין שדה מגנטי, אבל יש שדה חשמלי מושרה, והשטף דרכה (כולו בליבה) משתנה. הכא״מ אינו אפס.'
-        misconception: MC-maxwell-no-induced-field-outside
+      ארבעה גנרטורים, ובכולם סלילים באותו שטח. דרגו אותם לפי ערך השיא של הכא"מ, מהגדול לקטן (גנרטורים עם שיא שווה באותה דרגה).
+    items:
+      - id: g1
+        label: '$100$ כריכות, $0.2\,\text{T}$, $5$ סיבובים בשנייה'
+      - id: g2
+        label: '$200$ כריכות, $0.2\,\text{T}$, $2.5$ סיבובים בשנייה'
+      - id: g3
+        label: '$100$ כריכות, $0.4\,\text{T}$, $10$ סיבובים בשנייה'
+      - id: g4
+        label: '$50$ כריכות, $0.2\,\text{T}$, $5$ סיבובים בשנייה'
+    order: [g3, [g1, g2], g4]
+    correctFeedback: 'נכון. $\varepsilon_0 = NBA\omega$ פרופורציוני למכפלה $N\cdot B\cdot f$: $400$ לשלישי, $100$ לראשון ולשני, ו-$50$ לרביעי. בשני כפול מספר הכריכות, אבל חצי מהירות: השיא כמו בראשון.'
+    wrongFeedback: 'השיא פרופורציוני ל-$N$, ל-$B$ ולמהירות הסיבוב יחד, $\varepsilon_0 = NBA\omega$. חשבו לכל גנרטור את המכפלה $N\cdot B\cdot f$, ובדקו שלא שכחתם שמהירות הסיבוב משפיעה כמו מספר הכריכות.'
 
-  - id: Q-5.8-b-flux-faces
-    type: numeric
-    objectives: [OBJ-5.8-2]
-    level: mid
-    prompt: >-
-      משטח סגור בצורת גליל מקיף את הקוטב הצפוני של מגנט, כך שהמגנט נכנס אליו מלמטה. דרך המכסה העליון יוצא שטף מגנטי של $3\cdot10^{-4}\,\text{Wb}$, ודרך הדופן הצדדית יוצא עוד $1\cdot10^{-4}\,\text{Wb}$. כמה שטף מגנטי **נכנס** דרך המכסה התחתון, שהמגנט חוצה? ענו ב-$10^{-4}\,\text{Wb}$.
-    answer: 4
-    unit: 10⁻⁴ Wb
-    tolerance: 0.03
-    correctFeedback: 'נכון. השטף נטו דרך המשטח הסגור הוא אפס, ולכן כל מה שיוצא, $3 + 1 = 4\cdot10^{-4}\,\text{Wb}$, נכנס דרך המכסה התחתון, מתוך המגנט.'
-    wrongFeedback: 'לפי חוק גאוס למגנטיות, השטף נטו דרך משטח סגור הוא אפס: מה שיוצא שווה למה שנכנס.'
-    commonWrong:
-      - value: 0
-        feedback: 'מהקוטב הצפוני הקווים יוצאים, אבל הם מגיעים אליו מבפנים, דרך המגנט. דרך המכסה התחתון נכנס כל השטף שיוצא מהשאר.'
-        misconception: MC-maxwell-pole-is-a-source
-      - value: 2
-        feedback: 'החסרתם $3 - 1$. גם השטף דרך הדופן **יוצא**, ולכן מחברים: $3 + 1$.'
-      - value: 3
-        feedback: 'שכחתם את השטף שיוצא דרך הדופן הצדדית.'
-
-  # ------------------------------------------------ OBJ-5.8-3: Maxwell's addition, the displacement current
-  - id: Q-5.8-gap-field
-    type: twotier
-    objectives: [OBJ-5.8-3]
-    qualitative: true
-    prompt: >-
-      קבל נטען, וזרם זורם בתיל שמוביל אליו. האם יש שדה מגנטי ברווח שבין הלוחות, ליד השפה שלהם?
-    choices:
-      - text: 'כן: שדה שמקיף את הציר, כמו סביב התיל.'
-        correct: true
-        feedback: 'נכון.'
-      - text: 'לא: בין הלוחות אין זרם, ולכן אין שדה מגנטי.'
-        feedback: 'כך היה לפי חוק אמפר של שיעור 4.4. התוספת של מקסוול אומרת שגם שדה חשמלי שמשתנה יוצר שדה מגנטי, והשדה הזה נמדד בניסויים.'
-        misconception: MC-no-field-between-plates
-      - text: 'רק אם יש בקבל דליפה של מטען בין הלוחות.'
-        feedback: 'גם בקבל אידאלי, שבו שום מטען לא עובר את הרווח, יש שם שדה מגנטי בזמן הטעינה.'
-        misconception: MC-displacement-is-charge-flow
-    reasonPrompt: מה יוצר אותו?
-    reasons:
-      - text: 'השדה החשמלי בין הלוחות גדל, ושדה חשמלי שמשתנה יוצר סביבו שדה מגנטי (התוספת של מקסוול).'
-        correct: true
-        feedback: 'נכון. זרם ההעתקה $\varepsilon_0\,d\Phi_E/dt$ בין הלוחות שווה לזרם בתיל, והוא יוצר את אותו שדה.'
-      - text: 'אלקטרונים קופצים דרך הרווח מלוח ללוח, וזה זרם ההעתקה.'
-        feedback: 'שום מטען לא עובר את הרווח: אילו עבר, הקבל היה מתפרק. זרם ההעתקה הוא שדה חשמלי שמשתנה, לא תנועה של מטענים.'
-        misconception: MC-displacement-is-charge-flow
-      - text: 'השדה של התיל ממשיך לתוך הרווח, כמו שהשדה של מגנט ממשיך מחוצה לו.'
-        feedback: 'זה לא ההסבר. לפי חוק אמפר של שיעור 4.4, מסלול בין הלוחות לא מקיף שום זרם, ולכן הסכום סביבו היה אפס, ושדה שמקיף את הציר לא היה יכול להתקיים שם. את השדה שבין הלוחות יוצר השדה החשמלי שגדל: זרם ההעתקה שעובר דרך המסלול.'
-
-  - id: Q-5.8-displacement-equals
-    type: numeric
-    objectives: [OBJ-5.8-3]
-    prompt: >-
-      קבל נטען בזרם של $0.8\,\text{A}$. מה זרם ההעתקה, $\varepsilon_0\,\Delta\Phi_E/\Delta t$, דרך משטח שחוצה את כל הרווח שבין הלוחות? ענו באמפר.
-    answer: 0.8
-    unit: A
-    tolerance: 0.03
-    correctFeedback: 'נכון. $\Phi_E = q/\varepsilon_0$, ולכן $\varepsilon_0\,\Delta\Phi_E/\Delta t = \Delta q/\Delta t = 0.8\,\text{A}$: בדיוק הזרם בתיל.'
-    wrongFeedback: 'השטף בין הלוחות הוא $q/\varepsilon_0$. כפלו את קצב השינוי שלו ב-$\varepsilon_0$, ותקבלו את קצב השינוי של המטען על הלוח.'
-    commonWrong:
-      - value: 0
-        feedback: 'שום מטען לא עובר את הרווח, אבל זרם ההעתקה אינו זרימה של מטענים. השדה בין הלוחות גדל, וזרם ההעתקה שווה לזרם בתיל.'
-        misconception: MC-displacement-is-charge-flow
-      - value: 0.4
-        feedback: 'זרם ההעתקה לא מתחלק בין הלוחות. כל הזרם שמגיע ללוח ממשיך בין הלוחות כזרם העתקה.'
-
-  - id: Q-5.8-full-capacitor
+  # ------------------------------------------------ OBJ-5.8-3: slip rings, commutator, the motor
+  - id: Q-5.8-commutator-output
     type: mc
     objectives: [OBJ-5.8-3]
     qualitative: true
     prompt: >-
-      קבל מחובר לסוללה כבר זמן רב, והוא מלא: השדה החשמלי בין הלוחות חזק וקבוע. מה השדה המגנטי בין הלוחות?
+      מחליפים בגנרטור את טבעות ההחלקה בטבעת מפוצלת (קומוטטור), ומחברים אותו לנורה. איך נראה גרף המתח בין המברשות לפי הזמן?
     choices:
-      - text: 'אפס: השדה החשמלי לא משתנה, ולכן אין זרם העתקה.'
+      - text: 'גבעות של סינוס, כולן מעל לציר: המתח עולה מאפס לשיא וחוזר לאפס, פעמיים בכל סיבוב.'
         correct: true
-        feedback: 'נכון. שדה מגנטי נוצר מ**שינוי** של השדה החשמלי. גם בתיל הזרם נעצר, ולכן גם סביבו אין שדה מגנטי.'
-      - text: 'הכי חזק שהיה: השדה החשמלי עכשיו הכי חזק.'
-        feedback: 'זרם ההעתקה תלוי בקצב השינוי של השטף, לא בגודל השדה. כשהקבל מלא השדה כבר לא משתנה, וזרם ההעתקה אפס.'
-        misconception: MC-displacement-follows-field
-      - text: 'כמו בזמן הטעינה, כי הלוחות עדיין טעונים.'
-        feedback: 'מטענים שעומדים במקום לא יוצרים שדה מגנטי. השדה המגנטי היה קיים רק כל עוד השדה החשמלי השתנה.'
-      - text: 'אי אפשר לדעת בלי לדעת את המתח של הסוללה.'
-        feedback: 'המתח קובע כמה חזק השדה החשמלי, אבל השדה המגנטי תלוי רק בקצב השינוי שלו, וזה אפס בכל מתח.'
-        misconception: MC-displacement-follows-field
+        feedback: 'נכון. הטבעת המפוצלת הופכת את החיבור בדיוק כשהכא"מ עובר באפס, ולכן במקום החצאים השליליים מקבלים אותם חצאים, הפוכים: $|\varepsilon_0\sin\omega t|$. זה זרם ישר פועם.'
+      - text: 'קו ישר אופקי: מתח קבוע, כמו של סוללה.'
+        feedback: 'הקומוטטור לא משנה את גודל הכא"מ, רק את הסימן שלו. הגודל עדיין עולה ויורד, ופעמיים בכל סיבוב הוא אפס: זרם ישר **פועם**, לא קבוע.'
+        misconception: MC-commutator-steady-dc
+      - text: 'סינוס רגיל, חיובי ושלילי, כמו עם טבעות החלקה.'
+        feedback: 'עם טבעות החלקה כל טבעת מחוברת תמיד לאותו קצה של הסליל. בטבעת המפוצלת החיבור מתחלף כל חצי סיבוב, וזה הופך את החצאים השליליים לחיוביים.'
+      - text: 'גל מרובע: מתח קבוע שמתהפך בבת אחת כל חצי סיבוב.'
+        feedback: 'הטבעת המפוצלת לא מתהפכת בזמן שהמתח בשיא, אלא דווקא כשהוא אפס. וגודל הכא"מ ממשיך לעלות ולרדת כמו סינוס.'
+        misconception: MC-commutator-steady-dc
 
-  - id: Q-5.8-field-rate
-    type: numeric
-    objectives: [OBJ-5.8-3]
-    level: bagrut
-    prompt: >-
-      לוחות של קבל הם ריבועים בצלע $10\,\text{cm}$. ברגע מסוים הקבל נטען בזרם של $1.77\,\text{A}$. הניחו שהשדה בין הלוחות אחיד, $E = q/(\varepsilon_0 A)$. באיזה קצב גדל השדה החשמלי בין הלוחות? ענו ב-$\text{V}/(\text{m}\cdot\text{s})$, עם $\varepsilon_0 = 8.85\cdot10^{-12}$.
-    answer: 2e13
-    unit: V/(m·s)
-    tolerance: 0.03
-    correctFeedback: 'נכון. $\dfrac{\Delta E}{\Delta t} = \dfrac{1}{\varepsilon_0 A}\,\dfrac{\Delta q}{\Delta t} = \dfrac{I}{\varepsilon_0 A} = \dfrac{1.77}{8.85\cdot10^{-12}\cdot0.01} = 2\cdot10^{13}\,\text{V}/(\text{m}\cdot\text{s})$.'
-    wrongFeedback: 'השדה הוא $q/(\varepsilon_0 A)$, ו-$A$ ו-$\varepsilon_0$ קבועים. לכן הוא גדל בקצב $\dfrac{1}{\varepsilon_0 A}$ כפול הקצב שבו גדל המטען, הזרם.'
-    commonWrong:
-      - value: 177
-        feedback: 'חילקתם את הזרם בשטח ושכחתם את $\varepsilon_0$: $I/A$ היא צפיפות הזרם, לא קצב השינוי של השדה.'
-      - value: 2e9
-        feedback: 'הצבתם את השטח בסנטימטרים רבועים, $100$, במקום $0.01\,\text{m}^2$.'
-      - value: 2e11
-        feedback: 'הצבתם $A = 1\,\text{m}^2$. השטח של ריבוע בצלע $0.1\,\text{m}$ הוא $0.01\,\text{m}^2$.'
-
-  # ------------------------------------------------ OBJ-5.8-4: the wave, c, the spectrum
-  - id: Q-5.8-what-travels
-    type: mc
-    objectives: [OBJ-5.8-4]
-    qualitative: true
-    prompt: >-
-      אור השמש מגיע אלינו דרך 150 מיליון קילומטרים של כמעט-ריק. מה מתקדם בדרך?
-    choices:
-      - text: 'שדה חשמלי ושדה מגנטי שמשתנים ויוצרים זה את זה, בלי שום חומר.'
-        correct: true
-        feedback: 'נכון. שדה מגנטי שמשתנה יוצר שדה חשמלי (פאראדיי), ושדה חשמלי שמשתנה יוצר שדה מגנטי (התוספת של מקסוול). בריק אין צורך בשום דבר אחר.'
-      - text: 'תנודות של גז דליל מאוד שממלא את החלל, כמו קול באוויר.'
-        feedback: 'גל אלקטרומגנטי לא צריך חומר שיתנודד בו. מה שמתנודד הוא השדות עצמם, וזה אפשרי בריק מוחלט.'
-        misconception: MC-em-wave-needs-medium
-      - text: 'מטענים חשמליים שעפים מהשמש אלינו.'
-        feedback: 'בגל אלקטרומגנטי שום מטען לא נוסע. מטענים בשמש יוצרים את הגל, אבל מה שמתקדם הוא שדות.'
-      - text: 'אי אפשר להסביר אור בחשמל ובמגנטיות: אור הוא תופעה מסוג אחר.'
-        feedback: 'מקסוול מצא שהגל של השדות נע במהירות האור, והרץ יצר גלים כאלה ממעגל חשמלי. אור הוא גל אלקטרומגנטי.'
-        misconception: MC-maxwell-light-unlike-radio
-
-  - id: Q-5.8-same-speed
+  - id: Q-5.8-crank-harder
     type: twotier
-    objectives: [OBJ-5.8-4]
+    objectives: [OBJ-5.8-3]
     qualitative: true
+    level: mid
     prompt: >-
-      גל רדיו בתדירות $10^{8}\,\text{Hz}$ וקרן רנטגן בתדירות $10^{18}\,\text{Hz}$ יוצאים יחד מנקודה אחת בריק. מי מגיע ראשון למרחק של קילומטר?
+      מסובבים ביד גנרטור קטן, במהירות קבועה, והוא מדליק נורה. מנתקים את הנורה, כך שהמעגל פתוח, וממשיכים לסובב באותה מהירות. מה קורה?
     choices:
-      - text: 'מגיעים יחד.'
+      - text: 'קל יותר לסובב.'
         correct: true
         feedback: 'נכון.'
-      - text: 'קרן הרנטגן, כי התדירות שלה גבוהה יותר.'
-        feedback: 'תדירות גבוהה פירושה אורך גל קצר, לא מהירות גדולה. בריק כל הגלים האלקטרומגנטיים נעים באותה מהירות.'
-        misconception: MC-maxwell-speed-depends-on-frequency
-      - text: 'גל הרדיו, כי אורך הגל שלו ארוך יותר.'
-        feedback: 'גל ארוך לא מתקדם מהר יותר. $c = \lambda f$: כשאורך הגל ארוך יותר, התדירות קטנה יותר, והמכפלה זהה.'
-        misconception: MC-maxwell-speed-depends-on-frequency
+      - text: 'קשה יותר לסובב.'
+        feedback: 'בלי נורה אין זרם, ובלי זרם אין כוחות מגנטיים על הסליל. נשאר רק החיכוך.'
+      - text: 'אין שינוי, כי הסליל ממשיך להסתובב באותה מהירות באותו שדה.'
+        feedback: 'הכא"מ באמת לא משתנה, אבל המומנט שמתנגד לסיבוב נוצר על ידי **הזרם**. בלי זרם אין מומנט כזה, ומסובבים בקלות.'
+        misconception: MC-generator-free-energy
     reasonPrompt: מה הנימוק?
     reasons:
-      - text: 'המהירות בריק היא $c = 1/\sqrt{\mu_0\varepsilon_0}$, ובה אין שום תלות בתדירות.'
+      - text: 'בלי זרם בסליל אין עליו כוחות מגנטיים, ואין מומנט שמתנגד לסיבוב.'
         correct: true
-        feedback: 'נכון. המהירות נקבעת על ידי שני הקבועים בלבד. התדירות קובעת רק את אורך הגל, $\lambda = c/f$.'
-      - text: 'גל רנטגן נושא יותר אנרגיה, ולכן הוא מהיר יותר.'
-        feedback: 'אנרגיה ומהירות הן שני דברים שונים. כל הגלים האלקטרומגנטיים נעים בריק באותה מהירות.'
-        misconception: MC-maxwell-speed-depends-on-frequency
-      - text: 'רדיו ורנטגן הם תופעות שונות, ולכן אין סיבה שתהיה להם אותה מהירות.'
-        feedback: 'הם אותה תופעה: גל אלקטרומגנטי בתדירויות שונות. לכן יש להם אותה מהירות בריק.'
-        misconception: MC-maxwell-light-unlike-radio
+        feedback: 'נכון. כשהזרם זורם, הכוחות עליו יוצרים מומנט $NBIA\sin\theta$ נגד הסיבוב (חוק לנץ), כמו במנוע של שיעור 4.10. ההספק שמשקיעים נגדו, $\tau\omega$, הוא ההספק $\varepsilon I$ שהנורה מקבלת.'
+      - text: 'כשהמעגל פתוח, אין כא"מ בסליל.'
+        feedback: 'גם במעגל פתוח השטף משתנה, והכא"מ $NBA\omega\sin\omega t$ קיים: אפשר למדוד אותו בוולטמטר. מה שנעלם הוא הזרם.'
+      - text: 'הגנרטור מייצר אנרגיה בעצמו, וקשה לסובב רק בגלל החיכוך.'
+        feedback: 'הגנרטור לא מייצר אנרגיה, רק ממיר אותה. כל ג''אול שהנורה מקבלת הושקע בסיבוב נגד המומנט של הזרם המושרה.'
+        misconception: MC-generator-free-energy
 
-  - id: Q-5.8-c-from-constants
+  - id: Q-5.8-rings-true
+    type: multi
+    objectives: [OBJ-5.8-3]
+    qualitative: true
+    prompt: >-
+      אילו מהמשפטים נכונים? סמנו את כל התשובות הנכונות.
+    choices:
+      - text: 'עם טבעות החלקה, כל טבעת מחוברת תמיד לאותו קצה של הסליל, ולכן הזרם במעגל החיצוני מחליף כיוון.'
+        correct: true
+        feedback: 'נכון. הכא"מ של הסליל מגיע למעגל כמו שהוא, $\varepsilon_0\sin\omega t$: זרם חילופין.'
+      - text: 'הטבעת המפוצלת מחליפה את החיבור למברשות כשמישור הסליל ניצב לשדה.'
+        correct: true
+        feedback: 'נכון. במצב הזה הכא"מ אפס ומתחיל להתהפך, וההחלפה מבטלת את ההיפוך.'
+      - text: 'הטבעת המפוצלת מחליפה את החיבור למברשות כשמישור הסליל לאורך השדה.'
+        feedback: 'במצב הזה הכא"מ בשיא. החלפה שם הייתה הופכת את הסימן באמצע חצי המחזור, והתוצאה לא הייתה זרם ישר.'
+      - text: 'גנרטור עם טבעת מפוצלת נותן מתח קבוע בזמן.'
+        feedback: 'הכיוון קבוע, אבל הגודל עולה ויורד בין אפס לשיא: $|\varepsilon_0\sin\omega t|$, זרם ישר פועם.'
+        misconception: MC-commutator-steady-dc
+      - text: 'גנרטור עם טבעת מפוצלת בנוי כמו מנוע זרם ישר; מסובבים אותו ביד, ומקבלים זרם.'
+        correct: true
+        feedback: 'נכון. זה בדיוק המנוע של שיעור 4.10, שפועל בכיוון ההפוך.'
+
+  # ------------------------------------------------ OBJ-5.8-4: effective value, mean power, the grid
+  - id: Q-5.8-ac-energy
+    type: mc
+    objectives: [OBJ-5.8-4]
+    qualitative: true
+    prompt: >-
+      נורה מחוברת לגנרטור של זרם חילופין. על מחזור שלם, הממוצע של הזרם בנורה הוא אפס. מה נכון לגבי האנרגיה שהנורה מקבלת?
+    choices:
+      - text: 'היא מקבלת אנרגיה בשני חצאי המחזור, וההספק הממוצע חיובי.'
+        correct: true
+        feedback: 'נכון. ההספק ברגע הוא $I^2R$, ריבוע, ולכן הוא לא שלילי אף פעם: הנורה מתחממת בשני כיווני הזרם. ההספק הממוצע $\varepsilon_0^2/(2R)$.'
+      - text: 'בממוצע היא לא מקבלת אנרגיה, כי הממוצע של הזרם אפס.'
+        feedback: 'ההספק תלוי בריבוע הזרם, ולא בזרם עצמו. בחצי המחזור השני הזרם שלילי, אבל $I^2R$ חיובי: הנורה מתחממת גם אז.'
+        misconception: MC-ac-mean-zero-no-energy
+      - text: 'היא מקבלת אנרגיה בחצי מחזור אחד, ומחזירה אותה לגנרטור בחצי השני.'
+        feedback: 'נורה (נגד) לא מחזירה אנרגיה: היא הופכת אותה לחום ולאור בכל רגע שזורם בה זרם, לכל כיוון.'
+        misconception: MC-ac-mean-zero-no-energy
+      - text: 'היא מקבלת אנרגיה רק בחצי מחזור, כשהזרם חיובי.'
+        feedback: 'הנורה לא מבחינה בין הכיוונים. ההספק $I^2R$ זהה לזרם $I$ ולזרם באותו גודל בכיוון ההפוך.'
+        misconception: MC-ac-mean-zero-no-energy
+
+  - id: Q-5.8-mean-power
+    type: numeric
+    objectives: [OBJ-5.8-4]
+    prompt: >-
+      גנרטור שערך השיא של הכא"מ שלו $40\,\text{V}$ מחובר לנגד של $20\,\Omega$ (ההתנגדות של הסליל זניחה). מה ההספק הממוצע בנגד? ענו בוואט.
+    answer: 40
+    unit: W
+    tolerance: 0.03
+    correctFeedback: 'נכון. $\bar P = \dfrac{\varepsilon_0^2}{2R} = \dfrac{40^2}{2\cdot20} = 40\,\text{W}$: חצי מההספק בשיא, $80\,\text{W}$, כי הממוצע של $\sin^2$ על מחזור הוא חצי.'
+    wrongFeedback: 'ההספק ברגע $\dfrac{\varepsilon_0^2}{R}\sin^2\omega t$, והממוצע של $\sin^2$ על מחזור הוא חצי.'
+    commonWrong:
+      - value: 80
+        feedback: 'זה ההספק **בשיא**, $\varepsilon_0^2/R$, ברגעים שבהם הכא"מ בשיא. רוב הזמן ההספק קטן יותר, והממוצע חצי ממנו.'
+        misconception: MC-ac-mean-power-peak-squared
+      - value: 20
+        feedback: 'הצבתם בנוסחה את חצי השיא, $20\,\text{V}$, ומקבלים $\varepsilon_0^2/(4R)$. הממוצע הוא של **ההספק**, $\sin^2$, ולא של המתח: $\varepsilon_0^2/(2R)$.'
+        misconception: MC-ac-mean-power-peak-squared
+      - value: 0
+        feedback: 'הממוצע של הכא"מ אפס, אבל ההספק $\varepsilon^2/R$ לא שלילי אף פעם, ולכן הממוצע שלו חיובי.'
+        misconception: MC-ac-mean-zero-no-energy
+
+  - id: Q-5.8-effective
+    type: numeric
+    objectives: [OBJ-5.8-4]
+    prompt: >-
+      ערך השיא של מתח חילופין הוא $12\,\text{V}$. מה הערך האפקטיבי שלו? ענו בוולט.
+    answer: 8.485
+    unit: V
+    tolerance: 0.02
+    correctFeedback: 'נכון. $\varepsilon_{\text{eff}} = \dfrac{\varepsilon_0}{\sqrt2} = \dfrac{12}{\sqrt2} \approx 8.49\,\text{V}$: מתח קבוע כזה נותן בנגד את אותו הספק ממוצע.'
+    wrongFeedback: 'הערך האפקטיבי מוגדר דרך ההספק: $\varepsilon_{\text{eff}}^2/R = \varepsilon_0^2/(2R)$.'
+    commonWrong:
+      - value: 6
+        feedback: 'זה חצי מהשיא. הערך האפקטיבי הוא השורש של ממוצע **הריבוע**: $\sqrt{\tfrac12}\,\varepsilon_0 \approx 0.71\,\varepsilon_0$, ולא $0.5\,\varepsilon_0$.'
+        misconception: MC-ac-effective-is-half-peak
+      - value: 7.64
+        feedback: 'זה הממוצע של $|\varepsilon|$, $\tfrac{2}{\pi}\varepsilon_0$. הערך האפקטיבי מוגדר דרך ההספק, שתלוי בריבוע: $\varepsilon_0/\sqrt2$.'
+        misconception: MC-ac-effective-is-half-peak
+      - value: 16.97
+        feedback: 'הכפלתם ב-$\sqrt2$ במקום לחלק. הערך האפקטיבי קטן מהשיא: $\varepsilon_0/\sqrt2$.'
+
+  - id: Q-5.8-grid-peak
     type: numeric
     objectives: [OBJ-5.8-4]
     level: mid
     prompt: >-
-      חשבו את $\dfrac{1}{\sqrt{\mu_0\varepsilon_0}}$ מתוך הערכים שבדף הנוסחאות: $\mu_0 = 4\pi\cdot10^{-7}\,\text{T}\cdot\text{m/A}$ ו-$\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$. ענו ב-$\text{m/s}$.
-    answer: 3e8
-    unit: m/s
-    tolerance: 0.03
-    correctFeedback: 'נכון. $\mu_0\varepsilon_0 \approx 1.112\cdot10^{-17}\,\text{s}^2/\text{m}^2$, והשורש ההפוך הוא $3.00\cdot10^{8}\,\text{m/s}$: מהירות האור.'
-    wrongFeedback: 'כפלו קודם את שני הקבועים, הוציאו שורש, ואז חלקו את $1$ בתוצאה.'
+      ברשת החשמל בישראל המתח הוא $230\,\text{V}$ אפקטיבי, $50\,\text{Hz}$. מה המתח הגבוה ביותר שהשקע מגיע אליו? ענו בוולט.
+    answer: 325.3
+    unit: V
+    tolerance: 0.02
+    correctFeedback: 'נכון. $V_0 = \sqrt2\cdot230 \approx 325\,\text{V}$. המתח בשקע נע בין $V = 325\,\text{V}$ ל-$V = -325\,\text{V}$, $50$ פעמים בשנייה.'
+    wrongFeedback: '$230\,\text{V}$ הוא הערך האפקטיבי, והשיא גדול ממנו פי $\sqrt2$.'
     commonWrong:
-      - value: 9e16
-        feedback: 'שכחתם את השורש: $1/(\mu_0\varepsilon_0) \approx 9\cdot10^{16}$ הוא $c^2$.'
-      - value: 3.33e-9
-        feedback: 'זה $\sqrt{\mu_0\varepsilon_0}$, בלי החלוקה. חלקו את $1$ בתוצאה.'
-
-  - id: Q-5.8-fm-wavelength
-    type: numeric
-    objectives: [OBJ-5.8-4]
-    prompt: >-
-      תחנת רדיו משדרת בתדירות $100\,\text{MHz}$. מה אורך הגל שלה? ענו במטרים.
-    answer: 3
-    unit: m
-    tolerance: 0.03
-    correctFeedback: 'נכון. $\lambda = \dfrac{c}{f} = \dfrac{3\cdot10^{8}}{10^{8}} = 3\,\text{m}$.'
-    wrongFeedback: 'מ-$c = \lambda f$: $\lambda = c/f$, עם $f$ בהרץ. $1\,\text{MHz} = 10^{6}\,\text{Hz}$.'
-    commonWrong:
-      - value: 0.333
-        feedback: 'חילקתם הפוך, $f/c$. אורך הגל הוא $c/f$.'
-      - value: 3e6
-        feedback: 'הצבתם $f = 100$ בלי הקידומת. $100\,\text{MHz} = 10^{8}\,\text{Hz}$.'
-      - value: 3000
-        feedback: 'הצבתם $100\,\text{kHz}$. מגה-הרץ הוא $10^{6}\,\text{Hz}$, ו-$100\,\text{MHz} = 10^{8}\,\text{Hz}$.'
-
-  - id: Q-5.8-rank-wavelength
-    type: rank
-    objectives: [OBJ-5.8-4]
-    level: mid
-    prompt: >-
-      דרגו את הגלים לפי אורך הגל שלהם בריק, מהארוך ביותר לקצר ביותר.
-    items:
-      - id: grid
-        label: 'השדה של רשת החשמל, $50\,\text{Hz}$'
-      - id: fm
-        label: 'רדיו FM, $100\,\text{MHz}$'
-      - id: oven
-        label: 'תנור מיקרוגל, $2.45\,\text{GHz}$'
-      - id: green
-        label: 'אור ירוק, $5.6\cdot10^{14}\,\text{Hz}$'
-      - id: xray
-        label: 'קרני רנטגן, $3\cdot10^{18}\,\text{Hz}$'
-    order: [grid, fm, oven, green, xray]
-    correctFeedback: 'נכון. $\lambda = c/f$: ככל שהתדירות גבוהה יותר, אורך הגל קצר יותר. מ-$6000\,\text{km}$ ברשת החשמל, דרך $3\,\text{m}$, $12\,\text{cm}$ ו-$536\,\text{nm}$, ועד $10^{-10}\,\text{m}$ ברנטגן.'
-    wrongFeedback: 'כל הגלים נעים באותה מהירות, ולכן $\lambda = c/f$: אורך הגל הפוך לתדירות. סדרו לפי התדירות, מהנמוכה לגבוהה.'
+      - value: 230
+        feedback: '$230\,\text{V}$ הוא הערך **האפקטיבי**, שקובע את ההספק הממוצע. השיא גדול ממנו פי $\sqrt2$.'
+        misconception: MC-grid-230-is-peak
+      - value: 162.6
+        feedback: 'חילקתם ב-$\sqrt2$, כאילו $230\,\text{V}$ הוא השיא. הוא הערך האפקטיבי, והשיא הוא $\sqrt2\cdot230$.'
+        misconception: MC-grid-230-is-peak
+      - value: 460
+        feedback: 'הכפלתם ב-2. הערך האפקטיבי הוא השיא חלקי $\sqrt2$, ולכן השיא $\sqrt2\cdot230$, לא $2\cdot230$.'

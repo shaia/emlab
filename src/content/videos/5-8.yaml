@@ -1,22 +1,24 @@
-# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below) on the `verified`
-# date. `why` claims only what the title, the chapter list or the upload summary supports; nobody has watched them.
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below) on the
+# `verified` date. Durations come from the watch page (lengthSeconds). `why` claims only what the title
+# and the description support; neither video was watched. Captions: English tracks were listed on the
+# watch page, the rest were auto-translations and are not claimed.
 
-- id: v-5-8-crash-course
-  youtubeId: K40lNL3KsJ4
-  title: "Maxwell's Equations: Crash Course Physics #37"
-  channel: CrashCourse
+- id: v-5-8-generators
+  youtubeId: sAO9gYaMZkg
+  title: 'How electricity is generated (3D Animation - AC&DC Generators)'
+  channel: ScienceWorld
   lang: en
-  captions: []
-  minutes: 11
-  why: 'פרק באנגלית. לפי רשימת הפרקים שלו, הוא עובר על ארבע משוואות מקסוול (מ-1:09), כולל התוספת של מקסוול לחוק אמפר, ואחר כך על הגלים האלקטרומגנטיים ומהירותם (מ-5:00).'
+  captions: [en]
+  minutes: 5
+  why: 'הנפשה באנגלית. לפי התיאור שלה היא עוברת על גנרטור של זרם חילופין, על השטף המגנטי, על גנרטור של זרם ישר ועל חישוב התדירות של זרם החילופין. חפשו את טבעות ההחלקה ואת הטבעת המפוצלת, והשוו לשני המצבים באיור 5.8א.'
   verified: '2026-11-05'
 
-- id: v-5-8-matimatix
-  youtubeId: OwBd6RpeSuY
-  title: 'גלים אלקטרומגנטיים ומהירות האור- מציאת מהירות האור עם משוואות מקסוול חלק א'
-  channel: 'MATIMATIX'
-  lang: he
-  captions: []
-  minutes: 9
-  why: 'סרטון בעברית, החלק הראשון בסדרה. לפי הכותרת שלו, הוא מוצא את מהירות האור ממשוואות מקסוול. התיאור שלו לא מפרט את התוכן, והאורך לא אומת מחדש.'
+- id: v-5-8-rms
+  youtubeId: VB1ZYtzqPQo
+  title: 'What is RMS value? (& why should we care?) | Alternating currents | Physics | Khan Academy'
+  channel: Khan Academy India - English
+  lang: en
+  captions: [en]
+  minutes: 12
+  why: 'הסבר באנגלית. לפי התיאור, הערך האפקטיבי (RMS) של זרם חילופין הוא הזרם הישר שמפתח את אותו הספק ממוצע, ולסינוס הוא השיא חלקי שורש 2. זה ההסבר של "הערך האפקטיבי" בשיעור, בדרך אחרת.'
   verified: '2026-11-05'
