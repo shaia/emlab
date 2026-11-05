@@ -1,0 +1,81 @@
+# Lesson 5.7 terms (the generator and alternating current). Format and rules: see glossary/1-5.yaml.
+# Lesson 5.7 also uses frequency, angular-frequency, amplitude and time-average (glossary/6-14.yaml),
+# period (4-6), radian (6-1), commutator and brushes (4-10), and defines each of them in its own text first.
+
+- id: generator
+  term: גנרטור
+  en: electric generator
+  definition: 'מכשיר שהופך אנרגיה של סיבוב לאנרגיה חשמלית: סליל מסתובב בשדה מגנטי (או מגנט מסתובב ליד סליל), השטף דרכו משתנה, ולפי חוק פאראדיי נוצר בו כא"מ מושרה. נקרא גם מחולל, או דינמו. זה המנוע החשמלי, שפועל בכיוון ההפוך.'
+  lesson: '5.7'
+
+- id: angular-velocity
+  term: מהירות זוויתית
+  en: angular velocity
+  symbol: '\omega'
+  unit: rad/s
+  definition: 'הזווית שבה גוף מסתובב בכל שנייה, ברדיאנים. סיבוב שלם הוא 2π רדיאנים, ולכן גוף שמשלים f סיבובים בשנייה מסתובב ב-ω = 2πf, וזמן המחזור שלו T = 2π/ω. מוכרת מהמכניקה, מתנועה מעגלית.'
+  lesson: '5.7'
+
+- id: alternating-current
+  term: זרם חילופין
+  en: alternating current (AC)
+  definition: 'זרם שמחליף כיוון במחזוריות: חצי מחזור הוא זורם לכיוון אחד, וחצי מחזור לכיוון ההפוך. גנרטור עם טבעות החלקה נותן מתח חילופין סינוסי, ε = ε₀·sin(ωt), ובנגד הוא מניע זרם חילופין. זה הזרם ברשת החשמל.'
+  lesson: '5.7'
+
+- id: direct-current
+  term: זרם ישר
+  en: direct current (DC)
+  definition: 'זרם שזורם תמיד באותו כיוון, כמו הזרם שסוללה מניעה. אם גודלו משתנה אבל כיוונו לא, הוא זרם ישר פועם.'
+  lesson: '5.7'
+
+- id: pulsating-dc
+  term: זרם ישר פועם
+  en: pulsating direct current
+  definition: 'זרם שכיוונו קבוע אבל גודלו עולה ויורד במחזוריות. גנרטור עם קומוטטור נותן מתח כזה, |ε₀·sin(ωt)|: הוא עולה מאפס לשיא וחוזר לאפס פעמיים בכל סיבוב.'
+  lesson: '5.7'
+
+- id: slip-rings
+  term: טבעות החלקה
+  en: slip rings
+  definition: 'שתי טבעות שלמות על ציר הגנרטור, שמסתובבות איתו. כל טבעת מחוברת תמיד לאותו קצה של הסליל, ומברשת קבועה נוגעת בה. כך הכא"מ של הסליל מגיע למעגל החיצוני כמו שהוא, עם השינוי בסימן: זרם חילופין.'
+  lesson: '5.7'
+
+- id: peak-value
+  term: ערך השיא
+  en: peak value
+  symbol: '\varepsilon_0'
+  definition: 'הערך הגדול ביותר שמתח או זרם חילופין מגיעים אליו במחזור: המספר שמכפיל את ה-sin. בגנרטור ε₀ = NBAω.'
+  lesson: '5.7'
+
+- id: effective-value
+  term: ערך אפקטיבי
+  en: effective (rms) value
+  symbol: '\varepsilon_{\text{eff}}'
+  definition: 'המתח הקבוע (של זרם ישר) שהיה נותן בנגד את אותו הספק ממוצע כמו מתח החילופין. לסינוס הוא ε₀/√2, כ-0.71 מערך השיא, כי ההספק הממוצע ε₀²/(2R) שווה ל-(ε₀/√2)²/R. נקרא גם ערך יעיל, או ערך RMS (שורש ממוצע הריבועים). מתח הרשת, 230 V, הוא ערך אפקטיבי.'
+  lesson: '5.7'
+
+- id: mean-power
+  term: הספק ממוצע
+  en: mean power
+  symbol: '\bar P'
+  unit: W
+  definition: 'האנרגיה שרכיב מקבל במחזור שלם, חלקי זמן המחזור. בנגד R שמחובר לגנרטור, ההספק ברגע p = ε²/R עולה ויורד, וממוצעו ε₀²/(2R): חצי מההספק בשיא, כי הממוצע של sin² על מחזור הוא ½.'
+  lesson: '5.7'
+
+- id: power-grid
+  term: רשת החשמל
+  en: power grid
+  definition: 'הרשת שמביאה חשמל מתחנות הכוח לבתים. בישראל היא מספקת מתח חילופין של 230 V אפקטיבי (כ-325 V בשיא) בתדירות 50 Hz: 50 מחזורים בשנייה, מחזור כל 0.02 s.'
+  lesson: '5.7'
+
+- id: back-emf
+  term: כא"מ נגדי
+  en: back emf
+  definition: 'הכא"מ המושרה בסליל של מנוע חשמלי שמסתובב: המנוע הוא גם גנרטור, והכא"מ שלו מתנגד למתח הסוללה (חוק לנץ). ככל שהמנוע מהיר יותר, הכא"מ הנגדי גדול יותר והזרם בסליל קטן יותר.'
+  lesson: '5.7'
+
+- id: transformer
+  term: שנאי
+  en: transformer
+  definition: 'שני סלילים על ליבת ברזל משותפת. מתח חילופין בסליל אחד יוצר בליבה שטף משתנה, והשטף משרה מתח חילופין בסליל השני, גדול או קטן יותר לפי היחס בין מספרי הכריכות. עובד רק בזרם חילופין. נקרא גם טרנספורמטור. נושא העשרה.'
+  lesson: '5.7'
