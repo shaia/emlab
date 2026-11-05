@@ -1,0 +1,25 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below) on the
+# `verified` date. Durations were not confirmed: `minutes` is conservative. `why` claims only what the
+# title and a published summary of the video support.
+
+- id: v-5-1-khan-flux
+  youtubeId: m1PPujngqAw
+  title: 'Flux and magnetic flux'
+  channel: Khan Academy
+  lang: en
+  captions: []
+  start: 0
+  minutes: 11
+  why: 'הסבר באנגלית על מושג השטף: קודם רשת בתוך זרם אוויר, ואחר כך שדה מגנטי של מגנט מוט דרך משטח שמטים אותו, מגדילים אותו או מרחיקים אותו (לפי סיכום של הסרטון). חפשו את שלוש הדרכים לשנות שטף מהשיעור. שימו לב: בשטף מגנטי שום דבר לא זורם דרך המשטח, וגם הסרטון אומר זאת.'
+  verified: '2026-11-05'
+
+- id: v-5-1-oct-flux-problems
+  youtubeId: y30ATrKpwpU
+  title: 'Magnetic Flux, Basic Introduction - Physics Problems'
+  channel: The Organic Chemistry Tutor
+  lang: en
+  captions: []
+  start: 0
+  minutes: 12
+  why: 'מבוא באנגלית לשטף מגנטי עם תרגילים פתורים (לפי כותרת הסרטון). פתרו קודם את דוגמה 5.1.1 בעצמכם, ובזמן הצפייה בדקו בכל תרגיל איזו זווית מציבים: בין השדה לאנך, או בין השדה למישור.'
+  verified: '2026-11-05'
