@@ -48,19 +48,19 @@ questions:
     objectives: [OBJ-5.8-1, OBJ-5.8-2]
     level: mid
     prompt: >-
-      בתוך כדור דמיוני נמצאים מטען של $+3\,\text{nC}$ ומטען של $-1\,\text{nC}$. מחוץ לכדור, קרוב אליו, נמצא מטען של $+5\,\text{nC}$. מה השטף החשמלי דרך הכדור? ענו ב-$\text{N}\cdot\text{m}^2/\text{C}$, עם $\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$.
-    answer: 226
+      בתוך כדור דמיוני נמצאים מטען של $+6\,\text{nC}$ ומטען של $-1\,\text{nC}$. מחוץ לכדור, קרוב אליו, נמצא מטען של $+3\,\text{nC}$. מה השטף החשמלי דרך הכדור? ענו ב-$\text{N}\cdot\text{m}^2/\text{C}$, עם $\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$.
+    answer: 565
     unit: N·m²/C
     tolerance: 0.03
-    correctFeedback: 'נכון. $Q_{\text{in}} = +3 - 1 = +2\,\text{nC}$, והשטף $\dfrac{2\cdot10^{-9}}{8.85\cdot10^{-12}} \approx 226\,\text{N}\cdot\text{m}^2/\text{C}$. המטען שבחוץ משנה את השדה על הכדור, אבל לא את השטף נטו.'
+    correctFeedback: 'נכון. $Q_{\text{in}} = +6 - 1 = +5\,\text{nC}$, והשטף $\dfrac{5\cdot10^{-9}}{8.85\cdot10^{-12}} \approx 565\,\text{N}\cdot\text{m}^2/\text{C}$. המטען שבחוץ משנה את השדה על הכדור, אבל לא את השטף נטו.'
     wrongFeedback: 'צד ימין של חוק גאוס הוא המטען שבתוך המשטח בלבד, עם הסימנים, חלקי $\varepsilon_0$.'
     commonWrong:
-      - value: 791
-        feedback: 'הוספתם את המטען שבחוץ, $+5\,\text{nC}$. הוא לא נספר: כמה שהשדה שלו נכנס לכדור, כך הוא יוצא.'
+      - value: 904
+        feedback: 'הוספתם את המטען שבחוץ, $+3\,\text{nC}$. הוא לא נספר: כמה שהשדה שלו נכנס לכדור, כך הוא יוצא.'
         misconception: MC-gauss-outside-charge-counts
-      - value: 452
-        feedback: 'חיברתם $3 + 1$ בלי הסימנים. המטען השלילי מקטין את המטען הכלוא: $3 - 1 = 2\,\text{nC}$.'
-      - value: 18
+      - value: 791
+        feedback: 'חיברתם $6 + 1$ בלי הסימנים. המטען השלילי מקטין את המטען הכלוא: $6 - 1 = 5\,\text{nC}$.'
+      - value: 45
         feedback: 'חישבתם $kQ_{\text{in}}$. השטף הוא $Q_{\text{in}}/\varepsilon_0 = 4\pi k Q_{\text{in}}$, גדול פי $4\pi$.'
         misconception: MC-gauss-flux-equals-kq
 
@@ -195,7 +195,7 @@ questions:
         feedback: 'שום מטען לא עובר את הרווח: אילו עבר, הקבל היה מתפרק. זרם ההעתקה הוא שדה חשמלי שמשתנה, לא תנועה של מטענים.'
         misconception: MC-displacement-is-charge-flow
       - text: 'השדה של התיל ממשיך לתוך הרווח, כמו שהשדה של מגנט ממשיך מחוצה לו.'
-        feedback: 'השדה של התיל אכן מגיע לכל מקום, אבל בלי התוספת של מקסוול חוק אמפר נותן לאותו מסלול שתי תשובות. השדה שבין הלוחות מתאים לזרם ההעתקה שעובר שם.'
+        feedback: 'זה לא ההסבר. לפי חוק אמפר של שיעור 4.4, מסלול בין הלוחות לא מקיף שום זרם, ולכן הסכום סביבו היה אפס, ושדה שמקיף את הציר לא היה יכול להתקיים שם. את השדה שבין הלוחות יוצר השדה החשמלי שגדל: זרם ההעתקה שעובר דרך המסלול.'
 
   - id: Q-5.8-displacement-equals
     type: numeric

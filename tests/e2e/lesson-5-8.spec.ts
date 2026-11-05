@@ -78,9 +78,9 @@ test.describe('live figures', () => {
     await expect(fig.locator('[data-law="gauss-b"]')).toHaveAttribute('aria-pressed', 'true');
     await clickWorld(fig, 0, 0.05);
     const readout = fig.locator('.sim-readout');
-    await expect(readout).toContainText('∮B·dA = 0 T·m²');
-    await expect(readout).toContainText('השטף שיוצא: 7.36·10⁻⁷ T·m²');
-    await expect(readout).toContainText('השטף שנכנס: 7.36·10⁻⁷ T·m²');
+    await expect(readout).toContainText('∮B·dA = 0 Wb');
+    await expect(readout).toContainText('השטף שיוצא: 7.36·10⁻⁷ Wb');
+    await expect(readout).toContainText('השטף שנכנס: 7.36·10⁻⁷ Wb');
     expect((await progress(page)).tasks['fig-5-8a:b-pole']).toBeTruthy();
   });
 

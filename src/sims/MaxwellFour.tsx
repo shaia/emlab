@@ -90,13 +90,13 @@ const SAYS: Record<Law, ComponentChildren> = {
   ),
   faraday: (
     <>
-      <b>צד שמאל:</b> הסכום של <span class="q">E∥·Δl</span> סביב מסלול סגור: הכא״מ המושרה. <b>צד ימין:</b> מינוס קצב השינוי של השטף המגנטי דרך משטח
+      <b>צד שמאל:</b> הסכום של <span class="q">E∥·Δℓ</span> סביב מסלול סגור: הכא״מ המושרה. <b>צד ימין:</b> מינוס קצב השינוי של השטף המגנטי דרך משטח
       שהמסלול הוא השפה שלו. הוא שונה מאפס רק כשהשטף משתנה (שיעורים 5.2 ו-5.6).
     </>
   ),
   ampere: (
     <>
-      <b>צד שמאל:</b> הסכום של <span class="q">B∥·Δl</span> סביב מסלול סגור. <b>צד ימין:</b> <span class="q">μ₀</span> כפול זרם המטענים שעובר דרך משטח
+      <b>צד שמאל:</b> הסכום של <span class="q">B∥·Δℓ</span> סביב מסלול סגור. <b>צד ימין:</b> <span class="q">μ₀</span> כפול זרם המטענים שעובר דרך משטח
       שהמסלול הוא השפה שלו (שיעור 4.4), ועוד התוספת של מקסוול: <span class="q">μ₀ε₀</span> כפול קצב השינוי של השטף החשמלי דרך אותו משטח.
     </>
   ),
@@ -522,7 +522,7 @@ export default function MaxwellFour(props: MaxwellFourProps) {
     }
     // E in the gap, growing
     for (const y of [-0.04, -0.02, 0.02, 0.04]) arrow(ctx, X(-gap) + 2, Y(y), X(gap) - 2, Y(y), { color: p.efield, width: 2, head: 6 });
-    label(ctx, p, 'E גדל', X(0), Y(a) - 10, p.efield, { rtl: true, size: 12 });
+    label(ctx, p, 'E גדל', X(0), Y(a) - 18, p.efield, { rtl: true, size: 12 });
     // the path: a circle about the axis, seen almost edge-on
     const xc = s.at === 'wire' ? -0.07 : 0;
     const r = s.rA;
@@ -581,7 +581,7 @@ export default function MaxwellFour(props: MaxwellFourProps) {
     const W = view.w;
     const H = view.h;
     const axisY = H * 0.36;
-    const amp = H * 0.22;
+    const amp = H * 0.2;
     const lamPx = W / 2.4;
     const shift = t * 40; // slow motion: a crest moves 40 px per second, whatever f is
     const x0 = 24;
@@ -646,9 +646,15 @@ export default function MaxwellFour(props: MaxwellFourProps) {
       ctx.fillStyle = b.band === band ? withAlpha(p.accent, 0.35) : withAlpha(p.ink3, i % 2 ? 0.1 : 0.2);
       ctx.fillRect(xa, sy - sh / 2, xb - xa, sh);
       ctx.restore();
-      const narrow = xb - xa < 30;
       const name = BAND_NAME[b.band];
-      if (W > 420 || b.band === band || !narrow) label(ctx, p, name, (xa + xb) / 2, narrow ? sy - sh / 2 - 9 : sy + sh / 2 + 10, b.band === band ? p.ink : p.ink3, { rtl: true, size: 11 });
+      ctx.save();
+      ctx.font = `600 11px ${p.fontUi}`;
+      // on a wide figure every name may spill a little past its band; on a narrow one it must fit
+      const fits = W > 420 ? xb - xa >= 30 : ctx.measureText(name).width + 4 <= xb - xa;
+      ctx.restore();
+      // a name that does not fit its band is shown only for the band the wave is in (above the strip)
+      if (fits) label(ctx, p, name, (xa + xb) / 2, sy + sh / 2 + 10, b.band === band ? p.ink : p.ink3, { rtl: true, size: 11 });
+      else if (b.band === band || W > 420) label(ctx, p, name, (xa + xb) / 2, sy - sh / 2 - 22, b.band === band ? p.ink : p.ink3, { rtl: true, size: 11 });
       hi = lo;
     });
     const mx = xOf(Math.max(LOG_L_MIN, Math.min(LOG_L_MAX, Math.log10(lam))));
@@ -661,8 +667,10 @@ export default function MaxwellFour(props: MaxwellFourProps) {
     ctx.closePath();
     ctx.fill();
     ctx.restore();
-    label(ctx, p, 'אורך גל ארוך', sx0, sy - sh / 2 - 24, p.ink3, { align: 'left', size: 11, rtl: true });
-    label(ctx, p, 'אורך גל קצר', sx1, sy - sh / 2 - 24, p.ink3, { align: 'right', size: 11, rtl: true });
+    if (W > 420) {
+      label(ctx, p, 'אורך גל ארוך', sx0, sy - sh / 2 - 24, p.ink3, { align: 'left', size: 11, rtl: true });
+      label(ctx, p, 'אורך גל קצר', sx1, sy - sh / 2 - 24, p.ink3, { align: 'right', size: 11, rtl: true });
+    }
   };
 
   const draw = ({ ctx, view, palette: p, t }: FrameInfo) => {
@@ -761,10 +769,10 @@ export default function MaxwellFour(props: MaxwellFourProps) {
       return (
         <>
           <span>
-            המשטח הסגור: קובייה בצלע <b class="q">a = {cm(s.a)}</b>. השטף שיוצא: <b class="q">{sci(bflux.out)} T·m²</b>; השטף שנכנס:{' '}
-            <b class="q">{sci(bflux.in)} T·m²</b>
+            המשטח הסגור: קובייה בצלע <b class="q">a = {cm(s.a)}</b>. השטף שיוצא: <b class="q">{sci(bflux.out)} Wb</b>; השטף שנכנס:{' '}
+            <b class="q">{sci(bflux.in)} Wb</b>
           </span>
-          {sides(`∮B·dA = ${sci(clean(bflux.net, bflux.out))} T·m²`, '0')}
+          {sides(`∮B·dA = ${sci(clean(bflux.net, bflux.out))} Wb`, '0')}
         </>
       );
     }
@@ -798,7 +806,10 @@ export default function MaxwellFour(props: MaxwellFourProps) {
             צד שמאל: <b class="q">∮B·dl = {sci(amp.circulation)} T·m</b>
           </span>
           <span>
-            דרך המשטח: זרם של מטענים <b class="q">I = {sci(amp.conduction)} A</b>, ו-<b class="q">ε₀·ΔΦ_E/Δt = {sci(amp.displacement)} A</b>
+            דרך המשטח, זרם של מטענים: <b class="q">I = {sci(amp.conduction)} A</b>
+          </span>
+          <span>
+            דרך המשטח, מהשדה החשמלי שמשתנה: <b class="q">ε₀·ΔΦ_E/Δt = {sci(amp.displacement)} A</b>
           </span>
           {s.maxwell ? (
             <span>
@@ -875,7 +886,7 @@ export default function MaxwellFour(props: MaxwellFourProps) {
   const sceneLabel = (): string => {
     if (s.law === 'gauss-e')
       return `חוק גאוס: שני מטענים, ${nC(SCENE_CHARGES[0].q)} ו-${nC(SCENE_CHARGES[1].q)}, וכדור ברדיוס ${cm(s.R)}. המטען הכלוא ${nC(gauss.enclosed)}, והשטף ${sci(gauss.flux)} N·m²/C.`;
-    if (s.law === 'gauss-b') return `חוק גאוס למגנטיות: מגנט מוט וקובייה בצלע ${cm(s.a)}. השטף שיוצא ${sci(bflux.out)} T·m², ונטו אפס.`;
+    if (s.law === 'gauss-b') return `חוק גאוס למגנטיות: מגנט מוט וקובייה בצלע ${cm(s.a)}. השטף שיוצא ${sci(bflux.out)} Wb, ונטו אפס.`;
     if (s.law === 'faraday') return `חוק פאראדיי: ליבה שהשדה המגנטי בה יוצא מהדף ומשתנה בקצב ${sci(s.dBdt)} T/s, ומסלול ברדיוס ${cm(s.r)}. הסכום סביבו ${sci(far.circulation)} V.`;
     if (s.law === 'ampere') return `חוק אמפר-מקסוול: קבל שנטען בזרם ${CHARGING_I} A, מסלול ${s.at === 'wire' ? 'סביב התיל' : 'בין הלוחות'} ברדיוס ${cm(s.rA)}.`;
     return `גל אלקטרומגנטי בתדירות ${sci(f)} הרץ, אורך גל ${lengthWords(lam)}, ${BAND_NAME[band]}.`;
