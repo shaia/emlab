@@ -1,0 +1,63 @@
+---
+/**
+ * MaxwellFour figure for lesson MDX: <Spread figure={MaxwellFour} figureProps={{…}}>.
+ * The strip of laws above the scene is rendered here, at build time (KaTeX through src/lib/tex.ts), and
+ * passed to the island as children: the island only marks the chosen law and its two sides. Each row
+ * carries `data-law`; each side `data-side="lhs" | "rhs"`. `laws` picks the rows (and the panels).
+ */
+import { tex } from '~/lib/tex';
+import MaxwellFour, { type Law, type MaxwellFourProps } from './MaxwellFour';
+type Props = Omit<MaxwellFourProps, 'children'>;
+
+interface Row {
+  law: Law;
+  name: string;
+  /** one or two equations, each a left and a right side */
+  eqs: { lhs: string; rhs: string }[];
+}
+
+const ROWS: Row[] = [
+  { law: 'gauss-e', name: 'חוק גאוס', eqs: [{ lhs: String.raw`\oint_S \vec E\cdot d\vec A`, rhs: String.raw`\dfrac{Q_{\text{in}}}{\varepsilon_0}` }] },
+  { law: 'gauss-b', name: 'חוק גאוס למגנטיות', eqs: [{ lhs: String.raw`\oint_S \vec B\cdot d\vec A`, rhs: '0' }] },
+  { law: 'faraday', name: 'חוק פאראדיי', eqs: [{ lhs: String.raw`\oint_C \vec E\cdot d\vec l`, rhs: String.raw`-\dfrac{d\Phi_B}{dt}` }] },
+  {
+    law: 'ampere',
+    name: 'חוק אמפר-מקסוול',
+    eqs: [{ lhs: String.raw`\oint_C \vec B\cdot d\vec l`, rhs: String.raw`\mu_0 I_{\text{in}} + \mu_0\varepsilon_0\dfrac{d\Phi_E}{dt}` }],
+  },
+  {
+    law: 'wave',
+    name: 'בריק: שני החוקים שנשארים',
+    eqs: [
+      { lhs: String.raw`\oint_C \vec E\cdot d\vec l`, rhs: String.raw`-\dfrac{d\Phi_B}{dt}` },
+      { lhs: String.raw`\oint_C \vec B\cdot d\vec l`, rhs: String.raw`\mu_0\varepsilon_0\dfrac{d\Phi_E}{dt}` },
+    ],
+  },
+];
+
+const { laws = ['gauss-e', 'gauss-b', 'faraday', 'ampere'], law } = Astro.props;
+const active = law ?? laws[0];
+const rows = ROWS.filter((r) => laws.includes(r.law));
+const html = (s: string, where: string) => tex(`$${s}$`, `MaxwellFour ${where}`);
+---
+
+<MaxwellFour client:visible {...Astro.props}>
+  <div class="mf-strip" role="group" aria-label="החוקים: לחצו על חוק כדי לראות אותו באיור">
+    {
+      rows.map((r) => (
+        <button type="button" class={`mf-row ${r.law === active ? 'on' : ''}`} data-law={r.law} aria-pressed={r.law === active ? 'true' : 'false'}>
+          <span class="mf-name">{r.name}</span>
+          <span class="mf-eqs" dir="ltr">
+            {r.eqs.map((e, i) => (
+              <span class="mf-eq">
+                <span class="mf-side" data-side="lhs" set:html={html(e.lhs, `${r.law} lhs ${i}`)} />
+                <span class="mf-op">=</span>
+                <span class="mf-side" data-side="rhs" set:html={html(e.rhs, `${r.law} rhs ${i}`)} />
+              </span>
+            ))}
+          </span>
+        </button>
+      ))
+    }
+  </div>
+</MaxwellFour>
