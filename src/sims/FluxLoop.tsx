@@ -38,12 +38,14 @@ type Mode = 'uniform' | 'wire' | 'closed';
 
 /** flux one drawn line stands for, in the uniform view [Wb] */
 export const LINE_FLUX = 5e-4;
+/** height of the strip under the two uniform-view panels that holds their titles [px] */
+const BOTTOM = 28;
 /** height of the rectangle beside the wire [m] */
 export const WIRE_H = 0.2;
 /** strip counts the strip slider steps through */
 const STRIP_STEPS = [1, 2, 4, 8, 16, 32];
 
-const ASPECT: Record<Mode, number> = { uniform: 1.9, wire: 1.25, closed: 1.5 };
+const ASPECT: Record<Mode, number> = { uniform: 1.6, wire: 1.25, closed: 1.5 };
 
 const TASK_LABEL: Record<string, string> = {
   'three-ways': 'שנו את השטף בשלוש דרכים: בפס של B, בפס של צלע הלולאה ובפס של הזווית.',
@@ -101,10 +103,10 @@ const clean = (x: number) => (Math.abs(x) < 1e-15 ? 0 : x);
 
 /* ------------------------------------------------------------------ the magnet of `closed` */
 
-const MAGNET: BarMagnet = { x: 0, y: 0, angle: 0, L: 0.24, R: 0.03, NI: 400 };
+const MAGNET: BarMagnet = { x: 0, y: 0, angle: 0, L: 0.3, R: 0.045, NI: 400 };
 const CLOSED_W = 1.2;
 const CLOSED_H = CLOSED_W / ASPECT.closed;
-const SEEDS = [-0.7, -0.45, -0.2, 0.2, 0.45, 0.7];
+const SEEDS = [-0.65, -0.25, 0.25, 0.65];
 
 function magnetLines(): Vec2[][] {
   const f = (x: number, y: number) => barMagnetField(MAGNET, x, y);
@@ -130,8 +132,8 @@ export default function FluxLoop(props: FluxLoopProps) {
     r1: props.r1 ?? 0.05,
     w: props.width ?? 0.1,
     n: props.strips ?? 1,
-    cx: props.cx ?? 0.12,
-    cy: props.cy ?? 0,
+    cx: props.cx ?? -0.3,
+    cy: props.cy ?? -0.2,
     r: props.r ?? 0.1,
   });
   const [s, setS] = useState<State>(init);
@@ -240,9 +242,16 @@ export default function FluxLoop(props: FluxLoopProps) {
 
   /* ---------------------------------------------------------------- drawing helpers */
 
-  const text = (ctx: CanvasRenderingContext2D, p: Palette, t: string, x: number, y: number, o: { color?: string; size?: number; align?: CanvasTextAlign; rtl?: boolean; weight?: number; italic?: boolean } = {}) => {
+  const text = (ctx: CanvasRenderingContext2D, p: Palette, t: string, x: number, y: number, o: { color?: string; size?: number; align?: CanvasTextAlign; rtl?: boolean; weight?: number; italic?: boolean; box?: boolean } = {}) => {
     ctx.save();
     ctx.font = `${o.italic ? 'italic ' : ''}${o.weight ?? 500} ${o.size ?? 13}px ${p.fontUi}`;
+    if (o.box) {
+      const w = ctx.measureText(t).width;
+      const a = o.align ?? 'center';
+      const x0 = a === 'left' ? x : a === 'right' ? x - w : x - w / 2;
+      ctx.fillStyle = withAlpha(p.paper, 0.85);
+      ctx.fillRect(x0 - 3, y - (o.size ?? 13) * 0.7, w + 6, (o.size ?? 13) * 1.4);
+    }
     ctx.fillStyle = o.color ?? p.ink2;
     ctx.direction = o.rtl ? 'rtl' : 'ltr';
     ctx.textAlign = o.align ?? 'center';
@@ -264,24 +273,25 @@ export default function FluxLoop(props: FluxLoopProps) {
     const c = Math.cos(thRad);
     const halfY = (s.s * Math.abs(c)) / 2;
     const rows = latticeInside(d, 0.2);
-    const top = H * 0.12;
-    const cyS = top + (H - top) / 2;
+    const top = H * 0.04;
+    const cyS = top + (H - BOTTOM - top) / 2;
 
     // panel frames and titles
     ctx.save();
     ctx.strokeStyle = p.rule;
     ctx.lineWidth = 1;
-    ctx.strokeRect(1, top - 2, pw - 2, H - top);
-    ctx.strokeRect(pw + gap + 1, top - 2, pw - 2, H - top);
+    ctx.strokeRect(1, top - 2, pw - 2, H - top - BOTTOM + 2);
+    ctx.strokeRect(pw + gap + 1, top - 2, pw - 2, H - top - BOTTOM + 2);
     ctx.restore();
-    text(ctx, p, 'מבט מהצד', pw / 2, top / 2, { rtl: true, color: p.ink, weight: 600 });
-    text(ctx, p, 'מבט לאורך השדה: הקווים יוצאים אליכם', pw + gap + pw / 2, top / 2, { rtl: true, color: p.ink, weight: 600, size: W < 500 ? 10 : 13 });
+    text(ctx, p, 'מבט מהצד', pw / 2, H - 14, { rtl: true, color: p.ink, weight: 600, size: W < 500 ? 11 : 13 });
+    // at the bottom: the reset and fullscreen buttons sit in the stage's top-right corner
+    text(ctx, p, 'מבט לאורך השדה', pw + gap + pw / 2, H - 14, { rtl: true, color: p.ink, weight: 600, size: W < 500 ? 11 : 13 });
 
     // ---- side view
     const cxL = pw / 2;
     ctx.save();
     ctx.beginPath();
-    ctx.rect(2, top, pw - 4, H - top - 4);
+    ctx.rect(2, top, pw - 4, H - top - BOTTOM - 2);
     ctx.clip();
     for (const y of rows) {
       const sy = cyS - y * k;
@@ -343,7 +353,7 @@ export default function FluxLoop(props: FluxLoopProps) {
     const halfZ = s.s / 2;
     ctx.save();
     ctx.beginPath();
-    ctx.rect(ox + 2, top, pw - 4, H - top - 4);
+    ctx.rect(ox + 2, top, pw - 4, H - top - BOTTOM - 2);
     ctx.clip();
     // the loop's face: tinted from the normal's side, hatched from its back
     const rx = cxR - halfZ * k;
@@ -391,8 +401,6 @@ export default function FluxLoop(props: FluxLoopProps) {
     }
     ctx.restore();
     ctx.restore();
-    const note = theta === 90 ? 'הלולאה מקבילה לקווים' : c > 0 ? 'רואים את הצד של האנך' : 'רואים את הגב: הקווים עוברים נגד האנך';
-    text(ctx, p, note, cxR, H - 14, { rtl: true, size: W < 500 ? 10 : 12 });
   };
 
   /* ---------------------------------------------------------------- wire */
@@ -411,7 +419,7 @@ export default function FluxLoop(props: FluxLoopProps) {
     const gTop = H * 0.06;
     const gBot = H * 0.36;
     const B = (r: number) => Math.abs(wireB(s.I, r));
-    const Bref = Math.abs(wireB(20, 0.02)); // fixed scale: the strongest field the sliders allow
+    const Bref = Math.abs(wireB(20, 0.05)); // fixed scale; the curve is clipped nearer the wire
     const Y = (b: number) => gBot - (Math.min(b, Bref) / Bref) * (gBot - gTop);
 
     // ---- the graph of B(r) with the strip bars
@@ -439,16 +447,17 @@ export default function FluxLoop(props: FluxLoopProps) {
     ctx.beginPath();
     let started = false;
     for (let x = X(0.012); x < W - 6; x += 2) {
-      const yy = Y(B((x - x0) / k));
-      if (!started) ctx.moveTo(x, yy);
-      else ctx.lineTo(x, yy);
+      const b = B((x - x0) / k);
+      if (b > Bref) continue; // off the top of the graph: the curve starts where it enters
+      if (!started) ctx.moveTo(x, Y(b));
+      else ctx.lineTo(x, Y(b));
       started = true;
     }
     ctx.stroke();
     ctx.restore();
     text(ctx, p, 'B', x0 - 12, gTop + 4, { color: p.bfield, size: 14, weight: 600, italic: true });
     text(ctx, p, 'r', W - 12, gBot - 10, { color: p.ink2, size: 14, italic: true });
-    text(ctx, p, 'B = μ₀I/(2πr)', W - 10, gTop + 6, { color: p.bfield, size: 12, align: 'right' });
+    text(ctx, p, 'B = μ₀I/(2πr)', W - 10, gTop + 44, { color: p.bfield, size: 12, align: 'right' });
 
     // ---- the plane: the wire, the field marks, the rectangle
     const pTop = H * 0.44;
@@ -466,9 +475,12 @@ export default function FluxLoop(props: FluxLoopProps) {
       const b = B(r);
       if (b === 0) break;
       const dy = Math.max(9 / k, markFlux / (b * dx));
-      const n = Math.floor((pBot - pTop) / (dy * k) / 2);
+      const n = Math.floor((pBot - pTop) / (dy * k) / 2) + 1;
+      // a fixed pseudo-random offset per column, so the marks do not line up into rays from the middle
+      const jitter = ((Math.sin(r * 9173.3) * 43758.5453) % 1 + 1) % 1;
       for (let j = -n; j <= n; j++) {
-        const sy = cy + j * dy * k;
+        const sy = cy + (j + jitter - 0.5) * dy * k;
+        if (sy < pTop + 4 || sy > pBot - 4) continue;
         for (const side of [1, -1]) {
           const sx = x0 + side * r * k;
           if (sx < 4) continue;
@@ -524,12 +536,12 @@ export default function FluxLoop(props: FluxLoopProps) {
     const dir = s.I > 0 ? -1 : 1;
     const shift = ((t * 30) % 40) * dir;
     for (let y = pTop + 20 + ((shift % 40) + 40) % 40; y < pBot - 6; y += 40) chevron(ctx, x0, y, 0, dir, 7, p.paper);
-    text(ctx, p, 'I', x0 - 14, pTop + 16, { color: p.current, size: 15, weight: 600, italic: true });
+    text(ctx, p, 'I', x0 - 14, pTop + 16, { color: p.current, size: 15, weight: 600, italic: true, box: true });
     // distances
     const ly = ry2 + 14;
-    text(ctx, p, `r₁ = ${sci(s.r1 * 100)} cm`, X(s.r1), ly, { size: 11, align: 'right' });
-    text(ctx, p, `r₂ = ${sci(r2 * 100)} cm`, X(r2) + 4, ly, { size: 11, align: 'left' });
-    text(ctx, p, `h = ${WIRE_H * 100} cm`, X(r2) + 6, cy, { size: 11, align: 'left' });
+    text(ctx, p, `r₁ = ${sci(s.r1 * 100)} cm`, X(s.r1), ly, { size: 11, align: 'right', box: true });
+    text(ctx, p, `r₂ = ${sci(r2 * 100)} cm`, X(r2) + 4, ly, { size: 11, align: 'left', box: true });
+    text(ctx, p, `h = ${WIRE_H * 100} cm`, X(r2) + 6, cy, { size: 11, align: 'left', box: true });
   };
 
   /* ---------------------------------------------------------------- closed */
@@ -590,8 +602,8 @@ export default function FluxLoop(props: FluxLoopProps) {
     ctx.lineWidth = 1.5;
     ctx.strokeRect(mx, my, mw, mh);
     ctx.restore();
-    text(ctx, p, 'N', mx + mw * 0.82, my + mh / 2, { color: '#ffffff', size: 14, weight: 700 });
-    text(ctx, p, 'S', mx + mw * 0.18, my + mh / 2, { color: '#ffffff', size: 14, weight: 700 });
+    text(ctx, p, 'N', mx + mw * 0.9, my + mh / 2, { color: '#ffffff', size: 14, weight: 700 });
+    text(ctx, p, 'S', mx + mw * 0.1, my + mh / 2, { color: '#ffffff', size: 14, weight: 700 });
     // the lines inside the magnet, drawn over it
     if (lines) {
       ctx.save();
@@ -618,13 +630,14 @@ export default function FluxLoop(props: FluxLoopProps) {
         if (c.out) {
           ctx.fillStyle = p.ink;
           ctx.beginPath();
-          ctx.arc(sx, sy, 5, 0, Math.PI * 2);
+          ctx.arc(sx, sy, 4.5, 0, Math.PI * 2);
           ctx.fill();
         } else {
           ctx.fillStyle = p.paper;
           ctx.strokeStyle = p.ink;
-          ctx.fillRect(sx - 5, sy - 5, 10, 10);
-          ctx.strokeRect(sx - 5, sy - 5, 10, 10);
+          ctx.lineWidth = 1.6;
+          ctx.fillRect(sx - 4, sy - 4, 8, 8);
+          ctx.strokeRect(sx - 4, sy - 4, 8, 8);
         }
         ctx.restore();
       }
@@ -650,8 +663,8 @@ export default function FluxLoop(props: FluxLoopProps) {
     const gap = W * 0.03;
     const pw = (W - gap) / 2;
     const k = (H * 0.8) / 0.42;
-    const top = H * 0.12;
-    const cyS = top + (H - top) / 2;
+    const top = H * 0.04;
+    const cyS = top + (H - BOTTOM - top) / 2;
     const nl = 0.12 * k;
     return [pw / 2 + Math.cos(thRad) * nl, cyS - Math.sin(thRad) * nl];
   };
@@ -692,8 +705,8 @@ export default function FluxLoop(props: FluxLoopProps) {
       const W = v.w;
       const gap = W * 0.03;
       const pw = (W - gap) / 2;
-      const top = v.h * 0.12;
-      const cyS = top + (v.h - top) / 2;
+      const top = v.h * 0.04;
+      const cyS = top + (v.h - BOTTOM - top) / 2;
       const a = (Math.atan2(cyS - e.offsetY, e.offsetX - pw / 2) * 180) / Math.PI;
       const next = wrap(round(a, 5));
       if (next !== s.ang) act({ ang: next }, 'theta');
@@ -740,7 +753,12 @@ export default function FluxLoop(props: FluxLoopProps) {
             <b class="q">B = {sci(s.B)} T</b>, צלע <b class="q">{sci(s.s * 100)} cm</b>, שטח <b class="q">A = {sci(A)} m²</b>, זווית בין האנך לשדה <b class="q">θ = {theta}°</b>
           </span>
           <span>
-            קווים שעוברים דרך הלולאה: <b class="q">{nLines < 0 ? '−' : ''}{Math.abs(nLines)}</b> (כל קו מייצג <b class="q">{sci(LINE_FLUX)} Wb</b>)
+            קווים שעוברים דרך הלולאה: <b class="q">{nLines < 0 ? '−' : ''}{Math.abs(nLines)}</b> (כל קו מייצג <b class="q">{sci(LINE_FLUX)} Wb</b>).{' '}
+            {theta === 90
+              ? 'הלולאה מקבילה לקווים.'
+              : Math.cos(thRad) > 0
+                ? 'במבט לאורך השדה רואים את הצד של האנך.'
+                : 'במבט לאורך השדה רואים את הגב: הקווים עוברים נגד האנך.'}
           </span>
           <span>
             השטף: <b class="q">Φ = B·A·cosθ = {sci(phi)} Wb</b>
