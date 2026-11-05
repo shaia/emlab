@@ -1,0 +1,24 @@
+# Every id was checked against YouTube oEmbed (exists, embeddable; title and channel as below) on the
+# `verified` date, through WebFetch (curl has no network in this sandbox). `why` claims only what the
+# title and the upload description support. The MIT clip is also used in 5.3, for Lenz's law; here it is
+# the falling magnet's constant speed that matters.
+
+- id: v-5-5-copper-pipe
+  youtubeId: N7tIi71-AjA
+  title: "Lenz's Law with Copper Pipe (H16) [5K20.25]"
+  channel: MIT Physics Instructional Resources Lab
+  lang: en
+  captions: []
+  minutes: 2
+  why: 'הדגמה אמיתית מהמעבדה של MIT: מגנט שמפילים לתוך צינור נחושת נופל לאט, כי הזרם שהוא משרה בצינור בולם אותו (לפי תיאור הסרטון). זה אותו רעיון של המוט בין המסילות האנכיות: בדקו אם המגנט נראה כמי שנופל במהירות קבועה.'
+  verified: '2026-11-05'
+
+- id: v-5-5-drop-tower
+  youtubeId: jHvs56C5ZUE
+  title: 'The mechanics of how a drop tower works.'
+  channel: Ryan The Ride Mechanic
+  lang: en
+  captions: []
+  minutes: 10
+  why: 'לפי הכותרת, הסרטון מסביר את המכניקה של מגדל נפילה, המתקן שבפתיח של השיעור. אורכו ותוכנו המדויק לא אומתו; אם הוא מראה את הבלמים, חפשו איפה הבלימה מתחילה, והאם הקרון נעצר בגללה לגמרי או רק מאט.'
+  verified: '2026-11-05'

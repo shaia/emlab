@@ -1,7 +1,7 @@
 # Workbook, lesson 5.4 (rod on rails, terminal speed). Format and rules: see .claude/CLAUDE.md, "Worked examples, workbook".
 # Every number was recomputed with src/physics/induction.ts (motionalEmf, railCurrent, railBrakingForce,
-# railTerminalSpeed, railTimeConstant, railSpeed) and src/physics/railrod.ts (inclineRod, railAcceleration,
-# railPowers, kinetic); script wb54.ts in the session scratchpad.
+# railTerminalSpeed, railTimeConstant, railSpeed, railDistance) and src/physics/railrod.ts (railAcceleration,
+# railAt, railPowers, kinetic). The incline, the hanging mass and the vertical rails moved to 5.5 (5-5.yaml).
 # Directions: x right, y up the page, z out of the page; F = qv×B on the rod's charges, F = I L×B on the rod.
 # In a >- block, consecutive lines fold into one paragraph: every part (א, ב, …) starts after a blank line.
 
@@ -175,38 +175,38 @@ practice:
   - id: W-5.4-06
     level: mid
     qualitative: false
-    objectives: [OBJ-5.4-3]
+    objectives: [OBJ-5.4-4, OBJ-5.4-2]
     prompt: >-
-      מוט שמסתו $0.1\,\text{kg}$ מונח על מסילות אופקיות חלקות שהמרחק ביניהן $40\,\text{cm}$, בשדה של $0.5\,\text{T}$ שניצב למישור המסילות; המסילות מחוברות בנגד של $0.2\,\Omega$. חוט קל קשור למרכז המוט, עובר מעל גלגלת חלקה בקצה השולחן, ובקצהו השני תלויה משקולת של $50\,\text{g}$. משחררים את המערכת ממנוחה.
+      מזיזים מוט במהירות קבועה של $4\,\text{m/s}$ לאורך $2\,\text{m}$ על מסילות אופקיות חלקות. המרחק בין המסילות $0.5\,\text{m}$, השדה $0.6\,\text{T}$ ניצב למישור המסילות, וההתנגדות הכוללת של המעגל $1.5\,\Omega$.
 
-      א. מה התאוצה של המשקולת ברגע הראשון?
+      א. מה הכוח הדרוש, ומה העבודה שלו לאורך $2\,\text{m}$?
 
-      ב. מה המהירות הסופית של המוט?
+      ב. כמה חום מתפתח בנגד בזמן הזה? למה זה בדיוק העבודה?
 
-      ג. מה המתיחות בחוט כשמהירות המוט $1\,\text{m/s}$?
+      ג. חוזרים על אותה דרך, $2\,\text{m}$, במהירות קבועה של $8\,\text{m/s}$. פי כמה גדלים הכוח, ההספק והעבודה?
     answer: >-
-      א. כ-$3.33\,\text{m/s}^2$.
+      א. $0.24\,\text{N}$; $0.48\,\text{J}$.
 
-      ב. $2.5\,\text{m/s}$.
+      ב. $0.48\,\text{J}$: המהירות קבועה, והאנרגיה הקינטית לא משתנה.
 
-      ג. $0.4\,\text{N}$.
+      ג. הכוח פי 2, ההספק פי 4, והעבודה פי 2 ($0.96\,\text{J}$).
     solution:
       - kind: given
         text: >-
-          $m = 0.1\,\text{kg}$ (מוט), $M = 0.05\,\text{kg}$ (משקולת), $L = 0.4\,\text{m}$, $B = 0.5\,\text{T}$, $R = 0.2\,\Omega$, $g = 10\,\text{m/s}^2$. המוט והמשקולת נעים יחד באותה מהירות.
+          $v = 4\,\text{m/s}$, $d = 2\,\text{m}$, $L = 0.5\,\text{m}$, $B = 0.6\,\text{T}$, $R = 1.5\,\Omega$. המהירות קבועה, ולכן הכוח המופעל שווה לכוח המגנטי ומנוגד לו.
       - kind: formula
         text: >-
-          החוק השני של ניוטון למערכת כולה, לאורך החוט: $(m + M)a = Mg - \dfrac{B^2L^2v}{R}$.
+          $F = \dfrac{B^2L^2v}{R}$, $W = Fd$, $P = I^2R$ עם $I = \dfrac{BLv}{R}$, והזמן $t = d/v$.
       - kind: substitution
         text: >-
-          א. ב-$v = 0$ אין כוח מגנטי: $a = \dfrac{Mg}{m + M} = \dfrac{0.5}{0.15} \approx 3.33\,\text{m/s}^2$.
+          א. $F = \dfrac{0.36\cdot0.25\cdot4}{1.5} = 0.24\,\text{N}$, ו-$W = 0.24\cdot2 = 0.48\,\text{J}$.
 
-          ב. במהירות הסופית $a = 0$: $\dfrac{B^2L^2v_T}{R} = Mg$, ולכן $v_T = \dfrac{MgR}{B^2L^2} = \dfrac{0.5\cdot0.2}{0.25\cdot0.16} = 2.5\,\text{m/s}$.
+          ב. $I = \dfrac{0.6\cdot0.5\cdot4}{1.5} = 0.8\,\text{A}$, $P = 0.8^2\cdot1.5 = 0.96\,\text{W}$, והזמן $t = 2/4 = 0.5\,\text{s}$: $Q = 0.96\cdot0.5 = 0.48\,\text{J}$.
 
-          ג. ב-$v = 1\,\text{m/s}$ הכוח המגנטי $\dfrac{0.04\cdot1}{0.2} = 0.2\,\text{N}$, ו-$a = \dfrac{0.5 - 0.2}{0.15} = 2\,\text{m/s}^2$. למשקולת לבדה: $Mg - T = Ma$, ולכן $T = 0.05\cdot(10 - 2) = 0.4\,\text{N}$. בדיקה במוט: $T - F_B = ma$, $0.4 - 0.2 = 0.1\cdot2$.
+          ג. ב-$8\,\text{m/s}$: $F = 0.48\,\text{N}$ (פי 2, כי $F \propto v$), $I = 1.6\,\text{A}$ ו-$P = 3.84\,\text{W}$ (פי 4, כי $P = Fv \propto v^2$), והזמן $0.25\,\text{s}$ (חצי). העבודה $W = 0.48\cdot2 = 0.96\,\text{J}$, פי 2: הספק פי 4 במשך חצי זמן.
       - kind: result
         text: >-
-          א. $3.33\,\text{m/s}^2$. ב. $2.5\,\text{m/s}$. ג. $0.4\,\text{N}$ (ובמהירות הסופית המתיחות עולה ל-$Mg = 0.5\,\text{N}$).
+          א. $0.24\,\text{N}$ ו-$0.48\,\text{J}$. ב. $0.48\,\text{J}$ חום, כל העבודה. ג. הכוח פי 2, ההספק פי 4, העבודה פי 2: כדי להזיז מוט מהר יותר באותה דרך משקיעים יותר אנרגיה, והכול הופך לחום.
 
   - id: W-5.4-07
     level: mid
@@ -290,41 +290,49 @@ practice:
   - id: W-5.4-09
     level: bagrut
     qualitative: false
-    objectives: [OBJ-5.4-3, OBJ-5.4-4]
+    objectives: [OBJ-5.4-3, OBJ-5.4-4, OBJ-5.4-2]
     prompt: >-
-      מוט שמסתו $0.2\,\text{kg}$ משוחרר על מסילות חלקות משופעות, במרחק $0.5\,\text{m}$ זו מזו, שבתחתית המדרון מחוברות בנגד של $0.5\,\Omega$. בכל האזור יש שדה של $0.8\,\text{T}$, ניצב למישור המסילות.
+      מוט שמסתו $0.2\,\text{kg}$ מונח על מסילות אופקיות חלקות שהמרחק ביניהן $0.5\,\text{m}$, בשדה של $0.4\,\text{T}$ שניצב למישור המסילות. ההתנגדות הכוללת של המעגל $0.5\,\Omega$. כוח קבוע של $0.2\,\text{N}$ מושך את המוט לאורך המסילות, אבל ברגע $t = 0$ המוט כבר נע בכיוון הכוח במהירות $6\,\text{m/s}$: מישהו דחף אותו.
 
-      א. באיזו זווית שיפוע המהירות הסופית של המוט היא $2.5\,\text{m/s}$?
+      א. מה המהירות הסופית של המוט?
 
-      ב. מה הזרם במעגל כשהמוט נע במהירות הזאת?
+      ב. מה הזרם ומה התאוצה (גודל וכיוון) ברגע $t = 0$?
 
-      ג. כשהמוט נע במהירות הסופית, כמה חום מתפתח בנגד בשתי שניות? הראו שהתשובה שווה לירידה באנרגיה הפוטנציאלית של המוט באותו זמן.
+      ג. שרטטו, באופן איכותי, את גרף המהירות לפי הזמן, וכתבו מה הזרם אחרי זמן ארוך.
+
+      ד. עד הרגע שבו מהירות המוט $4\,\text{m/s}$, המוט עבר $10.3\,\text{m}$. כמה חום התפתח בנגד בזמן הזה? האם הוא גדול או קטן מעבודת הכוח המושך, ולמה?
     answer: >-
-      א. $\sin\alpha = 0.4$, $\alpha \approx 23.6^\circ$.
+      א. $2.5\,\text{m/s}$.
 
-      ב. $2\,\text{A}$.
+      ב. $2.4\,\text{A}$; $1.4\,\text{m/s}^2$ נגד התנועה (המוט מאט).
 
-      ג. $4\,\text{J}$.
+      ג. הגרף יורד מ-$6\,\text{m/s}$, בהתחלה מהר ואחר כך לאט, ומתקרב ל-$2.5\,\text{m/s}$ מלמעלה; הזרם מתקרב ל-$1\,\text{A}$.
+
+      ד. כ-$4.1\,\text{J}$, יותר מעבודת הכוח ($2.06\,\text{J}$): גם אנרגיה קינטית הפכה לחום.
     solution:
       - kind: given
         text: >-
-          $m = 0.2\,\text{kg}$, $L = 0.5\,\text{m}$, $R = 0.5\,\Omega$, $B = 0.8\,\text{T}$, $v_T = 2.5\,\text{m/s}$, $g = 10\,\text{m/s}^2$.
+          $m = 0.2\,\text{kg}$, $L = 0.5\,\text{m}$, $B = 0.4\,\text{T}$, $R = 0.5\,\Omega$, $F = 0.2\,\text{N}$, $v_0 = 6\,\text{m/s}$. $B^2L^2 = 0.16\cdot0.25 = 0.04\,\text{T}^2\text{m}^2$.
       - kind: formula
         text: >-
-          במהירות הסופית $\dfrac{B^2L^2v_T}{R} = mg\sin\alpha$.
-      - kind: manipulation
-        text: >-
-          מחלקים את שני האגפים ב-$mg$: $\sin\alpha = \dfrac{B^2L^2v_T}{mgR}$.
+          $ma = F - \dfrac{B^2L^2v}{R}$, $v_T = \dfrac{FR}{B^2L^2}$, $I = \dfrac{BLv}{R}$, ושימור האנרגיה $W_F = \Delta K + Q$.
       - kind: substitution
         text: >-
-          א. $\sin\alpha = \dfrac{0.64\cdot0.25\cdot2.5}{0.2\cdot10\cdot0.5} = \dfrac{0.4}{1} = 0.4$, ולכן $\alpha \approx 23.6^\circ$.
+          א. $v_T = \dfrac{0.2\cdot0.5}{0.04} = 2.5\,\text{m/s}$.
 
-          ב. $I = \dfrac{BLv_T}{R} = \dfrac{0.8\cdot0.5\cdot2.5}{0.5} = 2\,\text{A}$ (או מ-$BIL = mg\sin\alpha = 0.8\,\text{N}$).
-
-          ג. $I^2R = 4\cdot0.5 = 2\,\text{W}$, ובשתי שניות $Q = 4\,\text{J}$. באותו זמן המוט מתקדם $2.5\cdot2 = 5\,\text{m}$ לאורך המדרון ויורד לגובה $5\sin\alpha = 2\,\text{m}$: $mgh = 0.2\cdot10\cdot2 = 4\,\text{J}$.
+          ב. $I_0 = \dfrac{0.4\cdot0.5\cdot6}{0.5} = 2.4\,\text{A}$. הכוח הבולם $F_B = \dfrac{0.04\cdot6}{0.5} = 0.48\,\text{N}$, גדול מ-$F$: $a = \dfrac{0.2 - 0.48}{0.2} = -1.4\,\text{m/s}^2$. הסימן השלילי אומר שהתאוצה נגד התנועה.
+      - kind: reasoning
+        text: >-
+          ג. המוט מהיר מ-$v_T$, ולכן הבלימה גוברת על המשיכה והוא מאט. ככל שהוא מאט, הבלימה קטנה וההאטה מתמתנת, עד שהמהירות מתקרבת ל-$v_T$, הפעם מלמעלה. קבוע הזמן $\tau = \dfrac{mR}{B^2L^2} = 2.5\,\text{s}$ כמו בתנועה ממנוחה. אחרי זמן ארוך $BIL = F$, ולכן $I = \dfrac{F}{BL} = \dfrac{0.2}{0.2} = 1\,\text{A}$.
+      - kind: manipulation
+        text: >-
+          ד. מבודדים את החום משימור האנרגיה: $Q = W_F - \Delta K = Fd + \left(\tfrac{1}{2}mv_0^2 - \tfrac{1}{2}mv^2\right)$. האנרגיה הקינטית **קטנה**, ולכן $-\Delta K$ חיובי ומוסיף לחום.
+      - kind: substitution
+        text: >-
+          ד. $W_F = 0.2\cdot10.3 = 2.06\,\text{J}$, ו-$\tfrac{1}{2}\cdot0.2\cdot(36 - 16) = 2.0\,\text{J}$. לכן $Q = 2.06 + 2.0 \approx 4.1\,\text{J}$.
       - kind: result
         text: >-
-          א. $\alpha \approx 23.6^\circ$. ב. $2\,\text{A}$. ג. $4\,\text{J}$, בדיוק האנרגיה הפוטנציאלית שאבדה: המהירות קבועה, והאנרגיה הקינטית לא משתנה.
+          א. $2.5\,\text{m/s}$. ב. $2.4\,\text{A}$ ו-$1.4\,\text{m/s}^2$ נגד התנועה. ג. ירידה מתמתנת אל $2.5\,\text{m/s}$, והזרם מתקרב ל-$1\,\text{A}$. ד. כ-$4.1\,\text{J}$, יותר מ-$W_F = 2.06\,\text{J}$, כי גם האנרגיה הקינטית שהמוט איבד, $2\,\text{J}$, הפכה לחום.
 
   - id: W-5.4-10
     level: bagrut
@@ -368,48 +376,53 @@ practice:
 challenge:
   - id: W-5.4-c1
     stars: 1
-    objectives: [OBJ-5.4-3, OBJ-5.4-4]
+    objectives: [OBJ-5.4-3, OBJ-5.4-4, OBJ-5.4-2]
     prompt: >-
-      מוט נחושת שמסתו $m$ מחליק, ניצב למסילות, על שתי מסילות חלקות ומקבילות שהמרחק ביניהן $l$, ונוטות בזווית $\theta$ לאופק. בתחתית המדרון המסילות מחוברות בנגד $R$. בכל האזור יש שדה מגנטי אחיד $B$, ניצב למישור המסילות.
+      מוט מתכת שמסתו $0.2\,\text{kg}$ מונח על שתי מסילות אופקיות חלקות שהמרחק ביניהן $0.5\,\text{m}$, וההתנגדות שלהן זניחה. בקצה המסילות מחובר נגד של $0.4\,\Omega$, ובכל האזור שדה אחיד של $0.8\,\text{T}$, ניצב למישור המסילות. נותנים למוט מהירות התחלתית של $3\,\text{m/s}$, הרחק מהנגד, ומשאירים אותו. שום כוח אחר מלבד הכוח המגנטי לא פועל עליו לאורך המסילות.
 
-      א. מצאו ביטוי למהירות הסופית של המוט, אם ההתנגדות של המוט ושל המסילות זניחה.
+      א. מה הכוח המגנטי על המוט ומה תאוצתו ברגע הראשון?
 
-      ב. למוט יש התנגדות $r$. מה המהירות הסופית עכשיו? חשבו אותה ל-$m = 0.1\,\text{kg}$, $l = 0.5\,\text{m}$, $\theta = 30^\circ$, $B = 0.5\,\text{T}$, $R = 1.5\,\Omega$, $r = 0.5\,\Omega$, והשוו לתשובה של סעיף א עם אותם נתונים.
+      ב. בכל פרק זמן קצר $\Delta t$ הכוח המגנטי משנה את התנע של המוט ב-$BIL\,\Delta t$, ו-$I\,\Delta t$ הוא המטען $\Delta q$ שעובר בנגד באותו זמן. הראו שעד שהמוט נעצר עובר בנגד מטען כולל $q = \dfrac{mv_0}{BL}$, וחשבו אותו.
 
-      ג. במהירות הסופית של סעיף ב, איזה חלק מהאנרגיה הפוטנציאלית שהמוט מאבד הופך לחום בנגד $R$, ואיזה חלק במוט עצמו?
+      ג. באותו פרק זמן קצר, $I\,\Delta t = \dfrac{BLv\,\Delta t}{R}$. היעזרו בזה כדי להראות שהמוט עובר עד העצירה מרחק $x = \dfrac{mv_0R}{B^2L^2}$, וחשבו אותו.
+
+      ד. כמה חום מתפתח בנגד עד שהמוט נעצר? האם החום הזה הוא רבע מהאנרגיה הקינטית ההתחלתית, חצי ממנה, או כולה?
     answer: >-
-      א. $v_T = \dfrac{mgR\sin\theta}{B^2l^2}$.
+      א. $1.2\,\text{N}$ נגד התנועה; $6\,\text{m/s}^2$ (האטה).
 
-      ב. $v_T = \dfrac{mg(R + r)\sin\theta}{B^2l^2} = 16\,\text{m/s}$; בלי $r$, $12\,\text{m/s}$.
+      ב. $1.5\,\text{C}$.
 
-      ג. $\tfrac{3}{4}$ בנגד ו-$\tfrac{1}{4}$ במוט.
+      ג. $1.5\,\text{m}$.
+
+      ד. $0.9\,\text{J}$, כל האנרגיה הקינטית ההתחלתית.
     solution:
       - kind: given
         text: >-
-          הכוח המניע לאורך המסילות: $mg\sin\theta$. השדה ניצב למישור המסילות, ולכן $\varepsilon = Blv$.
-      - kind: formula
-        text: >-
-          $I = \dfrac{\varepsilon}{R_{\text{total}}}$, הכוח הבולם $BIl = \dfrac{B^2l^2v}{R_{\text{total}}}$, ובמהירות הסופית הוא שווה ל-$mg\sin\theta$.
-      - kind: manipulation
-        text: >-
-          א. $\dfrac{B^2l^2v_T}{R} = mg\sin\theta$, ולכן $v_T = \dfrac{mgR\sin\theta}{B^2l^2}$.
-
-          ב. המוט וה-$R$ בטור, $R_{\text{total}} = R + r$: $v_T = \dfrac{mg(R + r)\sin\theta}{B^2l^2}$.
-
-          ג. אותו זרם עובר ב-$R$ וב-$r$, ולכן החום מתחלק ביחס ההתנגדויות: $\dfrac{I^2R}{I^2(R + r)} = \dfrac{R}{R + r}$.
+          $m = 0.2\,\text{kg}$, $L = 0.5\,\text{m}$, $R = 0.4\,\Omega$, $B = 0.8\,\text{T}$, $v_0 = 3\,\text{m/s}$, ואין כוח מושך. $B^2L^2 = 0.64\cdot0.25 = 0.16\,\text{T}^2\text{m}^2$.
       - kind: substitution
         text: >-
-          ב. $mg\sin\theta = 0.1\cdot10\cdot0.5 = 0.5\,\text{N}$, $B^2l^2 = 0.25\cdot0.25 = 0.0625$. עם $r$: $v_T = \dfrac{0.5\cdot2}{0.0625} = 16\,\text{m/s}$. בלי $r$: $\dfrac{0.5\cdot1.5}{0.0625} = 12\,\text{m/s}$.
+          א. $F_B = \dfrac{B^2L^2v_0}{R} = \dfrac{0.16\cdot3}{0.4} = 1.2\,\text{N}$, נגד התנועה, ולכן $a = \dfrac{1.2}{0.2} = 6\,\text{m/s}^2$ בכיוון ההפוך למהירות.
+      - kind: reasoning
+        text: >-
+          ב. הכוח המגנטי הוא הכוח היחיד לאורך המסילות, ולכן לפי החוק השני של ניוטון בצורת תנע, בכל $\Delta t$ התנע קטן ב-$BIL\,\Delta t = BL\,\Delta q$. נסכם את כל פרקי הזמן עד העצירה: התנע ירד מ-$mv_0$ לאפס, והמטען שעבר הוא סכום כל ה-$\Delta q$. לכן $mv_0 = BLq$, כלומר $q = \dfrac{mv_0}{BL}$. כאן אין צורך לדעת איך הזרם משתנה בזמן: $B$ ו-$L$ קבועים, ולכן אפשר להוציא אותם מהסכום.
+      - kind: reasoning
+        text: >-
+          ג. בכל $\Delta t$ המוט מתקדם $\Delta x = v\,\Delta t$, ולכן $\Delta q = I\,\Delta t = \dfrac{BL\,\Delta x}{R}$. נסכם: $q = \dfrac{BLx}{R}$. נשווה לסעיף ב: $\dfrac{BLx}{R} = \dfrac{mv_0}{BL}$, ומכפילים את שני האגפים ב-$\dfrac{R}{BL}$: $x = \dfrac{mv_0R}{B^2L^2}$. (זה $v_0\tau$, עם $\tau = \dfrac{mR}{B^2L^2}$.)
+      - kind: substitution
+        text: >-
+          ב. $q = \dfrac{0.2\cdot3}{0.8\cdot0.5} = 1.5\,\text{C}$.
 
-          ג. $\dfrac{R}{R + r} = \dfrac{1.5}{2} = 0.75$. בדיקה: $I = \dfrac{mg\sin\theta}{Bl} = \dfrac{0.5}{0.25} = 2\,\text{A}$; ההספק הכולל $mg\sin\theta\cdot v_T = 0.5\cdot16 = 8\,\text{W} = I^2(R + r)$, ובנגד $I^2R = 6\,\text{W}$.
+          ג. $x = \dfrac{0.2\cdot3\cdot0.4}{0.16} = 1.5\,\text{m}$. בדיקה: $\tau = \dfrac{0.2\cdot0.4}{0.16} = 0.5\,\text{s}$, ו-$v_0\tau = 1.5\,\text{m}$.
+
+          ד. אין חיכוך ואין כוח מושך, ולכן כל האנרגיה הקינטית הופכת לחום: $Q = \tfrac{1}{2}\cdot0.2\cdot3^2 = 0.9\,\text{J}$.
       - kind: result
         text: >-
-          א. $v_T = mgR\sin\theta/(B^2l^2)$. ב. $16\,\text{m/s}$ (לעומת $12\,\text{m/s}$): ההתנגדות של המוט מקטינה את הזרם ואת הבלימה, והמהירות הסופית גדלה. ג. $\tfrac{3}{4}$ בנגד, $\tfrac{1}{4}$ במוט.
+          א. $1.2\,\text{N}$ ו-$6\,\text{m/s}^2$ נגד התנועה. ב. $q = mv_0/(BL) = 1.5\,\text{C}$. ג. $x = mv_0R/(B^2L^2) = 1.5\,\text{m}$: המוט נעצר במרחק סופי, אף שמהירותו רק מתקרבת לאפס. ד. $0.9\,\text{J}$, כל האנרגיה הקינטית, לא רבע ולא חצי.
     source:
-      name: JEE Main
-      year: 2018
-      problem: '15 April 2018, Shift 2, Question 21: a copper rod of mass m slides under gravity on smooth rails inclined at θ, joined by R at the bottom, in a field B normal to the rails (the terminal speed, multiple choice); the numbers and parts ב–ג added'
-      url: https://cracku.in/21-a-copper-rod-of-mass-m-slides-under-gravity-on-two-x-nta-jee-main-15-apr-2018-shift-2
+      name: NSEP (National Standard Examination in Physics, India)
+      year: 2023
+      problem: '26 November 2023 paper, Section B, Question 55: a rod of mass m and length ℓ launched at v₀ on frictionless rails closed by R in a field B into the page; true statements about v(t), the stopping distance mv₀R/(B²ℓ²), the heat and the charge mv₀/(Bℓ). Adapted: numbers, and the statements turned into derivation parts'
+      url: https://cracku.in/55-a-metal-rod-of-mass-m-and-length-ell-slides-on-fri-x-nsep-2023-26th-nov
       verified: '2026-11-05'
       adapted: true
 
@@ -417,43 +430,56 @@ challenge:
     stars: 2
     objectives: [OBJ-5.4-3, OBJ-5.4-1, OBJ-5.4-4]
     prompt: >-
-      מוט מוליך דק, שמסתו $40\,\text{g}$, אורכו $20\,\text{cm}$ והתנגדותו $4\,\Omega$, מוחזק אופקית בין שתי מסילות **אנכיות**, חלקות וארוכות, שההתנגדות שלהן זניחה; בראש המסילות הן מחוברות זו לזו בתיל שהתנגדותו זניחה. בכל האזור יש שדה מגנטי אחיד של $2\,\text{T}$, ניצב למישור המסילות. משחררים את המוט ממנוחה ב-$t = 0$, והוא נופל לאורך המסילות. התנגדות האוויר זניחה. אפשר להשתמש בכך שמהירות המוט היא $v(t) = v_T\left(1 - e^{-t/\tau}\right)$, ובקירוב $e^{-1} \approx 0.37$.
+      מוט מתכת שמסתו $0.1\,\text{kg}$ מונח על שתי מסילות אופקיות חלקות שהמרחק ביניהן $0.4\,\text{m}$, בשדה אחיד של $0.5\,\text{T}$ שניצב למישור המסילות. בין המסילות מחוברים בטור סוללה אידיאלית של $1.5\,\text{V}$ ונגד של $0.5\,\Omega$; שאר ההתנגדויות זניחות. סוגרים את המעגל כשהמוט במנוחה. (זה המנוע של שיעור 4.8, אבל הפעם המוט חופשי לנוע.)
 
-      א. מה המהירות הסופית של המוט, ומה קבוע הזמן?
+      א. מה הזרם ומה התאוצה של המוט ברגע הראשון?
 
-      ב. ברגע $t = 1\,\text{s}$: מה הכא"מ המושרה, מה הכוח המגנטי על המוט, ומה ההספק שהופך לחום?
+      ב. כשהמוט נע, נוצר בו כא"מ מושרה. הסבירו למה הוא מתנגד לסוללה, ומצאו את הזרם כשהמוט נע במהירות $v$.
 
-      ג. באותו רגע, הראו שההספק של כוח הכובד שווה להספק שהופך לחום ועוד קצב הגידול של האנרגיה הקינטית.
+      ג. המוט מגיע למהירות סופית. מה היא, ומה הזרם בה? למה היא לא תלויה בהתנגדות ובמסה?
+
+      ד. מהירות המוט היא $v(t) = v_T\left(1 - e^{-t/\tau}\right)$. מצאו את $\tau$.
+
+      ה. עד שהמוט מגיע (כמעט) למהירות הסופית, כמה אנרגיה נותנת הסוללה, כמה ממנה נעשית אנרגיה קינטית וכמה חום? היעזרו בכך שבכל פרק זמן קצר התנע של המוט גדל ב-$BL\,\Delta q$, והסוללה נותנת $U\,\Delta q$.
     answer: >-
-      א. $10\,\text{m/s}$; $1\,\text{s}$.
+      א. $3\,\text{A}$; $6\,\text{m/s}^2$.
 
-      ב. כ-$2.5\,\text{V}$, כ-$0.25\,\text{N}$, כ-$1.6\,\text{W}$.
+      ב. $I = \dfrac{U - BLv}{R}$.
 
-      ג. כ-$2.5\,\text{W} \approx 1.6\,\text{W} + 0.93\,\text{W}$.
+      ג. $7.5\,\text{m/s}$, ובה הזרם אפס.
+
+      ד. $1.25\,\text{s}$.
+
+      ה. $5.625\,\text{J}$ מהסוללה: חצי, כ-$2.81\,\text{J}$, אנרגיה קינטית, וחצי חום.
     solution:
       - kind: given
         text: >-
-          $m = 0.04\,\text{kg}$, $L = 0.2\,\text{m}$, $R = 4\,\Omega$ (ההתנגדות היחידה במעגל), $B = 2\,\text{T}$, $g = 10\,\text{m/s}^2$. הכוח המניע הוא כל המשקל, $mg = 0.4\,\text{N}$, כי המסילות אנכיות. $B^2L^2 = 4\cdot0.04 = 0.16$.
-      - kind: formula
-        text: >-
-          $v_T = \dfrac{mgR}{B^2L^2}$, $\tau = \dfrac{mR}{B^2L^2}$, $\varepsilon = BLv$, $I = \varepsilon/R$, $F_B = BIL$, $P = I^2R$.
+          $m = 0.1\,\text{kg}$, $L = 0.4\,\text{m}$, $B = 0.5\,\text{T}$, $U = 1.5\,\text{V}$, $R = 0.5\,\Omega$, $v_0 = 0$. $BL = 0.2\,\text{T}\cdot\text{m}$.
       - kind: substitution
         text: >-
-          א. $v_T = \dfrac{0.4\cdot4}{0.16} = 10\,\text{m/s}$, $\tau = \dfrac{0.04\cdot4}{0.16} = 1\,\text{s}$.
-
-          ב. $t = 1\,\text{s} = \tau$: $v = 10\cdot(1 - 0.37) = 6.3\,\text{m/s}$. $\varepsilon = 2\cdot0.2\cdot6.3 \approx 2.52\,\text{V}$, $I = 2.52/4 = 0.63\,\text{A}$, $F_B = 2\cdot0.63\cdot0.2 \approx 0.25\,\text{N}$, $P = 0.63^2\cdot4 \approx 1.59\,\text{W}$.
-
-          ג. ההספק של הכובד: $mgv = 0.4\cdot6.3 \approx 2.52\,\text{W}$. התאוצה: $a = \dfrac{mg - F_B}{m} = \dfrac{0.4 - 0.252}{0.04} \approx 3.7\,\text{m/s}^2$, וקצב הגידול של האנרגיה הקינטית $mva = 0.04\cdot6.3\cdot3.7 \approx 0.93\,\text{W}$. ואכן $1.59 + 0.93 \approx 2.52\,\text{W}$.
+          א. במנוחה אין כא"מ מושרה: $I_0 = \dfrac{U}{R} = 3\,\text{A}$, $F = BI_0L = 0.5\cdot3\cdot0.4 = 0.6\,\text{N}$, ו-$a_0 = \dfrac{0.6}{0.1} = 6\,\text{m/s}^2$.
       - kind: reasoning
         text: >-
-          ג. זה לא מקרה: $mgv - F_Bv = mva$, ו-$F_Bv = \dfrac{B^2L^2v^2}{R} = I^2R$. כלומר ההספק של הכובד מתחלק בין חום לאנרגיה קינטית בכל רגע, ולא רק במהירות הסופית.
+          ב. הכוח המגנטי מניע את המוט, ולכן התנועה היא התוצאה של הזרם. לפי חוק לנץ, הכא"מ המושרה $BLv$ מתנגד לסיבה, כלומר לזרם שמניע את המוט: הוא פועל נגד הסוללה. (בכוח לורנץ: על המטענים במוט שנע פועל כוח לאורכו, נגד כיוון הזרם.) במעגל יש שני כא"מים מנוגדים: $I = \dfrac{U - BLv}{R}$.
+      - kind: reasoning
+        text: >-
+          ג. החוק השני של ניוטון: $ma = BIL = \dfrac{BL(U - BLv)}{R}$. התאוצה מתאפסת כש-$BLv_T = U$, כלומר כשהכא"מ המושרה שווה למתח הסוללה ואין זרם. לכן $v_T = \dfrac{U}{BL}$. בלי זרם אין כוח, ובלי כוח אין צורך בזרם: אין חיכוך שצריך לנצח. $R$ ו-$m$ קובעים רק כמה מהר המוט מגיע אליה.
+      - kind: manipulation
+        text: >-
+          ד. נפתח סוגריים: $ma = \dfrac{BLU}{R} - \dfrac{B^2L^2v}{R}$. זו בדיוק המשוואה של מוט שנמשך בכוח קבוע $F = \dfrac{BLU}{R}$, ולכן $\tau = \dfrac{mR}{B^2L^2}$ כמו בשיעור.
+      - kind: substitution
+        text: >-
+          ג. $v_T = \dfrac{1.5}{0.2} = 7.5\,\text{m/s}$, $I = 0$. ד. $\tau = \dfrac{0.1\cdot0.5}{0.04} = 1.25\,\text{s}$ (בדיקה: $v_T/a_0 = 7.5/6 = 1.25\,\text{s}$).
+      - kind: reasoning
+        text: >-
+          ה. כמו באתגר הקודם, נסכם את השינויים בתנע: $mv_T = BLq$, ולכן המטען שעבר בסוללה $q = \dfrac{mv_T}{BL} = \dfrac{0.1\cdot7.5}{0.2} = 3.75\,\text{C}$. הסוללה נתנה $Uq = 1.5\cdot3.75 = 5.625\,\text{J}$. האנרגיה הקינטית $\tfrac{1}{2}\cdot0.1\cdot7.5^2 \approx 2.81\,\text{J}$. החום הוא ההפרש, $5.625 - 2.81 \approx 2.81\,\text{J}$. שימו לב: $Uq = U\cdot\dfrac{mv_T}{BL} = mv_T^2$, בדיוק פי 2 מהאנרגיה הקינטית, בכל $R$.
       - kind: result
         text: >-
-          א. $10\,\text{m/s}$, $1\,\text{s}$. ב. $2.5\,\text{V}$, $0.25\,\text{N}$, $1.6\,\text{W}$. ג. $2.52\,\text{W} \approx 1.59\,\text{W} + 0.93\,\text{W}$.
+          א. $3\,\text{A}$, $6\,\text{m/s}^2$. ב. $I = (U - BLv)/R$. ג. $v_T = U/(BL) = 7.5\,\text{m/s}$, בלי זרם. ד. $\tau = 1.25\,\text{s}$. ה. $5.625\,\text{J}$ מהסוללה, חצי לאנרגיה קינטית וחצי לחום, כמו בטעינת קבל מסוללה.
     source:
-      name: JEE Advanced
-      year: 2023
-      problem: 'Paper 1, Physics, Section 4 (matching), Question 34: a thin rod MN (20 g, 25 cm, 10 Ω) released on frictionless vertical rails in a 4 T field, emf, force and heat power at 0.2 s and the terminal velocity; adapted to 40 g, 20 cm, 4 Ω, 2 T at t = τ, matching replaced by open parts, part ג added'
-      url: https://cracku.in/34-a-thin-conducting-rod-mn-of-mass-20-gm-length-25-c-x-jee-advanced-2023-paper-1
+      name: Physics Olympiad Selection Competition (Hungary, IPhO team selection)
+      year: 2024
+      problem: 'Round 1, 26 February 2024, Problem F2: a rod of mass m on frictionless horizontal rails a distance ℓ apart in a field B, an ideal source U and a resistor R between the rails; (a) the speed against time from rest (part (b), the resistor replaced by an inductor, dropped). Adapted: numbers, the steps of (a) split into parts, and the energy part ה added'
+      url: https://ipho.physics.bme.hu/pdfs/kunfalvi/kunfalvi_2024_eng.pdf
       verified: '2026-11-05'
       adapted: true

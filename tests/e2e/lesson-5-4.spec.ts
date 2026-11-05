@@ -78,21 +78,6 @@ test.describe('live figure', () => {
     const sw = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(sw).toBeLessThanOrEqual(0);
   });
-
-  test('on an incline the terminal speed is 2 m/s with B normal to the rails and 2.67 m/s with B vertical', async ({ page }) => {
-    const fig = await openFigure(page);
-    const readout = fig.locator('.sim-readout');
-    await fig.getByRole('button', { name: 'מסילות משופעות' }).click();
-    await expect(readout).toContainText('v_T = 2 m/s');
-    await setSlider(timeSlider(fig), 'max');
-    await expect(readout).toContainText('המוט כמעט במהירות הסופית');
-    await fig.getByRole('button', { name: /השדה: ניצב/ }).click();
-    await expect(readout).toContainText('v_T = 2.67 m/s');
-    await setSlider(timeSlider(fig), 'max');
-    await expect(readout).toContainText('המוט כמעט במהירות הסופית');
-    const tasks = (await progress(page)).tasks;
-    for (const t of ['incline', 'vertical']) expect(tasks[`fig-5-4a:${t}`]).toBeTruthy();
-  });
 });
 
 test.describe('predict, then reveal', () => {

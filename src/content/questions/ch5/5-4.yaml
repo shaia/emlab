@@ -1,7 +1,7 @@
 # Lesson 5.4 question bank. Strings may hold $inline$ / $$display$$ TeX and **bold**; they are
 # rendered at build time. YAML note: plain and single-quoted strings keep backslashes literally.
 # Every number below was recomputed with src/physics/induction.ts (motionalEmf, railCurrent,
-# railBrakingForce, railTerminalSpeed, railTimeConstant) and src/physics/railrod.ts (inclineRod, kinetic,
+# railBrakingForce, railTerminalSpeed, railTimeConstant) and src/physics/railrod.ts (kinetic,
 # railPowers); script nums54.ts in the session scratchpad.
 # Directions: x right, y up the page, z out of the page; F = qv×B on the rod's charges, F = I L×B on the rod.
 
@@ -265,27 +265,6 @@ questions:
       - text: 'המוט יאט, ייעצר, ויתחיל לנוע אחורה.'
         feedback: 'הכוח הבולם פרופורציוני למהירות: כשהמהירות מתאפסת, גם הוא מתאפס. אין כוח שיחזיר את המוט לאחור.'
 
-  - id: Q-5.4-incline
-    type: numeric
-    objectives: [OBJ-5.4-3]
-    level: bagrut
-    prompt: >-
-      מוט שמסתו $50\,\text{g}$ משתחרר על מסילות חלקות שנוטות בזווית $30^\circ$ לאופק, במרחק $40\,\text{cm}$ זו מזו. בתחתית המדרון המסילות מחוברות בנגד של $0.5\,\Omega$. בכל האזור שדה **אנכי** של $0.5\,\text{T}$. מה המהירות הסופית של המוט, במטר לשנייה?
-    answer: 4.17
-    unit: m/s
-    tolerance: 0.02
-    correctFeedback: 'נכון. רק $B\cos30^\circ \approx 0.433\,\text{T}$ ניצב למסילות: $v_T = \dfrac{mgR\sin\alpha}{B^2L^2\cos^2\alpha} = \dfrac{0.05\cdot10\cdot0.5\cdot0.5}{0.25\cdot0.16\cdot0.75} \approx 4.17\,\text{m/s}$.'
-    wrongFeedback: 'הכוח המניע $mg\sin\alpha$. השדה אנכי, ולכן רק $B\cos\alpha$ ניצב למישור המסילות: גם בכא"מ וגם ברכיב הבולם של הכוח.'
-    commonWrong:
-      - value: 3.125
-        feedback: 'הצבתם את כל $B$, כאילו השדה ניצב למסילות. רק $B\cos\alpha$ עובר דרך המעגל.'
-        misconception: MC-rail-incline-full-field
-      - value: 3.61
-        feedback: 'הכנסתם $\cos\alpha$ רק פעם אחת. הוא מופיע פעמיים: בכא"מ, $BLv\cos\alpha$, וברכיב של הכוח האופקי לאורך המסילות.'
-        misconception: MC-rail-incline-full-field
-      - value: 8.33
-        feedback: 'שכחתם את $\sin\alpha$: הכוח המניע הוא רק רכיב הכובד לאורך המסילות, $mg\sin\alpha$.'
-
   # ------------------------------------------------ OBJ-5.4-4: energy
   - id: Q-5.4-power-current
     type: numeric
@@ -328,7 +307,7 @@ questions:
         feedback: 'השטח של המעגל ממשיך לגדול באותו קצב, $Lv_T$, ולכן השטף ממשיך להשתנות. הזרם במהירות הסופית הוא הגדול ביותר בכל הדרך.'
         misconception: MC-rail-terminal-no-current
       - text: 'הכוח המגנטי עושה עבודה חיובית על המוט.'
-        feedback: 'הכוח המגנטי על המוט נגד התנועה, ולכן העבודה שלו שלילית. היא שווה בגודלה לחום שמתפתח בנגד.'
+        feedback: 'הכוח המגנטי על המוט כולו, $BIL$, נגד התנועה, ולכן העבודה שלו על המוט שלילית, ושווה בגודלה לחום שמתפתח בנגד. (על המטענים, כמו שראינו בשיעור, הכוח המגנטי בסך הכול לא עושה עבודה: הוא רק מעביר לזרם את העבודה של הכוח המושך.)'
         misconception: MC-rail-magnetic-force-helps
 
   - id: Q-5.4-energy-way
