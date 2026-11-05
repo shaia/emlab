@@ -1,0 +1,194 @@
+# Chapter 0 Bagrut-style question: a scenario with lettered parts (א, ב, ג…), 33 points, as in paper
+# 036371. Parts are auto-graded (mc, numeric) or `open`: the student writes a solution, reveals the model
+# one in Bagrut format (formula → manipulation → substitution with units → result) and ticks the rubric.
+#
+# The learner has finished mechanics but not electricity, so the experiment is mechanics: a mass on a
+# spring, timed over 10 oscillations, with the hanger's mass left out of the table. It practises what
+# chapter 0 teaches: prefixes (grams, the time of 10 oscillations), linearisation (T² against m), a
+# quantity from the slope (k) and the meaning of an intercept (the hanger's mass). The pendulum of
+# example 0-4-6 and the datasets of src/physics/lab.ts are deliberately not reused.
+#
+# Data: k = 20 N/m, hanger m0 = 50 g. The period T = 2π√((m + m0)/k) is not in src/physics; it was
+# computed in a scratch script. measure() from src/physics/lab.ts adds 1.2% scatter to t10 (seed 41),
+# rounded to 0.01 s as a stopwatch reads. fitLine() on the rounded table (T = t10/10, m in kg): slope
+# 1.980 s²/kg, intercept 0.1002 s², so k = 19.9 N/m and m0 = 50.6 g; residuals at most 1.2%.
+# YAML note: never use "…" for TeX.
+
+chapter: 0
+questions:
+  # ------------------------------------------------- 1: a mass on a spring and a stopwatch
+  - id: Q-0-bagrut-1
+    type: bagrut
+    title: משקולות על קפיץ ושעון עצר
+    prompt: >-
+      תלמידים תלו קפיץ אנכי ממעמד, ותלו על הקצה התחתון שלו מחזיק משקולות. על המחזיק הניחו משקולות שמסתן
+      הכוללת $m$, משכו אותו מעט כלפי מטה ושחררו, והמחזיק התנודד למעלה ולמטה. בעזרת שעון עצר מדדו את הזמן
+      $t_{10}$ של 10 תנודות שלמות. את המחזיק עצמו התלמידים לא שקלו, ולכן המסה שלו, $m_0$, אינה ידועה.
+
+      לפי המכניקה, זמן המחזור (הזמן של תנודה שלמה אחת) של גוף שמסתו $M$, התלוי על קפיץ שקבועו $k$, הוא
+      $T = 2\pi\sqrt{\dfrac{M}{k}}$. כאן הגוף שמתנודד הוא המחזיק יחד עם המשקולות, כלומר $M = m + m_0$.
+      המסה של הקפיץ זניחה. התלמידים רשמו את המדידות בטבלה:
+      $$\begin{array}{c|c} m\,(\text{g}) & t_{10}\,(\text{s}) \\ \hline 50 & 4.48 \\ 100 & 5.44 \\ 150 & 6.30 \\ 200 & 7.03 \\ 250 & 7.76 \\ 300 & 8.31 \end{array}$$
+    diagramAlt: קפיץ אנכי תלוי ממעמד. בקצה התחתון שלו מחזיק משקולות, שמסתו m₀, ועליו שלוש משקולות שמסתן הכוללת m. חץ כפול מראה שהמחזיק מתנודד למעלה ולמטה.
+    diagram: |
+      <svg viewBox="0 0 300 250" width="300" height="250" font-size="15" aria-hidden="true">
+        <line x1="70" y1="20" x2="230" y2="20" stroke="currentColor" stroke-width="5"/>
+        <polyline points="150,20 150,34 136,40 164,48 136,56 164,64 136,72 164,80 136,88 164,96 136,104 164,112 150,118 150,128" fill="none" stroke="currentColor" stroke-width="2"/>
+        <text x="176" y="72" fill="currentColor" font-style="italic">k</text>
+        <path d="M150,128 q-8,6 0,12" fill="none" stroke="currentColor" stroke-width="2"/>
+        <line x1="150" y1="140" x2="150" y2="200" stroke="currentColor" stroke-width="2"/>
+        <rect x="122" y="164" width="56" height="12" fill="var(--paper-3)" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="122" y="176" width="56" height="12" fill="var(--paper-3)" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="122" y="188" width="56" height="12" fill="var(--paper-3)" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="116" y="200" width="68" height="6" fill="currentColor"/>
+        <line x1="192" y1="164" x2="192" y2="200" stroke="currentColor" stroke-width="1"/>
+        <line x1="187" y1="164" x2="197" y2="164" stroke="currentColor"/>
+        <line x1="187" y1="200" x2="197" y2="200" stroke="currentColor"/>
+        <text x="204" y="187" fill="currentColor" font-style="italic">m</text>
+        <line x1="186" y1="205" x2="206" y2="222" stroke="currentColor" stroke-width="0.8"/>
+        <text x="210" y="232" fill="currentColor" font-style="italic">m<tspan font-size="11" dy="3">0</tspan></text>
+        <g stroke="currentColor" stroke-width="1.5" fill="currentColor">
+          <line x1="80" y1="152" x2="80" y2="212"/>
+          <polygon points="74,154 86,154 80,142" stroke="none"/>
+          <polygon points="74,210 86,210 80,222" stroke="none"/>
+        </g>
+      </svg>
+    parts:
+      - label: א
+        type: mc
+        points: 4
+        level: basic
+        qualitative: true
+        objectives: [OBJ-0.3-3]
+        prompt: למה מדדו התלמידים את הזמן של 10 תנודות, ולא את הזמן של תנודה אחת?
+        choices:
+          - text: 'מי שמפעיל ועוצר שעון עצר ביד טועה בערך באותו זמן, כ-$0.2\,\text{s}$, בין שהוא מודד תנודה אחת ובין שהוא מודד עשר. כשמחלקים ב-10, גם השגיאה מתחלקת ב-10.'
+            correct: true
+            feedback: 'נכון. תנודה אחת נמשכת כאן כ-$0.6\,\text{s}$, ושגיאה של $0.2\,\text{s}$ היא כשליש ממנה. עשר תנודות נמשכות כ-$6\,\text{s}$, ואותה שגיאה היא רק כ-$3\%$ מהן. לכן אפשר לסמוך על יותר ספרות של $T$.'
+          - text: 'הזמן של 10 תנודות הוא מספר גדול יותר, עם יותר ספרות, ומספר עם יותר ספרות מדויק יותר.'
+            feedback: 'מספר הספרות לא קובע את הדיוק. שעון העצר מציג מאיות שנייה בכל מדידה, אבל היד טועה בכ-$0.2\,\text{s}$. מה שמשתפר הוא היחס בין השגיאה לבין הזמן שנמדד: אותה שגיאה, על זמן ארוך פי 10.'
+            misconception: MC-more-digits-better
+          - text: 'התנודות נחלשות, וזמן המחזור מתקצר מתנודה לתנודה. הממוצע של 10 תנודות הוא זמן המחזור האמיתי.'
+            feedback: 'התנודות אכן נחלשות, אבל בנוסחה $T = 2\pi\sqrt{M/k}$ אין את גודל התנודה: זמן המחזור לא תלוי בו. כל עשר התנודות נמשכות אותו זמן, והמדידה של עשר משפרת רק את הדיוק של המדידה ביד.'
+        hints:
+          - 'מה הטעות האפשרית כשלוחצים על שעון עצר בתחילת התנועה ובסופה? האם היא תלויה במספר התנודות?'
+
+      - label: ב
+        type: open
+        points: 6
+        level: mid
+        objectives: [OBJ-0.4-3, OBJ-0.4-2]
+        prompt: >-
+          (1) הראו כי $T^2 = \dfrac{4\pi^2}{k}\,m + \dfrac{4\pi^2}{k}\,m_0$.
+
+          (2) מה כדאי לשים על כל ציר כדי שהגרף יהיה קו ישר? מה השיפוע שלו, ומה נקודת החיתוך שלו עם הציר האנכי?
+          האם $T^2$ ביחס ישר ל-$m$? נמקו.
+        hints:
+          - 'העלו בריבוע את שני האגפים של $T = 2\pi\sqrt{M/k}$. גם את $2\pi$ מעלים בריבוע.'
+          - 'השוו את התוצאה למשוואה של קו ישר, $y = a\,x + b$. מה עומד במקום $x$, ומה נשאר קבוע בין המדידות?'
+        solution:
+          - { kind: formula, text: '$T = 2\pi\sqrt{\dfrac{M}{k}}$, עם $M = m + m_0$.' }
+          - { kind: manipulation, text: 'מעלים את שני האגפים בריבוע: $T^2 = \dfrac{4\pi^2}{k}\,(m + m_0)$. פותחים סוגריים: $T^2 = \dfrac{4\pi^2}{k}\,m + \dfrac{4\pi^2}{k}\,m_0$.' }
+          - { kind: manipulation, text: 'זה קו ישר מהצורה $y = a\,x + b$, עם $y = T^2$ על הציר האנכי ו-$x = m$ על הציר האופקי. השיפוע $a = \dfrac{4\pi^2}{k}$, ונקודת החיתוך $b = \dfrac{4\pi^2}{k}\,m_0$, כלומר $b = a\,m_0$. שניהם קבועים, כי $k$ ו-$m_0$ לא משתנים בין המדידות.' }
+          - { kind: result, text: 'גרף של $T^2$ כתלות ב-$m$ הוא קו ישר, ששיפועו $4\pi^2/k$ ונקודת החיתוך שלו $4\pi^2 m_0/k$. אבל $T^2$ **אינו** ביחס ישר ל-$m$: נקודת החיתוך חיובית, כי $m_0 > 0$, ולכן הקו לא עובר בראשית, והכפלה של $m$ לא מכפילה את $T^2$. מה שביחס ישר ל-$T^2$ הוא המסה הכוללת, $m + m_0$.' }
+        rubric:
+          - text: 'העליתי בריבוע את שני האגפים, כולל $2\pi$ (קיבלתי $4\pi^2$), והצבתי $M = m + m_0$.'
+          - text: 'בחרתי $T^2$ לציר האנכי ו-$m$ לציר האופקי, וזיהיתי את השיפוע $4\pi^2/k$ ואת נקודת החיתוך $4\pi^2 m_0/k$.'
+          - text: 'קבעתי ש-$T^2$ אינו ביחס ישר ל-$m$, ונימקתי בכך שהקו לא עובר בראשית.'
+
+      - label: ג
+        type: open
+        points: 9
+        level: mid
+        standalone: false
+        objectives: [OBJ-0.3-1, OBJ-0.4-3]
+        prompt: >-
+          (1) חשבו לכל שורה בטבלה את זמן המחזור $T$ ואת $T^2$, ורשמו את $m$ בקילוגרמים.
+
+          (2) סרטטו דיאגרמת פיזור של $T^2$ כתלות ב-$m$.
+
+          (3) הוסיפו את הקו הישר שמתאים ביותר לנקודות (קו מגמה), והמשיכו אותו שמאלה עד שהוא חותך את הציר האופקי.
+          לשם כך התחילו את הציר האופקי ב-$m = -0.10\,\text{kg}$.
+        hints:
+          - 'בכל שורה $T = t_{10}/10$, ו-$1\,\text{g} = 10^{-3}\,\text{kg}$.'
+          - 'לפי סעיף ב, הנקודות צריכות לשבת על קו ישר שלא עובר בראשית. אל תכריחו את הקו לעבור בה.'
+        solution:
+          - { kind: formula, text: '$T = \dfrac{t_{10}}{10}$ ו-$1\,\text{g} = 10^{-3}\,\text{kg}$. לפי סעיף ב, הגרף של $T^2$ כתלות ב-$m$ הוא קו ישר.' }
+          - { kind: substitution, text: 'למשל בשורה הראשונה: $m = 50\cdot10^{-3}\,\text{kg} = 0.050\,\text{kg}$, $T = \dfrac{4.48\,\text{s}}{10} = 0.448\,\text{s}$, ו-$T^2 = (0.448\,\text{s})^2 = 0.201\,\text{s}^2$.' }
+          - { kind: manipulation, text: 'כל השורות: $$\begin{array}{c|c|c} m\,(\text{kg}) & T\,(\text{s}) & T^2\,(\text{s}^2) \\ \hline 0.050 & 0.448 & 0.201 \\ 0.100 & 0.544 & 0.296 \\ 0.150 & 0.630 & 0.397 \\ 0.200 & 0.703 & 0.494 \\ 0.250 & 0.776 & 0.602 \\ 0.300 & 0.831 & 0.691 \end{array}$$' }
+          - { kind: manipulation, text: 'הציר האופקי מתחיל משמאל לראשית, ב-$m = -0.10\,\text{kg}$, ומגיע עד $m = 0.30\,\text{kg}$. הציר האנכי מ-0 עד כ-$0.7\,\text{s}^2$. שש הנקודות יושבות קרוב לקו ישר: הקו המתאים ביותר הוא $T^2 = 1.98\,m + 0.100$, עם $m$ בקילוגרמים ו-$T^2$ בשניות בריבוע. הוא עובר ליד $(0.050,\ 0.20)$ וליד $(0.300,\ 0.69)$, והנקודות מתפזרות משני צדדיו, הרחוקה ביותר במרחק של כ-$1\%$ ממנו.' }
+          - { kind: result, text: 'דיאגרמת פיזור של שש נקודות, וקו מגמה ישר ועולה שחותך את הציר האנכי בערך ב-$T^2 = 0.10\,\text{s}^2$, ולא בראשית. כשממשיכים אותו שמאלה, הוא חותך את הציר האופקי בערך ב-$m = -0.05\,\text{kg}$.' }
+        rubric:
+          - text: 'חישבתי $T = t_{10}/10$ (ולא השתמשתי ב-$t_{10}$ עצמו), והעליתי בריבוע בכל השורות.'
+          - text: 'המרתי את המסות מגרמים לקילוגרמים.'
+          - text: 'שמתי $m$ על הציר האופקי ו-$T^2$ על הציר האנכי, עם שם הגודל והיחידות ליד כל ציר ובקנה מידה אחיד, וסימנתי את שש הנקודות.'
+          - text: 'העברתי קו ישר אחד, עם נקודות משני צדדיו, בלי להכריח אותו לעבור בראשית, והמשכתי אותו עד הציר האופקי.'
+
+      - label: ד
+        type: numeric
+        points: 8
+        level: bagrut
+        standalone: false
+        objectives: [OBJ-0.4-4, OBJ-0.3-4]
+        prompt: מצאו מהשיפוע של קו המגמה את קבוע הקפיץ $k$.
+        answer: 20
+        unit: N/m
+        tolerance: 0.1
+        correctFeedback: >-
+          נכון. משתי נקודות רחוקות על הקו:
+          $a = \dfrac{0.69\,\text{s}^2 - 0.20\,\text{s}^2}{0.300\,\text{kg} - 0.050\,\text{kg}} \approx 1.96\,\text{s}^2/\text{kg}$.
+          לפי סעיף ב $a = \dfrac{4\pi^2}{k}$, ולכן $k = \dfrac{4\pi^2}{a} = \dfrac{4\pi^2}{1.96\,\text{s}^2/\text{kg}} \approx 20\,\text{N/m}$.
+          בדיקת יחידות: $\dfrac{\text{kg}}{\text{s}^2} = \dfrac{\text{kg}\cdot\text{m/s}^2}{\text{m}} = \text{N/m}$.
+        wrongFeedback: >-
+          לפי סעיף ב, השיפוע של הגרף של $T^2$ כתלות ב-$m$ הוא $\dfrac{4\pi^2}{k}$. חשבו אותו משתי נקודות רחוקות על הקו,
+          ולא משורות הטבלה, עם $m$ בקילוגרמים ועם $T$ של תנודה אחת, ואחר כך בודדו את $k$.
+        commonWrong:
+          - value: 0.2
+            feedback: 'השתמשתם ב-$t_{10}$ כאילו הוא $T$. זה הזמן של 10 תנודות, ולכן $t_{10}^2$ גדול פי 100 מ-$T^2$, השיפוע גדול פי 100, ו-$k$ יוצא קטן פי 100.'
+          - value: 1.99e4
+            feedback: 'השארתם את $m$ בגרמים. השיפוע יצא $1.98\cdot10^{-3}\,\text{s}^2/\text{g}$, קטן פי 1000, ולכן $k$ גדול פי 1000. היחידה $\text{N/m}$ בנויה מקילוגרמים, ולכן ממירים ל-$\text{kg}$ לפני ההצבה.'
+            misconception: MC-units-decoration
+          - value: 0.505
+            feedback: 'חישבתם $k = 1/a$ ושכחתם את $4\pi^2$. לפי סעיף ב, $a = 4\pi^2/k$.'
+          - value: 78.2
+            feedback: 'הפכתם את הקשר וחישבתם $k = 4\pi^2\cdot a$. מ-$a = \dfrac{4\pi^2}{k}$ מקבלים $k = \dfrac{4\pi^2}{a}$.'
+          - value: 25.7
+            feedback: 'זה מה שיוצא מהשיפוע של גרף של $T$, בלי ריבוע, כתלות ב-$m$. הגרף הזה אינו קו ישר, והשיפוע שלו אינו $4\pi^2/k$. על הציר האנכי שמים את $T^2$.'
+          - value: 16.2
+            feedback: 'הכרחתם את הקו לעבור בראשית. לפי סעיף ב הקו לא עובר בה, כי המסה של המחזיק לא בטבלה. קו שנאלץ לעבור בראשית תלול יותר, ולכן $k$ יוצא קטן מדי.'
+            misconception: MC-linear-means-proportional
+          - value: 9.8
+            feedback: 'חישבתם $k = 4\pi^2 m/T^2$ מהשורה הראשונה, בלי המחזיק. כל שורה נותנת כך ערך אחר, מ-$9.8$ עד $17\,\text{N/m}$, כי כשהקו לא עובר בראשית, $T^2/m$ אינו השיפוע. את השיפוע מחשבים משתי נקודות על הקו.'
+            misconception: MC-slope-from-data-points
+        hints:
+          - 'לפי סעיף ב, איזה ביטוי הוא השיפוע של הגרף של $T^2$ כתלות ב-$m$?'
+        explanation: >-
+          הזמנים בטבלה ידועים בשלוש ספרות משמעותיות, וקו שמשרטטים ביד מוסיף אי-ודאות של אחוזים ספורים. לכן כותבים
+          $k \approx 20\,\text{N/m}$, בשתי ספרות משמעותיות, ולא $19.937\,\text{N/m}$ כמו שמראה המחשבון.
+
+      - label: ה
+        type: numeric
+        points: 6
+        level: bagrut
+        standalone: false
+        objectives: [OBJ-0.4-1]
+        prompt: מצאו מקו המגמה את המסה $m_0$ של מחזיק המשקולות. תנו את התשובה בגרמים.
+        answer: 51
+        unit: g
+        tolerance: 0.15
+        correctFeedback: >-
+          נכון. לפי סעיף ב, $T^2 = a\,(m + m_0)$, ולכן הקו מגיע ל-$T^2 = 0$ כאשר $m = -m_0$. קו המגמה חותך את הציר
+          האופקי בערך ב-$m = -0.051\,\text{kg}$, ולכן $m_0 \approx 0.051\,\text{kg}$, כלומר כ-$51\,\text{g}$.
+          אותו דבר יוצא מנקודת החיתוך עם הציר האנכי: $m_0 = \dfrac{b}{a} = \dfrac{0.10\,\text{s}^2}{1.96\,\text{s}^2/\text{kg}} \approx 0.051\,\text{kg}$.
+        wrongFeedback: >-
+          לפי סעיף ב, נקודת החיתוך עם הציר האנכי היא $b = a\,m_0$. אפשר לחלק אותה בשיפוע, או לקרוא איפה הקו חותך את
+          הציר האופקי: שם $T^2 = 0$, כלומר $m + m_0 = 0$.
+        commonWrong:
+          - value: 100
+            feedback: 'קראתם את נקודת החיתוך עם הציר **האנכי**, $0.10\,\text{s}^2$, כאילו היא $0.10\,\text{kg}$. היא נמדדת בשניות בריבוע, לא במסה. כדי לקבל מסה מחלקים אותה בשיפוע.'
+          - value: 0.051
+            feedback: 'זו המסה בקילוגרמים. השאלה מבקשת גרמים: $0.051\,\text{kg} = 51\,\text{g}$.'
+          - value: -51
+            feedback: 'הקו אכן חותך את הציר האופקי ב-$m = -51\,\text{g}$, אבל המסה של המחזיק חיובית. בנקודה הזו $m + m_0 = 0$, ולכן $m_0$ הוא $51\,\text{g}$.'
+        hints:
+          - 'לפי סעיף ב, $T^2 = a\,(m + m_0)$. באיזה ערך של $m$ הביטוי הזה מתאפס?'

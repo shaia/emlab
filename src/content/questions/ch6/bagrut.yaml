@@ -1,0 +1,211 @@
+# Chapter 6 multi-part questions: a scenario with lettered parts (א, ב, ג…), 33 points each, in the
+# structure of questions/ch1/bagrut.yaml. Chapter 6 goes beyond the Bagrut, so the practice page
+# labels these "אתגר" and level `bagrut` shows as "מתקדם". Open parts are solved in the chapter-6
+# format: general law (law) → derivation (manipulation) → symbolic result → limit check (limit) →
+# unit check (units) → numbers (substitution) only when asked, ending in a result step.
+#
+# Every number was computed with src/physics, not by hand: magnetism.ts (loopField, the
+# elliptic-integral loop at rho = 0, times N; it equals loopAxisField), biotsavart.ts
+# (dipoleAxisField, loopMoment) and lab.ts (measure with 2% scatter, seed 18, readings rounded to
+# whole microtesla; fitLine on the rounded table). YAML note: never use "…" for TeX.
+
+chapter: 6
+questions:
+  # ------------------------------------------------------------ 1: a field sensor on the axis of a flat coil
+  - id: Q-6-bagrut-1
+    type: bagrut
+    title: חיישן שדה מגנטי על הציר של סליל שטוח
+    prompt: >-
+      סליל שטוח עגול של $N = 50$ כריכות סגור בתוך מעטפת פלסטיק, ולכן אי אפשר למדוד ישירות את הרדיוס $R$ של
+      הכריכות. בסליל זורם זרם קבוע $I$ מספק שהמד שלו מקולקל, ולכן גם הזרם לא ידוע. כדי למצוא את שניהם, תלמידים
+      מזיזים חיישן שדה מגנטי לאורך ציר הסליל ומודדים את השדה במרחק $z$ ממרכז הסליל. לפני המדידות הם מאפסים את
+      החיישן כשהזרם כבוי, כך שהוא מראה רק את השדה של הסליל. החיישן מודד את רכיב השדה לאורך הציר, ומציג אותו
+      במיקרוטסלה שלמים. המדידות:
+      $$\begin{array}{c|c} z\,(\text{cm}) & B\,(\mu\text{T}) \\ \hline 2.0 & 668 \\ 4.0 & 454 \\ 6.0 & 278 \\ 8.0 & 168 \\ 10.0 & 108 \\ 12.0 & 70 \end{array}$$
+      הזניחו את העובי של הסליל: כל הכריכות באותו מישור ובאותו רדיוס.
+    diagramAlt: >-
+      מבט מהצד. משמאל הסליל השטוח, בצבע הזהב, נראה כאליפסה צרה וגבוהה. בקצה העליון שלה הזרם יוצא מהדף (⊙), ובקצה
+      התחתון הוא נכנס לדף (⊗). דרך מרכז הסליל עובר ימינה ציר אופקי מקווקו, z. משמאל לסליל מסומן הרדיוס R, מהמרכז
+      עד הקצה העליון. על הציר, מימין לסליל, החיישן: מלבן קטן, ומימינו חץ כחול ימינה, השדה B לאורך הציר. מתחת לציר
+      מסומן המרחק z בין מרכז הסליל לחיישן.
+    diagram: |
+      <svg viewBox="0 0 420 185" width="420" height="185" font-size="14" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="1" fill="none">
+          <line x1="30" y1="85" x2="388" y2="85" stroke-dasharray="5 4"/>
+          <line x1="56" y1="85" x2="56" y2="27"/>
+          <line x1="50" y1="85" x2="62" y2="85"/>
+          <line x1="50" y1="27" x2="62" y2="27"/>
+          <line x1="90" y1="162" x2="251" y2="162"/>
+          <line x1="90" y1="156" x2="90" y2="168"/>
+          <line x1="251" y1="156" x2="251" y2="168"/>
+        </g>
+        <polygon points="388,80 400,85 388,90" fill="currentColor"/>
+        <text x="396" y="106" fill="currentColor" font-style="italic">z</text>
+        <ellipse cx="90" cy="85" rx="14" ry="58" fill="none" stroke="var(--current)" stroke-width="2.5"/>
+        <circle cx="90" cy="85" r="2.5" fill="currentColor"/>
+        <circle cx="90" cy="27" r="8" fill="var(--paper)" stroke="var(--current)" stroke-width="2"/>
+        <circle cx="90" cy="27" r="2.5" fill="var(--current)"/>
+        <circle cx="90" cy="143" r="8" fill="var(--paper)" stroke="var(--current)" stroke-width="2"/>
+        <line x1="84.5" y1="137.5" x2="95.5" y2="148.5" stroke="var(--current)" stroke-width="2"/>
+        <line x1="95.5" y1="137.5" x2="84.5" y2="148.5" stroke="var(--current)" stroke-width="2"/>
+        <text x="106" y="22" fill="var(--current)" font-style="italic">I</text>
+        <text x="38" y="61" fill="currentColor" font-style="italic">R</text>
+        <rect x="240" y="79" width="22" height="12" fill="var(--paper)" stroke="currentColor" stroke-width="1.5"/>
+        <text x="251" y="68" text-anchor="middle" fill="currentColor">חיישן</text>
+        <line x1="270" y1="85" x2="330" y2="85" stroke="var(--bfield)" stroke-width="2.5"/>
+        <polygon points="330,79 343,85 330,91" fill="var(--bfield)"/>
+        <text x="302" y="72" fill="var(--bfield)" font-style="italic" font-weight="700">B</text>
+        <text x="170" y="180" fill="currentColor" font-style="italic">z</text>
+      </svg>
+    parts:
+      - label: א
+        type: open
+        points: 7
+        level: bagrut
+        objectives: [OBJ-6.11-1, OBJ-6.11-3, OBJ-6.16-2]
+        prompt: >-
+          (1) הראו בעזרת חוק ביו-סבר שהשדה על הציר של הסליל, במרחק $z$ ממרכזו, הוא
+          $$B(z) = \frac{\mu_0 N I R^2}{2\left(R^2 + z^2\right)^{3/2}}$$
+
+          (2) בדקו את הביטוי בשני הגבולות, במרכז הסליל ורחוק ממנו ($z \gg R$), ובדקו את היחידות שלו.
+        hints:
+          - 'כל אלמנט של כריכה נמצא באותו מרחק מנקודה על הציר. מה הסימטריה עושה לרכיבים של התרומות לרוחב הציר?'
+        solution:
+          - { kind: law, text: 'חוק ביו-סבר: אלמנט זרם $I\,d\vec\ell$ תורם בנקודה P שדה $d\vec B = \dfrac{\mu_0}{4\pi}\cdot\dfrac{I\,d\vec\ell\times\hat r}{r^2}$, כאשר $\vec r$ הוא הקו מהאלמנט אל P.' }
+          - { kind: manipulation, text: 'כל אלמנט של כריכה נמצא באותו מרחק מ-P, $r = \sqrt{R^2 + z^2}$. הזרם באלמנט משיק לכריכה, ולכן ניצב גם לרדיוס שמגיע אליו וגם לציר, וכך גם לקו אל P. לכן לכל התרומות אותו גודל, $dB = \dfrac{\mu_0 I\,d\ell}{4\pi\left(R^2 + z^2\right)}$.' }
+          - { kind: manipulation, text: 'לכל אלמנט יש אלמנט מולו, בצד השני של הכריכה, שהרכיב של התרומה שלו לרוחב הציר הפוך: הרכיבים לרוחב מתבטלים. הרכיב לאורך הציר הוא $dB\sin\beta$, עם $\sin\beta = \dfrac{R}{r}$, זהה לכל האלמנטים. סכום ה-$d\ell$ על כריכה הוא ההיקף $2\pi R$, ו-$N$ כריכות באותו מקום תורמות פי $N$: $$B = N\cdot\frac{\mu_0 I}{4\pi\left(R^2 + z^2\right)}\cdot\frac{R}{\sqrt{R^2 + z^2}}\cdot2\pi R = \frac{\mu_0 N I R^2}{2\left(R^2 + z^2\right)^{3/2}}$$' }
+          - { kind: limit, text: 'במרכז, $z = 0$: $B = \dfrac{\mu_0 N I R^2}{2R^3} = \dfrac{\mu_0 N I}{2R}$, השדה במרכז סליל שטוח משיעור 4.3. רחוק, $z \gg R$: $\left(R^2 + z^2\right)^{3/2} \approx z^3$, ולכן $B \approx \dfrac{\mu_0 N I R^2}{2z^3} = \dfrac{\mu_0 m}{2\pi z^3}$ עם $m = NI\pi R^2$: השדה של דיפול מגנטי, שיורד כמו $1/z^3$, ולא כמו $1/z^2$ של מטען נקודתי.' }
+          - { kind: units, text: '$\mu_0 N I$ ביחידות $\text{T}\cdot\text{m}$, כמו המונה של $\mu_0 I/(2\pi r)$ של תיל, ו-$\dfrac{R^2}{\left(R^2 + z^2\right)^{3/2}}$ ביחידות $\text{m}^{-1}$: המכפלה בטסלה. גם בגבול הרחוק: $\dfrac{\text{T}\cdot\text{m}}{\text{A}}\cdot\dfrac{\text{A}\cdot\text{m}^2}{\text{m}^3} = \text{T}$.' }
+          - { kind: result, text: '$B(z) = \dfrac{\mu_0 N I R^2}{2\left(R^2 + z^2\right)^{3/2}}$ לאורך הציר. הביטוי עובר את שני הקצוות: $\mu_0NI/(2R)$ במרכז, ודיפול מגנטי, $1/z^3$, רחוק. היחידות טסלה.' }
+        rubric:
+          - text: כתבתי את חוק ביו-סבר לאלמנט זרם, וקבעתי שכל האלמנטים באותו מרחק מ-P ושהזרם בכל אחד מהם ניצב לקו אל P.
+          - text: נימקתי בסימטריה שהרכיבים לרוחב הציר מתבטלים, ולקחתי רק את הרכיב לאורך הציר, $dB\cdot R/r$.
+          - text: סכמתי על ההיקף, $2\pi R$, ועל $N$ כריכות, וקיבלתי את הביטוי.
+          - text: בדקתי שב-$z = 0$ מתקבל $\mu_0NI/(2R)$, ושרחוק השדה יורד כמו $1/z^3$, כמו של דיפול מגנטי.
+          - text: בדקתי שהיחידות של הביטוי הן טסלה.
+
+      - label: ב
+        type: open
+        points: 7
+        level: mid
+        objectives: [OBJ-6.16-3, OBJ-0.4-3, OBJ-0.4-2]
+        prompt: >-
+          (1) הראו שהגודל $B^{-2/3}$ הוא קשר קווי של $z^2$. מה השיפוע של הקו ומה נקודת החיתוך שלו עם הציר האנכי,
+          בביטויים עם $\mu_0$, $N$, $I$ ו-$R$?
+
+          (2) חשבו לכל מדידה את $z^2$ בסנטימטרים רבועים ואת $B^{-2/3}$ ביחידות $\text{T}^{-2/3}$, עם $B$ בטסלה.
+          סרטטו דיאגרמת פיזור של $B^{-2/3}$ כתלות ב-$z^2$, והוסיפו לה את הקו המתאים לה ביותר (קו מגמה).
+        hints:
+          - 'העלו את שני האגפים של הביטוי מחלק א בחזקת מינוס שתיים שלישיות. מה קורה ל-$\left(R^2 + z^2\right)^{3/2}$?'
+          - 'קו המגמה לא חייב לעבור בראשית. בחרו את הצירים כך שהחיתוך עם הציר האנכי ייכנס לגרף.'
+        solution:
+          - { kind: manipulation, text: 'מעלים את שני האגפים בחזקת מינוס שתיים שלישיות. $\left(R^2 + z^2\right)^{3/2}$ שבמכנה הופך ל-$\left(R^2 + z^2\right)^{1}$ במונה: $$B^{-2/3} = \left(\frac{2}{\mu_0 N I R^2}\right)^{2/3}\left(z^2 + R^2\right) = s\,z^2 + b$$ זה קשר קווי של $z^2$, עם שיפוע $s = \left(\dfrac{2}{\mu_0 N I R^2}\right)^{2/3}$ וחיתוך $b = sR^2$. הוא לא יחס ישר: החיתוך לא אפס.' }
+          - { kind: limit, text: 'ב-$z = 0$ הקו נותן $B^{-2/3} = b$, כלומר $B(0) = b^{-3/2} = s^{-3/2}R^{-3} = \dfrac{\mu_0 N I R^2}{2}\cdot\dfrac{1}{R^3} = \dfrac{\mu_0 N I}{2R}$, השדה במרכז. וכש-$z \gg R$ החיתוך זניח, $B^{-2/3} \approx s\,z^2$, כלומר $B \propto 1/z^3$: הדיפול.' }
+          - { kind: units, text: 'הציר האנכי ביחידות $\text{T}^{-2/3}$ והאופקי ב-$\text{cm}^2$, ולכן השיפוע ב-$\text{T}^{-2/3}/\text{cm}^2$ והחיתוך ב-$\text{T}^{-2/3}$. היחס $b/s$ ב-$\text{cm}^2$, כמו $R^2$.' }
+          - { kind: manipulation, text: 'לדוגמה, ב-$z = 2.0\,\text{cm}$: $z^2 = 4.0\,\text{cm}^2$, ו-$B^{-2/3} = \left(668\cdot10^{-6}\right)^{-2/3} \approx 130.9\,\text{T}^{-2/3}$. לכל המדידות: $$\begin{array}{c|c} z^2\,(\text{cm}^2) & B^{-2/3}\,(\text{T}^{-2/3}) \\ \hline 4 & 130.9 \\ 16 & 169.3 \\ 36 & 234.8 \\ 64 & 328.4 \\ 100 & 440.9 \\ 144 & 588.8 \end{array}$$' }
+          - { kind: manipulation, text: 'הציר האופקי מ-0 עד $150\,\text{cm}^2$, והאנכי מ-0 עד $600\,\text{T}^{-2/3}$, כדי שהחיתוך ייכנס לגרף. מסמנים את שש הנקודות. הן על קו ישר: הקו המתאים להן ביותר עובר ליד $(10,\ 150)$ וליד $(140,\ 574)$, והנקודה הרחוקה ממנו ביותר, ב-$z = 10\,\text{cm}$, במרחק של כ-$3\,\text{T}^{-2/3}$ בלבד. הקו **לא** עובר בראשית.' }
+          - { kind: result, text: 'שיפוע $\left(\dfrac{2}{\mu_0 N I R^2}\right)^{2/3}$, חיתוך $R^2$ כפול השיפוע. דיאגרמת פיזור של שש נקודות, וקו מגמה ישר עם שיפוע של כ-$3.26\,\text{T}^{-2/3}/\text{cm}^2$, שחותך את הציר האנכי בערך ב-$117\,\text{T}^{-2/3}$. הנקודות על קו ישר, ולכן הצורה של החוק עומדת במבחן.' }
+        rubric:
+          - text: העליתי את הביטוי בחזקת מינוס שתיים שלישיות, וזיהיתי את השיפוע $\left(\dfrac{2}{\mu_0NIR^2}\right)^{2/3}$ ואת החיתוך, $R^2$ כפול השיפוע.
+          - text: בדקתי שב-$z = 0$ החיתוך מחזיר את השדה במרכז, $\mu_0NI/(2R)$.
+          - text: חישבתי $z^2$ ו-$B^{-2/3}$ לכל מדידה, עם $B$ בטסלה, מכ-$131$ עד כ-$589\,\text{T}^{-2/3}$.
+          - text: כתבתי ליד כל ציר את הגודל ואת היחידות, ובחרתי קנה מידה אחיד שמתחיל באפס בשני הצירים.
+          - text: העברתי קו ישר אחד, עם נקודות משני צדדיו, ולא אילצתי אותו לעבור בראשית.
+
+      - label: ג
+        type: numeric
+        points: 5
+        level: mid
+        standalone: false
+        objectives: [OBJ-0.4-1, OBJ-6.16-3]
+        prompt: חשבו מהשיפוע ומנקודת החיתוך של קו המגמה את הרדיוס $R$ של הכריכות. ענו בסנטימטרים.
+        answer: 6.0
+        unit: cm
+        tolerance: 0.1
+        correctFeedback: 'נכון. משתי נקודות רחוקות על הקו, $(10,\ 150)$ ו-$(140,\ 574)$: $s = \dfrac{574 - 150}{140 - 10} \approx 3.26\,\text{T}^{-2/3}/\text{cm}^2$, ו-$b = 150 - 3.26\cdot10 \approx 117\,\text{T}^{-2/3}$. החיתוך הוא $b = sR^2$, ולכן $R^2 = \dfrac{b}{s} = \dfrac{117}{3.26} \approx 36\,\text{cm}^2$, ו-$R \approx 6.0\,\text{cm}$. $\mu_0$, $N$ ו-$I$ מצטמצמים: את הרדיוס קובעת רק הצורה של העקומה.'
+        wrongFeedback: 'השוו את $B^{-2/3} = s\left(z^2 + R^2\right)$ למשוואה של קו ישר: החיתוך הוא $sR^2$. חלקו את החיתוך בשיפוע, והוציאו שורש.'
+        commonWrong:
+          - value: 36
+            feedback: 'זה $R^2$, בסנטימטרים רבועים: $\dfrac{b}{s} \approx 36\,\text{cm}^2$. הוציאו שורש.'
+          - value: 10.8
+            feedback: 'הוצאתם שורש מהחיתוך עצמו, כאילו הוא $R^2$. החיתוך הוא $sR^2$, ובו גם השיפוע: $R^2 = b/s$.'
+          - value: 0.167
+            feedback: 'חילקתם את השיפוע בחיתוך. מ-$b = sR^2$ מבודדים $R^2 = b/s$, החיתוך חלקי השיפוע.'
+          - value: 0.06
+            feedback: 'זה הרדיוס במטרים. כאן מבקשים סנטימטרים: $0.060\,\text{m} = 6.0\,\text{cm}$.'
+
+      - label: ד
+        type: numeric
+        points: 6
+        level: bagrut
+        standalone: false
+        objectives: [OBJ-0.4-4, OBJ-6.16-3, OBJ-6.11-3]
+        prompt: חשבו מהשיפוע של קו המגמה ומהרדיוס שמצאתם את הזרם $I$ בסליל.
+        answer: 1.50
+        unit: A
+        tolerance: 0.12
+        correctFeedback: 'נכון. מהשיפוע, $s^{3/2} = \dfrac{2}{\mu_0 N I R^2}$, ולכן $I = \dfrac{2}{\mu_0 N R^2 s^{3/2}}$. במטרים השיפוע גדול פי $10^4$: $s \approx 3.26\cdot10^{4}\,\text{T}^{-2/3}/\text{m}^2$, ו-$s^{3/2} \approx 5.9\cdot10^{6}\,\text{T}^{-1}\,\text{m}^{-3}$. עם $R = 0.060\,\text{m}$: $$I = \frac{2}{4\pi\cdot10^{-7}\cdot50\cdot0.0036\cdot5.9\cdot10^{6}} \approx 1.5\,\text{A}$$'
+        wrongFeedback: 'בודדו את $I$ מ-$s = \left(\dfrac{2}{\mu_0NIR^2}\right)^{2/3}$: העלו את שני האגפים בחזקת $3/2$. לפני ההצבה המירו את השיפוע ל-$\text{T}^{-2/3}/\text{m}^2$ ואת $R$ למטרים.'
+        commonWrong:
+          - value: 0.75
+            feedback: 'שכחתם את ה-2 שבמונה, שבא מהמכנה $2\left(R^2 + z^2\right)^{3/2}$ של חלק א: $I = \dfrac{2}{\mu_0NR^2s^{3/2}}$.'
+          - value: 75
+            feedback: 'זו המכפלה $NI$, הזרם בכל הכריכות יחד. הזרם בכל כריכה קטן פי $N = 50$.'
+          - value: 1.5e6
+            feedback: 'השארתם את השיפוע ב-$\text{T}^{-2/3}/\text{cm}^2$, ואת $R$ במטרים. $1\,\text{cm}^2 = 10^{-4}\,\text{m}^2$, ולכן במטרים השיפוע גדול פי $10^4$, ו-$s^{3/2}$ פי $10^6$.'
+          - value: 1.5e-4
+            feedback: 'הצבתם את $R$ בסנטימטרים ואת השיפוע במטרים. הציבו את שניהם במטרים: $R = 0.060\,\text{m}$, ו-$R^2 = 0.0036\,\text{m}^2$.'
+          - value: 8.66e3
+            feedback: 'העליתם את השיפוע בחזקת $2/3$ במקום $3/2$. אם $s = X^{2/3}$, אז $X = s^{3/2}$.'
+          - value: 1.28
+            feedback: 'השתמשתם בנוסחה לשדה במרכז, $\mu_0NI/(2R)$, עם המדידה ב-$2.0\,\text{cm}$. אבל שם השדה כבר קטן מהשדה במרכז: $\left(1 + \dfrac{4}{36}\right)^{-3/2} \approx 0.85$. את הזרם נותן השיפוע של הקו, שבו כל המדידות.'
+            misconception: MC-slope-from-data-points
+        explanation: >-
+          בדיקת יחידות: $\mu_0 R^2 s^{3/2}$ ביחידות $\dfrac{\text{T}\cdot\text{m}}{\text{A}}\cdot\text{m}^2\cdot\text{T}^{-1}\,\text{m}^{-3} = \text{A}^{-1}$,
+          ולכן $I$ באמפר. ואפשר גם בלי $R$: מ-$R^2 = b/s$ יוצא $I = \dfrac{2}{\mu_0 N b\sqrt{s}}$, עם אותה תוצאה.
+
+      - label: ה
+        type: twotier
+        points: 4
+        level: mid
+        qualitative: true
+        objectives: [OBJ-6.16-3]
+        prompt: בגרף של חלק ב, אילו נקודות רחוקות יותר מקו המגמה, ביחידות של הציר האנכי?
+        choices:
+          - text: 'הנקודות הרחוקות מהסליל, עם $z$ גדול.'
+            correct: true
+            feedback: 'נכון. ב-2, 4 ו-6 סנטימטרים הנקודות רחוקות מהקו פחות מ-$0.5\,\text{T}^{-2/3}$, וב-8, 10 ו-12 סנטימטרים בין $1$ ל-$3\,\text{T}^{-2/3}$.'
+          - text: 'הנקודות הקרובות לסליל, עם $z$ קטן.'
+            feedback: 'קרוב לסליל השדה חזק, וכל שגיאה בו היא חלק קטן ממנו. בגרף שלכם, ב-2, 4 ו-6 סנטימטרים, הנקודות כמעט על הקו.'
+          - text: 'כל הנקודות מתפזרות באותה מידה.'
+            feedback: 'שגיאה יחסית זהה בשדה נותנת שגיאה יחסית זהה ב-$B^{-2/3}$, אבל בגרף רואים את השגיאה עצמה, לא את החלק היחסי שלה, והיא גדלה עם הערך של $B^{-2/3}$.'
+        reasons:
+          - text: 'שגיאה יחסית בשדה הופכת לשני שלישים ממנה ב-$B^{-2/3}$, ורחוק מהסליל $B^{-2/3}$ גדול יותר. וגם עיגול לשלמים הוא חלק גדול יותר מ-$70\,\mu\text{T}$ מאשר מ-$668\,\mu\text{T}$.'
+            correct: true
+            feedback: 'נכון. שגיאה של $2\%$ בשדה מזיזה את הנקודה ב-$z = 2.0\,\text{cm}$ ב-$1.7\,\text{T}^{-2/3}$ לכל היותר, וב-$z = 12\,\text{cm}$ ב-$7.9\,\text{T}^{-2/3}$. ושגיאה של $1\,\mu\text{T}$ מזיזה את הנקודה הרחוקה בכ-$5.5\,\text{T}^{-2/3}$, ואת הקרובה בפחות מ-$0.2$. לכן הנקודות הרחוקות קובעות את החיתוך פחות טוב, וכדאי לקרוא אותו מהקו, לא מנקודה אחת.'
+          - text: 'קרוב לסליל השדה משתנה הכי מהר עם המרחק, ולכן טעות קטנה במיקום החיישן משנה שם את המדידה הכי הרבה.'
+            feedback: 'זה נכון לגבי $B$ עצמו, אבל לא בגרף הזה. שם $B^{-2/3} = s\left(z^2 + R^2\right)$, וטעות של $1\,\text{mm}$ במיקום מזיזה את הנקודה ב-$2sz\cdot0.1\,\text{cm}$: כ-$1.3\,\text{T}^{-2/3}$ ב-$2.0\,\text{cm}$, וכ-$7.8\,\text{T}^{-2/3}$ ב-$12\,\text{cm}$. גם טעויות מיקום גדלות בגרף עם $z$.'
+          - text: 'רחוק מהסליל הביטוי של חלק א כבר לא מדויק, כי שם השדה הוא של דיפול מגנטי.'
+            feedback: 'הביטוי של חלק א מדויק על הציר בכל מרחק. השדה של דיפול מגנטי הוא הגבול שלו כש-$z \gg R$, לא תחליף שנכנס במקומו. הסטיות מהקו הן שגיאות מדידה, והן קטנות ומתפזרות משני צדדיו.'
+
+      - label: ו
+        type: mc
+        points: 4
+        level: bagrut
+        qualitative: true
+        objectives: [OBJ-6.16-2, OBJ-6.11-3]
+        prompt: >-
+          תלמיד מציב את שתי המדידות הרחוקות ביותר בגרף לוגריתמי של $B$ מול $z$, ומוצא שהשיפוע בין שתיהן הוא
+          $n \approx -2.4$. הוא מסיק שהסליל איננו דיפול מגנטי. מה נכון?
+        choices:
+          - text: 'הביטוי של חלק א מנבא את זה: השיפוע בגרף לוגריתמי משתנה עם המרחק, $n = -\dfrac{3z^2}{R^2 + z^2}$, והוא מתקרב ל-$n = -3$ רק כש-$z \gg R$.'
+            correct: true
+            feedback: 'נכון. $\ln B = C - \tfrac32\ln\left(R^2 + z^2\right)$, ולכן $n = \dfrac{d\ln B}{d\ln z} = -\dfrac{3z^2}{R^2 + z^2}$. ב-$z = 2R = 12\,\text{cm}$ זה $n = -2.4$, וב-$z = 11\,\text{cm}$ בערך $n = -2.3$, כמו במדידה. כדי שהשיפוע יגיע ל-$n = -2.9$ צריך $z \approx 5.4R$, כ-$32\,\text{cm}$. הדיפול הוא הקצה הרחוק, לא השדה בכל מרחק.'
+          - text: 'השדה יורד כמו $1/z^{2.4}$, ולכן הסליל איננו דיפול מגנטי גם רחוק ממנו.'
+            feedback: 'השיפוע לא קבוע. מהמדידות ב-2 וב-4 סנטימטרים יוצא $n \approx -0.56$, ומ-10 ו-12 סנטימטרים $n \approx -2.4$. הוא ממשיך לגדול בערכו המוחלט עם $z$ ושואף ל-$n = -3$: אין כאן חוק חזקה אחד, אלא מעבר בין שני קצוות.'
+          - text: 'המדידות שגויות: השדה של כריכה יורד כמו $1/z^3$ בכל מרחק, ולכן השיפוע חייב להיות בדיוק $n = -3$.'
+            feedback: 'נוסחת הדיפול היא הגבול של הביטוי המדויק כש-$z \gg R$, לא השדה בכל מרחק. ב-$z = 12\,\text{cm} = 2R$ היא נותנת כ-$98\,\mu\text{T}$, והמדידה $70\,\mu\text{T}$, כמו שהביטוי המדויק נותן.'
+            misconception: MC-bagrut-formula-exact
+          - text: 'השיפוע שואף ל-$n = -2$, כמו של מטען נקודתי, ו-$n \approx -2.4$ הוא בדרך לשם.'
+            feedback: 'אין מטען מגנטי. רחוק מהכריכה כל תרומה קטנה כמו $1/z^2$, אבל כמעט כולה לרוחב הציר ומתבטלת, ורק החלק $R/z$ שלה נשאר: $1/z^3$. השיפוע כבר עבר את $n = -2$, והוא בדרך ל-$n = -3$.'
+            misconception: MC-loop-far-inverse-square
