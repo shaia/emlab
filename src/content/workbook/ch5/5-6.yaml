@@ -1,0 +1,497 @@
+# Workbook, lesson 5.6 (the induced electric field). Format and rules: see .claude/CLAUDE.md, "Worked examples, workbook".
+# Every number was recomputed with src/physics/induction.ts (inducedFieldStrength, inducedCircleEmf,
+# motionalEmf), src/physics/inducedfield.ts (loopEmf, arcWork) and src/physics/constants.ts (MU0); script
+# recompute-5-6 in the session scratchpad. In a >- block, consecutive lines fold into one paragraph: every
+# part (א, ב, …) starts after a blank line.
+
+lesson: '5.6'
+practice:
+  - id: W-5.6-01
+    level: basic
+    qualitative: false
+    objectives: [OBJ-5.6-2]
+    prompt: >-
+      בליבה של סליל ארוך, ברדיוס $6\,\text{cm}$, השדה המגנטי גדל בקצב $1.5\,\text{T/s}$. מה עוצמת השדה החשמלי המושרה:
+
+      א. במרחק $3\,\text{cm}$ מהציר?
+
+      ב. על פני הליבה?
+
+      ג. במרחק $12\,\text{cm}$ מהציר? מה מפתיע בתשובה, בהשוואה לסעיף א?
+    answer: >-
+      א. $0.0225\,\text{V/m}$.
+
+      ב. $0.045\,\text{V/m}$.
+
+      ג. $0.0225\,\text{V/m}$, אותו שדה כמו בסעיף א.
+    solution:
+      - kind: given
+        text: >-
+          $a = 0.06\,\text{m}$, $\Delta B/\Delta t = 1.5\,\text{T/s}$.
+      - kind: formula
+        text: >-
+          מעגל שמרכזו על הציר: $E\cdot2\pi r = \dfrac{\Delta\Phi}{\Delta t}$. בפנים $E = \dfrac{r}{2}\cdot\dfrac{\Delta B}{\Delta t}$, ובחוץ $E = \dfrac{a^2}{2r}\cdot\dfrac{\Delta B}{\Delta t}$.
+      - kind: substitution
+        text: >-
+          א. $E = \dfrac{0.03}{2}\cdot1.5 = 0.0225\,\text{V/m}$.
+
+          ב. $E = \dfrac{0.06}{2}\cdot1.5 = 0.045\,\text{V/m}$.
+
+          ג. $E = \dfrac{0.06^2}{2\cdot0.12}\cdot1.5 = 0.0225\,\text{V/m}$.
+      - kind: reasoning
+        text: >-
+          בפנים השדה גדל כמו $r$, בחוץ הוא יורד כמו $1/r$. בחצי הרדיוס של הליבה ובפעמיים הרדיוס שלה הוא חצי מהשיא, ולכן שווה.
+      - kind: result
+        text: >-
+          א. $0.0225\,\text{V/m}$. ב. $0.045\,\text{V/m}$. ג. $0.0225\,\text{V/m}$.
+
+  - id: W-5.6-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-5.6-1]
+    prompt: >-
+      בליבה של סליל ארוך השדה המגנטי יוצא מהדף (⊙) ו**קטן**. הנקודות K, L ו-M נמצאות מחוץ לליבה: K מימין לציר, L משמאלו, ו-M מתחתיו.
+
+      א. האם השדה המושרה מקיף את הציר עם כיוון השעון או נגדו? נמקו בעזרת חוק לנץ.
+
+      ב. מה כיוון השדה המושרה ב-K, ב-L וב-M?
+
+      ג. פרוטון ואלקטרון נמצאים ב-K, במנוחה. לאן פועל הכוח על כל אחד מהם?
+    answer: >-
+      א. נגד כיוון השעון.
+
+      ב. ב-K למעלה, ב-L למטה, ב-M ימינה.
+
+      ג. על הפרוטון למעלה, על האלקטרון למטה.
+    solution:
+      - kind: reasoning
+        text: >-
+          א. השטף ⊙ דרך מעגל סביב הציר קטן. זרם מושרה במעגל היה מתנגד לירידה, כלומר יוצר בתוכו שדה ⊙. כלל יד ימין: אגודל החוצה מהדף, והאצבעות מתכופפות נגד כיוון השעון. השדה החשמלי דוחף מטען חיובי בכיוון הזרם, ולכן הוא מקיף את הציר נגד כיוון השעון.
+      - kind: reasoning
+        text: >-
+          ב. בהקפה נגד כיוון השעון: בצד ימין התנועה כלפי מעלה, בצד שמאל כלפי מטה, ובצד התחתון ימינה.
+      - kind: reasoning
+        text: >-
+          ג. על מטען חיובי הכוח בכיוון השדה, ועל מטען שלילי הפוך לו. אף אחד מהם לא נע ואין עליהם שדה מגנטי: הכוח חשמלי בלבד.
+      - kind: result
+        text: >-
+          א. נגד כיוון השעון. ב. K: למעלה; L: למטה; M: ימינה. ג. פרוטון: למעלה; אלקטרון: למטה.
+
+  - id: W-5.6-03
+    level: basic
+    qualitative: false
+    objectives: [OBJ-5.6-2]
+    prompt: >-
+      בליבה של סליל ארוך, ברדיוס $2\,\text{cm}$, השדה המגנטי גדל בקצב $3\,\text{T/s}$. מה הכא"מ סביב כל אחת מהלולאות:
+
+      א. מעגל ברדיוס $1\,\text{cm}$, שמרכזו על הציר?
+
+      ב. מעגל ברדיוס $5\,\text{cm}$, שמרכזו על הציר?
+
+      ג. מלבן של $10\,\text{cm}$ על $20\,\text{cm}$ שמקיף את הליבה, והציר לא במרכזו?
+
+      ד. מעגל ברדיוס $1\,\text{cm}$ שמרכזו במרחק $6\,\text{cm}$ מהציר?
+    answer: >-
+      א. $9.42\cdot10^{-4}\,\text{V}$.
+
+      ב. $3.77\cdot10^{-3}\,\text{V}$.
+
+      ג. $3.77\cdot10^{-3}\,\text{V}$.
+
+      ד. אפס.
+    solution:
+      - kind: formula
+        text: >-
+          $|\varepsilon| = \dfrac{\Delta\Phi}{\Delta t} = A_{\text{in}}\,\dfrac{\Delta B}{\Delta t}$, כאשר $A_{\text{in}}$ הוא השטח של הלולאה שבתוך הליבה, שם יש שדה.
+      - kind: substitution
+        text: >-
+          א. כל המעגל בליבה: $\pi\cdot0.01^2\cdot3 \approx 9.42\cdot10^{-4}\,\text{V}$.
+
+          ב. המעגל מקיף את כל הליבה: $\pi\cdot0.02^2\cdot3 \approx 3.77\cdot10^{-3}\,\text{V}$.
+
+          ג. גם המלבן מקיף את כל הליבה, והצורה והמקום לא משנים: $3.77\cdot10^{-3}\,\text{V}$.
+
+          ד. המעגל משתרע בין $5$ ל-$7\,\text{cm}$ מהציר, כולו מחוץ לליבה: אין שטף, והכא"מ אפס.
+      - kind: result
+        text: >-
+          א. $9.42\cdot10^{-4}\,\text{V}$. ב. $3.77\cdot10^{-3}\,\text{V}$. ג. $3.77\cdot10^{-3}\,\text{V}$. ד. $0$.
+
+  - id: W-5.6-04
+    level: mid
+    qualitative: false
+    objectives: [OBJ-5.6-2]
+    prompt: >-
+      בסליל ארוך ברדיוס $2\,\text{cm}$, עם 1500 כריכות למטר, הזרם עולה באחידות מאפס ל-$4\,\text{A}$ בתוך $0.2\,\text{s}$. סביב הסליל טבעת ברדיוס $5\,\text{cm}$ שמרכזה על הציר, וההתנגדות שלה $0.2\,\Omega$.
+
+      א. בכמה גדל השדה המגנטי בסליל, ובאיזה קצב?
+
+      ב. מה הכא"מ והזרם בטבעת בזמן שהזרם בסליל עולה?
+
+      ג. מה השדה החשמלי המושרה על הטבעת? מה קורה לו אחרי שהזרם בסליל מגיע ל-$4\,\text{A}$ ונשאר שם?
+    answer: >-
+      א. ב-$7.54\cdot10^{-3}\,\text{T}$, בקצב $0.0377\,\text{T/s}$.
+
+      ב. $4.74\cdot10^{-5}\,\text{V}$ ו-$2.37\cdot10^{-4}\,\text{A}$.
+
+      ג. $1.51\cdot10^{-4}\,\text{V/m}$; כשהזרם קבוע, השדה המושרה נעלם.
+    solution:
+      - kind: given
+        text: >-
+          $a = 0.02\,\text{m}$, $n = 1500\,\text{m}^{-1}$, $\Delta I = 4\,\text{A}$ ב-$\Delta t = 0.2\,\text{s}$, $r = 0.05\,\text{m}$, $R = 0.2\,\Omega$.
+      - kind: formula
+        text: >-
+          $B = \mu_0 n I$, $|\varepsilon| = \pi a^2\,\dfrac{\Delta B}{\Delta t}$ (הטבעת מקיפה את כל הליבה), $I = \dfrac{\varepsilon}{R}$, $E\cdot2\pi r = |\varepsilon|$.
+      - kind: substitution
+        text: >-
+          א. $\Delta B = 4\pi\cdot10^{-7}\cdot1500\cdot4 \approx 7.54\cdot10^{-3}\,\text{T}$, והקצב $\dfrac{7.54\cdot10^{-3}}{0.2} \approx 0.0377\,\text{T/s}$.
+
+          ב. $|\varepsilon| = \pi\cdot0.02^2\cdot0.0377 \approx 4.74\cdot10^{-5}\,\text{V}$, ו-$I = \dfrac{4.74\cdot10^{-5}}{0.2} \approx 2.37\cdot10^{-4}\,\text{A}$.
+
+          ג. $E = \dfrac{4.74\cdot10^{-5}}{2\pi\cdot0.05} \approx 1.51\cdot10^{-4}\,\text{V/m}$.
+      - kind: reasoning
+        text: >-
+          כשהזרם בסליל קבוע, השדה המגנטי לא משתנה. השדה המושרה קיים רק כל עוד יש שינוי, ולכן הוא נעלם, וגם הזרם בטבעת.
+      - kind: result
+        text: >-
+          א. $7.54\cdot10^{-3}\,\text{T}$, $0.0377\,\text{T/s}$. ב. $4.74\cdot10^{-5}\,\text{V}$, $2.37\cdot10^{-4}\,\text{A}$. ג. $1.51\cdot10^{-4}\,\text{V/m}$, ואחר כך אפס.
+
+  - id: W-5.6-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-5.6-3, OBJ-5.6-1]
+    prompt: >-
+      במעגל עם סוללה, הכא"מ "יושב" בסוללה: שם נעשית העבודה על המטענים. טבעת נחושת מקיפה סליל שהזרם בו גדל, ובטבעת זורם זרם מושרה.
+
+      א. איפה נעשית העבודה על המטענים בטבעת? האם יש בה נקודה מיוחדת שאפשר לקרוא לה "המקור"?
+
+      ב. מטען שזורם בטבעת משלים סיבוב וחוזר לנקודה שבה התחיל. במעגל עם סוללה, השדה החשמלי בתיל לא עושה עליו עבודה כוללת בסיבוב כזה. למה כאן כן?
+
+      ג. מה מסקנה ממה שמצאתם לגבי האפשרות לשייך לכל נקודה בטבעת פוטנציאל?
+    answer: >-
+      א. לאורך כל הטבעת: השדה המושרה דוחף את המטענים בכל קטע שלה, ואין "מקור" במקום אחד.
+
+      ב. כי השדה המושרה אינו משמר: סביב שטף שמשתנה העבודה ליחידת מטען היא הכא"מ.
+
+      ג. אי אפשר: לשדה המושרה אין פוטנציאל.
+    solution:
+      - kind: reasoning
+        text: >-
+          א. סביב סליל השדה המושרה משיק לטבעת ושווה בכל נקודה שלה (אם מרכזה על הציר). בכל קטע $\Delta\ell$ הוא עושה עבודה $qE\Delta\ell$, והכא"מ הוא סכום כל הקטעים, $\Sigma E_\parallel\,\Delta\ell$. אין נקודה אחת שבה "נכנסת" האנרגיה.
+      - kind: reasoning
+        text: >-
+          ב. במעגל עם סוללה, השדה בתיל נוצר ממטענים (על ההדקים ועל פני התילים), והוא משמר: העבודה שלו סביב מסלול סגור אפס, ואת העבודה הכוללת עושה הסוללה. בטבעת השדה נוצר מהשינוי של השדה המגנטי. העבודה שלו ליחידת מטען סביב הטבעת היא הכא"מ, $-\Delta\Phi/\Delta t$, ולא אפס.
+      - kind: reasoning
+        text: >-
+          ג. אילו היה פוטנציאל, מטען שחוזר לאותה נקודה היה חוזר לאותו פוטנציאל, והעבודה סביב הטבעת הייתה אפס. היא לא אפס, ולכן אין פוטנציאל.
+      - kind: result
+        text: >-
+          א. לאורך כל הטבעת. ב. השדה המושרה אינו משמר. ג. אין לו פוטנציאל.
+
+  - id: W-5.6-06
+    level: mid
+    qualitative: false
+    objectives: [OBJ-5.6-3]
+    prompt: >-
+      טבעת ברדיוס $10\,\text{cm}$ שמרכזה על הציר מקיפה ליבה של סליל ברדיוס $5\,\text{cm}$. השדה בליבה יוצא מהדף (⊙) וגדל בקצב $0.4\,\text{T/s}$. הנקודה A בצד הימני של הטבעת, והנקודה C בצד התחתון שלה.
+
+      א. מה השדה המושרה על הטבעת, ומה כיוונו?
+
+      ב. מטען חיובי עובר מ-A ל-C ברבע הטבעת הקצר (עם כיוון השעון). מה העבודה ליחידת מטען שהשדה עושה עליו?
+
+      ג. ומה אם הוא עובר מ-A ל-C בדרך הארוכה, שלושה רבעים מהטבעת, נגד כיוון השעון?
+
+      ד. הראו שההפרש בין שתי התוצאות הוא הכא"מ סביב הטבעת.
+    answer: >-
+      א. $5\cdot10^{-3}\,\text{V/m}$, משיק לטבעת, עם כיוון השעון.
+
+      ב. $+7.85\cdot10^{-4}\,\text{V}$.
+
+      ג. $-2.36\cdot10^{-3}\,\text{V}$.
+
+      ד. $3.14\cdot10^{-3}\,\text{V} = \pi a^2\,\Delta B/\Delta t$.
+    solution:
+      - kind: formula
+        text: >-
+          $E = \dfrac{a^2}{2r}\cdot\dfrac{\Delta B}{\Delta t}$ מחוץ לליבה. לאורך הטבעת השדה משיק ושווה, ולכן העבודה ליחידת מטען היא $\pm E$ כפול אורך הדרך: פלוס בכיוון השדה, מינוס נגדו.
+      - kind: substitution
+        text: >-
+          א. $E = \dfrac{0.05^2}{2\cdot0.1}\cdot0.4 = 5\cdot10^{-3}\,\text{V/m}$. שדה ⊙ שגדל: עם כיוון השעון.
+
+          ב. רבע טבעת: $\dfrac{2\pi\cdot0.1}{4} \approx 0.157\,\text{m}$, בכיוון השדה: $5\cdot10^{-3}\cdot0.157 \approx 7.85\cdot10^{-4}\,\text{V}$.
+
+          ג. שלושה רבעים: $0.471\,\text{m}$, נגד השדה: $-5\cdot10^{-3}\cdot0.471 \approx -2.36\cdot10^{-3}\,\text{V}$.
+      - kind: reasoning
+        text: >-
+          ד. מ-A ל-C בדרך הקצרה, ובחזרה מ-C ל-A בדרך הארוכה (עכשיו עם כיוון השעון, ולכן $+2.36\cdot10^{-3}\,\text{V}$), זו הטבעת כולה: $7.85\cdot10^{-4} + 2.36\cdot10^{-3} \approx 3.14\cdot10^{-3}\,\text{V}$. ואכן $\pi a^2\,\dfrac{\Delta B}{\Delta t} = \pi\cdot0.05^2\cdot0.4 \approx 3.14\cdot10^{-3}\,\text{V}$. העבודה מ-A ל-C תלויה בדרך: השדה לא משמר.
+      - kind: result
+        text: >-
+          א. $5\cdot10^{-3}\,\text{V/m}$, עם כיוון השעון. ב. $+7.85\cdot10^{-4}\,\text{V}$. ג. $-2.36\cdot10^{-3}\,\text{V}$. ד. ההפרש $3.14\cdot10^{-3}\,\text{V}$, הכא"מ.
+
+  - id: W-5.6-07
+    level: mid
+    qualitative: false
+    objectives: [OBJ-5.6-2]
+    prompt: >-
+      חיישן מודד שדה חשמלי מושרה של $0.01\,\text{V/m}$ במרחק $15\,\text{cm}$ מהציר של סליל ארוך, שהליבה שלו ברדיוס $3\,\text{cm}$.
+
+      א. באיזה קצב משתנה השדה המגנטי בליבה?
+
+      ב. מה השדה המושרה במרחק $1\,\text{cm}$ מהציר?
+
+      ג. איפה השדה המושרה הגדול ביותר, ומה ערכו?
+    answer: >-
+      א. $3.33\,\text{T/s}$.
+
+      ב. $0.0167\,\text{V/m}$.
+
+      ג. על פני הליבה, $0.05\,\text{V/m}$.
+    solution:
+      - kind: given
+        text: >-
+          $E = 0.01\,\text{V/m}$ ב-$r = 0.15\,\text{m}$, $a = 0.03\,\text{m}$; הנקודה מחוץ לליבה.
+      - kind: formula
+        text: >-
+          מחוץ לליבה $E = \dfrac{a^2}{2r}\cdot\dfrac{\Delta B}{\Delta t}$.
+      - kind: manipulation
+        text: >-
+          כופלים את שני האגפים ב-$\dfrac{2r}{a^2}$: $\dfrac{\Delta B}{\Delta t} = \dfrac{2rE}{a^2}$.
+      - kind: substitution
+        text: >-
+          א. $\dfrac{\Delta B}{\Delta t} = \dfrac{2\cdot0.15\cdot0.01}{0.03^2} \approx 3.33\,\text{T/s}$.
+
+          ב. בתוך הליבה: $E = \dfrac{0.01}{2}\cdot3.33 \approx 0.0167\,\text{V/m}$.
+
+          ג. בפנים השדה גדל עם $r$ ובחוץ יורד, ולכן השיא ב-$r = a$: $E = \dfrac{0.03}{2}\cdot3.33 = 0.05\,\text{V/m}$.
+      - kind: result
+        text: >-
+          א. $3.33\,\text{T/s}$. ב. $0.0167\,\text{V/m}$. ג. על פני הליבה, $0.05\,\text{V/m}$.
+
+  - id: W-5.6-08
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-5.6-4]
+    prompt: >-
+      שתי מסילות מקבילות, במרחק $25\,\text{cm}$ זו מזו, מחוברות בקצה אחד, ומוט מוליך סוגר איתן מלבן. השדה המגנטי אחיד, יוצא מהדף (⊙) ומכסה את כל המלבן. ברגע מסוים המוט במרחק $40\,\text{cm}$ מהקצה המחובר ונע הלאה ממנו ב-$1.5\,\text{m/s}$, והשדה הוא $0.2\,\text{T}$ ו**קטן** בקצב $0.1\,\text{T/s}$.
+
+      א. חשבו בנפרד את שתי התרומות לקצב השינוי של השטף באותו רגע, וציינו לכל אחת מה דוחף את המטענים.
+
+      ב. מה הכא"מ במלבן, ובאיזה כיוון הזרם?
+
+      ג. באיזו מהירות של המוט, באותו רגע, הכא"מ היה אפס?
+    answer: >-
+      א. $-0.01\,\text{Wb/s}$ מהשדה שקטן (שדה מושרה), $+0.075\,\text{Wb/s}$ מהמוט שנע (כוח לורנץ).
+
+      ב. $0.065\,\text{V}$; הזרם עם כיוון השעון.
+
+      ג. $0.2\,\text{m/s}$.
+    solution:
+      - kind: given
+        text: >-
+          $L = 0.25\,\text{m}$, $x = 0.4\,\text{m}$, ולכן $A = 0.1\,\text{m}^2$; $v = 1.5\,\text{m/s}$, $B = 0.2\,\text{T}$, $\Delta B/\Delta t = -0.1\,\text{T/s}$.
+      - kind: formula
+        text: >-
+          $\dfrac{\Delta\Phi}{\Delta t} = A\,\dfrac{\Delta B}{\Delta t} + B\,\dfrac{\Delta A}{\Delta t}$, ו-$\dfrac{\Delta A}{\Delta t} = Lv$.
+      - kind: substitution
+        text: >-
+          א. מהשדה: $0.1\cdot(-0.1) = -0.01\,\text{Wb/s}$; כאן הלולאה לא צריכה לזוז, ואת המטענים דוחף השדה החשמלי המושרה. מהמוט: $0.2\cdot0.25\cdot1.5 = 0.075\,\text{Wb/s}$; כאן המטענים במוט נעים איתו, ועליהם פועל כוח לורנץ.
+
+          ב. $\dfrac{\Delta\Phi}{\Delta t} = -0.01 + 0.075 = 0.065\,\text{Wb/s}$, ו-$|\varepsilon| = 0.065\,\text{V}$.
+      - kind: reasoning
+        text: >-
+          ב. השטף ⊙ גדל בסך הכול. לפי חוק לנץ הזרם המושרה יוצר בתוך המלבן שדה ⊗, כלומר זורם עם כיוון השעון.
+      - kind: manipulation
+        text: >-
+          ג. הכא"מ אפס כש-$BLv = A\,\left|\dfrac{\Delta B}{\Delta t}\right|$, כלומר $v = \dfrac{A\,|\Delta B/\Delta t|}{BL}$.
+      - kind: substitution
+        text: >-
+          ג. $v = \dfrac{0.1\cdot0.1}{0.2\cdot0.25} = 0.2\,\text{m/s}$.
+      - kind: result
+        text: >-
+          א. $-0.01$ ו-$+0.075\,\text{Wb/s}$. ב. $0.065\,\text{V}$, עם כיוון השעון. ג. $0.2\,\text{m/s}$.
+
+  - id: W-5.6-09
+    level: bagrut
+    qualitative: true
+    objectives: [OBJ-5.6-2, OBJ-5.6-1]
+    prompt: >-
+      טבעת מוליכה ברדיוס $6\,\text{cm}$, שמרכזה על הציר, מקיפה ליבה של סליל ארוך ברדיוס $4\,\text{cm}$, והשדה המגנטי בליבה גדל בקצב קבוע. קבעו ונמקו מה קורה לכא"מ בטבעת ולשדה החשמלי המושרה על הטבעת בכל אחד מהשינויים (כל שינוי לבדו):
+
+      א. מחליפים את הטבעת בטבעת ברדיוס $12\,\text{cm}$.
+
+      ב. מזיזים את הטבעת הצידה, כך שהיא עדיין מקיפה את כל הליבה אבל הציר לא במרכזה.
+
+      ג. מחליפים את הסליל בסליל ברדיוס $8\,\text{cm}$, עם אותו קצב שינוי של השדה (הטבעת ברדיוס $12\,\text{cm}$).
+
+      ד. מזיזים את הטבעת אל מחוץ לליבה, כך שאינה מקיפה אותה כלל.
+    answer: >-
+      א. הכא"מ לא משתנה; השדה על הטבעת קטן פי 2.
+
+      ב. הכא"מ לא משתנה; השדה על הטבעת כבר לא שווה בכל נקודה.
+
+      ג. הכא"מ גדל פי 4, וגם השדה.
+
+      ד. הכא"מ אפס, אבל השדה על הטבעת לא אפס.
+    solution:
+      - kind: reasoning
+        text: >-
+          א. הטבעת עדיין מקיפה את כל הליבה, והשטף עובר רק דרכה, ולכן $|\varepsilon| = \pi a^2\,\Delta B/\Delta t$ לא משתנה. השדה מחוץ לליבה יורד כמו $1/r$: פי 2 רחוק, פי 2 חלש. הטבעת ארוכה פי 2, והמכפלה $E\cdot2\pi r$ נשארת.
+      - kind: reasoning
+        text: >-
+          ב. הכא"מ תלוי רק בשטף שהטבעת מקיפה, וזה עדיין כל השטף. אבל המרחק מהציר משתנה לאורך הטבעת, ולכן השדה עליה לא אחיד, וחלק ממנו כבר לא לאורך הטבעת. הסכום $\Sigma E_\parallel\,\Delta\ell$ נשאר אותו דבר.
+      - kind: reasoning
+        text: >-
+          ג. $|\varepsilon| = \pi a^2\,\Delta B/\Delta t$: רדיוס הליבה פי 2, השטח פי 4, והכא"מ פי 4. על הטבעת, מחוץ לליבה, $E = \tfrac{a^2}{2r}\cdot\tfrac{\Delta B}{\Delta t}$, וגם הוא פי 4.
+      - kind: reasoning
+        text: >-
+          ד. הטבעת לא מקיפה שטף, ולכן הכא"מ אפס. השדה המושרה קיים גם שם, ודוחף בצד הקרוב לליבה בכיוון אחד ובצד הרחוק בכיוון ההפוך; התרומות מתקזזות.
+      - kind: result
+        text: >-
+          א. כא"מ זהה, שדה חצי. ב. כא"מ זהה, שדה לא אחיד. ג. שניהם פי 4. ד. כא"מ אפס, שדה לא אפס.
+
+  - id: W-5.6-10
+    level: bagrut
+    qualitative: false
+    objectives: [OBJ-5.6-3, OBJ-5.6-2]
+    prompt: >-
+      צינור מבודד, דק וסגור, בצורת טבעת ברדיוס $5\,\text{cm}$, מקיף ליבה של סליל ברדיוס $3\,\text{cm}$. השדה המגנטי בליבה גדל בקצב $2\,\text{T/s}$. בצינור חרוז קל: מסתו $0.1\,\text{mg}$ ($10^{-7}\,\text{kg}$), והמטען שלו $2\,\mu\text{C}$. החרוז נע בלי חיכוך ומשתחרר ממנוחה.
+
+      א. מה הכא"מ סביב הטבעת, השדה המושרה עליה, והכוח על החרוז?
+
+      ב. מה התאוצה של החרוז לאורך הטבעת, וכמה זמן לוקח לו הסיבוב הראשון?
+
+      ג. מה מהירותו בסוף הסיבוב הראשון? חשבו בשתי דרכים: מהתאוצה, וממשפט העבודה והאנרגיה.
+
+      ד. בכמה גדל השדה המגנטי בליבה בזמן הסיבוב הראשון?
+    answer: >-
+      א. $5.65\cdot10^{-3}\,\text{V}$, $0.018\,\text{V/m}$, $3.6\cdot10^{-8}\,\text{N}$.
+
+      ב. $0.36\,\text{m/s}^2$, כ-$1.32\,\text{s}$.
+
+      ג. כ-$0.476\,\text{m/s}$ בשתי הדרכים.
+
+      ד. בכ-$2.64\,\text{T}$.
+    solution:
+      - kind: given
+        text: >-
+          $a = 0.03\,\text{m}$, $r = 0.05\,\text{m}$, $\Delta B/\Delta t = 2\,\text{T/s}$, $m = 10^{-7}\,\text{kg}$, $q = 2\cdot10^{-6}\,\text{C}$.
+      - kind: formula
+        text: >-
+          $|\varepsilon| = \pi a^2\,\dfrac{\Delta B}{\Delta t}$, $E = \dfrac{a^2}{2r}\cdot\dfrac{\Delta B}{\Delta t}$, $F = qE$, $a_t = \dfrac{F}{m}$.
+      - kind: substitution
+        text: >-
+          א. $|\varepsilon| = \pi\cdot0.03^2\cdot2 \approx 5.65\cdot10^{-3}\,\text{V}$; $E = \dfrac{0.03^2}{2\cdot0.05}\cdot2 = 0.018\,\text{V/m}$; $F = 2\cdot10^{-6}\cdot0.018 = 3.6\cdot10^{-8}\,\text{N}$.
+
+          ב. $a_t = \dfrac{3.6\cdot10^{-8}}{10^{-7}} = 0.36\,\text{m/s}^2$. הכוח משיק לטבעת ושווה בגודלו בכל נקודה, ולכן לאורך הטבעת זו תנועה בתאוצה קבועה. סיבוב אחד: $s = 2\pi\cdot0.05 \approx 0.314\,\text{m}$, ומ-$s = \tfrac12 a_t t^2$: $t = \sqrt{\dfrac{2\cdot0.314}{0.36}} \approx 1.32\,\text{s}$.
+      - kind: substitution
+        text: >-
+          ג. מהתאוצה: $v = a_t t = 0.36\cdot1.32 \approx 0.476\,\text{m/s}$. מהאנרגיה: בסיבוב השדה עושה עבודה $q|\varepsilon|$, ולכן $\tfrac12 mv^2 = q|\varepsilon|$ ו-$v = \sqrt{\dfrac{2\cdot2\cdot10^{-6}\cdot5.65\cdot10^{-3}}{10^{-7}}} \approx 0.476\,\text{m/s}$.
+
+          ד. $\Delta B = 2\cdot1.32 \approx 2.64\,\text{T}$.
+      - kind: reasoning
+        text: >-
+          החרוז חזר לנקודה שבה התחיל, מהיר יותר: השדה עשה עליו עבודה במסלול סגור. בשדה משמר זה לא היה קורה. סעיף ד מראה גם את המחיר: כדי שהחרוז יצבור מהירות, השדה המגנטי צריך להמשיך לגדול כל הזמן.
+      - kind: result
+        text: >-
+          א. $5.65\cdot10^{-3}\,\text{V}$, $0.018\,\text{V/m}$, $3.6\cdot10^{-8}\,\text{N}$. ב. $0.36\,\text{m/s}^2$, $1.32\,\text{s}$. ג. $0.476\,\text{m/s}$. ד. $2.64\,\text{T}$.
+
+challenge:
+  - id: W-5.6-c1
+    stars: 1
+    objectives: [OBJ-5.6-4, OBJ-5.6-2]
+    prompt: >-
+      שדה מגנטי אחיד של $0.5\,\text{T}$, שיוצא מהדף (⊙), ממלא את כל האזור $x > 0$; ב-$x < 0$ אין שדה. טבעת מתכת ברדיוס $20\,\text{cm}$ מונחת במישור הדף ונעה לאורך ציר $x$ במהירות קבועה של $2\,\text{m/s}$. ב-$t = 0$ מרכז הטבעת ב-$x = -0.2\,\text{m}$, כך שהטבעת נוגעת בגבול השדה.
+
+      א. מה הכא"מ בטבעת ב-$t = 0.1\,\text{s}$?
+
+      ב. הסבירו את התוצאה בעזרת כוח לורנץ על המטענים בחלק של הטבעת שבתוך השדה: איזה אורך "פועל" כאן כמו המוט של שיעור 5.4?
+
+      ג. מה הכא"מ ב-$t = 0.05\,\text{s}$?
+
+      ד. ב-$t = 0.1\,\text{s}$ הטבעת נעצרת, ומאותו רגע השדה גדל בקצב $2\,\text{T/s}$. מה הכא"מ עכשיו, ומה דוחף את המטענים? באיזה כיוון הזרם, לפני העצירה ואחריה?
+    answer: >-
+      א. $0.4\,\text{V}$.
+
+      ב. המיתר שבין שתי נקודות החיתוך של הטבעת עם גבול השדה, באורך $2R$.
+
+      ג. כ-$0.346\,\text{V}$.
+
+      ד. כ-$0.126\,\text{V}$, משדה חשמלי מושרה; הזרם עם כיוון השעון בשני המקרים.
+    solution:
+      - kind: given
+        text: >-
+          $B = 0.5\,\text{T}$, $R = 0.2\,\text{m}$, $v = 2\,\text{m/s}$; מרכז הטבעת ב-$x_c = -0.2 + 2t$.
+      - kind: reasoning
+        text: >-
+          א. ב-$t = 0.1\,\text{s}$ המרכז ב-$x = 0$: חצי הטבעת בשדה. גבול השדה חותך את הטבעת לאורך מיתר, וכשהטבעת זזה ב-$v\Delta t$, השטח שבשדה גדל בפס שרוחבו $v\Delta t$ ואורכו המיתר: $\dfrac{\Delta A}{\Delta t} = v\cdot\ell$, כש-$\ell = 2\sqrt{R^2 - x_c^2}$.
+      - kind: substitution
+        text: >-
+          א. $\ell = 2R = 0.4\,\text{m}$, ו-$|\varepsilon| = B\,v\,\ell = 0.5\cdot2\cdot0.4 = 0.4\,\text{V}$.
+      - kind: reasoning
+        text: >-
+          ב. על כל מטען בקשת שבתוך השדה פועל כוח לורנץ $qvB$, ניצב ל-$\vec v$, כלומר לאורך ציר $y$. העבודה ליחידת מטען לאורך קטע קטן של הקשת היא $vB$ כפול ההיטל של הקטע על ציר $y$. לאורך כל הקשת ההיטלים מסתכמים לאורך המיתר, ולכן $\varepsilon = Bv\ell$, כמו מוט ישר באורך $\ell$. בחלק שמחוץ לשדה אין כוח.
+      - kind: substitution
+        text: >-
+          ג. ב-$t = 0.05\,\text{s}$: $x_c = -0.1\,\text{m}$, $\ell = 2\sqrt{0.2^2 - 0.1^2} \approx 0.346\,\text{m}$, ו-$|\varepsilon| = 0.5\cdot2\cdot0.346 \approx 0.346\,\text{V}$.
+      - kind: substitution
+        text: >-
+          ד. הטבעת עומדת, וחציה בשדה: $|\varepsilon| = A\,\dfrac{\Delta B}{\Delta t} = \dfrac{\pi\cdot0.2^2}{2}\cdot2 \approx 0.126\,\text{V}$.
+      - kind: reasoning
+        text: >-
+          ד. הטבעת לא נעה, ולכן אין כוח מגנטי על המטענים: את העבודה עושה השדה החשמלי המושרה. לפני העצירה השטף ⊙ גדל כי השטח שבשדה גדל, ואחריה כי השדה גדל: בשני המקרים לפי חוק לנץ הזרם יוצר בתוך הטבעת שדה ⊗, כלומר זורם עם כיוון השעון. שני מנגנונים, אותו חוק, $\varepsilon = -\Delta\Phi/\Delta t$.
+      - kind: result
+        text: >-
+          א. $0.4\,\text{V}$. ב. המיתר, באורך $2R$. ג. $0.346\,\text{V}$. ד. $0.126\,\text{V}$, שדה מושרה; עם כיוון השעון בשני המקרים.
+    source:
+      name: JEE Main
+      year: 2021
+      problem: '27 August 2021, Shift 2, Physics Section A, Q15: a ring moving at constant speed into a field filling x > 0'
+      url: https://cracku.in/15-a-constant-magnetic-field-of-1-t-is-applied-in-the-x-nta-jee-main-27-aug-2021-shift-2
+      verified: '2026-11-05'
+      adapted: true
+
+  - id: W-5.6-c2
+    stars: 2
+    objectives: [OBJ-5.6-2, OBJ-5.6-3]
+    prompt: >-
+      שדה מגנטי אחיד, שתלוי בזמן, $B(t)$, ממלא אזור עגול ברדיוס $a = 3\,\text{cm}$ (הליבה של סליל ארוך), ויוצא מהדף. מחוץ לאזור אין שדה.
+
+      א. הראו שעוצמת השדה החשמלי המושרה מחוץ לאזור יורדת כמו $1/r$, ובתוכו גדלה כמו $r$. שרטטו את $E(r)$.
+
+      ב. טבעת דקה ומבודדת, ברדיוס $b = 6\,\text{cm}$ ובמסה $m = 2\,\text{g}$, טעונה במטען $Q = 5\,\mu\text{C}$ שמפוזר עליה באחידות. היא יכולה להסתובב בחופשיות סביב הציר, ובהתחלה היא במנוחה, כשהשדה $B_0 = 1.5\,\text{T}$. השדה יורד לאפס. מה המהירות שבה נע היקף הטבעת בסוף? הראו שהיא לא תלויה בקצב שבו השדה יורד. לאיזה כיוון הטבעת מסתובבת?
+
+      ג. מה הייתה המהירות הזוויתית של הטבעת אילו היה הרדיוס שלה $b = 2\,\text{cm}$, בתוך האזור, עם אותם $m$ ו-$Q$?
+    answer: >-
+      א. בחוץ $E = \dfrac{a^2}{2r}\left|\dfrac{\Delta B}{\Delta t}\right|$, בפנים $E = \dfrac{r}{2}\left|\dfrac{\Delta B}{\Delta t}\right|$.
+
+      ב. $v = \dfrac{Qa^2B_0}{2mb} \approx 2.81\cdot10^{-5}\,\text{m/s}$ ($\omega \approx 4.69\cdot10^{-4}\,\text{rad/s}$), נגד כיוון השעון.
+
+      ג. $\omega = \dfrac{QB_0}{2m} \approx 1.88\cdot10^{-3}\,\text{rad/s}$.
+    solution:
+      - kind: reasoning
+        text: >-
+          א. מהסימטריה, על מעגל שמרכזו על הציר השדה המושרה משיק ושווה בגודלו, ולכן $\Sigma E_\parallel\,\Delta\ell = E\cdot2\pi r$. מחוץ לאזור המעגל מקיף את כל השטף, $\pi a^2 B$: $E\cdot2\pi r = \pi a^2\left|\dfrac{\Delta B}{\Delta t}\right|$, ו-$E = \dfrac{a^2}{2r}\left|\dfrac{\Delta B}{\Delta t}\right|$. בתוכו המעגל מקיף $\pi r^2 B$, ו-$E = \dfrac{r}{2}\left|\dfrac{\Delta B}{\Delta t}\right|$. הגרף עולה בקו ישר מאפס על הציר עד שיא ב-$r = a$, ויורד משם כמו $1/r$.
+      - kind: reasoning
+        text: >-
+          ב. כל חלק קטן של הטבעת, עם מטען $\Delta q$ ומסה $\Delta m$, מרגיש כוח משיק $\Delta q\,E$, ו-$E$ שווה בכל נקודות הטבעת. המטען והמסה מפוזרים באחידות, ולכן לכל החלקים אותה תאוצה משיקית, והטבעת כולה מסתובבת כגוף אחד: $m\,\dfrac{\Delta v}{\Delta t} = QE$, כש-$v$ המהירות של ההיקף.
+      - kind: manipulation
+        text: >-
+          ב. מציבים $E = \dfrac{a^2}{2b}\left|\dfrac{\Delta B}{\Delta t}\right|$: $m\,\Delta v = \dfrac{Qa^2}{2b}\,|\Delta B|$. מחברים על כל הירידה, $|\Delta B| = B_0$: $v = \dfrac{Qa^2B_0}{2mb}$. משך הירידה הצטמצם: ירידה מהירה נותנת כוח גדול לזמן קצר, וירידה איטית כוח קטן לזמן ארוך.
+      - kind: substitution
+        text: >-
+          ב. $v = \dfrac{5\cdot10^{-6}\cdot0.03^2\cdot1.5}{2\cdot2\cdot10^{-3}\cdot0.06} \approx 2.81\cdot10^{-5}\,\text{m/s}$, ו-$\omega = \dfrac{v}{b} \approx 4.69\cdot10^{-4}\,\text{rad/s}$.
+      - kind: reasoning
+        text: >-
+          ב. כיוון: השטף ⊙ קטן, ולפי חוק לנץ השדה המושרה מקיף את הציר נגד כיוון השעון (כך זרם היה יוצר שדה ⊙). על מטען חיובי הכוח בכיוון השדה: הטבעת מסתובבת נגד כיוון השעון.
+      - kind: substitution
+        text: >-
+          ג. בפנים $E = \dfrac{b}{2}\left|\dfrac{\Delta B}{\Delta t}\right|$, ולכן $m\,\Delta v = \dfrac{Qb}{2}\,B_0$, $v = \dfrac{QbB_0}{2m}$, ו-$\omega = \dfrac{v}{b} = \dfrac{QB_0}{2m} = \dfrac{5\cdot10^{-6}\cdot1.5}{2\cdot2\cdot10^{-3}} \approx 1.88\cdot10^{-3}\,\text{rad/s}$, בלי תלות ב-$b$.
+      - kind: result
+        text: >-
+          א. $E \propto 1/r$ בחוץ, $E \propto r$ בפנים. ב. $v \approx 2.81\cdot10^{-5}\,\text{m/s}$, נגד כיוון השעון, בלי תלות בקצב. ג. $\omega \approx 1.88\cdot10^{-3}\,\text{rad/s}$.
+    source:
+      name: IIT-JEE (the source page labels it JEE Advanced)
+      year: 2000
+      problem: 'Canvas Classes question bank EMI-185: the induced field outside a circular region of time-varying B (the original paper''s question number is not shown); parts ב and ג extend it'
+      url: https://www.canvasclasses.in/the-crucible/q/de589580-c74e-4acc-815f-980f88c5f719
+      verified: '2026-11-05'
+      adapted: true
