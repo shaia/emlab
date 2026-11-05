@@ -357,3 +357,221 @@ questions:
           - text: חישבתי את האנרגיה אחרי, עם המתח המשותף, $2.88\cdot10^{-4}\,\text{J}$.
           - text: קבעתי שהאנרגיה החשמלית קטנה, וחישבתי את ההפרש, $1.44\cdot10^{-4}\,\text{J}$.
           - text: הסברתי שההפרש הפך לחום בחוטים, ושהמטען, בניגוד לאנרגיה, נשמר.
+
+  # ------------------------------------------------------------ 4: weighing the pull between capacitor plates
+  # Data: capacitors.ts plateForce(plateCapacitance(A, d)·V, A)/G, A = 0.030 m², d = 2.0 mm, as a mass in grams,
+  # lab.ts measure(…, 0.03, seed 37), rounded to the scale's 0.01 g. fitLine(V², Δm) on the rounded table:
+  # slope 3.3166e-6 g/V², intercept -0.0037 g, so ε₀ = 2gd²·slope/A = 8.84e-12. Part ה: plateState.
+  - id: Q-2-bagrut-4
+    type: bagrut
+    title: שוקלים את המשיכה בין לוחות של קבל
+    prompt: >-
+      תלמידים מדדו את כוח המשיכה בין הלוחות של קבל לוחות באוויר. הלוחות מלבניים, $20\,\text{cm}$ על $15\,\text{cm}$,
+      כלומר שטח כל לוח $A = 0.030\,\text{m}^2$. הלוח התחתון מונח על מעמד מבודד שעומד על משקל אלקטרוני. הלוח העליון
+      מוחזק במתקן קבוע, מקביל ללוח התחתון ובמרחק $d = 2.0\,\text{mm}$ ממנו. הלוחות מחוברים לספק מתח שאפשר לכוון.
+      כשהמתח אפס מאפסים את המשקל. כשיש מתח בין הלוחות, הקריאה של המשקל יורדת ב-$\Delta m$.
+      בסעיפים א עד ה התעלמו מאפקט הקצוות. השתמשו ב-$g = 10\,\text{m/s}^2$.
+    diagramAlt: משקל אלקטרוני, ועליו מעמד מבודד שנושא את הלוח התחתון, השלילי. מעליו, במרחק d, לוח עליון חיובי שמוחזק במתקן קבוע. שני הלוחות מחוברים לספק מתח.
+    diagram: |
+      <svg viewBox="0 0 380 200" width="380" height="200" font-size="14" aria-hidden="true">
+        <line x1="40" y1="20" x2="40" y2="192" stroke="currentColor" stroke-width="3"/>
+        <line x1="20" y1="192" x2="70" y2="192" stroke="currentColor" stroke-width="3"/>
+        <line x1="40" y1="30" x2="180" y2="30" stroke="currentColor" stroke-width="3"/>
+        <line x1="180" y1="30" x2="180" y2="96" stroke="currentColor" stroke-width="3"/>
+        <rect x="110" y="96" width="140" height="8" fill="var(--pos)" opacity="0.45"/>
+        <text x="130" y="90" text-anchor="middle" fill="currentColor" font-weight="700" font-size="18">+</text>
+        <rect x="110" y="124" width="140" height="8" fill="var(--neg)" opacity="0.45"/>
+        <text x="130" y="150" text-anchor="middle" fill="currentColor" font-weight="700" font-size="18">−</text>
+        <line x1="100" y1="104" x2="100" y2="124" stroke="currentColor"/>
+        <line x1="95" y1="104" x2="105" y2="104" stroke="currentColor"/>
+        <line x1="95" y1="124" x2="105" y2="124" stroke="currentColor"/>
+        <text x="86" y="119" text-anchor="middle" fill="currentColor" font-style="italic">d</text>
+        <rect x="170" y="132" width="20" height="30" fill="none" stroke="currentColor" stroke-dasharray="3 2"/>
+        <rect x="110" y="162" width="140" height="30" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="196" y="169" width="44" height="16" fill="none" stroke="currentColor"/>
+        <text x="218" y="182" text-anchor="middle" fill="currentColor" font-size="12">g</text>
+        <line x1="250" y1="100" x2="300" y2="100" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="250" y1="128" x2="300" y2="122" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="300" y="88" width="60" height="44" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <text x="310" y="104" text-anchor="middle" fill="currentColor" font-size="12">+</text>
+        <text x="310" y="127" text-anchor="middle" fill="currentColor" font-size="12">−</text>
+        <text x="336" y="115" text-anchor="middle" fill="currentColor" font-style="italic">V</text>
+      </svg>
+    parts:
+      - label: א
+        type: open
+        points: 5
+        level: mid
+        objectives: [OBJ-2.6-3, OBJ-2.7-3]
+        prompt: >-
+          (1) הסבירו מדוע הקריאה של המשקל יורדת כשיש מתח בין הלוחות.
+
+          (2) הראו שגודל כוח המשיכה בין הלוחות הוא $F = \dfrac{\varepsilon_0 A V^2}{2d^2}$.
+        hints:
+          - 'מה הסימנים של המטענים על שני הלוחות? לאיזה כיוון פועל הכוח על הלוח התחתון?'
+          - 'כל לוח נמצא רק בשדה של הלוח השני, שהוא חצי מהשדה שבין הלוחות (שיעור 2.7).'
+        solution:
+          - { kind: formula, text: '$C = \dfrac{\varepsilon_0 A}{d}$, $Q = CV$ ו-$E = \dfrac{V}{d}$. הכוח על לוח אחד: $F = Q\cdot\dfrac{E}{2}$.' }
+          - { kind: manipulation, text: '(1) הלוחות מחוברים להדקים מנוגדים של הספק, ולכן הם טעונים במטענים מנוגדים, $\pm Q$, ומושכים זה את זה. על הלוח התחתון פועל כוח $F$ כלפי מעלה, ולכן המעמד לוחץ על המשקל בכוח קטן יותר: הקריאה יורדת ב-$\Delta m = F/g$.' }
+          - { kind: manipulation, text: '(2) השדה שבין הלוחות, $E$, הוא סכום השדות של שני הלוחות, כל אחד $E/2$. לוח לא מפעיל כוח על עצמו, ולכן על המטען $Q$ של הלוח התחתון פועל רק השדה של הלוח העליון: $F = Q\cdot\dfrac{E}{2}$.' }
+          - { kind: manipulation, text: 'מציבים $Q = \dfrac{\varepsilon_0 A}{d}\,V$ ו-$E = \dfrac{V}{d}$: $F = \dfrac12\cdot\dfrac{\varepsilon_0 A V}{d}\cdot\dfrac{V}{d}$.' }
+          - { kind: result, text: '$F = \dfrac{\varepsilon_0 A V^2}{2d^2}$. במרחק קבוע הכוח ביחס ישר לריבוע המתח.' }
+        rubric:
+          - text: הסברתי שהלוחות טעונים במטענים מנוגדים ומושכים זה את זה, ולכן הלוח התחתון נמשך כלפי מעלה והקריאה יורדת.
+          - text: 'כתבתי שעל לוח אחד פועל רק השדה של הלוח השני, $E/2$, ולכן $F = \tfrac12 QE$ (ולא $QE$).'
+          - text: 'הצבתי $Q = CV$ עם $C = \varepsilon_0 A/d$, ו-$E = V/d$.'
+          - text: 'קיבלתי $F = \dfrac{\varepsilon_0 A V^2}{2d^2}$.'
+
+      - label: ב
+        type: open
+        points: 8
+        level: mid
+        objectives: [OBJ-0.4-3, OBJ-0.4-2]
+        prompt: >-
+          התלמידים כיוונו את ספק המתח למתחים שונים, ורשמו בכל פעם את הירידה בקריאת המשקל:
+          $$\begin{array}{c|c} V\,(\text{V}) & \Delta m\,(\text{g}) \\ \hline 200 & 0.13 \\ 400 & 0.55 \\ 600 & 1.16 \\ 800 & 2.15 \\ 1000 & 3.26 \\ 1200 & 4.80 \end{array}$$
+
+          (1) לפי הביטוי מסעיף א, איזה גודל כדאי לשים על הציר האופקי כדי שהגרף של $\Delta m$ יהיה קו ישר? נמקו, והוסיפו
+          לטבלה עמודה של הגודל הזה.
+
+          (2) סרטטו דיאגרמת פיזור של $\Delta m$ כתלות בגודל שבחרתם, והוסיפו לה את הקו המתאים לה ביותר (קו מגמה).
+        hints:
+          - 'לפי סעיף א, הכוח ביחס ישר ל-$V^2$, לא ל-$V$. מה היה יוצא בגרף של $\Delta m$ כתלות ב-$V$ עצמו?'
+          - 'נוח לכתוב את $V^2$ ביחידות של $10^{5}\,\text{V}^2$.'
+        solution:
+          - { kind: formula, text: 'לפי סעיף א, $\Delta m = \dfrac{F}{g} = \dfrac{\varepsilon_0 A}{2gd^2}\cdot V^2$. במרחק קבוע כל מה שלפני $V^2$ קבוע, ולכן $\Delta m$ ביחס ישר ל-$V^2$: שמים את $V^2$ על הציר האופקי. בגרף של $\Delta m$ כתלות ב-$V$ עצמו הנקודות היו על עקומה שמתעקלת כלפי מעלה.' }
+          - { kind: manipulation, text: 'העמודה החדשה, ביחידות של $10^{5}\,\text{V}^2$: $0.4$, $1.6$, $3.6$, $6.4$, $10$, $14.4$.' }
+          - { kind: manipulation, text: 'הציר האופקי מ-0 עד $15\cdot10^{5}\,\text{V}^2$, והאנכי מ-0 עד $5\,\text{g}$. מסמנים את שש הנקודות. הקו המתאים להן ביותר הוא $\Delta m = 3.32\cdot10^{-6}\,V^2 - 0.004$ (עם $V^2$ ב-$\text{V}^2$ ו-$\Delta m$ בגרמים). ביחידות של העמודה החדשה הוא עובר ליד $(1.6,\ 0.53)$ וליד $(14.4,\ 4.77)$, וכמעט דרך הראשית.' }
+          - { kind: result, text: 'דיאגרמת פיזור של שש נקודות, וקו מגמה ישר שעובר כמעט דרך הראשית: הירידה בקריאה ביחס ישר לריבוע המתח, כפי שהביטוי מסעיף א צופה.' }
+        rubric:
+          - text: 'בחרתי $V^2$ לציר האופקי, ונימקתי לפי $F \propto V^2$ מסעיף א.'
+          - text: 'חישבתי נכון את עמודת $V^2$.'
+          - text: כתבתי ליד כל ציר את הגודל ואת היחידות, ובחרתי קנה מידה אחיד שמכיל את כל הנקודות.
+          - text: סימנתי נכון את שש הנקודות, והעברתי קו ישר אחד (לא קו שבור בין הנקודות), עם נקודות משני צדדיו.
+
+      - label: ג
+        type: numeric
+        points: 6
+        level: bagrut
+        standalone: false
+        objectives: [OBJ-0.4-4, OBJ-0.4-1]
+        prompt: חשבו את $\varepsilon_0$ לפי השיפוע של קו המגמה.
+        answer: 8.84e-12
+        unit: C²/(N·m²)
+        tolerance: 0.1
+        correctFeedback: >-
+          נכון. לפי סעיף ב, השיפוע $s$ של הגרף הוא $\dfrac{\varepsilon_0 A}{2gd^2}$. משתי נקודות רחוקות על הקו:
+          $s = \dfrac{4.77 - 0.53}{(14.4 - 1.6)\cdot10^{5}} = 3.31\cdot10^{-6}\,\text{g/V}^2$, כלומר $3.31\cdot10^{-9}\,\text{kg/V}^2$.
+          מבודדים:
+          $$\varepsilon_0 = \frac{2gd^2 s}{A} = \frac{2\cdot10\cdot(2.0\cdot10^{-3})^2\cdot3.31\cdot10^{-9}}{0.030} \approx 8.8\cdot10^{-12}\ \frac{\text{C}^2}{\text{N}\cdot\text{m}^2}$$
+          בתוך פחות מאחוז מהערך שבדף הנוסחאות.
+        wrongFeedback: >-
+          השוו את $\Delta m = \dfrac{\varepsilon_0 A}{2gd^2}\cdot V^2$ למשוואה של קו ישר: מה עומד במקום השיפוע? חשבו אותו משתי
+          נקודות רחוקות על הקו, העבירו גרמים לקילוגרמים ומילימטרים למטרים, ורק אז בודדו את $\varepsilon_0$.
+        commonWrong:
+          - value: 8.84e-9
+            feedback: 'השארתם את השיפוע בגרם ל-$\text{V}^2$. מסה מציבים בקילוגרמים: $1\,\text{g} = 10^{-3}\,\text{kg}$, ולכן מחלקים עוד ב-$10^{3}$.'
+          - value: 8.84e-13
+            feedback: 'שכחתם להכפיל ב-$g$. המשקל מראה מסה, והכוח הוא $F = \Delta m\cdot g$.'
+          - value: 4.42e-12
+            feedback: 'שכחתם את ה-2. כל לוח נמצא רק בשדה של הלוח השני, $E/2$, ולכן $F = \tfrac12 QE$, והשיפוע הוא $\dfrac{\varepsilon_0 A}{2gd^2}$.'
+          - value: 8.84e-6
+            feedback: 'הצבתם את $d$ במילימטרים. $d = 2.0\cdot10^{-3}\,\text{m}$, ולכן $d^2 = 4\cdot10^{-6}\,\text{m}^2$.'
+        hints:
+          - 'לפי סעיף ב, איזה גודל הוא השיפוע של הגרף של $\Delta m$ כתלות ב-$V^2$?'
+        explanation: >-
+          בדיקת יחידות: $\dfrac{(\text{m/s}^2)\cdot\text{m}^2\cdot(\text{kg/V}^2)}{\text{m}^2} = \dfrac{\text{N}}{\text{V}^2}$. מכיוון
+          ש-$1\,\text{V} = 1\,\text{N}\cdot\text{m/C}$, זה $\dfrac{\text{N}\cdot\text{C}^2}{\text{N}^2\cdot\text{m}^2} = \dfrac{\text{C}^2}{\text{N}\cdot\text{m}^2}$,
+          היחידה של $\varepsilon_0$.
+
+      - label: ד
+        type: twotier
+        points: 5
+        level: bagrut
+        qualitative: true
+        objectives: [OBJ-2.7-2]
+        prompt: >-
+          התלמידים כיוונו את הספק ל-$1000\,\text{V}$, ואז ניתקו ממנו את הלוחות. הלוחות נשארו טעונים. עכשיו הם הרימו לאט את
+          הלוח העליון, עד שהמרחק בין הלוחות גדל פי 2, ל-$4.0\,\text{mm}$. מה קורה לירידה $\Delta m$ בקריאת המשקל?
+        choices:
+          - text: היא לא משתנה. הכוח בין הלוחות נשאר אותו כוח.
+            correct: true
+            feedback: 'נכון. הקבל מנותק, ולכן המטען על הלוחות קבוע, וגם השדה שכל לוח יוצר. הכוח $F = \tfrac12 QE$ נשאר כפי שהיה. בדיקה בביטוי מסעיף א: המתח גדל פי 2, ל-$2000\,\text{V}$, וגם המרחק גדל פי 2, ולכן $V^2/d^2$ לא משתנה.'
+          - text: 'היא קטנה פי 4, כי הכוח ביחס הפוך ל-$d^2$.'
+            feedback: 'זה נכון רק כשהמתח קבוע, כלומר כשהספק מחובר. בקבל מנותק המטען קבוע, והמתח גדל פי 2 יחד עם המרחק: ב-$V^2/d^2$ שני השינויים מבטלים זה את זה.'
+            misconception: MC-isolated-v-constant
+          - text: 'היא גדלה פי 4, כי המתח בין הלוחות גדל פי 2 והכוח ביחס ישר ל-$V^2$.'
+            feedback: 'המתח אכן גדל פי 2, אבל גם המרחק גדל פי 2. בביטוי $\dfrac{\varepsilon_0 A V^2}{2d^2}$ שני השינויים מבטלים זה את זה.'
+          - text: היא קטנה פי 2, כי הקיבול קטן פי 2.
+            feedback: 'הקיבול אכן קטן פי 2, אבל המטען לא השתנה, ולכן גם השדה של כל לוח לא השתנה. הכוח תלוי במטען ובשדה, $F = \tfrac12 QE$, ולא בקיבול.'
+        reasonPrompt: ומה הנימוק?
+        reasons:
+          - text: המטען על הלוחות קבוע, ולכן השדה שכל לוח יוצר, שתלוי רק בצפיפות המטען, לא משתנה.
+            correct: true
+            feedback: 'נכון. השדה של לוח גדול לא תלוי במרחק ממנו (שיעור 1.8), ולכן הלוח העליון מושך את התחתון באותו כוח בכל גובה.'
+          - text: כוח בין מטענים נחלש כשהמרחק ביניהם גדל, כמו בחוק קולון.
+            feedback: 'זה נכון למטענים נקודתיים. השדה של לוח גדול כמעט אחיד, ולא נחלש כשמתרחקים ממנו.'
+            misconception: MC-plane-field-falls
+          - text: 'המתח בין הלוחות נשאר $1000\,\text{V}$ גם אחרי הניתוק.'
+            feedback: 'המתח נשאר קבוע רק כשהספק מחובר. אחרי הניתוק המטען קבוע, והמתח $V = Q/C$ עולה ל-$2000\,\text{V}$.'
+            misconception: MC-isolated-v-constant
+
+      - label: ה
+        type: numeric
+        points: 5
+        level: bagrut
+        objectives: [OBJ-2.7-3, OBJ-2.7-1, OBJ-2.9-3]
+        prompt: >-
+          כמו בסעיף ד: הקבל טעון ל-$1000\,\text{V}$ במרחק $2.0\,\text{mm}$ ומנותק מהספק, ומרימים לאט את הלוח העליון עד מרחק
+          $4.0\,\text{mm}$. חשבו בעזרת האנרגיה האגורה בקבל כמה עבודה עשתה היד שהרימה את הלוח. השתמשו
+          ב-$\varepsilon_0 = 8.85\cdot10^{-12}\,\text{C}^2/(\text{N}\cdot\text{m}^2)$.
+        answer: 6.64e-5
+        unit: J
+        tolerance: 0.05
+        correctFeedback: >-
+          נכון. $C_1 = \dfrac{\varepsilon_0 A}{d} = \dfrac{8.85\cdot10^{-12}\cdot0.030}{2.0\cdot10^{-3}} = 1.33\cdot10^{-10}\,\text{F}$,
+          ו-$Q = C_1V = 1.33\cdot10^{-7}\,\text{C}$. במרחק כפול הקיבול חצי, והמטען לא משתנה, ולכן $U = \dfrac{Q^2}{2C}$ גדלה
+          פי 2: מ-$6.64\cdot10^{-5}\,\text{J}$ ל-$1.33\cdot10^{-4}\,\text{J}$. העבודה של היד היא התוספת,
+          $W = 6.64\cdot10^{-5}\,\text{J}$. בדיקה בכוח: לפי סעיף ד הכוח קבוע,
+          $F = \dfrac{\varepsilon_0 A V^2}{2d^2} = 3.32\cdot10^{-2}\,\text{N}$, ו-$F\,\Delta d = 3.32\cdot10^{-2}\cdot2.0\cdot10^{-3} = 6.64\cdot10^{-5}\,\text{J}$.
+        wrongFeedback: 'בקבל מנותק המטען קבוע. חשבו את האנרגיה $U = \dfrac{Q^2}{2C}$ לפני ההרמה ואחריה. העבודה של היד היא ההפרש.'
+        commonWrong:
+          - value: -3.32e-5
+            feedback: 'חישבתם כאילו המתח נשאר $1000\,\text{V}$, כלומר כאילו הספק מחובר: אז $\tfrac12 CV^2$ קטנה לחצי. אבל הקבל מנותק, והמתח עולה ל-$2000\,\text{V}$.'
+            misconception: MC-isolated-v-constant
+          - value: 3.32e-5
+            feedback: 'זה גודל השינוי באנרגיה כאילו המתח נשאר $1000\,\text{V}$. אבל הקבל מנותק: המטען הוא שקבוע, והמתח עולה ל-$2000\,\text{V}$.'
+            misconception: MC-isolated-v-constant
+          - value: 1.33e-4
+            feedback: 'זו האנרגיה **אחרי** ההרמה (או הפרש שחושב בלי ה-$\tfrac12$, למשל עם $F = QE$). העבודה היא ההפרש $U_2 - U_1$.'
+          - value: 0
+            feedback: 'האנרגיה של קבל מנותק יכולה להשתנות. הלוחות מושכים זה את זה, והיד שמרימה את הלוח עושה עבודה נגד המשיכה, והעבודה הזו נאגרת בקבל.'
+            misconception: MC-isolated-energy-constant
+          - value: 6.64e-2
+            feedback: 'הצבתם את $\Delta d$ במילימטרים. $\Delta d = 2.0\cdot10^{-3}\,\text{m}$.'
+        hints:
+          - 'מה נשמר בקבל מנותק: המטען או המתח?'
+
+      - label: ו
+        type: mc
+        points: 4
+        level: bagrut
+        qualitative: true
+        objectives: [OBJ-2.6-2]
+        prompt: >-
+          קבוצה אחרת חזרה על הניסוי עם אותם לוחות, אבל במרחק $d = 3.0\,\text{cm}$ בין הלוחות, ובמתחים גבוהים פי 15, כך
+          שהקריאות של המשקל היו בערך כמו בטבלה. גם אצלם הנקודות של $\Delta m$ כתלות ב-$V^2$ היו על קו ישר, אבל
+          $\varepsilon_0$ שחישבו מהשיפוע לפי הביטוי מסעיף א היה רחוק בבירור מהערך שבדף הנוסחאות. מה ההסבר הסביר ביותר?
+        choices:
+          - text: >-
+              הביטוי מסעיף א מניח שהשדה אחיד ונמצא רק בין הלוחות. זה נכון כשהמרחק קטן בהרבה מהצלעות של הלוחות. במרחק של
+              $3\,\text{cm}$ השדה בולט החוצה ליד הקצוות, והכוח כבר לא שווה לביטוי.
+            correct: true
+            feedback: 'נכון. זה אפקט הקצוות, שבסעיפים הקודמים התעלמנו ממנו: כש-$d$ לא קטן בהרבה מהצלעות ($15\,\text{cm}$ ו-$20\,\text{cm}$), חלק מקווי השדה יוצאים מהצדדים ולא רק מהמרווח. כל המטענים, גם אלה שליד הקצוות, גדלים ביחס ישר למתח, ולכן הכוח עדיין ביחס ישר ל-$V^2$ והנקודות על ישר. אבל השיפוע כבר לא $\dfrac{\varepsilon_0 A}{2gd^2}$. קו ישר מראה שצורת הקשר נכונה, לא שהביטוי כולו נכון.'
+          - text: השדה של כל לוח נחלש כשמתרחקים ממנו, ולכן במרחק גדול הכוח קטן ממה שהביטוי צופה.
+            feedback: 'השדה של לוח גדול לא נחלש עם המרחק ממנו, כל עוד נמצאים רחוק מהקצוות. וההחלשה של השדה כשמרחיקים את הלוחות במתח קבוע כבר כלולה בביטוי, דרך $E = V/d$.'
+            misconception: MC-plane-field-falls
+          - text: הקבוע $\varepsilon_0$ תלוי במרחק בין הלוחות, ולכן כל מרחק נותן ערך אחר.
+            feedback: 'הקבוע $\varepsilon_0$ הוא קבוע של הטבע, אותו קבוע שמופיע בחוק קולון, $k = 1/(4\pi\varepsilon_0)$. הוא לא תלוי בניסוי. מה שהשתנה הוא מידת הדיוק של ההנחות שמאחורי הביטוי מסעיף א.'
+          - text: במתחים גבוהים כאלה האוויר בין הלוחות מוליך, ומטען זורם מלוח ללוח.
+            feedback: 'השדה בין הלוחות, $E = V/d$, הגיע ל-$6\cdot10^{5}\,\text{V/m}$, אותו שדה כמו ב-$1200\,\text{V}$ על פני $2\,\text{mm}$, ורחוק מהשדה שבו האוויר מתחיל להוליך, כ-$3\cdot10^{6}\,\text{V/m}$. ואילו מטען היה זורם בין הלוחות, הנקודות לא היו על ישר.'

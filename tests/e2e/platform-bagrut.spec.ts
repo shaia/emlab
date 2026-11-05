@@ -58,7 +58,7 @@ test.describe('practice sheet', () => {
     await expect(page.locator('[data-lesson-group="1.5"]')).toBeVisible();
     await expect(page.locator('[data-level-group="basic"]').first()).toBeVisible();
     const bagrut = page.locator('[data-bagrut-group]');
-    await expect(bagrut.locator('[data-type="bagrut"]')).toHaveCount(4);
+    await expect(bagrut.locator('[data-type="bagrut"]')).toHaveCount(6);
     // the Bagrut questions come last
     const order = await page
       .locator('[data-lesson-group], [data-bagrut-group]')

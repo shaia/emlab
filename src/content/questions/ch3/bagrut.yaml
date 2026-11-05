@@ -368,3 +368,206 @@ questions:
           - text: חישבתי את קבוע הזמן של הפריקה עם $R_2$, $1\,\text{s}$, ולא עם $R_1$.
           - text: השתמשתי בכך שאחרי זמן $\tau$ נשאר כ-37% מהמתח, וקיבלתי כ-$3.7\,\text{V}$.
           - text: חישבתי את האנרגיה שהקבל אגר, $\tfrac12CV^2 = 5\,\text{mJ}$, ונימקתי שכולה הופכת לחום בנגד.
+
+  # ------------------------------------------------------------ 4: the resistivity of a wire from R against L
+  # Data: lab.ts measure() with the true law R = 0.6 Ω + ρL/A (constantan, d = 0.40 mm, circuits.ts
+  # RESISTIVITY, roundArea), a 3 V supply and a 6 Ω resistor in series; I with 1% scatter (seed 21), V with
+  # 2.5% (seed 22), rounded to the mA and to 0.01 V. Every answer is fitLine() of R = V/I from the rounded
+  # table: slope 3.87 Ω/m, intercept 0.59 Ω, ρ = 4.86·10⁻⁷ Ω·m.
+  - id: Q-3-bagrut-4
+    type: bagrut
+    title: ההתנגדות הסגולית של תיל קונסטנטן
+    prompt: >-
+      תלמידים מדדו את ההתנגדות של תיל קונסטנטן אחיד שהקוטר שלו $d = 0.40\,\text{mm}$. הם מתחו את התיל לאורך סרגל,
+      וחיברו אליו שני תפסים שאפשר להזיז לאורכו. ספק מתח, נגד ומד זרם מחוברים בטור לקטע התיל שבין התפסים, ומד מתח
+      מחובר בין שני התפסים, כמתואר בתרשים. בכל מדידה הציבו התלמידים את התפסים במרחק $L$ זה מזה, ורשמו את הזרם $I$
+      ואת המתח $V$:
+      $$\begin{array}{c|c|c} L\,(\text{cm}) & I\,(\text{A}) & V\,(\text{V}) \\ \hline 20 & 0.406 & 0.56 \\ 40 & 0.367 & 0.78 \\ 60 & 0.334 & 0.97 \\ 80 & 0.308 & 1.13 \\ 100 & 0.286 & 1.28 \end{array}$$
+    diagramAlt: >-
+      מעגל. בצד שמאל ספק מתח, ההדק החיובי למעלה. בצלע העליונה נגד ומד זרם. למטה תיל ישר שמתוח לאורך סרגל, ועליו שני
+      תפסים: התיל מהספק מחובר לתפס השמאלי, והתיל ממד הזרם יורד אל התפס הימני. מד מתח מחובר בין שני התפסים. המרחק בין
+      התפסים מסומן L.
+    diagram: |
+      <svg viewBox="0 0 540 240" width="540" height="240" font-size="14" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="1.5" fill="none">
+          <polyline points="60,94 60,30 160,30"/>
+          <polyline points="220,30 286,30"/>
+          <polyline points="314,30 420,30 420,174"/>
+          <polyline points="60,106 60,150 180,150 180,174"/>
+          <polyline points="180,150 230,150 230,110 286,110"/>
+          <polyline points="314,110 370,110 370,150 420,150"/>
+          <rect x="160" y="22" width="60" height="16"/>
+          <circle cx="300" cy="30" r="14"/>
+          <circle cx="300" cy="110" r="14"/>
+          <rect x="90" y="186" width="420" height="14"/>
+        </g>
+        <line x1="84" y1="182" x2="516" y2="182" stroke="currentColor" stroke-width="3"/>
+        <g stroke="currentColor" stroke-width="1">
+          <line x1="110" y1="186" x2="110" y2="193"/><line x1="160" y1="186" x2="160" y2="193"/>
+          <line x1="210" y1="186" x2="210" y2="193"/><line x1="260" y1="186" x2="260" y2="193"/>
+          <line x1="310" y1="186" x2="310" y2="193"/><line x1="360" y1="186" x2="360" y2="193"/>
+          <line x1="410" y1="186" x2="410" y2="193"/><line x1="460" y1="186" x2="460" y2="193"/>
+        </g>
+        <polygon points="174,172 186,172 180,182" fill="currentColor"/>
+        <polygon points="414,172 426,172 420,182" fill="currentColor"/>
+        <line x1="44" y1="94" x2="76" y2="94" stroke="currentColor" stroke-width="2"/>
+        <line x1="52" y1="106" x2="68" y2="106" stroke="currentColor" stroke-width="4"/>
+        <circle cx="180" cy="150" r="3" fill="currentColor"/><circle cx="420" cy="150" r="3" fill="currentColor"/>
+        <g stroke="var(--current)" stroke-width="2" fill="var(--current)">
+          <line x1="90" y1="30" x2="124" y2="30"/><polygon points="122,25 122,35 132,30" stroke="none"/>
+        </g>
+        <text x="110" y="20" text-anchor="middle" fill="var(--current)" font-style="italic" font-weight="700">I</text>
+        <text x="40" y="91" fill="currentColor" font-size="12">+</text>
+        <text x="300" y="35" text-anchor="middle" fill="currentColor" font-weight="700">A</text>
+        <text x="300" y="115" text-anchor="middle" fill="currentColor" font-weight="700">V</text>
+        <g stroke="currentColor" stroke-width="1" fill="currentColor">
+          <line x1="186" y1="220" x2="414" y2="220"/>
+          <polygon points="180,220 190,215 190,225" stroke="none"/>
+          <polygon points="420,220 410,215 410,225" stroke="none"/>
+          <line x1="180" y1="204" x2="180" y2="228"/><line x1="420" y1="204" x2="420" y2="228"/>
+        </g>
+        <text x="300" y="215" text-anchor="middle" fill="currentColor" font-style="italic">L</text>
+        <text x="516" y="176" text-anchor="end" fill="currentColor">d = 0.40 mm</text>
+      </svg>
+    parts:
+      - label: א
+        type: open
+        points: 9
+        level: mid
+        objectives: [OBJ-3.3-1, OBJ-0.4-2]
+        prompt: >-
+          (1) חשבו את ההתנגדות $R$ של קטע התיל שבין התפסים בכל אחת מהמדידות.
+
+          (2) סרטטו דיאגרמת פיזור של ההתנגדות $R$ כתלות במרחק $L$ בין התפסים, והוסיפו לה את הישר המתאים לה ביותר
+          (קו מגמה).
+        hints:
+          - 'ההתנגדות היא היחס בין המתח על הקטע לזרם שעובר בו, $R = V/I$.'
+          - 'שימו את $L$ על הציר האופקי ואת $R$ על הציר האנכי, והתחילו את שני הצירים מאפס, כדי שתראו איפה הקו חותך את הציר האנכי.'
+        solution:
+          - { kind: formula, text: '$R = \dfrac{V}{I}$. לפי $R = \rho\dfrac{L}{A}$, ההתנגדות של קטע תיל אחיד גדלה באופן קווי עם האורך שלו, ולכן מעבירים קו ישר.' }
+          - { kind: substitution, text: 'במדידה הראשונה $R = \dfrac{0.56\,\text{V}}{0.406\,\text{A}} \approx 1.38\,\Omega$. כך מתקבלות, מ-$20\,\text{cm}$ עד $100\,\text{cm}$, ההתנגדויות $1.38$, $2.13$, $2.90$, $3.67$ ו-$4.48\,\Omega$.' }
+          - { kind: manipulation, text: 'הציר האופקי מ-0 עד $100\,\text{cm}$, והציר האנכי מ-0 עד $5\,\Omega$. מסמנים את חמש הנקודות: הן כמעט על קו ישר. הקו המתאים להן ביותר הוא $R = 3.87\,L + 0.59$ (עם $L$ במטרים ו-$R$ באוהם). הוא עובר ליד $(20\,\text{cm},\ 1.36\,\Omega)$ וליד $(100\,\text{cm},\ 4.46\,\Omega)$, והנקודות קרובות אליו משני צדדיו.' }
+          - { kind: result, text: 'דיאגרמת פיזור של חמש נקודות, וקו מגמה ישר עם שיפוע חיובי שאינו עובר בראשית: הוא חותך את ציר ההתנגדות בערך ב-$0.59\,\Omega$.' }
+        rubric:
+          - text: חישבתי $R = V/I$ בכל מדידה, וקיבלתי ערכים מ-$1.38\,\Omega$ עד $4.48\,\Omega$.
+          - text: שמתי $L$ על הציר האופקי ו-$R$ על הציר האנכי, וכתבתי ליד כל ציר את הגודל ואת היחידות.
+          - text: בחרתי קנה מידה אחיד, ששני הצירים בו מתחילים מאפס, וסימנתי נכון את חמש הנקודות.
+          - text: העברתי קו ישר אחד (לא קו שבור בין הנקודות), עם נקודות משני צדדיו, והמשכתי אותו עד הציר האנכי.
+
+      - label: ב
+        type: numeric
+        points: 7
+        level: bagrut
+        standalone: false
+        objectives: [OBJ-3.3-3, OBJ-0.4-4]
+        prompt: חשבו את ההתנגדות הסגולית של הקונסטנטן, לפי קו המגמה.
+        answer: 4.86e-7
+        unit: Ω·m
+        tolerance: 0.12
+        hints:
+          - 'לפי $R = \rho\dfrac{L}{A}$, איזה גודל הוא השיפוע של הגרף של $R$ כתלות ב-$L$?'
+        correctFeedback: 'נכון. לפי $R = \rho\dfrac{L}{A}$, השיפוע של הגרף של $R$ כתלות ב-$L$ הוא $\dfrac{\rho}{A}$. משתי נקודות רחוקות על הקו: $\dfrac{\Delta R}{\Delta L} = \dfrac{4.46 - 1.36}{1.00 - 0.20} \approx 3.9\,\Omega/\text{m}$. שטח החתך הוא $A = \dfrac{\pi d^2}{4} = \dfrac{\pi\,(0.40\cdot10^{-3})^2}{4} \approx 1.26\cdot10^{-7}\,\text{m}^2$, ולכן $\rho = 3.9\cdot1.26\cdot10^{-7} \approx 4.9\cdot10^{-7}\,\Omega\cdot\text{m}$.'
+        wrongFeedback: 'השוו את $R = \rho\dfrac{L}{A}$ למשוואה של קו ישר: השיפוע הוא $\rho/A$. חשבו אותו משתי נקודות רחוקות על הקו, עם $L$ במטרים, וכפלו בשטח החתך במטרים רבועים.'
+        commonWrong:
+          - value: 4.86e-4
+            feedback: 'המרתם את שטח החתך כמו אורך: $0.126\,\text{mm}^2 = 0.126\cdot10^{-3}\,\text{m}^2$. בשטח יש שני אורכים, ולכן $1\,\text{mm}^2 = (10^{-3}\,\text{m})^2 = 10^{-6}\,\text{m}^2$.'
+            misconception: MC-area-prefix-once
+          - value: 4.86e-9
+            feedback: 'השארתם את $L$ בסנטימטרים. השיפוע $0.039\,\Omega/\text{cm}$ קטן פי 100 מהשיפוע ביחידות $\Omega/\text{m}$: המירו את האורכים למטרים.'
+          - value: 1.94e-6
+            feedback: 'הצבתם את הקוטר במקום הרדיוס, $A = \pi d^2$. הרדיוס הוא חצי מהקוטר, ולכן $A = \pi\,(d/2)^2 = \pi d^2/4$, קטן פי 4.'
+          - value: 5.62e-7
+            feedback: 'חישבתם מנקודה אחת, המדידה של $100\,\text{cm}$: $\dfrac{RA}{L} = \dfrac{4.48\cdot1.26\cdot10^{-7}}{1.00}$. הקו לא עובר בראשית, ולכן המנה $R/L$ של נקודה אחת אינה השיפוע. את $\rho/A$ נותן השיפוע של קו המגמה.'
+            misconception: MC-slope-from-data-points
+          - value: 8.67e-7
+            feedback: 'חישבתם מנקודה אחת, המדידה של $20\,\text{cm}$. הקו לא עובר בראשית, ולכן המנה $R/L$ של נקודה אחת אינה השיפוע (על זה שואל סעיף ה). את $\rho/A$ נותן השיפוע של קו המגמה.'
+            misconception: MC-slope-from-data-points
+          - value: 3.25e-8
+            feedback: 'הפכתם את השיפוע: חישבתם $\Delta L/\Delta R$. בגרף של $R$ כתלות ב-$L$ השיפוע הוא $\Delta R/\Delta L$.'
+        explanation: >-
+          בדיקת יחידות: השיפוע נמדד ב-$\Omega/\text{m}$, וכשכופלים אותו בשטח ב-$\text{m}^2$ מתקבל $\Omega\cdot\text{m}$, היחידה
+          של ההתנגדות הסגולית.
+
+      - label: ג
+        type: numeric
+        points: 5
+        level: bagrut
+        standalone: false
+        objectives: [OBJ-0.4-1, OBJ-3.3-3]
+        prompt: >-
+          לפי $R = \rho\dfrac{L}{A}$, לקטע תיל שאורכו אפס אין התנגדות, אבל קו המגמה שלכם אינו עובר בראשית. בכל מדידה
+          נוספה להתנגדות של קטע התיל התנגדות קבועה: ההתנגדות של המגעים בין התפסים לתיל, שהזרם עובר דרכם ומד המתח מודד
+          גם אותם. מה ההתנגדות של המגעים, לפי הגרף?
+        answer: 0.59
+        unit: Ω
+        tolerance: 0.15
+        correctFeedback: 'נכון: זו נקודת החיתוך של הקו עם ציר ההתנגדות, ההתנגדות כאשר $L = 0$. ממשיכים את הקו עד הציר, או מחשבים מנקודה על הקו: $R = 1.36 - 3.87\cdot0.20 \approx 0.59\,\Omega$.'
+        wrongFeedback: 'המשיכו את קו המגמה שמאלה, עד $L = 0$. ההתנגדות שם היא של המגעים בלבד.'
+        commonWrong:
+          - value: 0
+            feedback: 'העברתם את הקו דרך הראשית. לא כל קו ישר עובר בראשית: קו דרך הראשית לא עובר ליד הנקודות. העבירו את הקו לפי הנקודות, והמשיכו אותו עד הציר האנכי.'
+            misconception: MC-linear-means-proportional
+          - value: 1.38
+            feedback: 'זו ההתנגדות במדידה הראשונה, כשהתפסים במרחק $20\,\text{cm}$ זה מזה. ההתנגדות של המגעים היא ההתנגדות כאשר $L = 0$. אם הציר האופקי שלכם מתחיל ב-$20\,\text{cm}$, המשיכו אותו ואת הקו עד אפס.'
+
+      - label: ד
+        type: twotier
+        points: 6
+        level: bagrut
+        qualitative: true
+        objectives: [OBJ-3.3-3]
+        prompt: >-
+          התלמידים חוזרים על הניסוי עם תיל קונסטנטן שהקוטר שלו כפול, $0.80\,\text{mm}$, באותם תפסים. הניחו שההתנגדות של
+          המגעים לא משתנה. איך ייראה קו המגמה של ההתנגדות כתלות במרחק בין התפסים, בהשוואה לקו של התיל הראשון?
+        choices:
+          - text: השיפוע קטן פי 4, ונקודת החיתוך עם הציר האנכי לא משתנה.
+            correct: true
+            feedback: 'נכון. שטח החתך גדל פי 4, ולכן כל מטר של תיל מוסיף התנגדות קטנה פי 4. המגעים לא השתנו, ולכן ההתנגדות כאשר $L = 0$ נשארת אותה התנגדות.'
+          - text: השיפוע קטן פי 2, ונקודת החיתוך עם הציר האנכי לא משתנה.
+            feedback: 'ההתנגדות תלויה בשטח החתך, לא בקוטר. קוטר כפול נותן שטח $\pi d^2/4$ גדול פי 4, והשיפוע $\rho/A$ קטן פי 4.'
+            misconception: MC-diameter-linear
+          - text: השיפוע גדל פי 4, ונקודת החיתוך עם הציר האנכי לא משתנה.
+            feedback: 'בתיל עבה יש יותר מסלולים לזרם, ולכן ההתנגדות שלו קטנה, לא גדלה. השיפוע $\rho/A$ קטן פי 4.'
+            misconception: MC-thicker-more-resistance
+          - text: הקו לא משתנה.
+            feedback: 'החומר אותו חומר, ולכן $\rho$ לא משתנה. אבל השיפוע הוא $\rho/A$, והוא תלוי גם בשטח החתך.'
+        reasonPrompt: ומה הנימוק?
+        reasons:
+          - text: 'השיפוע הוא $\rho/A$, ושטח החתך גדל פי 4. נקודת החיתוך היא ההתנגדות של המגעים, שאינה תלויה בתיל.'
+            correct: true
+            feedback: נכון.
+          - text: ההתנגדות של תיל ביחס הפוך לקוטר שלו.
+            feedback: 'היא ביחס הפוך לשטח החתך, $A = \pi d^2/4$, שגדל כמו ריבוע הקוטר.'
+            misconception: MC-diameter-linear
+          - text: בתיל עבה יש יותר חומר שמפריע לתנועת האלקטרונים.
+            feedback: 'בתיל עבה יש יותר מסלולים לזרם, כאילו כמה תילים דקים זה לצד זה. אותו מתח מעביר בו זרם גדול יותר, וההתנגדות קטנה.'
+            misconception: MC-thicker-more-resistance
+          - text: ההתנגדות הסגולית קובעת לבדה את ההתנגדות של כל קטע תיל.
+            feedback: 'ההתנגדות הסגולית היא תכונה של החומר. ההתנגדות של קטע תיל תלויה גם באורך ובשטח החתך שלו, $R = \rho L/A$.'
+
+      - label: ה
+        type: open
+        points: 6
+        level: bagrut
+        qualitative: true
+        standalone: false
+        objectives: [OBJ-0.4-4, OBJ-3.3-3]
+        prompt: >-
+          תלמיד אחר מציע לוותר על הגרף, ולחשב את ההתנגדות הסגולית ממדידה אחת, המדידה של $20\,\text{cm}$, לפי
+          $\rho = \dfrac{RA}{L}$.
+
+          (1) חשבו את הערך שהוא יקבל, והשוו אותו לתוצאה של סעיף ב.
+
+          (2) הסבירו למה הערך שלו גדול מדי, ולמה השיפוע של קו המגמה נותן את ההתנגדות הסגולית של התיל עצמו.
+        hints:
+          - 'לפי סעיף ג, ההתנגדות שנמדדה היא סכום של שני חלקים, ורק אחד מהם תלוי ב-$L$. מה קורה למנה $R/L$ בגלל החלק השני?'
+        solution:
+          - { kind: formula, text: 'ההתנגדות שנמדדת היא $R = \rho\dfrac{L}{A} + R_c$, כאשר $R_c$ ההתנגדות של המגעים מסעיף ג. לכן $\dfrac{RA}{L} = \rho + \dfrac{R_cA}{L}$.' }
+          - { kind: substitution, text: '$\dfrac{RA}{L} = \dfrac{1.38\,\Omega\cdot1.26\cdot10^{-7}\,\text{m}^2}{0.20\,\text{m}} \approx 8.7\cdot10^{-7}\,\Omega\cdot\text{m}$, פי 1.8 בערך מ-$4.9\cdot10^{-7}\,\Omega\cdot\text{m}$, הערך שמצאנו מהשיפוע.' }
+          - { kind: manipulation, text: 'התוספת היא $\dfrac{R_cA}{L} = \dfrac{0.59\cdot1.26\cdot10^{-7}}{0.20} \approx 3.7\cdot10^{-7}\,\Omega\cdot\text{m}$, וזה ההפרש בין שני הערכים. בקטע קצר ההתנגדות של המגעים היא חלק גדול מההתנגדות שנמדדת. גם במדידה של $100\,\text{cm}$ היא מגדילה את התוצאה בכ-15%.' }
+          - { kind: manipulation, text: 'בגרף, המגעים מוסיפים אותה התנגדות לכל הנקודות: הם מזיזים את הקו כולו למעלה, ואינם משנים את השיפוע. השיפוע, $\Delta R/\Delta L$, תלוי רק בהפרשים בין המדידות, ובהפרש $R_c$ מצטמצם.' }
+          - { kind: result, text: 'הוא יקבל כ-$8.7\cdot10^{-7}\,\Omega\cdot\text{m}$, פי 1.8 בערך מהערך של סעיף ב. המנה $R/L$ של מדידה אחת כוללת גם את ההתנגדות של המגעים, ובקטע קצר היא חלק גדול מההתנגדות. השיפוע לא מושפע מהתנגדות קבועה שמתווספת לכל המדידות, ולכן הוא נותן את $\rho/A$ של התיל עצמו.' }
+        rubric:
+          - text: חישבתי את $RA/L$ במדידה של $20\,\text{cm}$, וקיבלתי כ-$8.7\cdot10^{-7}\,\Omega\cdot\text{m}$, גדול בהרבה מהתוצאה של סעיף ב.
+          - text: הסברתי שההתנגדות שנמדדה כוללת גם את ההתנגדות של המגעים, ולכן $R/L$ גדול מ-$\rho/A$, ובמיוחד בקטע קצר.
+          - text: הסברתי שהתוספת קבועה ומזיזה את הקו למעלה בלי לשנות את השיפוע, ולכן השיפוע נותן את $\rho/A$ של התיל.
