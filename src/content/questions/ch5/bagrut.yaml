@@ -518,3 +518,225 @@ questions:
           - text: 'חישבתי הספק ממוצע של כ-$247\,\text{W}$, עם $\varepsilon_0^2/(2R)$ ולא $\varepsilon_0^2/R$.'
           - text: 'חישבתי עבודה של כ-$1.5\cdot10^{4}\,\text{J}$ בדקה, ונימקתי בחוק לנץ: המומנט על הזרם המושרה מתנגד לסיבוב.'
           - text: 'קבעתי שבסיבוב מהיר פי 2 השיא כפול, זמן המחזור חצי וההספק הממוצע פי 4.'
+
+  # ------------------------------------------------------------ 4: a coil inside a solenoid whose current is ramped (experiment)
+  # Data: lab.ts measure() (scatter 3%, seed 6) of |ε| = N·μ0·n·A·ΔI/Δt with N = 500, A = 10 cm², n = 2000 /m
+  # (magnetism.ts solenoidField, induction.ts fluxUniform and averageEmf), rounded to 0.1 mV. Every answer is
+  # recomputed from the rounded table with fitLine(): slope 1.26 mV·s/A, intercept −0.06 mV, n ≈ 2.0·10³ /m.
+  - id: Q-5-bagrut-4
+    type: bagrut
+    title: סליל קטן בתוך סליל שהזרם בו עולה
+    prompt: >-
+      תלמידים רצו למצוא את צפיפות הכריכות $n$ של סליל ארוך. במרכז הסליל הארוך, בתוכו, הם הניחו סליל קטן של
+      $N = 500$ כריכות, ששטח כל כריכה שלו $A = 10\,\text{cm}^2$. הציר של הסליל הקטן מונח על הציר של הסליל הארוך,
+      וקצות הסליל הקטן מחוברים למד מתח ממוחשב, שמודד את הכא"מ המושרה בו. הסליל הארוך ארוך בהרבה מרוחבו, ולכן
+      השדה בתוכו אחיד, $B = \mu_0 nI$, וכיוון הזרם בכריכות שלו הוא כזה שהשדה בתוכו מצביע ימינה, כמתואר בתרשים.
+
+      בכל הרצה מעלים את הזרם בסליל הארוך מאפס בקצב קבוע, $\dfrac{\Delta I}{\Delta t}$, ובזמן העלייה מד המתח מראה
+      כא"מ קבוע $\varepsilon$. התלמידים קיבלו את התוצאות שבטבלה:
+      $$\begin{array}{c|c} \Delta I/\Delta t\,(\text{A/s}) & \varepsilon\,(\text{mV}) \\ \hline 2 & 2.5 \\ 4 & 4.9 \\ 6 & 7.6 \\ 8 & 9.9 \\ 10 & 12.6 \end{array}$$
+    diagramAlt: >-
+      סליל ארוך ואופקי, שמסורטט כשורה של כריכות. בתוכו, באמצע אורכו, סליל קטן שהציר שלו על הציר של הסליל הארוך,
+      ושני החוטים שלו יוצאים למעלה אל מד מתח V. שני חצים בצבע השדה המגנטי בתוך הסליל הארוך מצביעים ימינה, B.
+      הקצוות של הסליל הארוך מחוברים למטה למקור שמסומן I(t).
+    diagram: |
+      <svg viewBox="0 0 460 215" width="460" height="215" font-size="15" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="1.5" fill="none">
+          <ellipse cx="70" cy="105" rx="7" ry="52"/><ellipse cx="90" cy="105" rx="7" ry="52"/>
+          <ellipse cx="110" cy="105" rx="7" ry="52"/><ellipse cx="130" cy="105" rx="7" ry="52"/>
+          <ellipse cx="150" cy="105" rx="7" ry="52"/><ellipse cx="170" cy="105" rx="7" ry="52"/>
+          <ellipse cx="190" cy="105" rx="7" ry="52"/><ellipse cx="210" cy="105" rx="7" ry="52"/>
+          <ellipse cx="230" cy="105" rx="7" ry="52"/><ellipse cx="250" cy="105" rx="7" ry="52"/>
+          <ellipse cx="270" cy="105" rx="7" ry="52"/><ellipse cx="290" cy="105" rx="7" ry="52"/>
+          <ellipse cx="310" cy="105" rx="7" ry="52"/><ellipse cx="330" cy="105" rx="7" ry="52"/>
+          <ellipse cx="350" cy="105" rx="7" ry="52"/><ellipse cx="370" cy="105" rx="7" ry="52"/>
+          <polyline points="70,157 70,195 190,195"/>
+          <polyline points="370,157 370,195 250,195"/>
+          <rect x="190" y="184" width="60" height="22"/>
+          <polyline points="217,84 217,22 394,22"/>
+          <polyline points="223,84 223,32 394,32"/>
+          <circle cx="410" cy="27" r="16"/>
+        </g>
+        <ellipse cx="220" cy="105" rx="9" ry="22" fill="none" stroke="currentColor" stroke-width="3.5"/>
+        <g stroke="var(--bfield)" stroke-width="2.5" fill="var(--bfield)">
+          <line x1="95" y1="105" x2="165" y2="105"/><polygon points="163,99 175,105 163,111" stroke="none"/>
+          <line x1="265" y1="105" x2="335" y2="105"/><polygon points="333,99 345,105 333,111" stroke="none"/>
+        </g>
+        <text x="130" y="96" text-anchor="middle" fill="var(--bfield)" font-style="italic" font-weight="700">B</text>
+        <text x="300" y="96" text-anchor="middle" fill="var(--bfield)" font-style="italic" font-weight="700">B</text>
+        <line x1="220" y1="128" x2="220" y2="164" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/>
+        <text x="220" y="178" text-anchor="middle" fill="currentColor" font-style="italic">N, A</text>
+        <text x="410" y="32" text-anchor="middle" fill="currentColor" font-weight="700">V</text>
+        <text x="220" y="200" text-anchor="middle" fill="var(--current)" font-style="italic">I(t)</text>
+        <text x="48" y="60" text-anchor="middle" fill="currentColor" font-style="italic">n</text>
+      </svg>
+    parts:
+      - label: א
+        type: open
+        points: 5
+        level: mid
+        objectives: [OBJ-5.2-2, OBJ-4.3-3]
+        prompt: 'הראו כי גודל הכא"מ המושרה בסליל הקטן בזמן העלייה הוא $\varepsilon = \mu_0 nNA\,\dfrac{\Delta I}{\Delta t}$.'
+        hints:
+          - 'מה כיוון השדה בתוך הסליל הארוך ביחס למישור הכריכות של הסליל הקטן? כתבו את השטף דרך כריכה אחת.'
+          - 'מה משתנה כשהזרם עולה: $n$, $A$ או $I$?'
+        solution:
+          - { kind: formula, text: '$B = \mu_0 nI$ בתוך סליל ארוך, $\Phi = BA\cos\theta$, ו-$|\varepsilon| = N\dfrac{|\Delta\Phi|}{\Delta t}$ (חוק פאראדיי).' }
+          - { kind: manipulation, text: 'השדה בתוך הסליל הארוך מקביל לציר, ולכן הוא ניצב למישור הכריכות של הסליל הקטן: $\theta = 0$, והשטף דרך כל כריכה $\Phi = \mu_0 nI\,A$.' }
+          - { kind: manipulation, text: 'הגדלים $n$ ו-$A$ קבועים, ולכן השטף משתנה רק בגלל הזרם: $\Delta\Phi = \mu_0 nA\,\Delta I$.' }
+          - { kind: result, text: 'מציבים בחוק פאראדיי: $\varepsilon = N\dfrac{\Delta\Phi}{\Delta t} = \mu_0 nNA\,\dfrac{\Delta I}{\Delta t}$. הכא"מ ביחס ישר לקצב השינוי של הזרם, ולא לזרם עצמו.' }
+        rubric:
+          - text: 'כתבתי את השדה בתוך הסליל הארוך, $B = \mu_0 nI$.'
+          - text: 'נימקתי שהשדה ניצב לכריכות של הסליל הקטן, וכתבתי את השטף דרך כריכה אחת, $\mu_0 nIA$.'
+          - text: 'כתבתי שהשטף משתנה רק בגלל השינוי בזרם.'
+          - text: 'השתמשתי בחוק פאראדיי עם $N$ כריכות, וקיבלתי את הביטוי.'
+
+      - label: ב
+        type: open
+        points: 8
+        level: mid
+        objectives: [OBJ-0.4-1, OBJ-0.4-2]
+        prompt: >-
+          (1) סרטטו דיאגרמת פיזור של הכא"מ $\varepsilon$ כתלות בקצב השינוי של הזרם $\dfrac{\Delta I}{\Delta t}$.
+
+          (2) הוסיפו לדיאגרמת הפיזור את הישר המתאים לה ביותר (קו מגמה).
+        hints:
+          - 'שימו את $\dfrac{\Delta I}{\Delta t}$ על הציר האופקי ואת $\varepsilon$ על הציר האנכי, והתחילו את שני הצירים באפס.'
+          - 'קו המגמה לא חייב לעבור דרך כל הנקודות. העבירו אותו כך שהנקודות יתפזרו משני צדדיו.'
+        solution:
+          - { kind: formula, text: 'לפי סעיף א, $\varepsilon = \mu_0 nNA\,\dfrac{\Delta I}{\Delta t}$: יחס ישר. לכן $\dfrac{\Delta I}{\Delta t}$ על הציר האופקי, $\varepsilon$ על הציר האנכי, ומעבירים קו ישר.' }
+          - { kind: manipulation, text: 'הציר האופקי מ-0 עד $10\,\text{A/s}$, והציר האנכי מ-0 עד $14\,\text{mV}$ לפחות. מסמנים את חמש הנקודות מהטבלה.' }
+          - { kind: manipulation, text: 'הקו המתאים ביותר הוא $\varepsilon = 1.26\,\dfrac{\Delta I}{\Delta t} - 0.06$ (עם $\varepsilon$ ב-$\text{mV}$ ו-$\Delta I/\Delta t$ ב-$\text{A/s}$). הוא עובר ליד $(2,\ 2.46)$ וליד $(10,\ 12.54)$, והנקודות מתפזרות משני צדדיו, הרחוקה ביותר במרחק $0.12\,\text{mV}$ ממנו.' }
+          - { kind: result, text: 'דיאגרמת פיזור של חמש נקודות, וקו מגמה ישר עם שיפוע חיובי שעובר כמעט דרך הראשית, כפי שמצפים מיחס ישר.' }
+        rubric:
+          - text: 'שמתי את $\Delta I/\Delta t$ על הציר האופקי ואת $\varepsilon$ על הציר האנכי, וכתבתי ליד כל ציר את הגודל ואת היחידות.'
+          - text: 'בחרתי קנה מידה אחיד שמתחיל באפס ומכיל את כל הנקודות.'
+          - text: 'סימנתי נכון את חמש הנקודות.'
+          - text: 'העברתי קו ישר אחד (לא קו שבור בין הנקודות), עם נקודות משני צדדיו, שעובר קרוב לראשית.'
+
+      - label: ג
+        type: numeric
+        points: 6
+        level: bagrut
+        standalone: false
+        objectives: [OBJ-0.4-4, OBJ-5.2-2]
+        prompt: 'חשבו, לפי קו המגמה והביטוי מסעיף א, את צפיפות הכריכות $n$ של הסליל הארוך.'
+        answer: 2.0e3
+        unit: 1/m
+        tolerance: 0.1
+        correctFeedback: >-
+          נכון. לפי סעיף א, השיפוע של הגרף הוא $k = \mu_0 nNA$. משתי נקודות רחוקות על הקו:
+          $k = \dfrac{12.54 - 2.46}{10 - 2} \approx 1.26\,\text{mV}\cdot\text{s/A} = 1.26\cdot10^{-3}\,\text{V}\cdot\text{s/A}$.
+          לכן $n = \dfrac{k}{\mu_0 NA} = \dfrac{1.26\cdot10^{-3}}{4\pi\cdot10^{-7}\cdot500\cdot10^{-3}} \approx 2.0\cdot10^{3}\,\text{m}^{-1}$,
+          כלומר כ-2000 כריכות בכל מטר של הסליל הארוך.
+        wrongFeedback: >-
+          השוו את $\varepsilon = \mu_0 nNA\,\dfrac{\Delta I}{\Delta t}$ למשוואה של ישר: מה עומד במקום השיפוע? חשבו את
+          השיפוע משתי נקודות רחוקות על הקו, והמירו לפני ההצבה: מילי-וולט לוולט, ו-$10\,\text{cm}^2 = 10^{-3}\,\text{m}^2$.
+        commonWrong:
+          - value: 1.0e6
+            feedback: 'שכחתם את $N$: חילקתם רק ב-$\mu_0 A$. בכל אחת מ-500 הכריכות נוצר כא"מ, והכריכות מחוברות בטור, ולכן השיפוע הוא $\mu_0 nNA$.'
+            misconception: MC-faraday-ignore-turns
+          - value: 2.0e6
+            feedback: 'הצבתם את השיפוע במילי-וולט כאילו היה בוולט. השיפוע הוא $1.26\,\text{mV}\cdot\text{s/A} = 1.26\cdot10^{-3}\,\text{V}\cdot\text{s/A}$.'
+          - value: 0.20
+            feedback: 'הצבתם $A = 10$, כאילו השטח במטרים רבועים. $1\,\text{cm}^2 = 10^{-4}\,\text{m}^2$, ולכן $A = 10^{-3}\,\text{m}^2$.'
+          - value: 1.26e4
+            feedback: 'הצבתם $2\cdot10^{-7}$ במקום $\mu_0$. זה הערך של $\dfrac{\mu_0}{2\pi}$, מהנוסחה של תיל ישר. כאן $\mu_0 = 4\pi\cdot10^{-7}\,\text{T}\cdot\text{m/A}$.'
+        hints:
+          - 'לפי סעיף א, איזה גודל הוא השיפוע של הגרף של $\varepsilon$ כתלות ב-$\dfrac{\Delta I}{\Delta t}$?'
+        explanation: >-
+          בדיקת יחידות: $\text{V}\cdot\text{s} = \text{Wb} = \text{T}\cdot\text{m}^2$, ולכן
+          $\dfrac{\text{T}\cdot\text{m}^2/\text{A}}{(\text{T}\cdot\text{m/A})\cdot\text{m}^2} = \text{m}^{-1}$, כריכות למטר.
+
+      - label: ד
+        type: mc
+        points: 4
+        level: basic
+        qualitative: true
+        objectives: [OBJ-5.2-1, OBJ-0.4-2]
+        prompt: >-
+          לפני ההרצות התלמידים העבירו בסליל הארוך זרם קבוע של $5.0\,\text{A}$ במשך דקה. מה הראה מד המתח בזמן הזה?
+          קבעו ונמקו, ובדקו שהתשובה מתאימה לנתונים שבטבלה.
+        choices:
+          - text: 'אפס: השטף דרך הסליל הקטן גדול, אבל הוא לא משתנה.'
+            correct: true
+            feedback: >-
+              נכון. כא"מ מושרה נוצר רק כשהשטף משתנה. בזרם קבוע השדה קבוע, השטף קבוע, ו-$\Delta I/\Delta t = 0$. זה
+              מתאים לטבלה: בכל השורות היחס בין הכא"מ לקצב השינוי של הזרם כמעט אותו יחס, כ-$1.25\,\text{mV}\cdot\text{s/A}$.
+              זה יחס ישר, וקו המגמה עובר כמעט דרך הראשית.
+          - text: 'כ-$6.2\,\text{mV}$: זה הערך שקו המגמה נותן מעל 5 בציר האופקי.'
+            feedback: >-
+              הציר האופקי הוא קצב השינוי של הזרם, לא הזרם. זרם קבוע, גדול ככל שיהיה, הוא קצב שינוי אפס, ושם קו המגמה
+              נותן כא"מ אפס.
+            misconception: MC-faraday-field-not-change
+          - text: 'כא"מ קבוע, גדול יותר מכל הערכים שבטבלה, כי השדה בתוך הסליל חזק וקבוע כל הזמן.'
+            feedback: >-
+              הכא"מ תלוי בקצב השינוי של השטף, לא בשטף עצמו. בזרם קבוע השטף אולי גדול, אבל הוא לא משתנה, והכא"מ אפס.
+            misconception: MC-faraday-emf-follows-flux
+          - text: 'אי אפשר לדעת, כי בטבלה אין מדידה שבה הזרם קבוע.'
+            feedback: >-
+              הביטוי מסעיף א עונה על זה: כאשר $\Delta I/\Delta t = 0$ הכא"מ אפס. גם הטבלה מראה את זה: הכא"מ ביחס ישר
+              לקצב השינוי, וקו המגמה עובר כמעט דרך הראשית.
+
+      - label: ה
+        type: mc
+        points: 5
+        level: mid
+        qualitative: true
+        objectives: [OBJ-5.3-1, OBJ-5.2-2]
+        prompt: >-
+          בהרצה נוספת הזרם בסליל הארוך יורד בקצב קבוע, מ-$5.0\,\text{A}$ לאפס בתוך $0.50\,\text{s}$. מה נכון לגבי
+          כיוון הזרם המושרה בסליל הקטן ולגבי גודל הכא"מ? קבעו ונמקו.
+        choices:
+          - text: 'הזרם המושרה מסתובב באותו כיוון כמו הזרם בכריכות של הסליל הארוך, וגודל הכא"מ כ-$12.6\,\text{mV}$.'
+            correct: true
+            feedback: >-
+              נכון. לפי חוק לנץ: השטף דרך הסליל הקטן מצביע ימינה וקטן, ולכן השדה המושרה מצביע ימינה, כדי להשלים את מה
+              שחסר. זרם שיוצר שדה ימינה מסתובב (לפי כלל יד ימין) כמו הזרם בכריכות של הסליל הארוך. הקצב הוא
+              $\dfrac{5.0}{0.50} = 10\,\text{A/s}$, ולכן גודל הכא"מ כמו בשורה האחרונה בטבלה, כ-$12.6\,\text{mV}$, אבל
+              מד המתח מראה אותו בסימן הפוך לזה של ההרצות שבהן הזרם עלה.
+          - text: 'הזרם המושרה מסתובב בכיוון הפוך לזרם בכריכות של הסליל הארוך, כמו בהרצות שבהן הזרם עלה, וגודל הכא"מ כ-$12.6\,\text{mV}$.'
+            feedback: >-
+              הזרם המושרה מתנגד לשינוי בשטף, לא לשדה. כשהזרם עלה, השטף ימינה גדל, והשדה המושרה פנה שמאלה. עכשיו השטף
+              ימינה קטן, ולכן השדה המושרה פונה ימינה, והזרם המושרה מסתובב כמו הזרם בכריכות.
+            misconception: MC-lenz-opposes-field
+          - text: 'הזרם המושרה מסתובב באותו כיוון כמו הזרם בכריכות של הסליל הארוך, וגודל הכא"מ כ-$6.2\,\text{mV}$, כי הזרם השתנה ב-$5.0\,\text{A}$.'
+            feedback: >-
+              הכיוון נכון, אבל הכא"מ תלוי בקצב השינוי של הזרם, לא רק בכמה הוא השתנה. הזרם ירד ב-$5.0\,\text{A}$ בתוך
+              $0.50\,\text{s}$, כלומר בקצב $10\,\text{A/s}$, ולכן הכא"מ כמו בשורה האחרונה בטבלה.
+            misconception: MC-faraday-change-not-rate
+          - text: 'הזרם המושרה מסתובב באותו כיוון כמו הזרם בכריכות של הסליל הארוך, והכא"מ קטן בהדרגה במשך הירידה, כי השדה נחלש.'
+            feedback: >-
+              הכא"מ תלוי בקצב השינוי של השטף, לא בגודל שלו. הזרם יורד בקצב קבוע, ולכן השטף יורד בקצב קבוע, והכא"מ קבוע
+              לאורך כל הירידה, גם כשהשדה כבר חלש.
+            misconception: MC-faraday-emf-follows-flux
+
+      - label: ו
+        type: open
+        points: 5
+        level: bagrut
+        qualitative: true
+        standalone: false
+        objectives: [OBJ-5.1-1, OBJ-5.1-2, OBJ-4.3-3]
+        prompt: >-
+          מה יהיה השיפוע של קו המגמה בכל אחד מהשינויים הבאים, לעומת השיפוע שמצאתם בסעיף ב? קבעו ונמקו.
+
+          (1) מסובבים את הסליל הקטן, בלי להוציא אותו מהסליל הארוך, כך שהציר שלו יוצר זווית של $60^\circ$ עם הציר של
+          הסליל הארוך.
+
+          (2) במקום הסליל הקטן כורכים סליל של 500 כריכות מבחוץ על הסליל הארוך, באמצע אורכו. שטח כל כריכה שלו
+          $50\,\text{cm}^2$, ושטח החתך של הסליל הארוך $20\,\text{cm}^2$.
+        hints:
+          - 'השיפוע הוא $N$ כפול השינוי בשטף דרך כריכה אחת, לכל אמפר של שינוי בזרם. מה קורה לשטף כשמטים כריכה?'
+          - 'בחלק (2): איפה נמצא השדה של סליל ארוך? אילו קווי שדה עוברים דרך כריכה שמקיפה אותו מבחוץ?'
+        solution:
+          - { kind: formula, text: '$|\varepsilon| = N\dfrac{|\Delta\Phi|}{\Delta t}$, ו-$\Phi = BA\cos\theta$, כש-$\theta$ היא הזווית בין השדה לאנך לכריכה.' }
+          - { kind: manipulation, text: '(1) האנך לכריכות של הסליל הקטן נמצא על הציר שלו, ולכן $\theta = 60^\circ$ ו-$\Phi = \mu_0 nIA\cos60^\circ$: רק חצי מהקווים שעברו קודם עוברים עכשיו דרך כל כריכה.' }
+          - { kind: substitution, text: '$k_1 = 1.26\cdot\cos60^\circ \approx 0.63\,\text{mV}\cdot\text{s/A}$.' }
+          - { kind: manipulation, text: '(2) השדה של סליל ארוך נמצא כמעט כולו בתוכו, ומחוצה לו הוא כמעט אפס (שיעור 4.3). לכן דרך כריכה ששטחה $50\,\text{cm}^2$ עוברים רק הקווים שבתוך החתך של הסליל הארוך: $\Phi = \mu_0 nI\cdot20\,\text{cm}^2$, ולא $\mu_0 nI\cdot50\,\text{cm}^2$.' }
+          - { kind: substitution, text: 'אותו $N$, ושטח אפקטיבי גדול פי 2: $k_2 = 1.26\cdot\dfrac{20}{10} \approx 2.5\,\text{mV}\cdot\text{s/A}$, ולא $1.26\cdot5 = 6.3\,\text{mV}\cdot\text{s/A}$.' }
+          - { kind: result, text: '(1) השיפוע קטן פי 2, לכ-$0.63\,\text{mV}\cdot\text{s/A}$. (2) השיפוע גדל פי 2, לכ-$2.5\,\text{mV}\cdot\text{s/A}$: את השטף קובע שטח החתך של הסליל הארוך, $20\,\text{cm}^2$, ולא השטח של הכריכה החיצונית.' }
+        rubric:
+          - text: 'נימקתי שבסיבוב השטף קטן פי $\cos\theta$, עם $\theta$ הזווית בין השדה לאנך לכריכה, וקיבלתי חצי מהשיפוע.'
+          - text: 'נימקתי שמחוץ לסליל ארוך השדה כמעט אפס, ולכן השטח שקובע בחלק (2) הוא שטח החתך של הסליל הארוך.'
+          - text: 'קבעתי שבחלק (2) השיפוע גדל פי 2, לכ-$2.5\,\text{mV}\cdot\text{s/A}$, ולא פי 5.'
