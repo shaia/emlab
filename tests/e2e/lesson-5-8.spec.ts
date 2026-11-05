@@ -46,8 +46,8 @@ test.describe('live figure', () => {
   test('the emf is largest where the flux is zero, and zero where the flux is largest', async ({ page }) => {
     const fig = await openFigure(page);
     const readout = fig.locator('.sim-readout');
-    // the starting state: θ = 60°, 200 turns of 40 cm², 0.5 T, one turn per second
-    await expect(readout).toContainText('θ = 60°');
+    // the starting state: θ = ωt = 60°, 200 turns of 40 cm², 0.5 T, one turn per second
+    await expect(readout).toContainText('θ = ωt = 60°');
     await expect(readout).toContainText('Φ = BA·cosθ = 1 mWb');
     await expect(readout).toContainText('ε = NBAω·sinθ = 2.18 V');
     await expect(readout).toContainText('ε₀ = NBAω = 2.51 V');
@@ -86,6 +86,8 @@ test.describe('live figure', () => {
     const fig = await openFigure(page);
     const readout = fig.locator('.sim-readout');
     await setSlider(fig.locator('input[type=range]').first(), 300);
+    // the readout shows the whole turn, so the sign of sin 300° matches the emf beside it
+    await expect(readout).toContainText('θ = ωt = 300°');
     await expect(readout).toContainText('ε = NBAω·sinθ = -2.18 V');
     await fig.getByRole('button', { name: 'טבעת מפוצלת' }).click();
     await expect(readout).toContainText('|ε| = 2.18 V');
@@ -97,14 +99,14 @@ test.describe('live figure', () => {
     const fig = await openFigure(page);
     await fig.getByRole('button', { name: 'סובבו את הגנרטור' }).click();
     await page.waitForTimeout(800);
-    await expect(fig.locator('.sim-readout')).toContainText('θ = 60°');
+    await expect(fig.locator('.sim-readout')).toContainText('θ = ωt = 60°');
     await expect(fig.getByRole('button', { name: 'סובבו את הגנרטור' })).toHaveAttribute('aria-pressed', 'false');
   });
 
   test('running, the coil turns and the readout follows it', async ({ page }) => {
     const fig = await openFigure(page);
     await fig.getByRole('button', { name: 'סובבו את הגנרטור' }).click();
-    await expect.poll(async () => (await fig.locator('.sim-readout').textContent()) ?? '', { timeout: 10_000 }).not.toContain('θ = 60°');
+    await expect.poll(async () => (await fig.locator('.sim-readout').textContent()) ?? '', { timeout: 10_000 }).not.toContain('θ = ωt = 60°');
     await fig.getByRole('button', { name: 'עצרו' }).click();
   });
 });

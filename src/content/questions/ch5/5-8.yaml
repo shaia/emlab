@@ -274,7 +274,7 @@ questions:
         feedback: 'זה ההספק **בשיא**, $\varepsilon_0^2/R$, ברגעים שבהם הכא"מ בשיא. רוב הזמן ההספק קטן יותר, והממוצע חצי ממנו.'
         misconception: MC-ac-mean-power-peak-squared
       - value: 20
-        feedback: 'הצבתם בנוסחה את חצי השיא, $20\,\text{V}$, ומקבלים $\varepsilon_0^2/(4R)$. הממוצע הוא של **ההספק**, $\sin^2$, ולא של המתח: $\varepsilon_0^2/(2R)$.'
+        feedback: 'קיבלתם $\varepsilon_0^2/(4R)$, חצי מהנכון. זה קורה בשתי דרכים: הצבתם ב-$\varepsilon^2/R$ את חצי השיא, $20\,\text{V}$, או שחילקתם ב-$\sqrt2$ **וגם** ב-2. החצי מופיע פעם אחת בלבד: $\bar P = \varepsilon_0^2/(2R)$ עם השיא, או $\bar P = \varepsilon_{\text{eff}}^2/R$ עם הערך האפקטיבי.'
         misconception: MC-ac-mean-power-peak-squared
       - value: 0
         feedback: 'הממוצע של הכא"מ אפס, אבל ההספק $\varepsilon^2/R$ לא שלילי אף פעם, ולכן הממוצע שלו חיובי.'
