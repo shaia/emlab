@@ -29,3 +29,19 @@ export const freezeSteps = (page: Page) =>
     const dispatch = window.dispatchEvent.bind(window);
     window.dispatchEvent = (e: Event) => (e.type === 'emlab:step' ? true : dispatch(e));
   });
+
+/**
+ * Put a ranking question's items in `order`, each named by a fragment of its label's text (a rendered KaTeX label
+ * keeps its TeX source, so `3000\,\mu\text{C}` works), whatever order they start in; then tie item i with item
+ * i + 1 for each i in `ties`. The items start shuffled, so a fixed list of clicks only works by luck.
+ */
+export async function rankTo(card: Locator, order: string[], ties: number[] = []) {
+  const labels = card.locator('.q-rank-label');
+  for (let i = 0; i < order.length; i++) {
+    const texts = await labels.allTextContents();
+    const j = texts.findIndex((t) => t.includes(order[i]));
+    if (j < 0) throw new Error(`rankTo: no item's label contains ${order[i]}`);
+    for (let k = j; k > i; k--) await card.getByRole('button', { name: 'למעלה' }).nth(k).click();
+  }
+  for (const t of ties) await card.locator('.q-rank-rel').nth(t).click();
+}

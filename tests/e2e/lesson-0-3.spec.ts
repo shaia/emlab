@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { freezeSteps, hydrated, progress } from './helpers';
+import { freezeSteps, hydrated, progress, rankTo } from './helpers';
 
 const LESSON = '/lessons/0-3/';
 
@@ -53,12 +53,8 @@ test('ranking charges with a tie', async ({ page }) => {
   const r = page.locator('[data-qid="Q-0.3-rank-charges"]');
   await r.scrollIntoViewIfNeeded();
   await hydrated(r);
-  // starts as 2 mC, 5·10⁻⁴ C, 3000 μC, 2·10⁶ nC; the answer is 3000 μC > 2 mC = 2·10⁶ nC > 5·10⁻⁴ C
-  const up = r.getByRole('button', { name: 'למעלה' });
-  await up.nth(2).click();
-  await up.nth(1).click(); // 3000 μC, 2 mC, 5·10⁻⁴, 2·10⁶ nC
-  await up.nth(3).click(); // 3000 μC, 2 mC, 2·10⁶ nC, 5·10⁻⁴
-  await r.locator('.q-rank-rel').nth(1).click();
+  // the answer is 3000 μC > 2 mC = 2·10⁶ nC > 5·10⁻⁴ C
+  await rankTo(r, ['3000\\,\\mu', '2\\,\\text{mC}', '2\\cdot10^{6}', '5\\cdot10^{-4}'], [1]);
   await r.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
   await expect(r).toHaveClass(/is-right/);
 });

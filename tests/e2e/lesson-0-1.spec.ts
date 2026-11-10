@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { hydrated, inked, progress } from './helpers';
+import { hydrated, inked, progress, rankTo } from './helpers';
 
 const LESSON = '/lessons/0-1/';
 
@@ -52,12 +52,8 @@ test('ranking the four confidence outcomes', async ({ page }) => {
   const r = page.locator('[data-qid="Q-0.1-rank-review"]');
   await r.scrollIntoViewIfNeeded();
   await hydrated(r);
-  // starts as right-unsure, wrong-sure, right-sure, wrong-unsure; the answer is
-  // wrong-sure, wrong-unsure, right-unsure, right-sure
-  const up = r.getByRole('button', { name: 'למעלה' });
-  await up.nth(1).click();
-  await up.nth(3).click();
-  await up.nth(2).click();
+  // the answer is wrong-sure, wrong-unsure, right-unsure, right-sure
+  await rankTo(r, ['טעיתם, וסימנתם "בטוחים"', 'טעיתם, וסימנתם "לא', 'עניתם נכון, וסימנתם "לא', 'עניתם נכון, וסימנתם "בטוחים"']);
   await r.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
   await expect(r).toHaveClass(/is-right/);
 });

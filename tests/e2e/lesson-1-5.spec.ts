@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { rankTo } from './helpers';
 
 const LESSON = '/lessons/1-5/';
 
@@ -151,9 +152,8 @@ test.describe('questions', () => {
     const r = page.locator('[data-qid="Q-1.5-rank-points"]');
     await r.scrollIntoViewIfNeeded();
     await hydrated(page, '[data-qid="Q-1.5-rank-points"]');
-    // items start as C, A, B (not the answer); move A up to get A, C, B, then tie C = B
-    await r.getByRole('button', { name: 'למעלה' }).nth(1).click();
-    await r.locator('.q-rank-rel').nth(1).click();
+    // the answer is A, then B = C
+    await rankTo(r, ['נקודה A', 'נקודה C', 'נקודה B'], [1]);
     await r.getByRole('button', { name: 'בדיקה · בטוחים', exact: true }).click();
     await expect(r).toHaveClass(/is-right/);
   });
