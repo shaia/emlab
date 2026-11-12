@@ -78,9 +78,11 @@ export default function GaussRadial(props: GaussRadialProps) {
   const [s, setS] = useState<State>(init);
   const [live, setLive] = useState('');
   const dragging = useRef(false);
-  // the state a text step produced: it must not tick a task, only the student's own controls do. A boolean flag is not
-  // enough: on late hydration the step arrives synchronously during mount, and the mount render's effect consumed it.
-  const stepState = useRef<State | null>(null);
+  // every state a text step produced: none may tick a task, only the student's own controls do. A boolean flag is not
+  // enough (on late hydration the step arrives synchronously during mount, and the mount render's effect consumed it),
+  // nor is the last step's state alone: effects run after paint, so when two steps arrive in quick succession the
+  // first step's effect runs after the second step replaced it, and would judge the first step's state as the student's.
+  const stepStates = useRef(new WeakSet<State>());
   const prev = useRef<State | null>(null);
   const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: TASK_LABEL[id] ?? id }));
 
@@ -93,7 +95,7 @@ export default function GaussRadial(props: GaussRadialProps) {
             profile: isProfile(st.profile) ? st.profile : p.profile,
             r: typeof st.r === 'number' ? clampR(st.r) : p.r,
           };
-          stepState.current = next;
+          stepStates.current.add(next);
           return next;
         });
       }),
@@ -108,7 +110,7 @@ export default function GaussRadial(props: GaussRadialProps) {
     const before = prev.current;
     prev.current = s;
     // neither the props' starting state nor a step's state is the student's doing
-    if (!before || s === stepState.current) return;
+    if (!before || stepStates.current.has(s)) return;
     const has = (t: string) => props.tasks?.includes(t);
     const done = (t: string) => markTask(`${props.id}:${t}`);
     if (has('cyl-inside') && s.scene === 'cylinder' && s.r <= R - 0.03) done('cyl-inside');

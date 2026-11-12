@@ -79,9 +79,11 @@ export default function FluxPatches(props: FluxPatchesProps) {
   const [s, setS] = useState<State>(init);
   const [live, setLive] = useState('');
   const dragging = useRef(false);
-  // the state a text step produced: it must not tick a task, only the student's own controls do. A boolean flag is not
-  // enough: on late hydration the step arrives synchronously during mount, and the mount render's effect consumed it.
-  const stepState = useRef<State | null>(null);
+  // every state a text step produced: none may tick a task, only the student's own controls do. A boolean flag is not
+  // enough (on late hydration the step arrives synchronously during mount, and the mount render's effect consumed it),
+  // nor is the last step's state alone: effects run after paint, so when two steps arrive in quick succession the
+  // first step's effect runs after the second step replaced it, and would judge the first step's state as the student's.
+  const stepStates = useRef(new WeakSet<State>());
   const mounted = useRef(false);
   const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: TASK_LABEL[id] ?? id }));
 
@@ -91,7 +93,7 @@ export default function FluxPatches(props: FluxPatchesProps) {
         setS((prev) => {
           const [x, y] = clampXY(typeof st.x === 'number' ? st.x : prev.x, typeof st.y === 'number' ? st.y : prev.y);
           const next: State = { n: typeof st.n === 'number' ? clampN(st.n) : prev.n, x, y };
-          stepState.current = next;
+          stepStates.current.add(next);
           return next;
         });
       }),
@@ -115,7 +117,7 @@ export default function FluxPatches(props: FluxPatchesProps) {
     // neither the props' starting state nor a step's state is the student's doing
     const first = !mounted.current;
     mounted.current = true;
-    if (first || s === stepState.current) return;
+    if (first || stepStates.current.has(s)) return;
     const has = (t: string) => props.tasks?.includes(t);
     const done = (t: string) => markTask(`${props.id}:${t}`);
     if (has('refine') && inside && Math.abs(patchSum - gauss) / gauss < 0.01 && s.n > 1) done('refine');
